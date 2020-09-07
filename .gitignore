@@ -2,9 +2,10 @@
 .vscode/
 
 *.aux
-*.log
 *.fls
+*.log
 *.out
+*.pdf
 *.toc
 *.synctex.gz
 *.fdb_latexmk
