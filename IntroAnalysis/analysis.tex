@@ -282,7 +282,7 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 
 \section{Equivalence Relations}
 
-\begin{defn}
+\begin{defn}\label{partition}
     A \emph{partition} $P$ of a set $X$ is a set of subsets of $X$ such that:
     \begin{itemize}
         \item $\emptyset \notin P$ --- that is, none of those subsets are empty.
@@ -312,9 +312,26 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     \end{itemize}
 \end{defn}
 
-\begin{defn}
+\begin{defn}\label{equivalence-relation}
     An \emph{equivalence relation} is a \emph{reflexive}, \emph{symmetric}, and \emph{transitive} binary relation.
 \end{defn}
+
+\begin{defn}\label{equivalence-class}
+    Let $S$ be a set and $\sim$ an equivalence relation on $S$. Then the \emph{equivalence class} of an element $a$ in $S$, denoted by $\left[a\right]$, is the set $\left\{x \in S \compbar x \sim a\right\}$.
+\end{defn}
+
+\begin{thm}{Equivalence classes form a partition}\proofbreak
+    Let $S$ be a set and $\sim$ an equivalence relation on $S$. If $X$ is the set of all equivalence classes of elements in $S$, then $X$ is a partition of $S$.
+\end{thm}
+
+\begin{proof}\proofbreak
+    \begin{itemize}
+        \item For any $a \in S$, $a \in \left[a\right]$ since $a \sim a$, so $\emptyset \notin X$.
+        \item Since $a \in S \implies a \in \left[a\right]$, we know $S \subseteq \bigcup_{A\in X}A$. Since for every $A \in X$, $a \in A \implies a \in S$, we know $\bigcup_{A\in X}A \subseteq S$. Therefore, $S = \bigcup_{A\in X}A$.
+        \item Let $a, b \in S$ such that $\left[a\right] \intersection \left[b\right] \neq \emptyset$. Then there exists some $x \in (\left[a\right] \intersection \left[b\right])$, so $x \sim a$ and $x \sim b$. By reflexivity $a \sim x$, and so by transitivity $a \sim b$, so $\left[a\right] = \left[b\right]$. Therefore, $(\forall A, B \in P) A \neq B \implies A \intersection B = \emptyset$.
+    \end{itemize}
+    Since $X$ meets all parts of Definition \ref{partition}, so $X$ is a partition of $S$.
+\end{proof}
 
 \section{Modular Arithmetic}
 
