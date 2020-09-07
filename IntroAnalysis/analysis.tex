@@ -211,4 +211,54 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     The Cartesian product of two sets $A$ and $B$ is denoted $A \times B$. It is equal to $\left\{\left(a, b\right) \compbar a \in A, b \in B \right\}$.
 \end{defn}
 
+\section{Binary Operation}
+
+\begin{defn}
+    A \emph{binary operation} is a mathematical operation of arity two, where both domains and the codomain are the same set.
+\end{defn}
+
+\begin{exmp}
+    Addition on $\R$ is a binary operation, as are multiplication and subtraction.
+\end{exmp}
+
+\begin{defn}
+    A binary operation $\circ$ on a set $S$ is commutative if $x \circ y = y \circ x$ for all $x, y \in S$.
+\end{defn}
+
+\begin{defn}
+    A binary operation $\circ$ on a set $S$ is associative if $x \circ (y \circ z) = (x \circ y) \circ z$ for all $x, y, z \in S$.
+\end{defn}
+
+\begin{defn}
+    Let $\circ$ be a binary operation on a set $S$. Then an element $e$ of $S$ is called a left identity if $e \circ a = a$ for all $a$ in $S$, and a right identity if $a \circ e = a$ for all $a$ in $S$. If $e$ is both a left and a right identity, then it is simply an identity.
+\end{defn}
+
+\begin{thm}
+    Let $\circ$ be a binary operation on a set $S$. If $\circ$ has both a left identity and a right identity, then those identities are the same.
+\end{thm}
+
+\begin{proof}
+    Let $e_1$ be a left identity for $\circ$ and $e_2$ be a right identity. Then $e_1 = e_1 \circ e_2 = e_2$, so $e_1 = e_2$.    
+\end{proof}
+
+\begin{cor}
+    If a binary operation has both a left identity and a right identity, it has only a single unique identity.
+\end{cor}
+
+\begin{defn}
+    Let $\circ$ be a binary operation on a set $S$, and $e$ be an identity element. An element $x$ of a set $S$ is \emph{invertible} if there exists some $x' \in S$ such that $x \circ x' = e$. $x'$ is the \emph{inverse} of $x$.
+\end{defn}
+
+\begin{thm}
+    Let $\circ$ be a binary associative operation on a set $S$, and $u \in S$ be an invertible element. Then for all $x, y \in S$, $(x \circ u = y \circ u) \implies (x = y)$.
+\end{thm}
+
+\begin{proof}
+    Let $u'$ be the inverse of the invertible element $u$. Then $(x \circ u) = (y \circ u) \implies (x \circ u) \circ u' = (y \circ u) \circ u'$. Since $\circ$ is associative, this implies that $x \circ (u \circ u') = y \circ (u \circ u')$. Since $u \circ u' = e$, we have $x \circ e = y \circ e$, and so $x = y$.
+\end{proof}
+
+\begin{cor}
+    Let $\circ$ be a binary associative operation on a set $S$, and $u \in S$ be an invertible element. Then for all $x, y \in S$, $(u \circ x = u \circ y) \implies (x = y)$.
+\end{cor}
+
 \end{document}
