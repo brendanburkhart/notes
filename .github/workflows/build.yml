@@ -16,5 +16,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: notes
-          path: /**/*.pdf
-          if-no-file-found: error
+          path: ./**/*.pdf
+          if-no-files-found: error
