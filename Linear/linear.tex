@@ -1,0 +1,384 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{fullpage}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{titling}
+\usepackage{pdfpages}
+
+\usepackage{common}
+\usepackage{linear}
+
+\begin{document}
+
+\title{Linear Algebra Notes}
+\author{Brendan Burkhart}
+\date{}
+\maketitle
+
+\section{Row operations and echelon form}
+
+\begin{defn}\label{linear-eq}
+    A \emph{linear equation} is an equation of the form $a_1x_1 + a_2x_2 + \cdots + a_nx_n = b$
+\end{defn}
+
+\begin{defn}\label{linear-sys}
+    A \emph{system of linear equations} (or \emph{linear system}) is a set of linear equations of the same variables (e.g. $x_1, x_2, \ldots, x_n$).
+\end{defn}
+
+\begin{defn}\label{linear-sys-solutions}
+    The \emph{solution set} of a system of linear equations is the intersection of the solution set of each individual linear equation.
+\end{defn}
+
+Systems of linear equations can be represented via matrices, where each column is a specific variable, each row is a linear equation, and the entries are the coefficients. Augmentations represent the constant term (denoted $b$ in definition \ref{linear-eq}).
+
+\begin{exmp}
+    The linear system \[\begin{linsys}{3}
+            x &+ &2y &- &z &= &-1 \\
+            2x &+ &2y &+ &z &= &1 \\
+            3x &+ &5y &- &2z &= &-1
+        \end{linsys}\] can be represented by the augmented matrix below.
+    \[\begin{amatrix}{3}
+            1 &2 &-1 &-1 \\
+            2 &2 &1 &1 \\
+            3 &5 &-2 &-1
+        \end{amatrix}\]
+\end{exmp}
+
+Row operations are certain operations on matrices or systems of linear equations which can be used to simply or otherwise transform the system, while leaving the solution set unchanged.
+
+\begin{defn}\label{row-op}
+    Row operations: \begin{enumerate}
+        \item Swap two rows/equations
+        \item Multiply a single row by a non-zero scalar
+        \item Add a scalar multiple of one row to another
+    \end{enumerate}
+\end{defn}
+
+\begin{thm}
+    If a linear system is obtained from another by one of the row operations, then the two systems have the same set of solutions.
+\end{thm}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}
+        \item As the intersection of sets is commutative, by Definition \ref{linear-sys-solutions}, the solution set of a linear system is unaffected by the order of the individual linear systems, therefore swapping rows/equations does not change the solution set.
+        \item Since multiplying a single row by a non-zero scalar is equivalent to multiplying both sides of the represented equation by that scalar, the solution set is clearly left unchanged.
+        \item Since adding a multiple of one row to another row is equivalent to adding equal quantities to both sides of the equation, no solutions are removed from the solution set. If the row $(sb_1 + a_1)x_1 + (sb_2 + a_2) + \cdots + (sb_n + a_n)x_n = sk_b + k_a$ is the result of adding $s$ times row $b_1x_1 + \cdots + b_nx_n = k_b$ to row $a_1x_1 + \cdots + a_nx_n = k_a$, then $(sb_1 + a_1)x_1 + (sb_2 + a_2) + \cdots + (sb_n + a_n)x_n = s(b_1x_1 + \cdots + b_nx_n) + k_a$  which implies that $a_1x_1 + \cdots + a_nx_n = k_a$, so no information was lost and the solution set remains the same.
+    \end{enumerate}
+\end{proof}
+
+\begin{defn}
+    A matrix in (row) \emph{echelon form} has all rows of zeroes at the bottom, and the leading term of each row is to the right of the row leading term above it.
+\end{defn}
+
+\begin{defn}
+    In \emph{reduced row echelon form}, a matrix in row echelon form additionally has leading terms which are all $1$, and the entries above and below each leading term are zero.
+\end{defn}
+
+\begin{rmk}
+    The reduced row echelon form of a particular matrix is always unique, however the row echelon form is not. Additionally, it is always possible to transform a given matrix into either echelon form via the row operations.
+\end{rmk}
+
+\begin{exmp}
+    \begin{align*}
+        \begin{amatrix}{3}
+            1 &0 &1 &4 \\
+            1 &-1 &2 &5 \\
+            4 &-1 &5 &17
+        \end{amatrix}
+         & \begin{aligned}
+             & \ro{r_2 \rightarrow r_2 - r_1}  \\
+             & \ro{r_3 \rightarrow r_3 - 4r_1} \\
+        \end{aligned}
+         & \begin{amatrix}{3}
+            1 &0 &1 &4 \\
+            0 &-1 &1 &1 \\
+            0 &-1 &1 &1
+        \end{amatrix}
+         & \begin{aligned}
+             & \ro{r_2 \rightarrow -r_2} \\
+        \end{aligned}
+         & \begin{amatrix}{3}
+            1 &0 &1 &4 \\
+            0 &1 &-1 &-1 \\
+            0 &-1 &1 &1
+        \end{amatrix} \\
+         & \begin{aligned}
+             & \ro{r_3 \rightarrow r_3 + r_2} \\
+        \end{aligned}
+         & \begin{amatrix}{3}
+            1 &0 &1 &4 \\
+            0 &1 &-1 &-1 \\
+            0 &0 &0 &0
+        \end{amatrix}
+    \end{align*}
+
+    Since there is no leading term corresponding to $z$, $z$ is a free variable. If we let $z$ be zero, then the augmentation yields a particular solution to this linear system.
+
+    Solution set in vector form:
+    \[\begin{pmatrix}
+            x \\ y \\ z
+        \end{pmatrix} = \begin{pmatrix}
+            4 \\ -1 \\ 0
+        \end{pmatrix} + z\begin{pmatrix}
+            -1 \\ 1 \\ 1
+        \end{pmatrix}\]
+
+    Solution set in parametric form:
+    \[\left\{\left(4 - z, -1 + z, z\right) \compbar z \in \R \right\}\]
+
+\end{exmp}
+
+\section{Vector Spaces}
+
+\begin{defn}
+    Let $F$ be a field. A \emph{vector space} over $F$ consists of a set $V$ together with two operations:
+
+    \begin{itemize}
+        \item[] $+: V \times V \to V$ (vector addition)
+        \item[] $\cdot: F \times V \to V$ (scalar multiplication)
+    \end{itemize}
+    which satisfy the following axioms for all $v, w, e \in V$ and $r, s \in F$:
+    \begin{enumerate}
+        \item $v + w = w + v$ (additive commutativity)
+        \item $(v + w) + u = v + (w + u)$ (additive associativity)
+        \item $\exists \vec{0} \in V \textrm{ s.t. } v + \vec{0} = v$ (additive identity)
+        \item $\exists z \in V \textrm{ s.t. } v + z = \vec{0}$ (additive inverse)
+        \item $(r + s) \cdot v = r \cdot v + s \cdot v$ (distributivity over scalar addition)
+        \item $r \cdot (v + w) = r \cdot v + r \cdot w$ (distributivity over vector addition)
+        \item $(rs)\cdot v = r \cdot (s \cdot v)$ (multiplicative associativity)
+        \item $1 \cdot v = v$ (multiplicative identity)
+    \end{enumerate}
+\end{defn}
+
+\begin{rmk}
+    You can prove the following for all $v \in V$ and $r \in F$ from those axioms (see Lemma \ref{vector-space-properties}): 
+    \begin{itemize}
+        \item The additive identity ($\vec{0}$) is unique.
+        \item Additive inverses are unique.
+        \item $0 \cdot v = \vec{0}$.
+        \item $-1 \cdot v = -v$.
+        \item $r \cdot \vec{0} = \vec{0}$.
+    \end{itemize}
+\end{rmk}
+
+\begin{exmp}
+    $\R^n$ is a vector space over $\R$ with $+$ and $\cdot$ defined as usual.
+\end{exmp}
+
+\begin{exmp}
+    Let $F$ be any field. Then \[F^n = \left\{\begin{pmatrix}
+            x_1 \\ \vdots \\ x_n
+        \end{pmatrix} \compbar x_i \in F \textrm{ for } i = 1, \ldots, n \right\}\] is a vector space over $F$ with $x + y$ defined as \[\begin{pmatrix}
+            x_1 \\ \vdots \\ x_n
+        \end{pmatrix} + \begin{pmatrix}
+            y_1 \\ \vdots \\ y_n
+        \end{pmatrix} = \begin{pmatrix}
+            x_1 + y_1 \\ \vdots \\ x_n + y_n
+        \end{pmatrix}\] and $r \cdot x$ defined as \[r\begin{pmatrix}
+            x_1 \\ \vdots \\ x_n
+        \end{pmatrix} = \begin{pmatrix}
+            rx_1 \\ \vdots \\ rx_n
+        \end{pmatrix}.\]
+\end{exmp}
+
+Consider the field $\mathbb{F}_2 = \{0, 1\}$, and the vector space $\mathbb{F}_2^2$. This vector space has four elements: $\left\{\begin{pmatrix}
+        0 \\ 0
+    \end{pmatrix}, \begin{pmatrix}
+        0 \\ 1
+    \end{pmatrix}, \begin{pmatrix}
+        1 \\ 0
+    \end{pmatrix}, \begin{pmatrix}
+        1 \\ 1
+    \end{pmatrix}\right\}$. In general, $\mathbb{F}_2^n$ has $2^n$ elements. Note that since $0 + 0 = 0$ and $1 + 1 = 0$, every element of $\mathbb{F}_2^n$ is its own inverse. Furthermore, every element of \textit{any} vector space $V$ over $\mathbb{F}_2$ is its own inverse. This is because $v + v = 1 \cdot v + 1 \cdot v = (1 + 1) \cdot v = 0 \cdot v = \vec{0}$.
+
+Consider the empty set. It cannot be a vector space, since a vector space requires the existence of an additive identity. However, the set $V = \left\{\star\right\}$ with $\star \cdot \star = \star$ and $r \cdot \star = \star$ is a vector space, called the \textbf{trivial} vector space. Note that $\star = \vec{0}$.
+
+\begin{exmp}
+    $\C$ forms a vector space over $\R$, with element-wise addition and $r \cdot (a + bi) = (ra) + (rb)i$.
+\end{exmp}
+
+\begin{rmk}
+    $\C =\C^1$ forms a vector space over $\C$, as does $\R = \R^1$ over $\R$.
+\end{rmk}
+
+\begin{exmp}
+    Let $V$ be the set of $2 \times 2$ matrices over $\R$, denoted $M_{2 \times 2}(R)$:
+    \[\left\{\begin{pmatrix}
+            a & b \\ c & d
+        \end{pmatrix} \compbar a,b,c,d \in \R \right\}.\] Define vector addition and scalar multiplication as follows. \[\begin{pmatrix}
+            a & b \\ c &d
+        \end{pmatrix} + \begin{pmatrix}
+            a' & b' \\ c' &d'
+        \end{pmatrix} = \begin{pmatrix}
+            a + a' & b + b' \\ c + c' &d + d'
+        \end{pmatrix}\] \[r \cdot \begin{pmatrix}
+            a & b \\ c &d
+        \end{pmatrix} = \begin{pmatrix}
+            ra & rb \\ rc &rd
+        \end{pmatrix}\] Note that $V$ is essentially equivalent to $\R^4$. $V$ is a vector space over $\R$, and in general $M_{m\times n}(F)$ with entry-wise vector addition and scalar multiplication forms a vector space over $F$.
+\end{exmp}
+
+\begin{exmp}
+    Let $F$ be any field, and $n \in \N$. Then define the set $P_n(F)$, the set of all polynomials with coefficients in $F$ of degree at most $n$, as follows. \[P_n(F) = \left\{a_0 + a_1x_1 + \cdots + a_nx^n \compbar a_i \in F \textrm{ for }i=0,\ldots,n\right\}\] \[(a_0 + \cdots + a_nx^n) + (b_0 + \cdots + b_nx^n) = (a_0 + b_0) + \cdots + (a_n + b_n)x^n\] \[r(a_0 + \cdots + a_nx^n) = ra_0 + \cdots + ra_nx^n\]
+
+    $P_n(F)$ is a vector space over $F$. Similarly, $P(F)$ (the set of polynomials with coefficients in $F$ of \textit{any} degree) forms a vector space over $F$.
+\end{exmp}
+
+\begin{exmp}
+    Let $S$ be any set, $F$ any field, and $V = \{f: S \to F\}$. $V$ forms a vector space over $F$ with $(f + g)(s) = f(s) + g(s)$ and $(rf)(s) = r(f(s))$ for all $r \in F, s \in S$.
+    
+    Notice that if $S = \{1, \ldots, n\}$, we get $F^n$, since $f \in V$ is a function from a coordinate index $i$ to the value of that coordinate $x_i$. If $S = \N$ and $V = \left\{(a_1, a_2, \ldots) \compbar a_i \in F \textrm{ for } i = 1, 2, \ldots\right\}$, we similarly get the set of all sequences in $F$.
+\end{exmp}
+
+\begin{lemma}\label{vector-space-properties}
+    Let $V$ be a vector space over a field $F$. Then for all $v \in V$ and $r \in F$: \begin{enumerate}
+        \item The additive identity is unique.
+        \item The additive inverse of $v$ is unique.
+        \item $0 \cdot v = \vec{0}$.
+        \item $(-1) \cdot v + v = \vec{0}$.
+        \item $r \cdot \vec{0} = \vec{0}$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}
+        \item Let $i_1$ and $i_2$ be additive identities of $V$. Then $i_1 = i_1 + i_2 = i_2$, and by transitivity $i_1 = i_2$. The additive identity is therefore unique.
+        \item Let $w_1$ and $w_2$ be additive inverses of $v$. Then $v + w_1 = \vec{0}$ and $v + w_2 = \vec{0}$, so $v + w_1 = v + w_2$. Then $w_1 + (v + w_1) = w_1 + (v + w_2)$, which implies that $(w_1 + v) + w_1 = (w_1 + v) + w_2$. Therefore, $w_1 = w_2$, so the additive inverse of $v$ is unique and so can be denoted $-v$.
+        \item $0 \cdot v + 0 \cdot v = (0 + 0) \cdot v = 0 \cdot v = 0 \cdot v + \vec{0}$. Since we have additive inverses, we have cancellation, so $0 \cdot v = \vec{0}$.
+        \item $(-1) \cdot v + v = (-1) \cdot v + 1 \cdot v = (-1 + 1) \cdot v = 0 \cdot v = \vec{0}$.
+        \item $r \cdot \vec{0} = r \cdot (v + -v) = r \cdot (1 + -1) \cdot v = (r \cdot 0)\cdot v = 0 \cdot v = \vec{0}$.
+    \end{enumerate}
+\end{proof}
+
+\begin{defn}
+    Let $V$ be a vector space over $F$, and $W \subseteq V$. We say $W$ is a \emph{subspace} of $V$ if it is itself a vector space over $F$ with the operations defined as for $V$.
+\end{defn}
+
+\begin{exmp}
+    Let $W = \left\{\begin{pmatrix}
+            x \\ y \\ z
+        \end{pmatrix} \in \R^3 \compbar x + y + z = 0\right\}$. $W$ is a vector subspace over $\R$ with the operations inherited from $\R^3$. $W$ is a plane within $\R^3$, with normal $(1, 1, 1)$.
+\end{exmp}
+
+\begin{prop}\label{subspace-proof}
+    A subset $W$ of $V$ is a subspace if and only if
+    \begin{enumerate}
+        \item $W$ is non-empty.
+        \item $W$ is closed under vector addition.
+        \item $W$ is closed under scalar multiplication.
+    \end{enumerate}
+\end{prop}
+
+\begin{proof}\proofbreak
+    ($\Longrightarrow$) If $W$ is a subspace, then by definition it is itself a vector space, so it must contain $\vec{0}$ and so it is non-empty. Additionally, (2) and (3) follow from the definition of binary operations.
+
+    ($\Longleftarrow$) Since $W$ is a subset of $V$ with the same operations, all axioms of vector spaces follow except for the existence of the additive identity and additive inverses, and $W$ being closed under vector addition and scalar multiplication (as these are defined as binary operations for $V$ rather than $W$).
+
+    (2) and (3) then guarantee that $W$ is closed under vector addition and scalar multiplication. Since $W$ is closed under scalar multiplication, we know that $(0 \cdot w) \in W$ for any $w \in W$. Since $0 \cdot w = \vec{0}$, we know that $\vec{0} \in W$ so $W$ has an additive identity. Similarly, since $(-1 \cdot w) \in W$ and $-1 \cdot w = -w$, every element in $W$ must have an additive inverse.
+\end{proof}
+
+\begin{exmp}
+    Let $V = \R^3$, $W = \left\{\begin{pmatrix}
+            x \\ y \\ z
+        \end{pmatrix} \in \R^3 \compbar x + y + z = 1\right\}$. Then $W$ cannot be a subspace of $V$, as $\vec{0} \notin W$.
+\end{exmp}
+
+\begin{exmp}
+    Let $V =\R^n$, and $W$ be the set of solutions to a homogeneous system of equations (every equation is equal to zero). Then $\{\vec{0}\}$ is a solution to the system of linear equations, and since every solution is equal to zero, the set of solutions is closed under addition and multiplication, so $W$ is a subspace of $V$.
+\end{exmp}
+
+\begin{exmp}
+    If $V$ is any vector space over $F$, then both $\{\vec{0}\}$ and $V$ are subspaces of $V$.
+\end{exmp}
+
+\begin{defn}
+    $\left\{\vec{0}\right\}$ is the \emph{trivial} subspace.
+\end{defn}
+
+\section{Linear Combinations and Spans}
+
+\begin{defn}
+    Let $V$ be a vector space over $F$, and $S \subseteq V$ with $S \neq \emptyset$. We say $v \in V$ is a \emph{linear combination} of vectors in $S$ if \[v = c_1s_1 + \cdots + c_nc_n \textrm{ for some } n >1, c_i \in F, s_i \in S \textrm{for i} = 1,\ldots,n\]
+\end{defn}
+
+\begin{exmp}
+    In $\R^3$, $\begin{pmatrix}
+            2 \\ 3 \\ 0
+        \end{pmatrix} = 2\begin{pmatrix}
+            1 \\ 0 \\ 0
+        \end{pmatrix} + 3\begin{pmatrix}
+            0 \\ 1 \\ 0
+        \end{pmatrix}$, so $\begin{pmatrix}
+            2 \\ 3 \\ 0
+        \end{pmatrix}$ is a linear combination of vectors in $\left\{\begin{pmatrix}
+            1 \\ 0 \\ 0
+        \end{pmatrix},\begin{pmatrix}
+            0 \\ 1 \\ 0
+        \end{pmatrix},\begin{pmatrix}
+            0 \\ 0 \\ 1
+        \end{pmatrix}\right\}$.
+\end{exmp}
+
+\begin{defn}
+    Let $S \subseteq V$. The \emph{span} (also \emph{linear span} or \emph{linear hull}) of $S$ is the set of all linear combinations of vectors in $S$. \[\spanset{S} = \left\{c_1s_1 + \cdots + c_ns_n \compbar n \in \N, c_i \in F, s_i \in S\right\}\]
+
+    By convention, if $S = \emptyset$, we define $\spanset{S} = \vec{0}$.
+\end{defn}
+
+\begin{rmk}
+    If $S \subseteq T$, then $\spanset{S} \subseteq \spanset{T}$.
+\end{rmk}
+
+\begin{lemma}
+    Let $V$ be a vector space over $F$, and $s \subseteq V$. Then $\spanset{S}$ is a subspace of $V$.
+\end{lemma}
+
+\begin{proof}
+    If $S = \emptyset$, then $\spanset{S} = \left\{\vec{0}\right\}$, so $\spanset{S}$ is the trivial subspace.
+
+    If $S \neq \emptyset$, then there exists some $s \in S$. Since $(1 \cdot s) \in \spanset{S}$, we know that $\spanset{S} \neq \emptyset$. Let $v, w \in \spanset{S}$, $r \in F$. We need to prove that $v + r \cdot w \in \spanset{S}$. Since $v \in \spanset{S}$, we know that $v = c_1s_1 + \cdots + c_ns_n$ for some $n \geq 1$, $c_i \in F$, and $s_i \in S$. Similarly, $w = d_1t_1 + \cdots + d_mt_m$ for some $m \geq 1$, $d_i \in F$, and $t_i \in S$. Then $v + rw = c_1s_1 + \cdots + c_ns_n + rd_1t_1 + \cdots + rd_mt_m$, so $v + r \cdot w \in \spanset{S}$. Therefore, by Lemma \ref{subspace-proof}, $\spanset{S}$ is a subspace of $V$.
+\end{proof}
+
+\begin{rmk}
+    We also proved that $S \subseteq \spanset{S}$, and that $\spanset{S}$ is the smallest subspace of $V$ that contains $S$, in the sense that if $W$ is a subspace of $V$ such that $S \subseteq W$, then $\spanset{S} \subseteq W$.
+\end{rmk}
+
+\begin{exmp}
+    Let $v$ be a vector space over $F$. Given $S \subseteq V$, and $v \in V$, how do we know if $v \in \spanset S$?
+
+    Let $V = P_2(\R)$, $S = \left\{x^2 + 3x - 2, 2x^2 + 5x -3\right\}$, and $v = -x^2 - 4x + 4$. We are trying to determine $a, b \in F$ such that $-x^2 - 4x + 4 = a(x^2 + 3x - 2) + b(2x^2 + 5x - 3)$. This would imply that $a + 2b = -1$, $3a + 5b = -4$, and $-2a - 3b = 4$. This system of equations can be represented as a matrix, and solved for $a$ and $b$.
+    \begin{align*}
+        \begin{amatrix}{2}
+            1 &2 &-1 \\
+            3 &5 &-4 \\
+            -2 &-3 &4
+        \end{amatrix}
+         & \begin{aligned}
+             & \ro{r_2 \rightarrow r_2 - 3r_1}  \\
+             & \ro{r_3 \rightarrow r_3 + 2r_1} \\
+        \end{aligned}
+         & \begin{amatrix}{2}
+            1 &2 &-1 \\
+            0 &-1 &-1 \\
+            0 &1 &2
+        \end{amatrix}
+    \end{align*}
+    This would imply that $0b = 1$, which is a contradiction, so no such $a, b$ exist.
+\end{exmp}
+
+\begin{lemma}
+    Let $V$ be a vector space over $F$, $S \subseteq V$, and $v \in V$. Then $\spanset{S \cup \left\{v\right\}} = \spanset{S}$ if and only if $v \in \spanset{S}$.
+\end{lemma}
+
+\begin{proof}\proofbreak
+    ($\Longrightarrow$) If $v \notin \spanset{S}$, then since $v \in \spanset{S \cup \left\{v\right\}}$, we know that $\spanset{S} \neq \spanset{S \cup \left\{v\right\}}$.
+
+    ($\Longleftarrow$) Assume $v \in \spanset{S}$. Then $v = c_1v_1 + \cdots + c_ns_n$ for $c_i \in F$ and $s_i \in S$. Since $S \subseteq S \cup \left\{v\right\}$, we have $\spanset{S} \subseteq \spanset{S \cup \left\{v\right\}}$. Let $w \in \spanset{S \cup \left\{v\right\}}$, so $w = d_1t_1 + \cdots + d_mt_n + d_{m+1}v$. Thus, $w = d_1t_1 + \cdots + d_mt_m + d_{m+1}(c_1 + \cdots + c_n)$, so $w \in \spanset{S}$ and $\spanset{S \cup \left\{v\right\}} \subseteq \spanset{S}$. Therefore, $\spanset{S} = \spanset{S \cup \left\{v\right\}}$.
+\end{proof}
+
+\end{document}

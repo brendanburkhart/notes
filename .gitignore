@@ -1,0 +1,10 @@
+*.txt
+.vscode/
+
+*.aux
+*.log
+*.fls
+*.synctex.gz
+*.fdb_latexmk
+*.synctex(busy)
+__latexindent_temp.tex

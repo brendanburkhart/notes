@@ -1,0 +1,42 @@
+\RequirePackage{mathtools}
+\RequirePackage{amsfonts}
+\RequirePackage{array}
+\RequirePackage{amssymb}
+\RequirePackage{amsmath}
+
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\DeclareMathOperator{\trace}{Tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\spn}{span}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+
+% Swap starred and non-starred versions of \absval and \norm
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+
+\newenvironment{linsys}[2][m]{%
+\setlength{\arraycolsep}{.1111em}
+\begin{array}[#1]{@{}*{#2}{rc}r@{}} 
+}{%
+\end{array}}
+
+\newenvironment{amatrix}[1]{%
+  \left[\begin{array}{@{}*{#1}{r}|*{#1}{r}@{}}
+}{%
+  \end{array}\right]
+}
+
+\newcommand{\ro}[1]{%
+  \xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+
+\newcommand\spanset[1]{\ensuremath\spn(#1)}
