@@ -2,5 +2,5 @@
 Typed up class notes
 
 Contains notes from:
-    Introduction to Analysis
-    Linear Algebra
+- Introduction to Analysis
+- Linear Algebra
