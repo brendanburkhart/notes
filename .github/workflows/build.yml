@@ -9,7 +9,9 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: Linear/linear.tex | IntroAnalysis/analysis.tex
+          root_file: |
+              Linear/linear.tex
+              IntroAnalysis/analysis.tex
       - name: Upload document
         uses: actions/upload-artifact@v2
         with:
