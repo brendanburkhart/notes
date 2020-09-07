@@ -30,17 +30,103 @@
     A set is an unordered group of distinct elements.
 \end{defn}
 
+\begin{exmp}
+    $\{1, 2, 3\}$ is a set containing three elements: $1$, $2$, and $3$.
+\end{exmp}
+
+\begin{note}
+    $\{1, 2, 3, 3\}$ is also set containing three elements, since the elements of a set are distinct.
+\end{note}
+
 \begin{defn}\label{empty-set}
     The empty set (denoted $\emptyset$) is the unique set having no elements.
 \end{defn}
 
-While sets are unordered groups of distinct elements, lists (also called $n$-tuples) are ordered groups of elements which are not necessarily distinct. An ordered pair $(a, b)$ is a list of a length two (a tuple), where $a$, and $b$ are elements of some set. 
+One of the most fundamental operations of sets is the ``element of'' operation, denoted by $\in$. $x \in X$ is true precisely when $x$ is an element of the set $X$. Note that sets can be elements of other sets. $x \notin X$ is used to denote ``not an element of''.
+
+\begin{exmp}
+    $\left\{\{1, 2\}, \{\}\right\}$ is a set containing two elements: the set $\{1, 2\}$, and the empty set.
+\end{exmp}
+
+Set comprehensions, or set builder notation, is a method of precisely defining a set. It can take various forms, such as enumerating all (or implying such) the elements of a set (e.g. $\{1, 2\}$ or $\{1, 2, \ldots, 5\}$). Or it can be used to build a set from another, such as $\left\{2n \compbar n \in \N\right\}$, which says make a set by taking every natural number and doubling it --- these are, of course, the even natural numbers. Set comprehensions can be made more complicated by including a predicate, for example $\left\{n \in \N \compbar n \neq n^2 \right\}$ --- all natural numbers which are not their own square.
+
+Two sets are equal when they contain precisely the same elements. For example, if we let $A = \{1, 1, 5, 2\}$ and $B = \{2, 2, 2, 1, 5\}$, then $A = B$ since for every element $x$ in $A$, $x$ is also in $B$ and vice versa.
+
+\begin{defn}\label{subset}
+    A set $T$ is a \emph{subset} of a set $S$ when every element of $T$ is also an element of $S$. This relationship is denoted $T \subseteq S$. $S$ is also referred to as a \emph{super set} of $T$.
+\end{defn}
+
+\begin{exmp}
+    $\{1, 2, 3\}$ is a subset of $\{1, 2, 3\}$.
+\end{exmp}
+
+\begin{rmk}
+    If a set $A$ is a subset of set $B$, and $B$ is a subset of $A$, then the sets must be equal. Showing that $A \subseteq B$ and $B \subseteq A$ is a common way to prove that two sets are equal.
+\end{rmk}
+
+\begin{defn}\label{proper-subset}
+    A set $T$ is a \emph{proper subset} of a set $S$ when every element of $T$ is also an element of $S$, but not vice versa --- that is, the sets are not equal. This relationship is denoted $T \subset S$.
+\end{defn}
+
+\begin{exmp}
+    $\{1\}$ is a proper subset of $\{1, 2, 3\}$.
+\end{exmp}
+
+\begin{defn}\label{intersection}
+    The intersection of sets $A$ and $B$ is the set $\left\{x \compbar x \in A \land x \in B \right\}$. It is denoted by $A \intersection B$.
+\end{defn}
+
+\begin{exmp}
+    $\{1, 2, 3, 4\} \intersection \{3, 4, 5\} = \{3, 4\}$.
+\end{exmp}
+
+\begin{defn}
+    The union of sets $A$ and $B$ is the set $\left\{x \compbar x \in A \lor x \in B\right\}$. It is denoted by $A \union B$.
+\end{defn}
+
+\begin{exmp}
+    $\{1, 2, 3, 4\} \union \{3, 4, 5\} = \{1, 2, 3, 4, 5\}$.
+\end{exmp}
+
+\begin{rmk}
+    If $A$ and $B$ are sets, then $(A \intersection B) \subseteq (A \union B)$. $A = B$ if and only if $(A \intersection B) = (A \union B)$.
+\end{rmk}
+
+\begin{defn}
+    The complement of set $A$ with respect to some super set $U$ is the set $\left\{x \in U \compbar x \notin A\right\}$. The complement is sometimes denoted $A'$.
+\end{defn}
+
+\begin{exmp}
+    Let $U = \{1, 2, 3, 4, 5\}$, and $A = \{1, 2\}$. Then $A' = \{3, 4, 5\}$.
+\end{exmp}
+
+\begin{exmp}
+    Let $U = \Z$, and $A$ the even numbers. Then $A'$ is the set of the odd numbers. 
+\end{exmp}
+
+\begin{rmk}
+    $A' \union A = U$. $A' \intersection A = \emptyset$.
+\end{rmk}
+
+\begin{defn}\label{set-difference}
+    The set difference of sets $A$ and  $B$, denoted $A \setminus B$, is the set containing all elements of $A$ which are not elements of $B$. $A \setminus B = \left\{x \in A \compbar x \notin B\right\}$.
+\end{defn}
+
+\begin{defn}\label{symmetric-difference}
+    The symmetric difference of sets $A$ and $B$, denoted $A \triangle B$, is defined to be the set $(A \setminus B) \union (B \setminus A)$.
+\end{defn}
+
+\begin{rmk}
+    $(A \triangle B)' = (A \intersection B)$ when $U = A \union B$.
+\end{rmk}
+
+While sets are unordered groups of distinct elements, lists (also called $n$-tuples) are ordered groups of elements which are not necessarily distinct. An ordered pair $(a, b)$ is a list of a length two (a tuple), where $a$, and $b$ are elements of some set.
 
 \begin{defn}\label{tuple}
     An ordered pair $(a, b)$ is a tuple of elements of some set.
 \end{defn}
 
-Ordered pairs (and $n$-tuples more generally) can be represented as sets themselves - the pair $(a, b)$ can be represented as the set $\left\{a, \{a, b\}\right\}$.
+Ordered pairs (and $n$-tuples more generally) can be represented as sets themselves --- the pair $(a, b)$ can be represented as the set $\left\{a, \{a, b\}\right\}$.
 
 \begin{defn}\label{cartesian-product}
     The Cartesian product of two sets $A$ and $B$ is denoted $A \times B$. It is equal to $\left\{\left(a, b\right) \compbar a \in A, b \in B \right\}$.
