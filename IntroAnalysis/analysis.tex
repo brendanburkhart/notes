@@ -57,7 +57,7 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
     Statement $P$ \emph{if and only if} (also \emph{iff} and $\iff$) statement $Q$ if $P \implies Q$ and $Q \implies P$.
 \end{defn}
 
-\begin{thm}\label{boolean-properties}\proofbreak
+\begin{thm}{Boolean properties}\label{boolean-algebraic-properties}\proofbreak
     Conjunction and disjunction are commutative:
     \begin{enumerate}
         \item $x \land y = y \land x$
@@ -75,20 +75,15 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
         \item $x \land (y \lor z) = (x \land y) \lor (x \land z)$
         \item $x \lor (y \land z) = (x \lor y) \land (x \lor z)$
     \end{enumerate}
-    
-    True is the identity element for conjunction and false is the identity element for disjunction:
+
+    True is the identity element (see \ref{identity}) for conjunction and false is the identity element for disjunction:
     \begin{enumerate}
         \item $x \land true = x$
         \item $x \lor false = x$
     \end{enumerate}
+\end{thm}
 
-    DeMorgan's Laws:
-    \begin{enumerate}
-        \item $\neg(x \land y) = (\neg x) \lor (\neg y)$
-        \item $\neg(x \lor y) = (\neg x) \land (\neg y)$
-    \end{enumerate}
-
-    Additional properties:
+\begin{thm}{Additional properties}\label{additional-boolean-properties}\proofbreak
     \begin{enumerate}
         \item $\neg(\neg x) = x$
         \item $x \land x = x$
@@ -97,12 +92,19 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
         \item $x \lor \neg x = true$
     \end{enumerate}
 \end{thm}
+    
+\begin{thm}{DeMorgan's Laws}\label{demorgan}\proofbreak
+    \begin{enumerate}
+        \item $\neg(x \land y) = (\neg x) \lor (\neg y)$
+        \item $\neg(x \lor y) = (\neg x) \land (\neg y)$
+    \end{enumerate}
+\end{thm}
 
-\begin{proof}
-    All properties in Theorem \ref{boolean-properties} can be proved by simply writing out the corresponding truth tables.
-\end{proof}
+\begin{rmk}
+    All properties in Theorem \ref{boolean-algebraic-properties}, Theorem \ref{additional-boolean-properties}, and Theorem \ref{demorgan} can be proved by simply writing out the corresponding truth tables.
+\end{rmk}
 
-\section{Sets and Lists}
+\section{Sets}
 
 \begin{defn}\label{set}
     A set is an unordered group of distinct elements.
@@ -198,6 +200,20 @@ Two sets are equal when they contain precisely the same elements. For example, i
     $(A \triangle B)' = (A \intersection B)$ when $U = A \union B$.
 \end{rmk}
 
+\section{Constructions}
+
+The \emph{von Neumann} construction is one of several ways to construct the natural numbers. It defines $0 = \emptyset$, and defines a function (called the \emph{successor} function) $S(a) = a \union \{a\}$ for every set $a$. Along with the axiom of infinity from Zermelo-Fraenkel set theory, this defines the set of natural numbers.
+
+Using this construction, each natural number is the set of all preceding natural numbers:
+\begin{itemize}
+    \item $0 = \emptyset$
+    \item $1 = 0 \union \{0\} = \{\{\}\}$
+    \item $2 = 1 \union \{1\} = \{\{\}\}, \{\{\}\}\}$
+    \item $3 = 2 \union \{2\} = \{\{\}\}, \{\{\}\}, \{\{\}\}, \{\{\}\}\}\}$
+\end{itemize}
+
+Notice that for natural numbers $n, m$, the number of elements of $n$ is $n$, and that $n \leq m \iff n \subseteq m$.
+
 While sets are unordered groups of distinct elements, lists (also called $n$-tuples) are ordered groups of elements which are not necessarily distinct. An ordered pair $(a, b)$ is a list of a length two (a tuple), where $a$, and $b$ are elements of some set.
 
 \begin{defn}\label{tuple}
@@ -220,6 +236,10 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     Addition on $\R$ is a binary operation, as are multiplication and subtraction.
 \end{exmp}
 
+\begin{exmp}
+    Let $S$ be the set of all functions $f : \R \to \R$. For any $f, g \in S$, let $f \circ g$ be the function in $S$ defined by $(f \circ g)(x) = f(g(x))$. This is a binary operation on $S$, called function composition.
+\end{exmp}
+
 \begin{defn}
     A binary operation $\circ$ on a set $S$ is commutative if $x \circ y = y \circ x$ for all $x, y \in S$.
 \end{defn}
@@ -228,7 +248,7 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     A binary operation $\circ$ on a set $S$ is associative if $x \circ (y \circ z) = (x \circ y) \circ z$ for all $x, y, z \in S$.
 \end{defn}
 
-\begin{defn}
+\begin{defn}\label{identity}
     Let $\circ$ be a binary operation on a set $S$. Then an element $e$ of $S$ is called a left identity if $e \circ a = a$ for all $a$ in $S$, and a right identity if $a \circ e = a$ for all $a$ in $S$. If $e$ is both a left and a right identity, then it is simply an identity.
 \end{defn}
 
@@ -259,5 +279,59 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \begin{cor}
     Let $\circ$ be a binary associative operation on a set $S$, and $u \in S$ be an invertible element. Then for all $x, y \in S$, $(u \circ x = u \circ y) \implies (x = y)$.
 \end{cor}
+
+\section{Equivalence Relations}
+
+\begin{defn}
+    A \emph{partition} $P$ of a set $X$ is a set of subsets of $X$ such that:
+    \begin{itemize}
+        \item $\emptyset \notin P$ --- that is, none of those subsets are empty.
+        \item $X = \bigcup_{A\in P}A$ --- that is, every element of $X$ is in a subset.
+        \item $(\forall A, B \in P) A \neq B \implies A \intersection B = \emptyset$ --- that is, no element of $X$ is in more than one subset.
+    \end{itemize}
+\end{defn}
+
+\begin{exmp}
+    Let $X = \{1, 2, 3, 4, 5\}$. Then $P = \left\{\{1, 2, 3\}, \{4, 5\}\right\}$ is a partition of $X$ as every element of $X$ is an element of an element of $P$, no element of $X$ is an element of more than one element of $P$, and no element of $P$ is empty.
+\end{exmp}
+
+\begin{exmp}
+    The empty set has a unique partition --- the empty set.
+\end{exmp}
+
+\begin{defn}
+    For a non-empty $X$, $P = \{X\}$ is the \emph{trivial} partition of $X$.
+\end{defn}
+
+\begin{defn}
+    A binary relation $\sim$ on a set $X$ is, for all $x, y, z \in X$:
+    \begin{itemize}
+        \item \emph{Reflexive} if $x \sim x$.
+        \item \emph{Symmetric} if $x \sim y \iff y \sim x$.
+        \item \emph{Transitive} if $x \sim y$ and $y \sim z$ implies $x \sim z$.
+    \end{itemize}
+\end{defn}
+
+\begin{defn}
+    An \emph{equivalence relation} is a \emph{reflexive}, \emph{symmetric}, and \emph{transitive} binary relation.
+\end{defn}
+
+\section{Modular Arithmetic}
+
+\begin{defn}
+    For $n \in \N, n \geq 1$, the set $\Z_n = \{0, 1, \ldots, n-1\}$ is the integers modulo $n$.
+\end{defn}
+
+\begin{defn}
+    Let $x \in \Z$. Then $x \bmod n = r$, where $x = qn + r$.
+\end{defn}
+
+\begin{defn}
+    $\oplus_n$ is a binary operation on $\Z_n$ defined by $(a \oplus_n b) = (a + b)\bmod n$.
+\end{defn}
+
+\begin{defn}
+    $\odot_n$ is a binary operation on $\Z_n$ defined by $(a \odot_n b) = (ab)\bmod n$.
+\end{defn}
 
 \end{document}
