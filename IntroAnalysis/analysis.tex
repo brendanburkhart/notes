@@ -206,10 +206,10 @@ The \emph{von Neumann} construction is one of several ways to construct the natu
 
 Using this construction, each natural number is the set of all preceding natural numbers:
 \begin{itemize}
-    \item $0 = \emptyset$
+    \item $0 = \{\}$
     \item $1 = 0 \union \{0\} = \{\{\}\}$
-    \item $2 = 1 \union \{1\} = \{\{\}\}, \{\{\}\}\}$
-    \item $3 = 2 \union \{2\} = \{\{\}\}, \{\{\}\}, \{\{\}\}, \{\{\}\}\}\}$
+    \item $2 = 1 \union \{1\} = \{\{\}, \{\{\}\}\}$
+    \item $3 = 2 \union \{2\} = \{\{\}, \{\{\}\}, \{\{\}, \{\{\}\}\}\}$
 \end{itemize}
 
 Notice that for natural numbers $n, m$, the number of elements of $n$ is $n$, and that $n \leq m \iff n \subseteq m$.
