@@ -24,6 +24,85 @@
 \tableofcontents
 \newpage
 
+\section{Boolean Algebra}
+
+Boolean algebra is the algebra dealing exclusively with the values \emph{true} and \emph{false}.
+
+The primary operations of Boolean algebra are \emph{negation} (also called \emph{not}) denoted by $\neg$, \emph{conjunction} (also called \emph{and}) denoted by $\land$, and \emph{disjunction} (also called \emph{or}) denoted by $\lor$.
+
+Since Boolean algebra has only two elements, it is possible to enumerate all variable combinations for a function. This is often done in the form of a truth table --- a table listing the values of variables and the corresponding function value as rows. For example, Table \ref{primary-operations} gives a combined truth table for negation, conjunction, and disjunction. It also serves as the definition of these operations.
+
+\begin{center}
+    \captionof{table}{Truth table of primary operations}
+    \label{primary-operations}
+    \begin{tabularx}{\linewidth}{|X|X|X|X|X|}
+        \hline
+        \thead{$X$} & \thead{$Y$} & \thead{$\neg X$} & \thead{$X \land Y$} & \thead{$X \lor Y$} \\
+        \hline
+        True  & True & False & True & True \\
+        \hline
+        True  & False & False & False & True \\
+        \hline
+        False  & True & True & False & True \\
+        \hline
+        False  & False & True & False & False \\
+        \hline
+    \end{tabularx}
+\end{center}
+
+\begin{defn}\label{implies}
+    A statement $P$ \emph{implies} (also $\implies$) statement $Q$ if $Q$ is true any time that $P$ is true. When $P$ is false, $Q$ can be true or false. If $P$ is always false, then it implies all statements. $P \implies Q$ is equivalent to $Q \impliedby P$.
+\end{defn}
+
+\begin{defn}\label{iff}
+    Statement $P$ \emph{if and only if} (also \emph{iff} and $\iff$) statement $Q$ if $P \implies Q$ and $Q \implies P$.
+\end{defn}
+
+\begin{thm}\label{boolean-properties}\proofbreak
+    Conjunction and disjunction are commutative:
+    \begin{enumerate}
+        \item $x \land y = y \land x$
+        \item $x \lor y = y \lor x$
+    \end{enumerate}
+    
+    Conjunction and disjunction are associative:
+    \begin{enumerate}
+        \item $(x \land y) \land z = x \land (y \land z)$
+        \item $(x \lor y) \lor z = x \lor (y \lor z)$
+    \end{enumerate}
+
+    Conjunction and disjunction are distributive:
+    \begin{enumerate}
+        \item $x \land (y \lor z) = (x \land y) \lor (x \land z)$
+        \item $x \lor (y \land z) = (x \lor y) \land (x \lor z)$
+    \end{enumerate}
+    
+    True is the identity element for conjunction and false is the identity element for disjunction:
+    \begin{enumerate}
+        \item $x \land true = x$
+        \item $x \lor false = x$
+    \end{enumerate}
+
+    DeMorgan's Laws:
+    \begin{enumerate}
+        \item $\neg(x \land y) = (\neg x) \lor (\neg y)$
+        \item $\neg(x \lor y) = (\neg x) \land (\neg y)$
+    \end{enumerate}
+
+    Additional properties:
+    \begin{enumerate}
+        \item $\neg(\neg x) = x$
+        \item $x \land x = x$
+        \item $x \lor x = x$
+        \item $x \land \neg x = false$
+        \item $x \lor \neg x = true$
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    All properties in Theorem \ref{boolean-properties} can be proved by simply writing out the corresponding truth tables.
+\end{proof}
+
 \section{Sets and Lists}
 
 \begin{defn}\label{set}
@@ -131,31 +210,5 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \begin{defn}\label{cartesian-product}
     The Cartesian product of two sets $A$ and $B$ is denoted $A \times B$. It is equal to $\left\{\left(a, b\right) \compbar a \in A, b \in B \right\}$.
 \end{defn}
-
-\section{Boolean Algebra}
-
-Boolean algebra is the algebra dealing exclusively with the values \emph{true} and \emph{false}.
-
-The primary operations of Boolean algebra are \emph{negation} (also called \emph{not}) denoted by $\neg$, \emph{conjunction} (also called \emph{and}) denoted by $\land$, and \emph{disjunction} (also called \emph{or}) denoted by $\lor$.
-
-Since Boolean algebra has only two elements, it is possible to enumerate all variable combinations for a function. This is often done in the form of a truth table --- a table listing the values of variables and the corresponding function value as rows. For example, Table \ref{primary-operations} gives a combined truth table for negation, conjunction, and disjunction. It also serves as the definition of these operations.
-
-\begin{center}
-    \captionof{table}{Truth table of primary operations}
-    \label{primary-operations}
-    \begin{tabularx}{\linewidth}{|X|X|X|X|X|}
-        \hline
-        \thead{$X$} & \thead{$Y$} & \thead{$\neg X$} & \thead{$X \land Y$} & \thead{$X \lor Y$} \\
-        \hline
-        True  & True & False & True & True \\
-        \hline
-        True  & False & False & False & True \\
-        \hline
-        False  & True & True & False & True \\
-        \hline
-        False  & False & True & False & False \\
-        \hline
-    \end{tabularx}
-\end{center}
 
 \end{document}
