@@ -6,6 +6,7 @@
 \usepackage{fullpage}
 \usepackage{makecell}
 \usepackage{tabularx}
+\usepackage[hypcap=false]{caption}
 \usepackage{tikz}
 \usepackage{titling}
 \usepackage{pdfpages}
@@ -44,5 +45,31 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \begin{defn}\label{cartesian-product}
     The Cartesian product of two sets $A$ and $B$ is denoted $A \times B$. It is equal to $\left\{\left(a, b\right) \compbar a \in A, b \in B \right\}$.
 \end{defn}
+
+\section{Boolean Algebra}
+
+Boolean algebra is the algebra dealing exclusively with the values \emph{true} and \emph{false}.
+
+The primary operations of Boolean algebra are \emph{negation} (also called \emph{not}) denoted by $\neg$, \emph{conjunction} (also called \emph{and}) denoted by $\land$, and \emph{disjunction} (also called \emph{or}) denoted by $\lor$.
+
+Since Boolean algebra has only two elements, it is possible to enumerate all variable combinations for a function. This is often done in the form of a truth table --- a table listing the values of variables and the corresponding function value as rows. For example, Table \ref{primary-operations} gives a combined truth table for negation, conjunction, and disjunction. It also serves as the definition of these operations.
+
+\begin{center}
+    \captionof{table}{Truth table of primary operations}
+    \label{primary-operations}
+    \begin{tabularx}{\linewidth}{|X|X|X|X|X|}
+        \hline
+        \thead{$X$} & \thead{$Y$} & \thead{$\neg X$} & \thead{$X \land Y$} & \thead{$X \lor Y$} \\
+        \hline
+        True  & True & False & True & True \\
+        \hline
+        True  & False & False & False & True \\
+        \hline
+        False  & True & True & False & True \\
+        \hline
+        False  & False & True & False & False \\
+        \hline
+    \end{tabularx}
+\end{center}
 
 \end{document}
