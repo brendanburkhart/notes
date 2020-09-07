@@ -1,0 +1,45 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{fullpage}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{titling}
+\usepackage{pdfpages}
+\usepackage{enumitem}
+
+\usepackage{common}
+
+\begin{document}
+
+\title{Introduction to Analysis Notes}
+\date{}
+\author{Brendan Burkhart}
+\maketitle
+
+\section{Sets and Lists}
+
+\begin{defn}\label{set}
+    A set is an unordered group of distinct elements.
+\end{defn}
+
+\begin{defn}\label{empty-set}
+    The empty set (denoted $\emptyset$) is the unique set having no elements.
+\end{defn}
+
+While sets are unordered groups of distinct elements, lists (also called $n$-tuples) are ordered groups of elements which are not necessarily distinct. An ordered pair $(a, b)$ is a list of a length two (a tuple), where $a$, and $b$ are elements of some set. 
+
+\begin{defn}\label{tuple}
+    An ordered pair $(a, b)$ is a tuple of elements of some set.
+\end{defn}
+
+Ordered pairs (and $n$-tuples more generally) can be represented as sets themselves - the pair $(a, b)$ can be represented as the set $\left\{a, \{a, b\}\right\}$.
+
+\begin{defn}\label{cartesian-product}
+    The Cartesian product of two sets $A$ and $B$ is denoted $A \times B$. It is equal to $\left\{\left(a, b\right) \compbar a \in A, b \in B \right\}$.
+\end{defn}
+
+\end{document}
