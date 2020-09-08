@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{centernot}
 \usepackage{fullpage}
 \usepackage{makecell}
 \usepackage{tabularx}
@@ -335,12 +336,57 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 
 \section{Modular Arithmetic}
 
+\begin{defn}\label{divisible}
+    Let $a, b$ be integers. Then we say $b$ is \emph{divisible} by $a$ (written $a \mid b$) when $b = an$ for some integer $n$.
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $2 \mid 6$ since $6 = 2(3)$
+        \item $-3 \mid 21$ since $21 = -3(-7)$
+        \item $7 \mid {-7}$ since $-7 = 7(-1)$
+        \item $4 \mid 0$ since $0 = 4(0)$
+        \item $0 \mid 0$ since $0 = 0(0)$
+    \end{itemize}
+\end{exmp}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $4 \centernot\mid 6$ (since there is no $n \in Z$ such that $6 = 4n$)
+        \item $6 \centernot\mid 3$ (since there is no $n \in Z$ such that $3 = 6n$)
+        \item $2 \centernot\mid 3$ (since there is no $n \in Z$ such that $3 = 2n$)
+    \end{itemize}
+\end{exmp}
+
 \begin{defn}
-    For $n \in \N, n \geq 1$, the set $\Z_n = \{0, 1, \ldots, n-1\}$ is the integers modulo $n$.
+    An integer $p$ is \emph{prime} when $1 < p$, and for every $x > 0$, $x \mid p$ implies that $x = 1$ or $x = p$.
 \end{defn}
 
 \begin{defn}
-    Let $x \in \Z$. Then $x \bmod n = r$, where $x = qn + r$.
+    Let $a, b$ be integers, and $m > 1$ be an integer called the \emph{modulus}. Then $a$ and $b$ are said to be \emph{congruent} modulo $m$, written $a \equiv b \pmod m$, when $m\mid(a - b)$.
+\end{defn}
+
+\begin{thm}\label{modular-congruence}
+    Congruence modulo $m$ is an equivalence relation on the integers.
+\end{thm}
+
+\begin{proof} Let $a, b, c$ be integers, and $m > 1$ be an integer. 
+
+    Since $(a-a) = 0$ and $0 = 0m$, we have $m|(a-a)$, so $a \equiv a \pmod m$.
+    
+    As $a \equiv b \pmod m$ implies that $m\mid(a - b)$, there exists some integer $n$ such that $(a - b) = nm$. Since $(b - a) = -nm$, we know $m\mid(b-a)$. This implies that $a \equiv b \pmod m \iff b \equiv a \pmod m$.
+    
+    If $a \equiv b \pmod m$, and $b \equiv c \pmod m$, we know that there exists integers $n_1, n_2$ such that $(a-b) = n_1m$ and $(b-c) = n_2m$. Since $(a-c) = (a-b) + (b-c)$, we know $(a-c) = (n_1 + n_2)m$, and so $a \equiv c \pmod m$.
+
+    Since congruence modulo $m$ is reflexive, symmetric, and transitive, it is an equivalence relation on the integers.
+\end{proof}
+
+\begin{defn}\label{mod-n}
+    Given an integer $n > 1$, the set $\Z/n\Z = \{0, 1, \ldots, n-1\}$ is the \emph{integers modulo $n$}.
+\end{defn}
+
+\begin{defn}\label{modulo}
+    Let $a$ be an integer. Then $a$ modulo $n$, written $a \bmod n$, is the unique element $b$ of $\Z/n\Z$ such that $a \sim b \pmod n$.
 \end{defn}
 
 \begin{defn}
@@ -350,5 +396,13 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \begin{defn}
     $\odot_n$ is a binary operation on $\Z_n$ defined by $(a \odot_n b) = (ab)\bmod n$.
 \end{defn}
+
+\begin{thm}\label{znz-prime-field}
+    If $n$ is a prime integer, then every $x \in \Z/n\Z$, where $x \neq 0$, has a multiplicative inverse $x^{-1}$ in $\Z/n\Z$.
+\end{thm}
+
+\begin{proof}
+    By Fermat's little theorem, since $n$ is prime and $n$ does not divide $x$ (since $x < n$), we have $x^{n-1} \equiv 1 \pmod n$. Therefore, $x \odot_n x^{n-2} \equiv 1 \pmod n$, so $x^{-1} = x^{n-2} \bmod n$.
+\end{proof}
 
 \end{document}
