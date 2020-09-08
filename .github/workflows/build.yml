@@ -13,6 +13,7 @@ jobs:
               Linear/linear.tex
               IntroAnalysis/analysis.tex
               Images/images.tex
+              VectorCalc/vector.tex
       - name: Upload document
         uses: actions/upload-artifact@v2
         with:
