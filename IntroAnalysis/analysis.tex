@@ -405,4 +405,47 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     By Fermat's little theorem, since $n$ is prime and $n$ does not divide $x$ (since $x < n$), we have $x^{n-1} \equiv 1 \pmod n$. Therefore, $x \odot_n x^{n-2} \equiv 1 \pmod n$, so $x^{-1} = x^{n-2} \bmod n$.
 \end{proof}
 
+\section{Fields}
+
+\begin{defn}
+    A \emph{field} is a set $F$ equipped with two binary operations called addition and multiplication (denoted by $+$ and $\cdot$ respectively), however they do not necessarily correspond to addition and multiplication on the real numbers.
+
+    Field axioms:
+    \begin{itemize}
+        \item Addition and multiplication are commutative.
+        \item Addition and multiplication are associative.
+        \item Additive and multiplicative identities, denoted $0$ and $1$ respectively.
+        \item Every element $x \in F$ has an additive inverse denoted $-x$.
+        \item Every element $x \in F$ where $x \neq 0$ has a multiplicative inverse denoted $x^{-1}$ or $1/x$.
+        \item Multiplication is distributive over addition.
+    \end{itemize}
+\end{defn}
+
+\begin{thm}{Field properties}\label{field-properties}\proofbreak
+    For every $x, y, z \in F$:
+    \begin{enumerate}
+        \item $0 \cdot x = 0$
+        \item $(-1) \cdot x = -x$
+        \item $-(-x) = x$
+        \item If $x \neq 0$, $\left(x^{-1}\right)^{-1} = x$
+        \item $x \cdot (-y) = -(x\cdot y)$
+        \item $(xy)^{-1} = x^{-1}y^{-1}$
+        \item $x\cdot(y-z) = x\cdot y - x \cdot z$
+        \item $-(x - y) = y - x$
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}
+        \item $0 \cdot x + 0 \cdot x = (0 + 0) \cdot x = 0 \cdot x$. Since the additive identity is unique, this implies that $0 \cdot x = 0$.
+        \item $(-1) \cdot x + x = (-1) \cdot x + 1 \cdot x = (-1 + 1) \cdot x = 0 \cdot x = 0$. Therefore, $(-1) \cdot x = -x$.
+        \item Let $w = -x$, then $x + w = 0$. Therefore, $x = -w$, and so $x = -(-x)$.
+        \item Let $w = x^{-1}$, then $wx = 1 = xw$, so $x = w^{-1}$. Therefore, $x = w^{-1}$, and so $(x^{-1})^{-1} = w^{-1} = w$.
+        \item $x \cdot (-y) + xy = x\cdot(-y + y) = x\cdot 0 = 0$.
+        \item Let $(xy)(x^{-1}y^{-1}) = (yx)(x^{-1}y^{-1}) = y(xx^{-1})y^{-1} = yy^{-1} = 1$. Since the multiplicative identity is unique, $(xy)^{-1} = x^{-1}y^{-1}$.
+        \item $x \cdot (y-z) = x \cdot (y + (-1)z) = x\cdot y + x \cdot (-1)z = xy - xz$.
+        \item Since $(x - y) + (y-x) = x + (-y + y) - x = x - x = 0$, we know $-(x - y) = (y - x)$.
+    \end{enumerate}
+\end{proof}
+
 \end{document}
