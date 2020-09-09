@@ -169,4 +169,12 @@ Figure \ref{fig:orthogonal-projection} shows $A'$, the orthogonal projection of 
     Let $A$ and $B$ be two vectors, and $\theta$ be the angle between them. Then $\norm{A \times B} = \norm{A}\norm{B}\sin\theta$, which is the area of a parallelogram with side lengths $\norm{A}$ and $\norm{B}$ and angle $\theta$.
 \end{thm}
 
+\begin{thm}
+    Let $(x_1, y_1, z_1)$ be a point, and $Ax + By + Cz + D = 0$ be a plane. Then the distance from the point to the plane is: \[\frac{\abs{Ax_1 + By_1 + Cz_1 + D}}{\sqrt{A^2 + B^2 + C^2}}.\]
+\end{thm}
+
+\begin{proof}
+    The line with direction $(A, B, C)$ that passes through the point is normal to the plane and thus contains the shortest path from the point to the plane. Therefore, $A(x_1 + At) + B(y_1 + Bt) + C(z_1 + Ct) + D = 0$ gives the closest point on the plane to the point. $Ax_1 + By_1 + Cz_1 + D = -t(A^2 + B^2 + C^2)$. The shortest distance is thus \[\abs{\frac{t}{\norm{(A, B, C)}}} = \frac{\abs{Ax_1 + By_1 + Cz_1 + D}}{\sqrt{A^2 + B^2 + C^2}}.\]
+\end{proof}
+
 \end{document}
