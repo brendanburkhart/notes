@@ -146,8 +146,27 @@ Figure \ref{fig:orthogonal-projection} shows $A'$, the orthogonal projection of 
     Since $A \times B = (a_2b_3 - b_2a_3)i - (a_1b_3 - b_1a_3)j + (a_1b_2 - b_1a_2)k$, we know that $A \cdot (A \times B) = (a_1a_2b_3 - a_1b_2a_3) - (a_1a_2b_3 - b_1a_2a_3) + (a_1b_2a_3 - b_1a_2a_3)$. This is equal to $(a_1a_2b_3 - a_1a_2b_3) - (b_1a_2a_3 - b_1a_2a_3) + (a_1b_2a_3 - a_1b_2a_3)$, which is equal to $0$, so by Corollary \ref{perpendicular-vectors} we know $A$ is perpendicular to $A \times B$. Similarly, $B$ is perpendicular to $A \times B$.
 \end{proof}
 
+\begin{thm}
+    Let $A$, $B$, and $C$ be vectors, and $x$ a real number. Then:
+    \begin{itemize}
+        \item $A \times B = 0$ if and only if $A = \vec{0}$ or $B = \vec{0})$, or $A$ is parallel to $B$.
+        \item $A \times B = -(B \times A)$.
+        \item $A \times (B + C) = (A \times B) + (A \times C)$.
+        \item $(A + B) \times C = (A \times C) + (B \times C)$.
+        \item $(\alpha A) \times B = A \times (\alpha B) = \alpha(A \times B)$.
+    \end{itemize}
+\end{thm}
+
+\begin{proof}
+    
+\end{proof}
+
 \begin{rmk}
     In a \emph{right-handed} coordinate system, the cross product will follow the \emph{right-hand rule}: on the right hand, index finger represents $A$, middle finger represents $B$, and then thumb represents $A \times B$. However, in a \emph{left-handed} coordinate system, the cross product will instead follow the similar \emph{left-hand rule}. The chirality of the cross product follows the chirality of the chosen basis, and is not inherently due to the definition of the cross product.
 \end{rmk}
+
+\begin{thm}
+    Let $A$ and $B$ be two vectors, and $\theta$ be the angle between them. Then $\norm{A \times B} = \norm{A}\norm{B}\sin\theta$, which is the area of a parallelogram with side lengths $\norm{A}$ and $\norm{B}$ and angle $\theta$.
+\end{thm}
 
 \end{document}
