@@ -127,9 +127,9 @@ Figure \ref{fig:orthogonal-projection} shows $A'$, the orthogonal projection of 
     \end{vmatrix}k\] \[= (a_2b_3 - b_2a_3)i - (a_1b_3 - b_1a_3)j + (a_1b_2 - b_1a_2)k.\]
 \end{defn}
 
-\begin{note}
+\begin{rmk}
     The cross product is a non-commutative binary operation.
-\end{note}
+\end{rmk}
 
 \begin{exmp}
     Let $A = 3i + j - k$, and $B = -6i - 2j - 2k$. Then \[A \times B =
@@ -145,5 +145,9 @@ Figure \ref{fig:orthogonal-projection} shows $A'$, the orthogonal projection of 
 \begin{proof}
     Since $A \times B = (a_2b_3 - b_2a_3)i - (a_1b_3 - b_1a_3)j + (a_1b_2 - b_1a_2)k$, we know that $A \cdot (A \times B) = (a_1a_2b_3 - a_1b_2a_3) - (a_1a_2b_3 - b_1a_2a_3) + (a_1b_2a_3 - b_1a_2a_3)$. This is equal to $(a_1a_2b_3 - a_1a_2b_3) - (b_1a_2a_3 - b_1a_2a_3) + (a_1b_2a_3 - a_1b_2a_3)$, which is equal to $0$, so by Corollary \ref{perpendicular-vectors} we know $A$ is perpendicular to $A \times B$. Similarly, $B$ is perpendicular to $A \times B$.
 \end{proof}
+
+\begin{rmk}
+    In a \emph{right-handed} coordinate system, the cross product will follow the \emph{right-hand rule}: on the right hand, index finger represents $A$, middle finger represents $B$, and then thumb represents $A \times B$. However, in a \emph{left-handed} coordinate system, the cross product will instead follow the similar \emph{left-hand rule}. The chirality of the cross product follows the chirality of the chosen basis, and is not inherently due to the definition of the cross product.
+\end{rmk}
 
 \end{document}
