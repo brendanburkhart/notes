@@ -240,4 +240,34 @@ In spherical coordinates, polar coordinates are augmented with a zenith angle $\
     If $(\sqrt{6}, -\sqrt{2}, -2\sqrt{2})$ is a point in Cartesian coordinates, then $\rho$ is equal to $\sqrt{6 + 2 + 8} = 4$, $\theta = \arctan\frac{-\sqrt{2}}{\sqrt{6}} = \frac{11\pi}{6}$, and $\phi = \arccos\frac{-2\sqrt{2}}{4} = \frac{3\pi}{4}$.
 \end{exmp}
 
+\section{Surfaces}
+
+\begin{defn}
+    A \emph{level set} of a real-valued function for a value $c \in \R$ is the set of all points where the value of the function is $c$. For a function $f$ of $n$ real variables, the level set is \[L_c(f) = \left\{\left(x_1, x_2, \ldots, x_n\right) \compbar f(x_1, x_2, \ldots, x_n) = c\right\}.\]
+\end{defn}
+
+\begin{rmk}
+    When $n = 2$, the level sets are called \emph{level curves}. These as essentially the same as contour lines on a topographical map. When $n=3$, the level sets are called \emph{level surfaces}.
+\end{rmk}
+
+\begin{defn}
+    A \emph{cylinder} is a surface that consists of parallel lines that intersect a given plane curve. For a cylinder in the more typical sense, the plane curve is a circle.
+\end{defn}
+
+\begin{defn}
+    \emph{Quadric surfaces} are higher-dimensional generalizations of conic sections --- ellipses, parabolas, and hyperbolas. In three dimensions with coordinate variables $x, y, z$, quadric surfaces are given by $Ax^2 + By^2 + Cz^2 + Dxy + Exz + Fyz + Gx + Hy + Iz + J = 0$.
+\end{defn}
+
+\begin{defn}
+    An \emph{ellipsoid} with width ($x$) $a$, height ($y$) $b$, and depth ($z$) $c$ is \[\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1.\] This can be decomposed into three orthogonal ellipses by individually setting each coordinate variable to zero.
+\end{defn}
+
+\begin{defn}
+    A \emph{cone} oriented around the $z$-axis is given by \[\frac{x^2}{a^2} + \frac{y^2}{b^2} = \frac{z^2}{c^2}.\] This can be decomposed into ellipses along the $z$-axis, and pairs of lines on the $x$ and $y$ axes.
+\end{defn}
+
+\begin{defn}
+    A \emph{paraboloid} oriented around the $z$-axis is given by \[\frac{x^2}{a^2} + \frac{y^2}{b^2} = \frac{z}{c}.\] This can be decomposed into ellipses around the $z$-axis, and parabolas along the $x$ and $y$ axes.
+\end{defn}
+
 \end{document}
