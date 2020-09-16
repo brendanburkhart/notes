@@ -26,7 +26,7 @@
 
 \section{Boolean Algebra}
 
-Boolean algebra is the algebra dealing exclusively with the values \emph{true} and \emph{false}.
+Boolean algebra is the algebra dealing exclusively with the values \textsc{true} and \textsc{false}.
 
 The primary operations of Boolean algebra are \emph{negation} (also called \emph{not}) denoted by $\neg$, \emph{conjunction} (also called \emph{and}) denoted by $\land$, and \emph{disjunction} (also called \emph{or}) denoted by $\lor$.
 
@@ -39,19 +39,19 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
         \hline
         \thead{$X$} & \thead{$Y$} & \thead{$\neg X$} & \thead{$X \land Y$} & \thead{$X \lor Y$} \\
         \hline
-        True  & True & False & True & True \\
+        \textsc{true}  & \textsc{true} & \textsc{false} & \textsc{true} & \textsc{true} \\
         \hline
-        True  & False & False & False & True \\
+        \textsc{true}  & \textsc{false} & \textsc{false} & \textsc{false} & \textsc{true} \\
         \hline
-        False  & True & True & False & True \\
+        \textsc{false}  & \textsc{true} & \textsc{true} & \textsc{false} & \textsc{true} \\
         \hline
-        False  & False & True & False & False \\
+        \textsc{false}  & \textsc{false} & \textsc{true} & \textsc{false} & \textsc{false} \\
         \hline
     \end{tabularx}
 \end{center}
 
 \begin{defn}\label{implies}
-    A statement $P$ \emph{implies} (also $\implies$) statement $Q$ if $Q$ is true any time that $P$ is true. When $P$ is false, $Q$ can be true or false. If $P$ is always false, then it implies all statements. $P \implies Q$ is equivalent to $Q \impliedby P$.
+    A statement $P$ \emph{implies} (also $\implies$) statement $Q$ if $Q$ is \textsc{true} any time that $P$ is \textsc{true}. When $P$ is \textsc{false}, $Q$ can be \textsc{true} or \textsc{false}. If $P$ is always \textsc{false}, then it implies all statements. $P \implies Q$ is equivalent to $Q \impliedby P$.
 \end{defn}
 
 \begin{defn}\label{iff}
@@ -64,7 +64,7 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
         \item $x \land y = y \land x$
         \item $x \lor y = y \lor x$
     \end{enumerate}
-    
+
     Conjunction and disjunction are associative:
     \begin{enumerate}
         \item $(x \land y) \land z = x \land (y \land z)$
@@ -77,10 +77,10 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
         \item $x \lor (y \land z) = (x \lor y) \land (x \lor z)$
     \end{enumerate}
 
-    True is the identity element (see \ref{identity}) for conjunction and false is the identity element for disjunction:
+    \textup{\textsc{true}} is the identity element (see \ref{identity}) for conjunction and \textup{\textsc{false}} is the identity element for disjunction:
     \begin{enumerate}
-        \item $x \land true = x$
-        \item $x \lor false = x$
+        \item $x \land \textup{\textsc{true}} = x$
+        \item $x \lor \textup{\textsc{false}} = x$
     \end{enumerate}
 \end{thm}
 
@@ -89,11 +89,11 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
         \item $\neg(\neg x) = x$
         \item $x \land x = x$
         \item $x \lor x = x$
-        \item $x \land \neg x = false$
-        \item $x \lor \neg x = true$
+        \item $x \land \neg x = \textup{\textsc{false}}$
+        \item $x \lor \neg x = \textup{\textsc{true}}$
     \end{enumerate}
 \end{thm}
-    
+
 \begin{thm}{DeMorgan's Laws}\label{demorgan}\proofbreak
     \begin{enumerate}
         \item $\neg(x \land y) = (\neg x) \lor (\neg y)$
@@ -123,7 +123,7 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
     The empty set (denoted $\emptyset$) is the unique set having no elements.
 \end{defn}
 
-One of the most fundamental operations of sets is the ``element of'' operation, denoted by $\in$. $x \in X$ is true precisely when $x$ is an element of the set $X$. Note that sets can be elements of other sets. $x \notin X$ is used to denote ``not an element of''.
+One of the most fundamental operations of sets is the ``element of'' operation, denoted by $\in$. $x \in X$ is \textsc{true} precisely when $x$ is an element of the set $X$. Note that sets can be elements of other sets. $x \notin X$ is used to denote ``not an element of''.
 
 \begin{exmp}
     $\left\{\{1, 2\}, \{\}\right\}$ is a set containing two elements: the set $\{1, 2\}$, and the empty set.
@@ -182,7 +182,7 @@ Two sets are equal when they contain precisely the same elements. For example, i
 \end{exmp}
 
 \begin{exmp}
-    Let $U = \Z$, and $A$ the even numbers. Then $A'$ is the set of the odd numbers. 
+    Let $U = \Z$, and $A$ the even numbers. Then $A'$ is the set of the odd numbers.
 \end{exmp}
 
 \begin{rmk}
@@ -258,7 +258,7 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \end{thm}
 
 \begin{proof}
-    Let $e_1$ be a left identity for $\circ$ and $e_2$ be a right identity. Then $e_1 = e_1 \circ e_2 = e_2$, so $e_1 = e_2$.    
+    Let $e_1$ be a left identity for $\circ$ and $e_2$ be a right identity. Then $e_1 = e_1 \circ e_2 = e_2$, so $e_1 = e_2$.
 \end{proof}
 
 \begin{cor}
@@ -370,12 +370,12 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     Congruence modulo $m$ is an equivalence relation on the integers.
 \end{thm}
 
-\begin{proof} Let $a, b, c$ be integers, and $m > 1$ be an integer. 
+\begin{proof} Let $a, b, c$ be integers, and $m > 1$ be an integer.
 
     Since $(a-a) = 0$ and $0 = 0m$, we have $m|(a-a)$, so $a \equiv a \pmod m$.
-    
+
     As $a \equiv b \pmod m$ implies that $m\mid(a - b)$, there exists some integer $n$ such that $(a - b) = nm$. Since $(b - a) = -nm$, we know $m\mid(b-a)$. This implies that $a \equiv b \pmod m \iff b \equiv a \pmod m$.
-    
+
     If $a \equiv b \pmod m$, and $b \equiv c \pmod m$, we know that there exists integers $n_1, n_2$ such that $(a-b) = n_1m$ and $(b-c) = n_2m$. Since $(a-c) = (a-b) + (b-c)$, we know $(a-c) = (n_1 + n_2)m$, and so $a \equiv c \pmod m$.
 
     Since congruence modulo $m$ is reflexive, symmetric, and transitive, it is an equivalence relation on the integers.
@@ -408,7 +408,7 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \section{Fields}
 
 \begin{defn}
-    A \emph{field} is a set $F$ equipped with two binary operations called addition and multiplication (denoted by $+$ and $\cdot$ respectively), however they do not necessarily correspond to addition and multiplication on the real numbers.
+    A \emph{field} $(F, +, \cdot)$ is a set $F$ equipped with two binary operations called addition ($+$) and multiplication ($\cdot$), which do not necessarily correspond to addition and multiplication on the real numbers.
 
     Field axioms:
     \begin{itemize}
@@ -445,6 +445,41 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
         \item Let $(xy)(x^{-1}y^{-1}) = (yx)(x^{-1}y^{-1}) = y(xx^{-1})y^{-1} = yy^{-1} = 1$. Since the multiplicative identity is unique, $(xy)^{-1} = x^{-1}y^{-1}$.
         \item $x \cdot (y-z) = x \cdot (y + (-1)z) = x\cdot y + x \cdot (-1)z = xy - xz$.
         \item Since $(x - y) + (y-x) = x + (-y + y) - x = x - x = 0$, we know $-(x - y) = (y - x)$.
+    \end{enumerate}
+\end{proof}
+
+\section{Ordered Fields}
+
+\begin{defn}
+    An \emph{ordered field} is a field $(F, +, \cdot)$ together with a subset $F^+ \subset F$ such that\begin{itemize}
+        \item For all $x, y \in F^+$, both $x + y$ and $x \cdot y$ are in $F^+$.
+        \item For all $x \in F$, exactly one of $x \in F^+$, $-x \in F^+$, and $x = 0$ is true.
+    \end{itemize}
+\end{defn}
+
+If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x > 0$) if $x \in F+$.
+
+\begin{defn}
+    For elements $x, y$ in an ordered field, we say $x > y$ (or $y < x$) if $x - y > 0$, and $x \geq y$  ()if $x = y \lor x > y$.
+\end{defn}
+
+\begin{thm} For all $x, y, z, w \in F$, where $F$ is an ordered field:
+    \begin{enumerate}
+        \item $(x < y) \land (y < z) \implies (x < z)$.
+        \item $(x < y) \land (z < w) \implies x + z < y + w$.
+        \item $(x > 0) \land (y < 0) \implies xy < 0$.
+        \item $(x < 0) \land (y < 0) \implies xy > 0$.
+        \item $x \neq 0 \implies x^2 > 0$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}
+        \item $x < y \land y < z$ implies that $y - x > 0$ and $z - y > 0$. Therefore, $(y - x) + (z - y) = z - x > 0$, so $x < z$.
+        \item $x < y \land z < w$ implies that $y - x > 0$ and $w - z > 0$. Therefore, $(y - x) + (w - z) = (y + w) - (x + z) > 0$, so $x + z < y + w$.
+        \item $(x > 0) \land (y < 0)$ implies that $-y > 0$. Since $x(-y) > 0$ and $x(-y) = -(xy)$, it follows that $xy < 0$.
+        \item $(x < 0) \land (y < 0)$ implies that $(-x)(-y) > 0$. Since $(-x)(-y) = -(-xy) = -(-xy) + (xy  + (-xy)) = (-xy) - (-xy) + xy = 0 + xy = xy$, it follows that $xy > 0$.
+        \item If $x > 0$, then $x^2 > 0$. If $x < 0$, then $-x > 0$, so $(-x)^2 > 0$. Since $(-x)(-x) = x^2$, it follows that $x^2 > 0$.
     \end{enumerate}
 \end{proof}
 
