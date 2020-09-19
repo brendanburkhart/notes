@@ -362,11 +362,11 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     An integer $p$ is \emph{prime} when $1 < p$, and for every $x > 0$, $x \mid p$ implies that $x = 1$ or $x = p$.
 \end{defn}
 
-\begin{defn}
+\begin{defn}\label{modular-congruence}
     Let $a, b$ be integers, and $m > 1$ be an integer called the \emph{modulus}. Then $a$ and $b$ are said to be \emph{congruent} modulo $m$, written $a \equiv b \pmod m$, when $m\mid(a - b)$.
 \end{defn}
 
-\begin{thm}\label{modular-congruence}
+\begin{thm}\label{modular-congruence-equivalence}
     Congruence modulo $m$ is an equivalence relation on the integers.
 \end{thm}
 
@@ -402,8 +402,42 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \end{thm}
 
 \begin{proof}
-    By Fermat's little theorem, since $n$ is prime and $n$ does not divide $x$ (since $x < n$), we have $x^{n-1} \equiv 1 \pmod n$. Therefore, $x \odot_n x^{n-2} \equiv 1 \pmod n$, so $x^{-1} = x^{n-2} \bmod n$.
+    By Corallary \ref{fermat-little-corallary} to Fermat's little theorem, since $n$ is prime and $n$ does not divide $x$ (since $x < n$), we have $x^{n-1} \equiv 1 \pmod n$. Therefore, $x \odot_n x^{n-2} \equiv 1 \pmod n$, so $x^{-1} = x^{n-2} \bmod n$.
 \end{proof}
+
+\section{Fermat's little theorem}
+
+\begin{defn}
+    For $n, k \in \N$ where $n \geq k \geq 0$, the binomial coefficient is a positive integer denoted by $n \choose k$. \[{n \choose k} = \frac{n!}{k!(n-k)!}.\]
+\end{defn}
+
+\begin{thm}{Binomial theorem}\label{binomial-theorem}\proofbreak
+    Let $(F, +, \cdot)$ be a field. Then for any $x, y \in F$ and $n \in \Z_{\geq 1}$, \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}{n \choose k}.\]
+\end{thm}
+
+\begin{lemma}\label{prime-divisible-combination}
+    Let $p$ be a prime number. Then $p$ divides ${p \choose k}$ for $0 < k < p$.
+\end{lemma}
+
+\begin{proof}
+    Since $p$ is prime, it has no positive divisors other than $1$ and $p$. Since $0 < k < p$, neither $k!$ nor $(p-k)!$ has $p$ as a factor. Therefore, ${p \choose k} = p\frac{(p-1)!}{k!(p-k)!}$, so $p \choose k$ must be divisible by $p$.
+\end{proof}
+
+\begin{thm}{Fermat's little theorem}\label{fermat-little-theorem}\proofbreak
+    Let $p$ be a prime number. Then for all $n \in \N$, $n^p \equiv n \pmod p$.
+\end{thm}
+
+\begin{proof}
+    If $n = 1$, then $n^p = 1^p = 1$, so $1^p \equiv 1 \pmod p$.
+
+    Assume $n^p \equiv n \pmod p$ for some $n > 0$. By the binomial theorem \ref{binomial-theorem}, $(n+1)^p = \sum_{k=0}^pn^k{p \choose k}$. By Lemma \ref{prime-divisible-combination}, we then know that $(n+1)^p = pw + n^p{p \choose p} + n^0{p \choose 0} = pw + n^p + 1$ for some $w \in \Z$. Since $(pw + n^p + 1) - (n + 1) = pw + (n^p - n)$ and by Definition \ref{modular-congruence} $n^p \equiv n \pmod p$ implies that $p \mid (n^p - n)$, it follows that $p \mid \left[(pw + n^p + 1) - (n + 1)\right]$. Therefore, $(n+1)^p \equiv (n+1) \pmod p$.
+
+    By induction, it follows that $n^p \equiv n \pmod p$ for all $n \in \N$.
+\end{proof}
+
+\begin{cor}\label{fermat-little-corallary}
+    Since $n^p \equiv n \pmod p$, it follows that $n^{p-1} \equiv 1 \pmod p$.
+\end{cor}
 
 \section{Fields}
 
@@ -482,5 +516,7 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
         \item If $x > 0$, then $x^2 > 0$. If $x < 0$, then $-x > 0$, so $(-x)^2 > 0$. Since $(-x)(-x) = x^2$, it follows that $x^2 > 0$.
     \end{enumerate}
 \end{proof}
+
+
 
 \end{document}
