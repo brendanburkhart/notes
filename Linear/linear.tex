@@ -509,10 +509,6 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     The coordinates with respect to $B$ define a function $f: V \to F^n$ where $f: v \mapsto [v]_B$. This function is a bijection that preserves the linear structure of the vector spaces $V$ and $F^n$. Let $v = c_1v_1 + \cdots + c_nv_n, w = d_1v_1 + \cdots + d_nv_n \in V$. Then $v + w = (c_1 + d_1)v_1 + (c_n + d_n)v_n$, so $[v+w]_B = [v]_B + [w]_B$. Similarly, $[rv]_B = r[v]_B$ for $r \in F$.
 \end{rmk}
 
-\begin{defn}
-    A vector space over $F$ is \emph{finite dimensional} if it has a finite basis.
-\end{defn}
-
 \begin{lemma}{Exchange lemma}\label{exchange-lemma}\proofbreak
     Let $B = \langle v_1, \ldots, v_n \rangle$ be a basis for a vector space $V$ over a field $F$, and let $a_1, \ldots, a_n \in F$ such that $a_l \neq 0$ for some $l$. Then let $w = a_1v_1 + \ldots + a_nv_n$, and let $B'$ be the set obtained from $B$ by exchanging $v_l$ with $w$. Then $B'$ is a basis for $V$.
 \end{lemma}
@@ -524,5 +520,44 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 
     To prove that $B'$ spans $V$, let $v$ be any vector in $V$. Since $B$ spans $V$, there exists some $c_1, \ldots, c_n \in F$ such that $v = c_1v_1 + \cdots + c_nv_n$. Now note that $v_1 = \frac{1}{a_1}w - \frac{a_2}{a_1}v_2 - \cdots - \frac{a_n}{a_1}v_n$. So $v = c_1\left(\frac{1}{a_1}w - \frac{a_2}{a_1}v_2 - \cdots - \frac{a_n}{a_1}v_n\right) + c_2v_2 \cdots + c_nv_n$, so $v \in \spanset{B'}$. Therefore, $B'$ spans $V$, and so $B'$ is a basis for $V$.
 \end{proof}
+
+\section{Dimension}
+
+\begin{defn}
+    A vector space over $F$ is \emph{finite dimensional} if it has a finite basis.
+\end{defn}
+
+\begin{lemma}\label{basis-maximal-independent-subset}
+    Let $V$ be a vector space over a field $F$, $B$ be a basis for $V$, and $S \subseteq V$ such that $B \subsetneq S$. Then $S$ is linearly dependent.
+\end{lemma}
+
+\begin{proof}
+    Since $B \subsetneq S$, there exists $v \in S$ such that $v \notin B$. Since $B$ is a basis for $V$, it follows that $v \in \spanset{B}$, and so $v \in \spanset{S - \{v\}}$. By Proposition \ref{linear-dependence-implies-extra-vector}, it follows that $S$ is linearly dependent.
+\end{proof}
+
+\begin{thm}{Dimension theorem}\label{dimension-theorem}\proofbreak
+    Any two bases of a finite dimensional vector space have the same cardinality.
+\end{thm}
+
+\begin{proof}
+    Let $V$ be a vector space over a field $F$. Then let $B = \langle v_1, \ldots, v_n \rangle$ be a finite basis of \emph{minimal size} for $V$, and let $C$ be \emph{any other} basis for $V$. Since $B$ is of minimal size, $|C|$ is at least $n$. Let $B_0 = B$, and then take $w_1 \in C$. By the Exchange lemma \ref{exchange-lemma}, there exists $l \in \{1, \ldots, n\}$ such that $v_l$ can be swapped for $w_1$ to form a new basis. Without loss of generality, assume that $l = 1$. Then $B_1 = \langle w_1, v_2, \ldots, v_n \rangle$ is a new basis for $V$. Now take $w_2 \in C$. Since $B_1$ is a basis, we have $a_1, \ldots, a_n \in F$ such that $w_2 = a_1w_1 + a_2v_2 + \cdots + a_nv_n$. Since $C$ is linearly independent, at least one of $a_2, \ldots, a_n$  must be non-zero. Without loss of generality, assume that $a_2 \neq 0$. By the Exchange lemma, we get the basis $B_2 = \langle w_1, w_2, v_3, \ldots, v_n\rangle$. Continue to get $B_n = \langle w_1, \ldots, w_n \rangle$ such that $B_n \subseteq C$. Since $C$ is a basis and therefore linearly independent, by Lemma \ref{basis-maximal-independent-subset} it follows that $B_n = C$, and so $|C| = |B|$.
+\end{proof}
+
+\begin{defn}
+    The cardinality for a basis for a finite dimensional vector space is the \emph{dimension} of the vector space.
+\end{defn}
+
+\begin{rmk}
+    We can think of the dimension as the number of degrees of freedom in $V$.
+\end{rmk}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $F^n$ has dimension $n$.
+        \item $P_n(F)$ has dimension $n+1$.
+        \item $\left\{(-1, 1, 0), (-1, 0, 1)\right\}$ is a basis for $\left\{\left(x, y, z\right) \in \R^3 \compbar x + y + z = 0 \right\}$, so it has dimension $2$.
+        \item $\{\vec{0}\}$ has dimension zero, since $\varnothing$ is a basis.
+    \end{itemize}
+\end{exmp}
 
 \end{document}
