@@ -435,7 +435,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     ($\impliedby$) Let $s_1, \ldots, s_n \in S$, and $c_1, \ldots, c_n, c_{n+1} \in F$ such that $c_1s_1 + \ldots + c_ns_n + c_{n+1}v = \vec{0}$. Then since $v \notin S$ it follows that $c_1, \ldots, c_n, c_{n+1}$ must equal zero, or else $v = -\frac{c_1}{c_{n+1}}s_1 + \cdots + -\frac{c_n}{c_{n+1}}s_n$. Therefore, $S \union \{v\}$ must be linearly independent.
 \end{proof}
 
-\begin{prop}
+\begin{prop}\label{linearly-independent-subset-existence}
     Any finite subset $S$ of $V$ has a linearly independent subset with the same span.
 \end{prop}
 
@@ -559,5 +559,55 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
         \item $\{\vec{0}\}$ has dimension zero, since $\varnothing$ is a basis.
     \end{itemize}
 \end{exmp}
+
+\begin{cor}\label{basis-span-independence}
+    Let $V$ be a vector space of dimension $n$, and let $S \subseteq V$. Then:
+    \begin{enumerate}
+        \item If $S$ is linearly independent, then $S$ has at most $n$ elements.
+        \item If $S$ is linearly independent, it can be completed to a basis for $V$ (i.e. there exists a basis $B$ for $V$ such that $S \subseteq B$).
+        \item If $S$ has exactly $n$ elements, then $S$ is linearly independent if and only if $\spanset{S} = V$.
+    \end{enumerate}
+\end{cor}
+
+\begin{rmk}
+    The third statement implies that if $|S| = n$, to prove that $S$ is a basis, it only needs to be proved that $S$ is linearly independent, or that $S$ spans $V$, not both.
+\end{rmk}
+
+\begin{exmp}
+    Since $\R^2$ has dimension $2$, to prove that $S = \left\{(5, 3), (1, 4)\right\}$ is a basis for $\R^2$, we only need to prove $S$ is linearly independent. Since they are not scalar multiples of each other, $S$ is linearly independent and so it a basis for $\R^2$.
+\end{exmp}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}
+        \item Assume that $|S| > n$. Using the Exchange lemma, and the fact that $S$ is linearly independent, we can construct a basis $B_n$ for $V$ such that $B_n \subseteq S$. By Lemma \ref{basis-maximal-independent-subset}, it follows that $B_n = S$, which would imply $|S| = n$. This is a contradiction, and so $|S| \leq n$.
+        \item If $V = \spanset{S}$, we are done. If not, there must exist some $v \notin \spanset{S}$. By Proposition \ref{linear-independence-with-extra-vector}, $S \union v$ is linearly independent. Continue until the set has $n$ elements, then since by (1) $n+1$ elements would be linearly dependent, it follows that every $v \in \spanset{\{S \union v_1 \union v_2 \union \ldots\}}$ so it follows that $\{S \union v_1 \union v_2 \union \ldots\}$ is a basis for $V$.
+        \item ($\implies$) If $S$ is linearly independent, then by (2) we can complete $S$ to a basis $B$ such that $S \subseteq B$. Since $|S| = n = |B|$, we have $S = B$, and so $\spanset{S} = V$. \\ ($\impliedby$) Instead, if $\spanset{S} = V$, then by Proposition \ref{linearly-independent-subset-existence} there exists $T \subseteq S$ such that $\spanset{T} = \spanset{S} = V$ and $T$ is linearly independent. Since $|S| = n = |T|$, it follows that $S = T$ and so $S$ must be linearly independent.
+    \end{enumerate}
+\end{proof}
+
+\begin{rmk}\proofbreak
+    \begin{itemize}
+        \item If $S$ spans $V$, then $|S|$ is at least $n$.
+        \item A basis is a minimal spanning set, and vice versa.
+        \item A basis is a maximal linearly independent set, and vice versa.
+    \end{itemize}
+\end{rmk}
+
+\begin{thm}
+    Let $V$ be a finite dimensional vector space with dimension $n$, and $W \subseteq V$ a subspace. Then:
+    \begin{enumerate}
+        \item $W$ has dimension less than or equal to that of $V$.
+        \item $W$ is finite dimensional.
+        \item $W = V$ if and only if the dimension of $W$ is equal to that of $V$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}
+        \item By Corollary \ref{basis-span-independence} (2), we can complete $\varnothing$ to a basis $B$ for $W$. Since $B$ is linearly independent and $B \subseteq V$, by Corollary \ref{basis-span-independence} (1), $|B| \leq n$, $W$ has dimension less than or equal to that of $V$.
+        \item Since $V$ is finite dimensional, and $W$ has dimension less than or equal to that of $V$, it follows that $W$ must also be finite dimensional.
+        \item If the dimensions of $V$ and $W$ are equal, and $B$ is a basis for $W$, we know that $\spanset{B} = W$. Since $B$ is a linearly independent subset of $V$ with $n$ elements, it follows that $\spanset{B} = V$, and so $W = V$. If $W = V$, then they share a basis, and so they have the same dimension.
+    \end{enumerate}
+\end{proof}
 
 \end{document}
