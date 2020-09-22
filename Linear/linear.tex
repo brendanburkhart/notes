@@ -63,7 +63,7 @@ Row operations are certain operations on matrices or systems of linear equations
     \end{enumerate}
 \end{defn}
 
-\begin{thm}
+\begin{thm}\label{solutions-unchanged-by-row-ops}
     If a linear system is obtained from another by one of the row operations, then the two systems have the same set of solutions.
 \end{thm}
 
@@ -269,6 +269,10 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
         \end{pmatrix} \in \R^3 \compbar x + y + z = 0\right\}$. $W$ is a vector subspace over $\R$ with the operations inherited from $\R^3$. $W$ is a plane within $\R^3$, with normal $(1, 1, 1)$.
 \end{exmp}
 
+\begin{exmp}
+    Let $S \subseteq F^n$ be the solution set to a homogeneous system of linear equations over a field $F$, and let $u, v \in S$ and $r \in$. Then by Theorem \ref{solutions-unchanged-by-row-ops}, $u + v \in S$ and $r \in S$. Therefore, $S$ is a vector subspace of $F^n$.
+\end{exmp}
+
 \begin{prop}\label{subspace-proof}
     A subset $W$ of $V$ is a subspace if and only if
     \begin{enumerate}
@@ -307,7 +311,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \section{Linear Combinations and Spans}
 
 \begin{defn}
-    Let $V$ be a vector space over $F$, and $S \subseteq V$ with $S \neq \emptyset$. We say $v \in V$ is a \emph{linear combination} of vectors in $S$ if \[v = c_1s_1 + \cdots + c_nc_n \textrm{ for some } n >1, c_i \in F, s_i \in S \textrm{for i} = 1,\ldots,n\]
+    Let $V$ be a vector space over $F$, and $S \subseteq V$ with $S \neq \emptyset$. We say $v \in V$ is a \emph{linear combination} of vectors in $S$ if \[v = c_1s_1 + \cdots + c_nc_n \textrm{ for some } n >1, c_i \in F, s_i \in S \textrm{for i} = 1,\ldots,n.\]
 \end{defn}
 
 \begin{exmp}
@@ -498,7 +502,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{exmp}
 
 \begin{defn}
-    Let $B = \langle v_1, \ldots, v_n\rangle$ be a finite ordered basis for a vector space $V$ over a field $F$. Given $v \in V$, by Proposition \ref{unique-basis-expression} there exists unique $c_1, \ldots, c_n \in F$ such that $v = c_1v_1 + \ldots + c_nv_n$. The vector $\begin{pmatrix}c_1 \\ \vdots \\ c_n\end{pmatrix} \in F^n$ is called the \emph{coordinates} of $v$ with respect to $B$. We denote this $[v]_B = \begin{pmatrix}c_1 \\ \vdots \\ c_n\end{pmatrix}$.
+    Let $B = \langle v_1, \ldots, v_n\rangle$ be a finite, ordered basis for a vector space $V$ over a field $F$. Given $v \in V$, by Proposition \ref{unique-basis-expression} there exists unique $c_1, \ldots, c_n \in F$ such that $v = c_1v_1 + \ldots + c_nv_n$. The vector $\begin{pmatrix}c_1 \\ \vdots \\ c_n\end{pmatrix} \in F^n$ is called the \emph{coordinates} of $v$ with respect to $B$. We denote this $[v]_B = \begin{pmatrix}c_1 \\ \vdots \\ c_n\end{pmatrix}$.
 \end{defn}
 
 \begin{exmp}
@@ -608,6 +612,95 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
         \item Since $V$ is finite dimensional, and $W$ has dimension less than or equal to that of $V$, it follows that $W$ must also be finite dimensional.
         \item If the dimensions of $V$ and $W$ are equal, and $B$ is a basis for $W$, we know that $\spanset{B} = W$. Since $B$ is a linearly independent subset of $V$ with $n$ elements, it follows that $\spanset{B} = V$, and so $W = V$. If $W = V$, then they share a basis, and so they have the same dimension.
     \end{enumerate}
+\end{proof}
+
+\section{Row and Column Spaces}
+
+\begin{defn}
+    Let $\boldsymbol{A}$ be an $m \times n$ matrix over a field $F$. Then the:
+    \begin{itemize}
+        \item \emph{row space} of $\boldsymbol{A}$ is the subspace of $F^n$ spanned by the rows of $A$,
+        \item \emph{column space} of $\boldsymbol{A}$ is the subspace of $F^m$ spanned by the columns of $A$,
+        \item \emph{row rank} of $\boldsymbol{A}$ is the dimension of the row space of $\boldsymbol{A}$,
+        \item \emph{column rank} of $\boldsymbol{A}$ is the dimension of the column space of $\boldsymbol{A}$.
+    \end{itemize}
+\end{defn}
+
+\begin{lemma}
+    Row operations on a matrix do not change its row space.
+\end{lemma}
+
+\begin{proof}
+    Let $\boldsymbol{A}$ be a matrix over a field $F$.
+    \begin{itemize}
+        \item Swapping rows simply changes the order of rows, and since sets are unordered, the span of the rows cannot be affected.
+        \item For any row $r_i$ of $\boldsymbol{A}$ and non-zero $k \in F$, since $kr_i$ is an element of the row space of $\boldsymbol{A}$, all rows of $\boldsymbol{B}$ are elements of the row space of $\boldsymbol{A}$. Therefore, the row space of $\boldsymbol{B}$ is a subset of the row space of $\boldsymbol{A}$. Since $\frac{1}{k}(kr_i)$ is an element of the row space of $\boldsymbol{B}$, it similarly follows that the row space of $\boldsymbol{A}$ is a subset of the row space of $\boldsymbol{B}$. Therefore, the row space of $\boldsymbol{A}$ equals the row space of $\boldsymbol{B}$.
+        \item For any rows $r_i, r_j$ of $\boldsymbol{A}$ and non-zero $k \in F$, $r_i + kr_j$ is an element of the row space of $\boldsymbol{A}$, and $(r_i + kr_j) - kr_j$ is an element of the row space of $\boldsymbol{B}$, it similarly follows that the row space of $\boldsymbol{A}$ equals the row space of $\boldsymbol{B}$.
+    \end{itemize}
+\end{proof}
+
+\begin{cor}
+    Let $\boldsymbol{A}$ be an $m \times n$ matrix, and $\boldsymbol{E}$ its reduced row echelon form. Then the row space of $\boldsymbol{A}$ is equal to the row space of $\boldsymbol{E}$, since $\boldsymbol{E}$ can be obtained from $\boldsymbol{A}$ by row operations.
+\end{cor}
+
+\begin{exmp}
+    \begin{align*}
+        A = \begin{amatrix}{3}
+            1 &2 &0 &4 \\
+            3 &3 &1 &0 \\
+            7 &8 &2 &4
+        \end{amatrix}
+         \begin{aligned}
+             & \ro{r_2 \rightarrow r_2 - 3r_1}  \\
+             & \ro{r_3 \rightarrow r_3 - 7r_1} \\
+        \end{aligned}
+         & \begin{amatrix}{3}
+            1 &2 &0 &4 \\
+            0 &-3 &1 &-12 \\
+            0 &-6 &2 &-24
+        \end{amatrix}
+         \begin{aligned}
+             & \ro{r_2 \rightarrow -1/3r_2} \\
+        \end{aligned} \\
+         & \begin{amatrix}{3}
+            1 &2 &0 &4 \\
+            0 &1 &-1/3 &4 \\
+            0 &-6 &2 &-24
+        \end{amatrix}
+         \begin{aligned}
+             & \ro{r_1 \rightarrow r_1 - 2r_2} \\
+             & \ro{r_3 \rightarrow r_3 + 6r_2} \\
+        \end{aligned}
+         & \begin{amatrix}{3}
+            1 &0 &2/3 &-4 \\
+            0 &1 &-1/3 &4 \\
+            0 &0 &0 &0
+        \end{amatrix} = E
+    \end{align*}
+
+    Since $\boldsymbol{E}$ was obtained from $\boldsymbol{A}$ by row operations, the row space of $\boldsymbol{A}$ is equal to the row space of $\boldsymbol{E}$, which is $\spanset{\{(1, 0, 2/3, -4), (0, 1, -1/3, 4)\}}$. Since $\boldsymbol{E}$ has two linearly independent rows, the row rank of $\boldsymbol{A}$ is $2$.
+\end{exmp}
+
+\begin{lemma}
+    Non-zero rows of a matrix in row echelon form are linearly independent.
+\end{lemma}
+
+\begin{cor}
+    Let $\boldsymbol{A}$ be an $m \times n$ matrix, and $\boldsymbol{E}$ the row echelon form. Then the non-zero rows of $\boldsymbol{E}$ form a basis for the row space of $\boldsymbol{A}$, and the row rank of $\boldsymbol{A}$ is equal to the number of non-zero rows in $\boldsymbol{E}$.
+\end{cor}
+
+\begin{lemma}
+    Row operations on a matrix do not change its column rank.
+\end{lemma}
+
+\begin{proof}
+    Let $\boldsymbol{A}$ be an $m \times n$ matrix, and let $C \subseteq F^n$ such that for every $c \in C$:
+    \begin{equation}\label{matrix-solution-star}\tag{$\star$}
+        \boldsymbol{A}c = c_1\begin{pmatrix} \boldsymbol{A}_{11} \\ \vdots \\ \boldsymbol{A}_{m1} \end{pmatrix} + \cdots + c_n\begin{pmatrix} \boldsymbol{A}_{1n} \\ \vdots \\ \boldsymbol{A}_{mn} \end{pmatrix} = \begin{pmatrix} 0 \\ \vdots \\ 0 \end{pmatrix}.
+    \end{equation}
+    This is equivalent to $c \in C$ being a solution to the homogeneous system of linear equations represented by $\boldsymbol{A}$. If $\boldsymbol{A}$ and $\boldsymbol{B}$ are related by row operations, then by Theorem \ref{solutions-unchanged-by-row-ops} their solutions sets are the same. Therefore, $c$ satisfies \ref{matrix-solution-star} for $\boldsymbol{A}$ if and only if it does so for $\boldsymbol{B}$.
+
+    Any particular set of columns in $\boldsymbol{A}$ are linearly dependent if and only if there exists $c \in C$ such that the coefficients in $c$ corresponding to each column are non-zero. Therefore, the same columns are linearly independent in $\boldsymbol{A}$ and $\boldsymbol{B}$, implying that the cardinalities of bases for $\boldsymbol{A}$ and $\boldsymbol{B}$ are the same (since this is equal to the maximum number of linearly independent columns), and so $\boldsymbol{A}$ and $\boldsymbol{B}$ must have the same column rank.
 \end{proof}
 
 \end{document}
