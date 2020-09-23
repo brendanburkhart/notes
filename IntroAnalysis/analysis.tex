@@ -281,7 +281,58 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     Let $\circ$ be a binary associative operation on a set $S$, and $u \in S$ be an invertible element. Then for all $x, y \in S$, $(u \circ x = u \circ y) \implies (x = y)$.
 \end{cor}
 
-\section{Equivalence Relations}
+\section{Relations}
+
+\begin{defn}
+    A \emph{relation} $R$ on sets $A$ and $B$ is a set of ordered pairs such that $R \subset A \times B$. For $a \in A, b \in B$, we say that $a$ is related to $b$, denoted by $a R b$, if $(a, b) \in R$.
+\end{defn}
+
+\begin{exmp}
+    Let $A = \{1, 2, 3, 4\}$, and let $R = \{(1, 1), (2, 2), (3, 3), (4, 4)\}$. $R$ is a relation from $A$ to $A$ that states $a \,R\, a$ if and only if $a = a$. That is, $R$ is an example of a typical equality relation.
+\end{exmp}
+
+\begin{exmp}
+    $<$, $\leq$, $=$, $>$, $\geq$ are all examples of relations.
+\end{exmp}
+
+\begin{defn}
+    A relation $R$ on a set $X$ is, for all $x, y, z \in X$:
+    \begin{itemize}
+        \item \emph{Reflexive} if $x R x$.
+        \item \emph{Irreflexive} if $\neg(x R x)$.
+        \item \emph{Symmetric} if $x R y \iff y R x$.
+        \item \emph{Antisymmetric} if $x R y$ and $y R x$ implies $x = y$.
+        \item \emph{Transitive} if $x R y$ and $y R z$ implies $x R z$.
+    \end{itemize}
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $\geq$ is a reflexive relation on $\R$.
+        \item $<$ is an irreflexive relation on $\R$.
+        \item $a \mid b$ is a symmetric relation on $\R$.
+        \item $a \mid b$ is an antisymmetric relation on $\N$.
+        \item $\leq$ is a transitive relation on $\R$.
+    \end{itemize}
+\end{exmp}
+
+\begin{defn}\label{equivalence-relation}
+    An \emph{equivalence relation} is a \emph{reflexive}, \emph{symmetric}, and \emph{transitive} relation.
+\end{defn}
+
+\begin{defn}
+    Let $A, B$ be two sets, and let $R$ be a relation from $A$ to $B$. Then the \emph{inverse} of $R$, denoted by $R^{-1}$, is a relation from $B$ to $A$ given by \[R^{-1} \,= \left\{(b, a) \compbar (a, b) \in R \right\}.\]
+\end{defn}
+
+\begin{prop}
+    Let $A, B$ be sets, and let $R$ be a relation from $A$ to $B$. Then $\left(R^{-1}\right)^{-1} = R$.
+\end{prop}
+
+\begin{proof}
+    If $R = \varnothing$, then $R^{-1} = \varnothing$, so $\left(R^{-1}\right)^{-1} = R$.
+
+    Let $(a, b) \in R$. Then by definition, we know $(b, a) \in R^{-1}$, so $(a, b) \in \left(R^{-1}\right)^{-1}$. Therefore, $R \subseteq \left(R^{-1}\right)^{-1}$. Now let $(a, b) \in \left(R^{-1}\right)^{-1}$, so it must be that $(b, a) \in R^{-1}$, so $(a, b) \in R$. Therefore, $\left(R^{-1}\right)^{-1} \subseteq R$, so it follows that $R = \left(R^{-1}\right)^{-1}$.
+\end{proof}
 
 \begin{defn}\label{partition}
     A \emph{partition} $P$ of a set $X$ is a set of subsets of $X$ such that:
@@ -304,32 +355,19 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     For a non-empty $X$, $P = \{X\}$ is the \emph{trivial} partition of $X$.
 \end{defn}
 
-\begin{defn}
-    A binary relation $\sim$ on a set $X$ is, for all $x, y, z \in X$:
-    \begin{itemize}
-        \item \emph{Reflexive} if $x \sim x$.
-        \item \emph{Symmetric} if $x \sim y \iff y \sim x$.
-        \item \emph{Transitive} if $x \sim y$ and $y \sim z$ implies $x \sim z$.
-    \end{itemize}
-\end{defn}
-
-\begin{defn}\label{equivalence-relation}
-    An \emph{equivalence relation} is a \emph{reflexive}, \emph{symmetric}, and \emph{transitive} binary relation.
-\end{defn}
-
 \begin{defn}\label{equivalence-class}
-    Let $S$ be a set and $\sim$ an equivalence relation on $S$. Then the \emph{equivalence class} of an element $a$ in $S$, denoted by $\left[a\right]$, is the set $\left\{x \in S \compbar x \sim a\right\}$.
+    Let $S$ be a set and $R$ an equivalence relation on $S$. Then the \emph{equivalence class} of an element $a$ in $S$, denoted by $\left[a\right]$, is the set $\left\{x \in S \compbar x R a\right\}$.
 \end{defn}
 
 \begin{thm}{Equivalence classes form a partition}\proofbreak
-    Let $S$ be a set and $\sim$ an equivalence relation on $S$. If $X$ is the set of all equivalence classes of elements in $S$, then $X$ is a partition of $S$.
+    Let $S$ be a set and $R$ an equivalence relation on $S$. If $X$ is the set of all equivalence classes of elements in $S$, then $X$ is a partition of $S$.
 \end{thm}
 
 \begin{proof}\proofbreak
     \begin{itemize}
-        \item For any $a \in S$, $a \in \left[a\right]$ since $a \sim a$, so $\emptyset \notin X$.
+        \item For any $a \in S$, $a \in \left[a\right]$ since $a R a$, so $\emptyset \notin X$.
         \item Since $a \in S \implies a \in \left[a\right]$, we know $S \subseteq \bigcup_{A\in X}A$. Since for every $A \in X$, $a \in A \implies a \in S$, we know $\bigcup_{A\in X}A \subseteq S$. Therefore, $S = \bigcup_{A\in X}A$.
-        \item Let $a, b \in S$ such that $\left[a\right] \intersection \left[b\right] \neq \emptyset$. Then there exists some $x \in (\left[a\right] \intersection \left[b\right])$, so $x \sim a$ and $x \sim b$. By reflexivity $a \sim x$, and so by transitivity $a \sim b$, so $\left[a\right] = \left[b\right]$. Therefore, $(\forall A, B \in P) A \neq B \implies A \intersection B = \emptyset$.
+        \item Let $a, b \in S$ such that $\left[a\right] \intersection \left[b\right] \neq \emptyset$. Then there exists some $x \in (\left[a\right] \intersection \left[b\right])$, so $x R a$ and $x R b$. By reflexivity $a R x$, and so by transitivity $a R b$, so $\left[a\right] = \left[b\right]$. Therefore, $(\forall A, B \in P) A \neq B \implies A \intersection B = \emptyset$.
     \end{itemize}
     Since $X$ meets all parts of Definition \ref{partition}, so $X$ is a partition of $S$.
 \end{proof}
@@ -386,7 +424,7 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \end{defn}
 
 \begin{defn}\label{modulo}
-    Let $a$ be an integer. Then $a$ modulo $n$, written $a \bmod n$, is the unique element $b$ of $\Z/n\Z$ such that $a \sim b \pmod n$.
+    Let $a$ be an integer. Then $a$ modulo $n$, written $a \bmod n$, is the unique element $b$ of $\Z/n\Z$ such that $a \equiv b \pmod n$.
 \end{defn}
 
 \begin{defn}
