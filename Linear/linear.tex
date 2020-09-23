@@ -626,7 +626,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     \end{itemize}
 \end{defn}
 
-\begin{lemma}
+\begin{lemma}\label{row-ops-row-space}
     Row operations on a matrix do not change its row space.
 \end{lemma}
 
@@ -689,7 +689,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     Let $\boldsymbol{A}$ be an $m \times n$ matrix, and $\boldsymbol{E}$ the row echelon form. Then the non-zero rows of $\boldsymbol{E}$ form a basis for the row space of $\boldsymbol{A}$, and the row rank of $\boldsymbol{A}$ is equal to the number of non-zero rows in $\boldsymbol{E}$.
 \end{cor}
 
-\begin{lemma}
+\begin{lemma}\label{row-ops-column-rank}
     Row operations on a matrix do not change its column rank.
 \end{lemma}
 
@@ -702,5 +702,43 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 
     Any particular set of columns in $\boldsymbol{A}$ are linearly dependent if and only if there exists $c \in C$ such that the coefficients in $c$ corresponding to each column are non-zero. Therefore, the same columns are linearly independent in $\boldsymbol{A}$ and $\boldsymbol{B}$, implying that the cardinalities of bases for $\boldsymbol{A}$ and $\boldsymbol{B}$ are the same (since this is equal to the maximum number of linearly independent columns), and so $\boldsymbol{A}$ and $\boldsymbol{B}$ must have the same column rank.
 \end{proof}
+
+\begin{cor}\label{row-ops-column-independence}
+    A set of columns of $\boldsymbol{A}$ are linearly independent if and only if the corresponding columns are also linearly independent in $\boldsymbol{B}$.
+\end{cor}
+
+\begin{defn}
+    The \emph{pivot columns} of a matrix $\boldsymbol{A}$ are those corresponding to the leading terms in the reduced row echelon form of $\boldsymbol{A}$.
+\end{defn}
+
+\begin{lemma}\label{pivot-columns-form-basis}
+    The pivot columns of a matrix $\boldsymbol{A}$ over a field $F$ form a basis for the column space of $\boldsymbol{A}$.
+\end{lemma}
+
+\begin{proof}
+    Let $\boldsymbol{E}$ be the reduced row echelon form of $\boldsymbol{A}$. Since the pivot columns of $\boldsymbol{E}$ are a subset of the standard basis for $F^n$, they must be linearly independent. By the shape of $\boldsymbol{E}$, the remaining columns must be linear combinations of the pivot columns, so the set of the pivot columns spans the column space of $\boldsymbol{E}$. By Corollary \ref{row-ops-column-independence}, the same follows for $\boldsymbol{A}$, and so the pivot columns form a basis for the column space of $\boldsymbol{A}$.
+\end{proof}
+
+\begin{thm}
+    Let $\boldsymbol{A}$ be a matrix. Then the row rank of $\boldsymbol{A}$ is equal to its column rank.
+\end{thm}
+
+\begin{proof}
+    Let $\boldsymbol{E}$ be the reduced row echelon form of $\boldsymbol{A}$. By Lemma \ref{row-ops-row-space}, it follows that the row rank of $\boldsymbol{A}$ is equal to the row rank of $\boldsymbol{E}$. This is of course equal to the number of non-zero rows of $\boldsymbol{E}$, or the number of leading terms. By definition, this is equal to the number of pivot columns of $\boldsymbol{A}$, and by Lemma \ref{pivot-columns-form-basis} this is equal to the column rank of $\boldsymbol{A}$.
+\end{proof}
+
+\begin{defn}
+    Let $\boldsymbol{A}$ be a matrix. Then the \emph{rank} of $\boldsymbol{A}$ is equal to the row/column rank of $\boldsymbol{A}$.
+\end{defn}
+
+\begin{rmk}
+    A system of homogeneous linear equations represented by an $m \times n$ matrix $\boldsymbol{A}$ has a unique solution if and only if the rank of $\boldsymbol{A}$ is $n$.
+
+    The set of solutions to the system is a vector subspace of $F^n$ whose dimension is equal to $n$ minus the rank of $\boldsymbol{A}$, which is also equal to the number of free variable in the system.
+
+    A non-homogeneous system represented by $\boldsymbol{A}$ has solutions if and only if the augmentation vector is in the column space of $\boldsymbol{A}$.
+
+    If $m$ is equal to the rank of $\boldsymbol{A}$, then the column space of $\boldsymbol{A} = F^m$, so every possible augmentation vector has a solution.
+\end{rmk}
 
 \end{document}
