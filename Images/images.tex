@@ -6,6 +6,7 @@
 \usepackage{fullpage}
 \usepackage{makecell}
 \usepackage{tabularx}
+\usepackage{mathdots}
 
 \usepackage[dvipsnames]{xcolor}
 \usepackage{tikz,tkz-euclide}
@@ -58,28 +59,6 @@ Color images can be represented as three of these matrices (or a single three-di
     \end{array}\right.$
 \end{defn}
 
-For the following four examples, let $I = \begin{bmatrix}
-    0 & 0 & 0\\ 255 & 255 & 0 \\ 255 & 0 & 100
-\end{bmatrix}$, so $\mathbb{D} = \left[0, 2\right] \times \left[0, 2\right]$, and let $L = 2^8 = 256$ so $\mathbb{P} = \left[0, 256 - 1\right]$.
-
-\begin{exmp}
-    Identity: $T: r \mapsto r$, $J = \begin{bmatrix}
-        0 & 0 & 0\\ 255 & 255 & 0 \\ 255 & 0 & 100
-    \end{bmatrix}$.
-\end{exmp}
-
-\begin{exmp}
-    Negative: $T: r \mapsto (L-1) - r$, $J = \begin{bmatrix}
-        255 & 255 & 255 \\ 0 & 0 & 255 \\ 0 & 255 & 155
-    \end{bmatrix}$.
-\end{exmp}
-
-\begin{exmp}
-    B\&W: $T: r \mapsto (L-1)H(r - t)$ where $L \geq t \geq 0$. $J = \begin{bmatrix}
-        0 & 0 & 0\\ 255 & 255 & 0 \\ 255 & 0 & 0
-    \end{bmatrix}$.
-\end{exmp}
-
 \begin{figure}[ht!]
     \centering
     \begin{tikzpicture}[scale=1.0]
@@ -99,10 +78,6 @@ For the following four examples, let $I = \begin{bmatrix}
 \label{fig:threshold}
 \end{figure}
 
-\begin{exmp}
-    Gamma-correction: $T: r \mapsto (L-1)\left(\frac{r}{L-1}\right)^\gamma$ where $\gamma > 0$. When $\gamma > 1$ the image is darkened, when $\gamma < 1$ the image is brightened, and when $\gamma = 1$ the image is unchanged.
-\end{exmp}
-
 \begin{figure}[ht!]
     \centering
     \begin{tikzpicture}[scale=01.0]
@@ -120,10 +95,6 @@ For the following four examples, let $I = \begin{bmatrix}
 \label{fig:gamma}
 \end{figure}
 
-\begin{exmp}
-    Contrast-enhancement: $T: r \mapsto c + c\sin\left(\frac{\pi(r-c)}{2c}\right)$ where $c = \frac{L - 1}{2}$. When $\gamma > 1$ the image is darkened, when $\gamma < 1$ the image is brightened, and when $\gamma = 1$ the image is unchanged.
-\end{exmp}
-
 \begin{figure}[ht!]
     \centering
     \begin{tikzpicture}[scale=01.0]
@@ -139,5 +110,115 @@ For the following four examples, let $I = \begin{bmatrix}
 \caption{Graph of contrast enhancement $c + c\sin\left(\frac{\pi(r-c)}{2c}\right)$.}
 \label{fig:contrast}
 \end{figure}
+
+For the following four examples, let $I = \begin{bmatrix}
+    0 & 0 & 0\\ 255 & 255 & 0 \\ 255 & 0 & 100
+\end{bmatrix}$, so $\mathbb{D} = \left[0, 2\right] \times \left[0, 2\right]$, and let $L = 2^8 = 256$ so $\mathbb{P} = \left[0, 256 - 1\right]$.
+
+\begin{exmp}
+    Identity: $T: r \mapsto r$, $J = \begin{bmatrix}
+        0 & 0 & 0\\ 255 & 255 & 0 \\ 255 & 0 & 100
+    \end{bmatrix}$.
+\end{exmp}
+
+\begin{exmp}
+    Negative: $T: r \mapsto (L-1) - r$, $J = \begin{bmatrix}
+        255 & 255 & 255 \\ 0 & 0 & 255 \\ 0 & 255 & 155
+    \end{bmatrix}$.
+\end{exmp}
+
+\begin{exmp}
+    Converting a grayscale image to B\&W uses a threshold function, an example of which is shown in Figure \ref{fig:threshold}. \[T: r \mapsto (L-1)H(r - t)\] where $L \geq t \geq 0$. \[J = \begin{bmatrix}
+        0 & 0 & 0\\ 255 & 255 & 0 \\ 255 & 0 & 0
+    \end{bmatrix}\]
+\end{exmp}
+
+\begin{exmp}
+    Gamma-correction uses the gamma function, two examples of which are shown in Figure \ref{fig:gamma}. \[T: r \mapsto (L-1)\left(\frac{r}{L-1}\right)^\gamma\] where $\gamma > 0$. When $\gamma > 1$ the image is darkened, when $\gamma < 1$ the image is brightened, and when $\gamma = 1$ the image is unchanged.
+\end{exmp}
+
+\begin{exmp}
+    Contrast-enhancement can be done using the function shown in Figure \ref{fig:contrast}. \[T: r \mapsto c + c\sin\left(\frac{\pi(r-c)}{2c}\right)\] where $c = \frac{L - 1}{2}$. When $\gamma > 1$ the image is darkened, when $\gamma < 1$ the image is brightened, and when $\gamma = 1$ the image is unchanged.
+\end{exmp}
+
+\section{Filtering and Convolutions}
+
+\begin{defn}
+    A \emph{filter mask} $w$ is a $(2k_1 + 1) \times (2k_2 + 1)$ matrix, where $k_1, k_2 \in \N$.
+
+    \[w = \begin{bmatrix}
+        w{(-k_1, -k_2)} & \cdots & w{(-k_1, 0)} & \cdots & w{(-k_1, k_2)} \\
+        \vdots & \ddots & \vdots & \iddots & \vdots \\
+        w{(0, -k_2)} & \cdots & w{(0, 0)} & \cdots & w{(0, k_2)} \\
+        \vdots & \iddots & \vdots & \ddots & \vdots \\
+        w{(k_1, -k_2)} & \cdots & w{(k_1, 0)} & \cdots & w{(k_1, k_2)} \\
+    \end{bmatrix}\]
+\end{defn}
+
+\begin{exmp}
+    A \emph{mean} or \emph{uniform averaging} filter uses a filter mask where
+    \[w = \frac{1}{k_1k_2}\begin{bmatrix}
+        1 & \cdots & 1 & \cdots & 1 \\
+        \vdots & \ddots & \vdots & \iddots & \vdots \\
+        1 & \cdots & 1 & \cdots & 1 \\
+        \vdots & \iddots & \vdots & \ddots & \vdots \\
+        1 & \cdots & 1 & \cdots & 1 \\
+    \end{bmatrix}.\] Typically, averaging filters are used with a $3 \times 3$ or $5 \times 5$ mask.
+\end{exmp}
+
+\begin{exmp}
+    A \emph{Gaussian} filter uses a filter mask created by sampling a Gaussian function \[g(x, y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}\] where
+    \[w = \begin{bmatrix}
+        g(-k_1, -k_2) & \cdots & g(-k_1, 0) & \cdots & g(-k_1, k_2) \\
+        \vdots & \ddots & \vdots & \iddots & \vdots \\
+        g(0, -k_2) & \cdots & g(0, 0) & \cdots & g(0, k_2) \\
+        \vdots & \iddots & \vdots & \ddots & \vdots \\
+        g(k_1, -k_2) & \cdots & g(k_1, 0) & \cdots & g(k_1, k_2) \\
+    \end{bmatrix}.\]
+\end{exmp}
+
+\begin{defn}
+    Let $I: \mathbb{D} \to \mathbb{P}$ be an image, and $w$ a filter mask. Then applying the \emph{filter} represented by $w$ to $I$ results in the image $J: \mathbb{D} \to \mathbb{D}$ defined by: \[J(i, j) = \sum_{u = -k_1}^{k_1}\sum_{v = -k_2}^{k_2}I(i + u, j + v)w(u, v).\]
+\end{defn}
+
+Notice that filters cannot be naively applied to the $k_1 + 1$ top/bottom-most rows, nor the $k_2 + 1$ left/right-most columns of $I$, since entries with indices outside the image do not exist. This problem can be solved via a variety of strategies.
+\begin{itemize}
+    \item One option is to zero-pad the image. For example, if $I$ is $3 \times 3$, then $I(2, 3)$ and $I(-1, 2)$ would both be $0$.
+    \item Zero-padding a bright image could cause strange filter behavior near the edges, so the image could instead be padded with the average value of the entire image.
+    \item Constant-padding with the average could still cause issues if parts of the image's edges differ significantly from the rest of the image, so nearest-neighbor padding can be used instead. This is where the added padding pixels have the same value as the nearest pixel from the image.
+    \[\begin{array}{c c||c c c}
+        3 & 3 & 3 & 7 & 2 \\
+        3 & 3 & 3 & 7 & 2\\
+        \hline \hline
+        3 & 3 & 3 & 7 & 2 \\
+        5 & 5 & 5 & 1 & 6 \\
+        8 & 8 & 8 & 9 & 4 \\
+    \end{array}\]
+    \item Nearest-neighbor can cause issues with detecting edges that are near/coincide with the edge of the image itself. This can be solved by instead by using reflective (also symmetric)padding. The reflection of the image's outer rows/columns can help accentuate an edge if one exists, rather than suppressing it like nearest-neighbor.
+    \[\begin{array}{c c||c c c}
+        1 & 5 & 5 & 1 & 6 \\
+        7 & 3 & 3 & 7 & 2\\
+        \hline \hline
+        7 & 3 & 3 & 7 & 2 \\
+        1 & 5 & 5 & 1 & 6 \\
+        9 & 8 & 8 & 9 & 4 \\
+    \end{array}\]
+    \item Periodic padding tiles the image, so accessing entries past one side will wrap around and access entries on the other side. Can be useful if images can an inherent periodicity that reflective padding doesn't take advantage of.
+\end{itemize}
+
+\begin{defn}
+    Let $I: \Z^2 \to \R$ be a function representing an image $I_0: \mathbb{D} \to \mathbb{P}$ take has been extended to infinity by zero-padding. Note that $I_0$ could be another image that has been padded in some way. Let $h: \Z^2 \to \R$ be a function (called the \emph{kernel} or \emph{convolution kernel}). Then we define the \emph{convolution} of $I$ and $h$, denoted by $I * h$, as \[(I * h)(i, j) = \sum_{k=-\infty}^{\infty}\sum_{l=-\infty}I(i - k, j - l)(h, k, l).\] Notice the similarities to the definition of applying a filter, and the differences --- there on no bounds, and the image entries are indexed using $i - k$ and $i - l$ rather than $i + u$ and $i + v$.
+\end{defn}
+
+Filtering can be defined in terms of convolution. To apply a $(2k_1 + 1) \times (2k_2 + 1)$ filter mask $w$ to an $n \times m$ image $I$ (which may be padded), define $h(k, l) = w(-k, l)$, and extend both $h$ and $I$ to infinity by zero-padding. Then $J = I * H$.
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item The mean filter mask can be used as a convolution kernel to evenly blur images, smoothing them out and removing noise.
+        \item The Gaussian blurring can be performed by using the Gaussian mask as a convolution kernel, resulting in less significant smoothing effects while still working to denoise the image.
+    \end{itemize}
+\end{exmp}
+
+Convolution is a linear operation, however several useful filtering operations are non-linear. One example is median blurring. Similarly to how mean filtering defines $J(i, j)$ to be the mean of the neighborhood of $I(i, j)$, median blurring uses the median of the neighborhood of $I(i, j)$. This can result in superior denoising, while better preserving edges. However, it is more computationally expensive than either mean or Gaussian blurring.
 
 \end{document}
