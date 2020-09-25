@@ -329,7 +329,7 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \end{prop}
 
 \begin{proof}
-    If $R = \varnothing$, then $R^{-1} = \varnothing$, so $\left(R^{-1}\right)^{-1} = R$.
+    If $R = \emptyset$, then $R^{-1} = \emptyset$, so $\left(R^{-1}\right)^{-1} = R$.
 
     Let $(a, b) \in R$. Then by definition, we know $(b, a) \in R^{-1}$, so $(a, b) \in \left(R^{-1}\right)^{-1}$. Therefore, $R \subseteq \left(R^{-1}\right)^{-1}$. Now let $(a, b) \in \left(R^{-1}\right)^{-1}$, so it must be that $(b, a) \in R^{-1}$, so $(a, b) \in R$. Therefore, $\left(R^{-1}\right)^{-1} \subseteq R$, so it follows that $R = \left(R^{-1}\right)^{-1}$.
 \end{proof}
@@ -341,6 +341,7 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
         \item $X = \bigcup_{A\in P}A$ --- that is, every element of $X$ is in a subset.
         \item $(\forall A, B \in P) A \neq B \implies A \intersection B = \emptyset$ --- that is, no element of $X$ is in more than one subset.
     \end{itemize}
+    Every $p \in P$ is called a \emph{part} of $P$.
 \end{defn}
 
 \begin{exmp}
@@ -359,17 +360,35 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     Let $S$ be a set and $R$ an equivalence relation on $S$. Then the \emph{equivalence class} of an element $a$ in $S$, denoted by $\left[a\right]$, is the set $\left\{x \in S \compbar x R a\right\}$.
 \end{defn}
 
+\begin{lemma}\label{equiv-class-non-empty}
+    Let $S$ be a set, $R$ be an equivalence relation on $S$, and $a \in S$. Then $a \in [a]$, and so $[a] \neq \emptyset$.
+\end{lemma}
+
+\begin{proof}
+    By reflexivity, $a R a$, so it follows that $a \in [a]$.
+\end{proof}
+
+\begin{lemma}\label{equiv-class-equal}
+    Let $S$ be a set, $R$ be an equivalence relation on $S$, and $a, b \in S$. Then $a R b$ if and only if $[a] = [b]$.
+\end{lemma}
+
+\begin{proof}\proofbreak
+    ($\implies$) Suppose $a R b$, and let $x \in [a]$. Then $x R a$, and so by transitivity $x R b$, so $x \in [b]$. Therefore, $[a] \subseteq [b]$. If $x \in [b]$, then $x R b$. By symmetry, $b R a$, and so by transitivity, $x R a$, implying that $x \in [a]$. Therefore, $[b] \subseteq [a]$, and so $[a] = [b]$.
+
+    ($\impliedby$) Assume that $[a] = [b]$. Let $x \in [a]$. Then $x \in [b]$, $x R a$, and $x R b$. It follows that by symmetry $a R x$, and by transitivity $a R b$.
+\end{proof}
+
 \begin{thm}{Equivalence classes form a partition}\proofbreak
-    Let $S$ be a set and $R$ an equivalence relation on $S$. If $X$ is the set of all equivalence classes of elements in $S$, then $X$ is a partition of $S$.
+    Let $S$ be a set, and $R$ an equivalence relation on $S$. If $X$ is the set of all equivalence classes of elements in $S$, then $X$ is a partition of $S$.
 \end{thm}
 
 \begin{proof}\proofbreak
     \begin{itemize}
-        \item For any $a \in S$, $a \in \left[a\right]$ since $a R a$, so $\emptyset \notin X$.
-        \item Since $a \in S \implies a \in \left[a\right]$, we know $S \subseteq \bigcup_{A\in X}A$. Since for every $A \in X$, $a \in A \implies a \in S$, we know $\bigcup_{A\in X}A \subseteq S$. Therefore, $S = \bigcup_{A\in X}A$.
-        \item Let $a, b \in S$ such that $\left[a\right] \intersection \left[b\right] \neq \emptyset$. Then there exists some $x \in (\left[a\right] \intersection \left[b\right])$, so $x R a$ and $x R b$. By reflexivity $a R x$, and so by transitivity $a R b$, so $\left[a\right] = \left[b\right]$. Therefore, $(\forall A, B \in P) A \neq B \implies A \intersection B = \emptyset$.
+        \item By \ref{equiv-class-non-empty}, there is no $p \in X$ such that $p = \emptyset$, so $\emptyset \notin X$.
+        \item Since $a \in S \implies a \in \left[a\right]$, we know that $S \subseteq \bigcup_{A\in X}A$. Since $a \in \bigcup_{A\in X}A$ implies that $a \in A$ for some $A \in X$. Therefore, $a \in S$, so we know that $\bigcup_{A\in X}A \subseteq S$. Therefore, $S = \bigcup_{A\in X}A$.
+        \item Let $a, b \in S$ such that $\left[a\right] \intersection \left[b\right] \neq \emptyset$. Then there exists some $x \in (\left[a\right] \intersection \left[b\right])$, so $x R a$ and $x R b$. By symmetry $a R x$, and then by transitivity $a R b$. Then by \ref{equiv-class-equal} we have $\left[a\right] = \left[b\right]$. Therefore, $(\forall A, B \in P) A \neq B \implies A \intersection B = \emptyset$.
     \end{itemize}
-    Since $X$ meets all parts of Definition \ref{partition}, so $X$ is a partition of $S$.
+    By Definition \ref{partition}, $X$ is a partition of $S$.
 \end{proof}
 
 \section{Modular Arithmetic}
