@@ -67,12 +67,12 @@ Color images can be represented as three of these matrices (or a single three-di
             axis y line=middle,
             ymin=0,ymax=256,ylabel=$y$,
             xmin=0,xmax=256,xlabel=$x$
-            ]
-        \addplot[domain=0:100, blue, ultra thick] {0};
-        \addplot[domain=100:256, blue, ultra thick] {255};
-        \addplot[color=blue,fill=white,only marks,mark=*] coordinates{(100,0)};
-        \addplot[color=blue,only marks,mark=*] coordinates{(100,255)};
-    \end{axis}
+        ]
+            \addplot[domain=0:100, blue, ultra thick] {0};
+            \addplot[domain=100:256, blue, ultra thick] {255};
+            \addplot[color=blue,fill=white,only marks,mark=*] coordinates{(100,0)};
+            \addplot[color=blue,only marks,mark=*] coordinates{(100,255)};
+        \end{axis}
     \end{tikzpicture}
 \caption{Graph of threshold function $(L-1)H(r - t)$ where $L = 256$ and $t = 100$.}
 \label{fig:threshold}
@@ -220,5 +220,78 @@ Filtering can be defined in terms of convolution. To apply a $(2k_1 + 1) \times 
 \end{exmp}
 
 Convolution is a linear operation, however several useful filtering operations are non-linear. One example is median blurring. Similarly to how mean filtering defines $J(i, j)$ to be the mean of the neighborhood of $I(i, j)$, median blurring uses the median of the neighborhood of $I(i, j)$. This can result in superior denoising, while better preserving edges. However, it is more computationally expensive than either mean or Gaussian blurring.
+
+\section{Partial Derivatives for Images}
+
+\begin{defn}
+    When $\Delta x$ is small enough, $f'(x_0)$ can be approximated using the \emph{forward difference formula}: \[f'(x_0) \approx \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}.\]
+\end{defn}
+
+\begin{defn}
+    When $\Delta x$ is small enough, $f'(x_0)$ can be approximated using the \emph{back difference formula}: \[f'(x_0) \approx \frac{f(x_0) - f(x_0 - \Delta x)}{\Delta x}.\]
+\end{defn}
+
+\begin{rmk}
+    Often, for a particular function at a particular point, the forward difference formula will overestimate the derivative and the backward difference formula will underestimate it, or vice versa. Thus, the average often gives a better approximation.
+\end{rmk}
+
+\begin{defn}
+    The \emph{central difference formula} (also the \emph{midpoint formula)} approximates $f'(x_0)$ for a function $f$ as the average of the forward and backward difference functions. \[f'(x_0) \approx \frac{1}{2}\left(\frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x} + \frac{f(x_0) - f(x_0 - \Delta x)}{\Delta x}\right) = \frac{f(x_0 + \Delta x) - f(x_0 - \Delta x)}{2\Delta x}.\]
+\end{defn}
+
+\begin{rmk}
+    We can approximate the second derivative $f''(x_0)$ of a function $f$ at point $x_0$ as \[f''(x_0) \approx \frac{f(x_0 + \Delta x) - 2f(x_0) + f(x_0 - \Delta x)}{\left(\Delta x\right)^2}\] by applying the forward difference formula to the backward difference formula or vice versa.
+\end{rmk}
+
+\begin{defn}
+    These approximations of derivatives are known as \emph{finite differences}.
+\end{defn}
+
+\begin{exmp}
+    Let $f: D \subseteq \R^2 \to \R$ be a function. We can use the central difference formula to approximate the first and second partial derivatives of $f(x, y)$ at $(x_0, y_0) \in \mathbb{D}$.
+
+    \[\frac{\partial f}{\partial x}(x_0, y_0) \approx \frac{f(x_0 + \Delta x, y_0) - f(x_0 - \Delta x, y_0)}{2\Delta x}.\]
+
+    \[\frac{\partial f}{\partial y}(x_0, y_0) \approx \frac{f(x_0, y_0  + \Delta y) - f(x_0, y_0 - \Delta y)}{2\Delta y}.\]
+
+    \[\frac{\partial^2 f}{\partial x^2}(x_0, y_0) \approx \frac{f(x_0 + \Delta x, y_0) - 2f(x_0, y_0) + f(x_0 - \Delta x, y_0)}{\left(\Delta x\right)^2}.\]
+\end{exmp}
+
+\begin{rmk}
+    To apply these formulas to images, we have $x_0 = j$, $y_0 = i$, and $\Delta x = \Delta j = 1$, $\Delta y = \Delta i = 1$.
+\end{rmk}
+
+\begin{exmp}
+    Let $I: \mathbb{D} \to \mathbb{P}$ be an image. Then the following are approximations of the derivatives of $I$ at $(i, j) \in \mathbb{D}$:
+    \[\frac{\partial^2I}{\partial y^2}(i, j) \approx \frac{I(i + 1, j) - 2I(i, j) + I(i - 1, j)}{1^2},\]
+    \[\frac{\partial I}{\partial y}(i, j) \approx \frac{I(i + 1, j) - I(i - 1, j)}{2},\]
+    \[\frac{\partial I}{\partial x}(i, j) \approx \frac{I(i, j + 1) - I(i, j - 1)}{2},\]
+\end{exmp}
+
+Since $\frac{\partial I}{\partial y}(i, j) \approx \frac{I(i + 1, j) - I(i - 1, j)}{2} = \frac{1}{2}I(i + 1, j) - \frac{1}{2}I(i - 1, j)$ for some image $I: \mathbb{D} \to \mathbb{P}$, we can find $\frac{\partial I}{\partial y}$ for every $(i, j) \in \mathbb{D}$ by filtering $I$ with the filter mask \[w_y = \begin{bmatrix}
+    0 & -1/2 & 0 \\
+    0 & 0 & 0 \\
+    0 & 1/2 & 0 \\
+\end{bmatrix}.\] This is equivalent to the convolution $I * h_y$, where \[h_y = \begin{bmatrix}
+    0 & 1/2 & 0 \\
+    0 & 0 & 0 \\
+    0 & -1/2 & 0 \\
+\end{bmatrix}.\]
+
+In practice, the Prewitt or Sobel filters are much more frequently used.
+
+Prewitt filter: \[w_y^P = \frac{1}{6}\begin{bmatrix}
+    -1 & -1 & 1 \\
+    0 & 0 & 0 \\
+    1 & 1 & 1 \\
+\end{bmatrix}\]
+
+Sobel filter: \[w_y^S = \frac{1}{8}\begin{bmatrix}
+    -1 & -2 & -1 \\
+    0 & 0 & 0 \\
+    1 & 2 & 1 \\
+\end{bmatrix}\]
+
+The Prewitt filter uses the average of three adjacent first derivatives in order to smooth out noise, and the Sobel filter does the same, but with a weighted average.
 
 \end{document}
