@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{centernot}
+\usepackage{fullpage}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage[hypcap=false]{caption}
+\usepackage{tikz}
+\usepackage{titling}
+\usepackage{pdfpages}
+\usepackage{enumitem}
+\usepackage{multicol}
+
+\usepackage{common}
+
+\begin{document}
+
+\title{Discrete Mathematics}
+\author{Brendan Burkhart}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Binomial Coefficients}
+
+\begin{defn}\label{binomial-coefficient}
+Let $n, k \in \N$. The \emph{binomial coefficient} $n \choose k$ is the number of subsets with cardinality $k$ of a set with cardinality $n$.
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{multicols}{2}
+        \begin{itemize}
+            \item $\binom{0}{0} = 1$
+            \item $\binom{1}{0} = 1$
+            \item $\binom{1}{1} = 1$
+            \item $\binom{2}{1} = 2$
+            \item $\binom{3}{2} = 3$
+            \item $\binom{4}{2} = 6$
+        \end{itemize}
+
+        \columnbreak
+
+        \begin{itemize}
+            \item $\binom{5}{0} = 1$
+            \item $\binom{5}{1} = 5$
+            \item $\binom{5}{2} = 10$
+            \item $\binom{5}{3} = 10$
+            \item $\binom{5}{4} = 5$
+            \item $\binom{5}{5} = 1$
+        \end{itemize}
+    \end{multicols}
+\end{exmp}
+
+\begin{prop}\label{binomial-complement}
+    Let $n, k \in \N$ with $0 \leq k \leq n$. Then \[{n \choose k} = {n \choose n-k}.\]
+\end{prop}
+
+\begin{proof}
+    Any selection of $k$ elements from a set with $n$ elements is equivalent to the selection of the other $n-k$ elements.
+\end{proof}
+
+\begin{exmp}
+    $\binom{5}{2} = \binom{5}{3}$, and $\binom{3}{1} = \binom{3}{2}$.
+\end{exmp}
+
+\begin{defn}\label{pascals-triangle}
+    \emph{Pascal's Triangle} is a particular way of writing out what is essentially a table of binomial coefficients that highlights several properties. Rows represent successive values for $n$, and columns represent $k$ --- the first row contains only a single column where $k=0$, in the second row the columns are $k=0$ and $k=1$, and so on.
+    \begin{center}
+        \begin{tabular}{rccccccccc}
+            $n=0$:&    &    &    &    &  1\\\noalign{\smallskip\smallskip}
+            $n=1$:&    &    &    &  1 &    &  1\\\noalign{\smallskip\smallskip}
+            $n=2$:&    &    &  1 &    &  2 &    &  1\\\noalign{\smallskip\smallskip}
+            $n=3$:&    &  1 &    &  3 &    &  3 &    &  1\\\noalign{\smallskip\smallskip}
+            $n=4$:&  1 &    &  4 &    &  6 &    &  4 &    &  1\\\noalign{\smallskip\smallskip}
+        \end{tabular}
+    \end{center}
+\end{defn}
+
+\begin{rmk}
+    Notice that $\binom{n}{0} = \binom{n}{n} = 1$, since there is only one set with cardinality $0$ (the empty set), and the only subset with cardinality $n$ of a set $X$ itself with cardinality $n$ is $X$. Alternatively, since $\binom{n}{0} = 1$, by Proposition \ref{binomial-complement} it follows that $\binom{n}{0} = \binom{n}{n}$ and so $\binom{n}{n} = 1$.
+\end{rmk}
+
+\begin{rmk}
+    Note that each entry in Pascal's Triangle is the sum of the two elements immediately above it.
+\end{rmk}
+
+\begin{prop}\label{pascals-identity}
+    Let $n \in \N$ with $0 < k < n$. Then $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
+\end{prop}
+
+\begin{proof}
+    Let $X$ be a set with $|X| = n$. By Definition \ref{binomial-coefficient}, $\binom{n}{k}$ is the number of subsets with $k$ elements of $X$. Fix some $x \in X$. Then there are $\binom{n-1}{k}$ subsets of $X$ that do not include $x$, and $\binom{n-1}{k-1}$ which do, so $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
+\end{proof}
+
+\end{document}
