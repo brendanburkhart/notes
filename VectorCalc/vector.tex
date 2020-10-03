@@ -31,6 +31,10 @@
 
 \section{Orthogonal Projection}
 
+\begin{thm}\label{law-of-cosines}
+    Let $\theta$ be the angle between non-zero vectors $A$ and $B$, and let $C = A - B$. The \emph{Law of Cosines} states that $\norm{C}^2 = \norm{A}^2 + \norm{B}^2 - 2\norm{A}\norm{B}\cos(\theta)$.
+\end{thm}
+
 \begin{figure}[ht!]
     \centering
     \begin{tikzpicture}[scale=1.4]
@@ -76,7 +80,7 @@ Figure \ref{fig:orthogonal-projection} shows $A'$, the orthogonal projection of 
 \end{thm}
 
 \begin{proof}\label{vector-angle}
-    Let $C = A - B$. Then $C \cdot C = (A - B) \cdot (A - B)$, which can we expand to get $A \cdot (A - B) - B \cdot (A - B) = A \cdot A + B \cdot B - 2(A \cdot B)$. Therefore, $\norm{C}^2 = \norm{A}^2 + \norm{B}^2 - 2(A \cdot B)$. By the Law of Cosines, $A \cdot B = \norm{A}\norm{B}\cos\theta$, so $\cos\theta = \frac{A \cdot B}{\norm{A}\norm{B}}$.
+    Let $C = A - B$. Then $C \cdot C = (A - B) \cdot (A - B)$, which can we expand to get $A \cdot (A - B) - B \cdot (A - B) = A \cdot A + B \cdot B - 2(A \cdot B)$. Therefore, $\norm{C}^2 = \norm{A}^2 + \norm{B}^2 - 2(A \cdot B)$. By the Law of Cosines \ref{law-of-cosines} and transitivity, it follows that $A \cdot B = \norm{A}\norm{B}\cos\theta$, so $\cos\theta = \frac{A \cdot B}{\norm{A}\norm{B}}$.
 \end{proof}
 
 \begin{exmp}
@@ -88,7 +92,7 @@ Figure \ref{fig:orthogonal-projection} shows $A'$, the orthogonal projection of 
 \end{exmp}
 
 \begin{cor}\label{perpendicular-vectors}
-    In general, non-zero $A$ and $B$ are perpendicular if and only if $A \cdot B = 0$.
+    Non-zero $A$ and $B$ are perpendicular if and only if $A \cdot B = 0$.
 \end{cor}
 
 \begin{proof}
