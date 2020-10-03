@@ -88,12 +88,34 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $n \choose k$ is the number o
     Note that each entry in Pascal's Triangle is the sum of the two elements immediately above it.
 \end{rmk}
 
-\begin{prop}\label{pascals-identity}
+\begin{prop}{Pascal's Identity}\label{pascals-identity}
     Let $n \in \N$ with $0 < k < n$. Then $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
 \end{prop}
 
 \begin{proof}
     Let $X$ be a set with $|X| = n$. By Definition \ref{binomial-coefficient}, $\binom{n}{k}$ is the number of subsets with $k$ elements of $X$. Fix some $x \in X$. Then there are $\binom{n-1}{k}$ subsets of $X$ that do not include $x$, and $\binom{n-1}{k-1}$ which do, so $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
 \end{proof}
+
+\begin{thm}{Binomial theorem}\label{binomial-theorem}\proofbreak
+    Let $F$ be a field. Then for any $x, y \in F$ and $n \in \Z_{\geq 1}$, \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}{n \choose k}.\]
+\end{thm}
+
+\begin{proof}
+    We will prove this by induction. Our base case is when $n = 1$, so $(x + y)^n = x + y$. Then \[\sum_k=0^1x^ky^{1-k}\binom{1}{k} = x^0y^1\binom{1}{0} + x^1y^0\binom{1}{1} = x + y,\] so the base case is true.
+    Now assume that for some $x, y \in F$ and $n \geq 1$ we have \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}{n \choose k}.\] Then since $(x + y)^{n+1} = (x+y)(x+y)^n$, we have $(x = y)^{n+1} = x(x+y)^n + y(x+y)^n$.
+    Therefore, \[\left(x + y\right)^{n+1} = x\left(\sum_{k=0}^n x^ky^{n-k}\binom{n}{k}\right) + y\left(\sum_{k=0}^n x^ky^{n-k}\binom{n}{k}\right),\] so it follows that \[\left(x + y\right)^{n+1} = \left(\sum_{k=0}^n x^{k+1}y^{n-k}\binom{n}{k}\right) + \left(\sum_{k=0}^n x^ky^{n-k+1}\binom{n}{k}\right).\]
+    We can now re-index the left sum to make the form of the terms match up better: \[\left(x + y\right)^{n+1} = \left(\sum_{k=1}^{n+1} x^{k}y^{n-k+1}\binom{n}{k-1}\right) + \left(\sum_{k=0}^n x^ky^{n-k+1}\binom{n}{k}\right).\]
+    Now we can factor and match up all the terms except for the last term of the left sum, and the first term of the right sum.
+    \[\left(x + y\right)^{n+1} = y^{n+1}\binom{n}{0} + \left(\binom{n}{k-1} + \binom{n}{k}\right)\left(\sum_{k=0}^{n} x^{k}y^{n-k+1}\right) + x^{n+1}\binom{n}{n}.\]
+    By Pascal's Identity \ref{pascals-identity}, we then have
+    \[\left(x + y\right)^{n+1} = y^{n+1}\binom{n}{0} + \binom{n+1}{k}\left(\sum_{k=0}^{n} x^{k}y^{n-k+1}\right) + x^{n+1}\binom{n}{n}.\]
+    We can then move the two extra terms into the summation:
+    \[\left(x + y\right)^{n+1} = \sum_{k=0}^{n+1}x^{k}y^{n+1-k}\binom{n+1}{k}.\]
+    Therefore, the induction step is complete, and so by the induction principle we are done.
+\end{proof}
+
+\begin{prop}
+    Let $n, k \in \N$ with $0 \leq k \leq n$. Then \[\binom{n}{k} = \frac{n!}{k!(n-k)!}.\]
+\end{prop}
 
 \end{document}
