@@ -259,7 +259,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     \end{enumerate}
 \end{proof}
 
-\begin{defn}
+\begin{defn}\label{subspace-defn}
     Let $V$ be a vector space over $F$, and $W \subseteq V$. We say $W$ is a \emph{subspace} of $V$ if it is itself a vector space over $F$ with the operations defined as for $V$.
 \end{defn}
 
@@ -743,10 +743,10 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 
 \section{Linear Transformations}
 
-\begin{defn}
+\begin{defn}\label{linear-transformation}
     Let $V$ and $W$ be a vector space over some field $F$. A \emph{linear transformation} $f: v \to w$ is a function satisfying for all $v, v' \in W$ and $r \in F$ the following:
     \begin{itemize}
-        \item $f(v + v') = f(v) + f(v')$ --- the function preserves addition.
+        \item $f(v + v') = f(v) + f(v')$ --- the function preserves vector addition.
         \item $f(rv) = rf(v)$ -- the function preserves scalar multiplication.
     \end{itemize}
     Taking these properties together, we say that a linear transformation preserves the linear structure of the underlying vector space.
@@ -808,12 +808,91 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     \end{itemize}
 \end{exmp}
 
-\begin{prop}
+\begin{prop}\label{zero-maps-to-zero}
     Let $f: V \to W$ be a linear transformation. Then $f(\vec{0}_v) = \vec{0}_w$.
 \end{prop}
 
 \begin{proof}
     Since $f$ preserves scalar multiplication, we have $f(\vec{0}_v) = f(0 \cdot \vec{0}_v) = 0f(\vec{0}_v) = 0$.
+\end{proof}
+
+\begin{prop}\label{action-on-basis}
+    A linear transformation is uniquely determined by its action on a basis.
+
+    Let $V$ and $W$ be vector spaces over a field $F$, and $B$ be a basis for $V$. For each $b \in B$, let $w_b \in W$. Then there exists a unique linear transformation $f: V \to W$ such that $f(b) = w_b$ for all $b \in B$.
+\end{prop}
+
+\begin{exmp}
+    Let $f: \R^3 \to \R^2$ be a linear transformation such that $f\left(\begin{pmatrix}
+        1 \\ 0 \\ 0
+    \end{pmatrix}\right) = \begin{pmatrix}
+        2 \\ 1
+    \end{pmatrix}$, $f\left(\begin{pmatrix}
+        0 \\ 1 \\ 0
+    \end{pmatrix}\right) = \begin{pmatrix}
+        3 \\ 1
+    \end{pmatrix}$, and $f\left(\begin{pmatrix}
+        0 \\ 0 \\ 1
+    \end{pmatrix}\right) = \begin{pmatrix}
+        0 \\ -3
+    \end{pmatrix}$. Since $f$ is a linear transformation, it follows that \[f\left(\begin{pmatrix}
+        x \\ y \\ z
+    \end{pmatrix}\right) = xf\left(\begin{pmatrix}
+        1 \\ 0 \\ 0
+    \end{pmatrix}\right) + yf\left(\begin{pmatrix}
+        0 \\ 1 \\ 0
+    \end{pmatrix}\right) + zf\left(\begin{pmatrix}
+        0 \\ 0 \\ 1
+    \end{pmatrix}\right) = \begin{pmatrix}
+        2x \\ 1x
+    \end{pmatrix} + \begin{pmatrix}
+        3y \\ 1y
+    \end{pmatrix} + \begin{pmatrix}
+        0 \\ -3z
+    \end{pmatrix},\] so we have \[f\left(\begin{pmatrix}
+        x \\ y \\ z
+    \end{pmatrix}\right) = \begin{pmatrix}
+        2x + 3y \\ x + y - 3z
+    \end{pmatrix}.\]
+\end{exmp}
+
+\begin{proof}\proofbreak
+    
+To prove the uniqueness of $f$ (without proving existence), let $v \in V$. By Proposition \ref{unique-basis-expression}, there exists unique $a_i \in F$ such that $v = a_1b_1 + \cdots + a_nb_n$. By the definition of a linear transformation (\ref{linear-transformation}), it follows that if $f$ exists then $f(v) = a_1f(b_1) + \cdots + a_nf(b_n) = a_1w_{b_1} + \cdots + a_nw_{b_n}$, so $f$ is completely determined.
+
+To prove the existence of $f$, we need to show that the function defined by $f(v) = a_1w_{b_1} + \cdots + a_nw_{b_n}$ is a linear transformation and satisfies $f(b) = w_b$ for all $b \in B$. That latter is simply true by construction. For the former, given $v, v' \in V$ and $r \in F$, we have $v = a_1b_1 + \cdots a_nb_n$ and $v' = a'_1b_1 + \cdots + a'_nb_n$ for $a_i, a'_i \in F$. Then $v + rv' = (a_1 + ra'_1)b_1 + \cdots + (a_n + ra'_n)b_n$. It follows that $f(v + rv') = (a_1 + ra'_1)f(b_1) + \cdots + (a_n + ra'_n)f(b_n) = (a_1w_{b_1} + \cdots + a_nw_{b_n}) + r(a'_1w_{b_1} + \cdots + a'_nw_{b_n}) = f(v) + rf(v')$. Therefore, $f$ is a linear transformation.
+\end{proof}
+
+\begin{exmp}
+    Let $f: \R^2 \to \R^2$ be anti-clockwise rotation about the origin by $\frac{\pi}{2}$. Then, $f(1, 0) = f(0, 1)$ and $f(0, 1)$ must equal $f(-1, 0)$. Then it follows that \[f(x, y) = xf(1, 0) = yf(0, 1) = x(0, 1) + y(-1, 0) = (-y, x).\]
+\end{exmp}
+
+\begin{exmp}
+    For general anti-clockwise rotation about the origin by $\theta$, it follows that $f(1, 0) = (\cos(\theta), \sin(\theta))$ and $f(0, 1) = (-\sin(\theta), \cos(\theta))$. Therefore, \[f(x, y) = x(\cos(\theta), \sin(\theta)) + y(-\sin(\theta), \cos(\theta)) = (x\cos(\theta) - y\sin(\theta), x\sin(\theta) + y\cos(\theta)).\]
+\end{exmp}
+
+\begin{prop}
+    Let $f: V \to W$ be a linear transformation over a field $F$, and $U \subseteq V$ a subspace. Then the image of $U$ under $f$ (which is given by $f(U) = \left\{f(u) \compbar u \in U\right\}$) is a subspace (see Definition \ref{subspace-defn}) of $W$.
+\end{prop}
+
+\begin{proof}
+    Since $U$ must be non-empty, it follows that $f(U)$ is as well. Then since $f$ is a linear transformation, it follows that $f(u) + rf(u') = f(u + ru')$ for every $u, u' \in U$ and $r \in F$, and since $u + ru' \in U$ it follows that $f(U)$ is closed under vector addition and scalar multiplication. Therefore, by Proposition \ref{subspace-proof}, we know that $f(U)$ is a subspace of $W$.
+\end{proof}
+
+\begin{defn}
+    Let $V, W$ be vector spaces and $f: V \to W$ a linear transformation. Then the \emph{range} of $f$ is the image of $V$ under $f$, denoted by $R(f)$. The \emph{rank} of $f$ is the dimension of $R(f)$.
+\end{defn}
+
+\begin{exmp}
+    Let $f: \R^2 \to \R^3$ be the linear transformation determined by $f(1, 0) = (2, 1, 0)$ and $f(0, 1) = (0, -1, 1)$. Then $R(f) = \spanset{\{(2, 1, 0), (0, -1, 1)\}}$. Since these vectors are linearly independent, they form a basis for $R(f)$, and so the rank of $f$ is 2.
+\end{exmp}
+
+\begin{prop}
+    Let $V, W$ be vector spaces over a field $F$, $f: V \to W$, and $U \subseteq W$ a subspace. Then the \emph{preimage} or \emph{inverse image} of $U$ under $f$ (which is given by $f^{-1}(U) = \left\{v \in V \compbar f(v) \in U\right\}$) is a subspace of $V$.
+\end{prop}
+
+\begin{proof}
+    Since by Definition \ref{subspace-defn} we know that $\vec{0}_w \in U$, and by Proposition \ref{zero-maps-to-zero} we know that $f(\vec{0}_v) = \vec{0}_w$, it follows that $\vec{0}_v \in f^{-1}(U)$, and so $f^{-1}(U)$ is non-empty. Let $v, v' \in f^{-1}(U)$ and $r \in F$. Then $f(v), f(v') \in U$, and since $U$ is a subspace $f(v) + rf(v') \in U$. Since $f$ is a linear transformation, it follows that $f(v + rv') \in U$, and so $v + rv' \in f^{-1}(U)$. Therefore $f^{-1}(U)$ is non-empty and closed under vector addition and scalar multiplication, so $f^{-1}(U)$ is a subspace of $V$ by Proposition \ref{subspace-proof}.
 \end{proof}
 
 \end{document}
