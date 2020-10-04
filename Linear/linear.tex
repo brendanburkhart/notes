@@ -527,7 +527,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 
 \section{Dimension}
 
-\begin{defn}
+\begin{defn}\label{finite-dimensional-defn}
     A vector space over $F$ is \emph{finite dimensional} if it has a finite basis.
 \end{defn}
 
@@ -583,7 +583,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 
 \begin{proof}\proofbreak
     \begin{enumerate}
-        \item Assume that $|S| > n$. Using the Exchange lemma, and the fact that $S$ is linearly independent, we can construct a basis $B_n$ for $V$ such that $B_n \subseteq S$. By Lemma \ref{basis-maximal-independent-subset}, it follows that $B_n = S$, which would imply $|S| = n$. This is a contradiction, and so $|S| \leq n$.
+        \item Assume that $|S| > n$. Using the Exchange lemma \ref{exchange-lemma}, and the fact that $S$ is linearly independent, we can construct a basis $B_n$ for $V$ such that $B_n \subseteq S$. By Lemma \ref{basis-maximal-independent-subset}, it follows that $B_n = S$, which would imply $|S| = n$. This is a contradiction, and so $|S| \leq n$.
         \item If $V = \spanset{S}$, we are done. If not, there must exist some $v \notin \spanset{S}$. By Proposition \ref{linear-independence-with-extra-vector}, $S \union v$ is linearly independent. Continue until the set has $n$ elements, then since by (1) $n+1$ elements would be linearly dependent, it follows that every $v \in \spanset{\{S \union v_1 \union v_2 \union \ldots\}}$ so it follows that $\{S \union v_1 \union v_2 \union \ldots\}$ is a basis for $V$.
         \item ($\implies$) If $S$ is linearly independent, then by (2) we can complete $S$ to a basis $B$ such that $S \subseteq B$. Since $|S| = n = |B|$, we have $S = B$, and so $\spanset{S} = V$. \\ ($\impliedby$) Instead, if $\spanset{S} = V$, then by Proposition \ref{linearly-independent-subset-existence} there exists $T \subseteq S$ such that $\spanset{T} = \spanset{S} = V$ and $T$ is linearly independent. Since $|S| = n = |T|$, it follows that $S = T$ and so $S$ must be linearly independent.
     \end{enumerate}
@@ -597,7 +597,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     \end{itemize}
 \end{rmk}
 
-\begin{thm}
+\begin{thm}\label{subspace-is-finite}
     Let $V$ be a finite dimensional vector space with dimension $n$, and $W \subseteq V$ a subspace. Then:
     \begin{enumerate}
         \item $W$ has dimension less than or equal to that of $V$.
@@ -893,6 +893,34 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 
 \begin{proof}
     Since by Definition \ref{subspace-defn} we know that $\vec{0}_w \in U$, and by Proposition \ref{zero-maps-to-zero} we know that $f(\vec{0}_v) = \vec{0}_w$, it follows that $\vec{0}_v \in f^{-1}(U)$, and so $f^{-1}(U)$ is non-empty. Let $v, v' \in f^{-1}(U)$ and $r \in F$. Then $f(v), f(v') \in U$, and since $U$ is a subspace $f(v) + rf(v') \in U$. Since $f$ is a linear transformation, it follows that $f(v + rv') \in U$, and so $v + rv' \in f^{-1}(U)$. Therefore, $f^{-1}(U)$ is non-empty and closed under vector addition and scalar multiplication, so $f^{-1}(U)$ is a subspace of $V$ by Proposition \ref{subspace-proof}.
+\end{proof}
+
+\begin{defn}
+    Let $f: V \to W$ be a linear transformation. Then the \emph{kernel} or \emph{null space} of $f$, commonly denoted by $\ker f$, is the inverse image of $\{\vec{0}_w\}$: \[\ker f = f^{-1}(\{\vec{0}_w\}) = \left\{v \in V \compbar f(v) = \vec{0}_w\right\}.\] The kernel of $f$ is a subspace of $V$, the dimension of which is the \emph{nullity} of $f$.
+\end{defn}
+
+\begin{exmp}
+    Let $f: \R^2 \to \R^3$ be the linear transformation $f(x, y) = (2x, x-y, y)$. Then $f(x, y) = (0, 0, 0)$ if and only if $2x = 0$, $x - y = 0$, and $y = 0$, which implies $x = y = 0$. Therefore, $\ker f = \{(0, 0)\}$, and the nullity is zero.
+\end{exmp}
+
+\begin{exmp}
+    Let $f: P_2(\R) \to \R^2$ be the linear transformation $f(ax^2 + bx + c) = (a + b, a + c)$. Then $f(ax^2 + bx + c) = (0, 0)$ if and only if $a + b = 0$ and $a + c = 0$, so $b = c$, and $a = -c$. Therefore, $\ker f = \left\{-cx^2 + cx + c \compbar c \in \R \right\} = \spanset{\{-x^2 + x + 1\}}$, so the nullity of $f$ is one.
+
+    Since the range of $f$ is \[\spanset{\{f(x^2), f(x), f(1)\}} = \spanset{\{(1, 1), (1, 0), (0, 1)\}} = \spanset{\{(1, 0), (0, 1)\}},\] the rank of $f$ is two.
+\end{exmp}
+
+\begin{rmk}
+    If $f: V \to W$ is a linear transformation, and $B$ is a basis of $V$, then the range of $f$ equals the span of $f(B)$. However, $f(B)$ is not necessarily linearly independent.
+\end{rmk}
+
+\begin{prop}\label{kernel-range-are-finite}
+    Let $f: V \to W$ be a linear transformation, where $V$ is a finite dimensional vector space with basis $B$. Then both the kernel and range of $f$ are finite dimensional.
+\end{prop}
+
+\begin{proof}
+    Since the kernel of $f$ is a subspace of $V$, the kernel of $f$ is finite dimensional by Theorem \ref{subspace-is-finite}.
+
+    Since $V$ is finite dimensional, by Definition \ref{finite-dimensional-defn} $B$ is finite, and so $f(B)$ is as well. By Proposition \ref{linearly-independent-subset-existence} it follows that there is a linearly independent subset of $f(B)$ which spans the range of $f$, which is then a basis for the range of $f$ by Corollary \ref{basis-span-independence}. Since $f(B)$ is finite, any subset must be as well, and so the range of $f$ is finite dimensional.
 \end{proof}
 
 \end{document}
