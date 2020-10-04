@@ -578,7 +578,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{rmk}
 
 \begin{exmp}
-    Since $\R^2$ has dimension $2$, to prove that $S = \left\{(5, 3), (1, 4)\right\}$ is a basis for $\R^2$, we only need to prove $S$ is linearly independent. Since they are not scalar multiples of each other, $S$ is linearly independent and so it a basis for $\R^2$.
+    Since $\R^2$ has dimension $2$, to prove that $S = \left\{(5, 3), (1, 4)\right\}$ is a basis for $\R^2$, we only need to prove $S$ is linearly independent. Since they are not scalar multiples of each other, $S$ is linearly independent and so it is a basis for $\R^2$.
 \end{exmp}
 
 \begin{proof}\proofbreak
@@ -747,7 +747,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     Let $V$ and $W$ be a vector space over some field $F$. A \emph{linear transformation} $f: v \to w$ is a function satisfying for all $v, v' \in W$ and $r \in F$ the following:
     \begin{itemize}
         \item $f(v + v') = f(v) + f(v')$ --- the function preserves vector addition.
-        \item $f(rv) = rf(v)$ -- the function preserves scalar multiplication.
+        \item $f(rv) = rf(v)$ --- the function preserves scalar multiplication.
     \end{itemize}
     Taking these properties together, we say that a linear transformation preserves the linear structure of the underlying vector space.
 
@@ -768,7 +768,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     Let $f: \R^3 \to \R^2$ be the function given by $f\left(
     \begin{pmatrix}
         x \\ y \\ z
-    \end{pmatrix} = 
+    \end{pmatrix} =
     \begin{pmatrix}
         2x + 3y \\ x + y - 3z
     \end{pmatrix}\right)$. Let $\begin{pmatrix}
@@ -857,7 +857,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{exmp}
 
 \begin{proof}\proofbreak
-    
+
 To prove the uniqueness of $f$ (without proving existence), let $v \in V$. By Proposition \ref{unique-basis-expression}, there exists unique $a_i \in F$ such that $v = a_1b_1 + \cdots + a_nb_n$. By the definition of a linear transformation (\ref{linear-transformation}), it follows that if $f$ exists then $f(v) = a_1f(b_1) + \cdots + a_nf(b_n) = a_1w_{b_1} + \cdots + a_nw_{b_n}$, so $f$ is completely determined.
 
 To prove the existence of $f$, we need to show that the function defined by $f(v) = a_1w_{b_1} + \cdots + a_nw_{b_n}$ is a linear transformation and satisfies $f(b) = w_b$ for all $b \in B$. That latter is simply true by construction. For the former, given $v, v' \in V$ and $r \in F$, we have $v = a_1b_1 + \cdots a_nb_n$ and $v' = a'_1b_1 + \cdots + a'_nb_n$ for $a_i, a'_i \in F$. Then $v + rv' = (a_1 + ra'_1)b_1 + \cdots + (a_n + ra'_n)b_n$. It follows that $f(v + rv') = (a_1 + ra'_1)f(b_1) + \cdots + (a_n + ra'_n)f(b_n) = (a_1w_{b_1} + \cdots + a_nw_{b_n}) + r(a'_1w_{b_1} + \cdots + a'_nw_{b_n}) = f(v) + rf(v')$. Therefore, $f$ is a linear transformation.
@@ -892,7 +892,7 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 \end{prop}
 
 \begin{proof}
-    Since by Definition \ref{subspace-defn} we know that $\vec{0}_w \in U$, and by Proposition \ref{zero-maps-to-zero} we know that $f(\vec{0}_v) = \vec{0}_w$, it follows that $\vec{0}_v \in f^{-1}(U)$, and so $f^{-1}(U)$ is non-empty. Let $v, v' \in f^{-1}(U)$ and $r \in F$. Then $f(v), f(v') \in U$, and since $U$ is a subspace $f(v) + rf(v') \in U$. Since $f$ is a linear transformation, it follows that $f(v + rv') \in U$, and so $v + rv' \in f^{-1}(U)$. Therefore $f^{-1}(U)$ is non-empty and closed under vector addition and scalar multiplication, so $f^{-1}(U)$ is a subspace of $V$ by Proposition \ref{subspace-proof}.
+    Since by Definition \ref{subspace-defn} we know that $\vec{0}_w \in U$, and by Proposition \ref{zero-maps-to-zero} we know that $f(\vec{0}_v) = \vec{0}_w$, it follows that $\vec{0}_v \in f^{-1}(U)$, and so $f^{-1}(U)$ is non-empty. Let $v, v' \in f^{-1}(U)$ and $r \in F$. Then $f(v), f(v') \in U$, and since $U$ is a subspace $f(v) + rf(v') \in U$. Since $f$ is a linear transformation, it follows that $f(v + rv') \in U$, and so $v + rv' \in f^{-1}(U)$. Therefore, $f^{-1}(U)$ is non-empty and closed under vector addition and scalar multiplication, so $f^{-1}(U)$ is a subspace of $V$ by Proposition \ref{subspace-proof}.
 \end{proof}
 
 \end{document}
