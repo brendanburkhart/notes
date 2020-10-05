@@ -548,7 +548,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{proof}
 
 \begin{defn}
-    The cardinality for a basis for a finite dimensional vector space is the \emph{dimension} of the vector space.
+    The cardinality for a basis for a finite dimensional vector space $V$ is the \emph{dimension} of $V$, denoted by $\dim(V)$.
 \end{defn}
 
 \begin{rmk}
@@ -809,11 +809,11 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{exmp}
 
 \begin{prop}\label{zero-maps-to-zero}
-    Let $f: V \to W$ be a linear transformation. Then $f(\vec{0}_v) = \vec{0}_w$.
+    Let $f: V \to W$ be a linear transformation. Then $f(\vec{0}_V) = \vec{0}_W$.
 \end{prop}
 
 \begin{proof}
-    Since $f$ preserves scalar multiplication, we have $f(\vec{0}_v) = f(0 \cdot \vec{0}_v) = 0f(\vec{0}_v) = 0$.
+    Since $f$ preserves scalar multiplication, we have $f(\vec{0}_V) = f(0 \cdot \vec{0}_V) = 0f(\vec{0}_V) = 0$.
 \end{proof}
 
 \begin{prop}\label{action-on-basis}
@@ -892,11 +892,11 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 \end{prop}
 
 \begin{proof}
-    Since by Definition \ref{subspace-defn} we know that $\vec{0}_w \in U$, and by Proposition \ref{zero-maps-to-zero} we know that $f(\vec{0}_v) = \vec{0}_w$, it follows that $\vec{0}_v \in f^{-1}(U)$, and so $f^{-1}(U)$ is non-empty. Let $v, v' \in f^{-1}(U)$ and $r \in F$. Then $f(v), f(v') \in U$, and since $U$ is a subspace $f(v) + rf(v') \in U$. Since $f$ is a linear transformation, it follows that $f(v + rv') \in U$, and so $v + rv' \in f^{-1}(U)$. Therefore, $f^{-1}(U)$ is non-empty and closed under vector addition and scalar multiplication, so $f^{-1}(U)$ is a subspace of $V$ by Proposition \ref{subspace-proof}.
+    Since by Definition \ref{subspace-defn} we know that $\vec{0}_W \in U$, and by Proposition \ref{zero-maps-to-zero} we know that $f(\vec{0}_V) = \vec{0}_W$, it follows that $\vec{0}_V \in f^{-1}(U)$, and so $f^{-1}(U)$ is non-empty. Let $v, v' \in f^{-1}(U)$ and $r \in F$. Then $f(v), f(v') \in U$, and since $U$ is a subspace $f(v) + rf(v') \in U$. Since $f$ is a linear transformation, it follows that $f(v + rv') \in U$, and so $v + rv' \in f^{-1}(U)$. Therefore, $f^{-1}(U)$ is non-empty and closed under vector addition and scalar multiplication, so $f^{-1}(U)$ is a subspace of $V$ by Proposition \ref{subspace-proof}.
 \end{proof}
 
 \begin{defn}
-    Let $f: V \to W$ be a linear transformation. Then the \emph{kernel} or \emph{null space} of $f$, commonly denoted by $\ker f$, is the inverse image of $\{\vec{0}_w\}$: \[\ker f = f^{-1}(\{\vec{0}_w\}) = \left\{v \in V \compbar f(v) = \vec{0}_w\right\}.\] The kernel of $f$ is a subspace of $V$, the dimension of which is the \emph{nullity} of $f$.
+    Let $f: V \to W$ be a linear transformation. Then the \emph{kernel} or \emph{null space} of $f$, commonly denoted by $\ker f$, is the inverse image of $\{\vec{0}_W\}$: \[\ker f = f^{-1}(\{\vec{0}_W\}) = \left\{v \in V \compbar f(v) = \vec{0}_W\right\}.\] The kernel of $f$ is a subspace of $V$, the dimension of which is the \emph{nullity} of $f$.
 \end{defn}
 
 \begin{exmp}
@@ -921,6 +921,20 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
     Since the kernel of $f$ is a subspace of $V$, the kernel of $f$ is finite dimensional by Theorem \ref{subspace-is-finite}.
 
     Since $V$ is finite dimensional, by Definition \ref{finite-dimensional-defn} $B$ is finite, and so $f(B)$ is as well. By Proposition \ref{linearly-independent-subset-existence} it follows that there is a linearly independent subset of $f(B)$ which spans the range of $f$, which is then a basis for the range of $f$ by Corollary \ref{basis-span-independence}. Since $f(B)$ is finite, any subset must be as well, and so the range of $f$ is finite dimensional.
+\end{proof}
+
+\begin{thm}\label{rank-nullity}
+    Rank-nullity theorem. Let $V, W$ be vector spaces over a field $F$, $V$ be finite dimensional, and $f: V \to W$ a linear transformation. Then the sum of the nullity and rank of $f$ is equal to the dimension of $V$.
+\end{thm}
+
+\begin{proof}
+    Let $\{v_1, \ldots, v_k\}$ be a basis for $\ker f$, which by Corollary \ref{basis-span-independence} can be completed to a basis $\{v_1, \ldots, v_k, v_{k+1}, \ldots, v_n\}$ for $V$.
+
+    Let $v \in V$, so there exists $a_i \in F$ (for $i = 1, \ldots, n$) such that $a1v_1 + \cdots + a_nv_n = v$. Then $f(v) = a_1f(v_1) + \cdots + a_nf(v_n)$. However, $f(v_1), \ldots, f(v_n)$ are all zero, so $f(v) = a_{k+1}f(v_{k+1}) + a_nf(v_n)$. It follows that $R(f) = \spanset{\{f(v_{k+1}), \ldots, f(v_n)\}}$.
+
+    Now assume there exists $a_{k+1}, \ldots, a_n \in F$ not all zero such that $a_{k+1}f(v_{k+1}) + \cdots + a_nf(v_n) = \vec{0}_W$. This would then imply $f(a_{k+1}v_{k+1} + \cdots + a_nv_n) = \vec{0}_W$, so $a_{k+1}v_{k+1} + \cdots + a_nv_n \in \ker f$. Since $\ker f = \spanset{v_1, \ldots, v_k}$, there must then exist $a_1, \ldots, a_n \in F$ such that $a_1v_1 + \cdots + a_kv_k = a_{k+1}v_{k+1} + \cdots + a_nv_n$, so $a_1v_1 + \cdots + a_kv_k + (-a_{k+1})v_{k+1} + \cdots + (-a_n)v_n = \vec{0}_V$. Then $\{v_1, \ldots, v_k, v_{k+1}, \ldots, v_n\}$ must be linearly dependent, which contradicts the assumption that it is a basis. Therefore, no such $a_{k+1}, \ldots, a_n \in F$ exist, and so $\{f(v_{k+1}), \ldots, f(v_n)\}$ must be linearly independent.
+
+    Since $\{f(v_{k+1}), \ldots, f(v_n)\}$ is both linearly independent and spans $R(f)$, by definition it is a basis for the range of $f$. Therefore, it follows that the dimension of $V$ is equal to the sum of the nullity and rank of $f$.
 \end{proof}
 
 \end{document}
