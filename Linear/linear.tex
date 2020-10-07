@@ -937,4 +937,82 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
     Since $\{f(v_{k+1}), \ldots, f(v_n)\}$ is both linearly independent and spans $R(f)$, by definition it is a basis for the range of $f$. Therefore, it follows that the dimension of $V$ is equal to the sum of the nullity and rank of $f$.
 \end{proof}
 
+\section{Isomorphisms}
+
+\begin{defn}
+    Let $A$ and $B$ be sets, and $f: A \to B$. We say that $f$ is \begin{itemize}
+        \item \emph{injective} or \emph{one-to-one} if $f(a) = f(a') \implies a = a'$ for all $a, a' \in A$,
+        \item \emph{surjective} or \emph{onto} if for all $b \in B$ there exists $a \in A$ such that $f(a) = b$,
+        \item and \emph{bijective} if $f$ is both injective and surjective.
+    \end{itemize}
+\end{defn}
+
+\begin{thm}
+    Let $f: A \to B$ be a function, then $f$ is bijective if and only if there exists a function $g: B \to A$ such that $g \circ f = \identity_A$ and $f \circ g = \identity_B$.
+\end{thm}
+
+\begin{lemma}
+    Let $f: V \to W$ be a linear transformation. Then $f$ is injective if and only if the null space of $f$ is $\{\vec{0}_V\}$.
+\end{lemma}
+
+\begin{proof}\proofbreak
+    ($\implies$) Suppose $f$ is injective, and let $v \in \ker f$, so $f(v) = \vec{0}_W$. Since $f$ is a linear transformation, we know that $f(\vec{0}_V) = \vec{0}_W$, and since $f$ is injective it follows that $\ker f = \{\vec{0}_V\}$.
+
+    ($\impliedby$) Suppose $\ker f = \{\vec{0}_V\}$, and let $v, v' \in V$ such that $f(v) = f(v')$. Then $f(v) = f(v') = \vec{0}_W$, so $f(v - v') = \vec{0}_W$. It follows that $v - v' = \vec{0}_V$, so $v = v'$. Therefore, $f$ is injective.
+\end{proof}
+
+\begin{cor}\label{injective-nullity-rank}
+    Let $V, W$ be vector spaces, where $V$ is finite dimensional, and $f: V \to W$ a linear transformation. Then the following are all equivalent:
+    \begin{itemize}
+        \item $f$ is injective.
+        \item The nullity of $f$ is zero.
+        \item The rank of $f$ is the dimension of $V$.
+        \item If $\{v_1, \ldots, v_n\}$ is a basis for $V$, then $\{f(v_1), \ldots, f(v_n)\}$ is a basis for $R(f)$.
+    \end{itemize}
+\end{cor}
+
+\begin{defn}
+    Let $V, W$ be vector spaces. Then an \emph{isomorphism} $f: V \to W$ is a bijective linear transformation. If an isomorphism exists for $V$ and $W$, then we say that $V$ and $W$ are \emph{isomorphic}.
+\end{defn}
+
+\begin{rmk}
+    Being isomorphic is an equivalence relation on the collection of all vector spaces over a field $F$.
+\end{rmk}
+
+\begin{exmp}
+    $f: P_n(F) \to F^{n+1}$ where $f(a_0 + a_1x + \cdots + a_nx^n) = \begin{pmatrix}
+        a_0 \\ a_1 \\ \vdots \\ a_n
+    \end{pmatrix}$.
+\end{exmp}
+
+\begin{exmp}
+    $g: M_{2\times2}(F) \to F^4$ where $\begin{bmatrix}
+        a & b \\ c & d
+    \end{bmatrix} \mapsto \begin{pmatrix}
+        a \\ b \\ c \\ d
+    \end{pmatrix}$.
+\end{exmp}
+
+\begin{prop}
+    If $f$ is an isomorphism, it is bijective by definition, so there exists a inverse function $f^{-1}: W \to V$. $f^{-1}$ is also a linear transformation.
+\end{prop}
+
+\begin{proof}
+    Let $f: V \to W$ be an isomorphism between vector spaces $V$ and $W$ over a field $F$, and let $g: W \to V = f^{-1}$. Consider $w, w' \in W$ and $r \in F$. Let $v, v' \in V$ such that $v = g(w)$ and $v' = g(w')$. Since $f$ is bijective, $v, v'$ must be unqiue. Then $f(v + rv') = f(v) + rf(v') = w + rw'$. Therefore, $g(w + rw') = v + rv' = g(w) + rg(w')$, so $g$ must be a linear transformation.
+\end{proof}
+
+\begin{thm}
+    Suppose $V$ and $W$ are finite dimensional vector spaces over a field $F$. Then $V$ and $W$ are isomorphic if and only if $V$ and $W$ have the same dimension.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) Let $f: V \to W$ be an isomorphism. Then by Corollary \ref{injective-nullity-rank}, since $f$ is injective it follows that the nullity of $f$ is zero and the rank of $f$ is the dimension of $W$. By the Rank-nullity theorem \ref{rank-nullity}, it follows that the rank of $f$ is equal to the dimension of $V$, so $V$ and $W$ have the same dimension.
+
+    ($\impliedby$) Let $n$ be the dimension of $V$ and $W$. Then take $\langle v_1, \ldots, v_n \rangle$ and $\langle w_1, \ldots, w_n \rangle$ ordered bases for $V$ and $W$ respectively. Define $f: V \to W$ by $f(v_i) = w_i$ for $i = 1, \ldots, n$, and extend linearly, which gives a unique linear transformation by Proposition \ref{action-on-basis}. Since the range of $f$ is $\spanset{\{f(v_1), \ldots, f(v_n)\}}$, which by construction is equal to $\spanset{\{w_1, \ldots, w_n\}}$, so $f$ is surjective. By Corollary \ref{injective-nullity-rank}, since $\langle w_1, \ldots, w_n \rangle$ is linearly independent (as it is a basis for $W$), the rank of $f$ is $n$, so we have that $f$ is injective. Therefore, $f$ is bijective and so $V$ and $W$ are isomorphic.
+\end{proof}
+
+\begin{cor}
+    If the dimension of $V$ is $n$, then $V$ is isomorphic of $F^n$.
+\end{cor}
+
 \end{document}
