@@ -371,5 +371,108 @@ Now consider the function $g(x) = f(x) - k\nabla^2f(x)$ for some positive real c
 
 We can apply this technique to an entire image. Let $I: \mathbb{D} \to \mathbb{P}$ be an image, then define $J$ by \[J(i, j) = I(i, j) - k\nabla^2I(i, j),\] for all $(i, j) \in \mathbb{D}$ and some real $k > 0$.
 
+\section{Image Processing on Graphs}
+
+We can apply graph theory and signal processing to image processing by modelling image data as graph signals. We will first define graphs and graph signals, and then explore how they can be applied to image processing.
+
+\begin{defn}
+    An \emph{undirected graph} is a $2$-tuple $\mathcal{G} = (\mathcal{V}, \mathcal{E})$, where $\mathcal{V}$ is a set of vertices, and $\mathcal{E}$ is a set of unordered pairs (two-sets) of vertices, called edges.
+\end{defn}
+
+\begin{defn}
+    The \emph{adjacency matrix} $\bm{A}$ of a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ is a square $|V| \times |V|$ matrix where $\bm{A}_{i, j}$ is $1$ is there is an edge from $V_i$ to $V_j$.
+\end{defn}
+
+\begin{exmp}
+    Let $\mathcal{V} = \{1, 2, 3, 4\}$, let $\mathcal{E} = \{\{1, 2\}, \{2, 3\}, \{3, 4\}, \{4, 1\}\}$. Then $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ is the graph shown in Figure \ref{fig:example-graph}. The adjacency matrix of $\mathcal{G}$ is
+    \[\bm{A} = \begin{bmatrix}
+        0 & 1 & 0 & 1 \\
+        1 & 0 & 1 & 0 \\
+        0 & 1 & 0 & 1 \\
+        1 & 0 & 1 & 0
+    \end{bmatrix}.\]
+\end{exmp}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (1) at (0,0) {1};
+            \node (2) at (2,0) {2};
+            \node (3) at (2,2) {3};
+            \node (4) at (0,2) {4};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+            every node/.style={fill=white,circle},
+            every edge/.style={draw=black,very thick}]
+            \path [<->] (1) edge (2);
+            \path [<->] (2) edge (3);
+            \path [<->] (3) edge (4);
+            \path [<->] (4) edge (1);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Example graph.}
+\label{fig:example-graph}
+\end{figure}
+
+\begin{defn}
+    A \emph{weighted, undirected graph} is a $3$-tuple $\mathcal{G} = (\mathcal{V}, \mathcal{E}, \bm{W})$, where $\mathcal{V}$ is a set of vertices, $\mathcal{E}$ is a set of unordered pairs (two-sets) of vertices, called edges, and $\bm{W}$ is a square $|\mathcal{V}| \times |\mathcal{V}|$ real matrix of weights. The weight between edges $i, j \in \mathcal{V}|$ is $\bm{W}_{i, j}$. Note that since $\mathcal{G}$ is undirected, $\bm{W}_{i,j} = \bm{W}_{j, i}$ for all $i, j \in \mathcal{V}$, and additionally we require $\bm{W}_{i, j} \geq 0$.
+\end{defn}
+
+\begin{exmp}
+    Let $\mathcal{V} = \{1, 2, 3, 4\}$, let $\mathcal{E} = \{\{1, 2\}, \{2, 3\}, \{3, 4\}, \{4, 1\}\}$, and let
+    \[\bm{W} = \begin{bmatrix}
+        0 & 1/2 & 0 & 1/5 \\
+        1/2 & 0 & 1/3 & 0 \\
+        0 & 1/3 & 0 & 1/4 \\
+        1/5 & 0 & 1/4 & 0
+    \end{bmatrix}.\] Then $\mathcal{G} = (\mathcal{V}, \mathcal{E}, \bm{W})$ is the graph shown in Figure \ref{fig:example-weighted-graph}.
+\end{exmp}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (1) at (0,0) {1};
+            \node (2) at (4,0) {2};
+            \node (3) at (4,4) {3};
+            \node (4) at (0,4) {4};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [<->] (1) edge node {$1/2$} (2);
+            \path [<->] (2) edge node {$1/3$} (3);
+            \path [<->] (3) edge node {$1/4$} (4);
+            \path [<->] (4) edge node {$1/5$} (1);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Example weighted graph.}
+\label{fig:example-weighted-graph}
+\end{figure}
+
+\begin{defn}
+    Let $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ be a graph. Then a \emph{graph signal} $f: \mathcal{V} \to \R$ is simply a function which assigns a real value to each vertex. The image of $f$ can be represented as a vector $v$ where the $i$-th entry is $f(i)$ - the value associated with the $i$-th vertex.
+\end{defn}
+
+\begin{defn}
+    The \emph{degree} of a vertex $v$ is the number of edges containing $v$.
+\end{defn}
+
+\begin{defn}
+    The \emph{degree matrix} $\bm{D}$ of an unweighted graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ is a square $|V| \times |V|$ matrix that is all zero, except for the diagonal entries. The $n$-th diagonal entry is the degree of the $n$-th vertex of $\mathcal{G}$. It follows that $\bm{D}$ is related to the adjacency matrix $\bm{A}$ by \[\bm{D}_{n,n} = \sum_{i=0}^{|V|}\bm{A}_{n,i}.\]
+\end{defn}
+
+\begin{defn}
+    The concept of a \emph{degree matrix} $\bm{D}$ can be extended to a weighted graph $\mathcal{G} = (\mathcal{V}, \mathcal{E}, \bm{W})$. It is defined by \[\bm{D}_{n,n} = \sum_{i=0}^{|V|}\bm{W}_{n,i}.\]
+\end{defn}
+
+\begin{defn}
+    The \emph{graph Laplacian} $\bm{L}$ of a weighted graph $\mathcal{G} = (\mathcal{V}, \mathcal{E}, \bm{W})$ is $L = D - W$.
+\end{defn}
+
+An image $I: \mathbb{D} \to \mathbb{P}$ can be represented as a graph signal. First, assign each pixel to a vertex, and then create an edge between every pixel's horizontal, vertical, and diagonal neighbors. Then the image can be encoded as the function $f: \mathbb{D} \to \mathbb{P}$ that assigns the value of each pixel to the corresponding vertex.
 
 \end{document}
