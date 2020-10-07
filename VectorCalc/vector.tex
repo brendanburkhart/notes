@@ -178,7 +178,7 @@ Figure \ref{fig:orthogonal-projection} shows $A'$, the orthogonal projection of 
 \end{thm}
 
 \begin{proof}
-    The line with direction $(A, B, C)$ that passes through the point is normal to the plane and thus contains the shortest path from the point to the plane. Therefore, $A(x_1 + At) + B(y_1 + Bt) + C(z_1 + Ct) + D = 0$ gives the closest point on the plane to the point. $Ax_1 + By_1 + Cz_1 + D = -t(A^2 + B^2 + C^2)$. The shortest distance is thus \[\abs{\frac{t}{\norm{(A, B, C)}}} = \frac{\abs{Ax_1 + By_1 + Cz_1 + D}}{\sqrt{A^2 + B^2 + C^2}}.\]
+    The line with direction $(A, B, C)$ that passes through the point is normal to the plane and thus contains the shortest path from the point to the plane. Therefore, $A(x_1 + At) + B(y_1 + Bt) + C(z_1 + Ct) + D = 0$ gives the closest point on the plane to the point. $Ax_1 + By_1 + Cz_1 + D = -t(A^2 + B^2 + C^2)$. Since the shortest distance is equal to $|-t\norm{\langle A, B, C \rangle}| = |-t\sqrt{A^2 + B^2 + C^2}|$, it follows that the shortest distance is given by \[\frac{\abs{Ax_1 + By_1 + Cz_1 + D}}{\sqrt{A^2 + B^2 + C^2}}.\]
 \end{proof}
 
 \section{Alternative Coordinate Systems}
