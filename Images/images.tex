@@ -7,6 +7,7 @@
 \usepackage{makecell}
 \usepackage{tabularx}
 \usepackage{mathdots}
+\usepackage{bm}
 
 \usepackage[dvipsnames]{xcolor}
 \usepackage{tikz,tkz-euclide}
@@ -80,7 +81,7 @@ Color images can be represented as three of these matrices (or a single three-di
 
 \begin{figure}[ht!]
     \centering
-    \begin{tikzpicture}[scale=01.0]
+    \begin{tikzpicture}[scale=1.0]
         \begin{axis}[
             axis x line=middle,
             axis y line=middle,
@@ -97,7 +98,7 @@ Color images can be represented as three of these matrices (or a single three-di
 
 \begin{figure}[ht!]
     \centering
-    \begin{tikzpicture}[scale=01.0]
+    \begin{tikzpicture}[scale=1.0]
         \begin{axis}[
             axis x line=middle,
             axis y line=middle,
@@ -293,5 +294,82 @@ Sobel filter: \[w_y^S = \frac{1}{8}\begin{bmatrix}
 \end{bmatrix}\]
 
 The Prewitt filter uses the average of three adjacent first derivatives in order to smooth out noise, and the Sobel filter does the same, but with a weighted average.
+
+\section{Laplacian for Images}
+
+\begin{defn}
+    Let $f: \R^n \to \R$ be a twice-differentiable function. The \emph{Laplacian} of $f$ is the sum of all unmixed second order partial derivatives.
+
+    \[\nabla^2f(x_1, \ldots, x_n) = \sum_{i=1}^n \frac{\partial^2f}{\partial x_i^2}(x_1, \ldots, x_d)\]
+\end{defn}
+
+\begin{exmp}
+    Let $f: \R^2 \to \R$. Then at some $(x_0, y_0) \in \R^2$, \[\nabla^2 f(x_0, y_0) = \frac{\partial^2f}{\partial x^2}(x_0, y_0) + \frac{\partial^2f}{\partial y^2}(x_0, y_0).\]
+\end{exmp}
+
+\begin{defn}
+    Let $I: \mathbb{D} \to \mathbb{P}$ be an image. Then its \emph{Laplacian} is defined by \[\nabla^2I(i, j) = (I * h_{xx})(i, j) + (I * h_{xx})(i, j),\] where $h_xx$ and $h_yy$ are kernels for the approximation of the images second derivatives.
+\end{defn}
+
+Since convolution distributes over addition of kernels, \[(I * h_{xx})(i, j) + (I * h_{xx})(i, j) = \left(I * (h_{xx} + h_{xx}\right)(i, j).\] Let $h_L = h_{xx} + h_{yy}$, then
+\[h_L = \begin{bmatrix}
+    0 & 1 & 0 \\ 1 & -4 & 1 \\ 0 & 1 & 1
+\end{bmatrix}.\]
+
+The following kernels are more frequently used to practice, which they use a weighted average of adjacent values as with the Prewitt and Sobel filters:
+
+\[h_{L_8} = \begin{bmatrix}
+    1 & 1 & 1 \\ 1 & -8 & 1 \\ 1 & 1 & 1
+\end{bmatrix}\]
+
+\[h_{L_12} = \begin{bmatrix}
+    1 & 2 & 1 \\ 2 & -12 & 2 \\ 1 & 2 & 1
+\end{bmatrix}\]
+
+The Laplacian of an image can be used to sharpen the image. For example, consider the logistic function, its first derivative, and its Laplacian, which are shown in Figure \ref{fig:laplacian} as the blue, green, and red graphs respectively.
+
+\[f(x) = \frac{e^x}{e^x + 1}\]
+\[\nabla{f} = \frac{e^x}{(e^x + 1)^2}\]
+\[\nabla^2f(x) = \frac{e^x - e^{3x}}{(e^x + 1)^4}\]
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+        \begin{axis}[
+            axis x line=middle,
+            axis y line=middle,
+            ymin=-1,ymax=1,ylabel=$y$,
+            xmin=-6,xmax=6,xlabel=$x$
+            ]
+        \addplot[domain=-6:6, blue, ultra thick, samples=100] {e^x/(e^x+1)};
+        \addplot[domain=-6:6, green, ultra thick, samples=100] {e^x/(e^x+1)^2};
+        \addplot[domain=-6:6, red, ultra thick, samples=100] {(e^x-e^(3*x))/(e^x+1)^4};
+    \end{axis}
+    \end{tikzpicture}
+\caption{Graph of the logistic function, its first derivative, and its Laplacian.}
+\label{fig:laplacian}
+\end{figure}
+
+Now consider the function $g(x) = f(x) - k\nabla^2f(x)$ for some positive real constant $k$. $g(x)$ for the logistic function with $k=2$ is shown in red in comparison to the logistic function in blue in Figure \ref{fig:laplacian-sharpening}. This technique will sharpen any twice-differentiable function, as it will essentially ``pull-down'' concave-down parts of the function, and ``push-up'' concave-up parts of the function. The effect of this is to accentuate corners and make regions are inflection points steeper.
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+        \begin{axis}[
+            axis x line=middle,
+            axis y line=middle,
+            ymin=-0.05,ymax=1.05,ylabel=$y$,
+            xmin=-6,xmax=6,xlabel=$x$
+            ]
+        \addplot[domain=-6:6, blue, ultra thick, samples=100] {e^x/(e^x+1)};
+        \addplot[domain=-6:6, red, ultra thick, samples=100] {e^x/(e^x+1) - 2*((e^x-e^(3*x))/(e^x+1)^4)};
+    \end{axis}
+    \end{tikzpicture}
+\caption{Graph of $f(x) - k\nabla^2f(x)$, where $k=2$.}
+\label{fig:laplacian-sharpening}
+\end{figure}
+
+We can apply this technique to an entire image. Let $I: \mathbb{D} \to \mathbb{P}$ be an image, then define $J$ by \[J(i, j) = I(i, j) - k\nabla^2I(i, j),\] for all $(i, j) \in \mathbb{D}$ and some real $k > 0$.
+
 
 \end{document}
