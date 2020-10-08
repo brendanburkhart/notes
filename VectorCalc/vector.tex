@@ -111,6 +111,18 @@ Figure \ref{fig:orthogonal-projection} shows $A'$, the orthogonal projection of 
    Let $A = \left(2, 2\right)$, and $B = \left(1, 0\right)$. Then since $A \cdot B = 2$, and $B \cdot B = 1$, we know $A' = \frac{2}{1}B = \left(2, 0\right)$.
 \end{exmp}
 
+\begin{thm}
+    Let $p$ be a point, and $A\cdot\vec{x} + D = 0$ be a plane. Then the distance from the point to the plane is given by $\frac{A\cdot p + D}{\norm{A}}$.
+\end{thm}
+
+\begin{proof}
+    The line with direction $A$ that passes through $p$ is normal to the plane and thus contains the shortest path from the point to the plane. Therefore, $A \cdot (p + tA) + D = 0$ gives the closest point on the plane to $p$. We then have $A \cdot p + D = -t(A \cdot A)$. Since the shortest distance is equal to $|-t\norm{A}|$, it follows that the shortest distance is given by \[\frac{\abs{A \cdot p + D}}{\norm{A}}.\]
+\end{proof}
+
+\begin{cor}
+    Let $(x_1, y_1, z_1)$ be a point in $\R^3$, and $Ax + By + Cz + D = 0$ be a plane in $\R^3$. Then the distance from the point to the plane is: \[\frac{\abs{Ax_1 + By_1 + Cz_1 + D}}{\sqrt{A^2 + B^2 + C^2}}.\]
+\end{cor}
+
 \section{Cross Product}
 
 \begin{defn}
@@ -153,17 +165,13 @@ Figure \ref{fig:orthogonal-projection} shows $A'$, the orthogonal projection of 
 \begin{thm}
     Let $A$, $B$, and $C$ be vectors, and $x$ a real number. Then:
     \begin{itemize}
-        \item $A \times B = 0$ if and only if $A = \vec{0}$ or $B = \vec{0})$, or $A$ is parallel to $B$.
+        \item $A \times B = \vec{0}$ if and only if $A = \vec{0}$, $B = \vec{0}$, or $A$ is parallel to $B$.
         \item $A \times B = -(B \times A)$.
         \item $A \times (B + C) = (A \times B) + (A \times C)$.
         \item $(A + B) \times C = (A \times C) + (B \times C)$.
         \item $(\alpha A) \times B = A \times (\alpha B) = \alpha(A \times B)$.
     \end{itemize}
 \end{thm}
-
-\begin{proof}
-
-\end{proof}
 
 \begin{rmk}
     In a \emph{right-handed} coordinate system, the cross product will follow the \emph{right-hand rule}: on the right hand, index finger represents $A$, middle finger represents $B$, and then thumb represents $A \times B$. However, in a \emph{left-handed} coordinate system, the cross product will instead follow the similar \emph{left-hand rule}. The chirality of the cross product follows the chirality of the chosen basis, and is not inherently due to the definition of the cross product.
@@ -174,11 +182,19 @@ Figure \ref{fig:orthogonal-projection} shows $A'$, the orthogonal projection of 
 \end{thm}
 
 \begin{thm}
-    Let $(x_1, y_1, z_1)$ be a point, and $Ax + By + Cz + D = 0$ be a plane. Then the distance from the point to the plane is: \[\frac{\abs{Ax_1 + By_1 + Cz_1 + D}}{\sqrt{A^2 + B^2 + C^2}}.\]
+    The shortest distance between two non-parallel lines $p_1 + t_1d_1$ and $p_2 + t_2d_2$ is given by \[\frac{(p_1 - p_2) \cdot (d_1 \times d_2)}{\norm{d_1 \times d_2}}.\]
 \end{thm}
 
 \begin{proof}
-    The line with direction $(A, B, C)$ that passes through the point is normal to the plane and thus contains the shortest path from the point to the plane. Therefore, $A(x_1 + At) + B(y_1 + Bt) + C(z_1 + Ct) + D = 0$ gives the closest point on the plane to the point. $Ax_1 + By_1 + Cz_1 + D = -t(A^2 + B^2 + C^2)$. Since the shortest distance is equal to $|-t\norm{\langle A, B, C \rangle}| = |-t\sqrt{A^2 + B^2 + C^2}|$, it follows that the shortest distance is given by \[\frac{\abs{Ax_1 + By_1 + Cz_1 + D}}{\sqrt{A^2 + B^2 + C^2}}.\]
+    The shortest distance must lay on a vector that is orthogonal to both lines, which would be $d_1 \times d_2$. The component of $p_1 - p_2$ onto $d_1 \times d_2$ is then the shortest distance between the lines.
+\end{proof}
+
+\begin{thm}
+    The closest point on a line $p_1 + t_1d_1$ to another lines $p_2 + t_2d_2$ is \[p_1 + \frac{(p_2 - p_1)\cdot n}{d_1 \cdot n}d_1.\]
+\end{thm}
+
+\begin{proof}
+    The vector between the closest point and $p_2$ must be parallel to $d_1 \times d_2$, so it will intersect the plane with normal $(d_1 \times d_2) \times d_2$. Let $n = (d_1 \times d_2) \times d_2$. Then \[\left\{(p_1 + t_1d_1) - p_2\right\} \cdot n = 0,\] so $(p_2 - p_1)\cdot n = t(d_1 \cdot n)$. Therefore, the closest point is given by \[p_1 + \left(\frac{(p_2 - p_1)\cdot n}{d_1 \cdot n}\right)d_1.\]
 \end{proof}
 
 \section{Alternative Coordinate Systems}
