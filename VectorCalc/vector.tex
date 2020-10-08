@@ -309,11 +309,38 @@ In spherical coordinates, polar coordinates are augmented with a zenith angle $\
 \end{defn}
 
 \begin{defn}
-    A \emph{cone} oriented around the $z$-axis is given by \[\frac{x^2}{a^2} + \frac{y^2}{b^2} = \frac{z^2}{c^2}.\] This can be decomposed into ellipses along the $z$-axis, and pairs of lines on the $x$ and $y$ axes.
+    A \emph{paraboloid} oriented around the $z$-axis is given by \[\frac{x^2}{a^2} + \frac{y^2}{b^2} = \frac{z}{c}.\] This can be decomposed into ellipses around the $z$-axis, and parabolas along the $x$ and $y$ axes.
 \end{defn}
 
 \begin{defn}
-    A \emph{paraboloid} oriented around the $z$-axis is given by \[\frac{x^2}{a^2} + \frac{y^2}{b^2} = \frac{z}{c}.\] This can be decomposed into ellipses around the $z$-axis, and parabolas along the $x$ and $y$ axes.
+    By negating either the $x^2$ or $y^2$ term in a paraboloid, we can form a \emph{saddle}. A saddle the curves up along the $x$ axis and down along the $y$ axis is given by \[\frac{x^2}{a^2} - \frac{y^2}{b^2} = \frac{z}{c}.\]
 \end{defn}
+
+\begin{defn}
+    A hyperboloid comes in three types, all with the general form \[\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = r,\] if they are aligned with the $z$-axis. When:
+    \begin{itemize}
+        \item $r > 0$, the hyperboloid is cooling-tower shaped along the $z$-axis, and is known as a hyperboloid of one sheet, or a hyperbolic hyperboloid.
+        \item $r = 0$, the hyperboloid is composed of two cones along the $z$-axis, and is known simply as a cone.
+        \item $r < 0$, the hyperboloid is vaguely shaped like two separated paraboloids facing away from each other, and is known as a hyperboloid of two sheets, or an elliptic hyperboloid.
+    \end{itemize}
+\end{defn}
+
+\section{Taylor's Theorem}
+
+Let $f: \R^2 \to \R$ be a $C^2$ (all second derivatives are continuous) function. Then the quadratic Taylor polynomial around $a = (x_0, y_0)$ must be of the form $T_2(x, y) = A + B(x-x_0) + C(y-y_0) + D(x-x_0)(y-y_0) + E(x-x_0)^2 + F(y-y_0)^2$.
+
+Then:
+\begin{itemize}
+    \item $\frac{\partial T_2}{\partial x} = B + D(y-y_0) + 2E(x-x_0)$,
+    \item $\frac{\partial T_2}{\partial y} = C + D(x-x_0) + 2F(y-y_0)$,
+    \item $\frac{\partial T_2}{\partial xy} = D$,
+    \item $\frac{\partial T_2}{\partial xx} = 2E$,
+    \item $\frac{\partial T_2}{\partial yy} = 2F$.
+\end{itemize}
+
+Therefore, we have $E = \frac{1}{2}\frac{\partial^2 f}{\partial x^2}(a)$, $F = \frac{1}{2}\frac{\partial^2 f}{\partial y^2}(a)$, $D = \frac{1}{2}\frac{\partial^2 f}{\partial xy}(a)$, $C = \frac{\partial f}{\partial y}(a)$, $B = \frac{\partial f}{\partial x}(a)$, and $A = f(a)$.
+
+It follows that \[T_2(x, y) = f(a) + \frac{\partial f}{\partial x}(a)(x-x_0) + \frac{\partial f}{\partial y}(a)(y-y_0) + \frac{1}{2}\frac{\partial^2 f}{\partial xy}(a)(x-x_0)(y-y_0) + \]
+\[\frac{1}{2}\frac{\partial^2 f}{\partial x^2}(a)(x-x_0)^2 + \frac{1}{2}\frac{\partial^2 f}{\partial y^2}(a)(y-y_0)^2.\]
 
 \end{document}
