@@ -574,6 +574,62 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
     \end{enumerate}
 \end{proof}
 
+\begin{prop}\label{greater-than-ratio}
+    Let $(F, F^+)$ be an ordered field, and let $x, y \in F^{+}$. Then $x > y$ if and only if $\frac{x}{y} > 1$.
+\end{prop}
 
+\begin{proof}\proofbreak
+    ($\implies$) If $x > y$, by definition $x - y > 0$. Therefore $\frac{x}{y} - \frac{y}{y} > 0$, so $\frac{x}{y} - 1 > 0$. This implies that $\frac{x}{y} > 1$.
+
+    ($\impliedby$) If $\frac{x}{y} > 1$, we know that $\frac{x}{y} - 1 > 0$, so $x - y > 0$. Therefore, we have $x > y$.
+\end{proof}
+
+\section{Real Numbers}
+
+\begin{defn}
+    A \emph{sequence} in a set $X$ is a function $f: \Z_{\geq k} \to X$.
+\end{defn}
+
+\begin{exmp}
+    Let $f: \Z_{\geq 3} \to Q$ be the function given by $f(n) = \frac{(-1)^n}{n}$.
+\end{exmp}
+
+\begin{defn}
+    Let $F$ be an ordered field, and $f$ a sequence in $F$. Then we say that $f$ \emph{converges} to some $x \in F$ if, for every open interval $(a, b) \in F$ containing $x$, there exists $N \in Z_{\geq k}$ such that $f(n) \in (a, b)$ for every $n \geq N$.
+\end{defn}
+
+\begin{defn}
+    A \emph{binary search sequence} in an ordered field $F$ is $\left\{[a_n, b_n]\right\}_{n \geq k}$ with $a_n, b_ \in F$ satisfying $[a_{n+1}, b_{n+1}] \subseteq [a_n, b_n]$ and $b_{n+1}-a_{n+1} = \frac{1}{2}(b_n - a_n)$.
+\end{defn}
+
+\begin{defn}
+    A binary search sequence \emph{converges} to some $x \in F$ if for all $n \geq k$, $\left\{[a_n, b_n]\right\}$ contains $x$.
+\end{defn}
+
+\begin{defn}
+    An ordered field $F$ is \emph{complete} if every binary search sequence converges to a unique element of $F$.
+\end{defn}
+
+\begin{defn}
+    Any complete ordered field is a model for the real numbers.
+\end{defn}
+
+\begin{rmk}
+    Any two complete ordered fields are isomorphic.
+\end{rmk}
+
+\begin{thm}
+    The Archimedean property states that for any $x, y \in \R^{+}$, there exists $n \in \Z_{\geq 1}$ such that $nx > y$.
+\end{thm}
+
+\begin{proof}
+    For the sake of contradiction, assume there exists some $x, y \in \R^{+}$ such that there is no $n \in \Z$ such that $nx > y$. Therefore, there is some $z \in \R$ where $z = y/x$ such that $z \geq n$ for all $n \in \Z$. Since $2^k \in \Z$ for all $k \in \Z$, it follows that $\frac{z}{2^k} \geq 1$ by Proposition \ref{greater-than-ratio}.
+
+    Now consider the binary search sequence $f(k) = \left\{[0, \frac{z}{2^k}]\right\}_{k \geq 0}$. It is clear that $0 \in f(k)$ for all $k \in \Z_{\geq 0}$, however since $\frac{z}{2^k} \geq 1$, we also have that the $1 \in f(k)$ for all $k \in \Z_{\geq 0}$. This would imply that the binary search sequence converges to both $0$ and $1$, which contradicts the definition of the real numbers, so it follows that there is no such $z \in \R$.
+\end{proof}
+
+\begin{cor}
+    Suppose $x \in R$ satisfies $0 \leq x \leq \frac{1}{n}$ for every $n \in \Z_{\geq 1}$. Then $x$ must be zero.
+\end{cor}
 
 \end{document}
