@@ -544,14 +544,14 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \begin{defn}
     An \emph{ordered field} is a field $(F, +, \cdot)$ together with a subset $F^+ \subset F$ such that\begin{itemize}
         \item For all $x, y \in F^+$, both $x + y$ and $x \cdot y$ are in $F^+$.
-        \item For all $x \in F$, exactly one of $x \in F^+$, $-x \in F^+$, and $x = 0$ is true.
+        \item (Trichotomy) For all $x \in F$, exactly one of $x \in F^+$, $-x \in F^+$, and $x = 0$ is true.
     \end{itemize}
 \end{defn}
 
 If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x > 0$) if $x \in F+$.
 
 \begin{defn}
-    For elements $x, y$ in an ordered field, we say $x > y$ (or $y < x$) if $x - y > 0$, and $x \geq y$  ()if $x = y \lor x > y$.
+    For elements $x, y$ in an ordered field, we say $x > y$ (or $y < x$) if $x - y > 0$, and $x \geq y$ (or $y \leq x$) if $x = y \lor x > y$.
 \end{defn}
 
 \begin{thm} For all $x, y, z, w \in F$, where $F$ is an ordered field:
@@ -574,14 +574,30 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
     \end{enumerate}
 \end{proof}
 
+\begin{prop}\label{trichotomy-exclusion}
+    Let $(F, F^+)$ be an ordered field, and $x, y \in F$. Then at most one of the following is true: $x < y$, $x > y$.
+\end{prop}
+
+\begin{proof}
+    For the sake of contradiction, assume that $x < y$ and $y > x$. Since $x < y$, we know $y - x > 0$, so $(y - x) \in F^+$. Since $x > y$, we know that $y - x < 0$, so $(y - x) \in F^-$. This contradicts trichotomy, $x < y \land y > x$ cannot be true.
+\end{proof}
+
 \begin{prop}\label{greater-than-ratio}
     Let $(F, F^+)$ be an ordered field, and let $x, y \in F^{+}$. Then $x > y$ if and only if $\frac{x}{y} > 1$.
 \end{prop}
 
 \begin{proof}\proofbreak
-    ($\implies$) If $x > y$, by definition $x - y > 0$. Therefore $\frac{x}{y} - \frac{y}{y} > 0$, so $\frac{x}{y} - 1 > 0$. This implies that $\frac{x}{y} > 1$.
+    ($\implies$) If $x > y$, by definition $x - y > 0$. Therefore, $\frac{x}{y} - \frac{y}{y} > 0$, so $\frac{x}{y} - 1 > 0$. This implies that $\frac{x}{y} > 1$.
 
-    ($\impliedby$) If $\frac{x}{y} > 1$, we know that $\frac{x}{y} - 1 > 0$, so $x - y > 0$. Therefore, we have $x > y$.
+    ($\impliedby$) If $\frac{x}{y} > 1$, we know that $\frac{x}{y} - 1 > 0$, so it follows that $x - y > 0$. Therefore, we have $x > y$.
+\end{proof}
+
+\begin{prop}\label{average-in-between}
+    Let $F$ be an ordered field, and $x, y \in F$ with $x < y$. Then $x < \frac{x+y}{2} < y$.
+\end{prop}
+
+\begin{proof}
+    Since $x < y$, we know that $x + x < x + y$, so $(x + y) - 2x > 0$. Then $\frac{x+y}{2} - x > 0$, so $x < \frac{x+y}{2}$. Similarly, since $x < y$ we know that $x + y < y + y$, so $2y - (x + y) > 0$. Then we have $y - \frac{x + y}{2} > 0$, so $\frac{x + y}{2} < y$. Therefore, $x < \frac{x+y}{2} < y$.
 \end{proof}
 
 \section{Real Numbers}
@@ -595,8 +611,16 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
 \end{exmp}
 
 \begin{defn}
-    Let $F$ be an ordered field, and $f$ a sequence in $F$. Then we say that $f$ \emph{converges} to some $x \in F$ if, for every open interval $(a, b) \in F$ containing $x$, there exists $N \in Z_{\geq k}$ such that $f(n) \in (a, b)$ for every $n \geq N$.
+    Let $F$ be an ordered field, and $f$ a sequence in $F$. Then we say that $f$ \emph{converges} to some \emph{limit} $x \in F$ if, for every open interval $(a, b) \in F$ containing $x$, there exists $N \in Z_{\geq k}$ such that $f(n) \in (a, b)$ for every $n \geq N$.
 \end{defn}
+
+\begin{thm}
+    If a sequence $f$ in an ordered field $F$ is convergent, it has a unique limit.
+\end{thm}
+
+\begin{proof}
+    Assume that a convergent sequence $f$ converges to two distinct limits, $L_1, L_2 \in F$. Since $L_1 \neq L_2$, one must be greater than the other, so without loss of generality we will assume that $L_1 < L_2$. By Proposition \ref{average-in-between}, we know that $L_1 < \frac{L_1+L_2}{2} < L_2$. Construct the open intervals $I_1 = (L_1 - 1, \frac{L_1+L_2}{2})$ and $I_1 = (\frac{L_1+L_2}{2}, I_2 + 1)$. Since $f$ converges to both $L_1$ and $L_2$, there must exist some $N_1, N_2 \in \Z$ such that for all $n \geq N_1$ we have $f(n) \in I_1$, and for all $n \geq N_2$ we have $f(n) \in I_2$. Now let $N$ be the largest of $N_1$ and $N_2$. For any $n \geq N$, we have $f(n) \in I_1$ so $f(n) < \frac{L_1+L_2}{2}$, and for any $n \geq N$, we have $f(n) \in I_2$ so $f(n) > \frac{L_1+L_2}{2}$. By Proposition \ref{trichotomy-exclusion}, this is a contradiction, so it must be that $f$ has a distinct limit.
+\end{proof}
 
 \begin{defn}
     A \emph{binary search sequence} in an ordered field $F$ is $\left\{[a_n, b_n]\right\}_{n \geq k}$ with $a_n, b_ \in F$ satisfying $[a_{n+1}, b_{n+1}] \subseteq [a_n, b_n]$ and $b_{n+1}-a_{n+1} = \frac{1}{2}(b_n - a_n)$.
@@ -631,5 +655,26 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
 \begin{cor}
     Suppose $x \in R$ satisfies $0 \leq x \leq \frac{1}{n}$ for every $n \in \Z_{\geq 1}$. Then $x$ must be zero.
 \end{cor}
+
+\begin{lemma}\label{geometric-progression}
+    For $r \neq 1$ and $n \in \Z_{geq 1}$, \[1 + r + r^2 + \cdots + r^{n-1} = \frac{1-r^n}{1-r}.\]
+\end{lemma}
+
+\begin{proof}
+    We will prove this by induction. For the base case, let $n = 1$. Since $r^0 = 1$, and $\frac{1-r^1}{1-r} = 1$, the base case is true.
+
+    Assume that $1 + r + r^n + \cdots + r^{n-1} = \frac{1-r^n}{1-r}$ for some $n \geq 1$. Then $1 + r + r^n + \cdots + r^{n-1} + r^n = \frac{1-r^n}{1-r} + r^n = \frac{1-r^n}{1-r} + \frac{r^n - r^{n+1}}{1-r}$, so it follows that $1 + r + r^n + \cdots + r^{n-1} + r^n = \frac   {1-r^{n+1}}{1-r}$.
+
+    By the induction principle, it follows that the lemma is true for all $n \geq 1$.
+\end{proof}
+
+\begin{lemma}\label{freshmans-reality}
+    Let $a, b \in R$ and $n \in \Z{\geq 1}$. Then \[b^n - a^n = (b - a)\sum_{k=0}^{n-1} b^ka^{n-1-k}.\]
+\end{lemma}
+
+\begin{proof}
+    If $b = a$, then $b - a = b^n - a^n = 0$, so the lemma is true in this case.
+    If $a = 0$, then $b^n - a^n = b^n$, and $(b - a)\sum_{k=0}^{n-1} b^ka^{n-1-k} = b\sum_{k=0}^{n-1}b^k = b^n$. Now assume $b \neq a$ and $a \neq 0$, and let $r = \frac{b}{a}$. Then $r \neq 1$, so $1 + r + r^2 + \cdots + r^{n-1} = \frac{1-r^n}{1-r}$ by Lemma \ref{geometric-progression}. It then follows that $r^n-1 = (r-1)\sum_{k=0}^{n-1}r^k$. Notice that $r^n - 1 = \frac{b^n}{a^n} - 1 = b^n - a^n$. Therefore, $b^n - a^n = (b-a)\sum_{k=0}^{n-1}b^ka^{n-1-k}$.
+\end{proof}
 
 \end{document}
