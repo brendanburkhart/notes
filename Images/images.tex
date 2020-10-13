@@ -478,4 +478,67 @@ We can apply graph theory and signal processing to image processing by modelling
 
 An image $I: \mathbb{D} \to \mathbb{P}$ can be represented as a graph signal. First, assign each pixel to a vertex, and then create an edge between every pixel's horizontal, vertical, and diagonal neighbors. Then the image can be encoded as the function $f: \mathbb{D} \to \mathbb{P}$ that assigns the value of each pixel to the corresponding vertex.
 
+\section{Shapes}
+
+\subsection{Mathematically Describing Shapes}
+
+\begin{defn} (Due to Wikipedia)
+    A \emph{shape} is the form of an object or its boundary, as opposed to other properties of the shape, such as its color, texture, material, position, or orientation.
+\end{defn}
+
+\begin{defn} (Due to David G. Kendall)
+    A \emph{shape} is the geometrical information that remains when the position, scale, and rotation  of an object are ignored.
+\end{defn}
+
+\begin{defn}
+    Consider a parameter space $M$. A \emph{parameterized curve} is a continuous mapping $c: M \to \R^d$. $M$ is usually an interval:
+    \begin{enumerate}
+        \item $M = [a, b]$, e.g. $M = [0, 1]$ for open curves,
+        \item $M = S^1$ (the unit circle) for closed curves.
+    \end{enumerate}
+\end{defn}
+
+\begin{exmp}
+    Let $M = [0, 1]$ and $d = 1$. Then \emph{one-dimensional} curves are mappings of the form $c: M \to \R$ where $c(t) = f(t)$ for some function $f$.
+    \begin{itemize}
+        \item $c(t) = 2t - 1$ gives a particular line.
+        \item $c(t) = (t - \frac{1}{2})^2$ describes a particular parabola.
+    \end{itemize}
+\end{exmp}
+
+\begin{exmp}
+    Let $M = [0, 1]$ and $d = 2$. Then \emph{two-dimensional} curves are mappings of the form $c: M \to \R^2$ where $c(t) = (x(t), y(t))$ for some functions $x, y$.
+    \begin{itemize}
+        \item $c(t) = (\cos(2\pi{t}), \sin(2\pi{t}))$ describes the unit circle.
+    \end{itemize}
+\end{exmp}
+
+\begin{rmk}
+    Shapes can be described as parametric curves/surfaces.
+\end{rmk}
+
+\begin{exmp}
+    If we want to parameterize a triangle on $M = [0, 1]$, we can use piecewise functions. For example,
+    \[c(t) = \left\{
+        \begin{array}{ll}
+          (t, 0) & : t \in [0, 1/3)\\
+          (1/3, t - 1/3) & : t \in [1/3, 2/3)\\
+          (1 - t, 1 - t) & : t \in [2/3, 1]\\
+        \end{array}
+      \right.
+    \]
+\end{exmp}
+
+\begin{defn}
+    From here, a \emph{shape} is a two-dimensional parametric curve $c: M \to \R^2$ on some interval $M$, which is in differentiable continuity class $C^2$ and $c'(t) \neq 0$ for all $t \in M$.
+\end{defn}
+
+\begin{defn}
+    Let $c: M \to \R^2$ be a shape, with $c(t) = (x(t), y(t))$. The \emph{tangent vector} of $c$ at $t$ is the unit vector \[T_c(t) = \frac{c'(t)}{\norm{c'(t)}} = \frac{(x'(t), y'(t))}{\sqrt{(x'(t))^2 + (y'(t))^2}}.\]
+\end{defn}
+
+\begin{defn}
+    Let $c: M \to \R^2$ be a shape, with $c(t) = (x(t), y(t))$. The \emph{normal vector} of $c$ at $t$ is the unit vector \[N_c(t) = \frac{(-y'(t), x'(t))}{\sqrt{(x'(t))^2 + (y'(t))^2}}.\]
+\end{defn}
+
 \end{document}
