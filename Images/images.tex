@@ -33,7 +33,9 @@
 \tableofcontents
 \newpage
 
-\section{Mathematically Describing Images}
+\section{Images}
+
+\subsection{Mathematically Describing Images}
 
 Traditionally, images have been modeled as graphs (or level sets) of continuous functions defined on a rectangular domain $D \subset \R^2$, and codomain $P \subset \R$. \[D = \left[0, R_1\right] \times \left[0, R_2\right] \subset \R^2\] \[P = \left[0, L\right] \subset \R\] \[f : D \to P\]
 
@@ -43,7 +45,7 @@ To perform computational work with images, it is useful to discretize images. Th
 
 Color images can be represented as three of these matrices (or a single three-dimensional matrix), each corresponding to one dimension of a color space, such as RGB or HSV.
 
-\section{Point Operations}
+\subsection{Point Operations}
 
 \begin{defn}
     Given a mapping $T: \mathbb{P} \to \mathbb{P}$, a \emph{point operation} on an image $I: \mathbb{D} \to \mathbb{P}$ is defined as $J(i, j) = T(I(i, j))$ for all $(i, j) \in \mathbb{D}$.
@@ -143,7 +145,7 @@ For the following four examples, let $I = \begin{bmatrix}
     Contrast-enhancement can be done using the function shown in Figure \ref{fig:contrast}. \[T: r \mapsto c + c\sin\left(\frac{\pi(r-c)}{2c}\right)\] where $c = \frac{L - 1}{2}$. When $\gamma > 1$ the image is darkened, when $\gamma < 1$ the image is brightened, and when $\gamma = 1$ the image is unchanged.
 \end{exmp}
 
-\section{Filtering and Convolutions}
+\subsection{Filtering and Convolutions}
 
 \begin{defn}
     A \emph{filter mask} $w$ is a $(2k_1 + 1) \times (2k_2 + 1)$ matrix, where $k_1, k_2 \in \N$.
@@ -223,7 +225,7 @@ Filtering can be defined in terms of convolution. To apply a $(2k_1 + 1) \times 
 
 Convolution is a linear operation, however several useful filtering operations are non-linear. One example is median blurring. Similarly to how mean filtering defines $J(i, j)$ to be the mean of the neighborhood of $I(i, j)$, median blurring uses the median of the neighborhood of $I(i, j)$. This can result in superior denoising, while better preserving edges. However, it is more computationally expensive than either mean or Gaussian blurring.
 
-\section{Partial Derivatives for Images}
+\subsection{Partial Derivatives for Images}
 
 \begin{defn}
     When $\Delta x$ is small enough, $f'(x_0)$ can be approximated using the \emph{forward difference formula}: \[f'(x_0) \approx \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}.\]
@@ -296,7 +298,7 @@ Sobel filter: \[w_y^S = \frac{1}{8}\begin{bmatrix}
 
 The Prewitt filter uses the average of three adjacent first derivatives in order to smooth out noise, and the Sobel filter does the same, but with a weighted average.
 
-\section{Laplacian for Images}
+\subsection{Laplacian for Images}
 
 \begin{defn}
     Let $f: \R^n \to \R$ be a twice-differentiable function. The \emph{Laplacian} of $f$ is the sum of all unmixed second order partial derivatives.
@@ -372,7 +374,7 @@ Now consider the function $g(x) = f(x) - k\nabla^2f(x)$ for some positive real c
 
 We can apply this technique to an entire image. Let $I: \mathbb{D} \to \mathbb{P}$ be an image, then define $J$ by \[J(i, j) = I(i, j) - k\nabla^2I(i, j),\] for all $(i, j) \in \mathbb{D}$ and some real $k > 0$.
 
-\section{Image Processing on Graphs}
+\subsection{Image Processing on Graphs}
 
 We can apply graph theory and signal processing to image processing by modelling image data as graph signals. We will first define graphs and graph signals, and then explore how they can be applied to image processing.
 
@@ -455,7 +457,7 @@ We can apply graph theory and signal processing to image processing by modelling
 \end{figure}
 
 \begin{defn}
-    Let $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ be a graph. Then a \emph{graph signal} $f: \mathcal{V} \to \R$ is simply a function which assigns a real value to each vertex. The image of $f$ can be represented as a vector $v$ where the $i$-th entry is $f(i)$ - the value associated with the $i$-th vertex.
+    Let $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ be a graph. Then a \emph{graph signal} $f: \mathcal{V} \to \R$ is simply a function which assigns a real value to each vertex. The image of $f$ can be represented as a vector $v$ where the $i$-th entry is $f(i)$ --- the value associated with the $i$-th vertex.
 \end{defn}
 
 \begin{defn}
