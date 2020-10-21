@@ -565,4 +565,33 @@ An image $I: \mathbb{D} \to \mathbb{P}$ can be represented as a graph signal. Fi
     \end{vmatrix} = \frac{x'(t)^2 + y'(t)^2}{x'(t)^2 + y'(t)^2} = 1,\] the ordered orthonormal basis $\left\langle T_c(t), N_c(t) \right\rangle$ is positively oriented.
 \end{proof}
 
+\subsection{Properties of Shapes}
+
+In this section, we will extend the definition of several useful properties of circles to arbitrary shapes.
+
+\begin{defn}
+    The \emph{diameter} of a shape $c$ is the largest of the maximum width and maximum height of the shape.
+\end{defn}
+
+\begin{defn}
+    The \emph{arc length} of a shape $c: M \to \R^2$, denoted by $L_c$, is the extension of circumference, and is given by \[L_c = \int_{t\in M}\norm{c'(t)}dt = \int_{t\in M}{\sqrt{x'(t)^2 + y'(t)^2}}dt.\] The expression ${\sqrt{x'(t)^2 + y'(t)^2}}dt$ is sometimes called the arc length measure, denoted $ds$, giving $L_c = \int_M ds$.
+\end{defn}
+
+\begin{defn}
+    The \emph{centroid} of a shape $c: M \to \R^2$ is the point $(\bar{x}, \bar{y})$, where \[\bar{x} = \int_M x(t)\frac{ds}{L_c},\] \[\bar{y} = \int_M y(t)\frac{ds}{L_c}.\]
+\end{defn}
+
+\begin{defn}
+    The \emph{convex hull} of a shape $c$ is the minimum convex shape which completely encloses $c$.
+\end{defn}
+
+\begin{defn}
+    The discretization of a curve $c: M \to \R^2$ where into $N$ pieces is the set $\{c(t_n) : 0 \leq n < N\}$, where $M$ is divided into $N$ intervals and $t_n$ denotes the zero-indexed $n$th interval. This can also be represented as the $N \times 2$ matrix
+    \[\begin{bmatrix}
+        c(t_0) \\ \vdots \\ c(t_{N-1})
+    \end{bmatrix} = \begin{bmatrix}
+        x_0 & y_0 \\ \vdots & \vdots \\ x_{N-1} & y_{N-1}
+    \end{bmatrix}.\]
+\end{defn}
+
 \end{document}
