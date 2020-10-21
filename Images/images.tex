@@ -530,15 +530,39 @@ An image $I: \mathbb{D} \to \mathbb{P}$ can be represented as a graph signal. Fi
 \end{exmp}
 
 \begin{defn}
-    From here, a \emph{shape} is a two-dimensional parametric curve $c: M \to \R^2$ on some interval $M$, which is in differentiable continuity class $C^2$ and $c'(t) \neq 0$ for all $t \in M$.
+    From here, a \emph{shape} is a two-dimensional parametric curve $c: M \to \R^2$ on some interval $M$, which is in differentiable continuity class $C^1$ and $c'(t) \neq 0$ for all $t \in M$.
 \end{defn}
 
 \begin{defn}
-    Let $c: M \to \R^2$ be a shape, with $c(t) = (x(t), y(t))$. The \emph{tangent vector} of $c$ at $t$ is the unit vector \[T_c(t) = \frac{c'(t)}{\norm{c'(t)}} = \frac{(x'(t), y'(t))}{\sqrt{(x'(t))^2 + (y'(t))^2}}.\]
+    An \emph{immersion} between $\R^n$ and $\R^m$ is a differentiable function $f: \R^n \to \R^m$ whose derivative at any point $p \in \R^n$ is linear map that is everywhere injective.
 \end{defn}
 
+\begin{rmk}
+    An immersion between $\R$ and $\R^2$ on some domain $M \subseteq \R$ is a then differentiable function \[c: M \to \R^2\] \[c(t) \mapsto (x(t), y(t))\], where $\norm{c'(t)} \neq 0$ for all $t \in M$. It follows that shapes are immersions between $\R$ and $\R^2$.
+\end{rmk}
+
 \begin{defn}
-    Let $c: M \to \R^2$ be a shape, with $c(t) = (x(t), y(t))$. The \emph{normal vector} of $c$ at $t$ is the unit vector \[N_c(t) = \frac{(-y'(t), x'(t))}{\sqrt{(x'(t))^2 + (y'(t))^2}}.\]
+    Let $c: M \to \R^2$ be a shape, with $c(t) = (x(t), y(t))$. Then the \emph{tangent} vector of $c$ at $t$, denoted by $T_c(t)$, is the unique unit vector in the direction $c'(t)$. The \emph{normal} vector of $c$ at $t$, denoted by $N_c(t)$, is the unique vector which extends $T_c(t)$ to a positively oriented orthonormal basis for $\R^n$.
 \end{defn}
+
+\begin{prop}
+    The tangent vector of $c$ at $t$ given by \[T_c(t) = \frac{c'(t)}{\norm{c'(t)}} = \frac{(x'(t), y'(t))}{\sqrt{(x'(t))^2 + (y'(t))^2}}.\]
+\end{prop}
+
+\begin{proof}
+    It is clear that \[\norm{T_c(t)} = \frac{\norm{(x'(t), y'(t))}}{\sqrt{(x'(t))^2 + (y'(t))^2}} = \frac{\sqrt{(x'(t))^2 + (y'(t))^2}}{\sqrt{(x'(t))^2 + (y'(t))^2}} = 1,\] and that since $T_c(t) = \frac{1}{\sqrt{(x'(t))^2 + (y'(t))^2}}c'(t)$, it must be parallel to $c'(t)$, so it is the tangent vector.
+\end{proof}
+
+\begin{prop}
+    The normal vector of $c$ at $t$ is given by \[N_c(t) = \frac{(-y'(t), x'(t))}{\sqrt{(x'(t))^2 + (y'(t))^2}}.\]
+\end{prop}
+
+\begin{proof}
+    It is clear that $\norm{N_c(t)} = \norm{T_c(t)} = 1$, so $N_c(t)$ is a unit vector. Since \[\left\langle T_c(t), N_c(t) \right\rangle = \frac{1}{(x'(t))^2 + (y'(t))^2}\left(x'(t)(-y'(t)) + y'(t)x'(t)\right) = 0,\] $N_c(t)$ is orthogonal to $T_c(t)$, and so extends $T_c(t)$ to an orthonormal basis for $\R^2$. Furthermore, since \[\det\begin{pmatrix}
+        T_c(t) & N_c(t)
+    \end{pmatrix} = \frac{1}{\norm{c'(t)}^2}\begin{vmatrix}
+        x'(t) & -y'(t) \\ y'(t) & x'(t)
+    \end{vmatrix} = \frac{x'(t)^2 + y'(t)^2}{x'(t)^2 + y'(t)^2} = 1,\] the ordered orthonormal basis $\left\langle T_c(t), N_c(t) \right\rangle$ is positively oriented.
+\end{proof}
 
 \end{document}
