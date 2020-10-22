@@ -880,11 +880,11 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 \end{proof}
 
 \begin{defn}
-    Let $V, W$ be vector spaces and $f: V \to W$ a linear transformation. Then the \emph{range} of $f$ is the image of $V$ under $f$, denoted by $R(f)$. The \emph{rank} of $f$ is the dimension of $R(f)$.
+    Let $V, W$ be vector spaces and $f: V \to W$ a linear transformation. The \emph{rank} of $f$ is the dimension of $f(V)$ (the image of $V$ under $f$).
 \end{defn}
 
 \begin{exmp}
-    Let $f: \R^2 \to \R^3$ be the linear transformation determined by $f(1, 0) = (2, 1, 0)$ and $f(0, 1) = (0, -1, 1)$. Then $R(f) = \spanset{\{(2, 1, 0), (0, -1, 1)\}}$. Since these vectors are linearly independent, they form a basis for $R(f)$, and so the rank of $f$ is 2.
+    Let $f: \R^2 \to \R^3$ be the linear transformation determined by $f(1, 0) = (2, 1, 0)$ and $f(0, 1) = (0, -1, 1)$. Then $f(\R^2) = \spanset{\{(2, 1, 0), (0, -1, 1)\}}$. Since these vectors are linearly independent, they form a basis for $f(\R^2)$, and so the rank of $f$ is 2.
 \end{exmp}
 
 \begin{prop}
@@ -906,21 +906,21 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 \begin{exmp}
     Let $f: P_2(\R) \to \R^2$ be the linear transformation $f(ax^2 + bx + c) = (a + b, a + c)$. Then $f(ax^2 + bx + c) = (0, 0)$ if and only if $a + b = 0$ and $a + c = 0$, so $b = c$, and $a = -c$. Therefore, $\ker f = \left\{-cx^2 + cx + c \compbar c \in \R \right\} = \spanset{\{-x^2 + x + 1\}}$, so the nullity of $f$ is one.
 
-    Since the range of $f$ is \[\spanset{\{f(x^2), f(x), f(1)\}} = \spanset{\{(1, 1), (1, 0), (0, 1)\}} = \spanset{\{(1, 0), (0, 1)\}},\] the rank of $f$ is two.
+    Since the image of $f$ is \[\spanset{\{f(x^2), f(x), f(1)\}} = \spanset{\{(1, 1), (1, 0), (0, 1)\}} = \spanset{\{(1, 0), (0, 1)\}},\] the rank of $f$ is two.
 \end{exmp}
 
 \begin{rmk}
-    If $f: V \to W$ is a linear transformation, and $B$ is a basis of $V$, then the range of $f$ equals the span of $f(B)$. However, $f(B)$ is not necessarily linearly independent.
+    If $f: V \to W$ is a linear transformation, and $B$ is a basis of $V$, then the image of $f$ equals the span of $f(B)$. However, $f(B)$ is not necessarily linearly independent.
 \end{rmk}
 
-\begin{prop}\label{kernel-range-are-finite}
-    Let $f: V \to W$ be a linear transformation, where $V$ is a finite dimensional vector space with basis $B$. Then both the kernel and range of $f$ are finite dimensional.
+\begin{prop}\label{kernel-image-are-finite}
+    Let $f: V \to W$ be a linear transformation, where $V$ is a finite dimensional vector space with basis $B$. Then both the kernel and image of $f$ are finite dimensional.
 \end{prop}
 
 \begin{proof}
     Since the kernel of $f$ is a subspace of $V$, the kernel of $f$ is finite dimensional by Theorem \ref{subspace-is-finite}.
 
-    Since $V$ is finite dimensional, by Definition \ref{finite-dimensional-defn} $B$ is finite, and so $f(B)$ is as well. By Proposition \ref{linearly-independent-subset-existence} it follows that there is a linearly independent subset of $f(B)$ which spans the range of $f$, which is then a basis for the range of $f$ by Corollary \ref{basis-span-independence}. Since $f(B)$ is finite, any subset must be as well, and so the range of $f$ is finite dimensional.
+    Since $V$ is finite dimensional, by Definition \ref{finite-dimensional-defn} $B$ is finite, and so $f(B)$ is as well. By Proposition \ref{linearly-independent-subset-existence} it follows that there is a linearly independent subset of $f(B)$ which spans the image of $f$, which is then a basis for the image of $f$ by Corollary \ref{basis-span-independence}. Since $f(B)$ is finite, any subset must be as well, and so the image of $f$ is finite dimensional.
 \end{proof}
 
 \begin{thm}\label{rank-nullity}
@@ -930,11 +930,11 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 \begin{proof}
     Let $\{v_1, \ldots, v_k\}$ be a basis for $\ker f$, which by Corollary \ref{basis-span-independence} can be completed to a basis $\{v_1, \ldots, v_k, v_{k+1}, \ldots, v_n\}$ for $V$.
 
-    Let $v \in V$, so there exists $a_i \in F$ (for $i = 1, \ldots, n$) such that $a1v_1 + \cdots + a_nv_n = v$. Then $f(v) = a_1f(v_1) + \cdots + a_nf(v_n)$. However, $f(v_1), \ldots, f(v_n)$ are all zero, so $f(v) = a_{k+1}f(v_{k+1}) + a_nf(v_n)$. It follows that $R(f) = \spanset{\{f(v_{k+1}), \ldots, f(v_n)\}}$.
+    Let $v \in V$, so there exists $a_i \in F$ (for $i = 1, \ldots, n$) such that $a1v_1 + \cdots + a_nv_n = v$. Then $f(v) = a_1f(v_1) + \cdots + a_nf(v_n)$. However, $f(v_1), \ldots, f(v_n)$ are all zero, so $f(v) = a_{k+1}f(v_{k+1}) + a_nf(v_n)$. It follows that $f(V) = \spanset{\{f(v_{k+1}), \ldots, f(v_n)\}}$.
 
     Now assume there exists $a_{k+1}, \ldots, a_n \in F$ not all zero such that $a_{k+1}f(v_{k+1}) + \cdots + a_nf(v_n) = \vec{0}_W$. This would then imply $f(a_{k+1}v_{k+1} + \cdots + a_nv_n) = \vec{0}_W$, so $a_{k+1}v_{k+1} + \cdots + a_nv_n \in \ker f$. Since $\ker f = \spanset{v_1, \ldots, v_k}$, there must then exist $a_1, \ldots, a_n \in F$ such that $a_1v_1 + \cdots + a_kv_k = a_{k+1}v_{k+1} + \cdots + a_nv_n$, so $a_1v_1 + \cdots + a_kv_k + (-a_{k+1})v_{k+1} + \cdots + (-a_n)v_n = \vec{0}_V$. Then $\{v_1, \ldots, v_k, v_{k+1}, \ldots, v_n\}$ must be linearly dependent, which contradicts the assumption that it is a basis. Therefore, no such $a_{k+1}, \ldots, a_n \in F$ exist, and so $\{f(v_{k+1}), \ldots, f(v_n)\}$ must be linearly independent.
 
-    Since $\{f(v_{k+1}), \ldots, f(v_n)\}$ is both linearly independent and spans $R(f)$, by definition it is a basis for the range of $f$. Therefore, it follows that the dimension of $V$ is equal to the sum of the nullity and rank of $f$.
+    Since $\{f(v_{k+1}), \ldots, f(v_n)\}$ is both linearly independent and spans $f(V)$, by definition it is a basis for the image of $f$. Therefore, it follows that the dimension of $V$ is equal to the sum of the nullity and rank of $f$.
 \end{proof}
 
 \section{Isomorphisms}
@@ -967,7 +967,7 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
         \item $f$ is injective.
         \item The nullity of $f$ is zero.
         \item The rank of $f$ is the dimension of $V$.
-        \item If $\{v_1, \ldots, v_n\}$ is a basis for $V$, then $\{f(v_1), \ldots, f(v_n)\}$ is a basis for $R(f)$.
+        \item If $\{v_1, \ldots, v_n\}$ is a basis for $V$, then $\{f(v_1), \ldots, f(v_n)\}$ is a basis for $f(V)$.
     \end{itemize}
 \end{cor}
 
@@ -1008,11 +1008,11 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 \begin{proof}\proofbreak
     ($\implies$) Let $f: V \to W$ be an isomorphism. Then by Corollary \ref{injective-nullity-rank}, since $f$ is injective it follows that the nullity of $f$ is zero and the rank of $f$ is the dimension of $W$. By the Rank-nullity theorem \ref{rank-nullity}, it follows that the rank of $f$ is equal to the dimension of $V$, so $V$ and $W$ have the same dimension.
 
-    ($\impliedby$) Let $n$ be the dimension of $V$ and $W$. Then take $\langle v_1, \ldots, v_n \rangle$ and $\langle w_1, \ldots, w_n \rangle$ ordered bases for $V$ and $W$ respectively. Define $f: V \to W$ by $f(v_i) = w_i$ for $i = 1, \ldots, n$, and extend linearly, which gives a unique linear transformation by Proposition \ref{action-on-basis}. Since the range of $f$ is $\spanset{\{f(v_1), \ldots, f(v_n)\}}$, which by construction is equal to $\spanset{\{w_1, \ldots, w_n\}}$, so $f$ is surjective. By Corollary \ref{injective-nullity-rank}, since $\langle w_1, \ldots, w_n \rangle$ is linearly independent (as it is a basis for $W$), the rank of $f$ is $n$, so we have that $f$ is injective. Therefore, $f$ is bijective and so $V$ and $W$ are isomorphic.
+    ($\impliedby$) Let $n$ be the dimension of $V$ and $W$. Then take $\langle v_1, \ldots, v_n \rangle$ and $\langle w_1, \ldots, w_n \rangle$ ordered bases for $V$ and $W$ respectively. Define $f: V \to W$ by $f(v_i) = w_i$ for $i = 1, \ldots, n$, and extend linearly, which gives a unique linear transformation by Proposition \ref{action-on-basis}. Since the image of $f$ is $\spanset{\{f(v_1), \ldots, f(v_n)\}}$, which by construction is equal to $\spanset{\{w_1, \ldots, w_n\}}$, so $f$ is surjective. By Corollary \ref{injective-nullity-rank}, since $\langle w_1, \ldots, w_n \rangle$ is linearly independent (as it is a basis for $W$), the rank of $f$ is $n$, so we have that $f$ is injective. Therefore, $f$ is bijective and so $V$ and $W$ are isomorphic.
 \end{proof}
 
 \begin{cor}
-    If the dimension of $V$ is $n$, then $V$ is isomorphic of $F^n$.
+    If the dimension of $V$ is $n$, then $V$ is isomorphic to $F^n$.
 \end{cor}
 
 \end{document}
