@@ -28,7 +28,7 @@
 \section{Binomial Coefficients}
 
 \begin{defn}\label{binomial-coefficient}
-Let $n, k \in \N$. The \emph{binomial coefficient} $n \choose k$ is the number of subsets with cardinality $k$ of a set with cardinality $n$.
+Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number of subsets with cardinality $k$ of a set with cardinality $n$.
 \end{defn}
 
 \begin{exmp}\proofbreak
@@ -56,7 +56,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $n \choose k$ is the number o
 \end{exmp}
 
 \begin{prop}\label{binomial-complement}
-    Let $n, k \in \N$ with $0 \leq k \leq n$. Then \[{n \choose k} = {n \choose n-k}.\]
+    Let $n, k \in \N$ with $0 \leq k \leq n$. Then \[\binom{n}{k} = \binom{n}{n-k}.\]
 \end{prop}
 
 \begin{proof}
@@ -97,12 +97,12 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $n \choose k$ is the number o
 \end{proof}
 
 \begin{thm}{Binomial theorem}\label{binomial-theorem}\proofbreak
-    Let $F$ be a field. Then for any $x, y \in F$ and $n \in \Z_{\geq 1}$, \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}{n \choose k}.\]
+    Let $F$ be a field. Then for any $x, y \in F$ and $n \in \Z_{\geq 1}$, \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}\binom{n}{k}.\]
 \end{thm}
 
 \begin{proof}
     We will prove this by induction. Our base case is when $n = 1$, so $(x + y)^n = x + y$. Then \[\sum_k=0^1x^ky^{1-k}\binom{1}{k} = x^0y^1\binom{1}{0} + x^1y^0\binom{1}{1} = x + y,\] so the base case is true.
-    Now assume that for some $x, y \in F$ and $n \geq 1$ we have \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}{n \choose k}.\] Then since $(x + y)^{n+1} = (x+y)(x+y)^n$, we have $(x = y)^{n+1} = x(x+y)^n + y(x+y)^n$.
+    Now assume that for some $x, y \in F$ and $n \geq 1$ we have \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}\binom{n}{k}.\] Then since $(x + y)^{n+1} = (x+y)(x+y)^n$, we have $(x = y)^{n+1} = x(x+y)^n + y(x+y)^n$.
     Therefore, \[\left(x + y\right)^{n+1} = x\left(\sum_{k=0}^n x^ky^{n-k}\binom{n}{k}\right) + y\left(\sum_{k=0}^n x^ky^{n-k}\binom{n}{k}\right),\] so it follows that \[\left(x + y\right)^{n+1} = \left(\sum_{k=0}^n x^{k+1}y^{n-k}\binom{n}{k}\right) + \left(\sum_{k=0}^n x^ky^{n-k+1}\binom{n}{k}\right).\]
     We can now re-index the left sum to make the form of the terms match up better: \[\left(x + y\right)^{n+1} = \left(\sum_{k=1}^{n+1} x^{k}y^{n-k+1}\binom{n}{k-1}\right) + \left(\sum_{k=0}^n x^ky^{n-k+1}\binom{n}{k}\right).\]
     Now we can factor and match up all the terms except for the last term of the left sum, and the first term of the right sum.
@@ -117,5 +117,103 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $n \choose k$ is the number o
 \begin{prop}
     Let $n, k \in \N$ with $0 \leq k \leq n$. Then \[\binom{n}{k} = \frac{n!}{k!(n-k)!}.\]
 \end{prop}
+
+\begin{proof}
+    When selecting a specific subset with $k$ elements, there are $n$ choices for the first element, $n-1$ for the second, and so on until $n-k+1$ for the last. Therefore, there are $\frac{n!}{(n-k)!}$ different ways to select the subsets. Each subset can have its elements selected in $k!$ different orders, so there are $\frac{n!}{k!(n-k!)}$ such subsets.
+\end{proof}
+
+\section{Recurrence Relations}
+
+\begin{defn}
+    A \emph{recurrence relation} is an equation that recursively defines a sequence in terms of the preceding terms, and certain initial conditions.
+\end{defn}
+
+\begin{defn}
+    A recurrence relation of \emph{order k} is an equation that recursively defines each term in terms of the previous $k$ terms. That is, if $u$ is the generated sequence, an order $k$ recurrence relation defines \[u_n = \varphi(n, u_{n-1}, u_{n-2}, \ldots, u_{n-k}) \,\textrm{for}\, n \geq k,\] where $\varphi$ is some function. Since $\varphi$ defines the sequence for $n \geq k$, $k$ initial values for $u_0$ through $u_{k-1}$ are needed.
+\end{defn}
+
+\begin{exmp}
+    $a_n = 2a_{n-1}$ is a first-order (order 1) recurrence relation. If we define $a_0 = 1$, then it generates the sequence $a = 1, 2, 4, 8, \ldots$.
+\end{exmp}
+
+\begin{exmp}
+    The Fibonacci sequence, defined by $a_0 = 0$, $a_1 = 1$, and $a_n = a_{n-1} + a_{n-2}$ for $n \geq 2$, is a second-order recurrence relation. This sequence is \[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \ldots.\]
+\end{exmp}
+
+\begin{defn}
+    A \emph{linear} recurrence relation is one whose recursive equation is a polynomial of degree $1$ --- that is, each term is a linear combination of the previous $k$ terms, plus a constant: \[u_n = s_1u_{n-1} + s_2u_{n-2} + \cdots + s_ku_{n-k} + b.\]
+\end{defn}
+
+\begin{defn}
+    A \emph{homogeneous} linear recurrence relation is one whose constant is $0$: \[u_n = s_1u_{n-1} + s_2u_{n-2} + \cdots + s_ku_{n-k}.\] Linear recurrences with a non-zero constant are known as \emph{non-homogeneous}.
+\end{defn}s
+\begin{prop}
+    A homogeneous linear recurrence is linear in its generated sequences. That is, given a linear recurrence relation $\varphi$, let $a$ and $b$ be sequences generated by $\varphi$ under some initial conditions. Then all linear combinations of $a$ and $b$ are also sequence generated by $\varphi$ for some initial conditions.
+\end{prop}
+
+\begin{proof}
+    Let $u_n = s_1u_{n-1} + s_2u_{n-2} + \cdots + s_ku_{n-k}$ be a linear recurrence relation of order $k$, and let $a$ and $b$ be sequences generated under some initial conditions. Then since
+    \begin{align*}
+        s_1(a_{n-1} + b_{n_1}) + s_2(a_{n-1} + b_{n_1}) + \cdots + s_k(a_{n-1} + b_{n_1}) & = \\ (s_1a_{n-1} + s_2a_{n-2} + \cdots + s_ka_{n-k}) + (s_1b_{n-1} + s_2b_{n-2} + \cdots + s_kb_{n-k}) & = \\
+        a_n + b_n, &
+    \end{align*}
+    and
+    \begin{align*}
+        s_1(ra_{n-1}) + s_2(ra_{n-1}) + \cdots + s_k(ra_{n-k}) & = \\
+        r(s_1a_{n-1} + s_2a_{n-1} + \cdots + r(s_ka_{n-k})) & = \\
+        ra_n, &
+    \end{align*}
+    the relation is linear in its generated sequences.
+\end{proof}
+
+\begin{defn}
+    The \emph{solution} to a recurrence relation of order $k$ is an expression for the $n$th term of the generated sequences as a function of $n$, parameters of the generating equation, and the $k$ initial conditions, but not involving any other terms of the sequence.
+\end{defn}
+
+\begin{exmp}
+    Let $u_n = 2u_{n-1}$ be a first-order homogeneous linear recurrence relation. Then $u_n = u_02^n$ is a solution to the recurrence relation.
+\end{exmp}
+
+\begin{thm}
+    Let $u_n = su_{n-1} + t$ be a first-order non-homogeneous linear recurrence relation. If $s = 1$, then a solution is \[u_n = u_0 + nt.\] Otherwise, a solution is \[u_n = s^n(u_0 + \frac{t}{s-1}) - \frac{t}{s-1}.\]
+\end{thm}
+
+\begin{rmk}
+    When $s \neq 1$, the solution to a first-order non-homogeneous linear recurrence relation is of the form $u_n = c_1s^n + c_2$, where $c_1$ and $c_2$ are fully determined by $s$, $t$, and $u_0$.
+\end{rmk}
+
+\begin{proof}\proofbreak
+    If $s = 1$, and $u_{n-1} = u_0 + (n-1)t$, then $u_n = 1(u_0 + (n-1)t) + t = u_0 + nt$.
+
+    If $s \neq 1$ and $u_{n-1} = s^{n-1}(u_0 + \frac{t}{s-1}) - \frac{t}{s-1}$, then
+    \begin{align*}
+        u_n = s(s^{n-1}(u_0 + \frac{t}{s-1}) - \frac{t}{s-1})) + t & = \\
+        s^n(u_0 + \frac{t}{s-1}) - \frac{st}{s-1} + \frac{(s-1)t}{s-1} & = \\
+        s^n(u_0 + \frac{t}{s-1}) - \frac{t}{s-1} &.
+    \end{align*}
+    Therefore, given an initial condition $u_0$, these are valid formulas for $u_n$ for all $n \geq 1$.
+\end{proof}
+
+\begin{thm}
+    Let $u_n = s_1u_{n-1} + s_2u_{n-2}$ be a second-order homogeneous linear recurrence relation. Let $r_1, r_2$ be the (possible complex) roots of $x^2 - s_1x - s_2$.
+
+    If $r_1 \neq r_2$, then $u_n = r_1^n$ and $u_n = r_2^n$ are linearly independent solutions.
+
+    If $r_1 = r_2$, let $r = r_1 = r_2$. Then $u_n = r^n$ and $u_n = nr^n$ are linearly independent solutions.
+\end{thm}
+
+\begin{proof}\proofbreak
+    If $u_{n-1} = r^{n-1}$ and $u_{n-2} = r^{n-2}$ where $r$ is a root of $x^2 - s_1x - s_2$, then $u_n = s_1r^{n-1} + s_2r^{n-2}$. Since $r^2 - s_1r - s_2 = 0$, it follows that $u_n = r^{n-2}r^2 = r^n$.
+
+    If $r = r_1 = r_2$, $u_{n-1} = nr^{n-1}$, and $u_{n-2} = nr^{n-2}$, then $u_n = s_1nr^{n-1} + s_2nr^{n-2}$. Since $r^2 - s_1r - s_2 = 0$, it follows that $u_n = nr^{n-2}r^2 = nr^n$.
+\end{proof}
+
+% \begin{thm}
+%     Let $u_n = s_1u_{n-1} + s_2u_{n-2}$ be a second-order homogeneous linear recurrence relation. Let $r_1, r_2$ be the (possible complex) roots of $x^2 - s_1x - s_2$.
+
+%     If $r_1 \neq r_2$, then $u_n = c_1r_1^n + c_2r_2^n$ for some $c_1, c_2$, and $c_1$ and $c_2$ are fully determined by $s_1$, $s_2$, $u_0$, and $u_1$.
+
+%     If $r_1 = r_2$, let $r = r_1 = r_2$. Then $u_n = c_1r^n + c_2nr^n$ for some $c_1, c_2$, and $c_1$ and $c_2$ are fully determined by $s_1$, $s_2$, $u_0$, and $u_1$.
+% \end{thm}
 
 \end{document}
