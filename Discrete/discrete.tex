@@ -262,4 +262,41 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     If $r = 0$, then $u_n = c_1r^n$, so $u_0 = c_1$, and $u_n = 0$ for all $n \geq 1$, so all possible solutions can be expressed in this form when $r = 0$.
 \end{proof}
 
+\section{Cantor's Theorem}
+
+\begin{thm}\label{pigeonhole}
+    Pigeonhole Principle.
+
+    Let $A, B$ be finite sets, and let $f: A \to B$. If $|A| > |B|$, then $f$ cannot be injective, and if $|A| < |B|$ then $f$ cannot be surjective.
+\end{thm}
+
+\begin{prop}
+    Let $A, B$ be finite sets, and let $f: A \to B$. If $f$ is a bijection, then $|A| = |B|$.
+\end{prop}
+
+\begin{proof}
+    If $|A| \neq |B|$, then either $|A| > |B|$ or $|A| < B$. Therefore, either $f$ is not injective or $f$ is not surjective by the Pigeonhole Principle \ref{pigeonhole}.
+\end{proof}
+
+\begin{prop}
+    Let $A, B$ be finite sets, and let $a = |A|$ and $b = |B|$. Let $F$ be all functions $f: A \to B$, $I \subseteq F$ be all injective functions, and $S \subseteq F$ be all surjective functions. Then
+    \begin{itemize}
+        \item $|F| = b^a$,
+        \item $|I| = (b)_a = \frac{b!}{(b-a)!}$,
+        \item $|S| = \sum_{i=0}^b(-1)^i\binom{b}{i}(b-i)^a$.
+    \end{itemize}
+\end{prop}
+
+\begin{thm}
+    Cantor's Theorem
+
+    Let $A$ be a set, and let $f: A \to 2^A$. Then $f$ cannot be onto.
+\end{thm}
+
+\begin{proof}
+    Let $B = \left\{x \in A \compbar x \notin f(x) \right\} \in 2^A$. For the sake of contradiction, assume that $f$ is onto, and so there must exist some $a \in A$ such that $f(a) = B$. We also know that either $a \in B$ or $a \notin B$.
+
+    If $a \in B$, then by the construction of $B$ we have $a \notin f(a)$. However, $f(a) = B$, so this is a contradiction. Similarly, $a \notin B$ must imply $a \in f(a)$.
+\end{proof}
+
 \end{document}
