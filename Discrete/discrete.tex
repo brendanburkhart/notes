@@ -8,7 +8,10 @@
 \usepackage{makecell}
 \usepackage{tabularx}
 \usepackage[hypcap=false]{caption}
-\usepackage{tikz}
+\usepackage{tikz, tkz-euclide}
+\usetikzlibrary{decorations.pathreplacing,arrows}
+\usetikzlibrary{quotes,angles,calc,intersections}
+
 \usepackage{titling}
 \usepackage{pdfpages}
 \usepackage{enumitem}
@@ -297,6 +300,69 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     Let $B = \left\{x \in A \compbar x \notin f(x) \right\} \in 2^A$. For the sake of contradiction, assume that $f$ is onto, and so there must exist some $a \in A$ such that $f(a) = B$. We also know that either $a \in B$ or $a \notin B$.
 
     If $a \in B$, then by the construction of $B$ we have $a \notin f(a)$. However, $f(a) = B$, so this is a contradiction. Similarly, $a \notin B$ must imply $a \in f(a)$.
+\end{proof}
+
+\section{Graph Theory}
+
+\begin{defn}
+    A \emph{simple graph} is a $2$-tuple $G = (V, E)$, where $V$ is a non-empty finite set of vertices, and $E$ is a set of unordered pairs (two-sets) of vertices, called edges.
+\end{defn}
+
+\begin{exmp}
+    \[G = \left(\left\{a, b, c, d\right\}, \left\{\{a, b\}, \{a, c\}, \{b, d\}\right\}\right)\]
+
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+                \node (a) at (0,0) {a};
+                \node (b) at (3,1.5) {b};
+                \node (c) at (3,-1.5) {c};
+                \node (d) at (6,0) {d};
+            \end{scope}
+
+            \begin{scope}[>={Stealth[black]},
+                        every node/.style={fill=white,circle},
+                        every edge/.style={draw=black,very thick}]
+                \path [->] (a) edge (b);
+                \path [->] (a) edge (c);
+                \path [->] (b) edge (d);
+            \end{scope}
+        \end{tikzpicture}
+    \end{center}
+\end{exmp}
+
+\begin{defn}
+    Let $G = (V, E)$ be a graph. If $u, v \in V$, then we say $u$ is \emph{adjacent to} $v$ when $\{u, v\} \in E$. We denote this by $u \sim v$, and say that $u$ and $v$ are the endpoints of the edge $\{u, v\}$. We further say that $u$ or $b$ is \emph{incident on} or \emph{incident with} $\{u, v\}$.
+\end{defn}
+
+\begin{defn}
+    Let $G = (V, E)$ be a graph. If $u, v \in V$ are adjacent, then we say $u$ and $v$ are \emph{neighbors}. The set of all neighbors of $v$ is the \emph{neighborhood} of $v$:
+    \[N(v) = \left\{u \in V \compbar u \sim v \right\}.\]
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph. The \emph{degree} of a vertex $v \in V$, denoted by $d_G(v)$, is the number of edges with which $v$ is incident. In a simple graph, it is the number of neighbors of $v$. \[d_G(v) = |N(v)|.\]
+\end{defn}
+
+\begin{thm}\label{sum-degrees-is-twice-edges}
+    Let $G = (V, E)$ be a graph. The sum of the degrees of all vertices in $G$ is twice the number of edges:
+    \[\sum_{v\in V}d_G(v) = 2|E|.\]
+\end{thm}
+
+\begin{cor}\label{sum-degrees-is-even}
+    The sum of degrees is always an even integer.
+\end{cor}
+
+\begin{proof}
+    Since $|E| \in \N$, and the sum of degrees is equal to $2|E|$, $2|E|$ must be an even integer.
+\end{proof}
+
+\begin{cor}\label{n-of-odd-vertices-is-even}
+    The number of vertices with odd degree is even.
+\end{cor}
+
+\begin{proof}
+    For the sake of contradiction, assume that a graph $G$ has an odd number of vertices with odd degree. Then, the sum of degrees of vertices with even degree must itself be even, and the sum of degrees of vertices with odd degree must be odd, so the sum of the degrees of all vertices in $G$ is odd. By Corollary \ref{sum-degrees-is-even}, this is a contradiction.
 \end{proof}
 
 \end{document}
