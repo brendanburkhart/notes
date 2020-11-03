@@ -383,7 +383,7 @@ We can apply graph theory and signal processing to image processing by modelling
 \end{defn}
 
 \begin{defn}
-    The \emph{adjacency matrix} $\bm{A}$ of a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ is a square $|V| \times |V|$ matrix where $\bm{A}_{i, j}$ is $1$ is there is an edge from $V_i$ to $V_j$.
+    The \emph{adjacency matrix} $\bm{A}$ of a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ is a square $|\mathcal{V}| \times |\mathcal{V}|$ matrix where $\bm{A}_{i, j}$ is $1$ if there is an edge from $\mathcal{V}_i$ to $\mathcal{V}_j$, and $0$ otherwise.
 \end{defn}
 
 \begin{exmp}
@@ -420,7 +420,7 @@ We can apply graph theory and signal processing to image processing by modelling
 \end{figure}
 
 \begin{defn}
-    A \emph{weighted, undirected graph} is a $3$-tuple $\mathcal{G} = (\mathcal{V}, \mathcal{E}, \bm{W})$, where $\mathcal{V}$ is a set of vertices, $\mathcal{E}$ is a set of unordered pairs (two-sets) of vertices, called edges, and $\bm{W}$ is a square $|\mathcal{V}| \times |\mathcal{V}|$ real matrix of weights. The weight between edges $i, j \in \mathcal{V}|$ is $\bm{W}_{i, j}$. Note that since $\mathcal{G}$ is undirected, $\bm{W}_{i,j} = \bm{W}_{j, i}$ for all $i, j \in \mathcal{V}$, and additionally we require $\bm{W}_{i, j} \geq 0$.
+    A \emph{weighted, undirected graph} is a $3$-tuple $\mathcal{G} = (\mathcal{V}, \mathcal{E}, \bm{W})$, where $\mathcal{V}$ is a set of vertices, $\mathcal{E}$ is a set of unordered pairs (two-sets) of vertices, called edges, and $\bm{W}$ is a square $|\mathcal{V}| \times |\mathcal{V}|$ real matrix of weights. The weight between edges $i, j \in \mathcal{V}$ is $\bm{W}_{i, j}$. Note that since $\mathcal{G}$ is undirected, $\bm{W}_{i,j} = \bm{W}_{j, i}$ for all $i, j \in \mathcal{V}$, and additionally we require $\bm{W}_{i, j} \geq 0$.
 \end{defn}
 
 \begin{exmp}
