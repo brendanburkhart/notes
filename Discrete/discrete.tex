@@ -16,6 +16,7 @@
 \usepackage{pdfpages}
 \usepackage{enumitem}
 \usepackage{multicol}
+\usepackage{bm}
 
 \usepackage{linear}
 \usepackage{common}
@@ -308,28 +309,34 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     A \emph{simple graph} is a $2$-tuple $G = (V, E)$, where $V$ is a non-empty finite set of vertices, and $E$ is a set of unordered pairs (two-sets) of vertices, called edges.
 \end{defn}
 
-\begin{exmp}
-    \[G = \left(\left\{a, b, c, d\right\}, \left\{\{a, b\}, \{a, c\}, \{b, d\}\right\}\right)\]
+\begin{rmk}
+    We may also write $V$ as $V(G)$, and $E$ as $E(G)$.
+\end{rmk}
 
-    \begin{center}
-        \begin{tikzpicture}
-            \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
-                \node (a) at (0,0) {a};
-                \node (b) at (3,1.5) {b};
-                \node (c) at (3,-1.5) {c};
-                \node (d) at (6,0) {d};
-            \end{scope}
-
-            \begin{scope}[>={Stealth[black]},
-                        every node/.style={fill=white,circle},
-                        every edge/.style={draw=black,very thick}]
-                \path [->] (a) edge (b);
-                \path [->] (a) edge (c);
-                \path [->] (b) edge (d);
-            \end{scope}
-        \end{tikzpicture}
-    \end{center}
+\begin{exmp} Let $G = \left(\left\{a, b, c, d\right\}, \left\{\{a, b\}, \{a, c\}, \{b, d\}\right\}\right)$. This graph is depicted in Figure \ref{fig:example-graph}.
 \end{exmp}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (a) at (0,0) {a};
+            \node (b) at (3,1.5) {b};
+            \node (c) at (3,-1.5) {c};
+            \node (d) at (6,0) {d};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [->] (a) edge (b);
+            \path [->] (a) edge (c);
+            \path [->] (b) edge (d);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Example simple graph}
+\label{fig:example-graph}
+\end{figure}
 
 \begin{defn}
     Let $G = (V, E)$ be a graph. If $u, v \in V$, then we say $u$ is \emph{adjacent to} $v$ when $\{u, v\} \in E$. We denote this by $u \sim v$, and say that $u$ and $v$ are the endpoints of the edge $\{u, v\}$. We further say that $u$ or $b$ is \emph{incident on} or \emph{incident with} $\{u, v\}$.
@@ -341,13 +348,45 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{defn}
 
 \begin{defn}
+    The \emph{adjacency matrix} $\bm{A}$ of a graph $G = (V, E)$ is a square $|V| \times |V|$ matrix where $\bm{A}_{i, j}$ is $1$ if there is an edge from $V_i$ to $V_j$, and $0$ otherwise.
+\end{defn}
+
+\begin{exmp}
+    Let $V = \{1, 2, 3, 4\}$, let $E = \{\{1, 2\}, \{2, 3\}, \{3, 4\}, \{4, 1\}\}$. The adjacency matrix of $G = (V, E)$ is
+    \[\bm{A} = \begin{bmatrix}
+        0 & 1 & 0 & 1 \\
+        1 & 0 & 1 & 0 \\
+        0 & 1 & 0 & 1 \\
+        1 & 0 & 1 & 0
+    \end{bmatrix}.\]
+\end{exmp}
+
+\begin{rmk}
+    The adjacency matrix of a graph clearly must be symmetric and have only zeroes on the major diagonal.
+\end{rmk}
+
+\begin{defn}
     Let $G$ be a graph. The \emph{degree} of a vertex $v \in V$, denoted by $d_G(v)$, is the number of edges with which $v$ is incident. In a simple graph, it is the number of neighbors of $v$. \[d_G(v) = |N(v)|.\]
 \end{defn}
+
+\begin{prop}\label{adjacency-sum}
+    Let $G = (V, E)$ be a graph, and $\bm{A}$ its adjacency matrix. The sum of all entries of $\bm{A}$ is the sum of the degrees of all vertices in $G$.
+\end{prop}
+
+\begin{proof}
+    The sum of entries in the $i$th row of $\bm{A}$ is the degree of $V_i$, since there is a single $1$ for every vertex $V_i$ is adjacent to. Therefore, the sum of the sum of each row gives the sum of degrees of vertices in $G$.
+\end{proof}
 
 \begin{thm}\label{sum-degrees-is-twice-edges}
     Let $G = (V, E)$ be a graph. The sum of the degrees of all vertices in $G$ is twice the number of edges:
     \[\sum_{v\in V}d_G(v) = 2|E|.\]
 \end{thm}
+
+\begin{proof}
+    By Proposition \ref{adjacency-sum}, we know that this sum is equal to the sum of the adjacency matrix of $G$. Since the adjacency matrix is symmetric, and has all zero entries on the major diagonal, its sum must be an even number equal to twice the sum of entries above the major diagonal (the upper triangular region).
+
+    We must then show that the sum of entries above the major diagonal is equal to the number of edges in $G$. Every edge can of course be represented uniquely as $(V_i, V_j)$, where $j > i$, which is precisely the sum of entries above the major diagonal in the adjacency matrix.
+\end{proof}
 
 \begin{cor}\label{sum-degrees-is-even}
     The sum of degrees is always an even integer.
@@ -364,5 +403,127 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \begin{proof}
     For the sake of contradiction, assume that a graph $G$ has an odd number of vertices with odd degree. Then, the sum of degrees of vertices with even degree must itself be even, and the sum of degrees of vertices with odd degree must be odd, so the sum of the degrees of all vertices in $G$ is odd. By Corollary \ref{sum-degrees-is-even}, this is a contradiction.
 \end{proof}
+
+\begin{defn}
+    An \emph{Eulerian trail} is a trail through a graph that visits every edge exactly once.
+\end{defn}
+
+\begin{defn}
+    An \emph{Eulerian circuit} is an Eulerian trail that starts and ends on the same vertex.
+\end{defn}
+
+\begin{defn}
+    Let $G = (V, E)$ be a graph. Then
+    \[\Delta G = \max_{v \in V}d_G(v),\]
+    \[\delta G = \min_{v \in V}d_G(v)\] are the maximum and minimum of all degrees of the vertices in $G$ respectively.
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph. Then the \emph{order} of $G$ is $|V(G)|$, and the \emph{size} of $G$ is $|E(G)|$.
+\end{defn}
+
+\begin{defn}
+    A \emph{regular} graph is a simple graph is which every vertex has the same degree, so for every regular graph $G$, we have $\Delta G = \delta G$. If every vertex has degree $n$, it is an $n$-regular graph.
+\end{defn}
+
+\begin{defn}
+    A \emph{complete} graph is one where every pair of vertices are adjacent. The unique complete graph with order $n$ is denoted by $K_n$.
+\end{defn}
+
+\begin{rmk}
+    The graph $K_n$ has size $\binom{n}{2}$.
+\end{rmk}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (a) at ({4*cos(0)}, {4*sin(0)}) {};
+            \node (b) at ({4*cos(60)}, {4*sin(60)}) {};
+            \node (c) at ({4*cos(120)}, {4*sin(120)}) {};
+            \node (d) at ({4*cos(180)}, {4*sin(180)}) {};
+            \node (e) at ({4*cos(240)}, {4*sin(240)}) {};
+            \node (f) at ({4*cos(300)}, {4*sin(300)}) {};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (a) edge (b);
+            \path [-] (a) edge (c);
+            \path [-] (a) edge (d);
+            \path [-] (a) edge (e);
+            \path [-] (a) edge (f);
+
+            \path [-] (b) edge (c);
+            \path [-] (b) edge (d);
+            \path [-] (b) edge (e);
+            \path [-] (b) edge (f);
+
+            \path [-] (c) edge (d);
+            \path [-] (c) edge (e);
+            \path [-] (c) edge (f);
+
+            \path [-] (d) edge (e);
+            \path [-] (d) edge (f);
+
+            \path [-] (e) edge (f);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Depiction of $K_6$}
+\label{fig:k-six}
+\end{figure}
+
+\begin{prop}
+    Every complete graph is a regular graph.
+\end{prop}
+
+\begin{proof}
+    Every vertex in $K_n$ is adjacent to exactly $n-1$ other vertices.
+\end{proof}
+
+\begin{defn}
+    Let $H$ be a graph. We call a graph $G$ a \emph{subgraph} of $H$ provided that
+    \begin{itemize}
+        \item $V(G) \subseteq V(H)$,
+        \item and $E(G) \subseteq E(H)$.
+    \end{itemize}
+\end{defn}
+
+\begin{rmk}
+    Every graph $G$ is a subgraph of itself.
+\end{rmk}
+
+\begin{defn}
+    Let $H$ be a graph, and let $G$ be a subgraph of $H$. $G$ is a \emph{spanning} subgraph of $H$ provided that
+    \begin{itemize}
+        \item $V(G) = V(H)$,
+        \item and $E(G) \subseteq E(H)$.
+    \end{itemize}
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph, and let $e \in E(G)$. Then we denote by $G - e$ the spanning subgraph of $G$ given by \[G - e = (V(G), E(G) - \{e\}).\]
+\end{defn}
+
+\begin{defn}
+    Let $H$ be a graph, and let $A \subseteq V(H)$. The subgraph of $H$ \emph{induced on} $A$ is the graph $H[A]$ with
+    \begin{itemize}
+        \item $V(H[A]) = A$,
+        \item and $E(H[A]) = \left\{\{a, b\} \in E(H) \compbar a \in A \land b \in A\right\}$.
+    \end{itemize}
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph, and let $v \in V(G)$. Then we denote by $G - v$ the subgraph of $G$ induced by $V(G) - v$, given by \[G - v = G[V(G) - \{v\}].\]
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph, and $S \subseteq V(G)$. If $u \sim v$ for all distinct $u, v \in S$, then we say that $S$ is a \emph{clique} in $G$.
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph. Then $\omega(G)$ is the maximum cardinality of all cliques in $G$.
+\end{defn}
 
 \end{document}
