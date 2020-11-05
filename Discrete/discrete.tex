@@ -674,7 +674,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{proof}
 
 \begin{defn}
-    Let $G$ be a graph. A \emph{walk} in $G$ is a list of vertices with each vector in the list adjacent to the next, i.e. \[W = (u_0, u_1, u_2, \ldots, u_l)\] where \[u_0 \sim u_1 \sim u_2 \sim \cdots \sim u_l.\] The \emph{length} of a walk $W$ is denoted by $|W|$, and is the number of edges in the walk, or equivalently the number of vertices in the walk minus one.
+    Let $G$ be a graph. A \emph{walk} in $G$ is a list of vertices with each vector in the list adjacent to the next, i.e. \[W = (u_0, u_1, u_2, \ldots, u_l)\] where \[u_0 \sim u_1 \sim u_2 \sim \cdots \sim u_l.\] The \emph{length} of a walk $W$ is denoted by $|W|$, and is the number of edges in the walk, or equivalently the number of vertices in the walk minus one. A walk is said the \emph{traverse} its edges. A walk from vertex $u$ to vertex $w$ is called a $(u, v)$-walk.
 \end{defn}
 
 \begin{defn}
@@ -683,6 +683,101 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 
 \begin{defn}
     A \emph{path} in a graph is a walk without repeated vertices.
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph, and $W = w_0 \sim \cdots \sim w_l$, $V = v_0 \sim \cdots \sim v_k$ be walks in $G$, where $w_l = v_0$. Then their concatenation, denoted by $W + V$, is the walk \[w_0 \sim \cdots \sim (w_l = v_0) \sim \cdots \sim v_k.\]
+\end{defn}
+
+\begin{prop}
+    Let $P$ be a path in a graph $G$. $P$ does not traverse any edge in $G$ more than once.
+\end{prop}
+
+\begin{proof}
+    Assume for the sake of contradiction that $P$ traverses some edge $\{u, v\} \in E(G)$ of $G$ at least twice.
+
+    Then without loss of generality, either \[P = \cdots \sim u \sim v \cdots \sim u \sim v \sim \cdots\] or \[P = \cdots \sim u \sim v \cdots \sim v \sim u \sim \cdots.\]
+
+    In the first case, $P$ clearly repeats vertices $u$ and $v$, and so is not a path. In the second case, $P$ must visit $u$ at least twice, and so is not a path.
+\end{proof}
+
+\begin{defn}
+    Let $G$ be a graph, and let $u, v \in G$. We say $u$ is \emph{connected} to $v$ (or $u$ and $v$ are \emph{connected}) if there exists a path from $u$ to $v$ in $G$.
+\end{defn}
+
+\begin{lemma}\label{walk-implies-path}
+    Let $G$ be a graph, and let $u, v \in V(G)$. If there is a $(u, v)$-walk in $G$, then there is a $(u, v)$-path in $G$.
+\end{lemma}
+
+\begin{proof}
+    Consider the set \[L = \left\{|W| \compbar W \textrm{ is a walk in } G\right\} \subseteq \N.\] By the Well-Ordering Principle, there is a smallest length $l \in L$. Let $P$ be any $(u,v)$-walk in $G$ of length $l$. Assume, for the sake of contradiction, that $P$ is \emph{not} a path in $G$. Then there is some repeated vertex $w$ in $P$: \[P = u \sim \cdots \sim w \sim \cdots \sim w \sim \cdots \sim v.\] However, \[P' = u \sim \cdots \sim w \sim \cdots \sim v\] is also a $(u, v)$-walk in $G$, and is shorter than $P$ by at least one edge, which contradicts our assumption. Therefore, $P$ is a path in $G$.
+\end{proof}
+
+\begin{prop}
+    Let $G$ be a graph. Then \emph{is connected to} is an equivalence relation on $V(G)$.
+\end{prop}
+
+\begin{proof}\proofbreak
+    \begin{itemize}
+        \item $x \in V(G)$ is connected to $x$ since $(x)$ is a path starting and ending at $x$, so this relation is reflexive.
+        \item If $x_0 \in V(G)$ to connected to $x_n \in V(G)$ by a path $x_0 \sim x_1 \sim \cdots \sim x_{n-1} \sim x_n$, then $v$ is connected to $u$ by the reverse path $x_n \sim x_{n-1} \sim \cdots x_1 \sim x_0$. Therefore, this relation is reflexive.
+        \item Let $x, y, z \in V(G)$ such that $x$ is connected to $y$ by a path $W_1$, and $y$ is connected to $z$ by a path $W_2$, then $x$ is connected to $z$ by the walk $W_1 + W_2$. By Lemma \ref{walk-implies-path} there must then be a $(x, z)$-path in $G$, and so this relation is transitive.
+    \end{itemize}
+\end{proof}
+
+\begin{rmk}
+    This implies that the \emph{is connected to} relation partitions $G$ into equivalence classes.
+\end{rmk}
+
+\begin{defn}
+    Let $G$ be a graph. A subgraph of $G$ induced by an equivalence class under the \emph{is connected to} relation is called a \emph{connected component} of $G$.
+\end{defn}
+
+\begin{defn}
+    A graph with only one connected component is \emph{connected}. If a graph is not connected, it is \emph{disconnected}.
+\end{defn}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (1) at (-2, 0.5) {1};
+            \node (2) at (1, 0.75) {2};
+            \node (3) at (2.5, 1.5) {3};
+            \node (4) at (4, 0.75) {4};
+            \node (5) at (3.5, -0.5) {5};
+            \node (6) at (0, 2) {6};
+            \node (7) at (-1, -1) {7};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (1) edge (7);
+            \path [-] (7) edge (2);
+            \path [-] (7) edge (6);
+            \path [-] (2) edge (6);
+
+            \path [-] (3) edge (4);
+            \path [-] (3) edge (5);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Example graph with two partitions}
+\label{fig:partition-graph-example}
+\end{figure}
+
+\begin{exmp}
+    The graph
+    \[G = (\{1, 2, 3, 4, 5, 6, 7\}, \left\{\{1, 7\}, \{7, 2\}, \{7, 6\}, \{2, 6\}, \{3, 4\}, \{3, 5\}\right\})\]
+    is partitioned into
+    \[[1] = \{1, 2, 6, 7\},\]
+    \[[3] = \{3, 4, 5\}\] under the relation \emph{is connected to}, as shown in Figure \ref{fig:partition-graph-example}.
+\end{exmp}
+
+\begin{defn}
+    Let $G$ be a graph, let $v \in V(G)$ and let $e \in E(G)$.
+
+    If $G - v$ has more connected components than $G$, we say $v$ is a \emph{cut vertex}. If $G - e$ has more connected components than $G$, we say $e$ is a \emph{cut edge}.
 \end{defn}
 
 \end{document}
