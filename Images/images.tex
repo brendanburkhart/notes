@@ -211,7 +211,7 @@ Notice that filters cannot be naively applied to the $k_1 + 1$ top/bottom-most r
 \end{itemize}
 
 \begin{defn}
-    Let $I: \Z^2 \to \R$ be a function representing an image $I_0: \mathbb{D} \to \mathbb{P}$ take has been extended to infinity by zero-padding. Note that $I_0$ could be another image that has been padded in some way. Let $h: \Z^2 \to \R$ be a function (called the \emph{kernel} or \emph{convolution kernel}). Then we define the \emph{convolution} of $I$ and $h$, denoted by $I * h$, as \[(I * h)(i, j) = \sum_{k=-\infty}^{\infty}\sum_{l=-\infty}I(i - k, j - l)(h, k, l).\] Notice the similarities to the definition of applying a filter, and the differences --- there on no bounds, and the image entries are indexed using $i - k$ and $i - l$ rather than $i + u$ and $i + v$.
+    Let $I: \Z^2 \to \R$ be a function representing an image $I_0: \mathbb{D} \to \mathbb{P}$ take has been extended to infinity by zero-padding. Note that $I_0$ could be another image that has been padded in some way. Let $h: \Z^2 \to \R$ be a function (called the \emph{kernel} or \emph{convolution kernel}). Then we define the \emph{convolution} of $I$ and $h$, denoted by $I * h$, as \[(I * h)(i, j) = \sum_{k=-\infty}^{\infty}\sum_{l=-\infty}^{\infty}I(i - k, j - l)(h, k, l).\] Notice the similarities to the definition of applying a filter, and the differences --- there on no bounds, and the image entries are indexed using $i - k$ and $i - l$ rather than $i + u$ and $i + v$.
 \end{defn}
 
 Filtering can be defined in terms of convolution. To apply a $(2k_1 + 1) \times (2k_2 + 1)$ filter mask $w$ to an $n \times m$ image $I$ (which may be padded), define $h(k, l) = w(-k, l)$, and extend both $h$ and $I$ to infinity by zero-padding. Then $J = I * H$.
@@ -574,7 +574,7 @@ In this section, we will extend the definition of several useful properties of c
 \end{defn}
 
 \begin{defn}
-    The \emph{arc length} of a shape $c: M \to \R^2$, denoted by $L_c$, is the extension of circumference, and is given by \[L_c = \int_{t\in M}\norm{c'(t)}dt = \int_{t\in M}{\sqrt{x'(t)^2 + y'(t)^2}}dt.\] The expression ${\sqrt{x'(t)^2 + y'(t)^2}}dt$ is sometimes called the arc length measure, denoted $ds$, giving $L_c = \int_M ds$.
+    The \emph{arc length} of a shape $c: M \to \R^2$, denoted by $L_c$, is the extension of circumference, and is given by \[L_c = \int_M\norm{c'(t)}dt = \int_M{\sqrt{x'(t)^2 + y'(t)^2}}dt.\] The expression ${\sqrt{x'(t)^2 + y'(t)^2}}dt$ is sometimes called the arc length measure, denoted $ds$, giving $L_c = \int_M ds$.
 \end{defn}
 
 \begin{defn}
@@ -593,5 +593,77 @@ In this section, we will extend the definition of several useful properties of c
         x_0 & y_0 \\ \vdots & \vdots \\ x_{N-1} & y_{N-1}
     \end{bmatrix}.\]
 \end{defn}
+
+To compute the derivative of a discretized curve $c: M \to \R^2$ at some $t_k \in M$, we can use finite differences, so \[c'(t_k) \approx \frac{c(t_{k+1})- c(t_{k-1})}{2} = \left(\frac{x(t_{k+1}) - x(t_{k-1})}{2}, \frac{y(t_{k+1}) - y(t_{k-1})}{2}\right).\]
+
+\subsection{Shape Spaces}
+
+\begin{defn} Metric Space
+
+    Let $S$ be a set. A \emph{distance} defined on $S$ is a function $d: S \times S \to \R$ such that
+    \begin{enumerate}
+        \item $d(x, y) \geq 0 \,\forall x, y \in S$,
+        \item $d(x, y) = 0 \iff x = y$,
+        \item $d(x, y) = d(y, x) \,\forall x, y \in S$,
+        \item $d(x, y) \leq d(x, z) + d(z, y) \,\forall x, y, z \in S$.
+    \end{enumerate}
+    The object $(S, d)$ is a \emph{metric space}.
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $S = \R$, and $d(x, y) = \abs{x - y}$,
+        \item $S = \R^2$, and $d(x, y) = \norm{x - y}_2 = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2}$.
+    \end{itemize}
+\end{exmp}
+
+\begin{defn}
+    Let $S = \R^d$. Then the $L_p$ norm is a distance function $d: S \times S \to \R$ where \[d(x - y) = \norm{x - y}_p = \left(\sum_{i=1}^d(x_i - y_i)^p\right)^{1/p},\] and together with $S$ forms a metric space.
+\end{defn}
+
+We can construct a metric space on the space of parameterized curves. Let $S$ be the set of immersions between $M \subset \R$ and $\R^2$.
+\[S = \left\{c \in C^1(M, \R^2) \compbar \norm{c'(t)} \neq 0 \right\}\]
+
+We define the \emph{square root velocity transform} $Q$
+\[Q: S \to L^2(M, \R^2)\]
+\[Q: c(t) \mapsto \left\{
+    \begin{array}{ll}
+        \frac{c'(t)}{\sqrt{\norm{c'(t)}}} & : c'(t) \neq 0\\
+        0 & : c'(t) = 0\\
+    \end{array}
+  \right.
+\]
+
+$L^2$ means square integrable, meaning $f: M \to \R^2$ if $\int_M \norm{f(t)}^2dt < \infty$. For any $q_1, q_2 \in L_2(M, \R^2)$, we define the distance function
+\[d(q_1, q_2) = \sqrt{\langle q_1 - q_2, q_1 - q_2\rangle}\] where
+\[\langle q_1 - q_2, q_1 - q_2 \rangle = \int_M\norm{q_1 - q_2}^2dt.\]
+
+\begin{exmp}
+    Consider the curve $s = \{\cos(t), \sin(t)\}$ on $M = [0, 2\pi]$. Then since
+    \[Q(s) = \left(-\sin(t), \cos(t)\right),\] and
+    \[\langle Q(s) - Q(s), Q(s) - Q(s) \rangle = \int_0^{2\pi} 0dt,\] we have
+    \[d(s, s) = 0.\]
+\end{exmp}
+
+\begin{exmp}
+    Consider the curves $s_1 = \{\cos(t), \sin(t)\}$, $s_2 = \{\cos(-t), \sin(-t)\}$ on $M = [0, 2\pi]$. Then since
+    \[Q(s_1) = \left(-\sin(t), \cos(t)\right), Q(s_2) = \left(\sin(-t), -\cos(-t)\right),\] so
+    \[Q(s_1) - Q(s_2) = 2\cos(t)\] and since
+    \[\langle Q(s_1) - Q(s_2), Q(s_1) - Q(s_2) \rangle = \int_0^{2\pi}{4\cos^2(t)}dt = 4\pi,\] so we have
+    \[d(s_1, s_2) = \sqrt{4\pi}.\]
+\end{exmp}
+
+Now consider the equivalence relation where for $s_1, s_2 \in S$, $s_1 \sim s_2$ means $s_1 = s_2 \circ \gamma$ for some absolutely continuous re-parameterization function $\gamma$. Then, form the quotient set $Q(S)/\sim$. We finally define the metric on $S$ to be
+\[d(s_1, s_2) = \inf_{w_1\in[Q(s_1)],w_2\in[Q(s_2)]}d(w_1,w_2).\]
+
+\begin{exmp}
+    Let $s_1 = \{\cos(t), \sin(t)\}$, $s_2 = \{\cos(-t), \sin(-t)\}$ on $M = [0, 2\pi]$, and let $\gamma(t) =  -t$. Then since $s_2 = s_1 \circ \gamma$, we have $s_2 \in [s_1]$. As $d(s_1, s_1) = 0$, and $d(s, s) \geq 0$, it follows that the infimum of $d(w_1, w_2)$ where $w_1 \in [Q(s_1)]$ and $w_2 \in [Q(s_2)]$ must be zero.
+\end{exmp}
+
+``Precise Matching of PL Curves in $\R^N$ In The Square Root Velocity Framework'' by Sayani Lahiri, Daniel Robinson, and Eric Klassen \url{https://arxiv.org/pdf/1501.00577.pdf} gives more details on the theoretical basis for this approach, and an exact algorithm to solve this distance function.
+
+``Fast Dynamic Programming for Elastic Registration of Curves'' by Javier Bernal, G\"unay Do\u{g}an, and Charles R. Hagwood \url{https://math.nist.gov/~JBernal/adapt_dp.pdf} describes a dynamic programming approach to computing the distance function.
+
+For a relaxed, estimation solution to computing this distance function, see ``An inexact matching approach for the comparison of plane curves with general elastic metric'' by Yashil Sukurdeep, Martin Bauer, and Nicolas Charon \url{https://arxiv.org/pdf/2001.02858.pdf}.
 
 \end{document}
