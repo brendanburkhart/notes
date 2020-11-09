@@ -806,11 +806,11 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     The following are equivalent ways of defining a tree.
 \end{rmk}
 
-\begin{thm}
+\begin{thm}\label{tree-unique-path}
     A connected graph $T$ is a tree if and only if for any two vertices $u, v \in V(T)$, there is a unique $(u, v)$-path in $T$.
 \end{thm}
 
-\begin{thm}
+\begin{thm}\label{tree-cute-edges}
     A connected graph $T$ is a tree if and only if every edge $e \in E(T)$ is a cut edge.
 \end{thm}
 
@@ -842,7 +842,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     \[x \sim \cdots \sim u \sim \cdots \sim y\] would require $u$ have degree greater than one, which would be a contradiction. Therefore, this path is also a unique $(x, y)$-path in $T - u$, and so $T - u$ is a tree.
 \end{proof}
 
-\begin{prop}
+\begin{prop}\label{tree-edges-n-minus-one}
     Let $T$ be a tree. If $|V(T)| = n$ and $n \geq 1$, then $|E(T)| = n-1$.
 \end{prop}
 
@@ -853,7 +853,27 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{proof}
 
 \begin{defn}
-    Let $G$ be a graph. A spanning subgraph of $G$ which is also a tree is a \emph{spanning tree}.
+    Let $G$ be a graph. If a spanning subgraph of $G$ is a tree, it is a \emph{spanning tree}.
 \end{defn}
+
+\begin{thm}\label{spanning-trees-in-connected-graphs}
+    Let $G$ be a graph. $G$ has a spanning tree if and only if $G$ is connected.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) Suppose $G$ has a spanning tree $T$. Let $u, v \in V(G)$, so $u, v \in V(T)$. Therefore, by Theorem \ref{tree-unique-path}, there is a $(u,v)$-path in $T$, and since $E(T) \subseteq E(G)$ it must also be a $(u,v)$-path in $G$ and so $G$ is connected.
+
+    ($\impliedby$) Since $G$ is connected, we can form a connected spanning subgraph of $G$ with the fewest possible edges. Every edge in this subgraph is a cut edge, or else it could have been removed to create a subgraph with fewer edges. This subgraph is then a spanning tree by Theorem \ref{tree-cute-edges}.
+\end{proof}
+
+\begin{thm}\label{tree-edges-iff}
+    Let $G$ be a connected graph on $n \geq 1$ vertices. $G$ is a tree if and only if $|E(G)| = n-1$.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) If $G$ is a tree, then $|E(G)| = n-1$ by Proposition \ref{tree-edges-n-minus-one}.
+
+    ($\impliedby$) If $|E(G)| = n-1$, then let $T$ be a spanning tree in $G$, which must exist by Theorem \ref{spanning-trees-in-connected-graphs}. Since $V(T) = V(G) = n$, $E(T) \subseteq E(G)$, and furthermore $|E(T)| = n-1$, we have $E(T) = E(G)$. Therefore, $G = T$, and so $G$ is a tree.
+\end{proof}
 
 \end{document}
