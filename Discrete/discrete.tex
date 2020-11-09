@@ -780,4 +780,80 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     If $G - v$ has more connected components than $G$, we say $v$ is a \emph{cut vertex}. If $G - e$ has more connected components than $G$, we say $e$ is a \emph{cut edge}.
 \end{defn}
 
+\begin{thm}
+    Let $G$ be a connected graph. If $e \in E(G)$ is a cut edge, then $G - e$ has exactly two connected components.
+\end{thm}
+
+\section{Trees}
+
+\begin{defn}
+    A \emph{cycle} is a walk in a graph of length at least three, where the first and last vertices are the same, but no other vertices are repeated.
+\end{defn}
+
+\begin{rmk}
+    The subgraph induced by a cycle with length $n$ may also be referred to as a cycle, and is denoted by $C_n$.
+\end{rmk}
+
+\begin{defn}
+    A graph with no cycles is called \emph{acyclic}, or a \emph{forest}.
+\end{defn}
+
+\begin{defn}
+    A \emph{tree} is a connected acyclic graph.
+\end{defn}
+
+\begin{rmk}
+    The following are equivalent ways of defining a tree.
+\end{rmk}
+
+\begin{thm}
+    A connected graph $T$ is a tree if and only if for any two vertices $u, v \in V(T)$, there is a unique $(u, v)$-path in $T$.
+\end{thm}
+
+\begin{thm}
+    A connected graph $T$ is a tree if and only if every edge $e \in E(T)$ is a cut edge.
+\end{thm}
+
+\begin{defn}
+    In a graph, a vertex with degree $1$ is a \emph{leaf}.
+\end{defn}
+
+\begin{thm}\label{tree-has-leaf}
+    Every tree with at least two vertices has a leaf.
+\end{thm}
+
+\begin{proof}
+    Let $T$ be a tree with at least two vertices, and let $P$ be a longest path in $T$. Since $T$ is connected and has at least two vertices, the longest path has at least two vertices:
+    \[P: u_0 \sim u_1 \sim \cdots \sim u_{\ell}\] where $\ell \geq 1$. We can that $u_0$ is a leaf in $T$. Assume, for the sake of contradiction, that $u_0$ is not a leaf. Then $u_0$ must be adjacent to at least one neighbor $x$ other than $u_1$. If $x \in P$, then
+    \[x \sim u_0 \sim u_1 \sim \cdots \sim x\] would be a cycle, and since $T$ is acyclic, it follows that $x \notin P$. Therefore, the path
+    \[Q: x \sim u_0 \sim u_1 \sim \cdots \sim u_{\ell}\] is a longer path than $P$, which is a contradiction. It follows that $u_0$ (and $u_{\ell}$ by the same argument) must be a leaf.
+\end{proof}
+
+\begin{rmk}
+    Since both $u_0$ and $u_{\ell}$ are leaves, every tree with at least two vertices must have at least two leaves.
+\end{rmk}
+
+\begin{prop}\label{tree-minus-leaf}
+    Let $T$ be a tree, and $u \in V(T)$. If $u$ is a leaf, then $T - u$ is a tree.
+\end{prop}
+
+\begin{proof}
+    Since $T$ is acyclic, $T - u$ is acyclic. Let $x, y \in V(T - u)$. Take the unique $(x, y)$-path in $T$. This path must not contain $u$, or else
+    \[x \sim \cdots \sim u \sim \cdots \sim y\] would require $u$ have degree greater than one, which would be a contradiction. Therefore, this path is also a unique $(x, y)$-path in $T - u$, and so $T - u$ is a tree.
+\end{proof}
+
+\begin{prop}
+    Let $T$ be a tree. If $|V(T)| = n$ and $n \geq 1$, then $|E(T)| = n-1$.
+\end{prop}
+
+\begin{proof}
+    We will prove this by induction on $n$. In the base case $n=1$, it must be that $|E(T)| = 0$, and $n-1 = 0$.
+
+    Assume that for some $n \geq 1$, all trees with $n$ vertices have $n-1$ edges. Let $T$ be a tree with $n+1$ vertices. Then by Theorem \ref{tree-has-leaf}, $T$ must have a leaf $u$. Since $T - u$ is a tree by Proposition \ref{tree-minus-leaf}, and has $n$ vertices, it must have $n-1$ edges. As $u$ is a leaf, it is only adjacent to one neighbor, and so $E(T) = E(T - u) + 1 = n$, which completes the induction.
+\end{proof}
+
+\begin{defn}
+    Let $G$ be a graph. A spanning subgraph of $G$ which is also a tree is a \emph{spanning tree}.
+\end{defn}
+
 \end{document}
