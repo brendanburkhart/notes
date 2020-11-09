@@ -876,4 +876,46 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     ($\impliedby$) If $|E(G)| = n-1$, then let $T$ be a spanning tree in $G$, which must exist by Theorem \ref{spanning-trees-in-connected-graphs}. Since $V(T) = V(G) = n$, $E(T) \subseteq E(G)$, and furthermore $|E(T)| = n-1$, we have $E(T) = E(G)$. Therefore, $G = T$, and so $G$ is a tree.
 \end{proof}
 
+\section{Graph Coloring}
+
+\begin{defn}
+    Let $G$ be a graph. For a positive integer $k$, a \emph{k-coloring} of $G$ is a function
+    \[f: V(G) \to \{1, \ldots, k\}.\] For $u \in V(G)$, if $f(u) = n$ we say that $f$ \emph{assigns} color $n$ to vertex $u$.
+\end{defn}
+
+\begin{defn}
+    A $k$-coloring $f$ is \emph{proper} provided
+    \[\{x, y\} \in E(G) \implies f(x) \neq f(y).\]
+    That is, $f$ assigns different colors to adjacent vertices.
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph. If $G$ has a proper $k$-coloring, it is \emph{k-colorable}.
+\end{defn}
+
+\begin{defn}
+    The smallest $k$ such that $G$ is $k$-colorable is the \emph{chromatic number} of $G$, and is denoted by $\chi(G)$.
+\end{defn}
+
+\begin{exmp}
+    Consider $K_n$, the complete graph on $n \geq 1$ vertices. The coloring
+    \[f: V(K_n) \to \{1, 2, \ldots, n\}\]
+    \[f: v_i \mapsto i\]
+    is clearly a proper $n$-coloring of $K_n$. So $K_n$ is $n$-colorable, and $\chi(K_n) \leq n$.
+
+    Since every vertex is adjacent to $n-1$ other vertices, at least $n$ colors are needed for a proper $n$-coloring. Therefore, $\chi(K_n) > n-1$, and so we have $\chi(K_n) = n$.
+\end{exmp}
+
+\begin{prop}\label{subgraph-chromatic-number}
+    Let $G$ be a subgraph of a graph $H$. Then $\chi(G) \leq \chi(H)$.
+\end{prop}
+
+\begin{proof}
+    Let $f$ be a proper $\chi(H)$-coloring of $H$. Then since $V(G) \subseteq V(H)$, we can restrict $f$ to $V(G)$ to obtain a (not necessarily proper) $\chi(H)$-coloring of $G$, so $\chi(G) \leq \chi(H)$.
+\end{proof}
+
+\begin{prop}\label{chromatic-number-graph-degree}
+    Let $B$ be a graph with maximum degree $\Delta G$. Then $\chi(G) \leq \Delta G + 1$.
+\end{prop}
+
 \end{document}
