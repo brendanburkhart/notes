@@ -607,8 +607,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     In the graph depicted in Figure \ref{fig:clique-examples}, an independent set with maximum cardinality is $\{1, 3\}$, so $\alpha(G) = 2$.
 \end{exmp}
 
-\begin{defn}Complement Graph
-
+\begin{defn}Complement Graph\proofbreak
     Let $G$ be a graph. The \emph{complement graph} of $G$, denoted by $\bar{G}$, is defined by
     \[V(\bar{G}) = V(G),\] and
     \[E(\bar{G}) = \left\{\{a, b\} \compbar a, b \in V(G), a \neq b, \{a, b\} \notin E(G) \right\}.\]
@@ -918,5 +917,90 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \begin{prop}\label{chromatic-number-graph-degree}
     Let $B$ be a graph with maximum degree $\Delta G$. Then $\chi(G) \leq \Delta G + 1$.
 \end{prop}
+
+\begin{prop}\label{cycle-chromatic-parity}
+    Let $C_n$ be a cycle on $n$ vertices. Then
+    \[\chi(C_n) = \left\{
+        \begin{array}{lr}
+            2 & : 2 \mid n \\
+            3 & : 2 \centernot\mid n
+        \end{array}\right.\]
+\end{prop}
+
+\begin{prop}\label{chromatic-cliques-independent-sets}
+    Let $G$ be a graph on $n$ vertices, then
+    \[\chi(G) \geq \omega(G),\] and
+    \[\chi(G) \geq \frac{n}{\alpha(G)}.\]
+\end{prop}
+
+\begin{prop}\label{single-maximum-degree}
+    Let $G$ be a graph. If $\Delta G \geq 1$, and $d_G(v) = \Delta G$ for only one $v \in V(G)$, then $\chi(G) < \Delta G$.
+\end{prop}
+
+\begin{prop}\label{induced-subgraphs-minimum-degree}
+    Let $G$ be a graph. If $\delta H \leq d$ for every induced subgraph $H$ of $G$, and some $d \in \N$, then $\chi(G) \leq d+1$.
+\end{prop}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (1) at ({2*cos(90)}, {2*sin(90)}) {1};
+            \node (2) at ({2*cos(162)}, {2*sin(162)}) {2};
+            \node (3) at ({2*cos(234)}, {2*sin(234)}) {3};
+            \node (4) at ({2*cos(306)}, {2*sin(306)}) {4};
+            \node (5) at ({2*cos(18)}, {2*sin(18)}) {5};
+            \node (6) at (0, 0) {6};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (1) edge (2);
+            \path [-] (2) edge (3);
+            \path [-] (3) edge (4);
+            \path [-] (4) edge (5);
+            \path [-] (5) edge (1);
+
+            \path [-] (1) edge (6);
+            \path [-] (2) edge (6);
+            \path [-] (3) edge (6);
+            \path [-] (4) edge (6);
+            \path [-] (5) edge (6);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Chromatic number example graph}
+\label{fig:chromatic-graph-example}
+\end{figure}
+
+\begin{exmp}
+    Let $G$ be the graph on $n$ vertices shown in Figure \ref{fig:chromatic-graph-example}.
+\end{exmp}
+
+\begin{prop}
+    Let $G$ be a graph. $G$ is $1$-colorable if and only if it is \emph{edgeless}, that is, $E(G) = \emptyset$.
+\end{prop}
+
+\begin{defn}
+    Graphs that are $2$-colorable are called \emph{bipartite}.
+\end{defn}
+
+\begin{prop}
+    Trees are bipartite.
+\end{prop}
+
+\begin{proof}
+    We will prove this by induction on the number of vertices.
+\end{proof}
+
+\begin{defn}Complete bipartite graph\proofbreak
+    The complete bipartite graph $K_{m,n}$ where $m,n \in \N$ and $m,n \geq 1$ is composed of two disjoint set of vertices $X$ and $Y$ where \item $|X| = m$, and $|Y| = n$. $K_{m,n} = (V, E)$, where
+    \[V = X \union Y,\]
+    \[E = \left\{x, y\} \compbar x \in X, y \in Y \right\}.\]
+\end{defn}
+
+\begin{thm}
+    Let $G$ be a graph. $G$ is bipartite if and only if it contains no odd cycles.
+\end{thm}
 
 \end{document}
