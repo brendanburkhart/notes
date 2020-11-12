@@ -897,14 +897,18 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     The smallest $k$ such that $G$ is $k$-colorable is the \emph{chromatic number} of $G$, and is denoted by $\chi(G)$.
 \end{defn}
 
-\begin{exmp}
-    Consider $K_n$, the complete graph on $n \geq 1$ vertices. The coloring
+\begin{prop}
+    The chromatic number of $K_n$, the complete graph on $n \in \N$ vertices, is $n$.
+\end{prop}
+
+\begin{proof}
+    The coloring
     \[f: V(K_n) \to \{1, 2, \ldots, n\}\]
     \[f: v_i \mapsto i\]
     is clearly a proper $n$-coloring of $K_n$. So $K_n$ is $n$-colorable, and $\chi(K_n) \leq n$.
 
-    Since every vertex is adjacent to $n-1$ other vertices, at least $n$ colors are needed for a proper $n$-coloring. Therefore, $\chi(K_n) > n-1$, and so we have $\chi(K_n) = n$.
-\end{exmp}
+    Since every vertex is adjacent to $n-1$ other vertices, at least $n$ colors are needed for a proper $n$-coloring. Therefore, $\chi(K_n) \geq n$, and so we have $\chi(K_n) = n$.
+\end{proof}
 
 \begin{prop}\label{subgraph-chromatic-number}
     Let $G$ be a subgraph of a graph $H$. Then $\chi(G) \leq \chi(H)$.
@@ -942,13 +946,56 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 
 \begin{prop}\label{chromatic-cliques-independent-sets}
     Let $G$ be a graph on $n$ vertices, then
-    \[\chi(G) \geq \omega(G),\] and
+    \[\chi(G) \geq \omega(G).\]
+\end{prop}
+
+\begin{proof}
+    We know that $K_{\omega(G)}$ is a subgraph of $G$. Since $\chi(K_n) = n$, it follows that $\chi(G) \geq \omega(G)$ by Proposition \ref{subgraph-chromatic-number}.
+\end{proof}
+
+\begin{lemma}\label{coloring-implies-partition}
+    Let $G$ be a graph, and let $f$ be a proper $k$-coloring of $G$, where $f$ is surjective. Let $u, v \in V(G)$ be related when $f(u) = f(v)$. This relation partitions $V(G)$ into independent sets.
+\end{lemma}
+
+\begin{proof}\proofbreak
+    Let $P_i = \{v \in V(G) \mid f(v) = i\}$, and $P = \{P_1, \ldots, P_k\}$.
+
+    Since $f$ is surjective, for $i \in \{1, \ldots, k\}$ there is some $v \in V(G)$ such that $f(v) = i$, and so $P_i \neq \emptyset$. Therefore, $\emptyset \notin P$.
+
+    For every $v \in V(G)$, since $f(v) = i$ for some $i \in \{1, \ldots, k\}$, we know that $v \in P_i$, and so
+    \[V(G) = \bigcup_{P_i\in P}P_i.\]
+
+    Since $f$ is a function, for any $v \in V(G)$, we know that $f(v) = i$ and $f(v) = j$ implies that $i = j$. Therefore, for every $P_i, P_j \in P$, since $v \in (P_i \intersection P_j)$ implies that $f(v) = i$ and $f(v) = j$, we have $i = j$ and so $P_i \intersection P_j = \emptyset$ when $i \neq j$.
+
+    Therefore, $P$ is a partition of $V(G)$. For any $u, v \in P_i$, we know that $f(u) = f(v)$, and so $u$ is not adjacent to $v$ because $f$ is a proper coloring. Therefore, $P$ is a set of independent sets in $G$.
+\end{proof}
+
+\begin{prop}
+    Let $G$ be a graph on $n$ vertices, then
     \[\chi(G) \geq \frac{n}{\alpha(G)}.\]
 \end{prop}
 
+\begin{proof}
+    Assume that $\chi(G) \geq \frac{n}{\alpha(G)}$, so there exists a proper $k$-coloring of $G$ where $k < \frac{n}{\alpha(G)}$. Therefore, by Lemma \ref{coloring-implies-partition}, there is a partition of $G$ into fewer than $\frac{n}{\alpha(G)}$ independent sets. However, this is a contradiction since $\alpha(G)$ is the largest independent set in $G$, and so there must be at least $\frac{n}{\alpha(G)}$ independent sets in any such partition.
+\end{proof}
+
 \begin{prop}\label{single-maximum-degree}
-    Let $G$ be a graph. If $\Delta G \geq 1$, and $d_G(v) = \Delta G$ for only one $v \in V(G)$, then $\chi(G) < \Delta G$.
+    Let $G$ be a graph. If $\Delta G \geq 1$, and $d_G(v) = \Delta G$ for only one $v \in V(G)$, then $\chi(G) \leq \Delta G$.
 \end{prop}
+
+\begin{proof}
+    Let $v$ be the unique vertex with $d_G(v) = \Delta G$. Let $f$ be a $\Delta G$-coloring such that $f(v) = 1$. Let $U$ be the set of vertices that neighbor $v$. Since $\Delta U <\leq \Delta G - 1$, we know that $G[U] - v$ is a subgraph with degree at most $\Delta U - 1$, and so by Proposition \ref{chromatic-number-graph-degree} can be colored with the $\Delta U = \Delta G - 1$ remaining colors. Since no remaining uncolored vertex is adjacent to $v$, the remainder of $G$ has degree $\Delta G - 1$, and can be colored using the procedure from the proof to Proposition \ref{chromatic-number-graph-degree} using all $\Delta G$ colors.
+\end{proof}
+
+\begin{prop}\label{induced-subgraphs-minimum-degree}
+    Let $G$ be a graph. If $\delta H \leq d$ for every induced subgraph $H$ of $G$, and some $d \in \N$, then $\chi(G) \leq d+1$.
+\end{prop}
+
+\begin{proof}
+    We will prove this by induction on $k$, the number of vertices in $G$. In the base case $k=1$, the minimum (and only) degree is zero, and the graph can indeed be colored with a single color.
+
+    Assume that the proposition holds for all graphs on $n$ vertices, where $0 < n \leq k$. Then let $G$ be a graph on $k+1$ vertices. Choose some $v \in V(G)$, and consider $G - v$. If $\delta J \leq c$ for every induced subgraph $J$ of $G - v$, then $\delta H \leq c +1 = d$ for every induced subgraph $H$ of $G$. By the induction hypothesis, we know that $\chi(G - v) \leq d$, and so $\chi(G) \leq d+1$.
+\end{proof}
 
 \begin{figure}[ht!]
     \centering
@@ -999,11 +1046,13 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{prop}
 
 \begin{proof}
-    We will prove this by induction on the number of vertices.
+    We will prove this by induction on the number of vertices $n$. In the base case $n=1$, a tree on $n$ vertices is bipartite since it is $1$-colorable, and so it is $2$-colorable.
+
+    Now assume that any tree on $n \geq 1$ vertices is bipartite, and let $T$ be a tree on $n+1$ vertices. Since $n \geq 2$, by Theorem \ref{tree-has-leaf}, $T$ must have a leaf $u$. By Proposition \ref{tree-minus-leaf}, $T - u$ is a tree on $n$ vertices, and so it is bipartite by the induction hypothesis. It follows that is has a proper $2$-coloring $f$. Since $u$ is a leaf, it is only adjacent to one vertex, which we will denote $v$. Extend $f$ to $u$ by letting $f(u) = 1$ if $f(v) = 2$, and $f(u) = 2$ if $f(v) = 1$. Then this extension of $f$ must be a proper $2$-coloring of $T$, and so $T$ is bipartite.
 \end{proof}
 
 \begin{defn}Complete bipartite graph\proofbreak
-    The complete bipartite graph $K_{m,n}$ where $m,n \in \N$ and $m,n \geq 1$ is composed of two disjoint set of vertices $X$ and $Y$ where \item $|X| = m$, and $|Y| = n$. $K_{m,n} = (V, E)$, where
+    The \emph{complete bipartite} graph $K_{m,n}$ where $m,n \in \N$ and $m,n \geq 1$ is composed of two disjoint set of vertices $X$ and $Y$ (the \emph{bipartitions} of $K_{m,n}$) where \item $|X| = m$, and $|Y| = n$. $K_{m,n} = (V, E)$, where
     \[V = X \union Y,\]
     \[E = \left\{x, y\} \compbar x \in X, y \in Y \right\}.\]
 \end{defn}
@@ -1011,6 +1060,12 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \begin{thm}
     Let $G$ be a graph. $G$ is bipartite if and only if it contains no odd cycles.
 \end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) Assume, for the sake of contradiction, that $G$ has at least one odd cycle $C$. By Proposition \ref{cycle-chromatic-parity}, $\chi(C) = 3$ and so by Proposition \ref{subgraph-chromatic-number}, $3 = \chi(C) \leq \chi(G)$. However, $G$ is bipartite and so $\chi(G) \leq 2$, so this is a contradiction, and $G$ must contain no odd cycles.
+
+    ($\impliedby$) Let $H$ be a connected component of $G$ that contains no odd cycles. Then choose some $v_0 \in V(H)$, and for every $v \in V(H)$, let $p(v)$ be a shortest $(u,v)$-path in $H$ (which must exist since $H$ is connected), and let $l(v)$ be the length of $p(v)$. If $2 \mid l(v)$, color $v$ with $1$, and color it $2$ otherwise. If $u, v \in V(H)$ are adjacent, and colored with the same color, then $l(u) + l(v)$ is even, and so $p(u) + \{u, v\} + p(v)$ is an odd cycle starting and ending at $v_0$. However, we assumed $H$ contains no odd cycles, and so any adjacent $u,v$ must have different colors. Therefore, $H$ is bipartite, and so if $G$ contains no odd cycles, we can use this procedure to show that every connected component of $G$ is bipartite, and it follows that $G$ must be bipartite.
+\end{proof}
 
 \section{Number Theory}
 
