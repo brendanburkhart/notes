@@ -824,7 +824,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 
 \begin{proof}
     Let $T$ be a tree with at least two vertices, and let $P$ be a longest path in $T$. Since $T$ is connected and has at least two vertices, the longest path has at least two vertices:
-    \[P: u_0 \sim u_1 \sim \cdots \sim u_{\ell}\] where $\ell \geq 1$. We can that $u_0$ is a leaf in $T$. Assume, for the sake of contradiction, that $u_0$ is not a leaf. Then $u_0$ must be adjacent to at least one neighbor $x$ other than $u_1$. If $x \in P$, then
+    \[P: u_0 \sim u_1 \sim \cdots \sim u_{\ell}\] where $\ell \geq 1$. We can show that $u_0$ is a leaf in $T$. Assume, for the sake of contradiction, that $u_0$ is not a leaf. Then $u_0$ must be adjacent to at least one neighbor $x$ other than $u_1$. If $x \in P$, then
     \[x \sim u_0 \sim u_1 \sim \cdots \sim x\] would be a cycle, and since $T$ is acyclic, it follows that $x \notin P$. Therefore, the path
     \[Q: x \sim u_0 \sim u_1 \sim \cdots \sim u_{\ell}\] is a longer path than $P$, which is a contradiction. It follows that $u_0$ (and $u_{\ell}$ by the same argument) must be a leaf.
 \end{proof}
