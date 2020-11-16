@@ -1069,7 +1069,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 
 \section{Number Theory}
 
-\begin{thm}
+\begin{thm}\label{integer-remainder-thm}
     Let $x, n \in \Z$ with $n \geq 1$. Then there exists unique $q, r \in \Z$ such that
     \[x = qn + r,\] and
     \[0 \leq r < n.\]
@@ -1078,5 +1078,67 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \begin{exmp}
     Let $x = 59$, and $n = 7$. Then since $x = 8(7) + 3$, we have $q = 8$ and $r = 3$.
 \end{exmp}
+
+\begin{rmk}
+    We may denote the unique remainder $r$ by $x \textrm{ mod } n$.
+\end{rmk}
+
+\begin{prop}
+    Let $x, y, n \in \Z$ with $n \geq 1$. Then
+    \[x \equiv y \pmod n \iff x \textrm{ mod} n = y \textrm{n}.\]
+\end{prop}
+
+\begin{defn}
+    Let $a, b \in \Z$. An integer $d$ is called a \emph{common divisor} of $a$ and $b$ provided that $d \mid a$ and $d \mid b$.
+\end{defn}
+
+\begin{exmp}
+    The common divisors of $18$ and $12$ are: \[1, -1, 2, -2, 3, -3, 6, -6.\]
+\end{exmp}
+
+\begin{defn}
+    Let $a, b \in \Z$. An integer $d$ is called the \emph{greatest common divisor} of $a$ and $b$ provided that
+    \begin{itemize}
+        \item $d$ is a common divisor of $a$ and $b$,
+        \item if $e$ is a common divisor of $a$ and $b$, then $e \leq d$.
+    \end{itemize}
+    The greatest common divisor of $a$ and $b$ may be denoted by $\gcdof{a}{b}$.
+\end{defn}
+
+\begin{exmp}
+    From the previous example, we can see that $\gcdof{a}{b} = 6$.
+\end{exmp}
+
+\begin{rmk}\proofbreak
+    \begin{itemize}
+        \item If $\gcdof{a}{b}$ exists, it is unique.
+        \item If $\gcdof{a}{b}$ does not exist, then $a = b = 0$.
+        \item If $a \neq 0$, then $\gcdof{a}{0} = |a|$.
+        \item $\gcdof{a}{b} = \gcdof{-a}{b} = \gcdof{a}{-b} = \gcdof{-a}{-b}$.
+        \item $\gcdof{a}{b} = \gcdof{b}{a}$.
+    \end{itemize}
+\end{rmk}
+
+\begin{prop}\label{euclidean-division-property}
+    Let $a, b \in \Z^+$. Then \[\gcdof{a}{b} = \gcdof{b}{a \textrm{ mod } b}.\]
+\end{prop}
+
+\begin{exmp}
+    $\gcdof{18}{12} = \gcdof{12}{6} = \gcdof{6}{6} = 6$.
+\end{exmp}
+
+\begin{proof}
+    Let $d = \gcdof{a}{b}$ and $e = \gcdof{b}{a \textrm{ mod } b}$. By Theorem \ref{integer-remainder-thm}, we know that \[a \textrm{ mod } b = a - q_1b\] for some $q \in \Z$. Since $d \mid a$ and $d \mid b$, it follows that $d \mid (a - q_1b)$. Therefore, $d$ is \emph{a} common divisor of $b$ and $a \textrm{ mod } b$, and so $d \leq e$.
+
+    Similarly, since $e \mid b$ and $e \mid (a \textrm{ mod } b)$, and $a = (a \textrm{ mod } b) + q_1b$, we know that $e \mid a$. Therefore, $e$ is \emph{a} common divisor of $a$ and $b$, and so $e \leq d$. Since we also have $d \leq e$, we then know that $d = e$.
+\end{proof}
+
+\begin{thm}\label{gcd-characterization}
+    Let $a, b \in \Z$, not both zero. Then $\gcdof{a}{b}$ is the smallest positive integer of the form $ax + by$ where $x, y \in \Z$.
+\end{thm}
+
+\begin{defn}
+    Let $a, b \in \Z$. If $\gcdof{a}{b} = 1$, we say that $a$ and $b$ are \emph{relatively prime}.
+\end{defn}
 
 \end{document}
