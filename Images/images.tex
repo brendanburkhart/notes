@@ -666,4 +666,35 @@ Now consider the equivalence relation where for $s_1, s_2 \in S$, $s_1 \sim s_2$
 
 For a relaxed, estimation solution to computing this distance function, see ``An inexact matching approach for the comparison of plane curves with general elastic metric'' by Yashil Sukurdeep, Martin Bauer, and Nicolas Charon \url{https://arxiv.org/pdf/2001.02858.pdf}.
 
+\subsection{Shape Clustering}
+
+Given $N$ shapes $\{c_1, c_2, \ldots, c_N\}$, let $d_{i,j}$ be $d(c_i, c_j)$ --- the distance between shapes $c_i$ and $c_j$ given by the square root velocity transform metric described above. By projecting this shapes into $\R^2$ or $\R^3$ in such as way as to preserve the pair-wise distances between the shapes, we can then apply standard clustering algorithms for points to identify clusters of shapes.
+
+Let $\hat{x}_1, \ldots, \hat{x}_N \in \R^d$ be the projected points. Note that $d$ is typically chosen to be $2$ or $3$, so that the projected points can be visualized effectively. We can perform the desired projection by solving the optimization problem
+\[\min_{\hat{x}_1, \ldots, \hat{x}_N \in \R^d}\sum_{i, j}\left(\norm{\hat{x}_i - \hat{x}_j}_2 - d_{i, j}\right)^2.\]
+
+Form the matrix
+\[D = \begin{bmatrix}
+    d_{1, 1} & \cdots & d_{1, N} \\
+    \vdots & \ddots & \vdots \\
+    d_{N, 1} & \cdots & d_{N, N}
+\end{bmatrix},\] and let $D^{(2)}$ be the element-wise square of $D$.
+
+Let $I_N$ be the $N \times N$ identity matrix, and $O_N$ be the $N \times N$ matrix where each element is $1$. Let $J = I_N - \frac{1}{N}O_N$.
+
+Now consider the matrix $B = \frac{-1}{2}JD^{(2)}J$. Computing this matrix is known as performing ``double-centering'', where each multiplication by $J$ is ``centering''. Let $\lambda_1, \ldots, \lambda_d$ be the $d$ largest eigenvalues of $B$, and $v_1, \ldots, v_d$ the corresponding eigenvectors. Form the matrices
+\[V_d = \begin{bmatrix}
+    v_1 & \cdots & v_d
+\end{bmatrix},\]
+\[\Lambda_d^{1/2} = \begin{bmatrix}
+    \lambda_1^{1/2} & 0 & \cdots & 0 \\
+    0 & \lambda_2^{1/2} & \cdots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \cdots & 0 \\
+\end{bmatrix},\] which are $N \times d$ and $d \times d$ matrices respectively.
+
+Finally, form the $N \times d$ matrix $\hat{X} = V_d\Lambda_d^{1/2}$. Then the $i$-th row of $\hat{X}$ is $\hat{x}_i \in \R^d$. Since these are points in $\R^d$ where $\norm{\hat{x}_i - \hat{x}_j}_2 \approx d_{i, j}$, we can now apply standard clustering algorithms, such as $k$-means, to find cluster among the points. It is important to pick a good target dimension for the projection, as using very small $d$ can result in underfitting, and high $d$ can result in overfitting. Using $d=3$ is the highest possible dimension that can still be visually inspected easily, and so is often a good choice.
+
+This process is known as ``Classical Multidimensional Scaling'', or CMDS, and is part of a larger family of projection algorithms known as MDS. Since forming the matrix $D$ did not depend at all on the square root velocity transform distance metric, this process is much more widely applicable to clustering data.
+
 \end{document}
