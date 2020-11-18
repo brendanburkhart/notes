@@ -454,6 +454,14 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     $\odot_n$ is a binary operation on $\Z_n$ defined by $(a \odot_n b) = (ab)\bmod n$.
 \end{defn}
 
+\begin{defn}
+    For $x \in \Z/n\Z$, the multiplicative inverse of $x$ (if it exists), denoted by $x^{-1}$, is a number such that $x \odot_n x^{-1} = 1$.
+\end{defn}
+
+\begin{prop}
+    Let $x \in \Z/n\Z$. Then $x^{-1}$ exists if and only if $\gcdof{x}{n} = 1$.
+\end{prop}
+
 \begin{thm}\label{znz-prime-field}
     If $n$ is a prime integer, then every $x \in \Z/n\Z$, where $x \neq 0$, has a multiplicative inverse $x^{-1}$ in $\Z/n\Z$.
 \end{thm}
