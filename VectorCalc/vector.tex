@@ -6,6 +6,7 @@
 \usepackage{fullpage}
 \usepackage{makecell}
 \usepackage{tabularx}
+\usepackage{bm}
 
 \usepackage[dvipsnames]{xcolor}
 \usepackage{tikz,tkz-euclide}
@@ -342,5 +343,80 @@ Therefore, we have $E = \frac{1}{2}\frac{\partial^2 f}{\partial x^2}(a)$, $F = \
 
 It follows that \[T_2(x, y) = f(a) + \frac{\partial f}{\partial x}(a)(x-x_0) + \frac{\partial f}{\partial y}(a)(y-y_0) + \frac{1}{2}\frac{\partial^2 f}{\partial xy}(a)(x-x_0)(y-y_0) + \]
 \[\frac{1}{2}\frac{\partial^2 f}{\partial x^2}(a)(x-x_0)^2 + \frac{1}{2}\frac{\partial^2 f}{\partial y^2}(a)(y-y_0)^2.\]
+
+\section{Vector Fields}
+
+\begin{defn}
+    A \emph{vector field} $F$ in $\R^n$ is a vector valued function $F: \R^n \to \R^n$.
+\end{defn}
+
+\begin{rmk}
+    We can interpret a vector field as a velocity field of a fluid.
+\end{rmk}
+
+\begin{exmp}
+    \[F: \R^2 \to \R^2\]
+    \[F: (x, y) \mapsto \langle 1 + x^2 - y, 2x\rangle \]
+\end{exmp}
+
+\begin{defn}
+    Let $F: \R^n \to \R^n$ be a vector field. A \emph{flow line} $c$ in a vector field $F$ is a function $c: \R \to \R^n$, such that \[F(c(t)) = c'(t)\] for all $t$ in the domain of $c$.
+\end{defn}
+
+\begin{exmp}
+    Let $F(x, y) = \langle 1 + x^2 - y, 2x\rangle$ as previously. Then $c(t) = (t, t^2)$ is a flow line of $F$, since $F(c(t)) = \langle 1 + t^2 - t^2, 2t\rangle = \langle 1, 2t\rangle$ and $c'(t) = \langle 1, 2t\rangle$.
+\end{exmp}
+
+\begin{defn}
+    Let $\nabla = \left\langle \frac{\partial}{\partial{x}}, \frac{\partial}{\partial{y}}, \frac{\partial}{\partial{z}} \right\rangle$, and let $F:\R^3 \to \R^3$ be a vector field. Then the \emph{divergence} of $F$ is given by \[\nabla \cdot F = \frac{\partial{F_x}}{\partial{x}} + \frac{\partial{F_y}}{\partial{y}} + \frac{\partial{F_z}}{\partial{z}}.\]
+\end{defn}
+
+\begin{defn}
+    More generally, for $n \in \Z^+$, let $\nabla = \left\langle \frac{\partial}{\partial{x_1}}, \ldots, \frac{\partial}{\partial{x_n}} \right\rangle$, and let $F:\R^n \to \R^n$ be a vector field. Then the \emph{divergence} of $F$ is given by \[\nabla \cdot F = \frac{\partial{F_{x_1}}}{\partial{x_1}} + \ldots + \frac{\partial{F_{x_n}}}{\partial{x_n}}.\]
+\end{defn}
+
+\begin{rmk}
+    If we interpret a vector field as the velocity field of a fluid, then the divergence of the field at a particular point is a measure of the \emph{expansion/contraction} of the fluid at that point. Positive values indicate expansion, negative values indicate contraction, and the magnitude indicates the rate of expansion/contraction.
+\end{rmk}
+
+\begin{defn}
+    Let $\nabla = \left\langle \frac{\partial}{\partial{x}}, \frac{\partial}{\partial{y}}, \frac{\partial}{\partial{z}} \right\rangle$, and let $F:\R^3 \to \R^3$ be a vector field. Then the \emph{curl} of $F$ is given by \[\nabla \times F = \begin{vmatrix}
+        i & j & k \\
+        \frac{\partial}{\partial{x}} & \frac{\partial}{\partial{y}} & \frac{\partial}{\partial{z}} \\
+        F_x & F_y & F_z
+        \end{vmatrix}.\]
+\end{defn}
+
+\begin{defn}
+    We can extend this definition to cover vector fields over $\R^2$, but not much beyond that. For a vector field $F: \R^2 \to \R^2$, we extend $F$ to $G: \R^3 \to \R^3$ where $G_x = F_x$, $G_y = F_y$, and $G_z = 0$, and then defining the curl of $F$ as $\nabla \times G$.
+\end{defn}
+
+\begin{rmk}
+    If we interpret a vector field as the velocity field of a fluid, then the curl of the field at a particular point is a measure of the \emph{local rotation} of the fluid at that point. The direction of the curl is the axis of rotation, and the magnitude of the curl indicates the rate of rotation.
+\end{rmk}
+
+\begin{prop}
+    Let $F: \R^2 \to \R^2$ be a vector field, and let $\bm{c}$ be the curl of $F$ at some point. Then $\bm{c} \cdot \langle 0, 0, 1\rangle = \norm{\bm{c}}$ --- that is, $\bm{c}$ is parallel to the $z$-axis and perpendicular to the $xy$ plane.
+\end{prop}
+
+\begin{proof}
+    Since $\frac{\partial{F_x}}{\partial{z}} = 0$, $\frac{\partial{F_y}}{\partial{z}}$, and $G_z = 0$, we know that $\bm{c}$ is equal to $\langle 0, 0, \frac{\partial{F_y}}{\partial{x}} - \frac{\partial{F_y}}{\partial{x}}\rangle$. Therefore, $\bm{c} \cdot \langle 0, 0, 1\rangle = \frac{\partial{F_y}}{\partial{x}} - \frac{\partial{F_y}}{\partial{x}} = \norm{\bm{c}}$.
+\end{proof}
+
+\begin{prop}
+    Let $F$ be a gradient vector field, so $F = \nabla G$ for some $G: \R^3 \to \R$. The curl of $F$ is $\vec{0}$ everywhere.
+\end{prop}
+
+\begin{proof}
+    Since $F = \nabla G$, we know that $F_x = \frac{\partial{G}}{\partial{x}}$, $F_y = \frac{\partial{G}}{\partial{y}}$, and $F_z = \frac{\partial{G}}{\partial{z}}$. The $x$ component of the curl is $\frac{\partial}{\partial{x}}F_y - \frac{\partial}{\partial{y}}F_x$, which is \[\frac{\partial}{\partial{x}}\frac{\partial{G}}{\partial{y}} - \frac{\partial}{\partial{y}}\frac{\partial{G}}{\partial{x}} = \frac{\partial{G}}{\partial{x}\partial{y}} - \frac{\partial{G}}{\partial{y}\partial{x}}.\] Since $\frac{\partial{G}}{\partial{x}\partial{y}} = \frac{\partial{G}}{\partial{y}\partial{x}}$, it follows that the $x$ component of the curl is zero. By a similar argument, the $y$ and $z$ components must also be zero, and so the curl of $F$ is $\vec{0}$.
+\end{proof}
+
+\section{Parameterization}
+
+Surfaces can often be parameterized in terms of two variables, allowing them to be integrated over as a two-dimensional region. Spherical, cylindrical, and polar coordinate systems offer useful tools to find a convenient and intuitive parameterization for many common surfaces. However, a mapping from the surface to the region within the parameterized space being integrated over usually introduces some stretching or distortion of areas which must be accounted for. The Jacobian (derivative) matrix of the mapping gives a local linear approximation of the mapping, and the determinant of a linear transformation gives the amount by which an area is scaled. This means we can divide the quantity being integrated over in the original space by the determinant of the Jacobian before integrating over it in the parameterized space in order to correct for the distortion. It is more common to have a mapping from the parameterized space back into the original space, in which case you must multiply by the determinant of the Jacobian of the mapping, rather than divide by it.
+
+If the parameterization changes the number of variables, as most do, we can use the fact that for a square matrix $A$, $|A|^2 = |A^TA|$, and $|A^TA|$ exist even for non-square matrices and still gives the scaling of area by $A$.
+
+For both polar and cylindrical parameterizations, the determinant of the Jacobian is $r$, and for spherical parameterizations it is $\rho^2\sin(\phi)$.
 
 \end{document}
