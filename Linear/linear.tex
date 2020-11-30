@@ -11,6 +11,7 @@
 \usepackage{pdfpages}
 \usepackage{color}
 \usepackage{hyperref}
+\usepackage{mathdots}
 
 \usepackage{common}
 \usepackage{linear}
@@ -958,7 +959,7 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 \begin{proof}\proofbreak
     ($\implies$) Suppose $f$ is injective, and let $v \in \ker f$, so $f(v) = \vec{0}_W$. Since $f$ is a linear transformation, we know that $f(\vec{0}_V) = \vec{0}_W$, and since $f$ is injective it follows that $\ker f = \{\vec{0}_V\}$.
 
-    ($\impliedby$) Suppose $\ker f = \{\vec{0}_V\}$, and let $v, v' \in V$ such that $f(v) = f(v')$. Then $f(v) = f(v') = \vec{0}_W$, so $f(v - v') = \vec{0}_W$. It follows that $v - v' = \vec{0}_V$, so $v = v'$. Therefore, $f$ is injective.
+    ($\impliedby$) Suppose $\ker f = \{\vec{0}_V\}$, and let $v, v' \in V$ such that $f(v) = f(v')$. Then $f(v) - f(v') = \vec{0}_W$, so $f(v - v') = \vec{0}_W$. It follows that $v - v' = \vec{0}_V$, so $v = v'$. Therefore, $f$ is injective.
 \end{proof}
 
 \begin{cor}\label{injective-nullity-rank}
@@ -994,11 +995,11 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 \end{exmp}
 
 \begin{prop}
-    If $f$ is an isomorphism, it is bijective by definition, so there exists a inverse function $f^{-1}: W \to V$. $f^{-1}$ is also a linear transformation.
+    If $f$ is an isomorphism, it is bijective by definition, so there exists an inverse function $f^{-1}: W \to V$. $f^{-1}$ is also a linear transformation.
 \end{prop}
 
 \begin{proof}
-    Let $f: V \to W$ be an isomorphism between vector spaces $V$ and $W$ over a field $F$, and let $g: W \to V = f^{-1}$. Consider $w, w' \in W$ and $r \in F$. Let $v, v' \in V$ such that $v = g(w)$ and $v' = g(w')$. Since $f$ is bijective, $v, v'$ must be unqiue. Then $f(v + rv') = f(v) + rf(v') = w + rw'$. Therefore, $g(w + rw') = v + rv' = g(w) + rg(w')$, so $g$ must be a linear transformation.
+    Let $f: V \to W$ be an isomorphism between vector spaces $V$ and $W$ over a field $F$, and let $g: W \to V = f^{-1}$. Consider $w, w' \in W$ and $r \in F$. Let $v, v' \in V$ such that $v = g(w)$ and $v' = g(w')$. Since $f$ is bijective, $v, v'$ must be unique. Then $f(v + rv') = f(v) + rf(v') = w + rw'$. Therefore, $g(w + rw') = v + rv' = g(w) + rg(w')$, so $g$ must be a linear transformation.
 \end{proof}
 
 \begin{thm}
@@ -1013,6 +1014,155 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 
 \begin{cor}
     If the dimension of $V$ is $n$, then $V$ is isomorphic to $F^n$.
+\end{cor}
+
+\begin{prop}\label{coordinates-are-isomorphism}
+    Let $V$ be a finite dimensional vector space over a field $F$, with dimension $n$ and let $B$ be a basis for $V$. The coordinates with respect to $B$ define a function $f: V \to F^n$ where $f: v \mapsto [v]_B$, which is an isomorphism between $V$ and $F^n$.
+\end{prop}
+
+\begin{proof}
+    Let $B = \langle v_1, \ldots, v_n\rangle$, and let $v = c_1v_1 + \cdots + c_nv_n, w = d_1v_1 + \cdots + d_nv_n \in V$. Then $v + w = (c_1 + d_1)v_1 + (c_n + d_n)v_n$, so $[v+w]_B = [v]_B + [w]_B$. Let $r \in F$, then $rv = rc_1v_1 + \cdots + rc_nv_n$, so $[rv]_B = r[v]_B$. It follows that this function is a linear transformation.
+
+    Since $B$ is linearly independent and spans $V$, by Proposition \ref{unique-basis-expression} the coordinates of every $v \in V$ are unique and since every set of coordinates $x \in F^m$ defines a unique $v \in V$, so $f$ is bijective. It follows that $f$ is an isomorphism.
+\end{proof}
+
+\begin{defn}
+    Let $V$ and $W$ be finite dimensional vector spaces over a field $F$, $B = \langle v_1, \ldots, v_n\rangle$, and $D = \langle w_1, \ldots, w_n\rangle$ be ordered bases for $V$ and $W$ respectively. Let $f: V \to W$ be a linear transformation. Consider the following $m \times n$ matrix over $F$:
+    \[[f]_B^D = \left([f(v_1)]_D \; [f(v_2)]_D \;\cdots\; [f(v_n)]_D \right).\]
+    This is the \emph{matrix representation} of $f$ with respect to $B$ and $D$.
+\end{defn}
+
+\begin{exmp}
+    Let $f: \R^2 \to \R^3$ be the linear transformation given by $f(1, 1) = (0, 2, -1)$ and $f(2, 0) = f(1, 1, 3)$. Let $B = \langle (1, 1), (2, 0) \rangle$ and $D = \langle (0, 2, -1), (1, 1, 3), (0, 0, 1)\rangle$. Then
+    \[[f]_B^D = \begin{pmatrix}
+        1 & 0 \\ 0 & 1 \\ 0 & 0
+    \end{pmatrix}.\] Let $D' = \langle (1, 0, 0), (0, 1, 0), (0, 0, 1)\rangle$ be the standard basis for $\R^3$. Then
+    \[[f]_B^{D'} = \begin{pmatrix}
+        0 & 1 \\ 2 & 1 \\ -1 & 3
+    \end{pmatrix}.\]
+\end{exmp}
+
+\begin{defn}
+    Let $F$ be a field, and $x, y \in \F^n$. The \emph{dot product} of $x$ and $y$, denoted by $x \cdot y$, is given by
+    \[x \cdot y = x_1y_1 + x_2y_2 + \cdots + x_ny_n \in F.\]
+\end{defn}
+
+For an $m \times n$ matrix $A$, and a vector $x \in \F^n$, we define the product $Ax \in F^m$ to be
+\[\begin{pmatrix}
+    A_{1,1} & \cdots & A_{1, n} \\
+    \vdots & \ddots & \vdots \\
+    A_{m,1} & \cdots & A_{m, n} \\
+\end{pmatrix}\begin{pmatrix}
+    x_1 \\ \vdots \\ x_n
+\end{pmatrix} = \begin{pmatrix}
+    A_{1,1}x_1 + \cdots + A_{1, n}x_n \\
+    \vdots \\
+    A_{m,1}x_1 + \cdots + A_{m, n}x_n \\
+\end{pmatrix}.\]
+
+\begin{rmk}
+    $Ax_i$ is the dot product of the $i$-th row of $A$ with $x$.
+\end{rmk}
+
+\begin{thm}
+    Let $V,W$ be vector spaces over a field $F$, and let $f: V \to W$ be a linear transformation. Let $B$ and $D$ be ordered bases for $V$, $W$ respectively. Then for all $v \in V$,
+    \[[f(v)]_D = [f]_B^D[v]_B.\]
+\end{thm}
+
+\begin{proof}
+    Given $V, W$ with ordered bases $B$ and $D$, and an $m \times n$ matrix $A$ (where $m = \dim W$ and $n = \dim V$), we can define a linear transformation $f: V \to W$ by $f(v_i) = A_{1,i}w_1 + \cdots + A_{m, i}w_m$, and extending linearly. By construction, $[f]_B^D = A$, and \[[f(v)]_D = [f]_B^D[v]_B.\]
+\end{proof}
+
+\begin{rmk}
+    Given $V, W, B, D$, we have a bijection $\{f: V \to W\} \to M_{m \times n}(F)$, where $f \mapsto [f]_B^D$.
+\end{rmk}
+
+\begin{thm}
+    Left multiplication by a matrix is a linear transformation.
+\end{thm}
+
+\begin{proof}
+    We use the above construction with $V = F^n$, $W = F^m$, and $B$ and $D$ the standard bases for $F^n$ and $F^m$ respectively. Given an $m \times n$ matrix $A$, we can define $L_A: F^n \to F^m$ by $L_A(e_i) = A_{1,i}e_1 + \cdots + A_{m, 1}e_m$, so $[L_A]_B^D = A$. Therefore, for $x \in F^n$, $Ax = L_A(x)$.
+\end{proof}
+
+\begin{exmp}
+    Let $f: P_2(\R) \to P_3(\R)$ be the linear transformation given by $p(x) \mapsto 2p'(x) + xp(x)$, and let $B = \langle 1, x, x^2\rangle$ and $D = \langle 1, x, x^2, x^3\rangle$. We then have $f(1) = 1x$, $f(x) = 2 + x^2$, and $f(x^2) = 4x + x^3$, so
+    \[[f]_B^D = \begin{pmatrix}
+        0 & 2 & 0 \\ 1 & 0 & 4 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+    \end{pmatrix}.\]
+    \[f(3 + 2x + x^2) = \begin{pmatrix}
+        0 & 2 & 0\\
+        1 & 0 & 4\\
+        0 & 1 & 0\\
+        0 & 0 & 1\\
+    \end{pmatrix}\begin{pmatrix}
+        3 \\ 2 \\ 1
+    \end{pmatrix} = \begin{pmatrix}
+        4 \\ 7 \\ 2 \\ 1
+    \end{pmatrix} = 4 + 7x + 2x^2 + x^3.\]
+\end{exmp}
+
+\section{Operations on Linear Transformations}
+
+\begin{thm}
+    Let $f: V \to W$ be a linear transformation, where $V$ and $W$ are finite dimensional vector spaces with dimension $n$ and $m$ respectively. Let $B$ and $D$ be ordered bases for $V$ and $W$ respectively. Then the rank of $f$ is equal to the rank of $[f]_B^D$.
+\end{thm}
+
+\begin{proof}
+    Let $l$ be the rank of $f$. Recall that the rank of $f$ is the dimension of $f(V) \subseteq W$, and the rank of $[f]_B^D$ is equal to the dimension of the column space of $[f]_B^D$, which is a subset of $F^m$. Let $C \subseteq f(D)$ be an ordered basis for $f(V)$. By Proposition \ref{coordinates-are-isomorphism}, coordinates define an isomorphism between $V$ and $F^m$, and so by Corollary \ref{injective-nullity-rank}, it follows that $\langle [c_1]_D, [c_2]_D, \ldots, [c_l]_D\rangle$ is linearly independent. Since this is a maximal linearly independent set, by Lemma \ref{basis-maximal-independent-subset} is a basis for the column space of $[f]_B^D$, and so the rank of $f$ is equal to the rank of $[f]_B^D$.
+\end{proof}
+
+\begin{defn}
+    Let $V$ and $W$ be vector spaces over a field $F$. Define $L(V, W)$ to be the set of all linear transformations from $V$ to $W$.
+\end{defn}
+
+\begin{defn}
+    Define the following operations for all $f, g \in L(V, W)$, $v \in V$, and $r \in F$:
+    \[(f + g)(v) = f(v) + g(v),\]
+    \[(rf)(v) = r(f(v)).\]
+\end{defn}
+
+\begin{lemma}
+    Let $V$ and $W$ be vector spaces over a field $F$. Let $f, g \in L(V, W)$, and $r \in F$. Then $f + g$ and $rf$ are linear transformations.
+\end{lemma}
+
+\begin{proof}
+    Let $v, v' \in V$, and $s \in F$. Then
+    \begin{align*}
+        (f + g)(v + sv') &= f(v + sv') + g(v + sv') \\
+        &= f(v) + sf(v') + g(v) + g(sv') \\
+        &= (f + g)(v) + s(f + g)(v').
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $V$ and $W$ be vector spaces over a field $F$. $L(V, W)$ forms a vector space over $F$ with the operations defined above.
+\end{thm}
+
+\begin{thm}
+    Let $V, W, U$ be vector spaces over a field $F$, and let $f: V \to W$ and $g: W \to U$ be linear transformations. Then $g \circ f: V \to U$ is a linear transformation.
+\end{thm}
+
+\begin{proof}
+    Let $v, v' \in V$ and $r \in F$. Then $(g \circ f)(v + rv') = g(f(v) + rf(v')) = (g \circ f)(v) + r(g \circ f)(v')$.
+\end{proof}
+
+\begin{defn}
+    Let $P$ be an $l \times m$ matrix over a field $F$ and $Q$ be an $m \times n$ matrix over $F$. Then their product $PQ$ is the $l \times n$ matrix over $F$ given by
+    \[(PQ)_{i,j} = \sum_k=1^m P_{i, k}Q_{k, j},\] for $i = 1, \ldots, l$ and $j = 1, \ldots, n$.
+\end{defn}
+
+\begin{rmk}
+    The product of a matrix and an $n$ dimensional vector defined previously is a special case of this general matrix multiplication, where the vector is treated as a $n \times 1$ matrix.
+\end{rmk}
+
+\begin{thm}
+    Let $V, W, U$ be vector spaces over a field $F$, and let $f: V \to W$ and $g: W \to U$ be linear transformations. Let $B, C, D$ be ordered bases for $V$, $W$, and $U$ respectively. Then
+    \[g \circ f]_B^D = [g]_C^D[f]_B^C.\]
+\end{thm}
+
+\begin{cor}
+    Let $A$ be an $l \times m$ matrix over $F$ and $B$ be an $m \times n$ matrix over $F$. Then $L_{AB}: F^n \to F^l$ is given by $L_A \circ L_B$.
 \end{cor}
 
 \end{document}
