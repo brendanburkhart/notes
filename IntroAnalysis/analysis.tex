@@ -650,7 +650,7 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
     Any two complete ordered fields are isomorphic.
 \end{rmk}
 
-\begin{thm}
+\begin{thm}\label{archimedean-property}
     The Archimedean property states that for any $x, y \in \R^{+}$, there exists $n \in \Z_{\geq 1}$ such that $nx > y$.
 \end{thm}
 
@@ -661,11 +661,15 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
 \end{proof}
 
 \begin{cor}
-    Suppose $x \in R$ satisfies $0 \leq x \leq \frac{1}{n}$ for every $n \in \Z_{\geq 1}$. Then $x$ must be zero.
+    Suppose $x \in \R$ satisfies $0 \leq x \leq \frac{1}{n}$ for every $n \in \Z_{\geq 1}$. Then $x$ must be zero.
 \end{cor}
 
+\begin{proof}
+    Assume, for the sake of contradiction, that $x \neq 0$. Then by the Archimedean property \ref{archimedean-property}, there exists $n \in \Z_{\geq 1}$ such that $nx > 1$, and so $x > \frac{1}{n}$. This is a contradiction, and so $x = 0$.
+\end{proof}
+
 \begin{lemma}\label{geometric-progression}
-    For $r \neq 1$ and $n \in \Z_{geq 1}$, \[1 + r + r^2 + \cdots + r^{n-1} = \frac{1-r^n}{1-r}.\]
+    For $r \neq 1$ and $n \in \Z_{\geq 1}$, \[1 + r + r^2 + \cdots + r^{n-1} = \frac{1-r^n}{1-r}.\]
 \end{lemma}
 
 \begin{proof}
@@ -677,7 +681,7 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
 \end{proof}
 
 \begin{lemma}\label{freshmans-reality}
-    Let $a, b \in R$ and $n \in \Z{\geq 1}$. Then \[b^n - a^n = (b - a)\sum_{k=0}^{n-1} b^ka^{n-1-k}.\]
+    Let $a, b \in \R$ and $n \in \Z_{\geq 1}$. Then \[b^n - a^n = (b - a)\sum_{k=0}^{n-1} b^ka^{n-1-k}.\]
 \end{lemma}
 
 \begin{proof}
