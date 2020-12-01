@@ -1080,13 +1080,23 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{exmp}
 
 \begin{rmk}
-    We may denote the unique remainder $r$ by $x \textrm{ mod } n$.
+    We may denote the unique remainder $r$ by $x \bmod n$.
 \end{rmk}
 
-\begin{prop}
+\begin{defn}
+    Let $x, y, n \in \Z$ with $n \geq 1$. We say that $x$ and $y$ are equivalent mod $n$, denoted by \[x \equiv y \pmod n\] when $(x - y) \bmod n = 0$.
+\end{defn}
+
+\begin{prop}\label{equiv-modular-remainder}
     Let $x, y, n \in \Z$ with $n \geq 1$. Then
-    \[x \equiv y \pmod n \iff x \textrm{ mod} n = y \textrm{n}.\]
+    \[x \equiv y \pmod n \iff x \bmod n = y \bmod n.\]
 \end{prop}
+
+\begin{proof}\proofbreak
+    ($\implies$) Since $x \equiv y \pmod n$, we know that $(x - y) \bmod n = 0$, so $(x - y) = qn$ for some $q \in \Z$. By Theorem \ref{integer-remainder-thm}, there exists $q_1, q_2, r_1, r_2 \in \Z$ such that $x = q_1n + r_1$, $y = q_2n + r_2$, and $0 \leq x n$, $0 \leq y < n$. It follows that $(q_1n + r_1) - (q_2n + r_2) = qn$, so $r_1 - r_2 = (q - q_1 + q_2)n$. Since $0 \leq r_1 \leq r_2 < n$, it follows that $\abs{r_1 - r_2} < n$, and so $\abs{q - q_1 + q_2} = 0$. Therefore, $r_1 = r_2$ and so $x \bmod n = y \bmod n$ by definition.
+
+    ($\impliedby$) By Theorem \ref{integer-remainder-thm}, there exists $q_1, q_2, r_1, r_2 \in \Z$ such that $x = q_1n + r_1$, $y = q_2n + r_2$. Since $x \bmod n = y \bmod n$ implies $r_1 = r_2$ by definition, we know that $(x - y) = (q_1 - q_2)n$. Therefore, $(x - y) \bmod n = 0$ and so $x \equiv y \pmod n$ by definition.
+\end{proof}
 
 \begin{defn}
     Let $a, b \in \Z$. An integer $d$ is called a \emph{common divisor} of $a$ and $b$ provided that $d \mid a$ and $d \mid b$.
@@ -1120,7 +1130,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{rmk}
 
 \begin{prop}\label{euclidean-division-property}
-    Let $a, b \in \Z^+$. Then \[\gcdof{a}{b} = \gcdof{b}{a \textrm{ mod } b}.\]
+    Let $a, b \in \Z^+$. Then \[\gcdof{a}{b} = \gcdof{b}{a \bmod b}.\]
 \end{prop}
 
 \begin{exmp}
@@ -1128,9 +1138,9 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{exmp}
 
 \begin{proof}
-    Let $d = \gcdof{a}{b}$ and $e = \gcdof{b}{a \textrm{ mod } b}$. By Theorem \ref{integer-remainder-thm}, we know that \[a \textrm{ mod } b = a - q_1b\] for some $q \in \Z$. Since $d \mid a$ and $d \mid b$, it follows that $d \mid (a - q_1b)$. Therefore, $d$ is \emph{a} common divisor of $b$ and $a \textrm{ mod } b$, and so $d \leq e$.
+    Let $d = \gcdof{a}{b}$ and $e = \gcdof{b}{a \bmod b}$. By Theorem \ref{integer-remainder-thm}, we know that \[a \bmod b = a - q_1b\] for some $q \in \Z$. Since $d \mid a$ and $d \mid b$, it follows that $d \mid (a - q_1b)$. Therefore, $d$ is \emph{a} common divisor of $b$ and $a \bmod b$, and so $d \leq e$.
 
-    Similarly, since $e \mid b$ and $e \mid (a \textrm{ mod } b)$, and $a = (a \textrm{ mod } b) + q_1b$, we know that $e \mid a$. Therefore, $e$ is \emph{a} common divisor of $a$ and $b$, and so $e \leq d$. Since we also have $d \leq e$, we then know that $d = e$.
+    Similarly, since $e \mid b$ and $e \mid (a \bmod b)$, and $a = (a \bmod b) + q_1b$, we know that $e \mid a$. Therefore, $e$ is \emph{a} common divisor of $a$ and $b$, and so $e \leq d$. Since we also have $d \leq e$, we then know that $d = e$.
 \end{proof}
 
 \begin{thm}\label{gcd-characterization}
@@ -1153,8 +1163,34 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     For any $a, b \in \Z$ not both zero, if $ax + by = 1$ for $x, y \in \Z$, then $1 \in \mathcal{D}$, and so $\gcdof{a}{b} \leq 1$. Since $\gcdof{a}{b}$ must be at least $1$, it follows that $\gcdof{a}{b} = 1$.
 \end{rmk}
 
-\begin{cor}
+\begin{cor}\label{relatively-prime-linear-combination}
     Let $a, b \in \Z$. Then $a$ and $b$ are relatively prime if and only if there exists $x, y \in \Z$ such that $ax + by = 1$.
 \end{cor}
+
+\begin{lemma}\label{modular-product-identification}
+    Let $a, b \in \Z$, $n > 1$, and let $c = b \mod n$. Then $ab \equiv ac \pmod n$.
+\end{lemma}
+
+\begin{proof}
+    By Theorem \ref{integer-remainder-thm}, we know that $ab = q_1n + r_1$ and $b = q_2n + r_2$ for some $q_1, q_2, r_1, r_2 \in \Z$ such that $0 \leq r_1 < n$ and $0 \leq r_2 < n$. Therefore, $ab = a(q_2n + r_2 = q_1n + r_1)$, and so $ar_2 = (aq_2 + q_1)n + r_1$. Since $r_2 = b \bmod n = c$, by Proposition \ref{equiv-modular-remainder} it follows that $ab \equiv ac \pmod n$.
+\end{proof}
+
+\begin{thm} Invertible Elements Theorem \proofbreak
+    Let $a \in \Z_n$. Then the multiplicative inverse of $a$, $a^{-1}$, exists if and only if $\gcdof{a}{n} = 1$.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) Let $b \in \Z_n$ such that $a \odot_n b = 1$, so $(ab) \bmod n = 1$. Then by Theorem \ref{integer-remainder-thm}, for some $q \in \Z$ we have $ab = qn + 1$, and so $1 = ab - qn$. By Corollary \ref{relatively-prime-linear-combination}, it follows so $\gcdof{a}{n} = 1$.
+
+    ($\impliedby$) Since $\gcdof{a}{n} = 1$, there exist $x, y \in \Z$ such that $ax + ny = 1$ by Corollary \ref{relatively-prime-linear-combination}, and so $ax = (-y)n + 1$. Since $0 \leq 1 < n$, it follows that $(ax) \bmod n = 1$.
+\end{proof}
+
+\begin{cor}
+    Let $x, y \in \Z$ such that $ax + ny = 1$, and let $b = x \bmod n$. Then $a^{-1} = b$ in $\Z_n$.
+\end{cor}
+
+\begin{proof}
+    Since $ax = -yn + 1$ we know that $(ax) \bmod n = 1$, and since $ax \equiv ab \pmod n$ by Lemma \ref{modular-product-identification}, it follows by Proposition \ref{equiv-modular-remainder} that $(ab) \bmod n = 1$. Therefore, $a \odot_n b = 1$, and so $b = a^{-1}$.
+\end{proof}
 
 \end{document}
