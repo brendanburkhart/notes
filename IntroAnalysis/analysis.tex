@@ -475,19 +475,19 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \section{Fermat's little theorem}
 
 \begin{defn}
-    For $n, k \in \N$ where $n \geq k \geq 0$, the binomial coefficient is a positive integer denoted by $n \choose k$. \[{n \choose k} = \frac{n!}{k!(n-k)!}.\]
+    For $n, k \in \N$ where $n \geq k \geq 0$, the binomial coefficient is a positive integer denoted by $\binom{n}{k}$. \[\binom{n}{k} = \frac{n!}{k!(n-k)!}.\]
 \end{defn}
 
 \begin{thm}{Binomial theorem}\label{binomial-theorem}\proofbreak
-    Let $(F, +, \cdot)$ be a field. Then for any $x, y \in F$ and $n \in \Z_{\geq 1}$, \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}{n \choose k}.\]
+    Let $(F, +, \cdot)$ be a field. Then for any $x, y \in F$ and $n \in \Z_{\geq 1}$, \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}{\binom{n}{k}}.\]
 \end{thm}
 
 \begin{lemma}\label{prime-divisible-combination}
-    Let $p$ be a prime number. Then $p$ divides ${p \choose k}$ for $0 < k < p$.
+    Let $p$ be a prime number. Then $p$ divides $\binom{p}{k}$ for $0 < k < p$.
 \end{lemma}
 
 \begin{proof}
-    Since $p$ is prime, it has no positive divisors other than $1$ and $p$. Since $0 < k < p$, neither $k!$ nor $(p-k)!$ has $p$ as a factor. Therefore, ${p \choose k} = p\frac{(p-1)!}{k!(p-k)!}$, so $p \choose k$ must be divisible by $p$.
+    Since $p$ is prime, it has no positive divisors other than $1$ and $p$. Since $0 < k < p$, neither $k!$ nor $(p-k)!$ has $p$ as a factor. Therefore, $\binom{p}{k} = p\frac{(p-1)!}{k!(p-k)!}$, so $\binom{p}{k}$ must be divisible by $p$.
 \end{proof}
 
 \begin{thm}{Fermat's little theorem}\label{fermat-little-theorem}\proofbreak
@@ -497,7 +497,7 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \begin{proof}
     If $n = 1$, then $n^p = 1^p = 1$, so $1^p \equiv 1 \pmod p$.
 
-    Assume $n^p \equiv n \pmod p$ for some $n > 0$. By the binomial theorem \ref{binomial-theorem}, $(n+1)^p = \sum_{k=0}^pn^k{p \choose k}$. By Lemma \ref{prime-divisible-combination}, we then know that $(n+1)^p = pw + n^p{p \choose p} + n^0{p \choose 0} = pw + n^p + 1$ for some $w \in \Z$. Since $(pw + n^p + 1) - (n + 1) = pw + (n^p - n)$ and by Definition \ref{modular-congruence} $n^p \equiv n \pmod p$ implies that $p \mid (n^p - n)$, it follows that $p \mid \left[(pw + n^p + 1) - (n + 1)\right]$. Therefore, $(n+1)^p \equiv (n+1) \pmod p$.
+    Assume $n^p \equiv n \pmod p$ for some $n > 0$. By the binomial theorem \ref{binomial-theorem}, $(n+1)^p = \sum_{k=0}^pn^k\binom{p}{k}$. By Lemma \ref{prime-divisible-combination}, we then know that $(n+1)^p = pw + n^p\binom{p}{p} + n^0\binom{p}{0} = pw + n^p + 1$ for some $w \in \Z$. Since $(pw + n^p + 1) - (n + 1) = pw + (n^p - n)$ and by Definition \ref{modular-congruence} $n^p \equiv n \pmod p$ implies that $p \mid (n^p - n)$, it follows that $p \mid \left[(pw + n^p + 1) - (n + 1)\right]$. Therefore, $(n+1)^p \equiv (n+1) \pmod p$.
 
     By induction, it follows that $n^p \equiv n \pmod p$ for all $n \in \N$.
 \end{proof}
