@@ -274,7 +274,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \section{Cantor's Theorem}
 
 \begin{thm}\label{pigeonhole}
-    Pigeonhole Principle.
+    Pigeonhole principle.
 
     Let $A, B$ be finite sets, and let $f: A \to B$. If $|A| > |B|$, then $f$ cannot be injective, and if $|A| < |B|$ then $f$ cannot be surjective.
 \end{thm}
@@ -284,7 +284,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{prop}
 
 \begin{proof}
-    If $|A| \neq |B|$, then either $|A| > |B|$ or $|A| < B$. Therefore, either $f$ is not injective or $f$ is not surjective by the Pigeonhole Principle \ref{pigeonhole}.
+    If $|A| \neq |B|$, then either $|A| > |B|$ or $|A| < B$. Therefore, either $f$ is not injective or $f$ is not surjective by the pigeonhole principle \ref{pigeonhole}.
 \end{proof}
 
 \begin{prop}
@@ -710,7 +710,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{lemma}
 
 \begin{proof}
-    Consider the set \[L = \left\{|W| \compbar W \textrm{ is a walk in } G\right\} \subseteq \N.\] By the Well-Ordering Principle, there is a smallest length $l \in L$. Let $P$ be any $(u,v)$-walk in $G$ of length $l$. Assume, for the sake of contradiction, that $P$ is \emph{not} a path in $G$. Then there is some repeated vertex $w$ in $P$: \[P = u \sim \cdots \sim w \sim \cdots \sim w \sim \cdots \sim v.\] However, \[P' = u \sim \cdots \sim w \sim \cdots \sim v\] is also a $(u, v)$-walk in $G$, and is shorter than $P$ by at least one edge, which contradicts our assumption. Therefore, $P$ is a path in $G$.
+    Consider the set \[L = \left\{|W| \compbar W \textrm{ is a walk in } G\right\} \subseteq \N.\] By the well-ordering principle, there is a smallest length $l \in L$. Let $P$ be any $(u,v)$-walk in $G$ of length $l$. Assume, for the sake of contradiction, that $P$ is \emph{not} a path in $G$. Then there is some repeated vertex $w$ in $P$: \[P = u \sim \cdots \sim w \sim \cdots \sim w \sim \cdots \sim v.\] However, \[P' = u \sim \cdots \sim w \sim \cdots \sim v\] is also a $(u, v)$-walk in $G$, and is shorter than $P$ by at least one edge, which contradicts our assumption. Therefore, $P$ is a path in $G$.
 \end{proof}
 
 \begin{prop}
@@ -1148,7 +1148,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{thm}
 
 \begin{proof}
-    Since $a, b$ are not both zero, when $x = a$ and $y = b$ gives $ax + by = a^2 + b^2 > 0$, so the set \[\mathcal{D} = \left\{ax+by \compbar ax + by > 0, x, y \in \Z \right\}\] is a non-empty subset of the positive integers, and so by the Well-Ordering Principle $\mathcal{D}$ must have a smallest element. Denote this element by $d = ax_0 + by_0$.
+    Since $a, b$ are not both zero, when $x = a$ and $y = b$ gives $ax + by = a^2 + b^2 > 0$, so the set \[\mathcal{D} = \left\{ax+by \compbar ax + by > 0, x, y \in \Z \right\}\] is a non-empty subset of the positive integers, and so by the well-ordering principle $\mathcal{D}$ must have a smallest element. Denote this element by $d = ax_0 + by_0$.
 
     Assume, for the sake of contradiction, that $d \centernot\mid a$. Then $a = qd + r$ with $0 < r < d$, and so $r = a - qd = (1-qx_0)a + (-qy_0)b$. Since $r > 0$, we know that $r \in \mathcal{D}$. However, $r < d$, but $d$ is the smallest element of $\mathcal{D}$, and so our assumption was false and $d \mid a$. Similarly, $d \mid b$.
 
@@ -1191,6 +1191,38 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 
 \begin{proof}
     We know $(ax) \bmod n = 1$ as $ax = -yn + 1$. Since $ax \equiv ab \pmod n$ by Lemma \ref{modular-product-identification}, by Proposition \ref{equiv-modular-remainder} we have $(ab) \bmod n = 1$. Therefore, $a \odot_n b = 1$, and so $b = a^{-1}$.
+\end{proof}
+
+\begin{lemma}\label{prime-division-one}
+    Let $a, b, p \Z$ with $p$ a prime number. If $p \mid ab$, then at least one of $p \mid a$ and $p \mid b$ must be true.
+\end{lemma}
+
+\begin{proof}
+    Assume, for the sake of contradiction, that $p \centernot\mid a$ and $p \centernot\mid b$. Since $p \centernot\mid a$, it must be that $\gcdof{a}{p} = 1$, and so by Corollary \ref{relatively-prime-linear-combination}, there exists $x_1, y_1 \in \Z$ such that $ax_1 + py_1 = 1$. Similarly, for some $x_2, y_2 \in \Z$, $bx_2 + py_2 = 1$. Therefore, $1 = (ax_1 + py_1)(bx_2 + py_2) = abx_1x_2 + apx_1y_2 + bpx_2y_1 + p^2y_1y_2$. Since $p$ divides all four terms of this expression (the first term by the assumption that $p \mid ab$), and so $p \mid 1$ by Proposition ????, which is a contradiction since $p$ is prime.
+\end{proof}
+
+\begin{lemma}\label{prime-division-two}
+    Suppose $p, q_1, q_2, \ldots, q_m$ are prime numbers. If $p \mid q_1q_2\cdots q_m$, then $p = q_i$ for some $1 \leq i \leq m$.
+\end{lemma}
+
+\begin{proof}
+    We will proceed by induction on $m$. In the base case $m = 1$, if $p\mid q_1$ it must be that $q_1 = p$, and so the base case is true.
+
+    Let $q_1q_2\cdots q_m = a$, and let $a_{m+1} = b$. Assume, for some $m \geq 1$, that if $p \mid a$ that $p = q_i$ for some $1 \leq i \leq m$. If $p \mid ab$, then by Lemma \ref{prime-division-one}, either $p \mid a$ in which case $p = q_i$ for some $1 \leq i \leq m$ by assumption, or  $p \mid b$ in which case $p = q_{m+1}$. Therefore, if $p \mid q_1q_2\cdots q_mq_{m+1}$ we have $p = q_i$ for some $1 \leq i \leq m+1$, and the induction is complete.
+\end{proof}
+
+\begin{thm}\label{fundmental-theorem-arithmetic}Fundamental Theorem of Arithmetic\proofbreak
+    Let $n \in \Z$, where $n > 0$. Then there exists a unique factoring of $n$ into a product of primes, up to the ordering of the primes.
+\end{thm}
+
+\begin{proof}\proofbreak
+\textbf{Existence} We will proceed by induction on $n$. In the base case $n=1$, the empty product is equal to $1$ and is vacously a product of primes.
+
+Assume for some $n \geq 1$, all $m \in \Z$ such that $1 \leq m \leq n$ can be factored into a product of primes. There are two possible cases for $n+1$: either it is prime or it is composite. If $n+1$ is prime, then $(n+1)$ is a product of primes, and a factoring of $(n+1)$. If it is composite, there exists some $a, b \in \Z$ such that $n+1 = ab$ and $1 < a < n+1$ and $1 < b < n+1$. Therefore, $a$ and $b$ can be factored into a product of primes by assumption, and so $ab$ is can be factored into a product of primes, and the induction is complete.
+
+\textbf{Uniqueness} Assume, for that sake of contradiction that there are some positive integers that can be factored into a product of primes in at least two distinct ways. Let $Y$ be the set of all such positive integers. By the well-ordering principle, there exists some smallest element $y \in Y$.
+
+Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime which are factorings of $y$, and are not simply permutations of each other. It follows that these products have no prime factors in common. If they did have at least one factor $r$ in common, then $y/r$ would be a smaller element of $y$, but $y$ is the smallest element of $Y$. Then since $p_1 \mid y = q_1q_2\cdots q_m$, we know that $p_1 = q_i$ for some $1 \leq i \leq m$ by Lemma \ref{prime-division-two}, which is a contradiction, and so $Y = \emptyset$.
 \end{proof}
 
 \end{document}
