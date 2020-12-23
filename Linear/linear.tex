@@ -632,7 +632,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{lemma}
 
 \begin{proof}
-    Let $\boldsymbol{A}$ be a matrix over a field $F$.
+    Let $\boldsymbol{A}$ be a matrix over a field $F$, and let $\boldsymbol{B}$ be the matrix resulting from a single row operation on $\boldsymbol{A}$.
     \begin{itemize}
         \item Swapping rows simply changes the order of rows, and since sets are unordered, the span of the rows cannot be affected.
         \item For any row $r_i$ of $\boldsymbol{A}$ and non-zero $k \in F$, since $kr_i$ is an element of the row space of $\boldsymbol{A}$, all rows of $\boldsymbol{B}$ are elements of the row space of $\boldsymbol{A}$. Therefore, the row space of $\boldsymbol{B}$ is a subset of the row space of $\boldsymbol{A}$. Since $\frac{1}{k}(kr_i)$ is an element of the row space of $\boldsymbol{B}$, it similarly follows that the row space of $\boldsymbol{A}$ is a subset of the row space of $\boldsymbol{B}$. Therefore, the row space of $\boldsymbol{A}$ equals the row space of $\boldsymbol{B}$.
