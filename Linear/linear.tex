@@ -545,11 +545,11 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{thm}
 
 \begin{proof}
-    Let $V$ be a vector space over a field $F$. Then let $B = \langle v_1, \ldots, v_n \rangle$ be a finite basis of \emph{minimal size} for $V$, and let $C$ be \emph{any other} basis for $V$. Since $B$ is of minimal size, $|C|$ is at least $n$. Let $B_0 = B$, and then take $w_1 \in C$. By the Exchange lemma \ref{exchange-lemma}, there exists $l \in \{1, \ldots, n\}$ such that $v_l$ can be swapped for $w_1$ to form a new basis. Without loss of generality, assume that $l = 1$. Then $B_1 = \langle w_1, v_2, \ldots, v_n \rangle$ is a new basis for $V$. Now take $w_2 \in C$. Since $B_1$ is a basis, we have $a_1, \ldots, a_n \in F$ such that $w_2 = a_1w_1 + a_2v_2 + \cdots + a_nv_n$. Since $C$ is linearly independent, at least one of $a_2, \ldots, a_n$  must be non-zero. Without loss of generality, assume that $a_2 \neq 0$. By the Exchange lemma, we get the basis $B_2 = \langle w_1, w_2, v_3, \ldots, v_n\rangle$. Continue to get $B_n = \langle w_1, \ldots, w_n \rangle$ such that $B_n \subseteq C$. Since $C$ is a basis and therefore linearly independent, by Lemma \ref{basis-maximal-independent-subset} it follows that $B_n = C$, and so $|C| = |B|$.
+    Let $V$ be a vector space over a field $F$. Then let $B = \langle v_1, \ldots, v_n \rangle$ be a finite basis of \emph{minimal size} for $V$, and let $C$ be \emph{any other} basis for $V$. Since $B$ is of minimal size, $|C|$ is at least $n$. Let $B_0 = B$, and then take $w_1 \in C$. By the Exchange lemma \ref{exchange-lemma}, there exists $l \in \{1, \ldots, n\}$ such that $v_l$ can be swapped for $w_1$ to form a new basis. Without loss of generality, assume that $l = 1$. Then $B_1 = \langle w_1, v_2, \ldots, v_n \rangle$ is a new basis for $V$. Now take $w_2 \in C$. Since $B_1$ is a basis, we have $a_1, \ldots, a_n \in F$ such that $w_2 = a_1w_1 + a_2v_2 + \cdots + a_nv_n$. Since $C$ is linearly independent, at least one of $a_2, \ldots, a_n$  must be non-zero. Without loss of generality, assume that $a_2 \neq 0$. By the Exchange lemma \ref{exchange-lemma}, we get the basis $B_2 = \langle w_1, w_2, v_3, \ldots, v_n\rangle$. Continue to get $B_n = \langle w_1, \ldots, w_n \rangle$ such that $B_n \subseteq C$. Since $C$ is a basis and therefore linearly independent, by Lemma \ref{basis-maximal-independent-subset} it follows that $B_n = C$, and so $|C| = |B|$.
 \end{proof}
 
 \begin{defn}
-    The cardinality for a basis for a finite dimensional vector space $V$ is the \emph{dimension} of $V$, denoted by $\dim(V)$.
+    The cardinality of a basis for a finite dimensional vector space $V$ is the \emph{dimension} of $V$, denoted by $\dim(V)$.
 \end{defn}
 
 \begin{rmk}
@@ -609,9 +609,9 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 
 \begin{proof}\proofbreak
     \begin{enumerate}
-        \item By Corollary \ref{basis-span-independence} (2), we can complete $\emptyset$ to a basis $B$ for $W$. Since $B$ is linearly independent and $B \subseteq V$, by Corollary \ref{basis-span-independence} (1), $|B| \leq n$, $W$ has dimension less than or equal to that of $V$.
+        \item By Corollary \ref{basis-span-independence} (2), we can complete $\emptyset$ to a basis $B$ for $W$. Since $B$ is linearly independent and $B \subseteq V$, by Corollary \ref{basis-span-independence} (1), $|B| \leq n$, so $W$ has dimension less than or equal to that of $V$.
         \item Since $V$ is finite dimensional, and $W$ has dimension less than or equal to that of $V$, it follows that $W$ must also be finite dimensional.
-        \item If the dimensions of $V$ and $W$ are equal, and $B$ is a basis for $W$, we know that $\spanset{B} = W$. Since $B$ is a linearly independent subset of $V$ with $n$ elements, it follows that $\spanset{B} = V$, and so $W = V$. If $W = V$, then they share a basis, and so they have the same dimension.
+        \item ($\implies$) If the dimensions of $V$ and $W$ are equal, and $B$ is a basis for $W$, we know that $\spanset{B} = W$. Since $B$ is a linearly independent subset of $V$ with $n$ elements, it follows by Corollary \ref{basis-span-independence} (3) that $\spanset{B} = V$, and so $W = V$. \\ ($\impliedby$) If $W = V$, then any basis $B$ for $W$ is also a basis for $V$, and so they have the same dimension.
     \end{enumerate}
 \end{proof}
 
