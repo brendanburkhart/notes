@@ -1047,7 +1047,7 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
     \[x \cdot y = x_1y_1 + x_2y_2 + \cdots + x_ny_n \in F.\]
 \end{defn}
 
-For an $m \times n$ matrix $A$, and a vector $x \in \F^n$, we define the product $Ax \in F^m$ to be
+For an $m \times n$ matrix $A$, and a vector $x \in F^n$, we define the product $Ax \in F^m$ to be
 \[\begin{pmatrix}
     A_{1,1} & \cdots & A_{1, n} \\
     \vdots & \ddots & \vdots \\
@@ -1061,8 +1061,31 @@ For an $m \times n$ matrix $A$, and a vector $x \in \F^n$, we define the product
 \end{pmatrix}.\]
 
 \begin{rmk}
-    $Ax_i$ is the dot product of the $i$-th row of $A$ with $x$.
+    $(Ax)_i$ is the dot product of the $i$-th row of $A$ with $x$.
 \end{rmk}
+
+\begin{defn}
+    Let $V, W$ be vector fields with ordered bases $B = \langle v_1, \ldots, v_n$ and $D = \langle w_1, \ldots, w_m \rangle$, and let $A$ be an $m \times n$ matrix (where $m = \dim W$ and $n = \dim V$). Let $L_A$ be a linear transformation $L_A: V \to W$ such that $L_A(v_i) = A_{1,i}w_1 + \cdots + A_{m,i}w_m$.
+\end{defn}
+
+\begin{rmk}
+    By Theorem \ref{action-on-basis}, $L_A$ is unique.
+\end{rmk}
+
+\begin{prop}\label{matrix-transformation-duality}
+    Let $A$ be an $m \times n$ matrix over a field $F$. For $x \in F^n$, $Ax = L_A(x)$.
+\end{prop}
+
+\begin{proof}
+    Since $x = x_1e_1 + x_2e_2 + \cdots + x_ne_n$, where $e_i$ is the $i$th element of the standard basis for $F^n$, it follows by linearity that
+    \begin{align*}
+        L_A(x) = \,&x_1(A_{1, 1}h_1 + \cdots + A_{m, 1}h_m) +\\
+        &x_2(A_{1, 2}h_1 + \cdots + A_{m, 2}h_m) + \\
+        &\phantom{x_1(A_{1, 1}h_1 +\;\;\;} \vdots \\
+        &x_n(A_{1, n}h_1 + \cdots + A_{m, n}h_m),
+    \end{align*}
+    where $h_i$ is the $i$th element of the standard basis for $F^m$. Therefore, the $i$th component of $L_A(x)$ is $A_{1, 1}x_1 + A_{1, 2}x_2 + \cdots + A_{1, n}x_n$, which is the dot product of the $i$-th row of $A$ with $x$. It follows by the definition of $Ax$ that $L_A(x) = Ax$.
+\end{proof}
 
 \begin{thm}
     Let $V,W$ be vector spaces over a field $F$, and let $f: V \to W$ be a linear transformation. Let $B$ and $D$ be ordered bases for $V$, $W$ respectively. Then for all $v \in V$,
@@ -1070,20 +1093,16 @@ For an $m \times n$ matrix $A$, and a vector $x \in \F^n$, we define the product
 \end{thm}
 
 \begin{proof}
-    Given $V, W$ with ordered bases $B$ and $D$, and an $m \times n$ matrix $A$ (where $m = \dim W$ and $n = \dim V$), we can define a linear transformation $f: V \to W$ by $f(v_i) = A_{1,i}w_1 + \cdots + A_{m, i}w_m$, and extending linearly. By construction, $[f]_B^D = A$, and \[[f(v)]_D = [f]_B^D[v]_B.\]
+    Let $n$ and $m$ be the dimensions of $V$ and $W$ respectively, let $A = [f]_B^D$, and let $x = [v]_B$. By definition \[Ax = x_1[f(v_1)]_D + x_2[f(v_2)]_D + \cdots + x_n[f(v_n)]_D.\] Since $f$ is a linear transformation, it follows that $Ax = [f(v)]_D$, and since $Ax = [f]_B^D[v]_D$ by definition, it follows that \[[f(v)]_D = [f]_B^D[v]_B.\]
 \end{proof}
 
 \begin{rmk}
     Given $V, W, B, D$, we have a bijection $\{f: V \to W\} \to M_{m \times n}(F)$, where $f \mapsto [f]_B^D$.
 \end{rmk}
 
-\begin{thm}
+\begin{cor}
     Left multiplication by a matrix is a linear transformation.
-\end{thm}
-
-\begin{proof}
-    We use the above construction with $V = F^n$, $W = F^m$, and $B$ and $D$ the standard bases for $F^n$ and $F^m$ respectively. Given an $m \times n$ matrix $A$, we can define $L_A: F^n \to F^m$ by $L_A(e_i) = A_{1,i}e_1 + \cdots + A_{m, 1}e_m$, so $[L_A]_B^D = A$. Therefore, for $x \in F^n$, $Ax = L_A(x)$.
-\end{proof}
+\end{cor}
 
 \begin{exmp}
     Let $f: P_2(\R) \to P_3(\R)$ be the linear transformation given by $p(x) \mapsto 2p'(x) + xp(x)$, and let $B = \langle 1, x, x^2\rangle$ and $D = \langle 1, x, x^2, x^3\rangle$. We then have $f(1) = 1x$, $f(x) = 2 + x^2$, and $f(x^2) = 4x + x^3$, so
