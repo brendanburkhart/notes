@@ -1,0 +1,43 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{centernot}
+\usepackage{fullpage}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage[hypcap=false]{caption}
+\usepackage{tikz, tkz-euclide}
+\usetikzlibrary{decorations.pathreplacing,arrows}
+\usetikzlibrary{quotes,angles,calc,intersections}
+
+\usepackage{titling}
+\usepackage{pdfpages}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{bm}
+
+\usepackage{linear}
+\usepackage{common}
+
+\begin{document}
+
+\title{Signals and Systems}
+\author{Brendan Burkhart}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+Signals can be broadly classified into discrete and continuous signals. For example, a continuous signal might be a function of a real variable representing time, or real variables representing a position in space, while a discrete signal is indexed by one or more integer variables. The variable(s) the signal is a function of are the \emph{independent variable(s)} of the signal, the values of the function are the dependent variables. For example, the voltage through a resistor could be the dependent variable of a signal where time is the independent variable.
+
+Signals in the real world are usually continuous signals, but are often discretized for representing in computers and data into discrete signals. A \emph{digital} signal is a discrete signal where the dependent variable(s) have finite precision, which is what signals in a digital representation must be.
+
+The value of a continuous signal $f$ at time $t \in \R$ is commonly denoted by $f(t)$, while a discrete signal $f$ at step $n \in \N$ would be denoted by $f[n]$. That is, parentheses are used for continuous signals, and square brackets for discrete.
+
+Systems are processes, either physical ones like electronics and mechanics, or virtual ones like a software algorithm, that have input and output signals, generating the output signals based on the input signals and any internal state.
+
+\end{document}
