@@ -7,5 +7,8 @@ Contains my notes from:
 - Vector Calculus
 - Discrete Math
 - Mathematics of Images and Shapes
+- Abstract Algebra
+- Signals and Systems
+- Ordinary Differential Equations
 
 Compiled PDFs are available as build artifacts - go to the `Actions` tab and select a commit and a zip file titled `notes` containing a PDF for every document will be listed.

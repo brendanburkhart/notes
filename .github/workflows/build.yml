@@ -17,6 +17,7 @@ jobs:
               Discrete/discrete.tex
               Abstract/abstract.tex
               Signals/signals.tex
+              DiffEq/diffeq.tex
       - name: Upload document
         uses: actions/upload-artifact@v2
         with:
