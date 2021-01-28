@@ -1,0 +1,104 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{centernot}
+\usepackage{fullpage}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage[hypcap=false]{caption}
+\usepackage{tikz, tkz-euclide}
+\usetikzlibrary{decorations.pathreplacing,arrows}
+\usetikzlibrary{quotes,angles,calc,intersections}
+
+\usepackage{titling}
+\usepackage{pdfpages}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{bm}
+
+\usepackage{linear}
+\usepackage{common}
+
+\begin{document}
+
+\title{Ordinary Differential Equations}
+\author{Brendan Burkhart}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Classification}
+
+\begin{defn}
+    A \emph{differential equation} is an equation relating one or more independent variables, functions of those variables, and derivatives of those functions.
+\end{defn}
+
+\begin{exmp}\label{first-order-ode}
+    \[\frac{\mathrm{d}x}{\mathrm{d}t} = x\]
+\end{exmp}
+
+\begin{defn}
+    A \emph{solution} to a differential equation is an expression for the dependent functions of the differential equation in terms of the independent variables.
+\end{defn}
+
+Differential equations can be broadly classified into \emph{ordinary} and \emph{partial} differential equations.
+
+\begin{defn}
+    An \emph{ordinary} differential equation, or \emph{ODE} is a differential equation involving a single independent variable, and all derivatives are with respect to this variable.
+\end{defn}
+
+\begin{defn}
+    A \emph{partial} differential equation, or \emph{PDE} is a differential equation involving functions of more than one independent variables, and derivatives may be with respect to any of those variables.
+\end{defn}
+
+\begin{defn}
+    The \emph{general form} of an ODE is
+    \[F(x, y, y', \ldots, y^{(n)}) = 0,\] that is some expression involving the independent variable $x$, the dependent variable $y$, and the derivatives of $y$.
+\end{defn}
+
+\begin{defn}
+    The \emph{order} of a differential equation is the order of the highest derivative.
+\end{defn}
+
+\begin{exmp}
+    \[\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} + \frac{g}{L}\sin\theta = 0\]
+    This is a second order differential equation, while Example \ref{first-order-ode} is first order.
+\end{exmp}
+
+\begin{defn}
+    A differential equation of a dependent variable $y$ and its derivatives is said to be \emph{linear} if it is an affine map with regard to $y$ and its derivatives.
+\end{defn}
+
+\begin{exmp}
+    $\sin(x)y' + 2x^2y'' = x$ is linear.
+\end{exmp}
+
+\begin{exmp}
+    $yy' + y'' = 0$ is non-linear.
+\end{exmp}
+
+\begin{defn}
+    An \emph{autonomous} differential equation is one in which the independent variable does not explicitly appear. When the independent variable represents time in some way, these may also be called \emph{time-invariant}.
+\end{defn}
+
+\begin{exmp}
+    $\frac{\mathrm{d}y}{\mathrm{d}x} = 5y - 20$ is an autonomous differential equation as the independent variable $x$ is not explicitly present.
+\end{exmp}
+
+\section{First-order linear autonomous differential equations}
+
+Any first-order linear autonomous differential equation with independent variable $x$ and dependent variable $y$ can trivially be put into the form \[\frac{\mathrm{d}y}{\mathrm{d}x} = ay - b.\] This form can always be solved.
+
+\begin{align*}
+    \frac{\mathrm{d}y}{\mathrm{d}x} &= ay - b \\
+    &= a(y - \frac{b}{a})
+\end{align*}
+
+Note that $\frac{\mathrm{d}}{\mathrm{d}x}{y - \frac{b}{a}} = \frac{\mathrm{d}}{\mathrm{d}x}y$. If $y \neq \frac{b}{a}$, it follows that $\ln(y - \frac{b}{a}) = ax + C$ for some constant of integration $C$, so $\abs{y - \frac{b}{a}} = ke^{ax}$ for some $k$. If $y > \frac{b}{a}$, then $y = \frac{b}{a} + ke^{ax}$, and similarly if $y < \frac{b}{a}$, then $y = \frac{b}{a} + ke^{ax}$ for some $k$. In the case that $y = \frac{b}{a}$, it follows that $\frac{\mathrm{d}y}{\mathrm{d}x} = 0$, so $y = \frac{b}{a} + ke^{ax}$ where $k = 0$.
+
+Therefore, $y = \frac{b}{a} + ke^{ax}$ is a solution to any first-order linear autonomous differential equation.
+
+\end{document}
