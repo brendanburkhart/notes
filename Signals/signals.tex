@@ -130,7 +130,7 @@ It is important to note the different between scaling and then shifting the time
 
 \section{Common signals}
 
-Two of the most common discrete signals are the unit impulse signal, and the unit step signal. The unit impulse is also known as the delta function and so is commonly denoted by $\delta[n]$, and is defined by
+Two of the most common signals are the unit impulse signal, and the unit step signal. The unit impulse is also known as the (Dirac) delta function. In discrete time it is commonly denoted by $\delta[n]$, and is defined by
 \[\delta[n] =
 \begin{dcases}
     1, & n = 1 \\
@@ -151,8 +151,8 @@ Two of the most common discrete signals are the unit impulse signal, and the uni
             \addplot+[const plot, no marks, ultra thick] coordinates {(-3,0) (0,0) (0,1) (0,0) (3,0)};
         \end{axis}
     \end{tikzpicture}
-\caption{Unit impulse signal}
-\label{fig:unit-impulse}
+\caption{Discrete unit impulse signal}
+\label{fig:discrete-unit-impulse}
 \end{figure}
 
 \begin{figure}[ht!]
@@ -168,8 +168,140 @@ Two of the most common discrete signals are the unit impulse signal, and the uni
             \addplot+[const plot, no marks, ultra thick] coordinates {(-3,0) (0,0) (0,1) (3,1)};
         \end{axis}
     \end{tikzpicture}
-\caption{Unit step signal}
-\label{fig:unit-step}
+\caption{Discrete unit step signal}
+\label{fig:discrete-unit-step}
 \end{figure}
+
+The delta function can be used to sift out everything but one value of a discrete time signal.
+\[x[n]\delta[n-n_0] = x[n_0]\delta[n-n_0]\]
+\[\sum_{m=-\infty}^n x[m]\delta[m-n_0] = x[n_0]\]
+
+In continuous time, we can define the unit step function similarly as \[u(t) =
+\begin{dcases}
+    1, & t > 0 \\
+    0, & t < 0
+\end{dcases}.\]
+Note that $u(0)$ is undefined. Defining the continuous time impulse is a bit more challenging. We would like it to be $\delta(t)$ such that
+\[u(t) = \int_{-t}^{t}\delta(\tau)d\tau.\] We can therefore define it has $\delta(t) = \lim_{\Delta\to 0}\delta_{\Delta}(t)$, where $\delta_{\Delta}(t)$ is a step impulse with width $\Delta$ and height $\frac{1}{\Delta}$ beginning at $t = 0$.
+
+Note the similarities between the discrete and continuous time version of these signals -- the first difference and first derivative play the same roles, as do the sums and integrals.
+
+\section{Energy and power}
+
+\begin{defn}
+    Let $x(t)$ be a continuous time signal. The \emph{energy} of the signal is
+    \[E_{\infty} = \lim_{T\to\infty}\int_{-T}^{T}\abs{x(t)}^2dt.\]
+\end{defn}
+
+\begin{defn}
+    Let $x(t)$ be a continuous time signal. The \emph{power} of the signal is
+    \[P_{\infty} = \lim_{T \to \infty}\frac{1}{2T}\int_{-T}^T\abs{x(t)}^2dt.\]
+\end{defn}
+
+\begin{defn}
+    Let $x[n]$ be a discrete time signal. The \emph{energy} of the signal is
+    \[E_{\infty} = \lim_{N\to\infty}\sum_{n=-N}^{N}\abs{x[n]}^2.\]
+\end{defn}
+
+\begin{defn}
+    Let $x[n]$ be a discrete time signal. The \emph{power} of the signal is
+    \[P_{\infty} = \lim_{N \to \infty}\frac{1}{2N+1}\sum_{n=-N}^N\abs{x[n]}^2.\]
+\end{defn}
+
+Note that if a signal has finite energy, then the signal must approach zero sufficiently fast as time approaches $\pm\infty$, or equal zero outside some interval.
+
+\begin{defn}
+    An \emph{energy signal} is a signal with finite energy. Such signals must have zero power.
+\end{defn}
+
+\begin{exmp}
+    $x(t) = e^{-\abs{t}}$ is an energy signal.
+\end{exmp}
+
+\begin{defn}
+    A \emph{power signal} is a signal with finite, non-zero power. Such signals must have infinite energy.
+\end{defn}
+
+\begin{exmp}
+    $x(t) = 1$ is a power signal, as is $x(t) = \sin(t)$.
+\end{exmp}
+
+Some signals are neither energy nor power signals, such as $x(t) = e^t$ or $x(t) = t$.
+
+\begin{exmp}
+    Let $x(t) = e^{-at}u(t)$ for some $a > 0$.
+    \[E_{\infty} = \int_{-\infty}^{\infty}\abs{x(t)}^2dt = \int_{0}^{\infty}e^{-2at}dt = \frac{1}{-2a}(0 - 1) = \frac{1}{2a}.\] Since $a > 0$, $x(t)$ is therefore an energy signal and has zero power.
+\end{exmp}
+
+\begin{exmp}
+    Let $x(t) = u(t)$. Then we have
+    \[P_{\infty} = \lim_{T\to\infty}\frac{1}{2T}\int_{-T}^{T}\abs{x(t)}^2dt = \lim_{T\to\infty}\frac{1}{2T}\int_{0}^{T}dt = \frac{1}{2}.\] Therefore, $x(t)$ is a power signal and has infinite energy.
+\end{exmp}
+
+\section{Even and odd}
+
+Recall that a function $f$ is even if $f(x) = f(-x)$ for all $x$ and odd if $f(x) = -f(-x)$. Obviously most functions are neither, but all functions can be decomposed into the sum of an even and odd part.
+
+\begin{defn}
+    Let $f(x)$ be a function, such as a signal. The \emph{even part} of $f$ is \[f_{\mathrm{ev}}(x) = \frac{f(x) + f(-x)}{2},\] and the \emph{odd part} of $f$ is \[f_{\mathrm{od}}(x) = \frac{f(x) - f(-x)}{2}.\]
+\end{defn}
+
+Note that the even part of a function must be even, since \[f_{\mathrm{ev}}(-x) = \frac{f(-x) + f(x)}{2} = \frac{f(x) + f(-x)}{2} = f_{\mathrm{ev}}(x),\] and the odd part must be odd: \[-f_{\mathrm{od}}(-x) = \frac{-f(-x)+f(x)}{2} = \frac{f(x) - f(-x)}{2} = f_{\mathrm{od}}(x).\]
+
+\begin{exmp}
+    $5x^2$ is even, while $x^3$ is odd, but $f(x) = x^3 + 5x^2$ is neither. \[f_{\mathrm{ev}}(x) = \frac{(x^3 + 5x^2) + ((-x)^3) + 5(-x)^2)}{2} = \frac{(x^3 - x^3) + (5x^2 + 5x^2)}{2} = 5x^2.\]
+    \[f_{\mathrm{od}}(x) = \frac{(x^3 + 5x^2) - ((-x)^3) + 5(-x)^2)}{2} = \frac{(x^3 + x^3) + (5x^2 - 5x^2)}{2} = x^3.\]
+\end{exmp}
+
+\begin{prop}
+    Let $f(x)$ be a function. Then $f(x) = f_{\mathrm{ev}}(x) + f_{\mathrm{od}}(x)$.
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        f_{\mathrm{ev}}(x) + f_{\mathrm{od}}(x) &= \\
+        \frac{f(x) + f(-x)}{2} + \frac{f(x) - f(-x)}{2} &= \\
+        \frac{f(x) + f(-x) + f(x) - f(-x)}{2} &= \\
+        \frac{2f(x)}{2} = f(x)
+    \end{align*}
+\end{proof}
+
+\section{Period and frequency}
+
+\begin{defn}
+    A signal $x(t)$ is \emph{bounded} if there exists some $K$ such that $\abs{x(t)} < K$ for all $t$.
+\end{defn}
+
+\begin{defn}
+    A signal $x(t)$ is \emph{periodic} if there exists some $T \in \R$ such that $x(t) = x(t + T)$ for all $T$. Note that if $f(t)$ is periodic with period $T$, it must also be periodic with period $kT$ where $k \in \Z^+$. The smallest such $T$ is called $T_0$, the \emph{fundamental period}.
+\end{defn}
+
+\begin{rmk}
+    For discrete time signals, it is instead required that $T \in \Z^+$.
+\end{rmk}
+
+\begin{rmk}
+    Constant signals are somewhat of an edge case with respect to periodicity. They are clearly periodic for any period $T > 0$, but have no fundamental period, and hence no fundamental frequency.
+\end{rmk}
+
+\begin{defn}
+    Given that $x(t)$ is periodic with fundamental period $T_0$, the \emph{fundamental frequency} of $x(t)$ is $\omega_0 = \frac{2\pi}{T_0}$. Some sources instead call $f_0$ the fundamental frequency where $f_0 = \frac{1}{T_0}$.
+\end{defn}
+
+\begin{exmp}
+    Let $x(t) = \sin(3t)$. If $x(t)$ is periodic with some period $T$, then it must be that $x(t) = x(t + T)$, so $\sin(3t) = \sin(3(t + T)) = \sin(3t + 3T)$. We know that $\sin$ is periodic with fundamental period $2\pi$, so $3T_0 = 2\pi$ and therefore $T_0 = \frac{2\pi}{3}$.
+\end{exmp}
+
+\begin{exmp}
+    Let $x(t) = e^{\pi(1 + j)t}$. Then we have $x(t) = x(t + T)$ which implies \[e^{\pi(1 + j)t} = e^{\pi(1 + j)(t + T)} = e^{\pi(1 + j)t}e^{\pi(1 + j)T}.\] Since $e^x \neq 0$ for all $x$, it follows that $e^{\pi(1 + j)T} = 1$, and so it must be that $\pi(1 + j)T = 2k{\pi}$ for some $k \in \Z$ by Euler's formula. Therefore, $T = \frac{2k}{1 + j}$. However, $T \notin \R$, so $x(t)$ is not periodic.
+\end{exmp}
+
+\begin{rmk}
+    If a \emph{non-zero} signal is both \emph{periodic} and \emph{bounded}, it must be a power signal.
+\end{rmk}
+
+\begin{rmk}
+    Signals which are periodic in continuous time may not be in discrete time. For example, we saw that $x(t) = \sin(3t)$ is periodic, but $x[n] = \sin(3n)$ is not, as there is no $N \in \Z^+$ such that $N = \frac{2\pi}{3}$.
+\end{rmk}
 
 \end{document}
