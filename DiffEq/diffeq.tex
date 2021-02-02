@@ -88,9 +88,15 @@ Differential equations can be broadly classified into \emph{ordinary} and \emph{
     $\frac{\mathrm{d}y}{\mathrm{d}x} = 5y - 20$ is an autonomous differential equation as the independent variable $x$ is not explicitly present.
 \end{exmp}
 
-\section{First-order linear autonomous differential equations}
+\section{First order differential equations}
 
-Any first-order linear autonomous differential equation with independent variable $x$ and dependent variable $y$ can trivially be put into the form \[\frac{\mathrm{d}y}{\mathrm{d}x} = ay - b.\] This form can always be solved.
+\begin{defn}
+    The \emph{standard form} of a linear first order differential equation (with independent variable $t$ and dependent variable $y$) is \[\frac{\mathrm{d}y}{\mathrm{d}t} + p(t)y = g(t),\] for some arbitrary functions $p(t), g(t)$.
+\end{defn}
+
+\subsection{Autonomous equations}
+
+Any linear first order autonomous ODE with independent variable $x$ and dependent variable $y$ can trivially be put into the form \[\frac{\mathrm{d}y}{\mathrm{d}x} = ay - b.\] This form can always be solved.
 
 \begin{align*}
     \frac{\mathrm{d}y}{\mathrm{d}x} &= ay - b \\
@@ -99,6 +105,19 @@ Any first-order linear autonomous differential equation with independent variabl
 
 Note that $\frac{\mathrm{d}}{\mathrm{d}x}{y - \frac{b}{a}} = \frac{\mathrm{d}}{\mathrm{d}x}y$. If $y \neq \frac{b}{a}$, it follows that $\ln(y - \frac{b}{a}) = ax + C$ for some constant of integration $C$, so $\abs{y - \frac{b}{a}} = ke^{ax}$ for some $k$. If $y > \frac{b}{a}$, then $y = \frac{b}{a} + ke^{ax}$, and similarly if $y < \frac{b}{a}$, then $y = \frac{b}{a} + ke^{ax}$ for some $k$. In the case that $y = \frac{b}{a}$, it follows that $\frac{\mathrm{d}y}{\mathrm{d}x} = 0$, so $y = \frac{b}{a} + ke^{ax}$ where $k = 0$.
 
-Therefore, $y = \frac{b}{a} + ke^{ax}$ is a solution to any first-order linear autonomous differential equation.
+Therefore, $y = \frac{b}{a} + ke^{ax}$ is a solution to any linear first order autonomous differential equation.
+
+\subsection{Integrating factors}
+
+Linear first order ODEs which are not autonomous can sometimes be solved through the use of an \emph{integrating factor}. We can write a linear first order ODE as \[y' + p(t)y = g(t),\] where $p(t), g(t)$ are arbitrary functions. Our goal here is to find a function $\mu(t)$, called the \emph{integrating factor}, such that
+\[\frac{\mathrm{d}}{\mathrm{d}t}\mu(t)y = \mu(t)y' + p(t)\mu(t)y.\] That is, we want $\mu'(t) = p(t)\mu(t)$. Once such $\mu(t)$ is found, since \[\mu(t)y' + \mu(t)p(t)y = \mu(t)g(t),\] we clearly have \[\frac{\mathrm{d}}{\mathrm{d}t}\mu(t)y = \mu(t)g(t).\] It follows that \[y = \frac{1}{\mu(t)}\int_{t_0}^t \mu(s)g(s)ds + C\] for some constants $t_0$ and $C$.
+
+We of course need to also be able to find such a $\mu(t)$. Note that since $\mu'(t) = p(t)\mu(t)$ we have \[\frac{\mu'(t)}{\mu(t)} = p(t).\] Since $\frac{\mathrm{d}}{\mathrm{d}t}\ln(\mu(t)) = \frac{\mu'(t)}{\mu(t)}$, it follows that $\ln(\mu(t)) = \int p(t)$. Therefore, $\mu(t) = e^{\int p(t)dt}$.
+
+\begin{exmp}
+    Using an integrating factor to solve $ty' + 2y = 4t^2$ with the initial condition $y(1) = 2$.
+
+    First, we need the differential equation in the standard form $y' + p(t)y = g(t)$. Doing this, we obtain $y' + \frac{2}{t}y = 4t$, provided that $t \neq 0$. Then we have $\ln(\mu(t)) = \int \frac{2}{t}dt = 2\ln(t) = \ln(t^2)$, so $\mu(t) = t^2$. We know have $\frac{\mathrm{d}}{\mathrm{d}t}\mu(t)y = 4t^3$, which we may integrate to obtain $t^2y = t^4 + c$, and so $y = t^2 + \frac{c}{t^2}$. Applying the initial condition $y(1) = 2$, we have $2 = 1 + c$, so $c = 1$ and our final particular solution is \[y = t^2 + \frac{1}{t^2}, t > 0.\]
+\end{exmp}
 
 \end{document}
