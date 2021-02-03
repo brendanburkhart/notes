@@ -120,4 +120,11 @@ We of course need to also be able to find such a $\mu(t)$. Note that since $\mu'
     First, we need the differential equation in the standard form $y' + p(t)y = g(t)$. Doing this, we obtain $y' + \frac{2}{t}y = 4t$, provided that $t \neq 0$. Then we have $\ln(\mu(t)) = \int \frac{2}{t}dt = 2\ln(t) = \ln(t^2)$, so $\mu(t) = t^2$. We know have $\frac{\mathrm{d}}{\mathrm{d}t}\mu(t)y = 4t^3$, which we may integrate to obtain $t^2y = t^4 + c$, and so $y = t^2 + \frac{c}{t^2}$. Applying the initial condition $y(1) = 2$, we have $2 = 1 + c$, so $c = 1$ and our final particular solution is \[y = t^2 + \frac{1}{t^2}, t > 0.\]
 \end{exmp}
 
+\subsection{Separable equations}
+
+A separable first order differential equation is of the form
+\[\frac{\mathrm{d}y}{\mathrm{d}t} = g(t)h(y),\] so that we may ``separate'' the independent and dependent variables to obtain
+\[\frac{1}{h(y)}\frac{\mathrm{d}y}{\mathrm{d}t} = g(t).\] This can be often be integrated, with the particularly nice property that due to the chain rule, we can simply integrate the LHS with respect to $y$.
+\[\int \frac{1}{h(y)}dy = \int g(t)dt.\] These integrals may or may not be computable, and even if they are the resulting equation may not be solvable for $y$. However, it can sometimes be done and is a simple and straightforward technique.
+
 \end{document}
