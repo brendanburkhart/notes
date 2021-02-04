@@ -149,4 +149,34 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     The symmetries of a triangle $\{e, S_1, S_2, S_3, R, R^2\}$, together with the binary operation of composition, form a group. Table \ref{triangle-multiplication-table} shows that every element has an inverse and that composition of these symmetries is closed. Associativity comes from the fact that $(xy)z$ means apply the symmetry $z$, then $y$, and then $x$, and $x(yz)$ also means apply $z$, then $y$, and then $x$, so the result is the same and $(xy)z = x(yz)$.
 \end{exmp}
 
+\begin{exmp}
+    $\N$, $\Z$, $\Q$, $\R$, and $\C$ all form groups under addition, and $\Q - \{0\}$, $\R - \{0\}$, and $\C - \{0\}$ form groups under multiplication.
+\end{exmp}
+
+\begin{exmp}
+    $\{1, -1, i, -i\} \subset \C$ forms a group under complex multiplication. It can be easily verified it is closed under multiplication, $1$ is the identity, and it inherits associativity from $\C$. Inverse can be easily checked: $(-1)(-1) = 1$ and $i(-i) = 1$.
+\end{exmp}
+
+\begin{defn}
+    A \emph{subgroup} $H$ of a group $G$ is a set $H \subseteq G$ that forms a group under the same group operation as $G$.
+\end{defn}
+
+\begin{thm}
+    A non-empty subset $H$ of a group $G$ is a subgroup of $G$ if and only if $x, y \in H$ implies $xy^{-1} \in H$.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) If $H$ is a subgroup of $G$, then since $y \in H$ it must be that $y^{-1} \in H$. Since groups are closed under the group operation, $x, y^{-1} \in H$ then implies that $xy^{-1} \in H$.
+
+    ($\impliedby$) Since $H$ is non-empty, there must exist some $x \in H$, and so $xx^{-1} \in H$, which implies $H$ contains the identity. $H$ clearly inherits associativity from $G$, so it only remains to check that it contains inverses and is closed. Since $e, x \in H$, $ex^{-1} \in H$, but $ex^{-1} = x$ so $H$ contains all inverses. Finally, if $x, y \in H$, we also have $x, y^{-1} \in H$, so $xy \in H$ and so $H$ is closed.
+\end{proof}
+
+\begin{thm}
+    Let $H, K \subseteq G$ be subgroups. Then $H \intersection K$ is a subgroup of $G$.
+\end{thm}
+
+\begin{proof}
+    Since $e \in H$ and $e \in K$, we of course have $e \in H \intersection K$. If $x \in H \intersection K$, then $x^{-1} \in H$ and $x^{-1} \in K$ so $x \in H \intersection K$. If $x, y \in H \intersection K$, then $xy \in H$ and $xy \in K$ so $xy \in H \intersection K$. Finally, $H \intersection K$ inherits associativity from $G$, so it is a subgroup.
+\end{proof}
+
 \end{document}
