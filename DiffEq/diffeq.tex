@@ -157,6 +157,10 @@ In general, any first order autonomous ODE is of the form $\frac{dy}{dt} = f(y)$
     Let $y' = f(y)$ be a first order autonomous ODE. If $f(y) > 0$ at a critical point $y_{\star}$, then when $y > y_{\star}$ the solution increases and when $y < y_{\star}$ the solution decreases. That is, solutions near the equilibrium of the critical point diverge from it, so we call these \emph{unstable} equilibria. Similarly, if $f'(y_{\star}) < 0$ then nearby solutions converge towards $y_{\star}$ and so we call it a \emph{stable} equilibrium.
 \end{defn}
 
+\begin{rmk}
+    Stable equilibria are also called \emph{sinks}, while unstable equilibria may be called \emph{sources}.
+\end{rmk}
+
 \begin{exmp}
     Let $y' = (1-y)^2(y-4)$, and so $y'' = -2(1-y)(y-4) + (1-y)^2$. Since both $y'$ and $y''$ are continuous on $\R$, by Theorem \ref{general-first-order-existence} we know that a unique solution must exist for any given initial value. It follows that no solution curves cross each other anywhere.
 
