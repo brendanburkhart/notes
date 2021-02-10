@@ -94,8 +94,6 @@ Differential equations can be broadly classified into \emph{ordinary} and \emph{
     The \emph{standard form} of a linear first order differential equation (with independent variable $t$ and dependent variable $y$) is \[\frac{\mathrm{d}y}{\mathrm{d}t} + p(t)y = g(t),\] for some arbitrary functions $p(t), g(t)$.
 \end{defn}
 
-\subsection{Autonomous equations}
-
 Any linear first order autonomous ODE with independent variable $x$ and dependent variable $y$ can trivially be put into the form \[\frac{\mathrm{d}y}{\mathrm{d}x} = ay - b.\] This form can always be solved.
 
 \begin{align*}
@@ -126,5 +124,79 @@ A separable first order differential equation is of the form
 \[\frac{\mathrm{d}y}{\mathrm{d}t} = g(t)h(y),\] so that we may ``separate'' the independent and dependent variables to obtain
 \[\frac{1}{h(y)}\frac{\mathrm{d}y}{\mathrm{d}t} = g(t).\] This can be often be integrated, with the particularly nice property that due to the chain rule, we can simply integrate the LHS with respect to $y$.
 \[\int \frac{1}{h(y)}dy = \int g(t)dt.\] These integrals may or may not be computable, and even if they are the resulting equation may not be solvable for $y$. However, it can sometimes be done and is a simple and straightforward technique.
+
+\subsection{Autonomous equations}
+
+In general, any first order autonomous ODE is of the form $\frac{dy}{dt} = f(y)$. Note that this form is always separable.
+
+\begin{rmk}
+    Note that the slope field of every autonomous ODE has the same slope for any given value of $y$, regardless of $t$.
+\end{rmk}
+
+\begin{defn}
+    Let $y' = f(y)$ be a first order autonomous ODE, and consider the set $\left\{y \in \R \compbar f(y) = 0 \right\}$. This is the \emph{critical point} set of the ODE.
+\end{defn}
+
+\begin{defn}
+    Let $y' = f(y)$ be a first order autonomous ODE. For any $y_{\star}$ in the critical point set, $y(t) = y_{\star}$ is an \emph{equilibrium solution} to the ODE.
+\end{defn}
+
+\begin{exmp}
+    Let $y' = y(1-y)$. The polynomial $y(1-y)$ is zero when $y = 0$ or $y = 1$, so $y(t) = 0$ and $y(t) = 1$ are equilibrium solutions.
+\end{exmp}
+
+\begin{rmk}
+    In between equilibria, the sign of $y'$ does not change.
+\end{rmk}
+
+\begin{rmk}
+    Given a first order autonomous ODE $y' = f(y)$, since the sign of $y'$ goes not change between critical points, we can use the sign of $y''$(which is also $f'(y)$) to learn more about the behavior of solutions around critical points.
+\end{rmk}
+
+\begin{defn}
+    Let $y' = f(y)$ be a first order autonomous ODE. If $f(y) > 0$ at a critical point $y_{\star}$, then when $y > y_{\star}$ the solution increases and when $y < y_{\star}$ the solution decreases. That is, solutions near the equilibrium of the critical point diverge from it, so we call these \emph{unstable} equilibria. Similarly, if $f'(y_{\star}) < 0$ then nearby solutions converge towards $y_{\star}$ and so we call it a \emph{stable} equilibrium.
+\end{defn}
+
+\begin{exmp}
+    Let $y' = (1-y)^2(y-4)$, and so $y'' = -2(1-y)(y-4) + (1-y)^2$. Since both $y'$ and $y''$ are continuous on $\R$, by Theorem \ref{general-first-order-existence} we know that a unique solution must exist for any given initial value. It follows that no solution curves cross each other anywhere.
+
+    Furthermore, we have see that the critical points are $1$ and $4$, and since $y''(4) = 9$ and $y''(1) = 0$ it follows that $4$ is an unstable equilibrium. We know that $1$ is an equilibrium as well, and that $y''' < 0$, so $1$ is semi-stable -- solutions converge to it from above, and diverge from it below.
+\end{exmp}
+
+\subsection{Existence and uniqueness of solutions}
+
+\begin{thm}\label{linear-first-order-existence}
+    Let $I = (\alpha, \beta)$ be an open interval containing $t = t_0$, and let $p, g$ be functions that are continuous on $I$. There exists a unique function $y(t)$ that satisfies both the differential equation
+    \[\frac{dy}{dt} + p(t)y = g(t)\] and the initial condition $y(t_0) = y_0$ for some $y_0$.
+\end{thm}
+
+\begin{proof}
+    Since the differential equation is linear, it can be solved using an integrating factor, and the initial condition uniquely determines the constant of integration.
+\end{proof}
+
+\begin{thm}\label{general-first-order-existence}
+    Let the functions $f$ and $\frac{\partial{f}}{\partial{y}}$ be continuous in some rectangular region $\alpha < t < \beta, \gamma < y < \delta$ containing a point $(t_0, y_0)$. Then, for some interval $(t_0 - h, t_0 + h)$ within $(\alpha, \beta)$, there exists a unique function $y(t)$ that satisfies both the differential equation
+    \[\frac{dy}{dt} = f(t, y)\] and the initial condition $y(t_0) = y_0$.
+\end{thm}
+
+\begin{cor}
+    The continuity of $f$ alone is sufficient for the existence of solutions, but not their uniqueness.
+\end{cor}
+
+\begin{rmk}
+    Note that Theorem \ref{general-first-order-existence} ensures two solutions cannot intersect each other, since the differential equation with initial condition corresponding to the intersection would be satisfied by both solutions.
+\end{rmk}
+
+\begin{exmp}
+    Consider $\dot{z} = z(1-z)$. Since $z(1-z)$ is a polynomial, it is continuous for all $z$, and so is $\frac{d}{dz}z(1-z)$. By Theorem \ref{general-first-order-existence}, it therefore has a unique solution for any given initial value.
+\end{exmp}
+
+\begin{exmp}
+    Consider $y(t) = y^{2/3}$. Since $y^{2/3}$ is continuous for all $y$, the \emph{existence} of a solution is guaranteed for all initial values by Theorem $\ref{general-first-order-existence}$. However, since $\frac{d}{dy}y^{2/3} = \frac{2}{3}y^{-1/3}$ is discontinuous at $y = 0$, the \emph{uniqueness} of the solution is only guaranteed for initial values $y \neq 0$.
+\end{exmp}
+
+\begin{exmp}
+    Consider $\dot{x} = \sqrt{x}$. Since $\sqrt{x}$ is only continuous for $x > 0$, given the initial condition $x(0) = x_0$, neither the existence nor uniqueness of a solution is not guaranteed.
+\end{exmp}
 
 \end{document}
