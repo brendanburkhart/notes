@@ -417,4 +417,98 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     Consider the permutation $(1a) \in S_n$ for some $a \neq 1$. We know that $(1a) \not\in A_n$. Consider the function $f(k) = k(1a)$, where $k \in A_n$. We will show that $f$ is a bijection between the even and odd elements of $S_n$. Since $k$ is even and $(1a)$ is odd, $f(k)$ must be odd. Now consider $k_1, k_2 \in A_n$ such that $f(k_1) = f(k_2)$. Then $k_1(1a) = k_2(1a)$ so $k_1(1a)(1a) = k_2(1a)(1a)$, and so $k_1 = k_2$, proving $f$ is injective. Now consider any $y \not\in A_n$. Since $(1a)$ is odd, $y(1a)$ is even and must be in $A_n$. Therefore, $f(y(1a)) = y(1a)(1a) = y$, and so $f$ is also surjective. Since $f$ is a bijection between the even and odd elements of $S_n$, it follows that precisely half of the elements of $S_n$ are even.
 \end{proof}
 
+\section{Isomorphisms}
+
+\begin{defn}
+    An \emph{isomorphism} between two groups $G$ and $G'$ is a bijection $\varphi: G \to G'$ such that $\varphi(xy) = \varphi(x)\varphi(y)$ for all $x, y \in G$. If there is an isomorphism between $G$ and $G'$, we say that $G$ is \emph{isomorphic} to $G'$, written $G \cong G'$.
+\end{defn}
+
+\begin{prop}\label{isomorphism-inverse}
+    If $\varphi: G \to G'$ is an isomorphism, then so is $\varphi^{-1}$.
+\end{prop}
+
+\begin{proof}
+    Since $\varphi$ is a bijection, so is $\varphi^{-1}$. Therefore, for $x, y \in G$, it is sufficient to show that $\varphi(x) = \varphi(y)$ in order to prove that $x = y$. Consider $x', y' \in G'$. Then $\varphi\left(\varphi^{-1}(x'y')\right) = xy$, and $\varphi\left(\varphi^{-1}(x')\varphi^{-1}(y')\right) = \varphi\left(\varphi^{-1}(x')\right)\varphi\left(\varphi^{-1}(y')\right) = x'y'$. Therefore, $\varphi^{-1}(x'y') = \varphi^{-1}(x')\varphi^{-1}(y')$.
+\end{proof}
+
+\begin{rmk}
+    If $G \cong G'$, then $\abs{G} = \abs{G'}$ since there is a bijection between them. But $\abs{G} = \abs{G'}$ doesn't imply $G \cong G'$ since there is no guarantee of an isomorphism.
+\end{rmk}
+
+\begin{prop}\label{isomorphism-preserves-identity-inverses}
+    Let $\varphi$ be an isomorphism between $G$ and $G'$. Then $\varphi(e) = e$, and for $x \in G$, $\varphi(x^{-1}) = \varphi(x)^{-1}$.
+\end{prop}
+
+\begin{proof}
+    For $x \in G$, we know $\varphi(x) = \varphi(ex) = \varphi(e)\varphi(x)$, so $\varphi(e)$ is a left identity in $G'$. Similarly, $\varphi(x) = \varphi(xe) = \varphi(x)\varphi(e)$, so $\varphi(e) = e$.
+
+    Consider $\varphi(xx^{-1})$, which is $\varphi(x)\varphi(x^{-1})$. Since $e = \varphi(e) = \varphi(xx^{-1}) = \varphi(x^{-1}x)$, we have $\varphi(x)\varphi(x^{-1}) = e = \varphi(x^{-1})\varphi(x)$ so $\varphi(x^{-1}) = \varphi(x)^{-1}$.
+\end{proof}
+
+\begin{prop}\label{isomorphism-subsets}
+    Let $G, G'$ be groups where $\varphi: G \to G'$ is an isomorphism, and $H$ be a subset of $G$. Then $\varphi(H)$ is a subset of $G'$, and $H \cong \varphi(H)$.
+\end{prop}
+
+\begin{proof}
+    Consider $x', y' \in \varphi(H)$. Then there exist $x, y \in H$ such that $x' = \varphi(x)$ and $y' = \varphi(y)$. Therefore, $\varphi(xy) = x'y' \in \varphi(H)$, so $\varphi(H)$ is closed under multiplication.
+
+    Since $\varphi(e) = e$, $\varphi(e)$ contains the identity. Furthermore, given $x' \in \varphi(H)$, we know there is some $x \in H$ such that $\varphi(x) = x'$. By Proposition \ref{isomorphism-inverse}, $\varphi(x^{-1}) = \varphi(x)^{-1} = x'^{-1}$, so $\varphi(H)$ contains all inverses. Finally, $\varphi(H)$ inherits associativity from $G'$, so it is a subgroup of $G'$.
+\end{proof}
+
+\begin{prop}
+    Let $G, G'$ be groups where $\varphi: G \to G'$ is an isomorphism. If $g \in G$ has order $n$, then $\varphi(g)$ also has order $n$.
+\end{prop}
+
+\begin{proof}
+    Since $g$ has order $n$, we know that $g^n = e$. By Proposition \ref{isomorphism-preserves-identity-inverses}, it follows that $\varphi(g^n) = e$. Since $\varphi(g^n) = \varphi(g)\varphi(g^{n-1}) = \cdots = \varphi(g)^n$, it follows that the order of $\varphi(g)$ is less than or equal to $n$.
+
+    Let $n'$ be the order of $\varphi(g)$. Since $\varphi(g)^{n'} = e$, we have $\varphi^{-1}(\varphi(g)^{n'}) = e$ by Proposition \ref{isomorphism-preserves-identity-inverses}. Then $\varphi^{-1}(\varphi(g)^{n'}) = \varphi^{-1}(\varphi(g))^{n'} = g^{n'} = e$, so the order of $g$ must be less than or equal to $n'$.
+
+    We therefore have $n' \leq n$ and $n \leq n'$, so it follows that $n = n'$, and so $\varphi(g)$ has the same order as $g$.
+\end{proof}
+
+\begin{prop}\label{abelian-isomorphism}
+    Let $G, G'$ be groups where $\varphi: G \to G'$ is an isomorphism, and let $G$ be abelian. Then $G'$ is also abelian.
+\end{prop}
+
+\begin{proof}
+    Let $x, y \in G$. Then $\varphi(xy) = \varphi(x)\varphi(y)$, and $\varphi(yx) = \varphi(y)\varphi(x)$. Since $G$ is abelian, $\varphi(xy) = \varphi(yx)$, and so $\varphi(x)\varphi(y) = \varphi(y)\varphi(x)$. Since $\varphi$ is surjective, it follows that $G'$ is abelian.
+\end{proof}
+
+\begin{prop}\label{cyclic-isomorphism}
+    \begin{itemize}
+        \item Any infinite cyclic group is isomorphic to $\Z$.
+        \item Any finite cyclic group of order $n$ is isomorphic to $\Z/n\Z$.
+    \end{itemize}
+\end{prop}
+
+\begin{proof}
+    Let $G_1$ be an infinite cyclic group, and $x \in G_1$ generate $G_1$. Then $\varphi: \Z \to G_1$ where $\varphi(n) = x^n$ is an isomorphism from $\Z$ to $G_1$.
+
+    Let $G_2$ be a finite cyclic group of order $n$, and $x \in G_2$ generate $G_2$. Then $\varphi: \Z/n\Z \to G_2$ where $\varphi(m) = x^m$ is an isomorphism from $\Z/n\Z$ to $G_2$.
+\end{proof}
+
+\begin{exmp}
+    Let $G = \left\{1, -1, i, -i\right\}$. Since $i^0 = 1$, $i^1 = i$, $i^2 = -1$, and $i^3 = -i$, it is a finite cyclic group of order four, and so is isomorphic to $\Z/4\Z$.
+\end{exmp}
+
+\begin{exmp}
+    Let $G = \left(\R, +\right)$ and $G' = \left(\R^+, \times\right)$, and consider $\varphi: \R \to \R^+$ where $\varphi(x) = e^x$. Since $\varphi$ is a bijection, and $\varphi(x + y) = e^{x+y} = e^xe^y = \varphi(x)\varphi(y)$, $\varphi$ is an isomorphism, and so the real numbers under addition are isomorphic to the positive real numbers under multiplication.
+\end{exmp}
+
+\begin{defn}
+    If $\varphi: G \to G'$ is an isomorphism, and $G = G'$, we say that $\varphi$ is an \emph{automorphism}.
+\end{defn}
+
+\begin{prop}
+    Let $G$ be a group, and fix some $g_0 \in G$. Then $\varphi(g) = g_0 \cdot g \cdot g_0^{-1}$ is an automorphism.
+\end{prop}
+
+\begin{proof}
+    First we need to show that $\varphi$ is a bijection. Consider some $g_1, g_2 \in G$ such that $\varphi(g_1) = \varphi(g_2)$. Then $g_0 \cdot g_1 \cdot g_0^{-1} = g_0 \cdot g_2 \cdot g_0^{-1}$, which we can cancel on the left by $g_0^{-1}$ to obtain $g_1 \cdot g_0^{-1} = g_2 \cdot g_0^{-1}$, and then on the right by $g_0$ to obtain $g_1 = g_2$, so $\varphi$ must be injective. Now consider some $g' \in G$. Since \[\varphi(g_0^{-1} \cdot g' \cdot g_0) = g_0 \cdot g_0^{-1} \cdot g' \cdot g_0 \cdot g_0^{-1} = g',\] $\varphi$ is also surjective. We have then shown that $\varphi$ is a bijection.
+
+    Given $g_1, g_1 \in G$, $\varphi(g_1g_2) = g_0 \cdot g_1 \cdot g_2 \cdot g_0^{-1}$. Since $e = g_0^{-1}g_0$, we then have
+    \[\varphi(g_1g_2) = g_0 \cdot g_1 \cdot g_0^{-1} \cdot g_0 \cdot g_2 \cdot g_0^{-1} = \varphi(g_1)\varphi(g_2),\] and so $\varphi$ is an automorphism.
+\end{proof}
+
 \end{document}
