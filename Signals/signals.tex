@@ -304,4 +304,36 @@ Note that the even part of a function must be even, since \[f_{\mathrm{ev}}(-x) 
     Signals which are periodic in continuous time may not be in discrete time. For example, we saw that $x(t) = \sin(3t)$ is periodic, but $x[n] = \sin(3n)$ is not, as there is no $N \in \Z^+$ such that $N = \frac{2\pi}{3}$.
 \end{rmk}
 
+\section{Exponential signals}
+
+\begin{defn}
+    An \emph{exponential signal} is a signal of the form $x(t) = ce^{at}$, for some $c, a \in \C$ and $t \in \R$.
+\end{defn}
+
+When $c, a \in \R$, the exponential signal is similar to the standard exponential function. If $a > 0$, the signals grows exponentially, if $a < 0$ it decreases exponentially, and in any case it is scaled by $c$.
+
+When $c \in \C$ and $a$ is strictly imaginary, the signal is called a \emph{phasor}. By Euler's formula, we have \[ce^{at} = \abs{c}e^{i\phi_0}e^{at} = \abs{c}e^{i(\omega_0t + \phi_0)} = \abs{c}\left(\cos(\omega_0t + \phi_0) + i\sin(\omega_0t + \phi_0)\right)\], where $i\omega_0 = a$ and $\phi_0 = \angle c$. A phasor can be interpreted as a vector-valued function, which always have magnitude $\abs{c}$, and has angular frequency $\omega_0$ (radians/time). At time $t = 0$, the angle is $\phi_0$, which may be called the \emph{phase} of the signal. Since the signal has angular frequency $\omega_0$, it has fundamental period $T_0 = \frac{2\pi}{\abs{w_0}}$.
+
+\begin{thm}
+    Let $x(t) = c_1e^{i\omega_1t} + c_2e^{i\omega_2t}$. This signal is periodic if and only if there exists some $\omega > 0$ and $k_1, k_2 \in \Z$ such that $\omega_1 = k_1\omega$ and $\omega_2 = k_2\omega$. If it is periodic, it has fundamental period $T_0 = \frac{2\pi}{\omega_0}$, where $\omega_0$ is the largest possible value for $\omega$.
+\end{thm}
+
+\begin{rmk}
+    The required condition is equivalent to $\frac{\omega_1}{\omega_2} \in \Q$. Note that this theorem can be generalized to signals that are the sum of $n$ phasors.
+\end{rmk}
+
+\begin{exmp}
+    Let $x(t) = 4e^{i2t} - 5e^{i3t}$. Since $2 = 2\cdot 1$ and $3 = 3 \cdot 1$, $x(t)$ is periodic with fundamental frequency $w_0 = 1$ and fundamental period $T_0 = \frac{2\pi}{\abs{1}} = 2\pi$.
+\end{exmp}
+
+\begin{exmp}
+    Let $x(t) = 4e^{i2t} - 5e^{i\pi t}$. Since $\frac{2}{\pi} \not\in \Q$, $x(t)$ is not periodic.
+\end{exmp}
+
+\begin{defn}
+    If a signal $x(t) = c_1e^{i\omega_1t} + c_2e^{i\omega_2t} + \cdots + c_ke^{i\omega_kt}$ is periodic, then we say the terms are \emph{harmonically related}.
+\end{defn}
+
+When $c, a \in \C$, and $a$ is not strictly imaginary, then the resulting exponential signal is a phasor given by $c$ and the imaginary part of $a$, all multiplied by $e^{\sigma_0}$, where $\sigma_0$ is the real part of $a$.
+
 \end{document}
