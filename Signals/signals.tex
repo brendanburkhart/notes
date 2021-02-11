@@ -45,6 +45,18 @@ The value of a continuous signal $f$ at time $t \in \R$ is commonly denoted by $
 
 Systems are processes, either physical ones like electronics and mechanics, or virtual ones like a software algorithm, that have input and output signals, generating the output signals based on the input signals and any internal state.
 
+\section{Geometric sums}
+
+\begin{prop}
+    For $r \neq 1$,
+    \[\sum_{k=0}^n{ar^k} = a\frac{1-r^{n-1}}{1-r}.\]
+\end{prop}
+
+\begin{prop}
+    For $\abs{r} < 1$,
+    \[\sum_{k=0}^\infty{ar^k} = a\frac{1}{1-r}.\]
+\end{prop}
+
 \section{Shifting and scaling signals}
 
 Consider a continuous signal $f(t)$. We can shift and scale the amplitude of this signal or we can shift and scale the frequency (or both of course).
