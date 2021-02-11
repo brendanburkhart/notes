@@ -318,13 +318,15 @@ Note that the even part of a function must be even, since \[f_{\mathrm{ev}}(-x) 
 
 \section{Exponential signals}
 
+\subsection{Continuous time}
+
 \begin{defn}
     An \emph{exponential signal} is a signal of the form $x(t) = ce^{at}$, for some $c, a \in \C$ and $t \in \R$.
 \end{defn}
 
 When $c, a \in \R$, the exponential signal is similar to the standard exponential function. If $a > 0$, the signals grows exponentially, if $a < 0$ it decreases exponentially, and in any case it is scaled by $c$.
 
-When $c \in \C$ and $a$ is strictly imaginary, the signal is called a \emph{phasor}. By Euler's formula, we have \[ce^{at} = \abs{c}e^{i\phi_0}e^{at} = \abs{c}e^{i(\omega_0t + \phi_0)} = \abs{c}\left(\cos(\omega_0t + \phi_0) + i\sin(\omega_0t + \phi_0)\right)\], where $i\omega_0 = a$ and $\phi_0 = \angle c$. A phasor can be interpreted as a vector-valued function, which always have magnitude $\abs{c}$, and has angular frequency $\omega_0$ (radians/time). At time $t = 0$, the angle is $\phi_0$, which may be called the \emph{phase} of the signal. Since the signal has angular frequency $\omega_0$, it has fundamental period $T_0 = \frac{2\pi}{\abs{w_0}}$.
+When $c \in \C$ and $a$ is strictly imaginary, the signal is called a \emph{phasor}. By Euler's formula, we have \[ce^{at} = \abs{c}e^{i\phi_0}e^{at} = \abs{c}e^{i(\omega_0t + \phi_0)} = \abs{c}\left(\cos(\omega_0t + \phi_0) + i\sin(\omega_0t + \phi_0)\right),\] where $i\omega_0 = a$ and $\phi_0 = \angle c$. A phasor can be interpreted as a vector-valued function, which always have magnitude $\abs{c}$, and has angular frequency $\omega_0$ (radians/time). At time $t = 0$, the angle is $\phi_0$, which may be called the \emph{phase} of the signal. Since the signal has angular frequency $\omega_0$, it has fundamental period $T_0 = \frac{2\pi}{\abs{w_0}}$.
 
 \begin{thm}
     Let $x(t) = c_1e^{i\omega_1t} + c_2e^{i\omega_2t}$. This signal is periodic if and only if there exists some $\omega > 0$ and $k_1, k_2 \in \Z$ such that $\omega_1 = k_1\omega$ and $\omega_2 = k_2\omega$. If it is periodic, it has fundamental period $T_0 = \frac{2\pi}{\omega_0}$, where $\omega_0$ is the largest possible value for $\omega$.
@@ -347,5 +349,29 @@ When $c \in \C$ and $a$ is strictly imaginary, the signal is called a \emph{phas
 \end{defn}
 
 When $c, a \in \C$, and $a$ is not strictly imaginary, then the resulting exponential signal is a phasor given by $c$ and the imaginary part of $a$, all multiplied by $e^{\sigma_0}$, where $\sigma_0$ is the real part of $a$.
+
+\subsection{Discrete time}
+
+\begin{defn}
+    An \emph{exponential signal} is a signal of the form $x[n] = ce^{an}$, for some $c, a \in \C$ and $n \in \N$.
+\end{defn}
+
+When $c, a \in \R$, the exponential signal is similar to the standard exponential function. If $a > 0$, the signals grows exponentially, if $a < 0$ it decreases exponentially, and in any case it is scaled by $c$.
+
+When $c \in \R$ and $a = \sigma_0 + i(2k+1)\pi$ for some $\sigma_0 \in \R$ and $k \in \Z$, we have a type of exponential signal that doesn't have a continuous time version. Since $x[n] = ce^{an}$, we have $x[n] = c\left(-e^{\sigma_0}\right)^n$. This signal therefore is simply $ce^{n\sigma_0}$, but alternating between positive and negative on each sample.
+
+When $c \in \C$ and $a$ is strictly imaginary, the signal is a discrete time \emph{phasor}. Unlike continuous time phasors, discrete time phasors are not always periodic. For $x[n] = e^{i\omega_0n}$ to be periodic in discrete time, we need $\frac{2\pi}{\abs{\omega_0}} \in \Q$, so that some integer multiple of this value is an integer period.
+
+\begin{thm}
+    Let $x[n] = c_1e^{i\omega_1n} + c_2e^{i\omega_2n}$, where the terms are periodic with fundamental periods $N_1, N_2 \in \N$. This signal is then periodic, and has fundamental period equal to the least common multiple of $N_1$ and $N_2$.
+\end{thm}
+
+\begin{rmk}
+    Note that this theorem can be generalized to signals that are the sum of $n$ discrete time phasors.
+\end{rmk}
+
+\begin{rmk}
+    For a continuous time phasors, increasing $\omega_0$ always results in a phasor with higher frequency. For a discrete time phasor however, add integer multiples of $2\pi$ to $\omega_0$ least the phasor unchanged.
+\end{rmk}
 
 \end{document}
