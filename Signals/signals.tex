@@ -316,6 +316,11 @@ Note that the even part of a function must be even, since \[f_{\mathrm{ev}}(-x) 
     Signals which are periodic in continuous time may not be in discrete time. For example, we saw that $x(t) = \sin(3t)$ is periodic, but $x[n] = \sin(3n)$ is not, as there is no $N \in \Z^+$ such that $N = \frac{2\pi}{3}$.
 \end{rmk}
 
+\begin{exmp}
+    Let $x[n] = \cos(\frac{\pi}{8}n^2)$. If $x[n]$ is periodic, then there exists some constant $N \in \N$ such that $x[n] = x[n+N]$ for all $n \in \Z$. Since cosine has period $2\pi$, it follows that
+    $\frac{\pi}{8}n^2 = \frac{\pi}{8}(n+N)^2 + 2k\pi$ for some $k \in \Z$, and since $(n+N)^2 - n^2 = 2nN + N^2$, we have \[\frac{2nN+N^2}{16} = k.\] Since $n$ can be any integer, and $\frac{2nN}{16}$ must be an integer, $N$ must be divisible by $8$. Using $N = 8$ gives $\frac{16n + 4(16)}{16} = 4 + n = k$, so $x[n]$ is periodic with fundamental frequency $N_0 = 8$.
+\end{exmp}
+
 \section{Exponential signals}
 
 \subsection{Continuous time}
