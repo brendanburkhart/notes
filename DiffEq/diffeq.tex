@@ -105,7 +105,7 @@ Note that $\frac{\mathrm{d}}{\mathrm{d}x}{y - \frac{b}{a}} = \frac{\mathrm{d}}{\
 
 Therefore, $y = \frac{b}{a} + ke^{ax}$ is a solution to any linear first order autonomous differential equation.
 
-\subsection{Integrating factors}
+\subsection{Linear equations}
 
 Linear first order ODEs which are not autonomous can sometimes be solved through the use of an \emph{integrating factor}. We can write a linear first order ODE as \[y' + p(t)y = g(t),\] where $p(t), g(t)$ are arbitrary functions. Our goal here is to find a function $\mu(t)$, called the \emph{integrating factor}, such that
 \[\frac{\mathrm{d}}{\mathrm{d}t}\mu(t)y = \mu(t)y' + p(t)\mu(t)y.\] That is, we want $\mu'(t) = p(t)\mu(t)$. Once such $\mu(t)$ is found, since \[\mu(t)y' + \mu(t)p(t)y = \mu(t)g(t),\] we clearly have \[\frac{\mathrm{d}}{\mathrm{d}t}\mu(t)y = \mu(t)g(t).\] It follows that \[y = \frac{1}{\mu(t)}\int_{t_0}^t \mu(s)g(s)ds + C\] for some constants $t_0$ and $C$.
@@ -202,5 +202,29 @@ In general, any first order autonomous ODE is of the form $\frac{dy}{dt} = f(y)$
 \begin{exmp}
     Consider $\dot{x} = \sqrt{x}$. Since $\sqrt{x}$ is only continuous for $x > 0$, given the initial condition $x(0) = x_0$, neither the existence nor uniqueness of a solution is not guaranteed.
 \end{exmp}
+
+\subsection{Exact equations}
+
+\begin{defn}
+    A first order ODE of the form $M(x, y) + N(x, y)y' = 0$ (where $y$ is a function of $x$) is \emph{exact} if there exists some function $\psi(x, y)$ such that $\frac{d\psi}{dx} = M(x, y) + N(x, y)y'$.
+\end{defn}
+
+\begin{exmp}
+    $2x + y^2 + 2xyy' = 0$ is an exact first order ODE, since $\psi(x, y) = x^2 + xy^2$ gives $\frac{d\psi}{dx} = 2x + y^2 + 2xyy' = 0$. It follows that $\psi(x, y) = \int{0}dx$, and so $x^2 + xy^2 = c$ for some constant $c$ is a solution.
+\end{exmp}
+
+\begin{thm}
+    Let functions $M, N, M_y, N_x$ be continuous on a simply connected region in the $xy$ plane. Then $M(x, y) + N(x, y)y' = 0$ is an exact differential equation if and only if $M_x(x, y) = N_y(x, y)$ for all points on the region.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) If it is an exact differential equation, then by definition there exists some $\psi(x, y)$ such that $\psi_x(x, y) = M(x, y)$ and $\psi_y(x, y) = N(x, y)$. Therefore, $\psi_{xy}(x, y) = M_y(x, y)$ and $\psi_{yx} = N_x(x, y)$. Since $M_y, N_x$ are continuous are some region, $\psi$ is $C^2$ are that region, and so $\psi_{xy} = \psi_{yx}$, implying $M_y = N_x$.
+
+    ($\impliedby$) Since $M$ is continuous on the region, we can integrate to obtain $\varPhi(x, y) = Q(x, y) + h(y)$, where $\frac{d}{dx}Q = M$ and $h(y)$ is an arbitrary function. We need $\frac{d}{dx}\varPhi(x, y) = M(x, y) + N(x, y)y'$, so we need to be able to choose $h(y)$ such that $\frac{d}{dy}\varPhi = N(x,y)$. We therefore have $\frac{d}{dy}\varPhi = \frac{d}{dy}Q + h'(y) = N(y)$, and so $h'(y) = N(y) - \frac{d}{dy}Q$. This equation is integrable (giving a solution for $h(y)$) when $N(x,y) - \frac{d}{dy}Q(x,y)$ is solely a function of $y$. Since $\frac{d}{dx}\left(N(x,y) - \frac{d}{dy}Q(x,y)\right) = N_x - M_y = 0$, it is not a function of $x$, and so there is function $\varPhi(x,y)$ such that $\frac{d}{dy}\varPhi = N(x,y)$ and $\frac{d}{dx}\varPhi = M(x,y)$.
+\end{proof}
+
+\begin{rmk}
+    Some non-exact first order differential equations can be made exact by way of an integrating factor.
+\end{rmk}
 
 \end{document}
