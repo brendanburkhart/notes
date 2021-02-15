@@ -227,4 +227,14 @@ In general, any first order autonomous ODE is of the form $\frac{dy}{dt} = f(y)$
     Some non-exact first order differential equations can be made exact by way of an integrating factor.
 \end{rmk}
 
+\section{Linear second order equations}
+
+\subsection{Homogeneous equations with constant coefficients}
+
+Let $ay'' + by' + cy = 0$ be a homogeneous second order differential equation, where $a, b, c$ are constants. Notice that if $y = e^{rt}$ for some $r$, then $a'' + by' + cy = ar^2e^{rt} + bre^{rt} + ce^{rt} = (ar^2 + br + c)e^{rt} = 0$. Since $e^{rt} \neq 0$, it follows that $ar^2 + br + c = 0$, and so $y = e^{rt}$ is a solution when $r$ is a root of $ar^2 + br + c = 0$. Furthermore, notice that any linear combination of solutions is also a solution, since the differential equation is homogeneous.
+
+\begin{defn}
+    For a differential equation of the form $ay'' + by' + cy = 0$, the equation $ar^2 + br + c = 0$ is called the \emph{characteristic eqution}.
+\end{defn}
+
 \end{document}
