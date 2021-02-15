@@ -246,4 +246,10 @@ Let $ay'' + by' + cy = 0$ be a homogeneous second order differential equation, w
     For a differential equation of the form $ay'' + by' + cy = 0$, the equation $ar^2 + br + c = 0$ is called the \emph{characteristic eqution}.
 \end{defn}
 
+\begin{exmp}
+    Consider the constant coefficient homogeneous differential equation $2y'' + 8y' - 10y = 10$. We know that $y = e^{rt}$ is a solution when $r$ is a root of $2r^2 + 8r - 10$, and since $2r^2 + 8r - 10 = (2r-2)(r+5)$, this gives us $r = 1, -5$. The general solution is then $y(t) = c_1e^t + c_2e^{-5t}$ for some constants $c_1, c_2 \in \R$.
+
+    Given two initial conditions, we can solve for $c_1$ and $c_2$. For example, if $y(0) = 2$ and $y'(0) = -4$, we have $2 = c_1 + c_2$ and $-4 = c_1 - 5c_2$. This system can be solved, yielding $6 = 6c_2$, so $c_2 = 1$ and so $c_1 = 1$ as well.
+\end{exmp}
+
 \end{document}
