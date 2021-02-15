@@ -223,9 +223,18 @@ In general, any first order autonomous ODE is of the form $\frac{dy}{dt} = f(y)$
     ($\impliedby$) Since $M$ is continuous on the region, we can integrate to obtain $\varPhi(x, y) = Q(x, y) + h(y)$, where $\frac{d}{dx}Q = M$ and $h(y)$ is an arbitrary function. We need $\frac{d}{dx}\varPhi(x, y) = M(x, y) + N(x, y)y'$, so we need to be able to choose $h(y)$ such that $\frac{d}{dy}\varPhi = N(x,y)$. We therefore have $\frac{d}{dy}\varPhi = \frac{d}{dy}Q + h'(y) = N(y)$, and so $h'(y) = N(y) - \frac{d}{dy}Q$. This equation is integrable (giving a solution for $h(y)$) when $N(x,y) - \frac{d}{dy}Q(x,y)$ is solely a function of $y$. Since $\frac{d}{dx}\left(N(x,y) - \frac{d}{dy}Q(x,y)\right) = N_x - M_y = 0$, it is not a function of $x$, and so there is function $\varPhi(x,y)$ such that $\frac{d}{dy}\varPhi = N(x,y)$ and $\frac{d}{dx}\varPhi = M(x,y)$.
 \end{proof}
 
+\begin{exmp}
+    Consider the first order differential equation \[\left(3x^2 - 2xy + 2\right) + \left(6y^2 - x^2 + 3\right)y' = 0.\] Since $\frac{d}{dy}\left(3x^2 - 2xy + 2\right) = -2x$ and $\frac{d}{dx}\left(6y^2 - x^2 + 3\right) = -2x$, this is an exact differential equation.
+    \[\int \left(3x^2 - 2xy + 2\right)dx = x^3 - x^2y + 2x + h(y).\] Since $\frac{d}{dy}\left(x^3 - x^2y + 2x\right) = -x^2$, we then want $h'(y) = \left(6y^2 - x^2 + 3\right) - (-x^2) = 6y^2 + 3$. Then, $h(y) = \int h'(y)dy = 2y^3 + 3y$, and so the general solution is \[\psi(x, y) = x^3 - x^2y + 2x + 2y^3 + 3y = c.\]
+\end{exmp}
+
 \begin{rmk}
     Some non-exact first order differential equations can be made exact by way of an integrating factor.
 \end{rmk}
+
+\begin{exmp}
+    Consider the differential equation $1 + \left(\frac{x}{y}- \sin(y)\right)y' = 0$. This is clearly not exact, but multiplying the equation by the integrating factor $y$ results in $y + \left(x - y\sin(y)\right)y' = 0$, which is exact and can be solved.
+\end{exmp}
 
 \section{Linear second order equations}
 
