@@ -279,7 +279,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     Let $X$ be a set, and let $S_X$ be the set of all bijections from $X$ to itself. These bijections are called \emph{permutations} of $X$.
 \end{defn}
 
-\begin{prop}
+\begin{prop}\label{permutations-group}
     For a given set $X$, $S_X$ is a group.
 \end{prop}
 
@@ -475,7 +475,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     Let $x, y \in G$. Then $\varphi(xy) = \varphi(x)\varphi(y)$, and $\varphi(yx) = \varphi(y)\varphi(x)$. Since $G$ is abelian, $\varphi(xy) = \varphi(yx)$, and so $\varphi(x)\varphi(y) = \varphi(y)\varphi(x)$. Since $\varphi$ is surjective, it follows that $G'$ is abelian.
 \end{proof}
 
-\begin{prop}\label{cyclic-isomorphism}
+\begin{prop}\label{cyclic-isomorphism}\proofbreak
     \begin{itemize}
         \item Any infinite cyclic group is isomorphic to $\Z$.
         \item Any finite cyclic group of order $n$ is isomorphic to $\Z/n\Z$.
@@ -510,5 +510,49 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     Given $g_1, g_1 \in G$, $\varphi(g_1g_2) = g_0 \cdot g_1 \cdot g_2 \cdot g_0^{-1}$. Since $e = g_0^{-1}g_0$, we then have
     \[\varphi(g_1g_2) = g_0 \cdot g_1 \cdot g_0^{-1} \cdot g_0 \cdot g_2 \cdot g_0^{-1} = \varphi(g_1)\varphi(g_2),\] and so $\varphi$ is an automorphism.
 \end{proof}
+
+\section{Cayley's theorem}
+
+\begin{defn}
+    For a group $G$, let $S_G$ denote the permutations of $G$. Note that $S_G$ is a group by Proposition \ref{permutations-group}.
+\end{defn}
+
+\begin{exmp}
+    Let $G = {a, b, c}$. Then \[S_G = \left\{e, (ab), (ac), (bc), (abc), (acb)\right\}.\]
+\end{exmp}
+
+\begin{defn}
+    Let $G$ be a group. Then define $\sigma_g: G \to G$ by $\sigma_g(h) = gh$ for all $h \in G$.
+\end{defn}
+
+\begin{lemma}
+    For any $g \in G$, $\sigma_g$ is a permutation of $G$.
+\end{lemma}
+
+\begin{proof}
+    $\sigma_g$ is injective, since for any $x, y \in G$ such that $\sigma_g(x) = \sigma_g(y)$, we have $gx = gy \implies g^{-1}gx = g^{-1}gy$, and so $x = y$. $\sigma_g$ is also surjective, since for any $z \in G$, $\sigma_g(g^{-1}z) = gg^{-1}z = z$. Therefore, $\sigma_g$ is an automorphism on $G$, and so is a permutation of $G$.
+\end{proof}
+
+\begin{thm}Cayley's theorem\label{cayleys}\proofbreak
+    Let $G$ be a group, then $G$ is isomorphic to a subgroup of $S_G$.
+\end{thm}
+
+\begin{proof}
+    Let $G' = \left\{\sigma_g \compbar g \in G\right\}$. We will first show that $G'$ is a subgroup of $S_G$. For $g_1, g_1 \in G$, $(\sigma_{g_1} \circ \sigma_{g_2})(h) = \sigma_{g_1}(g_2h) = g_1g_2h = \sigma_{g_1g_2}(h)$, so $G'$ is closed under composition. Since $\sigma_e = e$, $G'$ contains the identity. For any $g \in G$, $\sigma_g \circ \sigma_{g^{-1}} = \sigma_{gg^{-1}} = e$, so $G'$ contains all inverses, and $G'$ is associativity since permuations are associativity under composition.
+
+    Since we already showed that $\sigma_{g_1} \circ \sigma_{g_2} = \sigma_{g_1g_2}$, it only remains to be shown that $\sigma: G \to G'$ is a bijection. Consider $g_1, g_2 \in G$ such that $\sigma_{g_1} = \sigma_{g_2}$. It is injective since $g_1 = \sigma_{g_1}(e) = \sigma_{g_2}e = g_2$, and surjective by $G'$ is the image of $G$ under $\sigma$. Therefore, $G$ is isomorphic to $G'$, and $G'$ is a subgroup of $S_G$.
+\end{proof}
+
+\begin{cor}\label{finite-symmetric-isomorphism}
+    If $G$ is a finite group of order $n$, then $G$ is isomorphic to a subgroup of $S_n$.
+\end{cor}
+
+\begin{proof}
+    By Cayley's theorem, we know that $G$ is isomorphic to a subset of $S_G$. Recall that if there is a bijection between sets $X$ and $Y$, then $S_X \cong S_Y$. Since there is a bijection between $G$ and $\{1, 2, \ldots, n\}$, we know that $S_G$ is isomorphic to $S_n$, and so $G$ is isomorphic to a subgroup of $S_n$.
+\end{proof}
+
+\begin{rmk}
+    A finite group of order $n$ may be isomorphic to a subgroup of $S_k$ for $k < n$. For example, by Corollary \ref{finite-symmetric-isomorphism}, $S(\triangle)$ (the symmetries of equilateral triangles) is isomorphic to a subgroup of $S_6$, but we know that $S(\triangle) \cong S_3$. Another example is $S_n$ which is clearly isomorphic to $S_n$, but since it has order $n!$ is only shown to be isomorphic to a subgroup of $S_{n!}$ by Corollary \ref{finite-symmetric-isomorphism}.
+\end{rmk}
 
 \end{document}
