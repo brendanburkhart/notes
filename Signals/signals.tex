@@ -198,6 +198,12 @@ Note that $u(0)$ is undefined. Defining the continuous time impulse is a bit mor
 
 Note the similarities between the discrete and continuous time version of these signals -- the first difference and first derivative play the same roles, as do the sums and integrals.
 
+Since the continuous time delta function is not actually a function (it's technically a \emph{distribution}), behaves somewhat differently than may be expected. For example, \[\int_{-\infty}^{\infty}x(t)\delta(at)dt = \frac{1}{\abs{a}}x(0).\]
+
+Another signal is the \emph{unit ramp}, which in continuous time is simply \[r(t) = \int_{-\infty}^{t}u(\tau)d\tau.\] It is defined similarly in discrete time, however the running sum is shifted slightly so that $r[0] = 0$, in order to match the continuous time unit ramp. \[r[n] = \sum_{k=-\infty}^{n-1}u[k]= nu[n] = \begin{dcases}
+    n, & n \geq 0 \\ 0, & n < 0
+\end{dcases}.\]
+
 \section{Energy and power}
 
 \begin{defn}
