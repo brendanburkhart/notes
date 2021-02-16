@@ -59,7 +59,7 @@ Systems are processes, either physical ones like electronics and mechanics, or v
 
 \section{Shifting and scaling signals}
 
-Consider a continuous signal $f(t)$. We can shift and scale the amplitude of this signal or we can shift and scale the frequency (or both of course).
+Consider a continuous signal $f(t)$. We can shift and scale the amplitude of this signal, or we can shift and scale the frequency (or both of course).
 
 Given a signal $f(t)$, $af(t)$ will \emph{scale} the amplitude by a factor of $a$, while $f(t) + b$ will \emph{shift} the amplitude by $b$. Figure \ref{fig:amplitude-scale-shifts} shows a signal $f(t)$ in blue, as well as:
 \begin{itemize}
@@ -383,6 +383,56 @@ When $c \in \C$ and $a$ is strictly imaginary, the signal is a discrete time \em
 
 \begin{rmk}
     For a continuous time phasors, increasing $\omega_0$ always results in a phasor with higher frequency. For a discrete time phasor however, add integer multiples of $2\pi$ to $\omega_0$ least the phasor unchanged.
+\end{rmk}
+
+\section{Systems}
+
+A \emph{system} is a process that takes an input signal and produces an output signal. For a system $S$ with output $y$ and input $x$, we write $y(t) = S[x(t)]$ for a continuous time system, or $y[n] = S[x[n]]$ for a discrete time system.
+
+\begin{exmp}
+    A system that models a capacitor with capacitance $C$ is \[y(t) = \frac{1}{C}\int_{-\infty}^{t}x(\tau)d\tau.\]
+\end{exmp}
+
+\begin{defn}
+    A system is \emph{causal} if the output at time $t_0$ depends \emph{only} on inputs at times $t \leq t_0$. If a system is \emph{not} causal, we say that it is \emph{non-causal}.
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item An ideal predictor is a system $y(t) = x(t+1)$, which is non-causal.
+        \item An ideal delay is a system $y(t) = x(t-1)$, which is causal.
+        \item A centered moving average filter $y(t) = \frac{x(t-1) + x(t) + x(t+1)}{3}$ is non-causal.
+    \end{itemize}
+\end{exmp}
+
+\begin{rmk}
+    When determining whether a system is causal, the systems input is not necessarily time. For example, many image processing algorithms may look ahead at later pixels. Despite this being later in spatial rather temporal terms, they would be non-causal.
+\end{rmk}
+
+\begin{defn}
+    A \emph{time-invariant} system is one in which the output depends only on the inputs, not on the time. If a system is not time-invariant, it may be said to be \emph{time-varying}.
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $y[n] = \sin(x[n])$ is time-invariant.
+        \item $y(t) = 3x^2(t)u(t)$ is time-varying.
+    \end{itemize}
+\end{exmp}
+
+\begin{defn}
+    A system is \emph{memory-less} if the output at time $t$ depends \emph{only} on the input at time $t$.
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $y(t) = kx(t)$ is memory-less.
+        \item $y(t) = \int_{-\infty}^{t}x(\tau)d\tau$ is not memory-less.
+    \end{itemize}
+\end{exmp}
+
+\begin{rmk}
+    If a system is memory-less, it is necessarily causal.
 \end{rmk}
 
 \end{document}
