@@ -145,7 +145,7 @@ It is important to note the different between scaling and then shifting the time
 Two of the most common signals are the unit impulse signal, and the unit step signal. The unit impulse is also known as the (Dirac) delta function. In discrete time it is commonly denoted by $\delta[n]$, and is defined by
 \[\delta[n] =
 \begin{dcases}
-    1, & n = 1 \\
+    1, & n = 0 \\
     0, & n \neq 0
 \end{dcases}.\] The unit step signal $u[n]$ is defined by
 \[u[n] = \sum_{m=-\infty}^{n}\delta[m].\] Note that $\delta[n] = u[n] - u[n-1]$.
