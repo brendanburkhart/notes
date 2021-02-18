@@ -475,12 +475,12 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     Let $x, y \in G$. Then $\varphi(xy) = \varphi(x)\varphi(y)$, and $\varphi(yx) = \varphi(y)\varphi(x)$. Since $G$ is abelian, $\varphi(xy) = \varphi(yx)$, and so $\varphi(x)\varphi(y) = \varphi(y)\varphi(x)$. Since $\varphi$ is surjective, it follows that $G'$ is abelian.
 \end{proof}
 
-\begin{prop}\label{cyclic-isomorphism}\proofbreak
+\begin{thm}\label{cyclic-isomorphism}\proofbreak
     \begin{itemize}
         \item Any infinite cyclic group is isomorphic to $\Z$.
         \item Any finite cyclic group of order $n$ is isomorphic to $\Z/n\Z$.
     \end{itemize}
-\end{prop}
+\end{thm}
 
 \begin{proof}
     Let $G_1$ be an infinite cyclic group, and $x \in G_1$ generate $G_1$. Then $\varphi: \Z \to G_1$ where $\varphi(n) = x^n$ is an isomorphism from $\Z$ to $G_1$.
@@ -554,5 +554,94 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \begin{rmk}
     A finite group of order $n$ may be isomorphic to a subgroup of $S_k$ for $k < n$. For example, by Corollary \ref{finite-symmetric-isomorphism}, $S(\triangle)$ (the symmetries of equilateral triangles) is isomorphic to a subgroup of $S_6$, but we know that $S(\triangle) \cong S_3$. Another example is $S_n$ which is clearly isomorphic to $S_n$, but since it has order $n!$ is only shown to be isomorphic to a subgroup of $S_{n!}$ by Corollary \ref{finite-symmetric-isomorphism}.
 \end{rmk}
+
+\section{Products of Groups}
+
+\begin{defn}
+    Given groups $H$ and $K$, we define the following operation on the set $H \times K$: For $(h_1, k_1), (h_2, k_2) \in H \times K$, we define the element-wise operation $(h_1, k_1)(h_2, k_2) = (h_1h_2, k_1k_2)$. This set and operation are together the \emph{direct product} of $H$ and $K$.
+\end{defn}
+
+\begin{prop}
+    The direct product of groups $H$ and $K$ is a group.
+\end{prop}
+
+\begin{proof}
+    Given $(h_1, k_1), (h_2, k_2)$, $(h_1, k_1)(h_2, k_2) = (h_1h_2, k_1k_2)$ which is clearly an element of $H \times K$ since $H$ and $K$ are individually closed.
+
+    For any $(h, k) \in H \times K$, $(e, e)(h,k) = (h, k) = (h, k)(e, e)$, so $(e, e)$ is the identity. Then $(h, k)(h^{-1}, k^{-1}) = e = (h^{-1}k^{-1})(h, k)$, so $H \times K$ contains all inverses. Finally, associativity is inherited from $H$ and $K$.
+\end{proof}
+
+\begin{prop}
+    Let $H$ and $K$ be groups. Then $H \times K$ is isomorphic to $K \times H$.
+\end{prop}
+
+\begin{proof}
+    Let $\varphi: (H \times K) \to (K \times H)$ be given by $\varphi: (h, k) \mapsto (k, h)$. This is clearly a bijection, and preserves multiplication, so it is an isomorphism.
+\end{proof}
+
+\begin{prop}
+    Let $G_1, G_2, \ldots, G_k$ be groups. We can then form the direct product $G_1 \times G_2 \times \cdots \times G_k$, whose elements are $k$-tuples, and which is a group.
+\end{prop}
+
+\begin{prop}
+    Let $H' = \left\{(h, e) \compbar h \in H\right\}$ and $K' = \left\{(e, k) \compbar k \in K\right\}$. $H', K'$ are subgroups of $H \times K$ and are isomorphic to $H$ and $K$ respectively.
+\end{prop}
+
+\begin{prop}
+    $H \times K$ is abelian if and only if $H$ and $K$ are both abelian.
+\end{prop}
+
+\begin{proof}\proofbreak
+    ($\implies$) If $H \times K$ is abelian, then for any $h_1,h_2 \in H$ and $k_1,k_2 \in K$, we have $(h_1,k_1)(h_2,k_2) = (h_2,k_2)(h_1,k_1)$. Since $(h_1,k_1)(h_2,k_2) = (h_1h_2,k_1k_2)$ and $(h_2,k_2)(h_1,k_1) = (h_2h_1,k_2k_1)$, we then have $h_1h_2 = h_2h_1$ and $k_1k_2 = k_2k_1$, and so $H$ and $K$ are both abelian.
+
+    ($\impliedby$) If $H$ and $K$ are both abelian, then for any $h_1,h_2 \in H$ and $k_1,k_2 \in K$, we have $(h_1,k_1)(h_2,k_2) = (h_1h_2,k_1k_2) = (h_2h_1,k_2k_1) = (h_2,k_2)(h_1,k_1)$, and so $H \times K$ is abelian.
+\end{proof}
+
+\begin{prop}
+    $H, K < H \times K$ commute with each other. That is, for $(h, e) \in H \times K$ and $(e, k) \in H \times K$, $(h,e)(e, k) = (e, k)(h,e)$.
+\end{prop}
+
+\begin{prop}
+    For $H, K < H \times K$, $H \intersection K = \{(e, e)\}$.
+\end{prop}
+
+\begin{thm}
+    Let $G$ be a group with subgroups $H,K$ such that:
+    \begin{enumerate}[label=(\arabic*)]
+        \item For all $g \in G$, there exists $h \in H$, $k \in K$ such that $g = hk$.
+        \item For all $h \in H, k \in K$, $hk = kh$.
+        \item $H \intersection K = e$.
+    \end{enumerate}
+    Then $G$ is isomorphic to $H \times K$.
+\end{thm}
+
+\begin{proof}
+    Consider $\varphi: H \times K \to G$ where $(h, k) \mapsto hk$. We will first show that $\varphi$ preserves multiplication. For $(h_1, k_1), (h_2, k_2) \in H \times K$, $\varphi\left((h_1,k_1)(h_2,k_2)\right) = \varphi\left((h_1h_2,k_1k_2)\right) = h_1h_2k_1k_2$. By (2), $h_2k_1 = k_1h_2$, and so we have $h_1k_1h_2k_2 = \varphi((h_1, k_1))\varphi((h_2, k_2))$.
+
+    Now we will show that $\varphi$ is a bijection. Let $(h_1,k_1), (h_2,k_2) \in H \times K$ such that $\varphi((h_1,k_1)) = \varphi((h_2,k_2))$. We then have $\varphi((h_1,k_1))\varphi((h_2^{-1}),k_2^{-1})) = \varphi((h_2,k_2))\varphi((h_2^{-1}),k_2^{-1}))$, and since $\varphi$ preserves multiplication, this implies $\varphi((h_1h_2^{-1},k_1k_2^{-1})) = e$, and so we have $h_1h_2^{-1}k_1k_2^{-1} = e$. It follows that $\left(h_1h_2^{-1}\right)^{-1} = \left(k_1k_2^{-1}\right)$. Since $\left(h_1h_2^{-1}\right)^{-1} \in H$ and $k_1k_2^{-1} \in K$, by (3) we know that $h_1h_2^{-1} = e$ and $k_1k_2^{-1} = e$. It follows that $h_1 = h_2$ and $k_1 = k_2$, so $\varphi$ must be injective. By (1), $\varphi$ must be surjective.
+
+    Since $\varphi$ is a multiplication-preserving bijection, $G$ is isomorphic to $H \times K$.
+\end{proof}
+
+\begin{exmp}The Klein four-group is the direct product of the integers mod two with itself: $\Z/2\Z \times \Z/2\Z$. Its elements are $(0, 0)$, $(1, 0)$, $(0, 1)$, and $(1, 1)$. Note that every non-identity element has order $2$, and that the product of any two non-identity elements is the third. The order is $4$, while the order of $\Z/2\Z$ is two.
+\end{exmp}
+
+\begin{exmp}
+    Let $G = \Z/2\Z \times \Z/3\Z$. We clearly have $\abs{G} = 6$. The order of $(1, 1)$ is six, so this is a cyclic group. By Theorem \ref{cyclic-isomorphism}, we then have $\Z/2\Z \times \Z/3\Z \cong \Z/6\Z$.
+\end{exmp}
+
+\begin{thm}
+    $\Z/m\Z \times \Z/n\Z$ is isomorphic to $\Z/mn\Z$ if and only if $\gcdof{m}{n} = 1$.
+\end{thm}
+
+\begin{proof}\proofbreak
+    Let $k$ be an integer such that $(1, 1)^k = e$. Then $k = q_1m$ and $k = q_2m$ for some $q_1, q_2 \in \Z$. If $\gcdof{m}{n} = 1$, then $q_1 = n$ and $q_2 = n$, so $k = mn$.
+
+    If $\gcdof{m}{n} \neq 1$, then there exists some $s$ such that $m = q_1s$ and $n = q_2s$ for some $q_1, q_2 \in \Z$. Then for any $a \in \Z/m\Z, b \in \Z/n\Z$, $(a, b)^{q_1q_2s} = e$, so $\Z/m\Z \times \Z/n\Z$ has order $\leq q_1q_2s = \frac{mn}{\gcdof{m}{n}}$ if it is even cyclic.
+\end{proof}
+
+\begin{cor}
+    The order of $(1, 1) \in \Z/m\Z \times \Z/n\Z$ is $\frac{mn}{\gcdof{m}{n}}$.
+\end{cor}
 
 \end{document}
