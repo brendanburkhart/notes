@@ -435,4 +435,41 @@ A \emph{system} is a process that takes an input signal and produces an output s
     If a system is memory-less, it is necessarily causal.
 \end{rmk}
 
+\begin{defn}
+    A system $S$ is \emph{linear} if it is additive and homogeneous. For input signals $x_1(t), x_2(t)$ with $y_1(t) = S[x_1(t)]$ and $y_2(t) = S[x_2(t)]$, a system is additive if $S[x_1(t) + x_2(t)] = y_1(t) + y_2(t)$ and homogeneous if $S[ax_1(t)] = ay_1(t)$.
+\end{defn}
+
+\begin{prop}
+    A system $S$ is linear if $S[ax_1(t) + x_2(t)] = ay_1(t) + y_2(t)$.
+\end{prop}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $y(t) = t^2x(t)$ is both additive and homogeneous, so it is linear.
+        \item $y(t) = x^2(t)$ is neither additive nor homogeneous, so it is non-linear.
+        \item $y[n] = \bar{x}[n]$ is additive, but not homogeneous (since $S[ax[n]] = \bar{a}\bar{x}[n] \neq a\bar{x}[n]$), so it is non-linear.
+    \end{itemize}
+\end{exmp}
+
+\begin{defn}
+    A system is \emph{bounded input/bounded output} stable if every bounded input results in a bounded output. That is, if \[\abs{x(t)} < K \forall t \implies \abs{y(t)} < M \forall T,\] for some $K, M$.
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $y(t) = e^{x(t)}$ is stable.
+        \item $y(t) = e^tx(t)$ is unstable.
+        \item $y(t) = \sin(t)x(t)$ is stable.
+        \item $y[n] = 12x[n-1]$ is stable.
+    \end{itemize}
+\end{exmp}
+
+\begin{defn}
+    A system $S$ is \emph{invertible} if there exists $S^{-1}$ such that $S^{-1}[S[x(t)]] = x(t)$ for all $x(t)$.
+\end{defn}
+
+\begin{exmp}
+    Let $S = x^3[n]$. Then $S$ is invertible, since $\sqrt[3]{y[n]} = x[n]$, and so $S^{-1} = \sqrt[3]{y(t)}$.
+\end{exmp}
+
 \end{document}
