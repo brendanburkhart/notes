@@ -236,6 +236,14 @@ In general, any first order autonomous ODE is of the form $\frac{dy}{dt} = f(y)$
     Consider the differential equation $1 + \left(\frac{x}{y}- \sin(y)\right)y' = 0$. This is clearly not exact, but multiplying the equation by the integrating factor $y$ results in $y + \left(x - y\sin(y)\right)y' = 0$, which is exact and can be solved.
 \end{exmp}
 
+\begin{prop}
+    All separable first order differential equations are exact.
+\end{prop}
+
+\begin{proof}
+    Let $y' = g(y)h(x)$ be a separable equation. Then $-h(x) + \frac{1}{g(y)}y' = 0$. Since $\frac{\partial}{\partial y}\left(-h(x)\right) = 0 = \frac{\partial}{\partial}\frac{1}{g(y)}$, this is an exact differential equation.
+\end{proof}
+
 \section{Linear second order equations}
 
 \subsection{Homogeneous equations with constant coefficients}
