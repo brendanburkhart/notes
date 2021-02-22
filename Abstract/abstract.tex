@@ -511,7 +511,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     \[\varphi(g_1g_2) = g_0 \cdot g_1 \cdot g_0^{-1} \cdot g_0 \cdot g_2 \cdot g_0^{-1} = \varphi(g_1)\varphi(g_2),\] and so $\varphi$ is an automorphism.
 \end{proof}
 
-\section{Cayley's theorem}
+\section{Cayley's Theorem}
 
 \begin{defn}
     For a group $G$, let $S_G$ denote the permutations of $G$. Note that $S_G$ is a group by Proposition \ref{permutations-group}.
@@ -643,5 +643,101 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \begin{cor}
     The order of $(1, 1) \in \Z/m\Z \times \Z/n\Z$ is $\frac{mn}{\gcdof{m}{n}}$.
 \end{cor}
+
+\section{Lagrange's theorem}
+
+\begin{defn}
+    Let $G$ be a finite group, and $H$ a subgroup of $G$. For a given $g \in G$, the \emph{right coset} of $g$ and $H$, denote by $gH$, is \[\left\{gh \compbar h \in H\right\}.\]
+\end{defn}
+
+\begin{rmk}
+    Note that $g \in gH$, since $e \in H$.
+\end{rmk}
+
+\begin{prop}\label{coset-order}
+    For any right coset $gH$, the order of $H$ is equal to the order of $gH$.
+\end{prop}
+
+\begin{proof}
+    Consider $\varphi: H \to gH$ given by $h \mapsto gh$. Since $\varphi$ is a surjection into $gH$, and $gh_1 = gh_2 \implies g^{-1}gh_1 = g^{-1}gh_2 \implies h_1 = h_2$, $\varphi$ is a bijection between $H$ and $gH$.
+\end{proof}
+
+\begin{prop}\label{cosets-equal-or-disjoint}
+    Consider a right coset $gH$, and let $g' \in G$. If $g' \in gH$ then $g'H = gH$, if $g' \notin gH$ then $g'H \intersection gH$.
+\end{prop}
+
+\begin{proof}
+    If $g' \in gH$, then $g' = gh_1$ for some $h_1 \in H$. It follows that any $x \in g'H$ can be written as $(gh_1)h_2 = g(h_1h_2)$ for some $h_2 \in H$. Since $g(h_1h_2) \in gH$, we then have $g'H \subseteq gH$. Similarly, any $x \in gH$ can be written as $gh = (g'h_1^{-1})h_3 \in g'H$ for some $h_3 \in H$, so $gH \subseteq g'H$, giving us $gH = g'H$.
+
+    If $g' \notin gH$, then if there exists $x \in gH \intersection g'H$ we can write $x = gh_1$ for some $h_1 \in H$, and $x = g'h_2$ for some $h_2 \in H$. It follows that $gh_1 = g'h_2$, so $g' = (gh_1)h_2^{-1}$. However, $h_1h_2^{-1} \in H$, which would imply that $g' \in gH$. This is a contradiction, so it must be that $gH \intersection g'H$ is empty.
+\end{proof}
+
+\begin{thm}Lagrange's Theorem\label{lagrange-thm}\proofbreak
+    Let $G$ be a finite group, and $H$ a subgroup of $G$. Then the order of $H$ divides the order of $G$.
+\end{thm}
+
+\begin{proof}
+    Since $G$ is finite, we can enumerate its elements. Construct the set
+    \[X =\left\{gH \compbar g \in G\right\}.\] Since $g \in gH$, the union of all sets in $X$ produces $G$. By Proposition \ref{cosets-equal-or-disjoint}, $X$ is a set of disjoint sets. Since every element of $X$ has order $\abs{H}$ by Proposition \ref{coset-order}, it follows that $\abs{G} = \abs{X}\abs{H}$.
+\end{proof}
+
+\begin{cor}
+    For every $g \in G$, the order of $g$ divides $\abs{G}$.
+\end{cor}
+
+\begin{cor}
+    If $\abs{G}$ is prime, then $G$ must be cyclic.
+\end{cor}
+
+\begin{proof}
+    Let $g \in G$, where $g \in e$. Then $\abs{g} > 1$, and $\abs{G}$ divides $\abs{G}$. Since $\abs{G}$ is prime, it follows that $\langle g \rangle = G$.
+\end{proof}
+
+\begin{cor}\label{group-order-power}
+    For all $g \in G$, $g^{\abs{G}} = e$.
+\end{cor}
+
+\begin{proof}
+    Since $\abs{G} = k\abs{g}$ for some $k \in \Z^+$, we know that $g^{\abs{G}} = \left(g^{\abs{g}}\right)^k = e^k = e$.
+\end{proof}
+
+\begin{lemma}B\'ezout's Identity\label{bezouts}\proofbreak
+    For $a, n \in \Z$ such that $\gcdof{a}{n} = 1$, there exists $x, y \in \Z$ such that $ax + by = 1$.
+\end{lemma}
+
+\begin{defn}
+    For $n \in \Z^+$, define
+    \[R_n = \left\{m \in \Z/n\Z \compbar 0 < m \leq n-1, \gcdof{m}{n} = 1 \right\}.\] This group is sometimes denoted by $\left(\Z/n\Z\right)^x$.
+\end{defn}
+
+\begin{prop}
+    $R_n$ forms an abelian group under multiplication modulo $n$.
+\end{prop}
+
+\begin{proof}
+    Assume that for some $m_1, m_2 \in R_n$, $\gcdof{m_1m_2}{n} > 1$. Then there must exist some prime $p$ such that $m_1m_2 = q_1p$ and $n = q_2p$. But then either $m_1 = q_3p$ or $m_2 =q_4p$ which would imply that $\gcdof{m_1}{n} = p > 1$, or $\gcdof{m_2}{n} = p > 1$. Therefore, $\gcdof{m_1m_2}{n} = 1$. Since $m_1m_2 = kn + r$, where $r = m_1m_2 \bmod n$, if $\gcdof{r}{n} \neq 1$ then $\gcdof{m_1m_2}{n} \neq 1$. It follows that $m_1m_2 \in R_n$, so $R_n$ is closed.
+
+    Now, clearly $\gcdof{1}{n} = 1$, so $R_n$ contains the identity. By B\'ezout's Identity \ref{bezouts}, there exists $x, y \in \Z$ such that $mx + ny = 1$ for $m \in R_n$, so $mx = -ny + 1$, and so $mx \equiv 1 \pmod n$. Therefore, $x = m^{-1}$ and so $R_n$ contains inverses. Finally, we know that multiplication modulo $n$ is both commutative and associative, so $R_n$ is an abelian group.
+\end{proof}
+
+\begin{defn}
+    Euler's totient function $\varphi(n)$ is given by $\abs{R_n}$, the number of integers less than $n$ that are relatively prime to $n$.
+\end{defn}
+
+\begin{thm}\label{relatively-prime-totient-power}
+    If $\gcdof{x}{n} = 1$, then $x^{\varphi(n)} \equiv 1 \pmod n$.
+\end{thm}
+
+\begin{proof}
+    By Corollary \ref{group-order-power}, $x^{\varphi(n)} = e = 1$.
+\end{proof}
+
+\begin{thm}Fermat's little theorem\label{fermats-little-thm}\proofbreak
+    If $p$ is prime and $p$ does not divide $x$, then $x^{p-1} \equiv 1 \pmod p$.
+\end{thm}
+
+\begin{proof}
+    Since $\abs{R_p} = p-1$, $\varphi(p) = p-1$. Then $x^{p-1} \equiv 1 \pmod n$ by Theorem \ref{relatively-prime-totient-power}.
+\end{proof}
 
 \end{document}
