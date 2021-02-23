@@ -472,4 +472,53 @@ A \emph{system} is a process that takes an input signal and produces an output s
     Let $S = x^3[n]$. Then $S$ is invertible, since $\sqrt[3]{y[n]} = x[n]$, and so $S^{-1} = \sqrt[3]{y(t)}$.
 \end{exmp}
 
+\begin{rmk}
+    A system that is both \emph{linear} and \emph{time-invariant} may be referred to as an \emph{LTI} system.
+\end{rmk}
+
+\subsection{Discrete time linear time-invariant}
+
+\begin{defn}
+    Let $x_1[n], x_2[n]$ be signals. Then the \emph{convolution} of these signals is
+    \[x_1[n] * x_2[n]= \sum_{k=-\infty}^{\infty}x_1[k]x_2[n-k].\]
+\end{defn}
+
+\begin{prop}
+    For signals $x_1[n], x_2[n], x_3[n]$, and constant $\alpha$:
+    \begin{itemize}
+        \item $x_1[n]*x_2[n] = x_2[n]*x_1[n]$, so convolution is commutative.
+        \item $x_1[n]*\left(x_2[n]*x_3[n]\right) = \left(x_1[n]*x_2[n]\right)*x_3[n]$, so convolution is associative.
+        \item $x_1[n]*\left(x_2[n] + x_3[n]\right) = x_1[n]*x_2[n] + x_1[n]*x_3[n]$, so convolution distributes over addition.
+        \item $(\alpha x_1[n]) * x_2[n] = x_1[n] * (\alpha x_2[n]) = \alpha(x_1[n]*x_2[n])$, so together with the previous property convolution is linear.
+    \end{itemize}
+\end{prop}
+
+\begin{proof}
+    \[x_1[n]*x_2[n] = \sum_{k=-\infty}^{\infty}x_1[k]x_2[n-k].\] Now let $l = n-k$. Then \[x_1[n]*x_2[n] = \sum_{l=\infty}^{-\infty}x_1[n-l]x_2[l] = \sum_{l=-\infty}^{\infty}x_2[l]x_1[n-l] = x_2[n]*x_1[n].\] The other properties can be similarly.
+\end{proof}
+
+\begin{prop}
+    Let $S$ be an LTI, and let $h[n]$ be the \emph{impulse response} of the system, so $h[n] = S[\delta[n]]$. Then $y[n] = x[n] * h[n]$.
+\end{prop}
+
+\begin{proof}
+    We know that $S[\delta[n]] = h[n]$, and since the system is time-invariant, we know that $S[\delta[n - k]] = h[n - k]$. Since it is linear, $S[\alpha\delta[n - k]] =\alpha h[n-k]$, and so $S[x[k]\delta[n-k]] = x[k][n-k]$. Therefore, \[\sum_{k=\infty}^{\infty}x[k]h[n-k] = \sum_{k=-\infty}^{\infty}S[x[k]\delta[n-k]].\] Since $\delta[n-k] \neq 0 \implies n=k$, we then know that \[\sum_{k=\infty}^{\infty}S[x[k]\delta[n-k]] = S[x[n]] = y[n],\] and so it follows that
+    \[y[n] = \sum_{k=\infty}^{\infty}x[k]h[n-k] = x[n]*h[n].\]
+\end{proof}
+
+\begin{exmp}
+    Let $S$ be an LTI system such that $S[\delta[n]] = h[n] = r[n]$. Then given $x[n] = u[n]$, we have \[y[n] = S[x[n]] = r[n]*u[n].\]
+    \[y[n] = \sum_{k=-\infty}^{\infty}r[n-k]u[k] = \sum_{k=0}^{\infty}r[n-k].\] When $n < 0$, we then have $y[n] = 0$, and when $n \geq 0$, we have \[y[n] = 0 + 1 + 2 + \cdots + n = \frac{n(n-1)}{2}.\]
+\end{exmp}
+
+\begin{exmp}
+    Let $S$ be an LTI system such that $S[\delta[n]] = h[n] = u[n]$. Then given $x[n] = 2^{n}u[-n]$, we have \[y[n] = S[x[n]] = 2^{n}u[-n]*u[n].\]
+    \[y[n] = \sum_{k=-\infty}^{\infty}2^{k}u[-k]u[n-k] = \sum_{k=-\infty}^{0}2^{k}u[n-k].\]
+
+    If $n \geq 0$, then since $k \leq 0$ we know $n - k \geq 0$, and so
+    \[y[n] = \sum_{k=-\infty}^{0}2^k = \lim_{r\to\infty}\frac{1-(1/2)^{r}}{1-1/2} = 2.\]
+
+    If $n < 0$, then $n-k < 0$ only when $k > n$. Therefore, $y[n] = 2 - \left(2^{n+1} + 2^{n+2} + \cdots + 2^0\right)$. Since $n < 0$, \[y[n] = 2 - \frac{1-(1/2)^{-n}}{1-(1/2)} = 2^{n+1}.\]
+\end{exmp}
+
 \end{document}
