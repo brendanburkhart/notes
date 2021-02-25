@@ -1,34 +1,5 @@
-\documentclass[12pt]{article}
-
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{centernot}
-\usepackage{fullpage}
-\usepackage{makecell}
-\usepackage{tabularx}
-\usepackage[hypcap=false]{caption}
-\usepackage{tikz, tkz-euclide}
-\usetikzlibrary{decorations.pathreplacing,arrows}
-\usetikzlibrary{quotes,angles,calc,intersections}
-
-\usepackage{titling}
-\usepackage{pdfpages}
-\usepackage{enumitem}
-\usepackage{multicol}
-\usepackage{bm}
-
-\usepackage{linear}
-\usepackage{common}
-
-\begin{document}
-
-\title{Ordinary Differential Equations}
-\author{Brendan Burkhart}
-\maketitle
-
-\tableofcontents
-\newpage
+\chapter{Ordinary Differential Equations}
+\label{ch:diffeq}
 
 \section{Classification}
 
@@ -405,5 +376,3 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
 \begin{proof}
     The Wronskian is \[W = e^{rt}(e^{rt} + te^{rt}) - te^{rt}(e^{rt}) = e^{2rt},\] which is non-zero since $r \in \R$. Therefore, by Theorem \ref{linear-second-order-solution-family} linear combinations of $e^{rt}$ and $te^{rt}$ describe all possible solutions.
 \end{proof}
-
-\end{document}
