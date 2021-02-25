@@ -10,17 +10,10 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: |
-              Linear/linear.tex
-              IntroAnalysis/analysis.tex
-              Images/images.tex
-              VectorCalc/vector.tex
-              Discrete/discrete.tex
-              Abstract/abstract.tex
-              Signals/signals.tex
-              DiffEq/diffeq.tex
+              main.tex
       - name: Upload document
         uses: actions/upload-artifact@v2
         with:
           name: notes
-          path: "./*.pdf"
+          path: "main.pdf"
           if-no-files-found: error
