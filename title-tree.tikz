@@ -8,6 +8,8 @@
 \begin{scope}
     \clip (0, 1) circle (5);
 
+    \draw[line width=5pt] (0, 0) -- (0, 2.25);
+
     \draw[rotate=90, line width=3pt] (0, 0) [l-system={Fractal tree, step=2.25cm, angle=15, axiom=F[++++L][L][----L], order=6}] lindenmayer system -- cycle;
 
     \filldraw[fill=black] (-5,0) rectangle (5,-5);
