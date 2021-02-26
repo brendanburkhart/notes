@@ -1,34 +1,5 @@
-\documentclass[12pt]{article}
-
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{centernot}
-\usepackage{fullpage}
-\usepackage{makecell}
-\usepackage{tabularx}
-\usepackage[hypcap=false]{caption}
-\usepackage{tikz, tkz-euclide}
-\usetikzlibrary{decorations.pathreplacing,arrows}
-\usetikzlibrary{quotes,angles,calc,intersections}
-
-\usepackage{titling}
-\usepackage{pdfpages}
-\usepackage{enumitem}
-\usepackage{multicol}
-\usepackage{bm}
-
-\usepackage{linear}
-\usepackage{common}
-
-\begin{document}
-
-\title{Discrete Mathematics}
-\author{Brendan Burkhart}
-\maketitle
-
-\tableofcontents
-\newpage
+\chapter{Discrete Mathematics}
+\label{ch:discrete}
 
 \section{Sequences}
 
@@ -318,7 +289,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     We may also write $V$ as $V(G)$, and $E$ as $E(G)$.
 \end{rmk}
 
-\begin{exmp} Let $G = \left(\left\{a, b, c, d\right\}, \left\{\{a, b\}, \{a, c\}, \{b, d\}\right\}\right)$. This graph is depicted in Figure \ref{fig:example-graph}.
+\begin{exmp} Let $G = \left(\left\{a, b, c, d\right\}, \left\{\{a, b\}, \{a, c\}, \{b, d\}\right\}\right)$. This graph is depicted in Figure \ref{fig:example-simple-graph}.
 \end{exmp}
 
 \begin{figure}[ht!]
@@ -340,7 +311,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
         \end{scope}
     \end{tikzpicture}
 \caption{Example simple graph}
-\label{fig:example-graph}
+\label{fig:example-simple-graph}
 \end{figure}
 
 \begin{defn}
@@ -1279,5 +1250,3 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
     Let $n \in \Z^+$. For every $a \in \Z_n$ such that $\gcdof{a}{n} = 1$, then
     \[a^{\phi(n)} \equiv 1 \pmod n.\]
 \end{thm}
-
-\end{document}

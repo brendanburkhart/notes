@@ -1,39 +1,5 @@
-\documentclass[12pt]{article}
-
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{centernot}
-\usepackage{fullpage}
-\usepackage{makecell}
-\usepackage{tabularx}
-\usepackage[hypcap=false]{caption}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{tikz,tkz-euclide}
-\usetikzlibrary{decorations.pathreplacing,arrows}
-\usetikzlibrary{quotes,angles,calc,intersections}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.17}
-
-\usepackage{titling}
-\usepackage{pdfpages}
-\usepackage{color}
-\usepackage{hyperref}
-\usepackage{enumitem}
-\usepackage{multicol}
-\usepackage{bm}
-
-\usepackage{common}
-\usepackage{linear}
-
-\begin{document}
-
-\title{Signals and Systems}
-\author{Brendan Burkhart}
-\maketitle
-
-\tableofcontents
-\newpage
+\chapter{Signals and Systems}
+\label{ch:signals}
 
 \section{Introduction}
 
@@ -520,5 +486,3 @@ A \emph{system} is a process that takes an input signal and produces an output s
 
     If $n < 0$, then $n-k < 0$ only when $k > n$. Therefore, $y[n] = 2 - \left(2^{n+1} + 2^{n+2} + \cdots + 2^0\right)$. Since $n < 0$, \[y[n] = 2 - \frac{1-(1/2)^{-n}}{1-(1/2)} = 2^{n+1}.\]
 \end{exmp}
-
-\end{document}

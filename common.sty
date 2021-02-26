@@ -1,4 +1,13 @@
 \RequirePackage{amssymb}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+
+\RequirePackage{titling}
+\RequirePackage{centernot}
+\RequirePackage{bm}
+\RequirePackage{mathdots}
+
 \RequirePackage{enumitem}
 \setlist[enumerate]{leftmargin=2cm,topsep=0pt}
 \setlist[itemize]{leftmargin=2cm,topsep=0pt}
@@ -10,9 +19,10 @@
     linktoc=all,
     linkcolor=blue,
 }
+\RequirePackage[hypcap=false]{caption}
 
-\parskip=1em
-\parindent=0em
+%\parskip=1em
+%\parindent=0em
 
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
@@ -26,25 +36,3 @@
 
 \theoremstyle{remark}
 \newtheorem*{rmk}{Remark}
-
-% Line break for use at start of proof
-\newcommand{\proofbreak}{$ $\par\nobreak\ignorespaces}
-
-\newcommand{\compbar}{\,\middle|\,}
-
-\renewcommand{\emptyset}{\varnothing}
-
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\F}{\mathcal{F}}
-
-\newcommand{\union}{\cup}
-\newcommand{\intersection}{\cap}
-
-\DeclareMathOperator{\identity}{id}
-\DeclareMathOperator{\gcdop}{gcd}
-
-\newcommand{\gcdof}[2]{\ensuremath\gcdop(#1, #2)}

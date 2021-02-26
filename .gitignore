@@ -1,5 +1,5 @@
 *.txt
-.vscode/
+!ltex.dictionary.*.txt
 
 *.aux
 *.fls

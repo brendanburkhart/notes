@@ -1,30 +1,5 @@
-\documentclass[12pt]{article}
-
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{centernot}
-\usepackage{fullpage}
-\usepackage{makecell}
-\usepackage{tabularx}
-\usepackage[hypcap=false]{caption}
-\usepackage{tikz}
-\usepackage{titling}
-\usepackage{pdfpages}
-\usepackage{enumitem}
-\usepackage{mathtools}
-
-\usepackage{common}
-\usepackage{linear}
-
-\begin{document}
-
-\title{Introduction to Analysis Notes}
-\author{Brendan Burkhart}
-\maketitle
-
-\tableofcontents
-\newpage
+\chapter{Analysis}
+\label{ch:analysis}
 
 \section{Boolean Algebra}
 
@@ -478,7 +453,7 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
     For $n, k \in \N$ where $n \geq k \geq 0$, the binomial coefficient is a positive integer denoted by $\binom{n}{k}$. \[\binom{n}{k} = \frac{n!}{k!(n-k)!}.\]
 \end{defn}
 
-\begin{thm}{Binomial theorem}\label{binomial-theorem}\proofbreak
+\begin{thm}{Binomial theorem}\label{binomial-theorem-ref}\proofbreak
     Let $(F, +, \cdot)$ be a field. Then for any $x, y \in F$ and $n \in \Z_{\geq 1}$, \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}{\binom{n}{k}}.\]
 \end{thm}
 
@@ -497,7 +472,7 @@ Ordered pairs (and $n$-tuples more generally) can be represented as sets themsel
 \begin{proof}
     If $n = 1$, then $n^p = 1^p = 1$, so $1^p \equiv 1 \pmod p$.
 
-    Assume $n^p \equiv n \pmod p$ for some $n > 0$. By the binomial theorem \ref{binomial-theorem}, $(n+1)^p = \sum_{k=0}^pn^k\binom{p}{k}$. By Lemma \ref{prime-divisible-combination}, we then know that $(n+1)^p = pw + n^p\binom{p}{p} + n^0\binom{p}{0} = pw + n^p + 1$ for some $w \in \Z$. Since $(pw + n^p + 1) - (n + 1) = pw + (n^p - n)$ and by Definition \ref{modular-congruence} $n^p \equiv n \pmod p$ implies that $p \mid (n^p - n)$, it follows that $p \mid \left[(pw + n^p + 1) - (n + 1)\right]$. Therefore, $(n+1)^p \equiv (n+1) \pmod p$.
+    Assume $n^p \equiv n \pmod p$ for some $n > 0$. By the binomial theorem \ref{binomial-theorem-ref}, $(n+1)^p = \sum_{k=0}^pn^k\binom{p}{k}$. By Lemma \ref{prime-divisible-combination}, we then know that $(n+1)^p = pw + n^p\binom{p}{p} + n^0\binom{p}{0} = pw + n^p + 1$ for some $w \in \Z$. Since $(pw + n^p + 1) - (n + 1) = pw + (n^p - n)$ and by Definition \ref{modular-congruence} $n^p \equiv n \pmod p$ implies that $p \mid (n^p - n)$, it follows that $p \mid \left[(pw + n^p + 1) - (n + 1)\right]$. Therefore, $(n+1)^p \equiv (n+1) \pmod p$.
 
     By induction, it follows that $n^p \equiv n \pmod p$ for all $n \in \N$.
 \end{proof}
@@ -809,5 +784,3 @@ Since the sequence is a binary search sequence, $(b_k-a_k) = \frac{1}{2^k}(b_0 -
 \begin{defn}
     Let $x \in \R^+$, and $a, b \in \Z$ with $b > 0$. We define $x^{a/b}$ be to $\left(x^{1/b}\right)^a$.
 \end{defn}
-
-\end{document}

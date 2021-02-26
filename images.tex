@@ -1,37 +1,5 @@
-\documentclass[12pt]{article}
-
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{fullpage}
-\usepackage{makecell}
-\usepackage{tabularx}
-\usepackage{mathdots}
-\usepackage{bm}
-
-\usepackage[dvipsnames]{xcolor}
-\usepackage{tikz,tkz-euclide}
-\usetikzlibrary{decorations.pathreplacing}
-\usetikzlibrary{quotes,angles,calc,intersections}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.17}
-
-\usepackage{titling}
-\usepackage{pdfpages}
-\usepackage{color}
-\usepackage{hyperref}
-
-\usepackage{common}
-\usepackage{linear}
-
-\begin{document}
-
-\title{Mathematics of Images and Shapes Notes}
-\author{Brendan Burkhart}
-\maketitle
-
-\tableofcontents
-\newpage
+\chapter{Mathematics of Images and Shapes}
+\label{ch:images}
 
 \section{Images}
 
@@ -696,5 +664,3 @@ Now consider the matrix $B = \frac{-1}{2}JD^{(2)}J$. Computing this matrix is kn
 Finally, form the $N \times d$ matrix $\hat{X} = V_d\Lambda_d^{1/2}$. Then the $i$-th row of $\hat{X}$ is $\hat{x}_i \in \R^d$. Since these are points in $\R^d$ where $\norm{\hat{x}_i - \hat{x}_j}_2 \approx d_{i, j}$, we can now apply standard clustering algorithms, such as $k$-means, to find cluster among the points. It is important to pick a good target dimension for the projection, as using very small $d$ can result in underfitting, and high $d$ can result in overfitting. Using $d=3$ is the highest possible dimension that can still be visually inspected easily, and so is often a good choice.
 
 This process is known as ``Classical Multidimensional Scaling'', or CMDS, and is part of a larger family of projection algorithms known as MDS. Since forming the matrix $D$ did not depend at all on the square root velocity transform distance metric, this process is much more widely applicable to clustering data.
-
-\end{document}
