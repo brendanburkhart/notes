@@ -15,6 +15,7 @@ irreflexive
 Isomorphisms
 Jacobian
 multigraph
+nonhomogeneous
 ODE
 ODEs
 PDE
