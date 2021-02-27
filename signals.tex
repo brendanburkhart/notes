@@ -486,3 +486,101 @@ A \emph{system} is a process that takes an input signal and produces an output s
 
     If $n < 0$, then $n-k < 0$ only when $k > n$. Therefore, $y[n] = 2 - \left(2^{n+1} + 2^{n+2} + \cdots + 2^0\right)$. Since $n < 0$, \[y[n] = 2 - \frac{1-(1/2)^{-n}}{1-(1/2)} = 2^{n+1}.\]
 \end{exmp}
+
+\begin{prop}
+    Let $S$ be a discrete time LTI system with impulse response $h[n]$. Then \begin{itemize}
+        \item $S$ is causal if and only if $h[n]$ is right-sided -- that is, if $h[n] = 0$ for all $n < 0$.
+        \item $S$ is memoryless if and only if $h[k] = c\delta[n]$ for some $c$.
+    \end{itemize} 
+\end{prop}
+
+\begin{proof}
+    If $S$ is causal, then since $y[n] = \sum_{k=-\infty}^{\infty}h[k]x[n-k]$ it must be that $h[k] = 0$ for all $k < 0$. Similarly, if $h[k]$ is right-sided, then \[y[n] = \sum_{k=-\infty}^{\infty}h[k]x[n-k] = \sum_{k=0}^{\infty}x[n-k],\] and so $S$ is causal.
+
+    If $S$ is memoryless, then clearly $h[k] = 0$ when $k \neq 0$, so $h[k] = c\delta[k]$ for some $c$, and if $h[k] = c\delta[k]$, then $y[n] = x[0]h[n]$, so $S$ is memoryless.
+\end{proof}
+
+\begin{prop}
+    Let $S$ be a DT LTI system with impulse response $h[n]$. $S$ is stable if and only if $h[n]$ is absolutely summable: there exists some finite $M$ such that \[\sum_{n=-\infty}^{\infty}\abs{h[n]} < M.\]
+\end{prop}
+
+\begin{proof}
+    If $S$ is stable, then for $x[n] = 1$ we have $\abs{y[n]} < M$ for some $M$.
+    \[y[n] = \sum_{k=-\infty}^{\infty}h[k]x[n-k] = \sum_{k=-\infty}^{\infty}h[k]x[n-k] < M.\]
+
+    If such $M$ exists, then $\abs{x[n]} < K$ for some $K$ implis that
+    \begin{align*}
+        \abs{y[n]} \leq \sum_{k=-\infty}\abs{h[k]}\abs{x[n-k]} < K\sum_{k=-\infty}^{\infty} < KM < \infty.
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    Let $S$ be a DT LTI system with impulse response $h[n]$. $S$ is invertible if there exists $h_{I}[n]$ such that $h[n] * h_{I}[n] = \delta[n]$.
+\end{prop}
+
+\begin{proof}
+    Since $y[n] = x[n] * h[n]$, we know that
+    \begin{align*}
+        y[n] * h_{I}[n] &= (x[n] * h[n]) * h_I[n] = x[n] * (h[n] * h_I[n]) \\ &= x[n] * \delta[n] = x[n],
+    \end{align*}
+    so the system is invertible.
+\end{proof}
+
+\begin{exmp}
+    Let $S$ be a DT LTI system with impulse response $h[n] = u[n]$. If we can find $h_I[n]$ such that $h[n] * h_I[n] = \delta[n]$, then $S$ is invertible. Therefore, we want
+    \[\sum_{k=-\infty}^{\infty}u[k]h_I[n-k] = \delta[n].\] Since $\delta[n] = 0$ when $n \neq 0$, it follows that one possibility for $h_I[n-k]$ is $\delta[n] - \delta[n-1]$, and so $S$ is invertible.
+\end{exmp}
+
+\begin{rmk}
+    If $x[n]$ can be expressed as a finite number of delta signals, so
+    \[x[n] = x[n_0]\delta[n-n_0] + x[n_1]\delta[n-n_1] + \cdots + x[n_k]\delta[n-n_k],\] then clearly
+    \begin{align*}
+        y[n] &= \sum_{k=-\infty}^{\infty}x[k]h[n-k] \\
+        &= x[n_0]\sum_{k=-\infty}^{\infty}\delta[k-n_0]h[n-k] + \cdots + x[n_k]\sum_{k=-\infty}^{\infty}\delta[k-n_k]h[n-k] \\
+        &= x[n_0]h[n-n_0] + \cdots + x[n_k]h[n-n_k]
+    \end{align*}
+\end{rmk}
+
+\begin{defn}
+    An \emph{eigenfunction} of a system is a signal that is produces the same signal as output, up to a multiplicative constant. That is, for a system $S$, an eigenfunction is a signal $x$ such that $S[x] = cx$ for some $c$.
+\end{defn}
+
+\begin{prop}
+    A real growing exponential signal is an eigenfunction of any stable and causal discrete time LTI system.
+\end{prop}
+
+\begin{proof}
+    Let $S$ be a stable and causal DT LTI system with impulse response $h[n]$, and $x[n] = e^{\sigma_0n}$, where $\sigma_0 \geq 0$. Then
+    \begin{align}
+        y[n] = \sum_{k=-\infty}^{\infty}h[k]e^{\sigma_0(n-k)} = e^{\sigma_0n}\sum_{k=-\infty}^{\infty}h[k]e^{-\sigma_0k)}.
+    \end{align}
+    Since the system is causal, we know that $h[n] = 0$ for $n < 0$, so
+    \begin{align*}
+        y[n] = e^{\sigma_0n}\sum_{k=0}^{\infty}h[k]e^{-\sigma_0k)}.
+    \end{align*}
+    Since the system is stable, $h[n]$ is absolutely summable and so since $e^{-\sigma_0k} \leq 1$ for $k \geq 0$, we know that there is some constant $M$ such that
+    \begin{align*}
+        \abs{\sum_{k=0}^{\infty}h[k]e^{-\sigma_0k)}} \leq \sum_{k=0}^{\infty}\abs{h[k]} \leq M.
+    \end{align*}
+    Let $H(\sigma_0) = \sum_{k=0}^{\infty}h[k]e^{-\sigma_0k)}$, which we just showed converges, and then $y[n] = e^{\sigma_0n}H(\sigma_0) = H(\sigma_0)x[n]$.
+\end{proof}
+
+\begin{prop}
+    A complex phasor is an eigenfunction of any stable discrete time LTI system.
+\end{prop}
+
+\begin{proof}
+    Let $S$ be a stable DT LTI system with impulse response $h[n]$, and $x[n] = e^{i\omega_0n}$. Then
+    \begin{align*}
+        y[n] = \sum_{k=-\infty}^{\infty}h[k]e^{i\omega_0(n-k)} = e^{i\omega_0n}\sum_{k=-\infty}^{\infty}h[k]e^{-i\omega_0k}.
+    \end{align*}
+    Let \[H(\omega_0) = \sum_{k=-\infty}^{\infty}h[k]e^{-i\omega_0k}.\] Since $\abs{e^{-i\omega_0k}} = 1$, and $h[n]$ is absolutely summable, this sum must converge. Therefore, $y[n] = H(\omega_0)e^{i\omega_0n}$.
+\end{proof}
+
+\begin{cor}
+    Sine and cosine are eigenfunctions of any stable DT LTI system.
+\end{cor}
+
+\begin{proof}
+    Since sine and cosine are the imaginary and real parts of $e^{in}$ respectively, when $x[n] = e^{in} = \cos(n) + i\sin(n)$, by linearity we have $H(1)e^{in} = S[\cos(n)] + iS[\sin[n]]$, and so necessarily $S[\cos(n)] = H(1)\cos(n)$ and $S[\sin(n)] = H(1)\sin(n)$.
+\end{proof}
