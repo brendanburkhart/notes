@@ -419,11 +419,11 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
     We know that $L[Y_1(t)] = g(t)$ and $L[Y_2(t)] = g(t)$, so $L[Y_1(t)] - L[Y_2(t)] = 0$. By linearity, $L[Y_1(t) - Y_2(t)] = 0$, and so by Theorem \ref{linear-second-order-solution-family} $Y_1(t) - Y_2(t)$ is a linear combination of $y_1(t), y_2(t)$.
 \end{proof}
 
-\begin{thm}\label{lienar}
+\begin{thm}\label{linear-second-order-general-solution}
     If $y_1(t), y_2(t)$ satisfy $L[y] = 0$ and are linearly independent, and $Y(t)$ is a solution to $L[y] = g(t)$, then $y = c_1y_1(t) = c_2y_2(t) + Y(t)$ is a general solution to $L[y] = g(t)$.
 \end{thm}
 
-\begin{proof}\label{linear-second-order-general-solution}
+\begin{proof}
     Let $Y'(t)$ be any solution to $L[y] = g(t)$. Then by Theorem \ref{linear-second-order-nonhomogeneous-difference}, $Y'(t) - Y(t) = c_1y_1(t) + c_2y_2(t)$ for some $c_1, c_2$, and so $Y'(t) = c_1y_1(t) + c_2y_2(t) + Y(t)$.
 \end{proof}
 
