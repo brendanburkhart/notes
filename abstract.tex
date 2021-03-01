@@ -509,7 +509,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \end{thm}
 
 \begin{proof}
-    Let $G' = \left\{\sigma_g \compbar g \in G\right\}$. We will first show that $G'$ is a subgroup of $S_G$. For $g_1, g_1 \in G$, $(\sigma_{g_1} \circ \sigma_{g_2})(h) = \sigma_{g_1}(g_2h) = g_1g_2h = \sigma_{g_1g_2}(h)$, so $G'$ is closed under composition. Since $\sigma_e = e$, $G'$ contains the identity. For any $g \in G$, $\sigma_g \circ \sigma_{g^{-1}} = \sigma_{gg^{-1}} = e$, so $G'$ contains all inverses, and $G'$ is associativity since permuations are associativity under composition.
+    Let $G' = \left\{\sigma_g \compbar g \in G\right\}$. We will first show that $G'$ is a subgroup of $S_G$. For $g_1, g_1 \in G$, $(\sigma_{g_1} \circ \sigma_{g_2})(h) = \sigma_{g_1}(g_2h) = g_1g_2h = \sigma_{g_1g_2}(h)$, so $G'$ is closed under composition. Since $\sigma_e = e$, $G'$ contains the identity. For any $g \in G$, $\sigma_g \circ \sigma_{g^{-1}} = \sigma_{gg^{-1}} = e$, so $G'$ contains all inverses, and $G'$ is associativity since permutations are associativity under composition.
 
     Since we already showed that $\sigma_{g_1} \circ \sigma_{g_2} = \sigma_{g_1g_2}$, it only remains to be shown that $\sigma: G \to G'$ is a bijection. Consider $g_1, g_2 \in G$ such that $\sigma_{g_1} = \sigma_{g_2}$. It is injective since $g_1 = \sigma_{g_1}(e) = \sigma_{g_2}e = g_2$, and surjective by $G'$ is the image of $G$ under $\sigma$. Therefore, $G$ is isomorphic to $G'$, and $G'$ is a subgroup of $S_G$.
 \end{proof}
