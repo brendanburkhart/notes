@@ -381,6 +381,22 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
     The method used to find the second solution in the same of the repeated root can be used to find a second solution from another solution for a linear second order differential equation.
 \end{rmk}
 
+Given a solution $y_1(t)$ to $y''(t) + p(t)y' + q(t)y = 0$, we can assume that $y_2(t) = v(t)y_1(t)$ is another solution for some $v(t)$. It follows that \begin{align*}
+    y_2' &= v'y_1 + vy_1' \\
+    y_2'' &= v''y_1 + 2v'y_1' + vy_2''.
+\end{align*}
+Then, substituting $y_2(t)$ into the differential equation we obtain
+\begin{align*}
+    0 &= y_2'' + p(t)y_2' + q(t)y_2 \\
+    &= \left(v''y_1 + 2v'y_1' + vy_1''\right) + p(t)\left(v'y_1 + vy_1'\right) + q(t)vy_1 \\
+    &= y_1v'' + \left(2y_1' + p(t)y_1\right)v' + \left(y_1'' + p(t)y_1' + q(t)y_1\right)v.
+\end{align*}
+Since $y_1$ is a solution, $y_1'' + p(t)y_1' + q(t)y_1 = 0$ so this reduces to
+\begin{align*}
+    y_1v'' + \left(2y_1' + p(t)y_1\right)v' = 0.
+\end{align*}
+This is in fact a first order linear differential equation in $v'$, so the \emph{order} of this problem has been reduced from a second order to just a first order differential equation.
+
 \begin{exmp}
     Let $2t^2y'' + 3ty' - y = 0$, where $t > 0$ and $y(t) = t^{-1}$ is a known solution. Then we try $\phi(t) = v(t)y(t)$ for some $v(t)$, and so $\phi'(t) = v(t)y'(t) + v'(t)y(t) = v'(t)t^{-1} - v(t)t^{-2}$. Similarly, $\phi''(t) = v'(t)y'(t) + v(t)y''(t) + v''(t)y(t) + v'(t)y'(t)$, so we have
     \begin{align*}
@@ -394,7 +410,7 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
         &= -2v'(t) + 4t^{-1}v(t) + 2tv''(t) - 2v'(t) + 3v'(t) - 3t^{-1}v(t) - t^{-1}v(t) \\
         &= 2tv''(t)-v'(t) = 0.
     \end{align*}
-    Note that this is equivalent to the first order linear differential equation of $v'(t)$, so $\mu(t) = \exp{-\frac{1}{2}\ln(t)} = t^{-1/2}$, and so $v'(t) = c_1\sqrt{t}$. Therefore,
+    Note that this is equivalent to the first order linear differential equation of $v'(t)$, so $\mu(t) = \exp\left(-\frac{1}{2}\ln(t)\right) = t^{-1/2}$, and so $v'(t) = c_1\sqrt{t}$. Therefore,
     \[v(t) = c_1\int t^{1/2}dt = \frac{2}{3}c_1t^{3/2} + c_2.\] Finally, we obtain
     \[\phi(t) = v(t)t^{-1} = \frac{2}{3}c_1t^{1/2} + c_2t^{-1}.\] Since we already had $y(t) = t^{-1}$, our solutions become $y_1(t) = t^{-1}, y_2(t) = t^{1/2}$.
 
@@ -437,8 +453,8 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
 
 \begin{exmp}
     To find a particular solution to $y'' - 3y' - 4y = 2\sin(t)$, we might initially guess $Y(t) = A\sin(t)$ for some $A$. Then $Y' = A\cos(t)$ and $Y'' = -A\sin(t)$, and so we have $-A\sin(t) - 3A\cos(t) - 4A\sin(t) = 2\sin(t)$, and so $(2 + 5A)\sin(t) + 3A\cos(t) = 0$. At $t = 0$ this implies $3A = 0$ and at $t = \frac{\pi}{2}$ this implies $2 + 5A = 0$, but there is no such $A$, so our guess was wrong.
-    
-    Noting that that our result contained both sine and cosine, we instead now guess that $Y = A\sin(t) + B\cos(t)$, and so $-A\sin(t) - B\cos(t) - 3A\cos(t) + 3B\sin(t) - 4A\sin(t) - 4B\cos(t) = 2\sin(t)$. At $t = 0$ and $t = \frac{\pi}{2}$ respectively, this implies that $-B - 3A - 4B = 0$ and $-A + 3B - 4A = 2$, and so we have $-5B - 3A = 0$ and $3B - 5A = 2$. Solving this system, we obtain $A = -\frac{5}{17}$ and $B = \frac{3}{17}$, and so $Y = \frac{3}{17}\cos(t) - \frac{5}{17}\sin(t)$. 
+
+    Noting that that our result contained both sine and cosine, we instead now guess that $Y = A\sin(t) + B\cos(t)$, and so $-A\sin(t) - B\cos(t) - 3A\cos(t) + 3B\sin(t) - 4A\sin(t) - 4B\cos(t) = 2\sin(t)$. At $t = 0$ and $t = \frac{\pi}{2}$ respectively, this implies that $-B - 3A - 4B = 0$ and $-A + 3B - 4A = 2$, and so we have $-5B - 3A = 0$ and $3B - 5A = 2$. Solving this system, we obtain $A = -\frac{5}{17}$ and $B = \frac{3}{17}$, and so $Y = \frac{3}{17}\cos(t) - \frac{5}{17}\sin(t)$.
 \end{exmp}
 
 \begin{rmk}\proofbreak
@@ -469,7 +485,7 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
     The first equation can be solved by guessing $Y_1 = Ae^{2t}$, yielding $Y_1 = -\frac{1}{2}e^{2t}$.
 
     The second equation can be solved by guess $Y_2 = A\sin(t) + B\sin(t)$, and gives us $Y_2 = \frac{3}{17}\cos(t) - \frac{5}{17}\sin(t)$ (from the earlier example).
-    
+
     Finally, the third equation can be solved by guessing $Y_3 = e^{t}(A\cos(2t) + B\sin(2t))$, yielding $Y_3 = \frac{10}{13}e^{t}\cos(2t) + \frac{2}{13}e^{t}\sin(2t)$.
 
     Then we have the solution $Y = Y_1 + Y_2 + Y_3$ by Proposition \ref{linear-nonhomogeneous-sum}.
