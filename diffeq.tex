@@ -436,13 +436,31 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
     \[L[y] = y'' + p(t)y' + q(t)y = 0\] is called the \emph{corresponding homogeneous equation}.
 \end{defn}
 
-\begin{thm}\label{linear-second-order-nonhomogeneous-difference}
-    If $Y_1(t), Y_2(t)$ are solutions to a nonhomogeneous equation, and $y_1(t), y_2(t)$ are linearly independent solutions to the corresponding homogeneous equation, then for some $c_1, c_2$
-    \[Y_1(t) - Y_2(t) = c_1y_1(t) + c_2y_2(t).\]
+\begin{thm}\label{linear-nonhomogeneous-sum}
+    If $Y_1(t)$ and $Y_2(t)$ are solutions to
+    \begin{align*}
+        ay'' + by' + cy &= g_1(t), \\
+        ay'' + by' + cy &= g_2(t)
+    \end{align*} respectively, then $c_1Y_1(t) + c_1Y_2(t)$ is a solution to
+    \[ay'' + by' + cy = c_1g_1(t) + c_2g_2(t).\]
 \end{thm}
 
 \begin{proof}
-    We know that $L[Y_1(t)] = g(t)$ and $L[Y_2(t)] = g(t)$, so $L[Y_1(t)] - L[Y_2(t)] = 0$. By linearity, $L[Y_1(t) - Y_2(t)] = 0$, and so by Theorem \ref{linear-second-order-solution-family} $Y_1(t) - Y_2(t)$ is a linear combination of $y_1(t), y_2(t)$.
+    Let $Y(t) = c_1Y_1(t) + c_2Y_2(t)$. Then
+    \begin{align*}
+        aY'' + bY' + cY &= a(c_1Y_1'' + c_1Y_2'') + b(c_1Y_1' + c_1Y_2') + c(c_1Y_1 + c_1Y_2) \\
+        &= c_1\left(aY_1'' + bY_1' + cY_1\right) + c_2\left(aY_2'' + bY_2' + cY_2\right) \\
+        &= c_1g_1(t) + c_2g_2(t).
+    \end{align*}
+\end{proof}
+
+\begin{cor}\label{linear-second-order-nonhomogeneous-difference}
+    If $Y_1(t), Y_2(t)$ are solutions to a nonhomogeneous equation, and $y_1(t), y_2(t)$ are linearly independent solutions to the corresponding homogeneous equation, then for some $c_1, c_2$
+    \[Y_1(t) - Y_2(t) = c_1y_1(t) + c_2y_2(t).\]
+\end{cor}
+
+\begin{proof}
+    By Theorem \ref{linear-nonhomogeneous-sum}, $Y_1(t) - Y_2(t)$ is a solution to $L[y] = g_1(t) - g_2(t) = 0$. By Theorem \ref{linear-second-order-solution-family}, all such solutions are equal to $c_1y_1(t) + c_2y_2(t)$ for some $c_1, c_2$.
 \end{proof}
 
 \begin{thm}\label{linear-second-order-general-solution}
@@ -450,7 +468,7 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
 \end{thm}
 
 \begin{proof}
-    Let $Y'(t)$ be any solution to $L[y] = g(t)$. Then by Theorem \ref{linear-second-order-nonhomogeneous-difference}, $Y'(t) - Y(t) = c_1y_1(t) + c_2y_2(t)$ for some $c_1, c_2$, and so $Y'(t) = c_1y_1(t) + c_2y_2(t) + Y(t)$.
+    Let $Y'(t)$ be any solution to $L[y] = g(t)$. Then by Corollary \ref{linear-second-order-nonhomogeneous-difference}, $Y'(t) - Y(t) = c_1y_1(t) + c_2y_2(t)$ for some $c_1, c_2$, and so $Y'(t) = c_1y_1(t) + c_2y_2(t) + Y(t)$.
 \end{proof}
 
 \begin{rmk}
@@ -471,21 +489,13 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
     \begin{itemize}
         \item If the nonhomogeneous term contains $\sin(\alpha t)$ or $\cos(\beta t)$, then the guess for $Y$ should contain the terms $A\sin(\alpha t)$ and $B\cos(\beta t)$.
         \item If the homogeneous term contains $e^{\alpha t}$, the guess should contain $Ae^{\alpha t}$ as a term.
-        \item If the homogeneous term is contains a polynomial of degree $n$, then the guess should contain a polynomial with undetermined coefficients also of degree $n$.
+        \item If the homogeneous term contains a polynomial of degree $n$, then the guess should contain a polynomial with undetermined coefficients also of degree $n$.
     \end{itemize}
 \end{rmk}
 
-\begin{prop}\label{linear-nonhomogeneous-sum}
-    If $Y_1(t)$ and $Y_2(t)$ are solutions to
-    \begin{align*}
-        ay'' + by' + cy &= g_1(t), \\
-        ay'' + by' + cy &= g_2(t)
-    \end{align*} respectively, then $Y_1(t) + Y_2(t)$ is a solution to the differential equation with nonhomogeneous term $g_1(t) + g_2(t)$.
-\end{prop}
-
 \begin{exmp}
     Let \[y'' - 3y' - 4y = 3e^{2t} + 2\sin(t) - 8e^{t}\cos(2t).\]
-    We can separated this into
+    We can separate this into
     \begin{align*}
         y'' - 3y' - 4y &= 3e^{2t} \\
         y'' - 3y' - 4y &= 2\sin(t) \\
@@ -498,7 +508,7 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
 
     Finally, the third equation can be solved by guessing $Y_3 = e^{t}(A\cos(2t) + B\sin(2t))$, yielding $Y_3 = \frac{10}{13}e^{t}\cos(2t) + \frac{2}{13}e^{t}\sin(2t)$.
 
-    Then we have the solution $Y = Y_1 + Y_2 + Y_3$ by Proposition \ref{linear-nonhomogeneous-sum}.
+    Then we have the solution $Y = Y_1 + Y_2 + Y_3$ by Theorem \ref{linear-nonhomogeneous-sum}.
 \end{exmp}
 
 \begin{exmp}
