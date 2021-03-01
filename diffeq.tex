@@ -381,21 +381,31 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
     The method used to find the second solution in the same of the repeated root can be used to find a second solution from another solution for a linear second order differential equation.
 \end{rmk}
 
-Given a solution $y_1(t)$ to $y''(t) + p(t)y' + q(t)y = 0$, we can assume that $y_2(t) = v(t)y_1(t)$ is another solution for some $v(t)$. It follows that \begin{align*}
-    y_2' &= v'y_1 + vy_1' \\
-    y_2'' &= v''y_1 + 2v'y_1' + vy_2''.
-\end{align*}
-Then, substituting $y_2(t)$ into the differential equation we obtain
-\begin{align*}
-    0 &= y_2'' + p(t)y_2' + q(t)y_2 \\
-    &= \left(v''y_1 + 2v'y_1' + vy_1''\right) + p(t)\left(v'y_1 + vy_1'\right) + q(t)vy_1 \\
-    &= y_1v'' + \left(2y_1' + p(t)y_1\right)v' + \left(y_1'' + p(t)y_1' + q(t)y_1\right)v.
-\end{align*}
-Since $y_1$ is a solution, $y_1'' + p(t)y_1' + q(t)y_1 = 0$ so this reduces to
-\begin{align*}
-    y_1v'' + \left(2y_1' + p(t)y_1\right)v' = 0.
-\end{align*}
-This is in fact a first order linear differential equation in $v'$, so the \emph{order} of this problem has been reduced from a second order to just a first order differential equation.
+\begin{prop}\label{reduction-of-order}
+    Given a solution $y_1(t)$ to $y''(t) + p(t)y' + q(t)y = 0$, another solution $y_2(t)$ of the form $v(t)y_1(t)$ must satisfy the \emph{first-order linear} differential equation
+    \[y_1v'' + \left(2y_1' + p(t)y_1\right)v' = 0.\]
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        y_2' &= v'y_1 + vy_1' \\
+        y_2'' &= v''y_1 + 2v'y_1' + vy_2''.
+    \end{align*}
+    Substituting $y_2(t)$ into the differential equation we then obtain
+    \begin{align*}
+        0 &= y_2'' + p(t)y_2' + q(t)y_2 \\
+        &= \left(v''y_1 + 2v'y_1' + vy_1''\right) + p(t)\left(v'y_1 + vy_1'\right) + q(t)vy_1 \\
+        &= y_1v'' + \left(2y_1' + p(t)y_1\right)v' + \left(y_1'' + p(t)y_1' + q(t)y_1\right)v.
+    \end{align*}
+    Since $y_1$ is a solution, $y_1'' + p(t)y_1' + q(t)y_1 = 0$ so this reduces to
+    \begin{align*}
+        y_1v'' + \left(2y_1' + p(t)y_1\right)v' = 0.
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    Let solutions $y_1(t)$ and $y_2(t) = v(t)y_1(t)$ as in Proposition \ref{reduction-of-order}, then $y_1(t)$ and $y_2(t)$ are linearly independent whenever $v'$ is non-zero.
+\end{prop}
 
 \begin{exmp}
     Let $2t^2y'' + 3ty' - y = 0$, where $t > 0$ and $y(t) = t^{-1}$ is a known solution. Then we try $\phi(t) = v(t)y(t)$ for some $v(t)$, and so $\phi'(t) = v(t)y'(t) + v'(t)y(t) = v'(t)t^{-1} - v(t)t^{-2}$. Similarly, $\phi''(t) = v'(t)y'(t) + v(t)y''(t) + v''(t)y(t) + v'(t)y'(t)$, so we have
