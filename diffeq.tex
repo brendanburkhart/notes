@@ -369,7 +369,7 @@ For any solution $y_1 = e^{rt}$ and arbitrary constant $c$, we know that $ce^{rt
 For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Since $e^{rt}$ is a common factor to each term and is non-zero, we can divide it out and rearrange to obtain
 \[av''(t) - bv'(t) + \frac{b^2}{4a}v(t) + bv'(t) - \frac{b^2}{2a}v(t) + cv(t) = 0,\] and so $av''(t) - \left(\frac{b^2}{4a} - c\right)v(t) = 0$. Note that since $b^2 - 4ac = 0$, we have $\frac{b^2}{4a} - c = 0$. Therefore, $av''(t) = 0$, and so $v''(t) = 0$. It follows that $v(t) = c_1t + c_2$ for some constants $c_1, c_2$. Therefore, $y = c_1te^{rt} + c_2e^{rt}$ is a solution for any $c_1, c_2$.
 
-\begin{thm}
+\begin{thm}\label{linear-second-order-repeated-roots}
     Let $ay'' + by' + cy = 0$ be a differential equation whose characteristic equation has a repeated root $r$. Then linear combinations of $e^{rt}$ and $te^{rt}$ describe all possible solutions.
 \end{thm}
 
@@ -430,3 +430,51 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
 \begin{rmk}
     As a consequence of Theorem \ref{linear-second-order-general-solution}, to solve a linear second order nonhomogeneous differential equation, we need to first solve the corresponding homogeneous equation, and also find one particular solution to the nonhomogeneous equation.
 \end{rmk}
+
+\begin{defn}
+    The \emph{method of undetermined coefficients} is one strategy to find a particular solution to a nonhomogeneous differential equation. By guessing that $Y(t)$ takes a similar form to the nonhomogeneous term, but with undetermined variable coefficients, it is sometimes possible to determine possible values for those coefficients.
+\end{defn}
+
+\begin{exmp}
+    To find a particular solution to $y'' - 3y' - 4y = 2\sin(t)$, we might initially guess $Y(t) = A\sin(t)$ for some $A$. Then $Y' = A\cos(t)$ and $Y'' = -A\sin(t)$, and so we have $-A\sin(t) - 3A\cos(t) - 4A\sin(t) = 2\sin(t)$, and so $(2 + 5A)\sin(t) + 3A\cos(t) = 0$. At $t = 0$ this implies $3A = 0$ and at $t = \frac{\pi}{2}$ this implies $2 + 5A = 0$, but there is no such $A$, so our guess was wrong.
+    
+    Noting that that our result contained both sine and cosine, we instead now guess that $Y = A\sin(t) + B\cos(t)$, and so $-A\sin(t) - B\cos(t) - 3A\cos(t) + 3B\sin(t) - 4A\sin(t) - 4B\cos(t) = 2\sin(t)$. At $t = 0$ and $t = \frac{\pi}{2}$ respectively, this implies that $-B - 3A - 4B = 0$ and $-A + 3B - 4A = 2$, and so we have $-5B - 3A = 0$ and $3B - 5A = 2$. Solving this system, we obtain $A = -\frac{5}{17}$ and $B = \frac{3}{17}$, and so $Y = \frac{3}{17}\cos(t) - \frac{5}{17}\sin(t)$. 
+\end{exmp}
+
+\begin{rmk}\proofbreak
+    \begin{itemize}
+        \item If the nonhomogeneous term contains $\sin(\alpha t)$ or $\cos(\beta t)$, then the guess for $Y$ should contain the terms $A\sin(\alpha t)$ and $B\cos(\beta t)$.
+        \item If the homogeneous term contains $e^{\alpha t}$, the guess should contain $Ae^{\alpha t}$ as a term.
+        \item If the homogeneous term is contains a polynomial of degree $n$, then the guess should contain a polynomial with undetermined coefficients also of degree $n$.
+    \end{itemize}
+\end{rmk}
+
+\begin{prop}\label{linear-nonhomogeneous-sum}
+    If $Y_1(t)$ and $Y_2(t)$ are solutions to
+    \begin{align*}
+        ay'' + by' + cy &= g_1(t), \\
+        ay'' + by' + cy &= g_2(t)
+    \end{align*} respectively, then $Y_1(t) + Y_2(t)$ is a solution to the differential equation with nonhomogeneous term $g_1(t) + g_2(t)$.
+\end{prop}
+
+\begin{exmp}
+    Let \[y'' - 3y' - 4y = 3e^{2t} + 2\sin(t) - 8e^{t}\cos(2t).\]
+    We can separated this into
+    \begin{align*}
+        y'' - 3y' - 4y &= 3e^{2t} \\
+        y'' - 3y' - 4y &= 2\sin(t) \\
+        y'' - 3y' - 4y &= -8e^{t}\cos(2t).
+    \end{align*}
+
+    The first equation can be solved by guessing $Y_1 = Ae^{2t}$, yielding $Y_1 = -\frac{1}{2}e^{2t}$.
+
+    The second equation can be solved by guess $Y_2 = A\sin(t) + B\sin(t)$, and gives us $Y_2 = \frac{3}{17}\cos(t) - \frac{5}{17}\sin(t)$ (from the earlier example).
+    
+    Finally, the third equation can be solved by guessing $Y_3 = e^{t}(A\cos(2t) + B\sin(2t))$, yielding $Y_3 = \frac{10}{13}e^{t}\cos(2t) + \frac{2}{13}e^{t}\sin(2t)$.
+
+    Then we have the solution $Y = Y_1 + Y_2 + Y_3$ by Proposition \ref{linear-nonhomogeneous-sum}.
+\end{exmp}
+
+\begin{exmp}
+    Consider $y'' - 3y' - 4y = 2e^{-t}$. Our initial guess might be that $Y = Ae^{-t}$ for some $A$. However, $e^{-t}$ is a solution to the corresponding homogeneous equation, and so is not a solution. Another possible guess, perhaps inspired by Theorem \ref{linear-second-order-repeated-roots}, could be $Y = Ate^{-t}$. This gives us $-5Ae^{-t} - 2Ate^{-t} = 2e^{-t}$, and so $A = -\frac{2}{5}$, giving us $Y = -\frac{2}{5}te^{-t}$.
+\end{exmp}
