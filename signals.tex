@@ -584,3 +584,50 @@ A \emph{system} is a process that takes an input signal and produces an output s
 \begin{proof}
     Since sine and cosine are the imaginary and real parts of $e^{in}$ respectively, when $x[n] = e^{in} = \cos(n) + i\sin(n)$, by linearity we have $H(1)e^{in} = S[\cos(n)] + iS[\sin[n]]$, and so necessarily $S[\cos(n)] = H(1)\cos(n)$ and $S[\sin(n)] = H(1)\sin(n)$.
 \end{proof}
+
+\subsection{DT LTI Linear Difference Equations}
+
+\begin{defn}
+    A discrete time system of the form $y[n] + ay[n-1] = bx[n]$ is a first order constant coefficient \emph{linear difference equation}.
+\end{defn}
+
+\begin{defn}
+    $y[n] = x[n] - \frac{1}{2}y[n-1]$.
+\end{defn}
+
+\begin{prop}
+    If $y[n] = b[x] - ay[n-1]$ is a linear difference equation, and $x[n] = 0$ for all $n < n_0$, then
+    \[y[n] = \sum_{k=-\infty}^n(-a)^{n-k}bx[k].\]
+\end{prop}
+
+\begin{proof}
+    Given \[y[n] = \sum_{k=-\infty}^n(-a)^{n-k}bx[k],\]
+    then \[ay[n] = a\sum_{k=-\infty}^n(-a)^{n-k}bx[k] = \sum_{k=-\infty}^n(-a)^{n-1-k}bx[k] = -\sum_{k=-\infty}^{n-1}(-a)^{n-k}bx[k],\] and so
+    \[y + ay[n] = \sum_{k=-\infty}^n(-a)^{n-k}bx[k] - \sum_{k=-\infty}^{n-1}(-a)^{n-k}bx[k] = (-a)^0bx[n] = bx[n].\]
+\end{proof}
+
+\begin{prop}
+    The impulse response $h[n]$ of a first order linear difference equation is
+    \[h[n] = (-a)^{n}bu[n].\]
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        y[n] &= \sum_{k=-\infty}^{n}(-a)^{n-k}bx[k] = \sum_{k=-\infty}^{\infty}(-a)^{n-k}bu[n-k]x[k] \\
+        &= \sum_{k=-\infty}^{\infty}h[n-k]x[k] = h[n] * x[n].
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    Since $h[n]$ is clearly right-sided, a first order linear difference equation is causal, and when $a = 0$ it is also memoryless. Since $h[n]$ is absolutely summable when $\abs{a} < 1$, it is also stable whenever $\abs{a} < 1$.
+\end{rmk}
+
+\begin{defn}
+    The general form of an $n$-th order linear difference equation is
+    \[\sum_{k=0}^{N}a_ky[n-k] = \sum_{l=0}^{M}b_lx[b-l],\] or equivalently
+    \[y[n] = \frac{1}{a_0}\left(\sum_{l=0}^{M}b_lx[n-l]-\sum_{k=1}^{N}a_ky[n-k]\right),\]
+\end{defn}
+
+\begin{exmp}
+    $y[n] = x[n] + 2x[n-1] - 3y[n-1]$.
+\end{exmp}
