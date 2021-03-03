@@ -795,3 +795,77 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 
     We also know that the order of $x_i^{b_i-a_i}$ must divide $p_i$ by Lagrange's theorem, and similarly that the order of $y_i^{-1}$ must divide $p_1\cdots p_{i-1}p_{i+1}\cdots p_s$. Since $p_1, \ldots, p_s$ are \emph{distinct} primes, it follows that the order of both these elements must be $1$. Therefore, $x_i^{b_i-a_i} = e$, and so $a_i = b_i$ for all $i$. It follows that $\sigma$ is injective, and so we have showed that $\sigma$ is an isomorphism between $G$ and $\Z_{p_1}\times\Z_{p_2}\cdots\times\Z_{p_s}$.
 \end{proof}
+
+\section{Conjugacy}
+
+\begin{defn}
+    Let $G$ be a group. We say that $x, y \in G$ are \emph{conjugates} if there exists $g \in G$ such that
+    \[gxg^{-1} = y.\]
+\end{defn}
+
+\begin{prop}\label{conjugacy-equivalence-relation}
+    Conjugacy is an equivalence relation on a group.
+\end{prop}
+
+\begin{proof}
+    Let $G$ be a group, and $x, y, z \in G$. Notice that $exe^{-1} = x$, so $x \sim x$, and so conjugacy is reflexive.
+
+    If $x \sim y$, then $gxg^{-1} = y$ for some $g$, and so
+    \[g^{-1}\left(gxg^{-1}\right)g = g^{-1}yg\]
+    \[g^{-1}yg = x.\] Since $g^{-1} \in G$, it follows that $y \sim x$, and so conjugacy is symmetric.
+
+    If $x \sim y$ and $y \sim z$, then there exists $g_1, g_2 \in G$ such that
+    \[g_1xg_1^{-1} = y, \quad g_2yg_2^{-1} = z.\]
+    Therefore,
+    \[g_2\left(g_1xg_1^{-1}\right)g_2^{-1} = z.\] Since $(g_1g_2)^{-1} = g_2^{-1}g_1^{-1}$, it follows that $x \sim z$, and so conjugacy is transitive.
+\end{proof}
+
+\begin{rmk}
+    The equivalence class of the identity is just the identity, since by reflexivity $gxg^{-1} = e$ implies $geg^{-1} = x = gg^{-1} = e$.
+\end{rmk}
+
+\begin{rmk}
+    If $gxg^{-1} = x$ for all $g$, then $gx = xg$, and so $x$ must commute will all $g \in G$.
+\end{rmk}
+
+\begin{defn}
+    Let $G$ be a group. The \emph{center} of $G$, denoted by $Z(G)$, is the set of all elements $x \in G$ that commute with all other elements of $G$.
+\end{defn}
+
+\begin{rmk}
+    If $G$ is abelian, then $Z(G) = G$.
+\end{rmk}
+
+\begin{thm}\label{center-abelian-subgroup}
+    The center of a group $G$ forms an abelian subgroup of $G$.
+\end{thm}
+
+\begin{proof}
+    Since $ex = xe$ by definition, we know $e \in Z(G)$. Now for any $x, y \in Z(G)$ and arbitary $g \in G$,
+    \[(xy)g = x(yg) = x(gy) = (xg)y = (gx)y = g(xy),\] and so $xy \in Z(G)$.
+
+    For $x \in Z(G)$ and $g \in G$, since $gxg^{-1} = x$, we know $x^{-1} = gx^{-1}g$, and so $x^{-1} \in Z(G)$. Finally, $Z(G)$ inherits associativity from $G$.
+\end{proof}
+
+\begin{defn}
+    The \emph{cycle structure} of a permutation $p$ in $S_n$ is the number of cycles of each length when $p$ is written as disjoint cycles in cycle notation.
+\end{defn}
+
+\begin{exmp}
+    Consider $(123)(45) \in S_5$. Its cycle structure is one $2$-cycle and one $3$-cycle.
+\end{exmp}
+
+\begin{thm}\label{cycle-structure-conjugates}
+    Permutations $x, y \in S_n$ are conjugates if and only if they have the same cycle structure. 
+\end{thm}
+
+\begin{proof}
+    Fix a disjoint cycle representation for both $x$ and $y$, and match up pairs of cycles of equal length from each. This can always be done since they have the same cycle structure. Now consider the permutation $g$ that sends each element in $x$ to aligned element in $y$. For example,
+    \begin{align*}
+        x &= (135)(24) \\
+        y &= (123)(45),
+    \end{align*}
+    then $g(1) = (1)$, $g(3) = 2$, $g(5) = 3$, $g(2) = 4$, and $g(4) = 5$. Since the cycles are disjoint, this will always produce a permutation in $S_n$. We can see that $gxg^{-1} = y$, and so $x$ and $y$ must be conjugates.
+
+    If $x, y$ are conjugates, then $gxg^{-1} = y$. For any $a_1$ in $x$ which is in a cycle of length $k$, we want to show that $g(a_1)$ belongs to a cycle of length $k$ in $y$. Since $y(a_1) = a_2$, $y(a_2) = a_3$, up to $y(a_k) = a_1$, we know that $(g \odot x \odot g^{-1})(a_1) = a_2$, etc. But then, $a_1$ must be getting mapped into a cycle of length $k$ in $x$ by $g^{-1}$, and so $x$ and $y$ have the same cycle structure.
+\end{proof}
