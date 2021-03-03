@@ -15,7 +15,7 @@ Systems are processes, either physical ones like electronics and mechanics, or v
 
 \begin{prop}
     For $r \neq 1$,
-    \[\sum_{k=0}^n{ar^k} = a\frac{1-r^{n-1}}{1-r}.\]
+    \[\sum_{k=0}^n{ar^k} = a\frac{1-r^{n+1}}{1-r}.\]
 \end{prop}
 
 \begin{prop}
@@ -160,7 +160,7 @@ In continuous time, we can define the unit step function similarly as \[u(t) =
     0, & t < 0
 \end{dcases}.\]
 Note that $u(0)$ is undefined. Defining the continuous time impulse is a bit more challenging. We would like it to be $\delta(t)$ such that
-\[u(t) = \int_{-t}^{t}\delta(\tau)d\tau.\] We can therefore define it has $\delta(t) = \lim_{\Delta\to 0}\delta_{\Delta}(t)$, where $\delta_{\Delta}(t)$ is a step impulse with width $\Delta$ and height $\frac{1}{\Delta}$ beginning at $t = 0$.
+\[u(t) = \int_{-\infty}^{t}\delta(\tau)d\tau.\] We can therefore define it as $\delta(t) = \lim_{\Delta\to 0}\delta_{\Delta}(t)$, where $\delta_{\Delta}(t)$ is a step impulse with width $\Delta$ and height $\frac{1}{\Delta}$ beginning at $t = 0$.
 
 Note the similarities between the discrete and continuous time version of these signals -- the first difference and first derivative play the same roles, as do the sums and integrals.
 
