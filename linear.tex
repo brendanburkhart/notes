@@ -1100,7 +1100,7 @@ For an $m \times n$ matrix $A$, and a vector $x \in F^n$, we define the product 
 
 \section{Operations on Linear Transformations}
 
-\begin{thm}
+\begin{thm}\label{transformation-matrix-rank-equality}
     Let $f: V \to W$ be a linear transformation, where $V$ and $W$ are finite dimensional vector spaces with dimension $n$ and $m$ respectively. Let $B$ and $D$ be ordered bases for $V$ and $W$ respectively. Then the rank of $f$ is equal to the rank of $[f]_B^D$.
 \end{thm}
 
@@ -1160,3 +1160,198 @@ For an $m \times n$ matrix $A$, and a vector $x \in F^n$, we define the product 
 \begin{cor}
     Let $A$ be an $l \times m$ matrix over $F$ and $B$ be an $m \times n$ matrix over $F$. Then $L_{AB}: F^n \to F^l$ is given by $L_A \circ L_B$.
 \end{cor}
+
+\begin{cor}
+    Matrix multiplication is associative, so for matrices $A, B, C$ we have
+    \[A(BC) = (AB)C.\]
+\end{cor}
+
+\begin{rmk}
+    If $A, M \in M_{m\times n}(F)$ and $r \in F$, we define $A + B$ and $rA$ as the $m \times n$ obtained through element-wise addition and multiplication respectively.
+\end{rmk}
+
+\begin{thm}
+    Consider vector spaces $V, W$ over a field $F$. Let $f, g \in L(V, W)$ and $r \in F$. Let $B, D$ be ordered bases for $V$ and $W$ respectively. Then
+    \begin{align*}
+        [f + g]_B^D &= [f]_B^D + [g]_B^D, \\
+        [rf]_B^D &= r[f]_B^D.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Let $P = [f]_B^D$ and $Q = [g]_B^D$. Then
+    \begin{align}
+        (f + g)(v_j) = f(v_j) + g(v_j) &= \sum_{i=1}^{m}P_{ij}w_i + \sum_{i = 1}^{m}Q_{ij}w_i \\
+        &= \sum_{i=1}^{m}\left(P_{ij} + Q_{ij}\right)w_i.
+    \end{align}
+    Therefore, $[f + g]_B^D = P + Q = [f]_B^D + [g]_B^D$.
+
+    Similarly,
+    \begin{align*}
+        (rf)(v_j) = rf(v_j) = r\sum_{i=1}^{m}P_{ij}w_i,
+    \end{align*}
+    so $[rf]_B^D = rP = r[f]_B^D$.
+\end{proof}
+
+\begin{rmk}
+    Given $B, D$, the natural map from $L(V, W)$ to $M_{m\times n}(F)$ is an isomorphism.
+\end{rmk}
+
+\begin{rmk}
+    Note that matrix multiplication is not commutative. For example, if $A \in M_{3 \times 2}(F)$ and $B \in M_{2 \times 5}$, then $AB$ is defined but $BA$ does not exist.
+
+    If $A \in M_{3 \times 2}(F)$ and $B \in M_{2 \times 3}(F)$, then $AB \in M_{3 \times 3}(F)$ but $BA \in M_{2 \times 2}(F)$.
+
+    Even if $A, B \in M_{n \times n}(F)$, $AB$ is not necessarily (or even often) equal to $BA$.
+\end{rmk}
+
+\begin{defn}
+    Let $F$ be any field. Then the \emph{$n \times n$ identity matrx}, dentoed by $I$ or $I_n$ is the matrix with ones on the major diagonal and zeroes elsewhere.
+\end{defn}
+
+\begin{exmp}
+    \[I_3 = \begin{pmatrix}
+        1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+    \end{pmatrix}\]
+\end{exmp}
+
+\begin{prop}
+    For $A \in M_{m \times n}$, $AI_n = A = I_mA$.
+\end{prop}
+
+\begin{rmk}
+    Consider $id: V \to V$. Let $B$ be the ordered basis for $V$. Then $[id]_B^B = I$.
+\end{rmk}
+
+\begin{defn}
+    Let $A \in M_{m \times n}(F)$ and $B \in M_{n \times m}(F)$ such that $AB = I_m$. Then we say $A$ is a \emph{left inverse} of $B$ and $B$ is a \emph{right inverse} of $A$. If we also have $BA = I_n$, then we say $A$ and $B$ are \emph{inverses}, and that $A$ and $B$ are \emph{invertible}, or \emph{non-singular}.
+\end{defn}
+
+\begin{exmp}
+    \[\begin{pmatrix}
+        3 & 1 & 0
+    \end{pmatrix}\begin{pmatrix}
+        0 \\ 1 \\ 2
+    \end{pmatrix} = I_1,\]
+    but
+    \[\begin{pmatrix}
+        0 \\ 1 \\ 2
+    \end{pmatrix}\begin{pmatrix}
+        3 & 1 & 0
+    \end{pmatrix} \neq I_3.\]
+\end{exmp}
+
+\begin{lemma}\label{matrix-inverse-unique}
+    If a matrix has both a left and right inverse, then the two must coincide, and hence $A$ is invertible. Moreover, if $A$ is invertible, the inverse is unique.
+\end{lemma}
+
+\begin{defn}
+    We denote the inverse of an invertible matrix $A$ by $A^{-1}$.
+\end{defn}
+
+\begin{proof}
+    Assume $CA = I_n$ and $AB = I_m$. Then
+    \[C = CI_m = C(AB) = (CA)B = I_nB = B.\]
+\end{proof}
+
+\begin{rmk}
+    If $A$ is invertible, it is enough to check that $AB = I_m$ or $BA = I_n$ to show that $B = A^{-1}$.
+\end{rmk}
+
+\begin{thm}\label{matrix-invertible-rank}
+    A matrix is invertible if and only if it is an $n \times n$ matrix of rank $n$ for some $n \in N$.
+\end{thm}
+
+\begin{proof}
+    Suppose $A$ is an invertible $m \times n$ matrix, so $AA^{-1} = I_m$ and $A^{-1}A = I_n$. Consider $L_A: F^n \to F^m$ and $L_{A^{-1}}: F^m \to F^n$. Then $L_{A} \odot L_{A^{-1}} = L_{AA^{-1}} = L_{I_m} = id$. Similarly, $L_{A^{-1}} \odot L_A = id$. Therefore, $L_{A}$ is an isomorphism and so the dimension of $F^m$ and $F^n$ is the same, giving $m = n$.
+
+    Conversely, suppose $A$ is an $n \times n$ matrix of rank $n$. Then $L_A: F^n \to F^n$, and so by Theorem \ref{transformation-matrix-rank-equality} $L_A$ is a bijection and therefore an isomorphism. It follows that
+    \[\left[\left(L_A\right)^{-1}\right]_{sdt_n}^{std_n} = A^{-1}.\]
+\end{proof}
+
+\begin{exmp}
+    \[A = \begin{pmatrix}
+        -1 & 1 \\ 2 & -3
+    \end{pmatrix}.\]
+    Then
+    \begin{align*}
+        \begin{amatrix}{2}
+            -1 &1 &1 &0 \\
+            2 &-3 &0 &1
+        \end{amatrix}
+        & \begin{aligned}
+            & \ro{r_2 \rightarrow r_2 + 2r_1}  \\
+        \end{aligned}
+        \begin{amatrix}{2}
+            -1 &1 &1 &0 \\
+            0 &-1 &2 &1
+        \end{amatrix}
+        & \begin{aligned}
+            & \ro{r_1 \rightarrow -r_1 - r_2}  \\
+            & \ro{r_2 \rightarrow -r_2}  \\
+        \end{aligned}
+        \begin{amatrix}{2}
+            1 &0 &-3 &-1 \\
+            0 &1 &-2 &-1
+        \end{amatrix}.
+    \end{align*}
+    It follows that $A$ is invertible, since $I_2$ clearly has rank two, and
+    \[A^{-1} = \begin{pmatrix}
+        -3 & -1 \\ -2 & -1
+    \end{pmatrix}.\]
+\end{exmp}
+
+\begin{prop}
+    Given a square matrix $A$, perform the row reduction $(A|I_n) \mapsto (E|B)$, where $E$ is the unique reduced row echelon form of $A$. Then $A$ is invertible with inverse $B$ if and only if $E = I_n$.
+\end{prop}
+
+We will explore two reasons to explain this.
+
+\textbf{Reason 1:} Since
+\[\begin{amatrix}{2}
+    -1 & 1 & 1 \\ 2 & -3 & 0
+\end{amatrix} \mapsto \begin{amatrix}{3}
+    1 & 0 & -3 \\ 0 & 1 & -2
+\end{amatrix},\]
+$(-3, 2)$ is the unique solution to the system
+\[\begin{amatrix}{2}
+    -1 & 1 & x \\ 2 & -3 & y
+\end{amatrix} = \begin{pmatrix}
+    1 & 0
+\end{pmatrix}.\] Similarly, $A(x, y) = (0, 1)$ has only the solution $(-1, 1)$. Therefore,
+\[\begin{pmatrix}
+    -1 & 1 \\ 2 & -3
+\end{pmatrix}\begin{pmatrix}
+    -3 & -1 \\ -2 & -1
+\end{pmatrix} = I_2.\]
+
+\textbf{Reason 2.} Define an $n \times n$ \emph{elementary} matrix to be a matrix that can be obtained from $I_n$ by a single row operation.
+
+\begin{lemma}
+    Suppose $A \mapsto B$ via a single row operation, and $E$ is the corresponding elementary matrix obtained by performing the same row oepration on $I_n$. Then $B = EA$.
+\end{lemma}
+
+\begin{exmp}
+    \[\begin{pmatrix}
+        1 & 2 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+    \end{pmatrix}\begin{pmatrix}
+        3 & 2 \\ -1 & 4 \\ 0 & -1
+    \end{pmatrix} = \begin{pmatrix}
+        1 & 10 \\ -1 & 4 \\ 0 & -1
+    \end{pmatrix}.\]
+
+    Here, $E$ can be obtained from $I_3$ by $r_1 \to r_1 + 2r_2$, and $B$ can be obtained from $A$ by $r_1 \to r_1 + 2r_2$ as well.
+\end{exmp}
+
+If $(A|A') \mapsto (B|B')$ via elementary row operations, then there must exist elementary matrices $E_1, E_2, \ldots, E_k$ such that
+\begin{align*}
+    B &= E_kE_{k-1}\cdots E_2E_1A \\
+    B' &= E_kE_{k-1}\cdots E_2E_1A'
+\end{align*}
+
+In particular, if $(A|I_n) \mapsto (I_n|B')$, then
+\begin{align*}
+    I_n &= E_kE_{k-1}\cdots E_2E_1A \\
+    B' &= E_kE_{k-1}\cdots E_2E_1I_n,
+\end{align*}
+and so $I_n = B'A$.
