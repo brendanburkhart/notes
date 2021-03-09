@@ -728,3 +728,28 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
 \begin{exmp}
     $y(t) = x(t) + 2x(t-1) - 3y(t-1)$.
 \end{exmp}
+
+\section{Fourier Series}
+
+\begin{thm}\label{fourier-series}
+    For every continuous time periodic signal $x(t)$ with fundamental period $T_0 = \frac{2\pi}{\omega_0}$, there exists $a_k$ such that
+    \[x(t) = \sum_{k=-\infty}^{\infty}a_ke^{ik\omega_0t}.\]
+\end{thm}
+
+\begin{thm}\label{series-analysis-equation}
+    Given periodic signal $x(t)$ with fundamental period $T_0 = \frac{2\pi}{\omega_0}$,
+    \[a_k = \frac{1}{T_0}\int_{T_0}x(t)e^{-ik\omega_0t}dt.\]
+\end{thm}
+
+\begin{proof}
+    Given \[x(t) = \sum_{k=-\infty}^{\infty}a_ke^{ik\omega_0t},\]
+    we have
+    \[\int_{T_0}x(t)e^{-il\omega_0t}dt = \int_{T_0}e^{-il\omega_0t}\sum_{k=-\infty}^{\infty}a_ke^{ik\omega_0t}dt = \sum_{k=-\infty}^{\infty}a_k\int_{T_0}e^{i(k-l)\omega_0t}dt.\]
+    Since $\int_{T_0}e^{i(k-l)\omega_0t}$ whenever $k \neq l$, and is equal to $T_0$ when $k = l$,
+    \[\int_{T_0}x(t)e^{-il\omega_0t}dt = T_0a_l,\]
+    and the result follows directly.
+\end{proof}
+
+\begin{rmk}
+    The equation given in Theorem \ref{fourier-series} is sometimes referred to as the \emph{synthesis equation}, and the equation in Theorem \ref{series-analysis-equation} as the \emph{analysis equation}.
+\end{rmk}
