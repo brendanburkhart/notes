@@ -591,9 +591,9 @@ A \emph{system} is a process that takes an input signal and produces an output s
     A discrete time system of the form $y[n] + ay[n-1] = bx[n]$ is a first order constant coefficient \emph{linear difference equation}.
 \end{defn}
 
-\begin{defn}
+\begin{exmp}
     $y[n] = x[n] - \frac{1}{2}y[n-1]$.
-\end{defn}
+\end{exmp}
 
 \begin{prop}
     If $y[n] = b[x] - ay[n-1]$ is a linear difference equation, and $x[n] = 0$ for all $n < n_0$, then
@@ -628,6 +628,103 @@ A \emph{system} is a process that takes an input signal and produces an output s
     \[y[n] = \frac{1}{a_0}\left(\sum_{l=0}^{M}b_lx[n-l]-\sum_{k=1}^{N}a_ky[n-k]\right),\]
 \end{defn}
 
+\begin{rmk}
+    When $N = 0$, the system is guaranteed to be stable.
+\end{rmk}
+
 \begin{exmp}
     $y[n] = x[n] + 2x[n-1] - 3y[n-1]$.
+\end{exmp}
+
+\subsection{Continuous time linear time-invariant}
+
+Many of the results we have seen for DT LTI systems hold for CT LTI systems as well.
+
+\begin{defn}
+    Let $x_1(t), x_2(t)$ be signals. Then the \emph{convolution} of these signals is
+    \[x_1(t) * x_2(t)= \int_{-\infty}^{\infty}x_1(\tau)x_2(t-\tau)d\tau.\]
+\end{defn}
+
+\begin{prop}
+    Convolution of continuous signals is commutative, associative, distributive, and linear, just like with convolution of discrete signals.
+\end{prop}
+
+\begin{prop}
+    Let $S$ be an LTI, and let $h(t)$ be the \emph{impulse response} of the system, so $h(t) = S[\delta(t)]$. Then $y(t) = x(t) * h(t)$.
+\end{prop}
+
+\begin{exmp}
+    Let $S$ be an LTI system such that $S[\delta(t)] = h(t) = r(t)$. Then given $x(t)= u(t)$, we have \[y(t) = S[x(t)] = r(t)*u(t).\]
+    \[y(t) = \int_{-\infty}^{\infty}r(t-\tau)u(\tau)d\tau = \int_{0}^{\infty}r(t-\tau)d\tau = \int_{0}^{\infty}(t-\tau)d\tau.\] When $t < 0$, we then have $y(t) = 0$, and when $t \geq 0$, we have \[y(t) = \left(t\tau - \tau^2\right)|_0^t = \frac{t^2}{2}.\]
+\end{exmp}
+
+\begin{prop}
+    Let $S$ be a CT LTI system with impulse response $h(t)$. Then \begin{itemize}
+        \item $S$ is causal if and only if $h(t)$ is right-sided -- that is, if $h(t) = 0$ for all $t < 0$.
+        \item $S$ is memoryless if and only if $h(t) = c\delta(t)$ for some $c$.
+    \end{itemize}
+\end{prop}
+
+\begin{prop}
+    Let $S$ be a CT LTI system with impulse response $h(t)$. $S$ is stable if and only if $h(t)$ is absolutely integrable: there exists some finite $M$ such that \[\int_{-\infty}^{\infty}\abs{h(t)} < M.\]
+\end{prop}
+
+\begin{prop}
+    Let $S$ be a CT LTI system with impulse response $h(t)$. $S$ is invertible if there exists $h_{I}(t)$ such that $h(t) * h_{I}(t) = \delta(t)$.
+\end{prop}
+
+\begin{prop}
+    A real growing exponential signal $x(t) = e^{\sigma_0}t$ is an eigenfunction of any stable and causal continuous time LTI system.
+    \[S[x] = H(\sigma_0)e^{\sigma_0}t,\]
+    where
+    \[H(\sigma_0) = \int_{0}^{\infty}h(\tau)e^{-\sigma_0\tau}d\tau.\]
+\end{prop}
+
+\begin{prop}
+    A complex phasor is an eigenfunction of any stable continuous time LTI system.
+    \[S[x] = H(\omega_0)e^{i\omega_0t},\]
+    where
+    \[H(\omega_0) = \int_{-\infty}^{\infty}h(\tau)e^{-i\omega_0\tau}d\tau.\]
+\end{prop}
+
+\begin{cor}
+    Sine and cosine are eigenfunctions of any stable CT LTI system.
+\end{cor}
+
+\subsection{CT LTI Linear Differential Equations}
+
+\begin{defn}
+    A discontinuous time system of the form $\dot{y}(t) + ay(t) = bx(t)$ is a first order constant coefficient \emph{linear difference equation}.
+\end{defn}
+
+\begin{exmp}
+    $y(t) = x(t) - \frac{1}{2}y(t-1)$.
+\end{exmp}
+
+\begin{prop}
+    If $y(t) = bx(t) - ay(t-1)$ is a linear difference equation, and $x(t) = 0$ for all $t < t_0$, then
+    \[y(t) = \int_{-\infty}^{t}e^{-a(t-\tau)}bx(\tau)d\tau.\]
+\end{prop}
+
+\begin{prop}
+    The impulse response $h(t)$ of a first order linear difference equation is
+    \[h(t) = be^{-at}u(t).\]
+\end{prop}
+
+\begin{rmk}
+    Since $h(t)$ is clearly right-sided, a first order linear difference equation is causal, and when $a = 0$ it is also memoryless. Since $h(t)$ is absolutely integrable when $a > 0$, it is also stable whenever $a > 0$.
+\end{rmk}
+
+\begin{defn}
+    The general form of an $n$-th order linear difference equation is
+    \[\sum_{k=0}^{N}a_k\frac{d^ky(t)}{dt^k} = \sum_{l=0}^{M}b_l\frac{d^lx(t)}{dt^l},\] or equivalently
+    \[y(t) = \frac{1}{a_0}\left(\sum_{l=0}^{M}b_l\frac{d^lx(t)}{dt^l}-\sum_{k=1}^{N}a_k\frac{d^ky(t)}{dt^k}\right).\]
+\end{defn}
+
+\begin{rmk}
+    When $N = 0$, the system is guaranteed to be stable.
+\end{rmk}
+
+\begin{exmp}
+    $y(t) = x(t) + 2x(t-1) - 3y(t-1)$.
 \end{exmp}
