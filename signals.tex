@@ -491,7 +491,7 @@ A \emph{system} is a process that takes an input signal and produces an output s
     Let $S$ be a discrete time LTI system with impulse response $h[n]$. Then \begin{itemize}
         \item $S$ is causal if and only if $h[n]$ is right-sided -- that is, if $h[n] = 0$ for all $n < 0$.
         \item $S$ is memoryless if and only if $h[k] = c\delta[n]$ for some $c$.
-    \end{itemize} 
+    \end{itemize}
 \end{prop}
 
 \begin{proof}
@@ -552,17 +552,17 @@ A \emph{system} is a process that takes an input signal and produces an output s
 \begin{proof}
     Let $S$ be a stable and causal DT LTI system with impulse response $h[n]$, and $x[n] = e^{\sigma_0n}$, where $\sigma_0 \geq 0$. Then
     \begin{align}
-        y[n] = \sum_{k=-\infty}^{\infty}h[k]e^{\sigma_0(n-k)} = e^{\sigma_0n}\sum_{k=-\infty}^{\infty}h[k]e^{-\sigma_0k)}.
+        y[n] = \sum_{k=-\infty}^{\infty}h[k]e^{\sigma_0(n-k)} = e^{\sigma_0n}\sum_{k=-\infty}^{\infty}h[k]e^{-\sigma_0k}.
     \end{align}
     Since the system is causal, we know that $h[n] = 0$ for $n < 0$, so
     \begin{align*}
-        y[n] = e^{\sigma_0n}\sum_{k=0}^{\infty}h[k]e^{-\sigma_0k)}.
+        y[n] = e^{\sigma_0n}\sum_{k=0}^{\infty}h[k]e^{-\sigma_0k}.
     \end{align*}
     Since the system is stable, $h[n]$ is absolutely summable and so since $e^{-\sigma_0k} \leq 1$ for $k \geq 0$, we know that there is some constant $M$ such that
     \begin{align*}
-        \abs{\sum_{k=0}^{\infty}h[k]e^{-\sigma_0k)}} \leq \sum_{k=0}^{\infty}\abs{h[k]} \leq M.
+        \abs{\sum_{k=0}^{\infty}h[k]e^{-\sigma_0k}} \leq \sum_{k=0}^{\infty}\abs{h[k]} \leq M.
     \end{align*}
-    Let $H(\sigma_0) = \sum_{k=0}^{\infty}h[k]e^{-\sigma_0k)}$, which we just showed converges, and then $y[n] = e^{\sigma_0n}H(\sigma_0) = H(\sigma_0)x[n]$.
+    Let $H(\sigma_0) = \sum_{k=0}^{\infty}h[k]e^{-\sigma_0k}$, which we just showed converges, and then $y[n] = e^{\sigma_0n}H(\sigma_0) = H(\sigma_0)x[n]$.
 \end{proof}
 
 \begin{prop}
