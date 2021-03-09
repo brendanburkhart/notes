@@ -514,3 +514,81 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
 \begin{exmp}
     Consider $y'' - 3y' - 4y = 2e^{-t}$. Our initial guess might be that $Y = Ae^{-t}$ for some $A$. However, $e^{-t}$ is a solution to the corresponding homogeneous equation, and so is not a solution. Another possible guess, perhaps inspired by Theorem \ref{linear-second-order-repeated-roots}, could be $Y = Ate^{-t}$. This gives us $-5Ae^{-t} - 2Ate^{-t} = 2e^{-t}$, and so $A = -\frac{2}{5}$, giving us $Y = -\frac{2}{5}te^{-t}$.
 \end{exmp}
+
+\begin{exmp}
+    Consider $y'' - 2y' + y = te^t + 4$. Our guess in this case should be $t^2(A_0t + A_1)e^t + B$. Since the nonhomogeneous term contains a first degree polynomial multiplied by $e^t$, our guess must include a general first degree polynomial multiplied by $e^t$, hence $A_0te^t + A_1e^t$. However both $te^t$ and $e^t$ are already solutions to the corresponding homogeneous equation, and so we multiply both by $t^2$ (multiplying just by $t$ would still leave $te^t$). Finally, our guess needs a general zero degree polynomial ($B$) corresponding to the $+4$ in the nonhomogeneous term.
+\end{exmp}
+
+\begin{defn}
+    \emph{Variation of parameters} is another method used to solve nonhomogeneous linear second order differential equations. Unlike the method of undetermined coefficients, it works for all such equations, however it is certainly more complicated.
+
+    The method starts with a general solution to the corresponding homogeneous equation $c_1y_1 + c_2y_2$. Then $Y = u_1y_1 + u_2y_2$ is a solution to the nonhomogeneous equation for some (non-unique) functions $u_1, u_2$.
+\end{defn}
+
+\begin{exmp}
+    Consider $t^2y'' - t(t+2)y' + (t+2)y = 2t^3$. The corresponding homogeneous differential equation has general solution $y = c_1t + c_2te^t$, so we have $Y = u_1t + u_2te^t$. Then
+    \begin{align*}
+        Y' = u_1't + u_1 + u_2'te^t + u_2(te^t + e^t).
+    \end{align*}
+    Constrain $u_1, u_2$ such that $u_1't + u_2'te^t = 0$. This doesn't not over-constrain the system since we have two unknown functions and only one other constraint (the differential equation). Then we have $Y' = u_1 + u_2(te^t + e^t)$, and so
+    \[Y'' = u_1' + u_2'(te^t + e^t) + u_2(te^t + 2e^t).\]
+    Substituting $Y$ into the differential equation, we obtain
+    \begin{align*}
+        &u_1(t^2 + 2t - t^2 - 2t) + \\
+        &u_2(t^3e^t + 2t^2e^t - t^3e^t - t^2e^t - 2t^2e^t - 2te^t + t^2e^t + 2te^t) + \\
+        &u_1'(t^2 - t^3 - 2t^2) + u_2'(t^3e^t + t^2e^t - t^3e^t - 2t^2e^t) = 2t^3.
+    \end{align*}
+    Notice that the $u_1$ and $u_2$ terms are zero, and so together with the added constraint we have
+    \[u_1'(-t^2 - t^3) + u_2'(-t^2e^t) = 2t^3,\]
+    \[u_1't + u_2'te^t = 0.\]
+    We can then solve for $u_1', u_2'$, obtaining
+    \[u_1' = -2, \quad u_2' = 2e^{-t}.\]
+    Therefore, $u_1 = -2t$ and $u_2 = -2e^{-t}$, giving us
+    \[Y = -2t^2 - 2t.\] Finally, we have
+    \[y(t) = c_1y_1 + c_2y_2 + Y = c_1t + c_2te^t - 2t^2.\]
+\end{exmp}
+
+\begin{thm}
+    Let $y'' + p(t)y' + q(t)y = g(t)$ be a linear second order nonhomogeneous differential equation, where $p(t), q(t), g(t)$ are continuous on some open interval $I$. Let $y_1, y_2$ be a fundamental set of solutions to the corresponding homogeneous equation. Then
+    \[Y(t) = -y_1(t)\int_{t_0}^t\frac{y_2(s)g(s)}{W(y_1,y_2)(s)}ds + y_2(t)\int_{t_0}^t\frac{y_1(s)g(s)}{W(y_1,y_2)(s)}ds,\] where $t_0 \in I$, is a particular solution to the differential equation.
+\end{thm}
+
+\begin{proof}
+    Consider $Y = u_1y_1 + u_2y_2$ for some continuous functions $u_1, u_2$.
+    \[Y' = u_1'y_1 + u_1y_1' + u_2'y_2 + u_2y_2'.\]
+    As in the example, we will assume $u_1'y_1 + u_2'y_2 = 0$, so
+    \begin{align*}
+        Y &= u_1y_1 + u_2y_2 \\
+        Y' &= u_1y_1' + u_2y_2' \\
+        Y'' &= u_1'y_1' + u_1y_1'' + u_2'y_2' + u_2y_2''.
+    \end{align*}
+    Substituting these into the differential equation, we obtain
+    \begin{align*}
+        g(t) &= y'' + p(t)y' + q(t)y \\
+        &= \left(u_1'y_1' + u_1y_1'' + u_2'y_2' + u_2y_2''\right) + p(t)\left(u_1y_1' + u_2y_2'\right) + q(t)\left(u_1y_1 + u_2y_2\right) \\
+        &= u_1(y_1'' + p(t)y_1' + q(t)y_1) + u_2(y_2'' + p(t)y_2' + q(t)y_2) + u_1'y_1' + u_2'y_2'.
+    \end{align*}
+    Since $y_1, y_2$ are solutions to the homogeneous equation, we know that $y_1'' + p(t)y_1' + q(t)y_1$ and $y_2'' + p(t)y_2' + q(t)y_2$ are both equal to zero.
+    Together with the constraint we added, we know have
+    \begin{align*}
+        u_1'y_1' + u_2'y_2' &= g(t) \\
+        u_1'y_1 + u_2'y_2 &= 0.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        u_1'(y_1'y_2 - y_1y_2') = g(t)y_2 \\
+        u_2'(y_2'y_1 - y_2y_1') = g(t)y_1.
+    \end{align*}
+    Notice that $u_1$ and $u_2$ are each multiplied by $-W(y_1, y_2)$ and $W(y_1, y_2)$. Since $y_1, y_2$ form a fundamental set of solutions on $I$ by assumption, we know by Theorem \ref{linear-second-order-solution-family} and Corollary \ref{wronskian-always-zero} that the Wronskian of $y_1, y_2$ must be non-zero on $I$, and so
+    \begin{align*}
+        u_1' &= \frac{-y_2g(t)}{W(y_1, y_2)} \\
+        u_2' &= \frac{y_1g(t)}{W(y_1, y_2)}.
+    \end{align*}
+    Therefore, these expressions can be integrated to determine an expression for $Y(t)$.
+\end{proof}
+
+\begin{cor}
+    By Theorem \ref{linear-second-order-general-solution},
+    \[y(t) = c_1y_1(t) + c_2y_2(t) + Y(t)\]
+    is the general solution to the differential equation.
+\end{cor}
