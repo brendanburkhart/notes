@@ -595,6 +595,8 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
 
 \section{Higher order linear differential equations}
 
+Many of the results and techniques we have seen for first and second order linear differential equations generalize as one might expect to $n$th order linear differential equations.
+
 \begin{defn}
     An $n$-th order linear ordinary differential equation has the form
     \[P_0(t)\frac{d^ny}{dt^n} + P_1(t)\frac{d^{n-1}y}{dt^{n-1}} + \cdots + P_{n-1}(t)\frac{dy}{dt} + P_n(t)y = G(t).\]
@@ -606,6 +608,49 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
 \end{defn}
 
 \begin{thm}\label{nth-order-linear-existence-uniqueness}
-    If $p_1, p_2, \ldots, p_n, g$ are continuous on an open interval $I$, then there exists exactly one function $y = \phi(t)$ of $L[y] = g(t)$ such that
+    If $p_1, p_2, \ldots, p_n, g$ are continuous on an open interval $I$, then there exists exactly one solution $y = \phi(t)$ of $L[y] = g(t)$ such that
     \[y(t_0) = y_0,\; y'(t_0) = y_0',\ldots, y^{(n-1)}(t_0) = y_0^{(n-1)}.\]
 \end{thm}
+
+\begin{rmk}
+    If $y_1, \ldots, y_n$ are solutions to an $n$th order linear differential equation $L[y] = 0$, then
+    \[c_1y_1 + \cdots + c_ny_n\] is a solution as well for arbitrary constants $c_1, \ldots, c_n$.
+\end{rmk}
+
+\begin{defn}
+    The general $n$th order Wronskian of solutions $y_1, \ldots, y_n$ is
+    \begin{align*}
+        W(y_1, \ldots, y_n) = \begin{vmatrix}
+            y_1 & \ldots & y_n \\
+            y_1' & \ldots & y_n' \\
+            \vdots & \vdots & \vdots \\
+            y_1^{(n-2)} & \ldots & y_n^{(n-2)} \\
+            y_1^{(n-1)} & \ldots & y_n^{(n-1)} \\
+        \end{vmatrix}
+    \end{align*}
+\end{defn}
+
+\begin{thm}
+    Consider a solution $c_1y_1 + \ldots + c_ny_n$. Now consider the initial conditions given by $t_0 \in I$, and $y_0, y_0', \ldots, y_0^{(n-1)}$. We can find $c_1, \ldots, c_n$ to satisfy these initial conditions for any such $y_0, y_0', \ldots, y_0^{(n-1)}$ if and only if
+    \[W(y_1, \ldots, y_n)(t_0) \neq 0.\] Just as with second order linear equations, the Wronskian is either zero or non-zero for all $t \in I$, so it is necessary and sufficient for the Wronskian to be non-zero for any $t \in I$.
+\end{thm}
+
+\begin{prop}
+    Solutions $y_1, \ldots, y_n$ are a fundamental set of solutions if and only if
+    \[W(y_1, \ldots, y_n) \neq 0\] for some $t \in I$.
+\end{prop}
+
+\begin{defn}
+    For an $n$th order linear homogeneous differential equation
+    \[a_0y^{(n)} + a_1y^{(n-1)} + \ldots + a_{n-1}y' + a_ny = 0,\]
+    the polynomial
+    \[Z(r) = a_0r^n + a_1r^{n-1} + \ldots + a_{n-1}r + a_n\] is the \emph{characteristic equation}.
+\end{defn}
+
+\begin{prop}
+    If $Z(r)$ is the characteristic equation of a linear differential equation and $r$ is any root of $Z(r)$, then $e^{rt}$ is a solution. If a root $r$ has multiplicity $s$, then
+    \[e^{rt},\; te^{rt},\; t^2e^{rt},\; \ldots,\; t^{s-1}e^{rt},\]
+    are all solutions. Furthermore, given complex roots $\lambda \pm i\mu$, the corresponding solutions can be replaced with $e^{\lambda t}\cos(\mu t)$ and $e^{\lambda t}\sin(\mu t)$.
+
+    In all cases, these solutions are linearly independent, and so the general solution can be expressed as a linear combination of $n$ real-valued solutions.
+\end{prop}
