@@ -753,3 +753,119 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
 \begin{rmk}
     The equation given in Theorem \ref{fourier-series} is sometimes referred to as the \emph{synthesis equation}, and the equation in Theorem \ref{series-analysis-equation} as the \emph{analysis equation}.
 \end{rmk}
+
+\begin{rmk}
+    Representing a signal as a Fourier series can be extremely useful for signal processing. It can also be used for data compression for transmission and storage, since the signal can be represented as just $T_0$ and the coefficients $a_k$. 
+\end{rmk}
+
+\begin{defn}
+    A \emph{basis} is a set of signals
+    \[phi_0(t), \phi_1(t), \ldots, \phi_{k-1}(t).\]
+    Other signals can then be represented or approximated as linear combinations of these \emph{basis signals}.
+    \[x(t) \approx a_0\phi_0(t) + a_1\phi_1(t) + \cdots + a_{k-1}\phi_{k-1}(t).\]
+\end{defn}
+
+\begin{exmp}
+    The signals $\{e^{ik\omega_0t}\}$ for $k \in \Z$ is a basis for Fourier series.
+\end{exmp}
+
+\begin{exmp}
+    Consider $x(t) = \cos\left(\frac{\pi}{3}t\right)$. By Euler's formula,
+    \[x(t) = \frac{1}{2}e^{i\pi t/3} + \frac{1}{2}e^{-i\pi t/3},\]
+    and so we have $T_0 = 6$, $a_1 = \frac{1}{2}, a_{-1} = \frac{1}{2}$, and all other $a_k = 0$.
+\end{exmp}
+
+\begin{exmp}
+    Consider
+    \[x(t) = \left[1 + \cos\left(2\pi t\right)\right]\sin\left(10\pi t + \frac{\pi}{6}\right).\]
+    Once again applying Euler's formula, we have
+    \begin{align*}
+        x(t) &= \left(1 + \frac{1}{2}e^{2i\pi t} + \frac{1}{2}e^{2i\pi t}\right)\left(\frac{1}{2i}e^{i(10\pi t + \pi/6)} - \frac{1}{2i}e^{-i(10\pi t + \pi/6)}\right) \\
+        &= \frac{e^{i\pi/6}}{4i}e^{i2\pi t4} - \frac{e^{-i\pi/6}}{4i}e^{-i2\pi t4} + \frac{e^{i\pi/6}}{2i}e^{i2\pi t5} - \frac{e^{-i\pi/6}}{2i}e^{-i2\pi t5} + \frac{e^{i\pi/6}}{4i}e^{i2\pi t6} - \frac{e^{-i\pi/6}}{4i}e^{-i2\pi t6}.
+    \end{align*}
+\end{exmp}
+
+\begin{defn}
+    Given functions $f(t), g(t)$, their \emph{$L^2$} inner product on an interval $[a, b]$ is
+    \[\langle f, g \rangle = \int_a^b \bar{f(t)}g(t)dt.\]
+\end{defn}
+
+\begin{defn}
+    Basis signals $\phi_k$, $\phi_l$ are said to be \emph{orthogonal} when their inner product is zero, so
+    \[\int_{T_0}\phi_k(t)\phi_l^{*}(t)dt = 0.\]
+    A basis set $B$ is \emph{orthogonal} if $\phi_k, \phi_l \in B$ are orthogonal whenever $k \neq l$.
+\end{defn}
+
+\begin{defn}
+    A basis signal $\phi(t)$ is \emph{normal} if
+    \[\langle \phi, \phi \rangle = 1.\]
+\end{defn}
+
+\begin{exmp}
+    Let $\phi_k = e^{ik\omega_0t}$ be the Fourier series. Note that $\bar{\phi_k} = \phi_{-k}$. Then on $T_0$,
+    if $k \neq l$ we have
+    \[\langle \phi_k, \phi_l \rangle = \int_{t_0}^{t_0+T_0}e^{i(k-l)\omega_0t} = 0,\]
+    and if $k = l$ then $\langle \phi_k, \phi_l \rangle = T_0$. Therefore the Fourier series is an orthogonal basis set, and is orthonormal when $T_0 = 1$.
+\end{exmp}
+
+\begin{exmp}
+    \begin{figure}[hp!]
+        \centering
+        \begin{tikzpicture}[scale=1.0]
+            \begin{axis}[
+                axis x line=middle,
+                axis y line=middle,
+                ymin=-3,ymax=2,ylabel=$x(t)$,
+                xmin=-5,xmax=5,xlabel=$t$
+                ]
+    
+                \addplot+[const plot, no marks, ultra thick, blue] coordinates {(-5,0) (5,0)};
+
+                \draw[->, ultra thick, blue, -{Latex[blue]}] (-4,0)--(-4,1);
+                \draw[->, ultra thick, blue, -{Latex[blue]}] (-3,0)--(-3,-2);
+                \draw[->, ultra thick, blue, -{Latex[blue]}] (-2,0)--(-2,1);
+                \draw[->, ultra thick, blue, -{Latex[blue]}] (-1,0)--(-1,-2);
+                \draw[->, ultra thick, blue, -{Latex[blue]}] (0,0)--(0,1);
+                \draw[->, ultra thick, blue, -{Latex[blue]}] (1,0)--(1,-2);
+                \draw[->, ultra thick, blue, -{Latex[blue]}] (2,0)--(2,1);
+                \draw[->, ultra thick, blue, -{Latex[blue]}] (3,0)--(3,-2);
+                \draw[->, ultra thick, blue, -{Latex[blue]}] (4,0)--(4,1);
+            \end{axis}
+        \end{tikzpicture}
+    \caption{Fourier analysis example \#1}
+    \label{fig:fourier-impulse-example}
+    \end{figure}
+
+    Consider the signal $x(t)$ shown in Figure \ref{fig:fourier-impulse-example}. We can see that $T_0 = 2$, and so $\omega_0 = \pi$. To calculate the coefficients of the Fourier series, we can integrate over any period, so we will choose $(-1/2, 3/2)$ to have well-behaved end-points. Then
+    \begin{align*}
+        a_k &= \frac{1}{T_0}\int_{T_0}x(t)e^{-ik\omega_0t}dt\\
+        &= \frac{1}{2}\int_{-1/2}^{3/2}\left(\delta(t) - 2\delta(t-1)\right)e^{-ik\pi t}dt = \frac{1}{2} - e^{-ik\pi} \\
+        &= \frac{1}{2} - (-1)^k.
+    \end{align*}
+\end{exmp}
+
+\begin{exmp}
+    \begin{figure}[hp!]
+        \centering
+        \begin{tikzpicture}[scale=1.0]
+            \begin{axis}[
+                axis x line=middle,
+                axis y line=middle,
+                ymin=0,ymax=2,ylabel=$x(t)$,
+                xmin=-8,xmax=8,xlabel=$t$
+                ]
+    
+                \addplot+[const plot, no marks, ultra thick, blue] coordinates {(-8,0) (-6,1) (-4,0) (-1,1) (1,0) (4,1) (6,0) (8,0)};
+            \end{axis}
+        \end{tikzpicture}
+    \caption{Fourier analysis example \#2}
+    \label{fig:fourier-step-example}
+    \end{figure}
+
+    Consider the signal $x(t)$ shown in Figure \ref{fig:fourier-step-example}. We can see that $T_0 = 2$, and so $\omega_0 = \pi$. To calculate the coefficients of the Fourier series, we can integrate over any period, so we will choose $(-1/2, 3/2)$ to have well-behaved end-points. Then
+    \begin{align*}
+        a_k &= \frac{1}{T_0}\int_{T_0}x(t)e^{-ik\omega_0t}dt\\
+        &= \frac{1}{2}\int_{-1/2}^{3/2}\left(\delta(t) - 2\delta(t-1)\right)e^{-ik\pi t}dt = \frac{1}{2} - e^{-ik\pi} \\
+        &= \frac{1}{2} - (-1)^k.
+    \end{align*}
+\end{exmp}
