@@ -650,7 +650,39 @@ Many of the results and techniques we have seen for first and second order linea
 \begin{prop}
     If $Z(r)$ is the characteristic equation of a linear differential equation and $r$ is any root of $Z(r)$, then $e^{rt}$ is a solution. If a root $r$ has multiplicity $s$, then
     \[e^{rt},\; te^{rt},\; t^2e^{rt},\; \ldots,\; t^{s-1}e^{rt},\]
-    are all solutions. Furthermore, given complex roots $\lambda \pm i\mu$, the corresponding solutions can be replaced with $e^{\lambda t}\cos(\mu t)$ and $e^{\lambda t}\sin(\mu t)$.
+    are all solutions. Furthermore, given complex roots $\lambda \pm i\mu$ with multiplicity $s$, the corresponding solutions $2s$ homogeneous solutions can be replaced with
+    \[e^{\lambda t}\cos(\mu t),\; e^{\lambda t}\sin(\mu t),\; \ldots,\; t^{s-1}e^{\lambda t}\cos(\mu t), t^{s-1}e^{\lambda t}\sin(\mu t).\]
 
     In all cases, these solutions are linearly independent, and so the general solution can be expressed as a linear combination of $n$ real-valued solutions.
 \end{prop}
+
+\begin{defn}
+    A homogeneous linear equation of the form
+    \[a_nx^ny^{(n)} + a_{n-1}x^{n-1}y^{(n-1)} + \cdots + a_1xy' + a_0y = 0,\] is called a \emph{Cauchy-Euler equation.} With the substitution $x = e^u$, the corresponding equation in $u$ has constant coefficients, and can be solved by factoring the characteristic equation.
+
+    A Cauchy-Euler equation may also be solved with the guess $y = x^r$ for some $r$.
+\end{defn}
+
+\begin{exmp}
+    Consider \[x^2y'' + 13xy' + 36y = x^7.\] We will use the substitutions $x = e^u$, and $z(u) = y(x)$.
+    Note that
+    \begin{align*}
+        \frac{dx}{du} = \frac{d}{du}e^u = e^u = x, \\
+        \frac{d^2x}{du^2} = \frac{d^2}{du^2}e^u = e^u = x, \\
+    \end{align*}
+    \begin{align*}
+        \frac{d}{du}z(u) &= \frac{d}{du}y(x) = y'(x)\frac{dx}{du} = xy'(x), \\
+        \frac{d^2}{du^2}z(u) &= \frac{d^2}{du^2}y(x) = y'(x)\frac{d^2x}{du^2} + y''(x)\left(\frac{dx}{du}\right)^2 = x^2y''(x) - xy'(x).
+    \end{align*}
+    Therefore, $x^2y''(x) = z''(u) - z'(u)$, $xy'(x) = z'(u)$, and $y(x) = z(u)$, so
+    \begin{align*}
+        0 &= x^2y'' + 13xy' + 36y \\
+        &= z''(u) - z'(u) + 13z'(u) + 36z(u)
+        &= z''(u) + 12z'(u) + 36z(u).
+    \end{align*}
+    The characteristic equation for this new equation is $r^2 + 12r + 36 = (r + 6)^2$, and so the solutions are $z(u) = e^{-6u}, ue^{-6u}$. Then we have solutions $y(x) = x^{-6}, \ln(x)x^{-6}$. The non-homogeneous solution can be found by variation of parameters to be
+    \[Y(x) = \frac{x^7}{169},\]
+    so the general solution is
+    \[y(x) = c_1x^{-6} + c_2\ln(x)x^{-6} + \frac{x^7}{169}.\]
+\end{exmp}
+
