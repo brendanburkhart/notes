@@ -809,7 +809,7 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
 \end{exmp}
 
 \begin{exmp}
-    \begin{figure}[hp!]
+    \begin{figure}[h!]
         \centering
         \begin{tikzpicture}[scale=1.0]
             \begin{axis}[
@@ -845,27 +845,55 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
 \end{exmp}
 
 \begin{exmp}
-    \begin{figure}[hp!]
+    \begin{figure}[h!]
         \centering
         \begin{tikzpicture}[scale=1.0]
             \begin{axis}[
                 axis x line=middle,
                 axis y line=middle,
-                ymin=0,ymax=2,ylabel=$x(t)$,
-                xmin=-8,xmax=8,xlabel=$t$
+                ymin=0,ymax=1.45,ylabel=$x(t)$,
+                xmin=-7,xmax=7,xlabel=$t$
                 ]
     
-                \addplot+[const plot, no marks, ultra thick, blue] coordinates {(-8,0) (-6,1) (-4,0) (-1,1) (1,0) (4,1) (6,0) (8,0)};
+                \addplot+[const plot, no marks, ultra thick, blue] coordinates {(-6,0) (-5,1) (-3,0) (-1,1) (1,0) (3,1) (5,0) (6,0)};
             \end{axis}
         \end{tikzpicture}
     \caption{Fourier analysis example \#2}
     \label{fig:fourier-step-example}
     \end{figure}
 
-    Consider the signal $x(t)$ shown in Figure \ref{fig:fourier-step-example}. We can see that $T_0 = 2$, and so $\omega_0 = \pi$. To calculate the coefficients of the Fourier series, we can integrate over any period, so we will choose $(-1/2, 3/2)$ to have well-behaved end-points. Then
+    Consider the signal $x(t)$ shown in Figure \ref{fig:fourier-step-example}. Let $T_0$ be the period of the signal. To calculate the coefficients of the Fourier series, we can integrate over any period, so we will choose $(-T_0/2, T_0/2)$. Then
     \begin{align*}
         a_k &= \frac{1}{T_0}\int_{T_0}x(t)e^{-ik\omega_0t}dt\\
-        &= \frac{1}{2}\int_{-1/2}^{3/2}\left(\delta(t) - 2\delta(t-1)\right)e^{-ik\pi t}dt = \frac{1}{2} - e^{-ik\pi} \\
-        &= \frac{1}{2} - (-1)^k.
+        &= \frac{1}{T_0}\int_{-T_0/2}^{T_0/2}e^{-ik\pi t}dt.
     \end{align*}
+    When $k \neq 0$, this is simply
+    \begin{align*}
+        a_k &= -\frac{e^{-ik\omega_0 T_0/2} - e^{ik\omega_0 T_0/2}}{ik\omega_0 T_0} \\
+        &= \frac{e^{ik\pi} - e^{-ik\pi}}{ik\pi} \\
+        &= 2\frac{\sin(k\pi)}{k\pi}.
+    \end{align*}
+    For $k = 0$, we of course simply get $a_0 = 1$.
 \end{exmp}
+
+\begin{defn}
+    Let $I_{2n+1}$ be the error of the $n$th Fourier series approximation of a signal $x(t)$.
+    \[I_{2n+1} = \int_{T_0}\left(x(t) - \sum_{k=-N}^{N}a_{k}e^{ik\omega_0t}\right)^2dt\]
+\end{defn}
+
+\begin{thm}
+    Let $x(t)$ be a periodic signal with fundamental period $T_0$. When
+    \begin{itemize}
+        \item $x(t)$ is absolutely integrable ($\int_{T_0}\abs{x(t)}dt < \infty$),
+        \item $x(t)$ are a finite number of minima and maxima on any period interval,
+        \item $x(t)$ has a finite number of \emph{finite} discontinuities on any period interval, and no \emph{infinite} discontinuities,
+    \end{itemize}
+    then $x(t)$ is said to satisfy the Dirichlet conditions. The Dirichlet conditions are \emph{sufficient} to guarantee that $\lim_{N \to \infty} I_{2N+1} = 0$ and that
+    \[\sum_{k=-\infty}^{\infty}a_{k}e^{ik\omega_0t} = \frac{x(t^+) + x(t^-)}{2},\]
+    where
+    \begin{align*}
+        x(t^+) = \lim_{s \to t^+}x(s) \\
+        x(t^-) = \lim_{s \to t^-}x(s) \\
+    \end{align*}
+    are the left and right limits of $x(t)$ respectively.
+\end{thm}
