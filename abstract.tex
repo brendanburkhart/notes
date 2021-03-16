@@ -634,7 +634,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \end{proof}
 
 \begin{prop}\label{cosets-equal-or-disjoint}
-    Consider a left coset $gH$, and let $g' \in G$. If $g' \in gH$ then $g'H = gH$, if $g' \notin gH$ then $g'H \intersection gH$.
+    Consider a left coset $gH$, and let $g' \in G$. If $g' \in gH$ then $g'H = gH$, if $g' \notin gH$ then $g'H \intersection gH = \emptyset$.
 \end{prop}
 
 \begin{proof}
@@ -946,7 +946,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     If $gH = Hg$, then for any $g \in G$ and $h \in H$, there must exist $h' \in H$ such that $gh = h'g$. But then $ghg^{-1} = h' \in H$, and so $H$ is normal.
 \end{proof}
 
-\begin{cor}
+\begin{cor}\label{normal-cosets-commute}
     If $H \normalsubgroup G$, then $(g_1H)(g_2H) = (g_1g_2)H$.
 \end{cor}
 
@@ -987,9 +987,23 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \end{cor}
 
 \begin{prop}
-    If $H < G$ has only two unique cosets, $H$ and $gH$ (or $Hg$ equivalently), then $H$ is normal in $G$.
+    If $H < G$ has only two unique cosets, $H$ and $gH$ (or equivalently $Hg$), then $H$ is normal in $G$.
 \end{prop}
 
 \begin{proof}
     We know that $H$ and $gH$ must partition $G$ by Proposition \ref{cosets-equal-or-disjoint}. Then $G = H \disjointunion gH = H \disjointunion Hg$, which implies that $gH = Hg$. Therefore, $H$ is normal by Theorm \ref{normal-left-right-coset-equivalence}.
+\end{proof}
+
+\begin{defn}
+    Let $H \triangleleft G$ be a normal subset. Then \emph{quotient group} of $G$ and $H$ is
+    \[G/H = \left\{gH \compbar g \in G\right\}.\]
+\end{defn}
+
+\begin{prop}
+    With the operation $(gH)(g'H) = gg'H$, $G/H$ forms a group.
+\end{prop}
+
+\begin{proof}
+    Clearly $eH = H$ is the identity element, and since
+    $gHg^{-1}H = gg^{-1}H = eH$, every element has an inverse. Associativity is inherited from $G$, and so $G/H$ is a group.
 \end{proof}
