@@ -686,3 +686,45 @@ Many of the results and techniques we have seen for first and second order linea
     \[y(x) = c_1x^{-6} + c_2\ln(x)x^{-6} + \frac{x^7}{169}.\]
 \end{exmp}
 
+\section{Systems of First Order Linear Differential Equations}
+
+\begin{rmk}
+    Given a higher order ordinary differential equation, we can transform it into a system of first order ordinary differential equations.
+\end{rmk}
+
+\begin{exmp}
+    Consider $u'' + \frac{1}{8}u' + u = 0$. Make the substitutions $x_1 = u$ and $x_2 = u'$, so $x_2' + \frac{1}{8}x_2 + x_1 = 0$. Then we have
+    \begin{align*}
+        x_1' &= x_2 \\
+        x_2' &= -\frac{1}{8}x_2 - x_1.
+    \end{align*}
+\end{exmp}
+
+Now consider the system
+\begin{equation}\label{general-nth-order-system}
+\begin{aligned}
+    x_1' &= F_1(t, x_1, \ldots, x_n) \\
+    x_2' &= F_2(t, x_1, \ldots, x_n) \\
+    &\quad\quad\vdots \\
+    x_n' &= F_n(t, x_1, \ldots, x_n). \\
+    \end{aligned}
+\end{equation}
+
+\begin{thm}
+    Let $F_1, F_2, \ldots, F_n$ be functions of $y$ and $x_1, \ldots, x_n$. Let these functions and their partials $\frac{\partial F_1}{\partial y}, \ldots, \frac{\partial F_n}{\partial y}$ be continuous in a region $R$ defined by $\alpha < t < \beta$, $\alpha_1 < x_1 < \beta_1$, and so on through $\alpha_n < x_n < \beta_n$.
+
+    For any point $(t_0, x_1^0, x_2^0, \ldots, x_n^0) \in R$, there exists an interval $\abs{t-t_0} < h$ on which there is a unique solution $x_1 = \phi_1(t), \ldots, x_n = \phi_n(t)$ of the system \ref{general-nth-order-system} that satisfies the initial conditions $\phi_k(t_0) = x_k^0$.
+\end{thm}
+
+\begin{equation}\label{linear-nth-order-system}
+\begin{aligned}
+    x_1' &= p_{11}(t)x_1 + \ldots + p_{1n}(t)x_n + g_1(t) \\
+    x_n' &= p_{21}(t)x_1 + \ldots + p_{2n}(t)x_n + g_2(t) \\
+    &\quad\quad\vdots \\
+    x_n' &= p_{n1}(t)x_1 + \ldots + p_{nn}(t)x_n + g_n(t) \\
+\end{aligned}
+\end{equation}
+
+\begin{thm}
+    Let functions $p_{kl}, g_{k}$ be continuous on an interval $I = \alpha < t < \beta$. Then there exists a unique solution $x_1 = \phi_1(t), \ldots, x_n = \phi_n(t)$ of the system \ref{linear-nth-order-system} that satisfies the initial conditions $\phi_k(t_0) = x_k^0$ for any $t_0 \in I$. Furthermore, this solution exists on all of $I$.
+\end{thm}
