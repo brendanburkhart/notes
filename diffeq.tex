@@ -725,6 +725,34 @@ Now consider the system
 \end{aligned}
 \end{equation}
 
-\begin{thm}
+\begin{thm}\label{nth-order-linear-system-existence-uniqueness}
     Let functions $p_{kl}, g_{k}$ be continuous on an interval $I = \alpha < t < \beta$. Then there exists a unique solution $x_1 = \phi_1(t), \ldots, x_n = \phi_n(t)$ of the system \ref{linear-nth-order-system} that satisfies the initial conditions $\phi_k(t_0) = x_k^0$ for any $t_0 \in I$. Furthermore, this solution exists on all of $I$.
 \end{thm}
+
+\begin{rmk}
+    We can form a vector $\vec{x} = (x_1, x_2, \ldots, x_n)$, a matrix $\bm{P}$ where $P_{ij} = p_{ij}$, and a vector $\vec{g} = (g_1, \ldots, g_n)$. Then
+    \[\vec{x}' = P\vec{x} + \vec{g}.\]
+\end{rmk}
+
+\begin{prop}
+    Let $\vec{x}^{(1)}, \ldots, \vec{x}^{(n)}$ be solutions to a \emph{homogeneous} system of the form \ref{linear-nth-order-system}, so $g_k(t) = 0$ for $1 \leq k \leq n$. Then any linear combination of $\vec{x}^{(1)}, \ldots, \vec{x}^{(n)}$ is also a solution.
+\end{prop}
+
+\begin{proof}
+    Let $\vec{x} = c_1\vec{x}^{(1)} + \cdots + c_n\vec{x}^{(n)}$, and so $\vec{x}' = c_1\vec{x}^{(1)\prime} + \cdots + c_n\vec{x}^{(n)\prime}$.
+    Since $\vec{x}^{(k)\prime} = P\vec{x}^{(k)}$, it follows by linearity that
+    \[P(c_1\vec{x}^{(1)} + \cdots + c_n\vec{x}^{(n)}) = (c_1\vec{x}^{(1)\prime} + \cdots + c_n\vec{x}^{(n)\prime},\]
+    and so
+    \[P\vec{x} = \vec{x}^{\,\prime}.\]
+\end{proof}
+
+\begin{thm}
+    Let $\vec{x}^{(1)}, \ldots, \vec{x}^{(n)}$ be solutions to a system of the form \ref{linear-nth-order-system}. If these solutions are linearly independent are every point on an interval $I = \alpha < t < \beta$, then every solution $\vec{x} = \vec{\phi}(t)$ can be expressed as a linear combination
+    \[\vec{x}(t) = c_1\vec{x}^{(1)} + \cdots + c_n\vec{x}^{(n)}.\]
+\end{thm}
+
+\begin{proof}
+    Let $t = t_0$ be an arbitary point in $I$, and let $\vec{\xi} = \vec{\phi}(t)$. Since the solutions $\vec{x}^{(k)}$ must be linearly independent at $t_0$, we know that there exists unique $c_1, \ldots, c_2$ such that
+    \[\vec{x}(t) = \vec{\xi}.\]
+    Then by Theorem \ref{nth-order-linear-system-existence-uniqueness}, it must be that $\vec{x} = \vec{\phi}$.
+\end{proof}
