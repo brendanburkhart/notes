@@ -7,7 +7,7 @@
 \newlength{\rowidth}% row operation width
 \AtBeginDocument{\setlength{\rowidth}{3em}}
 
-\DeclareMathOperator{\trace}{Tr}
+\DeclareMathOperator{\trace}{tr}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\nullity}{nullity}
 \DeclareMathOperator{\spn}{span}
@@ -25,7 +25,7 @@
 
 \newenvironment{linsys}[2][m]{%
 \setlength{\arraycolsep}{.1111em}
-\begin{array}[#1]{@{}*{#2}{rc}r@{}} 
+\begin{array}[#1]{@{}*{#2}{rc}r@{}}
 }{%
 \end{array}}
 

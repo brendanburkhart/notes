@@ -752,7 +752,20 @@ Now consider the system
 \end{thm}
 
 \begin{proof}
-    Let $t = t_0$ be an arbitary point in $I$, and let $\vec{\xi} = \vec{\phi}(t)$. Since the solutions $\vec{x}^{(k)}$ must be linearly independent at $t_0$, we know that there exists unique $c_1, \ldots, c_2$ such that
+    Let $t = t_0$ be an arbitrary point in $I$, and let $\vec{\xi} = \vec{\phi}(t)$. Since the solutions $\vec{x}^{(k)}$ must be linearly independent at $t_0$, we know that there exists unique $c_1, \ldots, c_2$ such that
     \[\vec{x}(t) = \vec{\xi}.\]
     Then by Theorem \ref{nth-order-linear-system-existence-uniqueness}, it must be that $\vec{x} = \vec{\phi}$.
 \end{proof}
+
+\begin{rmk}
+    Consider an $n \times n$ matrix $X(t)$ where each of the $n$ solutions is a separate column, and so row $k$ gives the $k$th components of each of the solutions. The solutions are linearly independent precisely when the determinant of $X$ is non-zero. This determinant is the \emph{Wronskian} of the solutions.
+\end{rmk}
+
+\begin{thm}Liouville's formula\label{liouville-formula}\proofbreak
+    Let $X(t)$ be such a matrix of solutions on an open interval $I = \alpha < t < \beta$. Then for all $t_0 \in I$,
+    \[\det X(t) = \det X(t_0)\exp\left(\int_{t_0}^t \trace X(t)dt\right).\]
+\end{thm}
+
+\begin{cor}
+    On the interval $I$, the Wronskian is either always zero or always non-zero.
+\end{cor}
