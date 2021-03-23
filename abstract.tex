@@ -946,7 +946,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     If $gH = Hg$, then for any $g \in G$ and $h \in H$, there must exist $h' \in H$ such that $gh = h'g$. But then $ghg^{-1} = h' \in H$, and so $H$ is normal.
 \end{proof}
 
-\begin{cor}\label{normal-cosets-commute}
+\begin{cor}\label{normal-cosets-product}
     If $H \normalsubgroup G$, then $(g_1H)(g_2H) = (g_1g_2)H$.
 \end{cor}
 
@@ -967,7 +967,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     \[\left\{[a, b] \compbar a, b \in G\right\}.\]
 \end{defn}
 
-\begin{thm}
+\begin{thm}\label{commutator-normal-subgroup}
     The commutator subgroup of $G$ is always normal in $G$.
 \end{thm}
 
@@ -1006,4 +1006,62 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \begin{proof}
     Clearly $eH = H$ is the identity element, and since
     $gHg^{-1}H = gg^{-1}H = eH$, every element has an inverse. Associativity is inherited from $G$, and so $G/H$ is a group.
+\end{proof}
+
+\begin{defn}
+    Let $H < G$. The \emph{index} of $H$ within $G$ is the number of distinct left (or equivalently right) cosets of $H$ in $G$.
+\end{defn}
+
+\begin{prop}
+    If the index of $H$ in $G$ is two, then $H$ is a normal subgroup of $G$, and $G/H$ is isomorphic to $\Z_2$.
+\end{prop}
+
+\begin{proof}
+    To show that $H$ is normal in $G$, we want to show that $xH = Hx$ for all $x \in G$. Clearly this is true when $x \in H$. In the case that $x \not\in H$, then $xH$ and $H$ must partition $G$, and $Hx$ and $H$ also partition $G$. Therefore, $xH = Hx$ and so by Theorem \ref{normal-left-right-coset-equivalence} we have $H \triangleleft G$.
+
+    Next, since $H$ has only two distinct cosets, the order of $G/H$ must be two, and so $G/H \cong \Z_2$.
+\end{proof}
+
+\begin{exmp}
+    Let $G = \Z$ and $H = n\Z = \left\{nk \compbar k \in \Z\right\}$. Then $G/H$ is isomorphic to the integers modulo $n$, with
+    \begin{align*}
+        \Z_n \to \Z/n\Z \\
+        k \mapsto k + n\Z.
+    \end{align*}
+\end{exmp}
+
+\begin{exmp}
+    Let $G = \Z/n\Z$, let $r, m \in \Z$ such that $r = \frac{n}{m}$. Then let $H < \Z/n\Z$ be
+    \[r\Z_m = \left\{0, r, 2r, \ldots, (m-1)r\right\},\]
+    which we know is isomorphic to $\Z/m\Z$. Clearly
+    \[\frac{\abs{G}}{\abs{H}} = \abs{G/H} = \frac{n}{m} = r,\] and $G/H \cong \Z/r\Z \cong \Z_r$.
+\end{exmp}
+
+\begin{thm}
+    For any group $G$,
+    \[G/[G,G]\] is abelian.
+\end{thm}
+
+\begin{proof}
+    Let $H = [G,G]$, and consider cosets $xH, yH \in G/H$. We know that $xyx^{-1}y^{-1}H = H$ since $xyx^{-1}y^{-1} \in H$ by definition. Then by Corollary \ref{normal-cosets-product} we know that
+    \begin{align*}
+        xHyH(xH)^{-1}(yH)^{-1} = H,
+    \end{align*} and so
+    \begin{align*}
+        xHyH = yHxH.
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    We say that $G/[G,G]$ is an \emph{abelianization} of $G$. If $G$ is already abelian, then $[G,G] = e$, and so $G/[G,G]$ is isomorphic to $G$.
+\end{rmk}
+
+\begin{prop}
+    For any $H \triangleleft G$, $G/H$ is abelian if and only if $[G,G] \subseteq H$.
+\end{prop}
+
+\begin{proof}
+    By Theorem \ref{commutator-normal-subgroup}, $[G,G]$ is normal in $G$. If $H$ is abelian, then for any $x, y \in G$, so $Hxy = Hyx$ since $G/H$ is abelian. Then $Hxyx^{-1}y^{-1} = H$, and so $[x, y] \in H$. Therefore, $[G, G] \subseteq H$.
+
+    If $[G, G] \subseteq H$, then for any $xH, yH \in G/H$ we have $xyx^{-1}y^{-1}H = H$ since $xyx^{-1}y^{-1}$ is in $[G,G]$ and therefore in $H$. It follows that $xHyH = yHxH$.
 \end{proof}
