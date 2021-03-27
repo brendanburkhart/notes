@@ -769,3 +769,24 @@ Now consider the system
 \begin{cor}
     On the interval $I$, the Wronskian is either always zero or always non-zero.
 \end{cor}
+
+\begin{cor}
+    Let $\vec{x}^{(k)}$ be a set of $n$ solutions to a system of the form \ref{linear-nth-order-system} on an open interval $I = \alpha < t < \beta$.
+    All solutions to the system can be expressed as a linear combination of $\vec{x}^{(k)}$ if they are linearly independent at some $t_0 \in I$. 
+\end{cor}
+
+\begin{rmk}
+    Consider the elementary column vectors
+    \[e^{(1)} = \begin{pmatrix}
+        1 \\ 0 \\ 0 \\ \vdots \\ 0
+    \end{pmatrix}, e^{(2)} = \begin{pmatrix}
+        0 \\ 1 \\ 0 \\ \vdots \\ 0
+    \end{pmatrix}, \cdots, e^{(n)} = \begin{pmatrix}
+        0 \\ 0 \\ \vdots \\ 0 \\ 1
+    \end{pmatrix},\]
+    and consider a system of the form \ref{linear-nth-order-system}. Then for any $t_0 \in I$, by Theorem \ref{nth-order-linear-system-existence-uniqueness} there exist solutions $x^{(k)}$ such that $x^{(k)}(t_0) = e^{(k)}$. It follows that these solutions are linearly independent at $t_0$, and so form a fundamental set of solutions.
+\end{rmk}
+
+\begin{prop}
+    Consider a linear system of the form $\vec{x}' = P(t)\vec{x}$. If $\vec{x} = \vec{u}(t) + i\vec{v}(t)$ is a solution, then $\vec{u}$ and $\vec{v}$ are also solutions.
+\end{prop}
