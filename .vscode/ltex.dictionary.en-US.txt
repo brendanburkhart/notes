@@ -8,6 +8,8 @@ denoising
 distributivity
 equilibria
 Eulerian
+homomorphism
+homomorphisms
 hyperboloid
 iff
 injective
