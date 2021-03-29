@@ -140,7 +140,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     A \emph{subgroup} $H$ of a group $G$ is a set $H \subseteq G$ that forms a group under the same group operation as $G$. If $H$ is a subgroup of $G$ this may be denoted by $H \leqslant G$, or $H < G$ if it is a strict subgroup.
 \end{defn}
 
-\begin{thm}
+\begin{thm}\label{subgroup-test}
     A non-empty subset $H$ of a group $G$ is a subgroup of $G$ if and only if $x, y \in H$ implies $xy^{-1} \in H$.
 \end{thm}
 
@@ -789,7 +789,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     Next, we will show that $\sigma$ is a bijection. First note that \[\abs{G} = p_1p_2\ldots{p_s}= \abs{\Z_{p_1}\times\Z_{p_2}\cdots\times\Z_{p_s}},\] so it suffices to show that $\sigma$ is injective. Consider any \[(a_1, a_2, \ldots, a_s), (b_1, b_2, \ldots, b_s)\] such that
     \[\sigma(a_1, a_2, \ldots, a_s) = \sigma(b_1, b_2, \ldots, b_s).\] It follows that
     \[x_1^{a_1}x_2^{a_2}\cdots{x_s^{a_s}} = x_1^{b_1}x_2^{b_2}\cdots{x_s^{b_s}},\] and so
-    \[e = x_1^{b_1-a_1}x_2^{b_2-a_2}\cdots{x_s^{b_s-a_s}}.\] 
+    \[e = x_1^{b_1-a_1}x_2^{b_2-a_2}\cdots{x_s^{b_s-a_s}}.\]
     Let \[y_i = x_1^{b_1-a_1}\cdots x_{i-1}^{b_{i-1}-a_{i-1}}x_{i+1}^{b_{i+1}-a_{i+1}}\cdots x_s^{b_s-a_s}.\]
     Sicne $G$ is abelian we know that $x_i^{b_i-a_i}y_i = e$ so $x_i^{b_i - a_i} = y_i^{-1}$.
 
@@ -856,7 +856,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \end{exmp}
 
 \begin{thm}\label{cycle-structure-conjugates}
-    Permutations $x, y \in S_n$ are conjugates if and only if they have the same cycle structure. 
+    Permutations $x, y \in S_n$ are conjugates if and only if they have the same cycle structure.
 \end{thm}
 
 \begin{proof}
@@ -954,10 +954,6 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     By Theorem \ref{normal-left-right-coset-equivalence}, we know that $g_2H = Hg_2$, and so $(g_1H)(g_2H) = (g_1H)(Hg_2)$. By associativity, $(g_1H)(g2H) = g_1HHg_2$, and since $HH = H$, is equal to $g_1Hg_2$. But then $Hg_2 = g_2H$, and so $(g_1H)(g_2H) = (g_1g_2)H$.
 \end{proof}
 
-\begin{exmp}
-    Consider $h \in A_n$ and $g \in S_n$. Since $h$ can be written as the product of $2n$ transposition, and $g$ are $m$ transpositions for integers $n, m$, we know that $ghg^{-1}$ can be written as the product of $m + 2n + m = 2(n + m)$ transpositions. Therefore, $ghg^{-1} \in A_n$, and so $A_n$ is normal in $S_n$.
-\end{exmp}
-
 \begin{defn}
     Let $a, b \in G$. The \emph{commutator} of $a$ and $b$, denoted by $[a, b]$, is the element $aba^{-1}b^{-1}$.
 \end{defn}
@@ -1012,7 +1008,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     Let $H < G$. The \emph{index} of $H$ within $G$ is the number of distinct left (or equivalently right) cosets of $H$ in $G$.
 \end{defn}
 
-\begin{prop}
+\begin{prop}\label{index-two-normal}
     If the index of $H$ in $G$ is two, then $H$ is a normal subgroup of $G$, and $G/H$ is isomorphic to $\Z_2$.
 \end{prop}
 
@@ -1061,7 +1057,110 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \end{prop}
 
 \begin{proof}
-    By Theorem \ref{commutator-normal-subgroup}, $[G,G]$ is normal in $G$. If $H$ is abelian, then for any $x, y \in G$, so $Hxy = Hyx$ since $G/H$ is abelian. Then $Hxyx^{-1}y^{-1} = H$, and so $[x, y] \in H$. Therefore, $[G, G] \subseteq H$.
+    If $G/H$ is abelian, then for any $x, y \in G$ we know that $xHyH = yHxH$. Then $xyx^{-1}y^{-1}H = H$, and so $[x, y] \in H$. Therefore, $[G, G] \subseteq H$.
 
-    If $[G, G] \subseteq H$, then for any $xH, yH \in G/H$ we have $xyx^{-1}y^{-1}H = H$ since $xyx^{-1}y^{-1}$ is in $[G,G]$ and therefore in $H$. It follows that $xHyH = yHxH$.
+    If $[G, G] \subseteq H$, then for any $xH, yH \in G/H$ we have $xyx^{-1}y^{-1}H = H$ since $xyx^{-1}y^{-1}$ is in $[G,G]$ and therefore in $H$. It follows that $xHyH = yHxH$, and so $G/H$ is abelian.
+\end{proof}
+
+\begin{prop}\label{alternating-normal-in-symmetric}
+    For all $n$, $A_n$ is normal in $S_n$.
+\end{prop}
+
+\begin{proof}
+    Consider $h \in A_n$ and $g \in S_n$. Since $h$ can be written as the product of $2n$ transposition, and $g$ are $m$ transpositions for integers $n, m$, we know that $ghg^{-1}$ can be written as the product of $m + 2n + m = 2(n + m)$ transpositions. Therefore, $ghg^{-1} \in A_n$, and so $A_n$ is normal in $S_n$.
+\end{proof}
+
+\section{Homomorphisms}
+
+\begin{defn}
+    Let $G$ and $H$ be groups. A \emph{homomorphism} from $G$ to $H$ is a map
+    \[\varphi: G \to H\] such that for all $g_1, g_2 \in G$
+    \[\varphi(g_1g_2) = \varphi(g_1)\varphi(g_2).\]
+\end{defn}
+
+\begin{rmk}
+    An isomorphism is a bijective homomorphism.
+\end{rmk}
+
+\begin{prop}
+    The image of $\varphi: G \to H$ is a subgroup of $H$.
+\end{prop}
+
+\begin{proof}
+    The image of $\varphi$ must be closed by definition since $\varphi(g_1)\varphi(g_2) = \varphi(g_1g_2)$. Since $\varphi(e)\varphi(e) = \varphi(e)$, we know that $\varphi(e) = e$. Additionally, since $\varphi(gg^{-1}) = \varphi(g)\varphi(g^{-1})$ and $\varphi(gg^{-1}) = e$, it follows that $\varphi(g)^{-1} = \varphi(g^{-1})$. Therefore, $\varphi(G)$ is closed, contains the identity and inverses, and inherits associativity from $H$.
+\end{proof}
+
+\begin{prop}\label{kernel-normal-subgroup}
+    The kernel of $\varphi: G \to H$ is a normal subgroup of $G$.
+\end{prop}
+
+\begin{proof}
+    For any $x, y \in K$, clearly $\varphi(xy^{-1}) = \varphi(x)\varphi(y)^{-1} = e$, so $xy^{-1} \in K$. Since $e \in K$, the kernel is non-empty and so by Theorem \ref{subgroup-test} the kernel is a subgroup of $G$.
+
+    For any $k$ in the kernel and $g \in G$,
+    \[\varphi(gkg^{-1}) = \varphi(g)\varphi(k)\varphi(g^{-1}) = \varphi(g)e\varphi(g^{-1}) = \varphi(gg^{-1}) = e,\]
+    and since $e$ is in the kernel, the kernel must be normal in $G$.
+\end{proof}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item Consider $H \triangleleft G$ and $\varphi: G \to G/H$ where $\varphi(g) \mapsto gH$. Then $\varphi(G) = G/H$ and $\ker \varphi = H$.
+        \item For $\varphi: \Z \to \Z_n$ where $\varphi(k) = k \bmod n$, the image is $\Z_n$ and the kernel is $n\Z$.
+        \item Consider $\varphi: \R \to S^1$ where $\varphi(x) = e^{2\pi ix}$. Then the image is $S^1$ and the kernel is $\Z < \R$.
+        \item For $\varphi: GL_n(\R) \to \R - \{0\}$ where $\varphi(A) = \det A$, the image is $\R - \{0\}$ and the kernel is $SL_n(\R)$.
+        \item For $\varphi: S^1 \to S^1$ in $\C$ where $\varphi(z) = z^2$, the image is $S^1$ and the kernel is $\{\pm 1\}$.
+    \end{itemize}
+\end{exmp}
+
+\begin{thm}First Isomorphism Theorem\label{first-isomorphism}\proofbreak
+    Let $G$ and $H$ be groups, $\varphi: G \to H$ a homomorphism, and let $K$ be the kernel of $\varphi$. Then $G/K$ is isomorphic to the image of $\varphi$.
+\end{thm}
+
+\begin{proof}
+    Define $\varPsi: G/K \to H$ by $\varPsi(gK) \to \varphi(g)$. Since \[\varPsi(g_1K)\varPsi(g_2K) = \varphi(g_1)\varphi(g_2) = \varphi(g_1g_2) = \varPsi(g_1g_2K) = \varPsi(g_1Kg_2K),\]
+    we can see that $\varPsi$ must be a homomorphism. We will now show that $\varPsi$ is bijective and therefore an isomorphism.
+
+    Consider any $g_1, g_2 \in G$ such that $\varPsi(g_1K) = \varPsi(g_2K)$. Then $\varphi(g_1) = \varphi(g_2)$, and so $\varphi(g_1g_2^{-1}) = e$, and so $\varphi(g_1g_2^{-1}) \in K$. It follows that $g_1g_2^{-1}K = K$ so $g_1K = g_2K$, and so $\varPsi$ is injective.
+
+    For any $h \in \varphi(G)$, we know there exists $g \in G$ such that $\varphi(g) = h$. Then $\varPsi(gK) = h$, and so $\varPsi$ is also surjective.
+\end{proof}
+
+\begin{exmp}
+    Consider $\varphi: \R \to S^1$ where $\varphi(x) = e^{2\pi ix}$. Since the kernel is $\Z$, we know that $\R/\Z$ is isomorphic to $S^1$.
+\end{exmp}
+
+\begin{exmp}
+    Consider $\phi: G \times H \to \left(G/A\right) \times \left(H/B\right)$ where $(g, h) \mapsto (gA, hB)$. Since
+    \begin{align*}
+        \phi\left((g_1, h_1)(g_2, h_2)\right) &= \phi(g_1g_2, h_1h_2) = \left(g_1g_2A, h_1h_2B\right) \\
+        &= \left(g_1Ag_2A, h_1Bh_2B\right) = (g_1A, h_1B)(g_2A, h_2B) = \phi(g_1, h_1)\phi(g_2, h_2),\
+    \end{align*}
+    we know that $\phi$ is an isomorphism. Note that since $gA = A$ and $hB = B$ when $g \in A$ and $h \in B$, it follows that $\phi(g, h) = e$ when $(g, h) \in A \times B$, and so the kernel of $\phi$ must be $A \times B.$
+
+    Then by the First Isomorphism Theorem \ref{first-isomorphism} we know that $A \times B$ is a normal subgroup of $G \times H$, and also that
+    \[\left(G \times H\right)/\left(A \times B\right) \cong \phi(G \times H).\] Since the image of $\phi$ is all of $\left(G/A\right) \times \left(H/B\right)$, it follows that
+    \[\left(G \times H\right)/\left(A \times B\right) \cong \left(G/A\right) \times \left(H/B\right).\]
+\end{exmp}
+
+\begin{thm}Second Isomorphism Theorem\label{second-isomorphism}\proofbreak
+    Let $H$ and $J$ be subgroups of $G$, where $J$ is normal in $G$. Then $HJ$ is a subgroup of $G$, $H \intersection J$ is a normal subgroup of $H$, and $HJ/J$ is isomorphic to $H/\left(H \intersection J\right)$.
+\end{thm}
+
+\begin{proof}
+    Consider $x, y \in HJ$, where $x = h_1j_1, y = h_2j_2$ and $h_1,h_2 \in H$, $j_1,j_2 \in J$. Then
+    \begin{align*}
+        xy^{-1} = \left(h_1j_1\right)\left(h_2j_2\right)^{-1} = h_1j_1j_2^{-1}h_2^{-1} = h_1h_2^{-1}h_2j_3h_2^{-1}
+    \end{align*} for some $j_3 \in J$. Since $J$ is normal, $h_2j_3h_2^{-1} \in J$ and of course $h_1h_2^{-1} \in H$, so $xy^{-1} \in HJ$. Since $e \in HJ$ we know that $HJ$ is non-empty and so by Theorem \ref{subgroup-test} $HJ$ is a subgroup of $G$.
+
+    Now consider $\varphi: H \to HJ/J$ where $\varphi(x) = xeJ = xJ$. Since $\varphi(xy) = xyJ = xJyJ = \varphi(x)\varphi(y)$ this is a homomorphism. Furthermore, since for any $(hj)J$ we clearly have $(hj)J = hJ$ and $\varphi(h) = hJ$, it is surjective.
+
+    Since the kernel of $\varphi$ is trivially $H \intersection J$, it follows from the First Isomorphism Theorem \ref{first-isomorphism} that $HJ/J$ is isomorphic to $H/\left(H \intersection J\right)$ and from Proposition \ref{kernel-normal-subgroup} that $H \intersection J$ is a normal subgroup of of $H$.
+\end{proof}
+
+\begin{thm}Third Isomorphism Theorem\label{third-isomorphism}\proofbreak
+    Let $H$ and $J$ be \emph{normal} subgroups of $G$ such that $H \subseteq J$. Then $J/H$ is a normal subgroup of $G/H$, and $(G/H)/(J/H)$ is isomorphic to $G/J$.
+\end{thm}
+
+\begin{proof}
+    Consider $\varphi: G/H \to G/J$ where $\varphi(gH) = gJ$. Note that this is well-defined and surjective since $H \subseteq J$: given $g_1H = g_2H$ we know that $g_2 = g_1h$ for some $h \in H$, and so $\varphi(g_1H) = g_1J$ and $\varphi(g_2H) = g_2J = g_1J$ since $h \in J$. Since $\varphi(g_1Hg_2H) = \varphi(g_1g_2H) = g_1g_2J = \varphi(g_1H)\varphi(g_2H)$, this is a homomorphism. The result follows by the First Isomorphism Theorem \ref{first-isomorphism}.
 \end{proof}
