@@ -23,6 +23,8 @@
 \def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
 \makeatother
 
+\newcommand*{\transpose}{\mkern-1.5mu\mathsf{T}}
+
 \newenvironment{linsys}[2][m]{%
 \setlength{\arraycolsep}{.1111em}
 \begin{array}[#1]{@{}*{#2}{rc}r@{}}
