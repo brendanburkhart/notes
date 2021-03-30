@@ -526,6 +526,92 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     A finite group of order $n$ may be isomorphic to a subgroup of $S_k$ for $k < n$. For example, by Corollary \ref{finite-symmetric-isomorphism}, $S(\triangle)$ (the symmetries of equilateral triangles) is isomorphic to a subgroup of $S_6$, but we know that $S(\triangle) \cong S_3$. Another example is $S_n$ which is clearly isomorphic to $S_n$, but since it has order $n!$ is only shown to be isomorphic to a subgroup of $S_{n!}$ by Corollary \ref{finite-symmetric-isomorphism}.
 \end{rmk}
 
+\section{Matrix Groups}
+
+\begin{prop}
+    The set of all $n \times n$ invertible matrices over any field forms a group under matrix multiplication.
+\end{prop}
+
+\begin{proof}
+    Given $A, B \in M_{n}(F)$ where $A,B$ are invertible. Then $AB \in M_{n}(F)$ and $AB$ must be invertible since $\det AB = \det A \det B$. We have $I_n \in M_{n}(F)$ and $\det I_n = 1$, so this set contains the identity. Furthermore, these matrices are by definition invertible, and since matrix multiplication is associative in all cases, this set forms a group.
+\end{proof}
+
+\begin{defn}
+    The group of $n \times n$ invertible matrices over a field $F$ is the \emph{General Linear Group} over $F$, denoted by $GL_n(F)$.
+\end{defn}
+
+\begin{defn}
+    The set of $n \times n$ matrices with determinant $+1$ forms a subgroup of $GL_n(F)$: the \emph{Special Linear Group} over $F$, denoted by $SL_n(F)$.
+\end{defn}
+
+Recall the \emph{orthogonal matrices}, which are all invertible matrices $A$ such that $AA^{\transpose} = I$, or equivalently $A^{-1} = A^{\transpose}$. These matrices have columns which form an orthonormal basis for $F^n$.
+
+\begin{prop}
+    The orthogonal matrices are a subgroup of $GL_n(F)$, denoted by $O_n(F)$.
+\end{prop}
+
+\begin{proof}
+    Clearly $I_n \in O_n$, so $O_n$ is non-empty. Furthermore, for any $A, B \in O_n$ we have
+    \begin{align*}
+        \left(AB^{-1}\right)\left(AB^{-1}\right)^{\transpose} &= AB^{-1}\left(B^{-1}\right)^{\transpose}A^{\transpose} \\
+        &= AIA^{\transpose} = I.
+    \end{align*}
+    Therefore, $AB^{-1} \in O_n$, and so the result follows by Theorem \ref{subgroup-test}.
+\end{proof}
+
+\begin{defn}
+    As with $SL_n(F) < GL_n(F)$, we can form the \emph{Special Orthogonal Group} over $F$, the subgroup of $O_n(F)$ with determinant $+1$. This is denoted by $SO_n(F)$.
+\end{defn}
+
+Consider any element of $O_2(\R)$. We know this matrix must be
+\[\begin{bmatrix}
+    a & c \\
+    b & d
+\end{bmatrix},\]
+where $(a, b)$ is orthogonal to $(c, d)$. Since $\norm{(a, b)} = 1$, the point $(a, b)$ is a point on the unit circle, and so there is some $0 \leq \theta < 2\pi$ such that $\cos(\theta) = a$ and $\sin(\theta) = b$. Since the point $(c, d)$ is perpendicular, there is some $\phi$ where $\phi = \theta + \frac{\pi}{2}$ or $\phi = \theta - \frac{\pi}{2}$, such that $\cos(\phi) = c$ and $\sin(\phi) = d$. Therefore, any matrix in $O_2(\R)$ is in one of the following two forms:
+\[\begin{bmatrix}
+    \cos(\theta) & -\sin(\theta) \\
+    \sin(\theta) & \cos(\theta)
+\end{bmatrix}, \quad \textrm{or} \begin{bmatrix}
+    \cos(\theta) & \sin(\theta) \\
+    \sin(\theta) & -\cos(\theta)
+\end{bmatrix}.\]
+
+Therefore, any matrix in $O_2(\R)$ represents a rotation by $\theta$ around the origin in the first case, or a reflection across a line at angle $\frac{\theta}{2}$ through the origin.
+
+Furthermore, note that a matrix is in $SO_2(\R)$ precisely when it is a rotation, and
+\begin{align*}
+    \varphi: S^1 &\to SO_2(\R) \\
+    e^{i\theta} &\mapsto \begin{bmatrix}
+        \cos(\theta) & -\sin(\theta) \\
+        \sin(\theta) & \cos(\theta)
+    \end{bmatrix}
+\end{align*}
+is an isomorphism between the unit circle and $SO_2(\R)$.
+
+We will now similarly analyze $SO_3(\R)$. Since for $A \in SO_3(\R)$, $\det A = 1$ we know the product of eigenvalues must be $1$. Furthermore, since $A$ is orthogonal it preserves distance and so all eigenvalues must have magnitude $1$. Finally, since complex eigenvalues come in conjugate pairs with product $1$, if any eigenvalues are complex the third must be equal to $1$. If all are real, then an even number must be equal to $-1$, and so at least one is equal to $1$.
+
+In all cases, $A$ has eigenvalue $\lambda = 1$, with associated eigenvector $v$. Furthermore, all vectors perpendicular to $v$ must be remained perpendicular to $v$ since orthogonal matrices preserve orthogonality. If we perform a change of basis so that $\frac{v}{\norm{v}}$ is the first element of the new basis, then $L_A$ with respect to the new basis is of the form
+\begin{align}\label{so3-inner-so2}
+    \left[ \begin{array}{ *{3}{c} }
+        1 & 0 & 0 \\
+        0 & &  \\
+        0 & \multicolumn{2}{c}
+          {\raisebox{\dimexpr\normalbaselineskip+.7\ht\strutbox-1.15\height}[0pt][0pt]
+            {\scalebox{2}{$B$}}} \\
+      \end{array} \right],
+\end{align}
+where $\det B = 1$ and so $B \in SO_2(\R)$. Therefore, $A$ must represent a rotation about the axis $v$ through the origin.
+
+If $A \in O_3(\R) - SO_3(\R)$, then $AU \in SO_3(\R)$ where
+\[U = \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & -1
+\end{bmatrix}\] is a reflection across the $xy$-plane. We can then write $A = BU$, where $B = AU$, and so any matrix in $SO_3(\R)$ is either a rotation or a reflection across the $xy$-plane followed by a rotation.
+
+It is also possible to show that any rotation in $\R^3$ which fixes the origin can be represented by a matrix in $SO_3(\R)$. Any such rotation must fix an axis of rotation, choose an orthonormal basis such that this axis is parallel to $(1, 0, 0)$. Then this transformation can clearly be represented by a matrix of the form \ref{so3-inner-so2}, and so must be in $SO_3(\R)$.
+
 \section{Products of Groups}
 
 \begin{defn}
@@ -1165,7 +1251,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     Consider $\varphi: G/H \to G/J$ where $\varphi(gH) = gJ$. Note that this is well-defined and surjective since $H \subseteq J$: given $g_1H = g_2H$ we know that $g_2 = g_1h$ for some $h \in H$, and so $\varphi(g_1H) = g_1J$ and $\varphi(g_2H) = g_2J = g_1J$ since $h \in J$. Since $\varphi(g_1Hg_2H) = \varphi(g_1g_2H) = g_1g_2J = \varphi(g_1H)\varphi(g_2H)$, this is a homomorphism. The result follows by the First Isomorphism Theorem \ref{first-isomorphism}.
 \end{proof}
 
-\section{Actions, Orbits, and Stablizers}
+\section{Actions, Orbits, and Stabilizers}
 
 \begin{defn}
     An \emph{action} of a group $G$ on a set $X$ is a homomorphism $\varphi$ from $G$ to $S_x$, defining a map $G \times X \to X$. Given elements $g \in G$ and $x \in X$, we write $g \cdot x$ for the result of applying $\varphi(g)$ to $x$.
@@ -1193,7 +1279,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \end{proof}
 
 \begin{defn}
-    For $x \in X$, the \emph{stablizer} of $x$ is
+    For $x \in X$, the \emph{stabilizer} of $x$ is
     \[G_x = \left\{g \in G \compbar g \cdot x = x\right\}.\]
 \end{defn}
 
@@ -1242,7 +1328,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \end{cor}
 
 \begin{proof}
-    By Cauchy's Theorem \ref{cauchy-thm}, $G$ must contain elements of order $p^2$ and $p$. If any element has order $p^2$, then $G$ is isomorphic to $\Z_{p^2}$ and we are done. If not, since the center of $G$ is non-trivial by Theorem \ref{prime-order-center-nontrivial} there must be some non-trivial $x \in Z(G)$ with order $p$. Note that since $Z(G)$ is an abelian subgroup of $G$, $\langle x \rangle \subseteq Z(g)$ and $x^k$ commutes with all elements of $G$.
+    By Cauchy's Theorem \ref{cauchy-thm}, $G$ must contain elements of order $p^2$ and $p$. If any element has order $p^2$, then $G$ is isomorphic to $\Z_{p^2}$, and we are done. If not, since the center of $G$ is non-trivial by Theorem \ref{prime-order-center-nontrivial} there must be some non-trivial $x \in Z(G)$ with order $p$. Note that since $Z(G)$ is an abelian subgroup of $G$, $\langle x \rangle \subseteq Z(g)$ and $x^k$ commutes with all elements of $G$.
 
     Fix some $y \neq e$ not in $\langle x \rangle$. Then $\langle x, y\rangle$ is a subgroup of $G$ with order greater than $p$, so by Lagrange's Theorem \ref{lagrange-thm} we have $\langle x, y \rangle = G$. Therefore, $G$ is isomorphic to $\Z_p \times \Z_p$.
 \end{proof}
