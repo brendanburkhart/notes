@@ -3,6 +3,7 @@ arity
 bijective
 Burkhart
 codomain
+conjugacy
 denoise
 denoising
 distributivity
