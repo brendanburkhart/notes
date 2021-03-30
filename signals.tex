@@ -729,7 +729,7 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
     $y(t) = x(t) + 2x(t-1) - 3y(t-1)$.
 \end{exmp}
 
-\section{Fourier Series}
+\section{Fourier Series and Transforms}
 
 \begin{thm}\label{fourier-series}
     For every continuous time periodic signal $x(t)$ with fundamental period $T_0 = \frac{2\pi}{\omega_0}$, there exists $a_k$ such that
@@ -888,7 +888,7 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
         \item $x(t)$ are a finite number of minima and maxima on any period interval,
         \item $x(t)$ has a finite number of \emph{finite} discontinuities on any period interval, and no \emph{infinite} discontinuities,
     \end{itemize}
-    then $x(t)$ is said to satisfy the Dirichlet conditions. The Dirichlet conditions are \emph{sufficient} to guarantee that $\lim_{N \to \infty} I_{2N+1} = 0$ and that
+    then $x(t)$ is said to satisfy the Dirichlet conditions. The Dirichlet conditions are \emph{sufficient} (but \emph{not} necessary) to guarantee that $\lim_{N \to \infty} I_{2N+1} = 0$ and that
     \[\sum_{k=-\infty}^{\infty}a_{k}e^{ik\omega_0t} = \frac{x(t^+) + x(t^-)}{2},\]
     where
     \begin{align*}
@@ -897,3 +897,19 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
     \end{align*}
     are the left and right limits of $x(t)$ respectively.
 \end{thm}
+
+\begin{defn}
+    The \emph{Fourier transform} of a signal $x(t)$ is
+    \[X(i\omega) = \int_{-\infty}^{\infty}x(t)e^{-i\omega t}dt.\] Then
+    \[x(t) = \frac{1}{2\pi}\int_{-\infty}^{\infty}X(i\omega)e^{i\omega t}dt.\]
+\end{defn}
+
+\begin{prop}
+    Both the Fourier series and Fourier transform are linear. For functions $x(t)$ and $y(t)$ with Fourier transforms $X(i\omega)$ and $Y(i\omega)$ respectively, the Fourier transform of $ax(t) + by(t) = aX(i\omega) + bY(i\omega)$.
+\end{prop}
+
+\begin{defn}
+    The \emph{Laplace transform} of a signal $x(t)$ is given by
+    \[X(s) = \int_{-\infty}^{\infty}x(t)e^{-st}dt,\]
+    where $s$ is complex.
+\end{defn}
