@@ -5,7 +5,7 @@
 
 \subsection{Mathematically Describing Images}
 
-Traditionally, images have been modeled as graphs (or level sets) of continuous functions defined on a rectangular domain $D \subset \R^2$, and codomain $P \subset \R$. \[D = \left[0, R_1\right] \times \left[0, R_2\right] \subset \R^2\] \[P = \left[0, L\right] \subset \R\] \[f : D \to P\]
+Traditionally, images have been modeled as graphs (or level sets) of continuous functions defined on a rectangular domain $D \subset \R^2$, and codomain $P \subset \R$. That is, an image $f$ with domain $D$ and codomain $P$ is \[D = \left[0, R_1\right] \times \left[0, R_2\right] \subset \R^2,\] \[P = \left[0, L\right] \subset \R,\] \[f : D \to P.\]
 
 This definition is for grayscale (black and white), images, not color images. A value of $0$ would correspond to the color black, and $L$ to white, and everything in between would be various shades of gray.
 
@@ -663,4 +663,4 @@ Now consider the matrix $B = \frac{-1}{2}JD^{(2)}J$. Computing this matrix is kn
 
 Finally, form the $N \times d$ matrix $\hat{X} = V_d\Lambda_d^{1/2}$. Then the $i$-th row of $\hat{X}$ is $\hat{x}_i \in \R^d$. Since these are points in $\R^d$ where $\norm{\hat{x}_i - \hat{x}_j}_2 \approx d_{i, j}$, we can now apply standard clustering algorithms, such as $k$-means, to find cluster among the points. It is important to pick a good target dimension for the projection, as using very small $d$ can result in underfitting, and high $d$ can result in overfitting. Using $d=3$ is the highest possible dimension that can still be visually inspected easily, and so is often a good choice.
 
-This process is known as ``Classical Multidimensional Scaling'', or CMDS, and is part of a larger family of projection algorithms known as MDS. Since forming the matrix $D$ did not depend at all on the square root velocity transform distance metric, this process is much more widely applicable to clustering data.
+This process is known as ``Classical Multidimensional Scaling'' (CMDS), and is part of a larger family of projection algorithms known as MDS. Since forming the matrix $D$ did not depend at all on the square root velocity transform distance metric, this process is much more widely applicable to clustering data.
