@@ -1,10 +1,14 @@
 abelian
+abelianization
 Archimedean
 arity
+Bézout
 bijective
 Burkhart
 codomain
 conjugacy
+coset
+cosets
 denoise
 denoising
 distributivity
@@ -34,5 +38,7 @@ quadric
 Sobel
 subgraph
 surjective
+surjection
+totient
 Wronskian
 Zermelo-Fraenkel
