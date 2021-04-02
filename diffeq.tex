@@ -105,7 +105,9 @@ In general, any first order autonomous ODE is of the form $\frac{dy}{dt} = f(y)$
 \end{rmk}
 
 \begin{defn}
-    Let $y' = f(y)$ be a first order autonomous ODE, and consider the set $\left\{y \in \R \compbar f(y) = 0 \right\}$. This is the \emph{critical point} set of the ODE.
+    Let $y' = f(y)$ be a first order autonomous ODE, and consider the set
+    \[\left\{y \in \R \compbar f(y) = 0 \right\}.\]
+    This is the \emph{critical point} set of the ODE.
 \end{defn}
 
 \begin{defn}
@@ -135,7 +137,7 @@ In general, any first order autonomous ODE is of the form $\frac{dy}{dt} = f(y)$
 \begin{exmp}
     Let $y' = (1-y)^2(y-4)$, and so $y'' = -2(1-y)(y-4) + (1-y)^2$. Since both $y'$ and $y''$ are continuous on $\R$, by Theorem \ref{general-first-order-existence} we know that a unique solution must exist for any given initial value. It follows that no solution curves cross each other anywhere.
 
-    Furthermore, we can see that the critical points are $1$ and $4$, and since $y''(4) = 9$ and $y''(1) = 0$ it follows that $4$ is an unstable equilibrium. We know that $1$ is an equilibrium as well, and that $y''' < 0$, so $1$ is semi-stable -- solutions converge to it from above, and diverge from it below.
+    Furthermore, we can see that the critical points are $1$ and $4$, and since $y''(4) = 9$ and $y''(1) = 0$ it follows that $4$ is an unstable equilibrium. We know that $1$ is an equilibrium as well, and that $y''' < 0$, so $1$ is semi-stable --- solutions converge to it from above, and diverge from it below.
 \end{exmp}
 
 \subsection{Existence and uniqueness of solutions}
@@ -485,12 +487,8 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
     Noting that that our result contained both sine and cosine, we instead now guess that $Y = A\sin(t) + B\cos(t)$, and so $-A\sin(t) - B\cos(t) - 3A\cos(t) + 3B\sin(t) - 4A\sin(t) - 4B\cos(t) = 2\sin(t)$. At $t = 0$ and $t = \frac{\pi}{2}$ respectively, this implies that $-B - 3A - 4B = 0$ and $-A + 3B - 4A = 2$, and so we have $-5B - 3A = 0$ and $3B - 5A = 2$. Solving this system, we obtain $A = -\frac{5}{17}$ and $B = \frac{3}{17}$, and so $Y = \frac{3}{17}\cos(t) - \frac{5}{17}\sin(t)$.
 \end{exmp}
 
-\begin{rmk}\proofbreak
-    \begin{itemize}
-        \item If the nonhomogeneous term contains $\sin(\alpha t)$ or $\cos(\beta t)$, then the guess for $Y$ should contain the terms $A\sin(\alpha t)$ and $B\cos(\beta t)$.
-        \item If the homogeneous term contains $e^{\alpha t}$, the guess should contain $Ae^{\alpha t}$ as a term.
-        \item If the homogeneous term contains a polynomial of degree $n$, then the guess should contain a polynomial with undetermined coefficients also of degree $n$.
-    \end{itemize}
+\begin{rmk}
+    If the nonhomogeneous term contains $\sin(\alpha t)$ or $\cos(\beta t)$, then the guess for $Y$ should contain $A\sin(\alpha t) + B\cos(\beta t)$. Similarly, if it contains $e^{\alpha t}$, then the guess should contain $Ae^{\alpha t}$ as a term. Finally, if it contains a polynomial of degree $n$, then the guess should contain a polynomial with undetermined coefficients also of degree $n$.
 \end{rmk}
 
 \begin{exmp}
@@ -516,7 +514,7 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
 \end{exmp}
 
 \begin{exmp}
-    Consider $y'' - 2y' + y = te^t + 4$. Our guess in this case should be $t^2(A_0t + A_1)e^t + B$. Since the nonhomogeneous term contains a first degree polynomial multiplied by $e^t$, our guess must include a general first degree polynomial multiplied by $e^t$, hence $A_0te^t + A_1e^t$. However both $te^t$ and $e^t$ are already solutions to the corresponding homogeneous equation, and so we multiply both by $t^2$ (multiplying just by $t$ would still leave $te^t$). Finally, our guess needs a general zero degree polynomial ($B$) corresponding to the $+4$ in the nonhomogeneous term.
+    Consider $y'' - 2y' + y = te^t + 4$. Our guess in this case should be $t^2(A_0t + A_1)e^t + B$. Since the nonhomogeneous term contains a first degree polynomial multiplied by $e^t$, our guess must include a general first degree polynomial multiplied by $e^t$, hence $A_0te^t + A_1e^t$. However, both $te^t$ and $e^t$ are already solutions to the corresponding homogeneous equation, and so we multiply both by $t^2$ (multiplying just by $t$ would still leave $te^t$). Finally, our guess needs a general zero degree polynomial ($B$) corresponding to the $+4$ in the nonhomogeneous term.
 \end{exmp}
 
 \begin{defn}
@@ -530,7 +528,7 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
     \begin{align*}
         Y' = u_1't + u_1 + u_2'te^t + u_2(te^t + e^t).
     \end{align*}
-    Constrain $u_1, u_2$ such that $u_1't + u_2'te^t = 0$. This doesn't not over-constrain the system since we have two unknown functions and only one other constraint (the differential equation). Then we have $Y' = u_1 + u_2(te^t + e^t)$, and so
+    Constrain $u_1, u_2$ such that $u_1't + u_2'te^t = 0$. This doesn't over-constrain the system since we have two unknown functions and only one other constraint (the differential equation). Then we have $Y' = u_1 + u_2(te^t + e^t)$, and so
     \[Y'' = u_1' + u_2'(te^t + e^t) + u_2(te^t + 2e^t).\]
     Substituting $Y$ into the differential equation, we obtain
     \begin{align*}
@@ -772,7 +770,7 @@ Now consider the system
 
 \begin{cor}
     Let $\vec{x}^{(k)}$ be a set of $n$ solutions to a system of the form \ref{linear-nth-order-system} on an open interval $I = \alpha < t < \beta$.
-    All solutions to the system can be expressed as a linear combination of $\vec{x}^{(k)}$ if they are linearly independent at some $t_0 \in I$. 
+    All solutions to the system can be expressed as a linear combination of $\vec{x}^{(k)}$ if they are linearly independent at some $t_0 \in I$.
 \end{cor}
 
 \begin{rmk}
