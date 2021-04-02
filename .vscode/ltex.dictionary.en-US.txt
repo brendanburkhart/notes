@@ -6,6 +6,7 @@ Bézout
 bijective
 bipartitions
 Burkhart
+CMDS
 codomain
 conjugacy
 coset
