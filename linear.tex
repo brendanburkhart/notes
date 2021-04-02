@@ -205,7 +205,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{exmp}
 
 \begin{exmp}
-    Let $F$ be any field, and $n \in \N$. Then define the set $P_n(F)$, the set of all polynomials with coefficients in $F$ of degree at most $n$, as follows. \[P_n(F) = \left\{a_0 + a_1x_1 + \cdots + a_nx^n \compbar a_i \in F \textrm{ for }i=0,\ldots,n\right\}\] \[(a_0 + \cdots + a_nx^n) + (b_0 + \cdots + b_nx^n) = (a_0 + b_0) + \cdots + (a_n + b_n)x^n\] \[r(a_0 + \cdots + a_nx^n) = ra_0 + \cdots + ra_nx^n\]
+    Let $F$ be any field, and $n \in \N$. Then define the set $P_n(F)$, the set of all polynomials with coefficients in $F$ of degree at most $n$, as follows: \[P_n(F) = \left\{a_0 + a_1x_1 + \cdots + a_nx^n \compbar a_i \in F \textrm{ for }i=0,\ldots,n\right\},\] \[(a_0 + \cdots + a_nx^n) + (b_0 + \cdots + b_nx^n) = (a_0 + b_0) + \cdots + (a_n + b_n)x^n,\] \[r(a_0 + \cdots + a_nx^n) = ra_0 + \cdots + ra_nx^n.\]
 
     $P_n(F)$ is a vector space over $F$. Similarly, $P(F)$ (the set of polynomials with coefficients in $F$ of \textit{any} degree) forms a vector space over $F$.
 \end{exmp}
@@ -562,7 +562,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \begin{proof}\proofbreak
     \begin{enumerate}
         \item Assume that $|S| > n$. Using the Exchange lemma \ref{exchange-lemma}, and the fact that $S$ is linearly independent, we can construct a basis $B_n$ for $V$ such that $B_n \subseteq S$. By Lemma \ref{basis-maximal-independent-subset}, it follows that $B_n = S$, which would imply $|S| = n$. This is a contradiction, and so $|S| \leq n$.
-        \item If $V = \spanset{S}$, we are done. If not, there must exist some $v \notin \spanset{S}$. By Proposition \ref{linear-independence-with-extra-vector}, $S \union v$ is linearly independent. Continue until the set has $n$ elements, then since by (1) $n+1$ elements would be linearly dependent, it follows that every $v \in \spanset{\{S \union v_1 \union v_2 \union \ldots\}}$ so it follows that $\{S \union v_1 \union v_2 \union \ldots\}$ is a basis for $V$.
+        \item If $V = \spanset{S}$, we are done. If not, there must exist some $v \notin \spanset{S}$. By Proposition \ref{linear-independence-with-extra-vector}, $S \union v$ is linearly independent. Continue until the set has $n$ elements, then since by (1) $n+1$ elements would be linearly dependent, it follows that every $v \in \spanset{\{S \union v_1 \union v_2 \union \ldots\}}$. Then $\{S \union v_1 \union v_2 \union \ldots\}$ must be a basis for $V$.
         \item ($\implies$) If $S$ is linearly independent, then by (2) we can complete $S$ to a basis $B$ such that $S \subseteq B$. Since $|S| = n = |B|$, we have $S = B$, and so $\spanset{S} = V$. \\ ($\impliedby$) Instead, if $\spanset{S} = V$, then by Proposition \ref{linearly-independent-subset-existence} there exists $T \subseteq S$ such that $\spanset{T} = \spanset{S} = V$ and $T$ is linearly independent. Since $|S| = n = |T|$, it follows that $S = T$ and so $S$ must be linearly independent.
     \end{enumerate}
 \end{proof}
@@ -1042,7 +1042,7 @@ For an $m \times n$ matrix $A$, and a vector $x \in F^n$, we define the product 
 \end{rmk}
 
 \begin{defn}
-    Let $V, W$ be vector fields with ordered bases $B = \langle v_1, \ldots, v_n$ and $D = \langle w_1, \ldots, w_m \rangle$, and let $A$ be an $m \times n$ matrix (where $m = \dim W$ and $n = \dim V$). Let $L_A$ be a linear transformation $L_A: V \to W$ such that $L_A(v_i) = A_{1,i}w_1 + \cdots + A_{m,i}w_m$.
+    Let $V$ and $W$ be vector fields with ordered bases $B = \langle v_1, \ldots, v_n \rangle$ and $D = \langle w_1, \ldots, w_m \rangle$, and let $A$ be an $m \times n$ matrix (where $m = \dim W$ and $n = \dim V$). Let $L_A$ be a linear transformation $L_A: V \to W$ such that $L_A(v_i) = A_{1,i}w_1 + \cdots + A_{m,i}w_m$.
 \end{defn}
 
 \begin{rmk}
@@ -1206,7 +1206,7 @@ For an $m \times n$ matrix $A$, and a vector $x \in F^n$, we define the product 
 \end{rmk}
 
 \begin{defn}
-    Let $F$ be any field. Then the \emph{$n \times n$ identity matrx}, dentoed by $I$ or $I_n$ is the matrix with ones on the major diagonal and zeroes elsewhere.
+    Let $F$ be any field. Then the \emph{$n \times n$ identity matrix}, denoted by $I$ or $I_n$ is the matrix with ones on the major diagonal and zeroes elsewhere.
 \end{defn}
 
 \begin{exmp}
@@ -1302,7 +1302,7 @@ For an $m \times n$ matrix $A$, and a vector $x \in F^n$, we define the product 
 \end{exmp}
 
 \begin{prop}
-    Given a square matrix $A$, perform the row reduction $(A|I_n) \mapsto (E|B)$, where $E$ is the unique reduced row echelon form of $A$. Then $A$ is invertible with inverse $B$ if and only if $E = I_n$.
+    Given a square matrix $A$, perform the row reduction $(A|I_n) \mapsto (E|B)$, where $E$ is the (unique) reduced row echelon form of $A$. Then $A$ is invertible with inverse $B$ if and only if $E = I_n$.
 \end{prop}
 
 We will explore two reasons to explain this.
@@ -1328,7 +1328,7 @@ $(-3, 2)$ is the unique solution to the system
 \textbf{Reason 2.} Define an $n \times n$ \emph{elementary} matrix to be a matrix that can be obtained from $I_n$ by a single row operation.
 
 \begin{lemma}
-    Suppose $A \mapsto B$ via a single row operation, and $E$ is the corresponding elementary matrix obtained by performing the same row oepration on $I_n$. Then $B = EA$.
+    Suppose $A \mapsto B$ via a single row operation, and $E$ is the corresponding elementary matrix obtained by performing the same row operation on $I_n$. Then $B = EA$.
 \end{lemma}
 
 \begin{exmp}
