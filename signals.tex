@@ -150,9 +150,9 @@ Two of the most common signals are the unit impulse signal, and the unit step si
 \label{fig:discrete-unit-step}
 \end{figure}
 
-The delta function can be used to sift out everything but one value of a discrete time signal.
-\[x[n]\delta[n-n_0] = x[n_0]\delta[n-n_0]\]
-\[\sum_{m=-\infty}^n x[m]\delta[m-n_0] = x[n_0]\]
+The delta function can be used to sift out everything but one value of a discrete time signal:
+\[x[n]\delta[n-n_0] = x[n_0]\delta[n-n_0],\]
+\[\sum_{m=-\infty}^n x[m]\delta[m-n_0] = x[n_0].\]
 
 In continuous time, we can define the unit step function similarly as \[u(t) =
 \begin{dcases}
@@ -162,7 +162,7 @@ In continuous time, we can define the unit step function similarly as \[u(t) =
 Note that $u(0)$ is undefined. Defining the continuous time impulse is a bit more challenging. We would like it to be $\delta(t)$ such that
 \[u(t) = \int_{-\infty}^{t}\delta(\tau)d\tau.\] We can therefore define it as $\delta(t) = \lim_{\Delta\to 0}\delta_{\Delta}(t)$, where $\delta_{\Delta}(t)$ is a step impulse with width $\Delta$ and height $\frac{1}{\Delta}$ beginning at $t = 0$.
 
-Note the similarities between the discrete and continuous time version of these signals -- the first difference and first derivative play the same roles, as do the sums and integrals.
+Note the similarities between the discrete and continuous time version of these signals --- the first difference and first derivative play the same roles, as do the sums and integrals.
 
 Since the continuous time delta function is not actually a function (it's technically a \emph{distribution}), behaves somewhat differently than may be expected. For example, \[\int_{-\infty}^{\infty}x(t)\delta(at)dt = \frac{1}{\abs{a}}x(0).\]
 
@@ -489,7 +489,7 @@ A \emph{system} is a process that takes an input signal and produces an output s
 
 \begin{prop}
     Let $S$ be a discrete time LTI system with impulse response $h[n]$. Then \begin{itemize}
-        \item $S$ is causal if and only if $h[n]$ is right-sided -- that is, if $h[n] = 0$ for all $n < 0$.
+        \item $S$ is causal if and only if $h[n]$ is right-sided --- that is, if $h[n] = 0$ for all $n < 0$.
         \item $S$ is memoryless if and only if $h[k] = c\delta[n]$ for some $c$.
     \end{itemize}
 \end{prop}
@@ -508,7 +508,7 @@ A \emph{system} is a process that takes an input signal and produces an output s
     If $S$ is stable, then for $x[n] = 1$ we have $\abs{y[n]} < M$ for some $M$.
     \[y[n] = \sum_{k=-\infty}^{\infty}h[k]x[n-k] = \sum_{k=-\infty}^{\infty}h[k]x[n-k] < M.\]
 
-    If such $M$ exists, then $\abs{x[n]} < K$ for some $K$ implis that
+    If such $M$ exists, then $\abs{x[n]} < K$ for some $K$ implies that
     \begin{align*}
         \abs{y[n]} \leq \sum_{k=-\infty}\abs{h[k]}\abs{x[n-k]} < K\sum_{k=-\infty}^{\infty} < KM < \infty.
     \end{align*}
@@ -660,7 +660,7 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
 
 \begin{prop}
     Let $S$ be a CT LTI system with impulse response $h(t)$. Then \begin{itemize}
-        \item $S$ is causal if and only if $h(t)$ is right-sided -- that is, if $h(t) = 0$ for all $t < 0$.
+        \item $S$ is causal if and only if $h(t)$ is right-sided --- that is, if $h(t) = 0$ for all $t < 0$.
         \item $S$ is memoryless if and only if $h(t) = c\delta(t)$ for some $c$.
     \end{itemize}
 \end{prop}
@@ -755,7 +755,7 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
 \end{rmk}
 
 \begin{rmk}
-    Representing a signal as a Fourier series can be extremely useful for signal processing. It can also be used for data compression for transmission and storage, since the signal can be represented as just $T_0$ and the coefficients $a_k$. 
+    Representing a signal as a Fourier series can be extremely useful for signal processing. It can also be used for data compression for transmission and storage, since the signal can be represented as just $T_0$ and the coefficients $a_k$.
 \end{rmk}
 
 \begin{defn}
@@ -805,7 +805,7 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
     Let $\phi_k = e^{ik\omega_0t}$ be the Fourier series. Note that $\bar{\phi_k} = \phi_{-k}$. Then on $T_0$,
     if $k \neq l$ we have
     \[\langle \phi_k, \phi_l \rangle = \int_{t_0}^{t_0+T_0}e^{i(k-l)\omega_0t} = 0,\]
-    and if $k = l$ then $\langle \phi_k, \phi_l \rangle = T_0$. Therefore the Fourier series is an orthogonal basis set, and is orthonormal when $T_0 = 1$.
+    and if $k = l$ then $\langle \phi_k, \phi_l \rangle = T_0$. Therefore, the Fourier series is an orthogonal basis set, and is orthonormal when $T_0 = 1$.
 \end{exmp}
 
 \begin{exmp}
@@ -818,7 +818,7 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
                 ymin=-3,ymax=2,ylabel=$x(t)$,
                 xmin=-5,xmax=5,xlabel=$t$
                 ]
-    
+
                 \addplot+[const plot, no marks, ultra thick, blue] coordinates {(-5,0) (5,0)};
 
                 \draw[->, ultra thick, blue, -{Latex[blue]}] (-4,0)--(-4,1);
@@ -854,7 +854,7 @@ Many of the results we have seen for DT LTI systems hold for CT LTI systems as w
                 ymin=0,ymax=1.45,ylabel=$x(t)$,
                 xmin=-7,xmax=7,xlabel=$t$
                 ]
-    
+
                 \addplot+[const plot, no marks, ultra thick, blue] coordinates {(-6,0) (-5,1) (-3,0) (-1,1) (1,0) (3,1) (5,0) (6,0)};
             \end{axis}
         \end{tikzpicture}
