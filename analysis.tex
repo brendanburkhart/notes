@@ -16,13 +16,13 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
         \hline
         \thead{$X$} & \thead{$Y$} & \thead{$\neg X$} & \thead{$X \land Y$} & \thead{$X \lor Y$} \\
         \hline
-        \textsc{true}  & \textsc{true} & \textsc{false} & \textsc{true} & \textsc{true} \\
+        \textsc{true} & \textsc{true} & \textsc{false} & \textsc{true} & \textsc{true} \\
         \hline
         \textsc{true}  & \textsc{false} & \textsc{false} & \textsc{false} & \textsc{true} \\
         \hline
-        \textsc{false}  & \textsc{true} & \textsc{true} & \textsc{false} & \textsc{true} \\
+        \textsc{false} & \textsc{true} & \textsc{true} & \textsc{false} & \textsc{true} \\
         \hline
-        \textsc{false}  & \textsc{false} & \textsc{true} & \textsc{false} & \textsc{false} \\
+        \textsc{false} & \textsc{false} & \textsc{true} & \textsc{false} & \textsc{false} \\
         \hline
     \end{tabularx}
 \end{center}
@@ -151,7 +151,8 @@ Two sets are equal when they contain precisely the same elements. For example, i
 \end{rmk}
 
 \begin{defn}
-    The complement of set $A$ with respect to some super set $U$ is the set $\left\{x \in U \compbar x \notin A\right\}$. The complement is sometimes denoted $A'$.
+    The complement of set $A$ with respect to some super set $U$ is
+    \[A' = \left\{x \in U \compbar x \notin A\right\}.\]
 \end{defn}
 
 \begin{exmp}
@@ -616,7 +617,12 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
 \end{prop}
 
 \begin{proof}
-    If $x = 0$, then $x^2 = 0(0) = 0$. If $x > 0$, then $x^2 \in F^+$, and so $x^2 > 0$. If $x < 0$, then $(-x)^2 \in F^+$, and since $(-x)^2 = (-1)^2x^2 = x^2$, it follows that $x^2 > 0$.
+    If
+    \begin{itemize}
+        \item $x = 0$, then $x^2 = 0(0) = 0$,
+        \item $x > 0$, then $x^2 \in F^+$, and so $x^2 > 0$,
+        \item $x < 0$, then $(-x)^2 \in F^+$, and since $(-x)^2 = (-1)^2x^2 = x^2$, it follows that $x^2 > 0$.
+    \end{itemize}
 \end{proof}
 
 \section{Real Numbers}
