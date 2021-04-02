@@ -1293,7 +1293,7 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
     \end{itemize}
 \end{defn}
 
-\begin{thm}
+\begin{thm}\label{orbit-conjugate-stabilizers}
     If $x, y \in G$ belong to the same $G$-orbit, then $G_x$ is conjugate to $G_y$.
 \end{thm}
 
@@ -1301,7 +1301,7 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
     We know that $y = g \cdot x$, and that $s \cdot x = x$ for all $s \in G_x$. Therefore, $gsg^{-1} \cdot y = gs \cdot (g^{-1} \cdot y) = g^{-1} \cdot (s \cdot x) = y$, so $gsg^{-1} \in G_y$. Similarly, since $x = g^{-1} \cdot y$ we know that for $g^{-1}sg \in G_x$ for all $s \in G_x$. Therefore, $G_x = gG_yg^{-1}$.
 \end{proof}
 
-\begin{thm}Orbit-Stabilizer Theorem\label{orbit-stablizer}\proofbreak
+\begin{thm}Orbit-Stabilizer Theorem\label{orbit-stabilizer}\proofbreak
     For $x \in X$, there is a bijection between cosets of $G_x$ in $G$ and the $G$-orbit of $x$, $G \cdot x$.
 \end{thm}
 
@@ -1311,7 +1311,7 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
     If $\sigma(g_1\cdot x) = \sigma(g_2 \cdot x)$, then $g_2 = g_1h$ for some $h \in G_x$. It follows that $g_2 \cdot x = g_1(h \cdot x) = g_1 \cdot x$ so $\sigma$ is injective. For any $gG_x$, clearly $\sigma(g \cdot x)$ for $\sigma$ is a bijection.
 \end{proof}
 
-\begin{cor}
+\begin{cor}\label{orbit-stabilizer-cor}
     If $G$ is finite, then $\abs{G \cdot X} = \frac{\abs{G}}{\abs{G_x}}$.
 \end{cor}
 
@@ -1333,4 +1333,63 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
     By Cauchy's Theorem \ref{cauchy-thm}, $G$ must contain elements of order $p^2$ and $p$. If any element has order $p^2$, then $G$ is isomorphic to $\Z_{p^2}$, and we are done. If not, since the center of $G$ is non-trivial by Theorem \ref{prime-order-center-nontrivial} there must be some non-trivial $x \in Z(G)$ with order $p$. Note that since $Z(G)$ is an abelian subgroup of $G$, $\langle x \rangle \subseteq Z(g)$ and $x^k$ commutes with all elements of $G$.
 
     Fix some $y \neq e$ not in $\langle x \rangle$. Then $\langle x, y\rangle$ is a subgroup of $G$ with order greater than $p$, so by Lagrange's Theorem \ref{lagrange-thm} we have $\langle x, y \rangle = G$. Therefore, $G$ is isomorphic to $\Z_p \times \Z_p$.
+\end{proof}
+
+\begin{defn}
+    Consider a $G$-action on $X$. The \emph{fixed points} of $g \in G$, denoted by $X^g$, are the elements of $X$ which are left fixed by $g$.
+    \[X^g = \left\{x \in X \compbar g \cdot x = x\right\}\]
+\end{defn}
+
+\begin{thm}Orbit Counting Theorem\label{orbit-counting}\proofbreak
+    The number of distinct orbits of an action of $G$ on $X$ is
+    \[\frac{1}{\abs{G}}\sum_{g \in G}\abs{X^g}.\]
+\end{thm}
+
+\begin{proof}
+    Consider the set of all ordered pairs $(g, x) \in G \times X$ such that $x \in X^g$. Let $M$ be the cardinality of this set. We of course have
+    \begin{equation}\label{orbit-count-star}\tag{$\star$}
+        M = \sum_{g \in G}\abs{X^g}.
+    \end{equation}
+    We can flip the role of $x$ and $g$, and alternately express this as
+    \begin{align*}
+        M = \sum_{x \in X}\abs{G_x}.
+    \end{align*}
+    Let $k$ be the number of distinct orbits, and $X_1, X_2, \ldots, X_k$ be the distinct orbits. Since orbits are necessarily disjoint,
+    \begin{equation}\label{orbit-count-star-star}\tag{$\star\star$}
+        M = \sum_{i=1}^{k}\sum_{x \in X_i}\abs{G_x}.
+    \end{equation}
+    Recall that points in the same orbit must have conjugate stabilizer groups by Theorem \ref{orbit-conjugate-stabilizers}. Therefore, by fixing some $\bar{x} \in X_i$ we have
+    \[\sum_{x \in X_i}\abs{G_x} = \abs{X_i}\abs{G_{\bar{x}}} = \abs{G \cdot \bar{x}}\abs{G_{\bar{x}}}.\]
+    By the corollary to the Orbit-Stabilizer Theorem \ref{orbit-stabilizer} we know $\abs{G \cdot \bar{x}}\abs{G_{\bar{x}}} = \abs{G}$ and so by \ref{orbit-count-star-star}
+    \begin{align*}
+        M = \sum_{i=1}^{k}\abs{G} = k\abs{G}.
+    \end{align*}
+    Then by equating this with the expression for $M$ given by \ref{orbit-count-star}, we find
+    \[\sum_{g \in G}\abs{X^g} = k\abs{G},\]
+    and so
+    \[k = \frac{1}{\abs{G}}\sum_{g \in G}\abs{X^g}.\]
+\end{proof}
+
+\begin{thm}
+    Consider a $G$-action on $X$. If $g, g' \in G$ are conjugate, then \[\abs{X^{g}} = \abs{X^{g'}},\]
+\end{thm}
+
+\begin{proof}
+    Since $g$ is conjugate to $g'$, there is some $h \in G$ such that $g' = hgh^{-1}$.
+    Consider $\sigma: X^{g} \to X^{g'}$ where $\sigma(x) = h \cdot x$.
+    Since
+    \begin{align*}
+        g' \cdot (h \cdot x) &= hgh^{-1} \cdot (h \cdot x) = hgh^{-1}h x = h \cdot (g \cdot x) = h \cdot x,
+    \end{align*}
+    we can see that $\sigma(x) \in X^{g'}$ whenever $x \in X^g$, so the codomain is indeed $X^{g'}$.
+
+    We will now show that $\sigma$ is a bijection between $X^g$ and $X^{g'}$. Consider any $x, y \in X^g$ such that $\sigma(x) = \sigma(y)$. Then $h \cdot x = h \cdot y$, so $h^{-1}h \cdot x = h^{-1}h \cdot y$. Since $e \cdot x = x$ we have $x = y$, and so $\sigma$ is injective.
+
+    For any $y \in X^{g'}$, we know that $\sigma(h^{-1} \cdot y) = hh^{1-} \cdot y = y$. Since $g = h^{-1}g'h$ and $y \in X^{g'}$, we have
+    \begin{align*}
+        g \cdot (h^{-1} \cdot y) &= h^{-1}g'hh^{-1} \cdot y = h^{-1}g' \cdot y = h^{-1} \cdot y.
+    \end{align*}
+    Therefore, $h^{-1} \cdot y \in X^{g}$, and so $\sigma$ must be surjective onto $X^{g'}$.
+
+    We have shown that $\sigma$ is a bijection, and the result follows immediately.
 \end{proof}
