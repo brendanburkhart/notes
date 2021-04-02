@@ -683,7 +683,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{lemma}
 
 \begin{proof}
-    Consider the set \[L = \left\{|W| \compbar W \textrm{ is a walk in } G\right\} \subseteq \N.\] By the well-ordering principle, there is a smallest length $l \in L$. Let $P$ be any $(u,v)$-walk in $G$ of length $l$. Assume, for the sake of contradiction, that $P$ is \emph{not} a path in $G$. Then there is some repeated vertex $w$ in $P$: \[P = u \sim \cdots \sim w \sim \cdots \sim w \sim \cdots \sim v.\] However, \[P' = u \sim \cdots \sim w \sim \cdots \sim v\] is also a $(u, v)$-walk in $G$, and is shorter than $P$ by at least one edge, which contradicts our assumption. Therefore, $P$ is a path in $G$.
+    Consider the set \[L = \left\{|W| \compbar W \textrm{ is a walk in } G\right\} \subseteq \N.\] By the well-ordering principle, there is some smallest length $l \in L$. Let $P$ be any $(u,v)$-walk in $G$ of length $l$. Assume, for the sake of contradiction, that $P$ is \emph{not} a path in $G$. Then there is some repeated vertex $w$ in $P$: \[P = u \sim \cdots \sim w \sim \cdots \sim w \sim \cdots \sim v.\] However, \[P' = u \sim \cdots \sim w \sim \cdots \sim v\] is also a $(u, v)$-walk in $G$, and is shorter than $P$ by at least one edge, which contradicts our assumption. Therefore, $P$ is a path in $G$.
 \end{proof}
 
 \begin{prop}
@@ -957,7 +957,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{prop}
 
 \begin{proof}
-    Let $v$ be the unique vertex with $d_G(v) = \Delta G$. Let $f$ be a $\Delta G$-coloring such that $f(v) = 1$. Let $U$ be the set of vertices that neighbor $v$. Since $\Delta U < \Delta G$, we know that $G[U] - v$ is a subgraph with degree at most $\Delta U - 1$, and so by Proposition \ref{chromatic-number-graph-degree} can be colored with the $\Delta U = \Delta G - 1$ remaining colors. Since no remaining uncolored vertex is adjacent to $v$, the remainder of $G$ has degree $\Delta G - 1$, and can be colored using the procedure from the proof to Proposition \ref{chromatic-number-graph-degree} using all $\Delta G$ colors.
+    Let $v$ be the unique vertex with $d_G(v) = \Delta G$, $f$ be a $\Delta G$-coloring such that $f(v) = 1$, and $U$ be the set of vertices that neighbor $v$. Since $\Delta U < \Delta G$, we know that $G[U] - v$ is a subgraph with degree at most $\Delta U - 1$, and so by Proposition \ref{chromatic-number-graph-degree} can be colored with the $\Delta U = \Delta G - 1$ remaining colors. Since no remaining uncolored vertex is adjacent to $v$, the remainder of $G$ has degree $\Delta G - 1$, and can be colored using the procedure from the proof to Proposition \ref{chromatic-number-graph-degree} using all $\Delta G$ colors.
 \end{proof}
 
 \begin{prop}\label{induced-subgraphs-minimum-degree}
@@ -1094,8 +1094,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 
 \begin{rmk}\proofbreak
     \begin{itemize}
-        \item If $\gcdof{a}{b}$ exists, it is unique.
-        \item If $\gcdof{a}{b}$ does not exist, then $a = b = 0$.
+        \item If $\gcdof{a}{b}$ exists it is unique, otherwise $a = b = 0$.
         \item If $a \neq 0$, then $\gcdof{a}{0} = |a|$.
         \item $\gcdof{a}{b} = \gcdof{-a}{b} = \gcdof{a}{-b} = \gcdof{-a}{-b}$.
         \item $\gcdof{a}{b} = \gcdof{b}{a}$.
@@ -1189,13 +1188,13 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{thm}
 
 \begin{proof}\proofbreak
-\textbf{Existence} We will proceed by induction on $n$. In the base case $n=1$, the empty product is equal to $1$ and is vacously a product of primes.
+\textbf{Existence} We will proceed by induction on $n$. In the base case $n=1$, the empty product is equal to $1$ and is vacuously a product of primes.
 
 Assume for some $n \geq 1$, all $m \in \Z$ such that $1 \leq m \leq n$ can be factored into a product of primes. There are two possible cases for $n+1$: either it is prime or it is composite. If $n+1$ is prime, then $(n+1)$ is a product of primes, and a factoring of $(n+1)$. If it is composite, there exists some $a, b \in \Z$ such that $n+1 = ab$ and $1 < a < n+1$ and $1 < b < n+1$. Therefore, $a$ and $b$ can be factored into a product of primes by assumption, and so $ab$ is can be factored into a product of primes, and the induction is complete.
 
 \textbf{Uniqueness} Assume, for that sake of contradiction that there are some positive integers that can be factored into a product of primes in at least two distinct ways. Let $Y$ be the set of all such positive integers. By the well-ordering principle, there exists some smallest element $y \in Y$.
 
-Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime which are factorings of $y$, and are not simply permutations of each other. It follows that these products have no prime factors in common. If they did have at least one factor $r$ in common, then $y/r$ would be a smaller element of $y$, but $y$ is the smallest element of $Y$. Then since $p_1 \mid y = q_1q_2\cdots q_m$, we know that $p_1 = q_i$ for some $1 \leq i \leq m$ by Lemma \ref{prime-division-two}, which is a contradiction, and so $Y = \emptyset$.
+Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime which are factorization of $y$, and are not simply permutations of each other. It follows that these products have no prime factors in common. If they did have at least one factor $r$ in common, then $y/r$ would be a smaller element of $y$, but $y$ is the smallest element of $Y$. Then since $p_1 \mid y = q_1q_2\cdots q_m$, we know that $p_1 = q_i$ for some $1 \leq i \leq m$ by Lemma \ref{prime-division-two}, which is a contradiction, and so $Y = \emptyset$.
 \end{proof}
 
 \begin{defn}

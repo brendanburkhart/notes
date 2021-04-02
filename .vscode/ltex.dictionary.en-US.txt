@@ -4,6 +4,7 @@ Archimedean
 arity
 Bézout
 bijective
+bipartitions
 Burkhart
 codomain
 conjugacy
@@ -12,6 +13,7 @@ cosets
 denoise
 denoising
 distributivity
+edgeless
 equilibria
 Eulerian
 homomorphism
