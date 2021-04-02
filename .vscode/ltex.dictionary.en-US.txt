@@ -40,5 +40,6 @@ subgraph
 surjective
 surjection
 totient
+trichotomy
 Wronskian
 Zermelo-Fraenkel
