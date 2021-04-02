@@ -20,6 +20,7 @@ homomorphism
 homomorphisms
 hyperboloid
 iff
+infimum
 injective
 irreflexive
 Isomorphisms
@@ -43,5 +44,6 @@ surjective
 surjection
 totient
 trichotomy
+underfitting
 Wronskian
 Zermelo-Fraenkel
