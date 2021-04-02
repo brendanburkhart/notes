@@ -5,7 +5,7 @@
 
 Our first motivation for studying groups will be the symmetries of regular $n$-gons, starting with the regular $3$-gon: the equilateral triangle. The symmetries of a regular $n$-gon in the plane are rotations and reflections which take the $n$-gon to itself.
 
-For example, if we take an equilateral triangle and label the vertices $A, B, C$, in anti-clockwise order starting from the top, we have two rotational symmetries: rotation by $120^\circ$ and rotation by $240^\circ$, in a particular sense or direction, say anti-clockwise. We also have three reflection symmetries -- reflections across a line going from one vertex to the midpoint of the opposite edge.
+For example, if we take an equilateral triangle and label the vertices $A, B, C$, in anti-clockwise order starting from the top, we have two rotational symmetries: rotation by $120^\circ$ and rotation by $240^\circ$, in a particular sense or direction, say anti-clockwise. We also have three reflection symmetries --- reflections across a line going from one vertex to the midpoint of the opposite edge.
 
 \begin{figure}[ht!]
     \centering
@@ -231,7 +231,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \begin{proof}
     Let $H$ be a subgroup of $\Z$. If $H = \{0\}$, then $H$ is trivially cyclic, so assume $H \neq \{0\}$. For any $x \in H$, $-x$ must also be in $H$, and so since $H \neq \{0\}$ there must be some smallest positive integer $m$ in $H$.
 
-    Now consider any $k \in H$. We know that $k = qm + r$ for some $q \in \Z$ and $0 \leq r < m$ -- that is, $r = k \bmod m$ and $q = \frac{k - r}{m}$. Since $m, k \in H$, and $r = k + (-qm)$, we know that $r \in H$. Since $m$ is the smallest positive integer in $H$, it follows that $r = 0$. Therefore, $k = qm$, so $m$ generates all of $H$, and it follows that $H$ must be cyclic.
+    Now consider any $k \in H$. We know that $k = qm + r$ for some $q \in \Z$ and $0 \leq r < m$ --- that is, $r = k \bmod m$ and $q = \frac{k - r}{m}$. Since $m, k \in H$, and $r = k + (-qm)$, we know that $r \in H$. Since $m$ is the smallest positive integer in $H$, it follows that $r = 0$. Therefore, $k = qm$, so $m$ generates all of $H$, and it follows that $H$ must be cyclic.
 \end{proof}
 
 \begin{thm}
@@ -413,7 +413,9 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
 \begin{proof}
     For $x \in G$, we know $\varphi(x) = \varphi(ex) = \varphi(e)\varphi(x)$, so $\varphi(e)$ is a left identity in $G'$. Similarly, $\varphi(x) = \varphi(xe) = \varphi(x)\varphi(e)$, so $\varphi(e) = e$.
 
-    Consider $\varphi(xx^{-1})$, which is $\varphi(x)\varphi(x^{-1})$. Since $e = \varphi(e) = \varphi(xx^{-1}) = \varphi(x^{-1}x)$, we have $\varphi(x)\varphi(x^{-1}) = e = \varphi(x^{-1})\varphi(x)$ so $\varphi(x^{-1}) = \varphi(x)^{-1}$.
+    Consider $\varphi(xx^{-1})$, which is $\varphi(x)\varphi(x^{-1})$. Since
+    \[e = \varphi(e) = \varphi(xx^{-1}) = \varphi(x^{-1}x) = \varphi(x)\varphi(x^{-1}),\]
+    we have $e = \varphi(x^{-1})\varphi(x)$ and so $\varphi(x^{-1}) = \varphi(x)^{-1}$.
 \end{proof}
 
 \begin{prop}\label{isomorphism-subgroups}
@@ -824,7 +826,7 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
         &= g_pg_1\cdots g_{p-1}.
     \end{align*}
     Since $\mathscr{R}$ is an equivalence relation on $X$, by Theorem \ref{equiv-classes-form-partition} we know that $\mathscr{R}$ partitions $X$ into disjoint equivalence classes $X_{\alpha}$. Since $\{(e, \ldots, e)\} \subseteq X$ is an equivalence classes, there exists at least one $X_{\alpha}$ such that $\abs{X_{\alpha}} = 1$. If we can show that there exists another such $X_{\alpha} = \{(x, \ldots, x)\}$, then clearly $x^p = 1$, and so by Lagrange's theorem \ref{lagrange-thm} the order of $x$ would be $p$.
-    Let $(g_1, \ldots, g_p) \in X_{\alpha}$, where $\abs{X_\alpha} = k$ for $1 \leq k \leq p$. Then there two two possibilities: either $k=p$, or $k < p$. Assume for now that $k < p$. Then by B\'ezout's Lemma \ref{bezouts}, there exists integers $a, b$ such that $ak + bp = 1$ since $k$ and $p$ must be relatively prime. Note that since both $k$ and $p$ cyclic permutations must leave $(g_1, \ldots, g_p)$ unchanged, $ak + bp$ cyclic permutations must also leave it unchanged. However, since $ak + bp = 1$, applying $ak + bp$ permutations is equivalent to applying one cyclic permutation, so $(g_1, \ldots, g_p) = (x, \ldots, x)$ for some $x \in G$.
+    Let $(g_1, \ldots, g_p) \in X_{\alpha}$, where $\abs{X_\alpha} = k$ for $1 \leq k \leq p$. Then there are two possibilities: either $k=p$, or $k < p$. Assume for now that $k < p$. Then by B\'ezout's Lemma \ref{bezouts}, there exists integers $a, b$ such that $ak + bp = 1$ since $k$ and $p$ must be relatively prime. Note that since both $k$ and $p$ cyclic permutations must leave $(g_1, \ldots, g_p)$ unchanged, $ak + bp$ cyclic permutations must also leave it unchanged. However, since $ak + bp = 1$, applying $ak + bp$ permutations is equivalent to applying one cyclic permutation, so $(g_1, \ldots, g_p) = (x, \ldots, x)$ for some $x \in G$.
     Now consider the other possibility, that $k=p$ for all $X_{\alpha}$ except for $\{(e, \ldots, e)\}$. Then \[X = \{(e, \ldots, e)\} \disjointunion \disjointunionbig_{\beta}X_{\beta},\] so $\abs{X} = 1 + ps$ for some $s$. However, we showed that $\abs{X} = \abs{G}^{p-1}$, and since $\abs{G}$ is divisible by $p$, $\abs{X}$ must be as well. Therefore, there exists at least some $X_{\alpha}$ such that $k < p$, and therefore there exists $x \in G$ such that the order of $x$ is $p$.
 \end{proof}
 
@@ -877,7 +879,7 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
     \[x_1^{a_1}x_2^{a_2}\cdots{x_s^{a_s}} = x_1^{b_1}x_2^{b_2}\cdots{x_s^{b_s}},\] and so
     \[e = x_1^{b_1-a_1}x_2^{b_2-a_2}\cdots{x_s^{b_s-a_s}}.\]
     Let \[y_i = x_1^{b_1-a_1}\cdots x_{i-1}^{b_{i-1}-a_{i-1}}x_{i+1}^{b_{i+1}-a_{i+1}}\cdots x_s^{b_s-a_s}.\]
-    Sicne $G$ is abelian we know that $x_i^{b_i-a_i}y_i = e$ so $x_i^{b_i - a_i} = y_i^{-1}$.
+    Since $G$ is abelian we know that $x_i^{b_i-a_i}y_i = e$ so $x_i^{b_i - a_i} = y_i^{-1}$.
 
     We also know that the order of $x_i^{b_i-a_i}$ must divide $p_i$ by Lagrange's theorem, and similarly that the order of $y_i^{-1}$ must divide $p_1\cdots p_{i-1}p_{i+1}\cdots p_s$. Since $p_1, \ldots, p_s$ are \emph{distinct} primes, it follows that the order of both these elements must be $1$. Therefore, $x_i^{b_i-a_i} = e$, and so $a_i = b_i$ for all $i$. It follows that $\sigma$ is injective, and so we have showed that $\sigma$ is an isomorphism between $G$ and $\Z_{p_1}\times\Z_{p_2}\cdots\times\Z_{p_s}$.
 \end{proof}
@@ -927,7 +929,7 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
 \end{thm}
 
 \begin{proof}
-    Since $ex = xe$ by definition, we know $e \in Z(G)$. Now for any $x, y \in Z(G)$ and arbitary $g \in G$,
+    Since $ex = xe$ by definition, we know $e \in Z(G)$. Now for any $x, y \in Z(G)$ and arbitrary $g \in G$,
     \[(xy)g = x(yg) = x(gy) = (xg)y = (gx)y = g(xy),\] and so $xy \in Z(G)$.
 
     For $x \in Z(G)$ and $g \in G$, since $gxg^{-1} = x$, we know $x^{-1} = gx^{-1}g$, and so $x^{-1} \in Z(G)$. Finally, $Z(G)$ inherits associativity from $G$.
@@ -1073,7 +1075,7 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
 \end{prop}
 
 \begin{proof}
-    We know that $H$ and $gH$ must partition $G$ by Proposition \ref{cosets-equal-or-disjoint}. Then $G = H \disjointunion gH = H \disjointunion Hg$, which implies that $gH = Hg$. Therefore, $H$ is normal by Theorm \ref{normal-left-right-coset-equivalence}.
+    We know that $H$ and $gH$ must partition $G$ by Proposition \ref{cosets-equal-or-disjoint}. Then $G = H \disjointunion gH = H \disjointunion Hg$, which implies that $gH = Hg$. Therefore, $H$ is normal by Theorem \ref{normal-left-right-coset-equivalence}.
 \end{proof}
 
 \begin{defn}
@@ -1216,12 +1218,12 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
 \end{exmp}
 
 \begin{exmp}
-    Consider $\phi: G \times H \to \left(G/A\right) \times \left(H/B\right)$ where $(g, h) \mapsto (gA, hB)$. Since
+    Consider $\phi: G \times H \to \left(G/A\right) \times \left(H/B\right)$ where $(g, h) \mapsto (gA, hB)$.
     \begin{align*}
         \phi\left((g_1, h_1)(g_2, h_2)\right) &= \phi(g_1g_2, h_1h_2) = \left(g_1g_2A, h_1h_2B\right) \\
-        &= \left(g_1Ag_2A, h_1Bh_2B\right) = (g_1A, h_1B)(g_2A, h_2B) = \phi(g_1, h_1)\phi(g_2, h_2),\
+        &= \left(g_1Ag_2A, h_1Bh_2B\right) = (g_1A, h_1B)(g_2A, h_2B) = \phi(g_1, h_1)\phi(g_2, h_2).\
     \end{align*}
-    we know that $\phi$ is an isomorphism. Note that since $gA = A$ and $hB = B$ when $g \in A$ and $h \in B$, it follows that $\phi(g, h) = e$ when $(g, h) \in A \times B$, and so the kernel of $\phi$ must be $A \times B.$
+    We then know that $\phi$ is an isomorphism. Note that since $gA = A$ and $hB = B$ when $g \in A$ and $h \in B$, it follows that $\phi(g, h) = e$ when $(g, h) \in A \times B$, and so the kernel of $\phi$ must be $A \times B.$
 
     Then by the First Isomorphism Theorem \ref{first-isomorphism} we know that $A \times B$ is a normal subgroup of $G \times H$, and also that
     \[\left(G \times H\right)/\left(A \times B\right) \cong \phi(G \times H).\] Since the image of $\phi$ is all of $\left(G/A\right) \times \left(H/B\right)$, it follows that
@@ -1238,9 +1240,9 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
         xy^{-1} = \left(h_1j_1\right)\left(h_2j_2\right)^{-1} = h_1j_1j_2^{-1}h_2^{-1} = h_1h_2^{-1}h_2j_3h_2^{-1}
     \end{align*} for some $j_3 \in J$. Since $J$ is normal, $h_2j_3h_2^{-1} \in J$ and of course $h_1h_2^{-1} \in H$, so $xy^{-1} \in HJ$. Since $e \in HJ$ we know that $HJ$ is non-empty and so by Theorem \ref{subgroup-test} $HJ$ is a subgroup of $G$.
 
-    Now consider $\varphi: H \to HJ/J$ where $\varphi(x) = xeJ = xJ$. Since $\varphi(xy) = xyJ = xJyJ = \varphi(x)\varphi(y)$ this is a homomorphism. Furthermore, since for any $(hj)J$ we clearly have $(hj)J = hJ$ and $\varphi(h) = hJ$, it is surjective.
+    Now consider $\varphi: H \to HJ/J$ where $\varphi(x) = xeJ = xJ$. Since $\varphi(xy) = xyJ = xJyJ = \varphi(x)\varphi(y)$, this is a homomorphism. Furthermore, since for any $(hj)J$ we clearly have $(hj)J = hJ$ and $\varphi(h) = hJ$, it is surjective.
 
-    Since the kernel of $\varphi$ is trivially $H \intersection J$, it follows from the First Isomorphism Theorem \ref{first-isomorphism} that $HJ/J$ is isomorphic to $H/\left(H \intersection J\right)$ and from Proposition \ref{kernel-normal-subgroup} that $H \intersection J$ is a normal subgroup of of $H$.
+    Since the kernel of $\varphi$ is trivially $H \intersection J$, it follows from the First Isomorphism Theorem \ref{first-isomorphism} that $HJ/J$ is isomorphic to $H/\left(H \intersection J\right)$ and from Proposition \ref{kernel-normal-subgroup} that $H \intersection J$ is a normal subgroup of $H$.
 \end{proof}
 
 \begin{thm}Third Isomorphism Theorem\label{third-isomorphism}\proofbreak
