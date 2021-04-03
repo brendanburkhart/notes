@@ -1486,19 +1486,93 @@ Throughout this section, we will show that a function satisfying all of these pr
     \end{bmatrix} \mapsto 1(1) - 0(0) = 1.\]
 \end{exmp}
 
-\begin{prop}
-    Let $\det$ be a determinant function, and $A, B \in M_{n \times n}(F)$. If
+\begin{prop}\label{det-row-ops}
+    Let $\det$ be a determinant function, and $A, B \in M_{n \times n}(F)$ where
     \begin{align*}
-        A &= (r_1, \ldots, r_i, r_j, \ldots, r_n) \\
-        B &= (r_1, \ldots, r_j, r_i, \ldots, r_n)
+        A &= (r_1, \ldots, r_n). \\
     \end{align*}
-    (that is, $B$ can be obtained from $A$ by swapping two rows), then $\det B = -\det A$.
+    Choose two rows $r_i, r_j$ from $A$, $i \neq j$.
+    If $B$ can be obtained from $A$ by swapping two rows, then
+    \begin{equation}\label{det-row-swap}\tag{$1$}
+        \det B = -\det A.
+    \end{equation}
+    If instead $B$ can be obtained from $A$ by adding $kr_j$ to $r_i$, then
+    \begin{equation}\label{det-add-multiple}\tag{$2$}
+        \det B = \det A.
+    \end{equation}
 \end{prop}
 
 \begin{proof}
-    By the alternating property of $\det$, we know that
+    In the first case, by the alternating property of $\det$, we know that
     \[\det (r_1, \ldots, r_i + r_j, r_i + r_j, \ldots, r_n) = 0,\]
     and by the multilinearity property we have
-    \[\det (r_1, \ldots, r_i + r_j, r_i + r_j, \ldots, r_n) &= \det (r_1, \ldots, r_i, r_i + r_j, \ldots, r_n) + \det (r_1, \ldots, r_j, r_i + r_j, \ldots, r_n) \\
-    &= \det (r_1, \ldots, r_i, r_i, \ldots, r_n) + \det (r_1, \ldots, r_j, r_j, \ldots, r_n) + \det (r_1, \ldots, r_i, r_j, \ldots, r_n) + \det (r_1, \ldots, r_j, r_i, \ldots, r_n).\]
+    \begin{align*}
+        \det (r_1, \ldots, r_i + r_j, r_i + r_j, \ldots, r_n) &= \det (r_1, \ldots, r_i, r_i + r_j, \ldots, r_n) + \det (r_1, \ldots, r_j, r_i + r_j, \ldots, r_n) \\
+        &= \det (r_1, \ldots, r_i, r_i, \ldots, r_n) + \det (r_1, \ldots, r_j, r_j, \ldots, r_n)\\
+        &\quad\quad + \det (r_1, \ldots, r_i, r_j, \ldots, r_n) + \det (r_1, \ldots, r_j, r_i, \ldots, r_n).
+    \end{align*}
+    Since the first two terms of the last expression have a repeated row, by the alternating property they must be zero, and so
+    \begin{align*}
+        0 &= \det (r_1, \ldots, r_i, r_j, \ldots, r_n) + \det (r_1, \ldots, r_j, r_i, \ldots, r_n) \\
+        &= \det A + \det B.
+    \end{align*}
+
+    In the second case,
+    \begin{align*}
+        \det B &= \det\left(r_1, \ldots, kr_j + r_i, \ldots, r_j, \ldots, r_n\right) \\
+        &= \det\left(r_1, \ldots, r_i, \ldots, r_j, \ldots, r_n\right) + k\det\left(r_1, \ldots, r_j, \ldots, r_j, \ldots, r_n\right) \\
+        &= \det A + 0.
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    \begin{align*}
+        \det \begin{bmatrix}
+            -3 & 1 & 2 \\ 0 & 4 & 5 \\ 0 & 0 & 6
+        \end{bmatrix} &= (-3)\det\begin{bmatrix}
+            1 & -1/3 & -2/3 \\ 0 & 4 & 5 \\ 0 & 0 & 6
+        \end{bmatrix} = (-3)(4)\begin{bmatrix}
+            1 & -1/3 & -2/3 \\ 0 & 1 & 5/4 \\ 0 & 0 & 6
+        \end{bmatrix} \\
+        &= (-3)(4)(6)\begin{bmatrix}
+            1 & -1/3 & -2/3 \\ 0 & 1 & 5/4 \\ 0 & 0 & 1
+        \end{bmatrix} = (-3)(4)(6)\begin{bmatrix}
+            1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+        \end{bmatrix} \\
+        &= (-3)(4)(6)\det I = -72.
+    \end{align*}
+\end{exmp}
+
+\begin{rmk}
+    Consider a matrix $A$, and perform Gauss-Jordan elimination to get the reduced row echelon form $E$. By multilinearity, multiplying a row by $k \neq 0$ multiplies the determinant by $k$, and by Proposition \ref{det-row-ops} the other row ops either negate the determinant, or leave it unchanged. Therefore, $\det A = k\det E$ for some $k \neq 0$.
+\end{rmk}
+
+\begin{prop}
+    Let $\det$ be a determinant function. Then
+    \begin{enumerate}[label=(\arabic*)]
+        \item If $A$ has a row of all zeroes, then $\det A = 0$.
+        \item $A$ is invertible if and only if $\det A \neq 0$.
+        \item The determinant of an upper triangular matrix is the product of the major diagonal entries.
+    \end{enumerate}
+\end{prop}
+
+\begin{proof}
+    Let $A$ be a matrix with $r_i = \vec{0}$. Then consider $B$ obtained from $A$ by adding $r_j$ to $r_i$, so $B$ contains $r_j$ twice. By the alternating property, $\det B = 0$, and by Proposition \ref{det-row-ops} (\ref{det-add-multiple}) we know $\det A = \det B$, so we have $\det A = 0$.
+
+    If $A$ is invertible, then $\det A = k\det E = k\det I = k$, where $k \neq 0$. If $A$ is not invertible, then $\det A = k\det E$, but $E$ must contain a row of zeroes by Theorem \ref{matrix-invertible-rank}. Therefore, $\det E = 0$, and so $\det A = 0$.
+
+    \begin{align*}
+        \det\begin{bmatrix}
+            a_{11} & a_{12} & \cdots & a_{1n} \\
+            0 & a_{22} & \cdots & a_{2n} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & a_{nn}
+        \end{bmatrix} &= a_{11}a_{22}\cdots a_{nn}\det\begin{bmatrix}
+            1 & a_{12}/a_{11} & \cdots & a_{1n}/a_{11} \\
+            0 & 1 & \cdots & a_{2n}/{a_22} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & 1
+        \end{bmatrix} \\
+        &= a_{11}a_{22}\cdots a_{nn}\det I = a_{11}a_{22}\cdots a_{nn}.
+    \end{align*}
 \end{proof}
