@@ -1310,22 +1310,26 @@ We will explore two reasons to explain this.
 \textbf{Reason 1:} Since
 \[\begin{amatrix}{2}
     -1 & 1 & 1 \\ 2 & -3 & 0
-\end{amatrix} \mapsto \begin{amatrix}{3}
+\end{amatrix} \mapsto \begin{amatrix}{2}
     1 & 0 & -3 \\ 0 & 1 & -2
 \end{amatrix},\]
-$(-3, 2)$ is the unique solution to the system
+$(-3, -2)$ is the unique solution to the system
 \[\begin{amatrix}{2}
     -1 & 1 & x \\ 2 & -3 & y
-\end{amatrix} = \begin{pmatrix}
-    1 & 0
-\end{pmatrix}.\] Similarly, $A(x, y) = (0, 1)$ has only the solution $(-1, 1)$. Therefore,
-\[\begin{pmatrix}
+\end{amatrix} = \begin{bmatrix}
+    1 \\ 0
+\end{bmatrix}.\] Similarly, $A(x, y) = (0, 1)$ has only the solution $(-1, 1)$. Therefore,
+\[\begin{bmatrix}
     -1 & 1 \\ 2 & -3
-\end{pmatrix}\begin{pmatrix}
-    -3 & -1 \\ -2 & -1
-\end{pmatrix} = I_2.\]
+\end{bmatrix}\begin{bmatrix}
+    -3 & -1 \\ -2 & 1
+\end{bmatrix} = I_2.\]
 
-\textbf{Reason 2.} Define an $n \times n$ \emph{elementary} matrix to be a matrix that can be obtained from $I_n$ by a single row operation.
+By Theorem \ref{solutions-unchanged-by-row-ops}, if $(A|I_n) \mapsto (I_n|B)$ then the $i$th column of $B$ must be solution to $A\vec{v} = \vec{i}$, where $\vec{i}$ is the $i$th column of $I_n$. Therefore, $AB = I_n$.
+
+\begin{defn}
+    An $n \times n$ \emph{elementary} matrix is a matrix that can be obtained from $I_n$ by a single row operation.
+\end{defn}
 
 \begin{lemma}
     Suppose $A \mapsto B$ via a single row operation, and $E$ is the corresponding elementary matrix obtained by performing the same row operation on $I_n$. Then $B = EA$.
@@ -1342,6 +1346,8 @@ $(-3, 2)$ is the unique solution to the system
 
     Here, $E$ can be obtained from $I_3$ by $r_1 \to r_1 + 2r_2$, and $B$ can be obtained from $A$ by $r_1 \to r_1 + 2r_2$ as well.
 \end{exmp}
+
+\textbf{Reason 2.}
 
 If $(A|A') \mapsto (B|B')$ via elementary row operations, then there must exist elementary matrices $E_1, E_2, \ldots, E_k$ such that
 \begin{align*}
@@ -1557,22 +1563,22 @@ Throughout this section, we will show that a function satisfying all of these pr
 \end{prop}
 
 \begin{proof}
-    Let $A$ be a matrix with $r_i = \vec{0}$. Then consider $B$ obtained from $A$ by adding $r_j$ to $r_i$, so $B$ contains $r_j$ twice. By the alternating property, $\det B = 0$, and by Proposition \ref{det-row-ops} (\ref{det-add-multiple}) we know $\det A = \det B$, so we have $\det A = 0$.
-
-    If $A$ is invertible, then $\det A = k\det E = k\det I = k$, where $k \neq 0$. If $A$ is not invertible, then $\det A = k\det E$, but $E$ must contain a row of zeroes by Theorem \ref{matrix-invertible-rank}. Therefore, $\det E = 0$, and so $\det A = 0$.
-
-    \begin{align*}
-        \det\begin{bmatrix}
-            a_{11} & a_{12} & \cdots & a_{1n} \\
-            0 & a_{22} & \cdots & a_{2n} \\
-            \vdots & \vdots & \ddots & \vdots \\
-            0 & 0 & \cdots & a_{nn}
-        \end{bmatrix} &= a_{11}a_{22}\cdots a_{nn}\det\begin{bmatrix}
-            1 & a_{12}/a_{11} & \cdots & a_{1n}/a_{11} \\
-            0 & 1 & \cdots & a_{2n}/{a_22} \\
-            \vdots & \vdots & \ddots & \vdots \\
-            0 & 0 & \cdots & 1
-        \end{bmatrix} \\
-        &= a_{11}a_{22}\cdots a_{nn}\det I = a_{11}a_{22}\cdots a_{nn}.
-    \end{align*}
+    \begin{enumerate}[label=(\arabic*)]
+        \item Let $A$ be a matrix with $r_i = \vec{0}$. Then consider $B$ obtained from $A$ by adding $r_j$ to $r_i$, so $B$ contains $r_j$ twice. By the alternating property, $\det B = 0$, and by Proposition \ref{det-row-ops} (\ref{det-add-multiple}) we know $\det A = \det B$, so we have $\det A = 0$.
+        \item We know that $\det A = k\det E$, where $E$ is the reduced row echelon form of $A$. If $A$ is invertible, then $\det A = k\det E = k\det I = k$, where $k \neq 0$. If $A$ is not invertible then $A$ must have rank $m < n$ by Theorem \ref{matrix-invertible-rank}. It follows by Lemma \ref{row-ops-row-space} that $E$ must contain a row of zeroes. Therefore, $\det E = 0$, and since $\det A = k\det E$ we have $\det A = 0$.
+        \item \begin{align*}
+            \det\begin{bmatrix}
+                a_{11} & a_{12} & \cdots & a_{1n} \\
+                0 & a_{22} & \cdots & a_{2n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                0 & 0 & \cdots & a_{nn}
+            \end{bmatrix} &= a_{11}a_{22}\cdots a_{nn}\det\begin{bmatrix}
+                1 & a_{12}/a_{11} & \cdots & a_{1n}/a_{11} \\
+                0 & 1 & \cdots & a_{2n}/{a_22} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                0 & 0 & \cdots & 1
+            \end{bmatrix} \\
+            &= a_{11}a_{22}\cdots a_{nn}\det I = a_{11}a_{22}\cdots a_{nn}.
+        \end{align*}
+    \end{enumerate}
 \end{proof}
