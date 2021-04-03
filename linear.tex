@@ -1437,3 +1437,68 @@ Let $B$ and $C$ be ordered basis for a vector space $V$, and consider $v \in V$ 
     Let $V$ and $W$ be finite dimensional vector spaces over a field $F$, and $B, B'$ and $D, D'$ be ordered bases for $V$ and $W$ respectively. Let $P$ be the change of basis matrix from $B$ to $B'$, and $Q$ be the change of basis matrix from $D$ to $D'$. Then for a linear transformation $f$,
     \[[f]_{B'}^{D'} = Q[f]_{B}^{D}P^{-1}.\]
 \end{thm}
+
+\section{Determinants}
+
+When is an $n \times n$ matrix invertible? When $n = 1$, $[a]$ is invertible when $a \neq 0$, in which case $[a]^{-1} = [1/a]$. When $n = 2$, we can show that
+\[\begin{bmatrix}
+    a & b \\
+    c & d
+\end{bmatrix}\] is invertible when $ad - bc \neq 0$, in which case
+\[\begin{bmatrix}
+    a & b \\
+    c & d
+\end{bmatrix}^{-1} = \frac{1}{ad - bc}\begin{bmatrix}
+    d & -b \\
+    c & a
+\end{bmatrix}.\]
+
+\begin{rmk}
+    Let $A \in M_{n \times n}(F)$, and let $r_1, \ldots, r_n$ be the rows of $A$. We will denote $A$ by $(r_1, \ldots, r_n)$.
+\end{rmk}
+
+\begin{defn}
+    A \emph{determinant} is a function $\det M_{n \times n}(F) \to F$ which satisfies the following properties:
+    \begin{itemize}
+        \item Multilinearity: it is multilinear on the rows, i.e. linear on each row. If $r_1, \ldots, r_n \in F^n$, $r_i' \in F^n$, and $s \in F$, then
+        \begin{align*}
+            \det\left(r_1, \ldots, sr_i' + r_i, \ldots, r_n\right) = \det\left(r_1, \ldots, r_i, \ldots, r_n\right) + s\det\left(r_1, \ldots, r_i', \ldots, r_n\right).
+        \end{align*}
+        \item Alternating: $\det(r_1, \ldots, r_n) = 0$ if $r_i = r_j$ for some $i \neq j$.
+        \item Normalized: $\det(I) = 1$.
+    \end{itemize}
+\end{defn}
+
+Throughout this section, we will show that a function satisfying all of these properties does in fact exist, and furthermore that it must be unique.
+
+\begin{exmp}
+    Consider $\det: M_{2 \times 2}(F) \to F$ given by
+    \[\begin{bmatrix}
+        a & b \\ c & d
+    \end{bmatrix} \mapsto ad - bc.\]
+    We can show that this is a determinant. Firstly, it is multilinear:
+    \[\begin{bmatrix}
+        a + sa' & b + sb' \\ c & d
+    \end{bmatrix} \mapsto (a + sa')d - (b + sb')c = \left(ad - bc\right) + s\left(a'd - b'c\right).\]
+    Secondly, it is alternating: if $(a, b) = (c, d)$, then $ad - bc = ab - ba = 0$. Finally, it is normalized:
+    \[\begin{bmatrix}
+        1 & 0 \\ 0 & 1
+    \end{bmatrix} \mapsto 1(1) - 0(0) = 1.\]
+\end{exmp}
+
+\begin{prop}
+    Let $\det$ be a determinant function, and $A, B \in M_{n \times n}(F)$. If
+    \begin{align*}
+        A &= (r_1, \ldots, r_i, r_j, \ldots, r_n) \\
+        B &= (r_1, \ldots, r_j, r_i, \ldots, r_n)
+    \end{align*}
+    (that is, $B$ can be obtained from $A$ by swapping two rows), then $\det B = -\det A$.
+\end{prop}
+
+\begin{proof}
+    By the alternating property of $\det$, we know that
+    \[\det (r_1, \ldots, r_i + r_j, r_i + r_j, \ldots, r_n) = 0,\]
+    and by the multilinearity property we have
+    \[\det (r_1, \ldots, r_i + r_j, r_i + r_j, \ldots, r_n) &= \det (r_1, \ldots, r_i, r_i + r_j, \ldots, r_n) + \det (r_1, \ldots, r_j, r_i + r_j, \ldots, r_n) \\
+    &= \det (r_1, \ldots, r_i, r_i, \ldots, r_n) + \det (r_1, \ldots, r_j, r_j, \ldots, r_n) + \det (r_1, \ldots, r_i, r_j, \ldots, r_n) + \det (r_1, \ldots, r_j, r_i, \ldots, r_n).\]
+\end{proof}
