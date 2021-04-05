@@ -1463,7 +1463,7 @@ When is an $n \times n$ matrix invertible? When $n = 1$, $[a]$ is invertible whe
     Let $A \in M_{n \times n}(F)$, and let $r_1, \ldots, r_n$ be the rows of $A$. We will denote $A$ by $(r_1, \ldots, r_n)$.
 \end{rmk}
 
-\begin{defn}
+\begin{defn}\label{det-properties}
     A \emph{determinant} is a function $\det M_{n \times n}(F) \to F$ which satisfies the following properties:
     \begin{itemize}
         \item Multilinearity: it is multilinear on the rows, i.e. linear on each row. If $r_1, \ldots, r_n \in F^n$, $r_i' \in F^n$, and $s \in F$, then
@@ -1553,7 +1553,7 @@ Throughout this section, we will show that a function satisfying all of these pr
     Consider a matrix $A$, and perform Gauss-Jordan elimination to get the reduced row echelon form $E$. By multilinearity, multiplying a row by $k \neq 0$ multiplies the determinant by $k$, and by Proposition \ref{det-row-ops} the other row ops either negate the determinant, or leave it unchanged. Therefore, $\det A = k\det E$ for some $k \neq 0$.
 \end{rmk}
 
-\begin{prop}
+\begin{prop}\label{det-zero}
     Let $\det$ be a determinant function. Then
     \begin{enumerate}[label=(\arabic*)]
         \item If $A$ has a row of all zeroes, then $\det A = 0$.
@@ -1562,7 +1562,7 @@ Throughout this section, we will show that a function satisfying all of these pr
     \end{enumerate}
 \end{prop}
 
-\begin{proof}
+\begin{proof}\proofbreak
     \begin{enumerate}[label=(\arabic*)]
         \item Let $A$ be a matrix with $r_i = \vec{0}$. Then consider $B$ obtained from $A$ by adding $r_j$ to $r_i$, so $B$ contains $r_j$ twice. By the alternating property, $\det B = 0$, and by Proposition \ref{det-row-ops} (\ref{det-add-multiple}) we know $\det A = \det B$, so we have $\det A = 0$.
         \item We know that $\det A = k\det E$, where $E$ is the reduced row echelon form of $A$. If $A$ is invertible, then $\det A = k\det E = k\det I = k$, where $k \neq 0$. If $A$ is not invertible then $A$ must have rank $m < n$ by Theorem \ref{matrix-invertible-rank}. It follows by Lemma \ref{row-ops-row-space} that $E$ must contain a row of zeroes. Therefore, $\det E = 0$, and since $\det A = k\det E$ we have $\det A = 0$.
@@ -1582,3 +1582,27 @@ Throughout this section, we will show that a function satisfying all of these pr
         \end{align*}
     \end{enumerate}
 \end{proof}
+
+\begin{defn}
+    Let $A$ be an $m \times n$ matrix. The \emph{transpose} of $A$, denoted by $A^{\transpose}$ is the $n \times m$ matrix given by
+    \[\left(A^{\transpose}\right)_{ij} = A_{ji}.\]
+\end{defn}
+
+\begin{exmp}
+    \[\begin{pmatrix}
+        a & b \\
+        c & d
+    \end{pmatrix}^{\transpose} = \begin{pmatrix}
+        a & c \\ & b & d
+    \end{pmatrix}.\]
+
+    Note that $\det A = ad - bc$, and $\det A^{\transpose} = ad - cb$, so $\det A = \det A^{\transpose}$.
+\end{exmp}
+
+\begin{thm}
+    Let $A$ and $B$ be $n \times n$ matrices. Then
+    \begin{enumerate}[label=(\arabic*)]
+        \item $\left(AB\right)^{\transpose} = B^{\transpose}A^{\transpose}$.
+        \item If $A$ is invertible, so is $A^{\transpose}$ and $\left(A^{\transpose}\right)^{-1} = \left(A^{-1}\right)^{\transpose}$.
+    \end{enumerate}
+\end{thm}
