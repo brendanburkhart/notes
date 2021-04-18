@@ -881,7 +881,9 @@ it remains so in the non-linear system.
     \begin{align*}
         f(x) = f(p) + \frac{\partial}{\partial x_1}f\left(x_1 - p_1\right) + \frac{\partial}{\partial x_2}f\left(x_2 - p_2\right) + \cdots + \frac{\partial}{\partial x_n}f\left(x_n - p_n\right) + \eta(x).
     \end{align*}
-    If $f$ is twice-differentiable, then the partial above exist and are continuous at $p$, and $\lim_{x \to p}\norm{\eta(x)}/\norm(x) = 0$. Furthermore, since $p$ is a critical point we have $f(p) = 0$, so
+    If $f$ is twice-differentiable, then the partial above exist and are continuous at $p$, and
+    \[\lim_{x \to p}\norm{\eta(x)}/\norm(x) = 0.\]
+    Furthermore, since $p$ is a critical point we have $f(p) = 0$, so
     \begin{align*}
         f(x) = (\nabla x)(x - p) + \eta(x).
     \end{align*}
