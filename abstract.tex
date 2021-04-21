@@ -1285,6 +1285,14 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
     \[G_x = \left\{g \in G \compbar g \cdot x = x\right\}.\]
 \end{defn}
 
+\begin{prop}
+    The stabilizer $G_x$ is a subgroup of $G$.
+\end{prop}
+
+\begin{proof}
+    We know that $e \in G_x$, so $G_x$ is non-empty. If $g, h \in G_x$, then since $(gh^{-1})h = g$, so $(gh^{-1})h \cdot x = x$, but $(gh^{-1})h \cdot x = (gh^{-1}) \cdot (h \cdot x) = gh^{-1} \cdot x$, and so $gh^{-1} \in G_x$. Then by Theorem \ref{subgroup-test}, $G_x$ is a subgroup of $G$.
+\end{proof}
+
 \begin{defn}
     A $G$-action on $X$ is said to be
     \begin{itemize}
