@@ -749,7 +749,7 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
 \end{cor}
 
 \begin{proof}
-    Let $g \in G$, where $g \in e$. Then $\abs{g} > 1$, and $\abs{g}$ must divide $\abs{G}$. Since $\abs{G}$ is prime, it follows that $\abs{g} = \abs{G}$, and so $\langle g \rangle = G$.
+    Let $g \in G$, where $g \neq e$. Then $\abs{g} > 1$, and $\abs{g}$ must divide $\abs{G}$. Since $\abs{G}$ is prime, it follows that $\abs{g} = \abs{G}$, and so $\langle g \rangle = G$.
 \end{proof}
 
 \begin{cor}\label{group-order-power}
@@ -1285,6 +1285,14 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
     \[G_x = \left\{g \in G \compbar g \cdot x = x\right\}.\]
 \end{defn}
 
+\begin{prop}
+    The stabilizer $G_x$ is a subgroup of $G$.
+\end{prop}
+
+\begin{proof}
+    We know that $e \in G_x$, so $G_x$ is non-empty. If $g, h \in G_x$, then since $(gh^{-1})h = g$, so $(gh^{-1})h \cdot x = x$, but $(gh^{-1})h \cdot x = (gh^{-1}) \cdot (h \cdot x) = gh^{-1} \cdot x$, and so $gh^{-1} \in G_x$. Then by Theorem \ref{subgroup-test}, $G_x$ is a subgroup of $G$.
+\end{proof}
+
 \begin{defn}
     A $G$-action on $X$ is said to be
     \begin{itemize}
@@ -1371,7 +1379,7 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
 \end{proof}
 
 \begin{thm}
-    Consider a $G$-action on $X$. If $g, g' \in G$ are conjugate, then \[\abs{X^{g}} = \abs{X^{g'}},\]
+    Consider a $G$-action on $X$. If $g, g' \in G$ are conjugate, then \[\bigl|{X^{g}}\bigr| = \bigl|X^{g'}\bigr|,\]
 \end{thm}
 
 \begin{proof}
@@ -1393,3 +1401,23 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
 
     We have shown that $\sigma$ is a bijection, and the result follows immediately.
 \end{proof}
+
+\section{Sylow's Theorems}
+
+For this section, consider a finite group $G$ with order divisible by a prime $p$. Let $m$ be largest $m$ such that $p^m$ divides the order of $G$, and let $k = \abs{G}/p^m$.
+
+\begin{defn}
+    A \emph{Sylow $p$-subgroup} is any subgroup of $G$ with order $p^m$.
+\end{defn}
+
+\begin{thm}
+    $G$ must contain at least one a subgroup with order $p^m$.
+\end{thm}
+
+\begin{thm}
+    Any two subgroups of $G$ with order $p^m$ are conjugate.
+\end{thm}
+
+\begin{thm}
+    The number of subgroups of $G$ with order $p^m$ is both congruent to $1$ modulo $p$, and is a factor of $k$.
+\end{thm}

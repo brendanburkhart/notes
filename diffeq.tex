@@ -686,6 +686,8 @@ Many of the results and techniques we have seen for first and second order linea
 
 \section{Systems of First Order Linear Differential Equations}
 
+\subsection{First Order Linear Systems}
+
 \begin{rmk}
     Given a higher order ordinary differential equation, we can transform it into a system of first order ordinary differential equations.
 \end{rmk}
@@ -744,7 +746,7 @@ Now consider the system
     \[P\vec{x} = \vec{x}^{\,\prime}.\]
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{linear-system-fundamental-solution}
     Let $\vec{x}^{(1)}, \ldots, \vec{x}^{(n)}$ be solutions to a system of the form \ref{linear-nth-order-system}. If these solutions are linearly independent are every point on an interval $I = \alpha < t < \beta$, then every solution $\vec{x} = \vec{\phi}(t)$ can be expressed as a linear combination
     \[\vec{x}(t) = c_1\vec{x}^{(1)} + \cdots + c_n\vec{x}^{(n)}.\]
 \end{thm}
@@ -788,3 +790,101 @@ Now consider the system
 \begin{prop}
     Consider a linear system of the form $\vec{x}' = P(t)\vec{x}$. If $\vec{x} = \vec{u}(t) + i\vec{v}(t)$ is a solution, then $\vec{u}$ and $\vec{v}$ are also solutions.
 \end{prop}
+
+\begin{thm}
+    Let $\vec{x}' = P\vec{x}$ be a homogeneous linear constant-coefficient system of $n$ variables.
+    \begin{itemize}
+        \item If $\lambda$ and $\vec{\xi}$ are an eigenvalue-eigenvector pair, then $\vec{x} = \vec{\xi}e^{\lambda t}$ is a solution to the system.
+        \item If $\vec{\xi^{(1)}}$ and $\vec{\xi^{(2)}}$ are linearly independent eigenvectors, then their corresponding solutions are linearly independent.
+    \end{itemize}
+\end{thm}
+
+\begin{proof}
+    If $\vec{x} = \vec{\xi}e^{\lambda t}$, then
+    \begin{align*}
+        \vec{x'} = \lambda\vec{\xi}e^{\lambda t},
+    \end{align*}
+    and
+    \begin{align*}
+        P\vec{x} &= P\left(\vec{\xi}e^{\lambda t}\right) = \left(P\vec{\xi}\right)e^{\lambda t} \\
+        &= \lambda\vec{\xi}e^{\lambda t},
+    \end{align*}
+    and so $\vec{\xi}e^{\lambda t}$ is a solution.
+
+    If $\vec{\xi^{(1)}}$ and $\vec{\xi^{(2)}}$ are eigenvectors with corresponding eigenvalues $\lambda_1, \lambda_2$ (not necessarily distinct) respectively, their solutions are
+    \begin{align*}
+        \vec{x}^{(1)} = \vec{\xi^{(1)}}e^{\lambda_1 t}, \quad\quad \vec{x}^{(2)} = \vec{\xi^{(2)}}e^{\lambda_2 t}.
+    \end{align*}
+    If $c_1\vec{x}^{(1)} + c_2\vec{x}^{(2)} = \vec{0}$, then
+    \begin{align*}
+        \vec{0} &= c_1\vec{\xi^{(1)}}e^{\lambda_1 t} + c_2\vec{\xi^{(2)}}e^{\lambda_2 t} \\
+        &= e^{\lambda_1 t}\left(c_1\vec{\xi^{(1)}} + c_2\vec{\xi^{(2)}}e^{(\lambda_2 - \lambda_1) t}\right) \\
+        &= c_1\vec{\xi^{(1)}} + c_2\vec{\xi^{(2)}}e^{(\lambda_2 - \lambda_1) t}.
+    \end{align*}
+    Regardless of $\lambda_2 - \lambda_1$, since $e^{\lambda_2 - \lambda_1} \neq 0$ this would necessarily imply that $\vec{\xi^{(1)}}$ and $\vec{\xi^{(2)}}$ are linearly dependent. Therefore, $\vec{x}^{(1)}$ and $\vec{x}^{(2)}$ are linearly independent as long as $\vec{\xi^{(1)}}$ and $\vec{\xi^{(2)}}$ are linearly independent.
+\end{proof}
+
+\begin{cor}
+    If $P$ has $n$ linearly independent eigenvectors, then by Theorem \ref{linear-system-fundamental-solution} the corresponding solutions form a fundamental set of solutions.
+\end{cor}
+
+\begin{thm}
+    Let $\vec{x}' = P\vec{x}$ be a homogeneous linear constant-coefficient system of $2$ variables. If $P$ has only one linearly independent eigenvector $\vec{\xi}$ with corresponding eigenvalue $\lambda$, then
+    \[\vec{x} = \vec{\xi}te^{\lambda t} + \vec{\eta}e^{\lambda t}\] is a solution, where $\vec{\eta}$ is the first generalized eigenvector.
+\end{thm}
+
+\begin{proof}
+    Given $\vec{x} = \vec{\xi}te^{\lambda t} + \vec{\eta}e^{\lambda t}$, we have
+    \[\vec{x'} = \lambda\vec{\xi}te^{\lambda t} + \vec{\xi}e^{\lambda t} + \lambda\vec{\eta}e^{\lambda t},\]
+    and
+    \begin{align*}
+        P\vec{x} &= P\left(\vec{\xi}te^{\lambda t} + \vec{\eta}e^{\lambda t}\right) \\
+        &= \lambda\vec{\xi}te^{\lambda t} + \left(\vec{\xi} + \lambda\vec{\eta}\right)e^{\lambda t} \\
+        &= \vec{x'}.
+    \end{align*}
+\end{proof}
+
+\subsection{Non-linear Systems}
+Much of the behavior of a first order linear system can be understood from its critical points. Note that a system of the form
+\[x' = Ax\]
+only has a critical point at the origin $x = \vec{0}$ as long as $A$ is
+invertible.
+
+To gain some degree of qualitative understanding of the behavior of a non-linear first order system, we can analyze the behavior surrounding critical points. For isolated critical points (the points immedaitely surrounding it are not also critical), we can often find a linear approximation of the system that has the same behavior sufficiently close to the critical point.
+
+\begin{defn}
+    A non-linear autonomous system $x' = f(x)$ is \emph{locally linear} at $p$ if we can find constant matrix $A$ and function $g(x)$ such that
+    \[u' = Au + g(x)\]
+    where $u = x - p$, and that
+    \[g(x) = 0, \quad\quad \lim_{x \to p}\frac{\norm{g(x)}}{\norm{x}} = 0.\]
+    We say that $u' = Au$ is the \emph{linearization} of the system.
+\end{defn}
+
+\begin{prop}
+    If $x' = f(x)$ is locally linear at $p$, then $p$ is a critical point of $f$. That is, $f(p) = \vec{0}$, and so $x(t) = p$ is an equilibrium solution.
+\end{prop}
+
+\begin{proof}
+    Note that $y = \vec{0}$ is necessarily a solution to the linearization $u' = Au$, and that $Ay + g(y + p) = 0$, so $x = p$ must be a solution.
+\end{proof}
+
+If a system is locally linear at $p$, then we understand some of the behavior of solutions near $p$ from the behavior of solutions in the linearization. It is possible to show that if the origin is an unstable critical point of the linearization, then $p$ is unstable in the non-linear system, and if it is asymptotically stable it remains asymptotically stable in the non-linear system. In many cases, the type of the critical point remains unchanged. For example, if the origin is a node or a spiral point,
+it remains so in the non-linear system.
+
+\begin{thm}
+    Consider the autonomous non-linear system $x' = f(x)$. If $f$ is twice differentiable at a critical point $p$, then $f$ is locally linear at $p$. Furthermore, the Jacobian of $f$ at $p$ is the coefficient matrix of the linearization:
+    \[u' = (\nabla f)u.\]
+\end{thm}
+
+\begin{proof}
+    Consider the Taylor series of $f$ at $p$:
+    \begin{align*}
+        f(x) = f(p) + \frac{\partial}{\partial x_1}f\left(x_1 - p_1\right) + \frac{\partial}{\partial x_2}f\left(x_2 - p_2\right) + \cdots + \frac{\partial}{\partial x_n}f\left(x_n - p_n\right) + \eta(x).
+    \end{align*}
+    If $f$ is twice-differentiable, then the partial above exist and are continuous at $p$, and
+    \[\lim_{x \to p}\norm{\eta(x)}/\norm(x) = 0.\]
+    Furthermore, since $p$ is a critical point we have $f(p) = 0$, so
+    \begin{align*}
+        f(x) = (\nabla x)(x - p) + \eta(x).
+    \end{align*}
+\end{proof}
