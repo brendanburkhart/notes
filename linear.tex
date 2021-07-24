@@ -246,10 +246,6 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
         \end{pmatrix} \in \R^3 \compbar x + y + z = 0\right\}$. $W$ is a vector subspace over $\R$ with the operations inherited from $\R^3$. $W$ is a plane within $\R^3$, with normal $(1, 1, 1)$.
 \end{exmp}
 
-\begin{exmp}
-    Let $S \subseteq F^n$ be the solution set to a homogeneous system of linear equations over a field $F$, and let $u, v \in S$ and $r \in F$. Then by Theorem \ref{solutions-unchanged-by-row-ops}, $u + v \in S$ and $ru \in S$. Therefore, $S$ is a vector subspace of $F^n$.
-\end{exmp}
-
 \begin{prop}\label{subspace-proof}
     A subset $W$ of $V$ is a subspace if and only if
     \begin{enumerate}
@@ -274,7 +270,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{exmp}
 
 \begin{exmp}
-    Let $V =\R^n$, and $W$ be the set of solutions to a homogeneous system of equations (every equation is equal to zero). Then $\{\vec{0}\}$ is a solution to the system of linear equations, and since every solution is equal to zero, the set of solutions is closed under addition and multiplication, so $W$ is a subspace of $V$.
+    Let $S \subseteq F^n$ be the solution set to a homogeneous system of linear equations over a field $F$. Then clearly $\vec{0} \in S$, and since every solution is equal to zero, $S$ is closed under addition and multiplication. Therefore, by Proposition \ref{subspace-proof}, $S$ is a vector subspace of $F^n$.
 \end{exmp}
 
 \begin{exmp}
