@@ -334,7 +334,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{rmk}
 
 \begin{exmp}
-    Let $v$ be a vector space over $F$. Given $S \subseteq V$, and $v \in V$, how do we know if $v \in \spanset S$?
+    Let $V$ be a vector space over $F$. Given $S \subseteq V$, and $v \in V$, how do we know if $v \in \spanset S$?
 
     Let $V = P_2(\R)$, $S = \left\{x^2 + 3x - 2, 2x^2 + 5x -3\right\}$, and $v = -x^2 - 4x + 4$. We are trying to determine $a, b \in F$ such that $-x^2 - 4x + 4 = a(x^2 + 3x - 2) + b(2x^2 + 5x - 3)$. This would imply that $a + 2b = -1$, $3a + 5b = -4$, and $-2a - 3b = 4$. This system of equations can be represented as a matrix, and solved for $a$ and $b$.
     \begin{align*}
@@ -343,17 +343,25 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
             3 &5 &-4 \\
             -2 &-3 &4
         \end{amatrix}
-         & \begin{aligned}
+        &\begin{aligned}
              & \ro{r_2 \rightarrow r_2 - 3r_1}  \\
              & \ro{r_3 \rightarrow r_3 + 2r_1} \\
         \end{aligned}
-         & \begin{amatrix}{2}
+        &\begin{amatrix}{2}
             1 &2 &-1 \\
             0 &-1 &-1 \\
             0 &1 &2
         \end{amatrix}
+        &\begin{aligned}
+            & \ro{r_2 \rightarrow r_2 + r_3}  \\
+       \end{aligned}
+       &\begin{amatrix}{2}
+           1 &2 &-1 \\
+           0 &0 &1 \\
+           0 &1 &2
+       \end{amatrix}
     \end{align*}
-    This would imply that $0b = 1$, which is a contradiction, so no such $a, b$ exist.
+    This would imply that $0 = 1$, which is a contradiction, so no such $a, b$ exist.
 \end{exmp}
 
 \begin{lemma}\label{equal-spans-condition}
