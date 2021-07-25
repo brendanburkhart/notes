@@ -369,7 +369,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{lemma}
 
 \begin{proof}\proofbreak
-    ($\implies$) If $v \notin \spanset{S}$, then since $v \in \spanset{S \cup \left\{v\right\}}$, we know that $\spanset{S} \neq \spanset{S \cup \left\{v\right\}}$.
+    ($\implies$) Since $v \in \spanset{S \cup \left\{v\right\}}$, if $\spanset{S} = \spanset{S \cup \left\{v\right\}}$ then $v \in \spanset{S}$.
 
     ($\impliedby$) Assume $v \in \spanset{S}$. Then $v = c_1v_1 + \cdots + c_ns_n$ for $c_i \in F$ and $s_i \in S$. Since $S \subseteq S \cup \left\{v\right\}$, we have $\spanset{S} \subseteq \spanset{S \cup \left\{v\right\}}$. Let $w \in \spanset{S \cup \left\{v\right\}}$, so $w = d_1t_1 + \cdots + d_mt_n + d_{m+1}v$. Thus, $w = d_1t_1 + \cdots + d_mt_m + d_{m+1}(c_1 + \cdots + c_n)$, so $w \in \spanset{S}$ and $\spanset{S \cup \left\{v\right\}} \subseteq \spanset{S}$. Therefore, $\spanset{S} = \spanset{S \cup \left\{v\right\}}$.
 \end{proof}
