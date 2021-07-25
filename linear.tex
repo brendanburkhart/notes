@@ -1468,14 +1468,14 @@ When is an $n \times n$ matrix invertible? When $n = 1$, $[a]$ is invertible whe
 \end{rmk}
 
 \begin{defn}\label{det-properties}
-    A \emph{determinant} is a function $\det M_{n \times n}(F) \to F$ which satisfies the following properties:
+    A \emph{determinant} is a function $\det M_{n \times n}(F) \to F$ that is:
     \begin{itemize}
-        \item Multilinearity: it is multilinear on the rows, i.e. linear on each row. If $r_1, \ldots, r_n \in F^n$, $r_i' \in F^n$, and $s \in F$, then
+        \item Multilinear: it is linear on each row. If $r_1, \ldots, r_n \in F^n$, $r_i' \in F^n$, and $s \in F$, then
         \begin{align*}
             \det\left(r_1, \ldots, sr_i' + r_i, \ldots, r_n\right) = \det\left(r_1, \ldots, r_i, \ldots, r_n\right) + s\det\left(r_1, \ldots, r_i', \ldots, r_n\right).
         \end{align*}
         \item Alternating: $\det(r_1, \ldots, r_n) = 0$ if $r_i = r_j$ for some $i \neq j$.
-        \item Normalized: $\det(I) = 1$.
+        \item Normalized: $\det(I_n) = 1$.
     \end{itemize}
 \end{defn}
 
