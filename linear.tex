@@ -1602,10 +1602,17 @@ Throughout this section, we will show that a function satisfying all of these pr
     Note that $\det A = ad - bc$, and $\det A^{\transpose} = ad - cb$, so $\det A = \det A^{\transpose}$.
 \end{exmp}
 
-\begin{thm}
+\begin{thm}\label{transpose-properties}
     Let $A$ and $B$ be $n \times n$ matrices. Then
     \begin{enumerate}[label=(\arabic*)]
         \item $\left(AB\right)^{\transpose} = B^{\transpose}A^{\transpose}$.
         \item If $A$ is invertible, so is $A^{\transpose}$ and $\left(A^{\transpose}\right)^{-1} = \left(A^{-1}\right)^{\transpose}$.
     \end{enumerate}
 \end{thm}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}[label=(\arabic*)]
+        \item Since $A$ and $B$ are both $n \times n$, $(AB)^{\transpose}$ and $B^{\transpose}A^{\transpose}$ are both $n \times n$ as well. Then \[\left(\left(AB\right)^{\transpose}\right)_{ij} = (AB)_{ji} = \sum_{k=1}^{n}A_{jk}B_{ki} = \sum_{k=1}^{n}B^{\transpose}_{ik}A^{\transpose}_{kj} = \left(B^{\transpose}A^{\transpose}\right)_{ij}.\]
+        \item If $A$ is invertible, then $I = AA^{-1}$. By (1), $\left(AA^{-1}\right)^{\transpose} = \left(A^{-1}\right)^{\transpose}A^{\transpose}$. Since $I = I^{\transpose}$, we then have $\left(A^{-1}\right)^{\transpose}A^{\transpose} = I$, so $\left(A^{\transpose}\right)^{-1} = \left(A^{-1}\right)^{\transpose}$.
+    \end{enumerate}
+\end{proof}
