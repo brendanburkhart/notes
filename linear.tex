@@ -1554,7 +1554,7 @@ Throughout this section, we will show that a function satisfying all of these pr
 \end{exmp}
 
 \begin{rmk}
-    Consider a matrix $A$, and perform Gauss-Jordan elimination to get the reduced row echelon form $E$. By multilinearity, multiplying a row by $k \neq 0$ multiplies the determinant by $k$, and by Proposition \ref{det-row-ops} the other row ops either negate the determinant, or leave it unchanged. Therefore, $\det A = k\det E$ for some $k \neq 0$.
+    Consider a matrix $A$, and perform Gauss-Jordan elimination to get the reduced row echelon form $E$.
 \end{rmk}
 
 \begin{prop}\label{det-zero}
@@ -1586,6 +1586,24 @@ Throughout this section, we will show that a function satisfying all of these pr
         \end{align*}
     \end{enumerate}
 \end{proof}
+
+\begin{thm}Uniqueness of the determinant\proofbreak
+    If a function exists that is multilinear, alternating, and normalized, it is unique.
+\end{thm}
+
+\begin{proof}
+    Let $\delta$ and $\delta'$ be two functions that are multilinear, alternating, and normalized. Consider an $n \times n$ matrix $A$, and perform Gauss-Jordan elimination to obtain the reduced row echelon form $E$. Let $\ell$ be the number of times the row swap operation was used, and let $k_1, \ldots, k_s$ be all coefficients a row was multiplied by the second type of row operation. By multilinearity, multiplying a row by $k \neq 0$ multiplies the determinant by $k$, and by Proposition \ref{det-row-ops} the first and third types of row operations negate the determinant and leave it unchanged respectively. Therefore,
+    \[\delta(A) = \delta'(A) = (-1)^{\ell}\frac{1}{k_1\cdots k_s}\det E = \begin{dcases}
+        (-1)^{\ell}\frac{1}{k_1\cdots k_s}, & \textrm{if $A$ is invertible} \\
+        0, & \textrm{if $A$ is not invertible}
+    \end{dcases}.\]
+\end{proof}
+
+\begin{rmk}
+    This shows that the existence of such a function would imply it is unique, but does not guarantee that it exists. Without a proof that it exists, this doesn't constitute a formula for the determinant since earlier steps were predicated on the existence.
+
+    Furthermore, note that we did not show that $\ell$ and $k_i$ were unique --- perhaps different choices of row operations would result in different values. This does not mean that the uniqueness proof is wrong, only that if obtaining different values was possible then the determinant function would not be well-defined and so would not exist. That is, we showed that the existence of the determinant implies its uniqueness, and so lack of uniqueness of $\ell$ and $k_i$ would refute its existence.
+\end{rmk}
 
 \begin{defn}
     Let $A$ be an $m \times n$ matrix. The \emph{transpose} of $A$, denoted by $A^{\transpose}$ is the $n \times m$ matrix given by
@@ -1665,6 +1683,14 @@ Throughout this section, we will show that a function satisfying all of these pr
     Finally, if $\det A \neq 0$ and $\det B \neq 0$, then by Proposition \ref{matrix-inverse-reduction} there exists elementary matrices $E_1, \ldots, E_{k}$ such that $A = E_{k}\cdots E_1I_n$. Then $\det A = \det E_{k}\cdots \det E_1\det I_n$ by Lemma \ref{determinant-respects-elementary-product}, and by the same lemma $\det AB = \det E_{k}\cdots \det E_1\det I_n\det B = \det A\det B$.
 \end{proof}
 
+\begin{cor}
+    If $A$ is invertible, then $\det A^{-1} = \frac{1}{\det A}$.
+\end{cor}
+
+\begin{proof}
+    $1 = \det I_n = \det AA^{-1} = \det A\det A^{-1}$.
+\end{proof}
+
 \begin{thm}
     If $A$ is an $n \times n$ matrix, then $\det A = \det A^{\transpose}$.
 \end{thm}
@@ -1678,4 +1704,69 @@ Throughout this section, we will show that a function satisfying all of these pr
     \[\det A = \frac{1}{\det E_k\cdots \det E_1},\]
     \[\det A^{\transpose} = \frac{1}{\det E_1^{\transpose}\cdots \det E_k^{\transpose}}.\]
     Then by Lemma \ref{elementary-transpose-determinant}, we have $\det A = \det A^{\transpose}$.
+\end{proof}
+
+\begin{rmk}
+    Up until this point, we have proceeded by assuming that some function $\det$ exists that is multilinear, alternating, and normalized, and then showing it must have certain properties. We will now explicitly show that a function exists with these properties.
+\end{rmk}
+
+\begin{defn}
+    Let $A$ be an $n \times n$ matrix. For $i, j \in \left\{1, 2, \ldots, n\right\}$, let the $i,j$-minor (or cofactor), denoted by $A^{ij}$, be the $(n-1) \times (n-1)$ matrix obtained from $A$ by removing the $i$th row and $j$th column.
+\end{defn}
+
+\begin{thm}Laplace expansion of the determinant\proofbreak
+    Let $A$ be an $n \times n$ matrix, and fix some $k \in \left\{1, 2, \ldots, n\right\}$. Then
+    \[\det A = \sum_{j=1}^{n}(-1)^{k+j}A_{jk}\det(A^{jk}).\]
+\end{thm}
+
+\begin{rmk}
+    Laplace expansion is also known as cofactor expansion. Since we expanded along the $k$th column of $A$, this is called the column expansion. Since $\det A = \det A^{\transpose}$, we could also do a row expansion along the $k$th row once we've proven this theorem.
+\end{rmk}
+
+\begin{exmp}
+    We will do a Laplace expansion along the first column ($k=1$):
+    \begin{align*}
+        \det \begin{pmatrix}
+            1 &2 &3 \\
+            4 &5 &6 \\
+            7 &8 &9
+        \end{pmatrix}
+        &= (-1)^{1+1}A_{11}\det \begin{pmatrix}
+            5 & 6 \\ 8 & 9
+        \end{pmatrix} + (-1)^{1+2}A_{21}\det \begin{pmatrix}
+            2 & 3 \\ 8 & 9
+        \end{pmatrix} + (-1)^{1+3}A_{31}\det \begin{pmatrix}
+            2 & 3 \\ 5 & 6
+        \end{pmatrix} \\
+        &= 1\cdot(45 - 48) - 4\cdot(18 - 24) + 7\cdot(12 - 15) = 0.
+    \end{align*}
+\end{exmp}
+
+\begin{rmk}
+    Columns or rows containing many zeros are computationally efficient to expand along, since those terms must disappear and so don't need to be calculated.
+\end{rmk}
+
+\begin{proof}
+    We will proceed by induction on $n$. In the case $n = 1$, clearly $[a] \mapsto a$ is multilinear and normalized, and is vacuously alternating. Now assume that $\det$ exists for $(n-1) \times (n-1)$ matrices, and we will show that the Laplace expansion on the $k$th column (which we will denote by $\delta$) is normalized, multilinear, and alternating on $n \times n$ matrices.
+
+    Normalized:
+    \[\delta(I_n) = \sum_{j=1}^{n}(-1)^{k+j}(I_n)_{jk}\det((I_n)^{jk}) = (-1)^{k+k}\cdot 1 \cdot \det I_{n-1} = 1.\]
+
+    Multilinear:
+    Consider matrices $A, B, C$ given by $B = (r_1, \ldots, r_{\ell}, \ldots, r_n)$, $C = (r_1, \ldots, r'_{\ell}, \ldots, r_n)$, and $A = (r_1, \ldots, r'_{\ell}s + r_{\ell}, \ldots, r_n)$. We have
+    \[\delta(A) = \sum_{j=1}^{n}(-1)^{k+j}A_{jk}\det(A^{jk}).\] When $j \neq \ell$, linearity of that term follows from multilinearity of $\det(A^{jk})$, and when $j = \ell$ linearity of the term follows from $A_{jk} = s(r'_{\ell})_{k}+(r_{\ell})_{k}$.
+    \begin{align*}
+        \delta(A) &= (-1)^{k+\ell}\left(s(r'_{\ell})_{k}+(r_{\ell})_{k}\right)\det(A^{\ell k}) + \sum_{j=1,j\neq \ell}^{n}(-1)^{k+j}A_{jk}\left(s\det(C^{jk})+\det(B^{jk})\right) \\
+        &= s\delta(C) + \delta(B).
+    \end{align*}
+
+    Alternating:
+    Assume that $r_i = r_{\ell}$ for some $i \neq \ell$. All cofactors will then be zero, except when $j = i$ or $j = \ell$, so the Laplace expansion gives
+    \[\delta(A) = (-1)^{k+i}A_{ik}\det A^{ik} + (-1)^{k+\ell}A_{\ell k}\det A^{\ell k}.\]
+    Since the $i$th and $\ell$th rows are equal, $A_{ik} = A_{\ell k}$, and $\det A^{\ell k} = (-1)^{i - \ell-1}\det A^{ik}$ since swapping rows negates the determinant. Therefore,
+    \begin{align*}
+        \delta(A) &= (-1)^{k+i}A_{ik}\det A^{ik} + (-1)^{k+\ell}A_{\ell k}\det A^{\ell k} \\
+        &= (-1)^{k+i}A_{ik}\det A^{ik} + (-1)^{k+\ell}(-1)^{i - \ell-1}A_{ik}\det A^{ik} \\
+        &= (-1)^{k+i}A_{ik}\det A^{ik} + (-1)^{k+i-1}A_{ik}\det A^{ik} = 0.
+    \end{align*}
 \end{proof}
