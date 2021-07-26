@@ -701,7 +701,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     Let $\boldsymbol{E}$ be the reduced row echelon form of $\boldsymbol{A}$. Since the pivot columns of $\boldsymbol{E}$ are a subset of the standard basis for $F^n$, they must be linearly independent. By the shape of $\boldsymbol{E}$, the remaining columns must be linear combinations of the pivot columns, so the set of the pivot columns spans the column space of $\boldsymbol{E}$. By Corollary \ref{row-ops-column-independence}, the same follows for $\boldsymbol{A}$, and so the pivot columns form a basis for the column space of $\boldsymbol{A}$.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{row-column-rank-equivalence}
     Let $\boldsymbol{A}$ be a matrix. Then the row rank of $\boldsymbol{A}$ is equal to its column rank.
 \end{thm}
 
@@ -1305,7 +1305,7 @@ For an $m \times n$ matrix $A$, and a vector $x \in F^n$, we define the product 
     \end{pmatrix}.\]
 \end{exmp}
 
-\begin{prop}
+\begin{prop}\label{matrix-inverse-reduction}
     Given a square matrix $A$, perform the row reduction $(A|I_n) \mapsto (E|B)$, where $E$ is the (unique) reduced row echelon form of $A$. Then $A$ is invertible with inverse $B$ if and only if $E = I_n$.
 \end{prop}
 
@@ -1331,7 +1331,7 @@ $(-3, -2)$ is the unique solution to the system
 
 By Theorem \ref{solutions-unchanged-by-row-ops}, if $(A|I_n) \mapsto (I_n|B)$ then the $i$th column of $B$ must be solution to $A\vec{v} = \vec{i}$, where $\vec{i}$ is the $i$th column of $I_n$. Therefore, $AB = I_n$.
 
-\begin{defn}
+\begin{defn}\label{elementary-matrix-defn}
     An $n \times n$ \emph{elementary} matrix is a matrix that can be obtained from $I_n$ by a single row operation.
 \end{defn}
 
@@ -1615,4 +1615,67 @@ Throughout this section, we will show that a function satisfying all of these pr
         \item Since $A$ and $B$ are both $n \times n$, $(AB)^{\transpose}$ and $B^{\transpose}A^{\transpose}$ are both $n \times n$ as well. Then \[\left(\left(AB\right)^{\transpose}\right)_{ij} = (AB)_{ji} = \sum_{k=1}^{n}A_{jk}B_{ki} = \sum_{k=1}^{n}B^{\transpose}_{ik}A^{\transpose}_{kj} = \left(B^{\transpose}A^{\transpose}\right)_{ij}.\]
         \item If $A$ is invertible, then $I = AA^{-1}$. By (1), $\left(AA^{-1}\right)^{\transpose} = \left(A^{-1}\right)^{\transpose}A^{\transpose}$. Since $I = I^{\transpose}$, we then have $\left(A^{-1}\right)^{\transpose}A^{\transpose} = I$, so $\left(A^{\transpose}\right)^{-1} = \left(A^{-1}\right)^{\transpose}$.
     \end{enumerate}
+\end{proof}
+
+\begin{cor}\label{transpose-of-product}
+    $\left(A_1A_2\cdots A_{k_1}A_k\right)^{\transpose} = A_k^{\transpose}A_{k-1}^{\transpose}\cdots A_2^{\transpose}A_1^{\transpose}$
+\end{cor}
+
+\begin{lemma}\label{elementary-transpose-determinant}
+    Let $E$ be an elementary matrix. Then $\det E = \det E^{\transpose} \neq 0$.
+\end{lemma}
+
+\begin{proof}
+    We will divide our proof into three cases, by which of the three row operators $E$ was obtained by.
+
+    \begin{itemize}
+        \item Since swapping rows and swapping columns in $I_n$ is the same thing, if $E$ is obtained from $I_n$ by swapping two rows, then $E = E^{\transpose}$. Then $\det E = \det E^{\transpose} = (-1)\det I_n = -1$ by Proposition \ref{det-row-ops} (\ref{det-row-swap}).
+        \item If $E$ is obtained from $I_n$ by multiplying row $i$ by $k \neq 0$, then $E$ only has non-zero entries on the major diagonal and so $E = E^{\transpose}$. Therefore, $\det E = \det E^{\transpose} = k \det I_n = k$ by multilinearity.
+        \item If $E$ is obtained from $I_n$ by adding $kr_j$ to $r_i$, then $E^{\transpose}$ is obtained from $I_n$ by adding $kr_i$ to $r_j$. Therefore, $\det E = \det I_n = \det E^{\transpose} = 1$ by Proposition \ref{det-row-ops} (\ref{det-add-multiple}).
+    \end{itemize}
+\end{proof}
+
+\begin{lemma}\label{determinant-respects-elementary-product}
+    Let $E$ be an elementary $n \times n$ matrix, and $A$ an arbitrary $n \times n$ matrix. Then $\det EA = \det E \det A$.
+\end{lemma}
+
+\begin{proof}
+    This follow immediately from Proposition \ref{det-row-ops} and multilinearity of the determinant.
+\end{proof}
+
+\begin{lemma}\label{invertible-matrix-solutions}
+    Let $M$ be an $n \times n$ matrix, then $M$ is invertible if and only if no non-trivial solutions exist to $Mx = 0$.
+\end{lemma}
+
+\begin{proof}
+    If the only solution to $Mx = \vec{0}$ is $x = \vec{0}$, then the nullity of $M = $ and so by the Rank-nullity theorem \ref{rank-nullity} $M$ must be full rank and so is invertible.
+
+    If $Mx = \vec{0}$ has a solution $x \neq \vec{0}$, then the nullity of $M > 0$. Therefore, by the Rank-nullity theorem \ref{rank-nullity}, the rank of $M$ is less than $n$ and so $M$ is not invertible.
+\end{proof}
+
+\begin{thm}\label{determinant-respects-product}
+    Let $A$ and $B$ be $n \times n$ matrices. Then $\det AB = \det A \det B$.
+\end{thm}
+
+\begin{proof}
+    If $\det B = 0$, then by Lemma \ref{invertible-matrix-solutions} we know that $Bx = \vec{0}$ has a non-trivial solution $x$. Then $(AB)x = A(Bx) = A\vec{0} = \vec{0}$, and so $\det AB = 0 = \det A\det B$.
+
+    If $\det B \neq 0$ and $\det A = 0$, then there exists $y \neq \vec{0}$ such that $Ay = \vec{0}$. Let $x = B^{-1}y$, and since $B^{-1}$ is invertible we have $x \neq 0$, and so $ABx = Ay = \vec{0}$, and so $\det AB = 0 = \det A\det B$.
+
+    Finally, if $\det A \neq 0$ and $\det B \neq 0$, then by Proposition \ref{matrix-inverse-reduction} there exists elementary matrices $E_1, \ldots, E_{k}$ such that $A = E_{k}\cdots E_1I_n$. Then $\det A = \det E_{k}\cdots \det E_1\det I_n$ by Lemma \ref{determinant-respects-elementary-product}, and by the same lemma $\det AB = \det E_{k}\cdots \det E_1\det I_n\det B = \det A\det B$.
+\end{proof}
+
+\begin{thm}
+    If $A$ is an $n \times n$ matrix, then $\det A = \det A^{\transpose}$.
+\end{thm}
+
+\begin{proof}
+    If $A$ is not invertible, then by Theorem \ref{matrix-invertible-rank} the rank of $A$ is less than $n$. Since the rank of $A$ is the rank of $A^{\transpose}$ by Theorem \ref{row-column-rank-equivalence}, by Proposition \ref{det-zero} (2) $\det A = 0 = \det A^{\transpose}$.
+
+    If $A$ is invertible, then by Proposition \ref{matrix-inverse-reduction} there exists elementary matrices $E_1, \ldots, E_{k}$ such that $I_n = E_{k}\cdots E_1A$. Then $\det I_n = \det E_{k}\cdots \det E_1 \det A$. By Corollary \ref{transpose-of-product}, we know that
+    \[I_n^{\transpose} = A^{\transpose}E_1^{\transpose}\cdots E_k^{\transpose}.\]
+    Therefore, by Lemma \ref{determinant-respects-product}
+    \[\det A = \frac{1}{\det E_k\cdots \det E_1},\]
+    \[\det A^{\transpose} = \frac{1}{\det E_1^{\transpose}\cdots \det E_k^{\transpose}}.\]
+    Then by Lemma \ref{elementary-transpose-determinant}, we have $\det A = \det A^{\transpose}$.
 \end{proof}
