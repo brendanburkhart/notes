@@ -1587,7 +1587,7 @@ Throughout this section, we will show that a function satisfying all of these pr
     \end{enumerate}
 \end{proof}
 
-\begin{thm}Uniqueness of the determinant\proofbreak
+\begin{thm}Uniqueness of the determinant\label{determinant-uniqueness}\proofbreak
     If a function exists that is multilinear, alternating, and normalized, it is unique.
 \end{thm}
 
@@ -1769,4 +1769,73 @@ Throughout this section, we will show that a function satisfying all of these pr
         &= (-1)^{k+i}A_{ik}\det A^{ik} + (-1)^{k+\ell}(-1)^{i - \ell-1}A_{ik}\det A^{ik} \\
         &= (-1)^{k+i}A_{ik}\det A^{ik} + (-1)^{k+i-1}A_{ik}\det A^{ik} = 0.
     \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $SA(v, w)$ define the signed area of the parallelogram determined by $v, w \in \R^2$. Then $SA(v, w) = \det(v, w)$.
+\end{thm}
+
+\begin{proof}
+    We will prove that $SA$ is normalized, alternating, and multilinear, and therefore must be the $2 \times 2$ determinant function by the uniqueness of the determinant \ref{determinant-uniqueness}.
+
+    Let $e_1 = (0, 1)$ and $e_2 = (1, 0)$. Then $SA(e_1, e_2) = 1 \cdot 1 = 1$, so $SA$ is normalized. For any $v \in \R^2$, we know that $SA(v, v) = 0$, so $SA$ is alternating.
+
+    Clearly, for $c \in \R$, $SA(cv, w) = A(v, cw) = cA(v, w)$. Showing that $SA(u + v, w) = A(u, w) + A(v, w)$ is more difficult. We will use a graphical proof: in Figure \ref{fig:parallelogram-addition}, the sum of the areas of the blue and red parallelograms is clearly the same as the area of the purple parallelogram, by similarity of triangles. All different possible orientations of parallelograms can be verified to show that $SA$ is indeed multilinear.
+
+    \begin{figure}[ht!]
+        \centering
+        \begin{minipage}[b]{0.3\linewidth}
+            \begin{tikzpicture}[scale=0.82,rotate=270]
+                \coordinate (O) at (0, 0);
+                \coordinate (A) at (2, 1);
+                \coordinate (B) at (1, 2);
+                \coordinate (C) at (0, 3);
+
+                \coordinate (B2) at ($(A)+(B)$);
+                \coordinate (C2) at ($(A)+(C)$);
+
+                \coordinate (D) at ($(B)+(C)$);
+                \coordinate (D2) at ($(A)+(D)$);
+
+                \tkzFillPolygon[draw,fill=red!65](O,A,B2,B);
+                \tkzFillPolygon[draw,fill=blue!65](B,B2,D2,D);
+            \end{tikzpicture}
+        \end{minipage}
+        \begin{minipage}[b]{0.3\linewidth}
+            \begin{tikzpicture}[scale=0.82,rotate=270]
+                \coordinate (O) at (0, 0);
+                \coordinate (A) at (2, 1);
+                \coordinate (B) at (1, 2);
+                \coordinate (C) at (0, 3);
+
+                \coordinate (B2) at ($(A)+(B)$);
+                \coordinate (C2) at ($(A)+(C)$);
+
+                \coordinate (D) at ($(B)+(C)$);
+                \coordinate (D2) at ($(A)+(D)$);
+
+                \tkzFillPolygon[draw,fill=purple!65](O,A,D2,D);
+            \end{tikzpicture}
+        \end{minipage}
+        \begin{minipage}[b]{0.3\linewidth}
+            \begin{tikzpicture}[scale=0.82,rotate=270]
+                \coordinate (O) at (0, 0);
+                \coordinate (A) at (2, 1);
+                \coordinate (B) at (1, 2);
+                \coordinate (C) at (0, 3);
+
+                \coordinate (B2) at ($(A)+(B)$);
+                \coordinate (C2) at ($(A)+(C)$);
+
+                \coordinate (D) at ($(B)+(C)$);
+                \coordinate (D2) at ($(A)+(D)$);
+
+                \tkzFillPolygon[draw,fill=red!65](O,A,B2,B);
+                \tkzFillPolygon[draw,fill=blue!65](B,B2,D2,D);
+                \tkzFillPolygon[draw,opacity=0.50,fill=purple!65](O,A,D2,D);
+            \end{tikzpicture}
+        \end{minipage}
+    \caption{Addition of parallelograms}
+    \label{fig:parallelogram-addition}
+    \end{figure}
 \end{proof}
