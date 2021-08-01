@@ -28,6 +28,8 @@ Isomorphisms
 Jacobian
 memoryless
 multigraph
+multilinear
+multilinearity
 nonhomogeneous
 ODE
 ODEs

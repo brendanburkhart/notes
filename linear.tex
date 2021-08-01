@@ -246,10 +246,6 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
         \end{pmatrix} \in \R^3 \compbar x + y + z = 0\right\}$. $W$ is a vector subspace over $\R$ with the operations inherited from $\R^3$. $W$ is a plane within $\R^3$, with normal $(1, 1, 1)$.
 \end{exmp}
 
-\begin{exmp}
-    Let $S \subseteq F^n$ be the solution set to a homogeneous system of linear equations over a field $F$, and let $u, v \in S$ and $r \in$. Then by Theorem \ref{solutions-unchanged-by-row-ops}, $u + v \in S$ and $r \in S$. Therefore, $S$ is a vector subspace of $F^n$.
-\end{exmp}
-
 \begin{prop}\label{subspace-proof}
     A subset $W$ of $V$ is a subspace if and only if
     \begin{enumerate}
@@ -274,7 +270,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{exmp}
 
 \begin{exmp}
-    Let $V =\R^n$, and $W$ be the set of solutions to a homogeneous system of equations (every equation is equal to zero). Then $\{\vec{0}\}$ is a solution to the system of linear equations, and since every solution is equal to zero, the set of solutions is closed under addition and multiplication, so $W$ is a subspace of $V$.
+    Let $S \subseteq F^n$ be the solution set to a homogeneous system of linear equations over a field $F$. Then clearly $\vec{0} \in S$, and since every solution is equal to zero, $S$ is closed under addition and multiplication. Therefore, by Proposition \ref{subspace-proof}, $S$ is a vector subspace of $F^n$.
 \end{exmp}
 
 \begin{exmp}
@@ -288,7 +284,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \section{Linear Combinations and Spans}
 
 \begin{defn}
-    Let $V$ be a vector space over $F$, and $S \subseteq V$ with $S \neq \emptyset$. We say $v \in V$ is a \emph{linear combination} of vectors in $S$ if \[v = c_1s_1 + \cdots + c_nc_n \textrm{ for some } n >1, c_i \in F, s_i \in S \textrm{for i} = 1,\ldots,n.\]
+    Let $V$ be a vector space over $F$, and $S \subseteq V$ with $S \neq \emptyset$. We say $v \in V$ is a \emph{linear combination} of vectors in $S$ if \[v = c_1s_1 + \cdots + c_nc_n \textrm{ for some } c_i \in F, s_i \in S.\]
 \end{defn}
 
 \begin{exmp}
@@ -312,7 +308,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \begin{defn}
     Let $S \subseteq V$. The \emph{span} (also \emph{linear span} or \emph{linear hull}) of $S$ is the set of all linear combinations of vectors in $S$. \[\spanset{S} = \left\{c_1s_1 + \cdots + c_ns_n \compbar n \in \N, c_i \in F, s_i \in S\right\}\]
 
-    By convention, if $S = \emptyset$, we define $\spanset{S} = \vec{0}$.
+    By convention, if $S = \emptyset$, we define $\spanset{S} = \left\{\vec{0}\right\}$.
 \end{defn}
 
 \begin{rmk}
@@ -324,7 +320,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{rmk}
 
 \begin{lemma}
-    Let $V$ be a vector space over $F$, and $s \subseteq V$. Then $\spanset{S}$ is a subspace of $V$.
+    Let $V$ be a vector space over $F$, and $S \subseteq V$. Then $\spanset{S}$ is a subspace of $V$.
 \end{lemma}
 
 \begin{proof}
@@ -338,7 +334,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{rmk}
 
 \begin{exmp}
-    Let $v$ be a vector space over $F$. Given $S \subseteq V$, and $v \in V$, how do we know if $v \in \spanset S$?
+    Let $V$ be a vector space over $F$. Given $S \subseteq V$, and $v \in V$, how do we know if $v \in \spanset S$?
 
     Let $V = P_2(\R)$, $S = \left\{x^2 + 3x - 2, 2x^2 + 5x -3\right\}$, and $v = -x^2 - 4x + 4$. We are trying to determine $a, b \in F$ such that $-x^2 - 4x + 4 = a(x^2 + 3x - 2) + b(2x^2 + 5x - 3)$. This would imply that $a + 2b = -1$, $3a + 5b = -4$, and $-2a - 3b = 4$. This system of equations can be represented as a matrix, and solved for $a$ and $b$.
     \begin{align*}
@@ -347,17 +343,25 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
             3 &5 &-4 \\
             -2 &-3 &4
         \end{amatrix}
-         & \begin{aligned}
+        &\begin{aligned}
              & \ro{r_2 \rightarrow r_2 - 3r_1}  \\
              & \ro{r_3 \rightarrow r_3 + 2r_1} \\
         \end{aligned}
-         & \begin{amatrix}{2}
+        &\begin{amatrix}{2}
             1 &2 &-1 \\
             0 &-1 &-1 \\
             0 &1 &2
         \end{amatrix}
+        &\begin{aligned}
+            & \ro{r_2 \rightarrow r_2 + r_3}  \\
+       \end{aligned}
+       &\begin{amatrix}{2}
+           1 &2 &-1 \\
+           0 &0 &1 \\
+           0 &1 &2
+       \end{amatrix}
     \end{align*}
-    This would imply that $0b = 1$, which is a contradiction, so no such $a, b$ exist.
+    This would imply that $0 = 1$, which is a contradiction, so no such $a, b$ exist.
 \end{exmp}
 
 \begin{lemma}\label{equal-spans-condition}
@@ -365,7 +369,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \end{lemma}
 
 \begin{proof}\proofbreak
-    ($\implies$) If $v \notin \spanset{S}$, then since $v \in \spanset{S \cup \left\{v\right\}}$, we know that $\spanset{S} \neq \spanset{S \cup \left\{v\right\}}$.
+    ($\implies$) Since $v \in \spanset{S \cup \left\{v\right\}}$, if $\spanset{S} = \spanset{S \cup \left\{v\right\}}$ then $v \in \spanset{S}$.
 
     ($\impliedby$) Assume $v \in \spanset{S}$. Then $v = c_1v_1 + \cdots + c_ns_n$ for $c_i \in F$ and $s_i \in S$. Since $S \subseteq S \cup \left\{v\right\}$, we have $\spanset{S} \subseteq \spanset{S \cup \left\{v\right\}}$. Let $w \in \spanset{S \cup \left\{v\right\}}$, so $w = d_1t_1 + \cdots + d_mt_n + d_{m+1}v$. Thus, $w = d_1t_1 + \cdots + d_mt_m + d_{m+1}(c_1 + \cdots + c_n)$, so $w \in \spanset{S}$ and $\spanset{S \cup \left\{v\right\}} \subseteq \spanset{S}$. Therefore, $\spanset{S} = \spanset{S \cup \left\{v\right\}}$.
 \end{proof}
@@ -373,11 +377,11 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \section{Linear Independence}
 
 \begin{defn}
-    Let $V$ be a vector space over a field $F$, and $S \subseteq V$. We say that $S$ is \emph{linearly dependent} if there exists distinct $s_1, s_2, \ldots, s_n \in S$ and $c_1, c_2, \ldots, c_n \in F$ not all zero such that $c_1s_1 + c_2s_2 + \cdots + c_ns_n \neq \vec{0}$.
+    Let $V$ be a vector space over a field $F$, and $S \subseteq V$. We say that $S$ is \emph{linearly dependent} if there exists distinct $s_1, s_2, \ldots, s_n \in S$, and $c_1, c_2, \ldots, c_n \in F$ not all zero such that $c_1s_1 + c_2s_2 + \cdots + c_ns_n \neq \vec{0}$.
 \end{defn}
 
 \begin{rmk}
-    If $S$ is not linear dependent, then we say that it is \emph{linearly independent}.
+    If $S$ is not linearly dependent, then we say that it is \emph{linearly independent}.
 \end{rmk}
 
 \begin{exmp}
@@ -423,7 +427,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
 \begin{proof}
     If $S$ is linearly independent, then $S$ itself is just such a subset.
 
-    If not, then there must exist $v \in S$ such that $v \in \spanset{S - \{v\}}$ by Proposition \ref{linear-dependence-implies-extra-vector}. Then by Lemma \ref{equal-spans-condition}, $\spanset{S} = \spanset{S - \{v\}}$. Then either $S - \{v\}$ is a linear independent subset of $S$ with the same span, or this process can be repeated. Since $S$ is finite, and $\emptyset$ is linearly independent, eventually a linearly independent subset with the same span will be reached.
+    If not, then there must exist $v \in S$ such that $v \in \spanset{S - \{v\}}$ by Proposition \ref{linear-dependence-implies-extra-vector}. Then by Lemma \ref{equal-spans-condition}, $\spanset{S} = \spanset{S - \{v\}}$. Then either $S - \{v\}$ is a linearly independent subset of $S$ with the same span, or this process can be repeated. Since $S$ is finite, and $\emptyset$ is linearly independent, eventually a linearly independent subset with the same span will be reached.
 \end{proof}
 
 \begin{exmp}
@@ -697,7 +701,7 @@ Consider the empty set. It cannot be a vector space, since a vector space requir
     Let $\boldsymbol{E}$ be the reduced row echelon form of $\boldsymbol{A}$. Since the pivot columns of $\boldsymbol{E}$ are a subset of the standard basis for $F^n$, they must be linearly independent. By the shape of $\boldsymbol{E}$, the remaining columns must be linear combinations of the pivot columns, so the set of the pivot columns spans the column space of $\boldsymbol{E}$. By Corollary \ref{row-ops-column-independence}, the same follows for $\boldsymbol{A}$, and so the pivot columns form a basis for the column space of $\boldsymbol{A}$.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{row-column-rank-equivalence}
     Let $\boldsymbol{A}$ be a matrix. Then the row rank of $\boldsymbol{A}$ is equal to its column rank.
 \end{thm}
 
@@ -1301,7 +1305,7 @@ For an $m \times n$ matrix $A$, and a vector $x \in F^n$, we define the product 
     \end{pmatrix}.\]
 \end{exmp}
 
-\begin{prop}
+\begin{prop}\label{matrix-inverse-reduction}
     Given a square matrix $A$, perform the row reduction $(A|I_n) \mapsto (E|B)$, where $E$ is the (unique) reduced row echelon form of $A$. Then $A$ is invertible with inverse $B$ if and only if $E = I_n$.
 \end{prop}
 
@@ -1310,22 +1314,26 @@ We will explore two reasons to explain this.
 \textbf{Reason 1:} Since
 \[\begin{amatrix}{2}
     -1 & 1 & 1 \\ 2 & -3 & 0
-\end{amatrix} \mapsto \begin{amatrix}{3}
+\end{amatrix} \mapsto \begin{amatrix}{2}
     1 & 0 & -3 \\ 0 & 1 & -2
 \end{amatrix},\]
-$(-3, 2)$ is the unique solution to the system
+$(-3, -2)$ is the unique solution to the system
 \[\begin{amatrix}{2}
     -1 & 1 & x \\ 2 & -3 & y
-\end{amatrix} = \begin{pmatrix}
-    1 & 0
-\end{pmatrix}.\] Similarly, $A(x, y) = (0, 1)$ has only the solution $(-1, 1)$. Therefore,
-\[\begin{pmatrix}
+\end{amatrix} = \begin{bmatrix}
+    1 \\ 0
+\end{bmatrix}.\] Similarly, $A(x, y) = (0, 1)$ has only the solution $(-1, 1)$. Therefore,
+\[\begin{bmatrix}
     -1 & 1 \\ 2 & -3
-\end{pmatrix}\begin{pmatrix}
-    -3 & -1 \\ -2 & -1
-\end{pmatrix} = I_2.\]
+\end{bmatrix}\begin{bmatrix}
+    -3 & -1 \\ -2 & 1
+\end{bmatrix} = I_2.\]
 
-\textbf{Reason 2.} Define an $n \times n$ \emph{elementary} matrix to be a matrix that can be obtained from $I_n$ by a single row operation.
+By Theorem \ref{solutions-unchanged-by-row-ops}, if $(A|I_n) \mapsto (I_n|B)$ then the $i$th column of $B$ must be solution to $A\vec{v} = \vec{i}$, where $\vec{i}$ is the $i$th column of $I_n$. Therefore, $AB = I_n$.
+
+\begin{defn}\label{elementary-matrix-defn}
+    An $n \times n$ \emph{elementary} matrix is a matrix that can be obtained from $I_n$ by a single row operation.
+\end{defn}
 
 \begin{lemma}
     Suppose $A \mapsto B$ via a single row operation, and $E$ is the corresponding elementary matrix obtained by performing the same row operation on $I_n$. Then $B = EA$.
@@ -1342,6 +1350,8 @@ $(-3, 2)$ is the unique solution to the system
 
     Here, $E$ can be obtained from $I_3$ by $r_1 \to r_1 + 2r_2$, and $B$ can be obtained from $A$ by $r_1 \to r_1 + 2r_2$ as well.
 \end{exmp}
+
+\textbf{Reason 2.}
 
 If $(A|A') \mapsto (B|B')$ via elementary row operations, then there must exist elementary matrices $E_1, E_2, \ldots, E_k$ such that
 \begin{align*}
@@ -1437,3 +1447,412 @@ Let $B$ and $C$ be ordered basis for a vector space $V$, and consider $v \in V$ 
     Let $V$ and $W$ be finite dimensional vector spaces over a field $F$, and $B, B'$ and $D, D'$ be ordered bases for $V$ and $W$ respectively. Let $P$ be the change of basis matrix from $B$ to $B'$, and $Q$ be the change of basis matrix from $D$ to $D'$. Then for a linear transformation $f$,
     \[[f]_{B'}^{D'} = Q[f]_{B}^{D}P^{-1}.\]
 \end{thm}
+
+\section{Determinants}
+
+When is an $n \times n$ matrix invertible? When $n = 1$, $[a]$ is invertible when $a \neq 0$, in which case $[a]^{-1} = [1/a]$. When $n = 2$, we can show that
+\[\begin{bmatrix}
+    a & b \\
+    c & d
+\end{bmatrix}\] is invertible when $ad - bc \neq 0$, in which case
+\[\begin{bmatrix}
+    a & b \\
+    c & d
+\end{bmatrix}^{-1} = \frac{1}{ad - bc}\begin{bmatrix}
+    d & -b \\
+    c & a
+\end{bmatrix}.\]
+
+\begin{rmk}
+    Let $A \in M_{n \times n}(F)$, and let $r_1, \ldots, r_n$ be the rows of $A$. We will denote $A$ by $(r_1, \ldots, r_n)$.
+\end{rmk}
+
+\begin{defn}\label{det-properties}
+    A \emph{determinant} is a function $\det M_{n \times n}(F) \to F$ that is:
+    \begin{itemize}
+        \item Multilinear: it is linear on each row. If $r_1, \ldots, r_n \in F^n$, $r_i' \in F^n$, and $s \in F$, then
+        \begin{align*}
+            \det\left(r_1, \ldots, sr_i' + r_i, \ldots, r_n\right) = \det\left(r_1, \ldots, r_i, \ldots, r_n\right) + s\det\left(r_1, \ldots, r_i', \ldots, r_n\right).
+        \end{align*}
+        \item Alternating: $\det(r_1, \ldots, r_n) = 0$ if $r_i = r_j$ for some $i \neq j$.
+        \item Normalized: $\det(I_n) = 1$.
+    \end{itemize}
+\end{defn}
+
+Throughout this section, we will show that a function satisfying all of these properties does in fact exist, and furthermore that it must be unique.
+
+\begin{exmp}
+    Consider $\det: M_{2 \times 2}(F) \to F$ given by
+    \[\begin{bmatrix}
+        a & b \\ c & d
+    \end{bmatrix} \mapsto ad - bc.\]
+    We can show that this is a determinant. Firstly, it is multilinear:
+    \[\begin{bmatrix}
+        a + sa' & b + sb' \\ c & d
+    \end{bmatrix} \mapsto (a + sa')d - (b + sb')c = \left(ad - bc\right) + s\left(a'd - b'c\right).\]
+    Secondly, it is alternating: if $(a, b) = (c, d)$, then $ad - bc = ab - ba = 0$. Finally, it is normalized:
+    \[\begin{bmatrix}
+        1 & 0 \\ 0 & 1
+    \end{bmatrix} \mapsto 1(1) - 0(0) = 1.\]
+\end{exmp}
+
+\begin{prop}\label{det-row-ops}
+    Let $\det$ be a determinant function, and $A, B \in M_{n \times n}(F)$ where
+    \begin{align*}
+        A &= (r_1, \ldots, r_n). \\
+    \end{align*}
+    Choose two rows $r_i, r_j$ from $A$, $i \neq j$.
+    If $B$ can be obtained from $A$ by swapping two rows, then
+    \begin{equation}\label{det-row-swap}\tag{$1$}
+        \det B = -\det A.
+    \end{equation}
+    If instead $B$ can be obtained from $A$ by adding $kr_j$ to $r_i$, then
+    \begin{equation}\label{det-add-multiple}\tag{$2$}
+        \det B = \det A.
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    In the first case, by the alternating property of $\det$, we know that
+    \[\det (r_1, \ldots, r_i + r_j, r_i + r_j, \ldots, r_n) = 0,\]
+    and by the multilinearity property we have
+    \begin{align*}
+        \det (r_1, \ldots, r_i + r_j, r_i + r_j, \ldots, r_n) &= \det (r_1, \ldots, r_i, r_i + r_j, \ldots, r_n) + \det (r_1, \ldots, r_j, r_i + r_j, \ldots, r_n) \\
+        &= \det (r_1, \ldots, r_i, r_i, \ldots, r_n) + \det (r_1, \ldots, r_j, r_j, \ldots, r_n)\\
+        &\quad\quad + \det (r_1, \ldots, r_i, r_j, \ldots, r_n) + \det (r_1, \ldots, r_j, r_i, \ldots, r_n).
+    \end{align*}
+    Since the first two terms of the last expression have a repeated row, by the alternating property they must be zero, and so
+    \begin{align*}
+        0 &= \det (r_1, \ldots, r_i, r_j, \ldots, r_n) + \det (r_1, \ldots, r_j, r_i, \ldots, r_n) \\
+        &= \det A + \det B.
+    \end{align*}
+
+    In the second case,
+    \begin{align*}
+        \det B &= \det\left(r_1, \ldots, kr_j + r_i, \ldots, r_j, \ldots, r_n\right) \\
+        &= \det\left(r_1, \ldots, r_i, \ldots, r_j, \ldots, r_n\right) + k\det\left(r_1, \ldots, r_j, \ldots, r_j, \ldots, r_n\right) \\
+        &= \det A + 0.
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    \begin{align*}
+        \det \begin{bmatrix}
+            -3 & 1 & 2 \\ 0 & 4 & 5 \\ 0 & 0 & 6
+        \end{bmatrix} &= (-3)\det\begin{bmatrix}
+            1 & -1/3 & -2/3 \\ 0 & 4 & 5 \\ 0 & 0 & 6
+        \end{bmatrix} = (-3)(4)\begin{bmatrix}
+            1 & -1/3 & -2/3 \\ 0 & 1 & 5/4 \\ 0 & 0 & 6
+        \end{bmatrix} \\
+        &= (-3)(4)(6)\begin{bmatrix}
+            1 & -1/3 & -2/3 \\ 0 & 1 & 5/4 \\ 0 & 0 & 1
+        \end{bmatrix} = (-3)(4)(6)\begin{bmatrix}
+            1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+        \end{bmatrix} \\
+        &= (-3)(4)(6)\det I = -72.
+    \end{align*}
+\end{exmp}
+
+\begin{rmk}
+    Consider a matrix $A$, and perform Gauss-Jordan elimination to get the reduced row echelon form $E$.
+\end{rmk}
+
+\begin{prop}\label{det-zero}
+    Let $\det$ be a determinant function. Then
+    \begin{enumerate}[label=(\arabic*)]
+        \item If $A$ has a row of all zeroes, then $\det A = 0$.
+        \item $A$ is invertible if and only if $\det A \neq 0$.
+        \item The determinant of an upper triangular matrix is the product of the major diagonal entries.
+    \end{enumerate}
+\end{prop}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}[label=(\arabic*)]
+        \item Let $A$ be a matrix with $r_i = \vec{0}$. Then consider $B$ obtained from $A$ by adding $r_j$ to $r_i$, so $B$ contains $r_j$ twice. By the alternating property, $\det B = 0$, and by Proposition \ref{det-row-ops} (\ref{det-add-multiple}) we know $\det A = \det B$, so we have $\det A = 0$.
+        \item We know that $\det A = k\det E$, where $E$ is the reduced row echelon form of $A$. If $A$ is invertible, then $\det A = k\det E = k\det I = k$, where $k \neq 0$. If $A$ is not invertible then $A$ must have rank $m < n$ by Theorem \ref{matrix-invertible-rank}. It follows by Lemma \ref{row-ops-row-space} that $E$ must contain a row of zeroes. Therefore, $\det E = 0$, and since $\det A = k\det E$ we have $\det A = 0$.
+        \item \begin{align*}
+            \det\begin{bmatrix}
+                a_{11} & a_{12} & \cdots & a_{1n} \\
+                0 & a_{22} & \cdots & a_{2n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                0 & 0 & \cdots & a_{nn}
+            \end{bmatrix} &= a_{11}a_{22}\cdots a_{nn}\det\begin{bmatrix}
+                1 & a_{12}/a_{11} & \cdots & a_{1n}/a_{11} \\
+                0 & 1 & \cdots & a_{2n}/{a_22} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                0 & 0 & \cdots & 1
+            \end{bmatrix} \\
+            &= a_{11}a_{22}\cdots a_{nn}\det I = a_{11}a_{22}\cdots a_{nn}.
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+\begin{thm}Uniqueness of the determinant\label{determinant-uniqueness}\proofbreak
+    If a function exists that is multilinear, alternating, and normalized, it is unique.
+\end{thm}
+
+\begin{proof}
+    Let $\delta$ and $\delta'$ be two functions that are multilinear, alternating, and normalized. Consider an $n \times n$ matrix $A$, and perform Gauss-Jordan elimination to obtain the reduced row echelon form $E$. Let $\ell$ be the number of times the row swap operation was used, and let $k_1, \ldots, k_s$ be all coefficients a row was multiplied by the second type of row operation. By multilinearity, multiplying a row by $k \neq 0$ multiplies the determinant by $k$, and by Proposition \ref{det-row-ops} the first and third types of row operations negate the determinant and leave it unchanged respectively. Therefore,
+    \[\delta(A) = \delta'(A) = (-1)^{\ell}\frac{1}{k_1\cdots k_s}\det E = \begin{dcases}
+        (-1)^{\ell}\frac{1}{k_1\cdots k_s}, & \textrm{if $A$ is invertible} \\
+        0, & \textrm{if $A$ is not invertible}
+    \end{dcases}.\]
+\end{proof}
+
+\begin{rmk}
+    This shows that the existence of such a function would imply it is unique, but does not guarantee that it exists. Without a proof that it exists, this doesn't constitute a formula for the determinant since earlier steps were predicated on the existence.
+
+    Furthermore, note that we did not show that $\ell$ and $k_i$ were unique --- perhaps different choices of row operations would result in different values. This does not mean that the uniqueness proof is wrong, only that if obtaining different values was possible then the determinant function would not be well-defined and so would not exist. That is, we showed that the existence of the determinant implies its uniqueness, and so lack of uniqueness of $\ell$ and $k_i$ would refute its existence.
+\end{rmk}
+
+\begin{defn}
+    Let $A$ be an $m \times n$ matrix. The \emph{transpose} of $A$, denoted by $A^{\transpose}$ is the $n \times m$ matrix given by
+    \[\left(A^{\transpose}\right)_{ij} = A_{ji}.\]
+\end{defn}
+
+\begin{exmp}
+    \[\begin{pmatrix}
+        a & b \\ c & d
+    \end{pmatrix}^{\transpose} = \begin{pmatrix}
+        a & c \\ b & d
+    \end{pmatrix}.\]
+
+    Note that $\det A = ad - bc$, and $\det A^{\transpose} = ad - cb$, so $\det A = \det A^{\transpose}$.
+\end{exmp}
+
+\begin{thm}\label{transpose-properties}
+    Let $A$ and $B$ be $n \times n$ matrices. Then
+    \begin{enumerate}[label=(\arabic*)]
+        \item $\left(AB\right)^{\transpose} = B^{\transpose}A^{\transpose}$.
+        \item If $A$ is invertible, so is $A^{\transpose}$ and $\left(A^{\transpose}\right)^{-1} = \left(A^{-1}\right)^{\transpose}$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}[label=(\arabic*)]
+        \item Since $A$ and $B$ are both $n \times n$, $(AB)^{\transpose}$ and $B^{\transpose}A^{\transpose}$ are both $n \times n$ as well. Then \[\left(\left(AB\right)^{\transpose}\right)_{ij} = (AB)_{ji} = \sum_{k=1}^{n}A_{jk}B_{ki} = \sum_{k=1}^{n}B^{\transpose}_{ik}A^{\transpose}_{kj} = \left(B^{\transpose}A^{\transpose}\right)_{ij}.\]
+        \item If $A$ is invertible, then $I = AA^{-1}$. By (1), $\left(AA^{-1}\right)^{\transpose} = \left(A^{-1}\right)^{\transpose}A^{\transpose}$. Since $I = I^{\transpose}$, we then have $\left(A^{-1}\right)^{\transpose}A^{\transpose} = I$, so $\left(A^{\transpose}\right)^{-1} = \left(A^{-1}\right)^{\transpose}$.
+    \end{enumerate}
+\end{proof}
+
+\begin{cor}\label{transpose-of-product}
+    $\left(A_1A_2\cdots A_{k_1}A_k\right)^{\transpose} = A_k^{\transpose}A_{k-1}^{\transpose}\cdots A_2^{\transpose}A_1^{\transpose}$
+\end{cor}
+
+\begin{lemma}\label{elementary-transpose-determinant}
+    Let $E$ be an elementary matrix. Then $\det E = \det E^{\transpose} \neq 0$.
+\end{lemma}
+
+\begin{proof}
+    We will divide our proof into three cases, by which of the three row operators $E$ was obtained by.
+
+    \begin{itemize}
+        \item Since swapping rows and swapping columns in $I_n$ is the same thing, if $E$ is obtained from $I_n$ by swapping two rows, then $E = E^{\transpose}$. Then $\det E = \det E^{\transpose} = (-1)\det I_n = -1$ by Proposition \ref{det-row-ops} (\ref{det-row-swap}).
+        \item If $E$ is obtained from $I_n$ by multiplying row $i$ by $k \neq 0$, then $E$ only has non-zero entries on the major diagonal and so $E = E^{\transpose}$. Therefore, $\det E = \det E^{\transpose} = k \det I_n = k$ by multilinearity.
+        \item If $E$ is obtained from $I_n$ by adding $kr_j$ to $r_i$, then $E^{\transpose}$ is obtained from $I_n$ by adding $kr_i$ to $r_j$. Therefore, $\det E = \det I_n = \det E^{\transpose} = 1$ by Proposition \ref{det-row-ops} (\ref{det-add-multiple}).
+    \end{itemize}
+\end{proof}
+
+\begin{lemma}\label{determinant-respects-elementary-product}
+    Let $E$ be an elementary $n \times n$ matrix, and $A$ an arbitrary $n \times n$ matrix. Then $\det EA = \det E \det A$.
+\end{lemma}
+
+\begin{proof}
+    This follow immediately from Proposition \ref{det-row-ops} and multilinearity of the determinant.
+\end{proof}
+
+\begin{lemma}\label{invertible-matrix-solutions}
+    Let $M$ be an $n \times n$ matrix, then $M$ is invertible if and only if no non-trivial solutions exist to $Mx = 0$.
+\end{lemma}
+
+\begin{proof}
+    If the only solution to $Mx = \vec{0}$ is $x = \vec{0}$, then the nullity of $M = $ and so by the Rank-nullity theorem \ref{rank-nullity} $M$ must be full rank and so is invertible.
+
+    If $Mx = \vec{0}$ has a solution $x \neq \vec{0}$, then the nullity of $M > 0$. Therefore, by the Rank-nullity theorem \ref{rank-nullity}, the rank of $M$ is less than $n$ and so $M$ is not invertible.
+\end{proof}
+
+\begin{thm}\label{determinant-respects-product}
+    Let $A$ and $B$ be $n \times n$ matrices. Then $\det AB = \det A \det B$.
+\end{thm}
+
+\begin{proof}
+    If $\det B = 0$, then by Lemma \ref{invertible-matrix-solutions} we know that $Bx = \vec{0}$ has a non-trivial solution $x$. Then $(AB)x = A(Bx) = A\vec{0} = \vec{0}$, and so $\det AB = 0 = \det A\det B$.
+
+    If $\det B \neq 0$ and $\det A = 0$, then there exists $y \neq \vec{0}$ such that $Ay = \vec{0}$. Let $x = B^{-1}y$, and since $B^{-1}$ is invertible we have $x \neq 0$, and so $ABx = Ay = \vec{0}$, and so $\det AB = 0 = \det A\det B$.
+
+    Finally, if $\det A \neq 0$ and $\det B \neq 0$, then by Proposition \ref{matrix-inverse-reduction} there exists elementary matrices $E_1, \ldots, E_{k}$ such that $A = E_{k}\cdots E_1I_n$. Then $\det A = \det E_{k}\cdots \det E_1\det I_n$ by Lemma \ref{determinant-respects-elementary-product}, and by the same lemma $\det AB = \det E_{k}\cdots \det E_1\det I_n\det B = \det A\det B$.
+\end{proof}
+
+\begin{cor}
+    If $A$ is invertible, then $\det A^{-1} = \frac{1}{\det A}$.
+\end{cor}
+
+\begin{proof}
+    $1 = \det I_n = \det AA^{-1} = \det A\det A^{-1}$.
+\end{proof}
+
+\begin{thm}
+    If $A$ is an $n \times n$ matrix, then $\det A = \det A^{\transpose}$.
+\end{thm}
+
+\begin{proof}
+    If $A$ is not invertible, then by Theorem \ref{matrix-invertible-rank} the rank of $A$ is less than $n$. Since the rank of $A$ is the rank of $A^{\transpose}$ by Theorem \ref{row-column-rank-equivalence}, by Proposition \ref{det-zero} (2) $\det A = 0 = \det A^{\transpose}$.
+
+    If $A$ is invertible, then by Proposition \ref{matrix-inverse-reduction} there exists elementary matrices $E_1, \ldots, E_{k}$ such that $I_n = E_{k}\cdots E_1A$. Then $\det I_n = \det E_{k}\cdots \det E_1 \det A$. By Corollary \ref{transpose-of-product}, we know that
+    \[I_n^{\transpose} = A^{\transpose}E_1^{\transpose}\cdots E_k^{\transpose}.\]
+    Therefore, by Lemma \ref{determinant-respects-product}
+    \[\det A = \frac{1}{\det E_k\cdots \det E_1},\]
+    \[\det A^{\transpose} = \frac{1}{\det E_1^{\transpose}\cdots \det E_k^{\transpose}}.\]
+    Then by Lemma \ref{elementary-transpose-determinant}, we have $\det A = \det A^{\transpose}$.
+\end{proof}
+
+\begin{rmk}
+    Up until this point, we have proceeded by assuming that some function $\det$ exists that is multilinear, alternating, and normalized, and then showing it must have certain properties. We will now explicitly show that a function exists with these properties.
+\end{rmk}
+
+\begin{defn}
+    Let $A$ be an $n \times n$ matrix. For $i, j \in \left\{1, 2, \ldots, n\right\}$, let the $i,j$-minor (or cofactor), denoted by $A^{ij}$, be the $(n-1) \times (n-1)$ matrix obtained from $A$ by removing the $i$th row and $j$th column.
+\end{defn}
+
+\begin{thm}Laplace expansion of the determinant\proofbreak
+    Let $A$ be an $n \times n$ matrix, and fix some $k \in \left\{1, 2, \ldots, n\right\}$. Then
+    \[\det A = \sum_{j=1}^{n}(-1)^{k+j}A_{jk}\det(A^{jk}).\]
+\end{thm}
+
+\begin{rmk}
+    Laplace expansion is also known as cofactor expansion. Since we expanded along the $k$th column of $A$, this is called the column expansion. Since $\det A = \det A^{\transpose}$, we could also do a row expansion along the $k$th row once we've proven this theorem.
+\end{rmk}
+
+\begin{exmp}
+    We will do a Laplace expansion along the first column ($k=1$):
+    \begin{align*}
+        \det \begin{pmatrix}
+            1 &2 &3 \\
+            4 &5 &6 \\
+            7 &8 &9
+        \end{pmatrix}
+        &= (-1)^{1+1}A_{11}\det \begin{pmatrix}
+            5 & 6 \\ 8 & 9
+        \end{pmatrix} + (-1)^{1+2}A_{21}\det \begin{pmatrix}
+            2 & 3 \\ 8 & 9
+        \end{pmatrix} + (-1)^{1+3}A_{31}\det \begin{pmatrix}
+            2 & 3 \\ 5 & 6
+        \end{pmatrix} \\
+        &= 1\cdot(45 - 48) - 4\cdot(18 - 24) + 7\cdot(12 - 15) = 0.
+    \end{align*}
+\end{exmp}
+
+\begin{rmk}
+    Columns or rows containing many zeros are computationally efficient to expand along, since those terms must disappear and so don't need to be calculated.
+\end{rmk}
+
+\begin{proof}
+    We will proceed by induction on $n$. In the case $n = 1$, clearly $[a] \mapsto a$ is multilinear and normalized, and is vacuously alternating. Now assume that $\det$ exists for $(n-1) \times (n-1)$ matrices, and we will show that the Laplace expansion on the $k$th column (which we will denote by $\delta$) is normalized, multilinear, and alternating on $n \times n$ matrices.
+
+    Normalized:
+    \[\delta(I_n) = \sum_{j=1}^{n}(-1)^{k+j}(I_n)_{jk}\det((I_n)^{jk}) = (-1)^{k+k}\cdot 1 \cdot \det I_{n-1} = 1.\]
+
+    Multilinear:
+    Consider matrices $A, B, C$ given by $B = (r_1, \ldots, r_{\ell}, \ldots, r_n)$, $C = (r_1, \ldots, r'_{\ell}, \ldots, r_n)$, and $A = (r_1, \ldots, r'_{\ell}s + r_{\ell}, \ldots, r_n)$. We have
+    \[\delta(A) = \sum_{j=1}^{n}(-1)^{k+j}A_{jk}\det(A^{jk}).\] When $j \neq \ell$, linearity of that term follows from multilinearity of $\det(A^{jk})$, and when $j = \ell$ linearity of the term follows from $A_{jk} = s(r'_{\ell})_{k}+(r_{\ell})_{k}$.
+    \begin{align*}
+        \delta(A) &= (-1)^{k+\ell}\left(s(r'_{\ell})_{k}+(r_{\ell})_{k}\right)\det(A^{\ell k}) + \sum_{j=1,j\neq \ell}^{n}(-1)^{k+j}A_{jk}\left(s\det(C^{jk})+\det(B^{jk})\right) \\
+        &= s\delta(C) + \delta(B).
+    \end{align*}
+
+    Alternating:
+    Assume that $r_i = r_{\ell}$ for some $i \neq \ell$. All cofactors will then be zero, except when $j = i$ or $j = \ell$, so the Laplace expansion gives
+    \[\delta(A) = (-1)^{k+i}A_{ik}\det A^{ik} + (-1)^{k+\ell}A_{\ell k}\det A^{\ell k}.\]
+    Since the $i$th and $\ell$th rows are equal, $A_{ik} = A_{\ell k}$, and $\det A^{\ell k} = (-1)^{i - \ell-1}\det A^{ik}$ since swapping rows negates the determinant. Therefore,
+    \begin{align*}
+        \delta(A) &= (-1)^{k+i}A_{ik}\det A^{ik} + (-1)^{k+\ell}A_{\ell k}\det A^{\ell k} \\
+        &= (-1)^{k+i}A_{ik}\det A^{ik} + (-1)^{k+\ell}(-1)^{i - \ell-1}A_{ik}\det A^{ik} \\
+        &= (-1)^{k+i}A_{ik}\det A^{ik} + (-1)^{k+i-1}A_{ik}\det A^{ik} = 0.
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $SA(v, w)$ define the signed area of the parallelogram determined by $v, w \in \R^2$. Then $SA(v, w) = \det(v, w)$.
+\end{thm}
+
+\begin{proof}
+    We will prove that $SA$ is normalized, alternating, and multilinear, and therefore must be the $2 \times 2$ determinant function by the uniqueness of the determinant \ref{determinant-uniqueness}.
+
+    Let $e_1 = (0, 1)$ and $e_2 = (1, 0)$. Then $SA(e_1, e_2) = 1 \cdot 1 = 1$, so $SA$ is normalized. For any $v \in \R^2$, we know that $SA(v, v) = 0$, so $SA$ is alternating.
+
+    Clearly, for $c \in \R$, $SA(cv, w) = A(v, cw) = cA(v, w)$. Showing that $SA(u + v, w) = A(u, w) + A(v, w)$ is more difficult. We will use a graphical proof: in Figure \ref{fig:parallelogram-addition}, the sum of the areas of the blue and red parallelograms is clearly the same as the area of the purple parallelogram, by similarity of triangles. All different possible orientations of parallelograms can be verified to show that $SA$ is indeed multilinear.
+
+    \begin{figure}[ht!]
+        \centering
+        \begin{minipage}[b]{0.3\linewidth}
+            \begin{tikzpicture}[scale=0.82,rotate=270]
+                \coordinate (O) at (0, 0);
+                \coordinate (A) at (2, 1);
+                \coordinate (B) at (1, 2);
+                \coordinate (C) at (0, 3);
+
+                \coordinate (B2) at ($(A)+(B)$);
+                \coordinate (C2) at ($(A)+(C)$);
+
+                \coordinate (D) at ($(B)+(C)$);
+                \coordinate (D2) at ($(A)+(D)$);
+
+                \tkzFillPolygon[draw,fill=red!65](O,A,B2,B);
+                \tkzFillPolygon[draw,fill=blue!65](B,B2,D2,D);
+            \end{tikzpicture}
+        \end{minipage}
+        \begin{minipage}[b]{0.3\linewidth}
+            \begin{tikzpicture}[scale=0.82,rotate=270]
+                \coordinate (O) at (0, 0);
+                \coordinate (A) at (2, 1);
+                \coordinate (B) at (1, 2);
+                \coordinate (C) at (0, 3);
+
+                \coordinate (B2) at ($(A)+(B)$);
+                \coordinate (C2) at ($(A)+(C)$);
+
+                \coordinate (D) at ($(B)+(C)$);
+                \coordinate (D2) at ($(A)+(D)$);
+
+                \tkzFillPolygon[draw,fill=purple!65](O,A,D2,D);
+            \end{tikzpicture}
+        \end{minipage}
+        \begin{minipage}[b]{0.3\linewidth}
+            \begin{tikzpicture}[scale=0.82,rotate=270]
+                \coordinate (O) at (0, 0);
+                \coordinate (A) at (2, 1);
+                \coordinate (B) at (1, 2);
+                \coordinate (C) at (0, 3);
+
+                \coordinate (B2) at ($(A)+(B)$);
+                \coordinate (C2) at ($(A)+(C)$);
+
+                \coordinate (D) at ($(B)+(C)$);
+                \coordinate (D2) at ($(A)+(D)$);
+
+                \tkzFillPolygon[draw,fill=red!65](O,A,B2,B);
+                \tkzFillPolygon[draw,fill=blue!65](B,B2,D2,D);
+                \tkzFillPolygon[draw,opacity=0.50,fill=purple!65](O,A,D2,D);
+            \end{tikzpicture}
+        \end{minipage}
+    \caption{Addition of parallelograms}
+    \label{fig:parallelogram-addition}
+    \end{figure}
+\end{proof}
+
+\begin{defn}
+    Given $v_1, \ldots, v_n \in \R^n$, we define the \emph{parallelepiped} given by them to be
+    \[P = \left\{t_1v_1 + \cdots + t_nv_n \compbar t_1, \ldots, t_n \in [0, 1] \right\},\]
+    and $\vol(P) = \abs{\det(v_1, \ldots, v_n)}$.
+\end{defn}
+
+\begin{thm}
+    Let $v_1, \ldots, v_n \in \R^n$, and $P$ be the corresponding parallelepiped. Let $A \in M_{n\times n}(\R)$. Then $L_A(P)$ is a parallelepiped defined by $Av_1, \ldots, Av_n$. Moreover,
+    \[\vol(L_A(P)) = \abs{\det(A)}\vol(P).\]
+\end{thm}
+
+\begin{proof}
+    $x \in L_A(P)$ if and only if $x = A(t_1v_1 + \cdots + t_nv_n) = t_1Av_1 + \cdots + t_nAv_n$ for some $t_1, \ldots, t_n \in [0_, 1]$, so
+    \[L_A(P) = \left\{t_1Av_1 + \cdots + t_nAv_n \compbar t_1, \ldots, t_n \in [0, 1] \right\}.\]
+    Let $B = (v_1, \ldots, v_n)$, so $\vol(P) = \abs{\det(B)}$. Then $\vol(L_A(P)) = \abs{\det(AB)} = \abs{\det(A)}\abs{\det(B)} = \abs{\det(A)}\vol(P)$.
+\end{proof}
