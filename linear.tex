@@ -1839,3 +1839,20 @@ Throughout this section, we will show that a function satisfying all of these pr
     \label{fig:parallelogram-addition}
     \end{figure}
 \end{proof}
+
+\begin{defn}
+    Given $v_1, \ldots, v_n \in \R^n$, we define the \emph{parallelepiped} given by them to be
+    \[P = \left\{t_1v_1 + \cdots + t_nv_n \compbar t_1, \ldots, t_n \in [0, 1] \right\},\]
+    and $\vol(P) = \abs{\det(v_1, \ldots, v_n)}$.
+\end{defn}
+
+\begin{thm}
+    Let $v_1, \ldots, v_n \in \R^n$, and $P$ be the corresponding parallelepiped. Let $A \in M_{n\times n}(\R)$. Then $L_A(P)$ is a parallelepiped defined by $Av_1, \ldots, Av_n$. Moreover,
+    \[\vol(L_A(P)) = \abs{\det(A)}\vol(P).\]
+\end{thm}
+
+\begin{proof}
+    $x \in L_A(P)$ if and only if $x = A(t_1v_1 + \cdots + t_nv_n) = t_1Av_1 + \cdots + t_nAv_n$ for some $t_1, \ldots, t_n \in [0_, 1]$, so
+    \[L_A(P) = \left\{t_1Av_1 + \cdots + t_nAv_n \compbar t_1, \ldots, t_n \in [0, 1] \right\}.\]
+    Let $B = (v_1, \ldots, v_n)$, so $\vol(P) = \abs{\det(B)}$. Then $\vol(L_A(P)) = \abs{\det(AB)} = \abs{\det(A)}\abs{\det(B)} = \abs{\det(A)}\vol(P)$.
+\end{proof}
