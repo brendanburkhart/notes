@@ -1934,3 +1934,28 @@ Throughout this section, we will show that a function satisfying all of these pr
         \item Transitivity: If $A$ is similar to $B$, and $B$ is similar to $C$, then $A = PBP^{-1}$ and $B = QCQ^{-1}$. Therefore, $A = P(QCQ^{-1})P^{-1} = (PQ)C(PQ)^{-1}$, and so $A$ is similar to $C$.
     \end{itemize}
 \end{proof}
+
+\begin{defn}
+    Let $V$ be a vector space with finite dimension $n$ over a field $F$, and let $f: V \to V$ be a linear transformation. We say that $f$ is \emph{diagonalizable} if there exists an ordered basis $B$ for $V$ such that $[f]_{B}^{B}$ is a diagonal matrix.
+
+    Let $A \in M_{n\times n}(F)$. Then $A$ is \emph{diagonalizable} if $A$ is similar to a diagonal matrix.
+\end{defn}
+
+\begin{rmk}
+    A linear transformation $f: V \to V$ is diagonalizable if and only if $[f]_C^C$ is diagonalizable for an ordered basis $C$. A matrix $A \in M_{n \times n}(F)$ is diagonalizable if and only if $L_A: F^n \to F^n$ is diagonalizable.
+\end{rmk}
+
+\begin{lemma}
+    A linear transformation $f: V \to V$ is diagonalizable if and only if there exists an ordered basis $B = \langle v_1, \ldots, v_n\rangle$ and $\lambda_1, \ldots, \lambda_n \in F$ such that $f(v_i) = \lambda_iv_i$ for $i = 1, \ldots, n$.
+\end{lemma}
+
+\begin{proof}
+    Recall that $[f(v_i)]_{B}$ is the $i$th column of $[f]_{B}^{B}$, and so
+    \[[f]_{B}^{B} = \left(\begin{array}{cccc}
+        \lambda_1 & & \largeblock{2}{-0.7}{0} \\
+        & \lambda_2 & &  \\
+        &  & \ddots \\
+        \largeblock{2}{0.7}{0} & & \lambda_n \\
+    \end{array}
+    \right)\] if and only if $f(v_i) = \lambda_iv_i$.
+\end{proof}

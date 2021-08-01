@@ -43,3 +43,9 @@
 }
 
 \newcommand\spanset[1]{\ensuremath\spn(#1)}
+
+\newcommand\largeblock[3]{
+  \multicolumn{#1}{c}
+    {\raisebox{\dimexpr\normalbaselineskip+#2\ht\strutbox-1.15\height}[0pt][0pt]
+    {\scalebox{#1}{#3}}}
+}
