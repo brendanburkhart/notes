@@ -1959,3 +1959,52 @@ Throughout this section, we will show that a function satisfying all of these pr
     \end{array}
     \right)\] if and only if $f(v_i) = \lambda_iv_i$.
 \end{proof}
+
+\begin{defn}
+    Let $f: V \to V$ be a linear transform, and $v \in V$ with $v \neq \vec{0}$. We say that $v$ is an \emph{eigenvector} of $f$ with eigenvalue $\lambda$ if $f(v) = \lambda v$.
+
+    For $A \in M_{n \times n}(F)$, we define the eigenvectors and eigenvalues of $A$ to be those of $L_A$, i.e. $v \in F^n$ is an eigenvector for $A$ if $Av = \lambda v$ for some $\lambda \in F$.
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $A = \begin{pmatrix}8 & -18 \\ 3 & -7\end{pmatrix}$ has eigenvectors $(2, 1)$ and $(3, 1)$, with eigenvalues $-1$ and $-2$ respectively.
+        \item All vectors in $V$ are eigenvectors of $\id: V \to V$ with eigenvalue $\lambda = 1$.
+        \item Let $f: \R^2 \to \R^2$ be a rotation in the plane by $\frac{\pi}{2}$. Then $f$ has no eigenvectors.
+        \item Let $f: \R^2 \to \R^2$ be a rotation in the plane by $\pi$. Then all vectors in $\R^2$ are eigenvectors of $f$, with eigenvalue $\lambda = 1$.
+    \end{itemize}
+\end{exmp}
+
+\begin{rmk}
+    If $v$ is an eigenvector of $f$, there is a unique eigenvalue. That is, if $f(v) = \lambda v$ and $f(v) = \mu v$, then $\lambda v = \mu v$, so $\lambda = \mu$ since $v \neq \vec{0}$.
+\end{rmk}
+
+\begin{rmk}
+    Are there eigenvectors of a linear transformation $f$ whose eigenvalue is $0$? That is, $f(v) = 0v = \vec{0}$. Yes, any non-zero vector in the null space of $f$ is an eigenvector with eigenvalue $0$.
+\end{rmk}
+
+How can we go about finding the eigenvectors and eigenvalues of a particular matrix or linear transformation? We are looking for $v \in F^n$ such that $Av = \lambda v$, so $Av - \lambda v = \vec{0}$. Therefore, $Av - \lambda I_n v = \vec{0}$, and so $(A - \lambda I_n)v = \vec{0}$. This implies that $A - \lambda I_n$ is not full-rank, so we want to find $\lambda$ such that
+\[\det(A - \lambda I_n) = 0.\]
+
+\begin{exmp}
+    To find the eigenvectors and eigenvalues of $A = \begin{pmatrix}
+        1 & 5 \\ 0 & -1
+    \end{pmatrix}$, we want $\lambda$ such that
+    \[\det \begin{pmatrix}
+        1-\lambda & 5 \\ 3 & -1-\lambda
+    \end{pmatrix} = 0.\]
+    Therefore, $(1-\lambda)(-1-\lambda) - 15 = 0$, and so solving the roots of the polynomial we obtain $\lambda = \pm 4$. To identify the corresponding eigenvectors, we want to find non-zero vectors in the null space of $A - \lambda I$.
+
+    For $\lambda = 4$, we have
+    \[\begin{pmatrix}
+        1-4 & 5 \\ 3 & -1 - 4
+    \end{pmatrix}\begin{pmatrix}
+        x \\ y
+    \end{pmatrix} = \begin{pmatrix}
+        -3 & 5 \\ 3 & -5
+    \end{pmatrix}\begin{pmatrix}
+        x \\ y
+    \end{pmatrix} = \begin{pmatrix}
+        0 \\ 0
+    \end{pmatrix},\] so $v = (5, 3)$ is one possible solution, as well as all non-zero scalar multiples. Similarly, for $\lambda = -4$ we find that the eigenvectors are $(1, -1)$ and all non-zero scalar multiples thereof.
+\end{exmp}
