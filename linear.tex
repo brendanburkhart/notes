@@ -869,7 +869,7 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
     Let $f: \R^2 \to \R^3$ be the linear transformation determined by $f(1, 0) = (2, 1, 0)$ and $f(0, 1) = (0, -1, 1)$. Then $f(\R^2) = \spanset{\{(2, 1, 0), (0, -1, 1)\}}$. Since these vectors are linearly independent, they form a basis for $f(\R^2)$, and so the rank of $f$ is 2.
 \end{exmp}
 
-\begin{prop}
+\begin{prop}\label{inverse-image-subspace}
     Let $V, W$ be vector spaces over a field $F$, $f: V \to W$, and $U \subseteq W$ a subspace. Then the \emph{preimage} or \emph{inverse image} of $U$ under $f$ (which is given by $f^{-1}(U) = \left\{v \in V \compbar f(v) \in U\right\}$) is a subspace of $V$.
 \end{prop}
 
@@ -880,6 +880,10 @@ To prove the existence of $f$, we need to show that the function defined by $f(v
 \begin{defn}
     Let $f: V \to W$ be a linear transformation. Then the \emph{kernel} or \emph{null space} of $f$, commonly denoted by $\ker f$, is the inverse image of $\{\vec{0}_W\}$: \[\ker f = f^{-1}(\{\vec{0}_W\}) = \left\{v \in V \compbar f(v) = \vec{0}_W\right\}.\] The kernel of $f$ is a subspace of $V$, the dimension of which is the \emph{nullity} of $f$.
 \end{defn}
+
+\begin{rmk}
+    It follows from Proposition \ref{inverse-image-subspace} that the null space of $f: V \to W$ is a subspace of $V$.
+\end{rmk}
 
 \begin{exmp}
     Let $f: \R^2 \to \R^3$ be the linear transformation $f(x, y) = (2x, x-y, y)$. Then $f(x, y) = (0, 0, 0)$ if and only if $2x = 0$, $x - y = 0$, and $y = 0$, which implies $x = y = 0$. Therefore, $\ker f = \{(0, 0)\}$, and the nullity is zero.
@@ -1945,7 +1949,7 @@ Throughout this section, we will show that a function satisfying all of these pr
     A linear transformation $f: V \to V$ is diagonalizable if and only if $[f]_C^C$ is diagonalizable for an ordered basis $C$. A matrix $A \in M_{n \times n}(F)$ is diagonalizable if and only if $L_A: F^n \to F^n$ is diagonalizable.
 \end{rmk}
 
-\begin{lemma}
+\begin{lemma}\label{diagonalizable-eigenvectors}
     A linear transformation $f: V \to V$ is diagonalizable if and only if there exists an ordered basis $B = \langle v_1, \ldots, v_n\rangle$ and $\lambda_1, \ldots, \lambda_n \in F$ such that $f(v_i) = \lambda_iv_i$ for $i = 1, \ldots, n$.
 \end{lemma}
 
@@ -2008,3 +2012,113 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
         0 \\ 0
     \end{pmatrix},\] so $v = (5, 3)$ is one possible solution, as well as all non-zero scalar multiples. Similarly, for $\lambda = -4$ we find that the eigenvectors are $(1, -1)$ and all non-zero scalar multiples thereof.
 \end{exmp}
+
+\begin{defn}
+    The \emph{characteristic polynomial} of $A \in M_{n \times n}(F)$ is
+    \[p(t) = \det(A - tI_n).\]
+    Let $V$ be a finite dimensional vector space over a field $F$, and let $f: V \to V$. Then the characteristic polynomial of $f$ is the characteristic polynomial of $[f]_B^B$ for some ordered basis $B$ of $V$.
+\end{defn}
+
+\begin{prop}
+    Above definition is independent of the choice of basis $B$, since similar matrices have the same characteristic polynomial.
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        \det(PAP^{-1}-tI_n) &= \det(P(A-tI_n)P^{-1}) = \det(P)\det(A-tI_n)\det(P^{-1}) \\
+        &= \det(P)\det(P^{-1})\det(A-tI_n) = \det(I_n)\det(A-tI_n) = \det(A-tI_n).
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    Let $A \in M_{n \times n}(F)$ and $f: V \to V$ where $A = [f]_B^B$ for some ordered basis $B$. Then $\lambda \in F$ is an eigenvalue of $A$ (respectively $f$) if and only if $\lambda$ is a root of the characteristic polynomial of $A$ (respectively $f$). A vector $v \in F^n$ (respectively $v \in V$) with $v \neq \vec{0}$ is an eigenvector corresponding to $\lambda$ if and only if $v$ is in the null space of $A - \lambda I_n$ (respectively $f - \lambda \id$).
+\end{prop}
+
+\begin{proof}
+    Note that $Av = \lambda v$ is equivalent to $(A - \lambda I_n)v = \vec{0}$, and there exists non-zero such $v$ if and only if $A - \lambda I$ is non-invertible, i.e. if and only if $\det(A - \lambda I_n) = 0$.
+\end{proof}
+
+\begin{exmp}
+    Let $f: \R^2 \to \R^2$ denote an anti-clockwise rotation by $\frac{\pi}{2}$. Then $f(1, 0) = (0, 1)$ and $f(0, 1) = (-1, 0)$, so $A = \begin{pmatrix}0 & -1 \\ 1 & 0\end{pmatrix}$. Then
+    \[\det\begin{pmatrix}A - tI_2\end{pmatrix} = \det\begin{pmatrix}-t & -1 & 1 & -t\end{pmatrix} = t^2 + 1.\] Since $t^2 = -1$ has no solutions in $\R$, $f$ has no eigenvalues and therefore no eigenvectors. If instead we have $f: \C^2 \to \C^2$ and $A \in M_{2 \times 2}(\C)$, then $\lambda = \pm i$ and eigenvectors $(-i, 1)$ and $(i, 1)$ corresponding to $\lambda = i$ and $\lambda = -i$ respectively.
+\end{exmp}
+
+\begin{rmk}
+    The characteristic polynomial of an $n \times n$ matrix is a polynomial of degree $n$, which we can see by recursively expanding the first term of the Laplace expansion of $\det(A - \lambda I_n)$ along the first row/column.
+\end{rmk}
+
+\begin{thm}{Fundamental theorem of algebra}\proofbreak
+    Let $f(t) = t^n + a_{n_1}t^{n-1} + \cdots + a_0$ be a polynomial where $a_i \in \C$. Then there exists $r_1, \ldots, r_n \in \C$ (not necessarily distinct) such that $f(t) = (t -r_1)(t-r_2)\cdots(t-r_n)$. By grouping repeated terms, we then have
+    $f(t) = (t-\lambda_1)^{m_1}\cdots (t-\lambda_k)^{m_k}$, with $\lambda_i \neq \lambda_j$ when $i \neq j$. We call $m_i$ the \emph{algebraic multiplicity} of $\lambda_i$.
+\end{thm}
+
+\begin{defn}
+    Let $V$ be a vector space over a field $F$, let $f: V \to V$ be a linear transformation and let $\lambda \in F$ be an eigenvalue of $f$. The \emph{eigenspace} of $f$ associated with $\lambda$ is
+    \[V_{\lambda} = \left\{v \in V \compbar f(v) = \lambda v\right\}.\]
+\end{defn}
+
+\begin{rmk}
+    The eigenspace $V_{\lambda}$ consists of all eigenvectors with eigenvalue $\lambda$, as well as $\vec{0}$.
+\end{rmk}
+
+\begin{exmp}
+    Consider $V = \R^2$, $f(v) = \begin{pmatrix}1 & 1 \\ 0 & 1\end{pmatrix}$. Then $V_1 = \spanset{\{\begin{pmatrix}1 \\ 0\end{pmatrix}\}}$.
+\end{exmp}
+
+\begin{lemma}
+    $V_{\lambda}$ is a vector subspace of $V$.
+\end{lemma}
+
+\begin{proof}
+    $V_{\lambda}$ is the null space of $f - \lambda \circ \id$, and so by Proposition \ref{inverse-image-subspace} $V_{\lambda}$ is a subspace.
+\end{proof}
+
+\begin{exmp}
+    Consider $A = \begin{pmatrix}3 & 0 & 0 \\ 0 & 2 & 1 \\ 0 & 0 & 2\end{pmatrix}$. We have $p(t) = \det(A - tI_3) = (3-t)(2-t)^2$. Therefore, the eigenvalues are $3$ with algebraic multiplicity 1, and $2$ with algebraic multiplicity $2$.
+\end{exmp}
+
+\begin{rmk}
+    Consider an upper triangular matrix $A$ with diagonal entries $a_i$. Recursively performing a Laplace expansion of $\det(A-tI)$ along the first columns, we can see that \[\det(A-tI) = (a_1 - t)(a_2 - t)\cdots(a_n-t),\] and so the eigenvalues of $A$ are the diagonal entries.
+\end{rmk}
+
+\begin{defn}
+    Let $\lambda$ be an eigenvalue of $f$. The \emph{geometric multiplicity} of $\lambda$ is the dimension of $V_{\lambda}$.
+\end{defn}
+
+\begin{thm}
+    If $\{v_1, \ldots, v_k\}$ are eigenvectors of $f: V \to V$ corresponding to distinct eigenvalues $\lambda_1, \ldots, \lambda_k$, then $\{v_1, \ldots, v_k\}$ is linearly independent.
+\end{thm}
+
+\begin{proof}
+    We will proceed by induction on $k$. For $k = 1$, $\{v_1\}$ must be linearly independent since $v_1 \neq \vec{0}$. Next, assume that $\{v_1, \ldots, v_{k-1}\}$ is linearly independent for some $k > 1$, and let $v_k$ be an eigenvector of $f$ corresponding to an eigenvalue distinct from those of $v_1, \ldots, v_{k-1}$. Now consider $c_1, \ldots, c_k \in F$ such that
+    \begin{equation*}\tag{$\star$}c_1v_1 + \cdots + c_kv_k = \vec{0}.\end{equation*}
+    Then we can apply $f - \lambda_k\circ\id$ to obtain
+    \[c_1(\lambda_1 - \lambda_k)v_1 + \cdots + c_{k-1}(\lambda_{k-1} - \lambda_k)v_{k-1} + c_k(\lambda_k - \lambda_k)v_k = \vec{0},\] and so
+    \[c_1(\lambda_1 - \lambda_k)v_1 + \cdots + c_{k-1}(\lambda_{k-1} - \lambda_k)v_{k-1} = \vec{0}.\] By assumption, $\lambda_k$ is distinct from $\lambda_1, \ldots, \lambda_{k-1}$ and $\{v_1, \ldots, v_{k-1}\}$ are linearly independent, and so it follows that $c_1 = c_2 = \cdots = c_{k-1} = 0$. Therefore, by $\star$ we have $c_kv_k = \vec{0}$, and since $v_k$ is an eigenvector we have $v_k \neq \vec{0}$, and so $c_k = 0$. Finally, $\{v_1, \ldots, v_k\}$ must be linearly independent.
+\end{proof}
+
+\begin{cor}
+    Consider $f: V \to V$ where $V$ has dimension $n$. If $f$ has $n$ distinct eigenvalues, then $f$ is diagonalizable.
+\end{cor}
+
+\begin{proof}
+    Follows from Lemma \ref{diagonalizable-eigenvectors}.
+\end{proof}
+
+\begin{thm}
+    Let $\lambda$ be an eigenvalue for $f: V \to V$, where $V$ has finite dimension. Let $G[\lambda], A[\lambda]$ denote the geometric and algebraic multiplicities of $\lambda$ respectively. Then
+    \[1 \leq G[\lambda] \leq A[\lambda].\]
+\end{thm}
+
+\begin{proof}
+    Let $\langle v_1, \ldots, v_p\rangle$ be an ordered basis for $V_{\lambda}$ (so $p$ is the geometric multiplicity of $\lambda$). Extend to an ordered basis $B = \langle v_1, \ldots, v_p, v_{p+1}, \ldots, v_n\rangle$ for $V$. Then
+    \[[f]_B^B = \left(\begin{array}{c|cl}
+        \raisebox{-10pt}[0pt][25pt]{$\begin{smallmatrix}
+            \lambda & & 0\\
+            & \ddots & \\
+            0 & & \lambda
+        \end{smallmatrix}$} & \raisebox{-14pt}[0pt]{\scalebox{1.5}{C}} & \rlap{\kern 8mm$\dim F$ vertical}\\
+        \hline
+        \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{0}} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{P}} & \rlap{\kern 8mm$\dim Z$ horizontal}
+    \end{array}\right) \]
+\end{proof}
