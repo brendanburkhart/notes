@@ -2112,13 +2112,19 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
 
 \begin{proof}
     Let $\langle v_1, \ldots, v_p\rangle$ be an ordered basis for $V_{\lambda}$ (so $p$ is the geometric multiplicity of $\lambda$). Extend to an ordered basis $B = \langle v_1, \ldots, v_p, v_{p+1}, \ldots, v_n\rangle$ for $V$. Then
-    \[[f]_B^B = \left(\begin{array}{c|cl}
+    \[[f]_B^B = \left(\begin{array}{c|c}
         \raisebox{-10pt}[0pt][25pt]{$\begin{smallmatrix}
-            \lambda & & 0\\
+            \lambda & & \smallblock{1.2}{-0.8}{0}\\
             & \ddots & \\
-            0 & & \lambda
-        \end{smallmatrix}$} & \raisebox{-14pt}[0pt]{\scalebox{1.5}{C}} & \rlap{\kern 8mm$\dim F$ vertical}\\
+            \smallblock{1.2}{-0.3}{0} & & \lambda
+        \end{smallmatrix}$} & \raisebox{-14pt}[0pt]{\scalebox{1.5}{C}} \\
         \hline
-        \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{0}} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{P}} & \rlap{\kern 8mm$\dim Z$ horizontal}
-    \end{array}\right) \]
+        \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{0}} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{D}}
+    \end{array}\right).\]
+    Then the characteristic polynomial of $f$ is
+    \[\det([f]_B^B - tI_n) = \det\left(\begin{array}{c|c}
+        \lambda - tI_p & C \\
+        \hline
+        \raisebox{-1pt}[0pt][5pt]{0} & \raisebox{-1pt}[0pt][5pt]{$D - tI_{n-p}$}
+    \end{array}\right) = \det((\lambda - t)I_p)\det(D - tI_{n-p}) = (\lambda - t)^{p} \cdot g(t).\]
 \end{proof}
