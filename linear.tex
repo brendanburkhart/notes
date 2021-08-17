@@ -2194,3 +2194,28 @@ Assume for all $i, j = 1,\ldots,n$ that $p(i, j, \ell) = (A^\ell)_{ij}$ for some
 
 Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell})_{ij}$ for $\ell \in \Z_{\geq 0}$.
 \end{proof}
+
+\section{Inner Products}
+
+\begin{defn}
+    Let $V$ be a vector space over a field $F$, where $F = \C$ or $F = \C$. An \emph{inner product} on $V$ is a function
+    \[\langle\,,\,\rangle: V \times V \to F\]
+    satisfying
+    \begin{enumerate}
+        \item linearity in the first argument: for all $x, y, z \in V$ and $r \in F$, $\langle x+y, z\rangle = \langle x,z\rangle + \langle y,z \rangle$ and $\langle rx, y\rangle = r\langle x,y\rangle$,
+        \item conjugate symmetry: for all $x, y \in V$, $\langle y, x\rangle = \overline{\langle x, y\rangle}$,
+        \item positive definiteness: for all $x \in V$ with $x \neq \vec{0}$, $\langle x, x \rangle > 0$.
+    \end{enumerate}
+\end{defn}
+
+\begin{rmk}
+    When $F = \R$, conjugate symmetry is reduced to just symmetry: $\langle x, y\rangle = \langle y, x \rangle$ for all $x, y \in V$. Regardless of $F$, conjugate symmetry implies that $\langle x, x\rangle = \overline{\langle x, x\rangle}$, so $\langle x, x\rangle \in \R$.
+\end{rmk}
+
+\begin{exmp}
+    The dot product on $\R^n$ forms on inner product: given $x = (x_1, \ldots, x_n)$ and $y = (y_1, \ldots, y_n)$, $\langle x, y\rangle = x \cdot y = \sum_{i=1}^{n}x_iy_i$.
+\end{exmp}
+
+\begin{exmp}
+    The conjugate dot product on $\C^n$ forms on inner product: given $x = (x_1, \ldots, x_n)$ and $y = (y_1, \ldots, y_n)$, $\langle x, y\rangle = x \cdot \overline{y} = \sum_{i=1}^{n}x_i\overline{y_i}$.
+\end{exmp}
