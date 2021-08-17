@@ -2278,3 +2278,16 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \begin{rmk}
     We say that $x \in V$ is a \emph{unit vector} if $\norm{x} = 1$. We say that vectors $x, y \in V$ are \emph{perpendicular} or \emph{orthogonal} if $\langle x, y \rangle = 0$.
 \end{rmk}
+
+\begin{thm}Pythagorean Theorem\proofbreak
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$. If $x, y \in V$ are orthogonal, then
+    \[\norm{x}^2 + \norm{y}^2 = \norm{x + y}^2.\]
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        \norm{x+y}^2 &= \sqrt{\langle x+y, x+y\rangle}^2 = \langle x+y, x+y\rangle \\
+        &= \langle x, x+y\rangle + \langle y, x+y\rangle = \langle x, x\rangle + \langle x, y\rangle + \langle y, x\rangle + \langle y, y\rangle \\
+        &= \langle x, x\rangle + \langle y, y\rangle = \norm{x^2} + \norm{y^2}
+    \end{align*}
+\end{proof}
