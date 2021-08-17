@@ -2264,3 +2264,17 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 
     (5) Suppose that $\langle x, y \rangle = \langle x, z \rangle$ for all $x \in V$. Then $\langle x, y-z \rangle = \langle x, y \rangle - \langle x, z \rangle = 0$. Let $x = y-z$. Then $\langle y-z, y-z \rangle = 0$, so by property (4) we have $y - z = \vec{0}$, and so $y = z$.
 \end{proof}
+
+\begin{defn}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$. Let $x \in V$. The \emph{norm} or \emph{length} of $x$ is
+    \[\norm{x} = \sqrt{\langle x, x \rangle} \in \R_{\geq 0}.\]
+\end{defn}
+
+\begin{exmp}
+    Let $\R^2$ have the standard dot product. Then for $v = (x, y) \in \R^2$,
+    \[\norm{v} = \sqrt{v \cdot v} = \sqrt{x^2 + y^2}.\]
+\end{exmp}
+
+\begin{rmk}
+    We say that $x \in V$ is a \emph{unit vector} if $\norm{x} = 1$. We say that vectors $x, y \in V$ are \emph{perpendicular} or \emph{orthogonal} if $\langle x, y \rangle = 0$.
+\end{rmk}
