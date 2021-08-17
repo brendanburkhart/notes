@@ -2201,7 +2201,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     Let $V$ be a vector space over a field $F$, where $F = \C$ or $F = \C$. An \emph{inner product} on $V$ is a function
     \[\langle\,,\,\rangle: V \times V \to F\]
     satisfying
-    \begin{enumerate}
+    \begin{enumerate}[label=(\arabic*)]
         \item linearity in the first argument: for all $x, y, z \in V$ and $r \in F$, $\langle x+y, z\rangle = \langle x,z\rangle + \langle y,z \rangle$ and $\langle rx, y\rangle = r\langle x,y\rangle$,
         \item conjugate symmetry: for all $x, y \in V$, $\langle y, x\rangle = \overline{\langle x, y\rangle}$,
         \item positive definiteness: for all $x \in V$ with $x \neq \vec{0}$, $\langle x, x \rangle > 0$.
@@ -2219,3 +2219,48 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \begin{exmp}
     The conjugate dot product on $\C^n$ forms on inner product: given $x = (x_1, \ldots, x_n)$ and $y = (y_1, \ldots, y_n)$, $\langle x, y\rangle = x \cdot \overline{y} = \sum_{i=1}^{n}x_i\overline{y_i}$.
 \end{exmp}
+
+\begin{exmp}
+    Let $V = \mathcal{C}_{\R}\left([0, 1]\right)$, the set of continuous functions $f: [0, 1] \to \R$. Define
+    \[\langle f, g \rangle = \int_0^1 f(t)g(t)dt.\]
+\end{exmp}
+
+\begin{exmp}
+    Let $V = M_{m \times n}(F)$, and for all $A \in V$ define the conjugate transpose of $A$ to be $A^* = \overline{A^{\transpose}}$, where the matrix conjugate is taken entry-wise. Then
+    \[\langle A, B \rangle = \textrm{tr}(B^*A) = \sum_{i=1}^{n}(B^*A)_{ii}.\]
+\end{exmp}
+
+\begin{exmp}
+    Let $V = \R^2$, and define $\langle (x_1, x_2), (y_1, y_2) \rangle = 3x_1y_1 + 2x_1y_2 + 2x_2y_1 + 4x_2y_2$.
+\end{exmp}
+
+\begin{defn}
+    An \emph{inner product space} is a vector space over $\R$ or $\C$ together with a particular inner product on $V$.
+\end{defn}
+
+\begin{thm}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$. Then for all $x, y, z \in V$ and $r \in F$, the following hold:
+    \begin{enumerate}[label=(\arabic*)]
+        \item $\langle x, y+z \rangle = \langle x, y \rangle + \langle x, z \rangle$,
+        \item $\langle x, ry \rangle = \overline{r}\langle x, y \rangle$,
+        \item $\langle x, \vec{0} \rangle = \langle \vec{0}, y \rangle = 0$,
+        \item $\langle x, x \rangle = 0$ if and only if $x = \vec{0}$,
+        \item If $\langle x, y \rangle = \langle x, z \rangle$ for all $x \in V$, then $y = z$.
+    \end{enumerate}
+\end{thm}
+
+\begin{rmk}
+    Properties $(1)$ and $(2)$ guarantee linear in the second argument if $F = \R$ and conjugate linearity in the second argument if $F = \C$.
+\end{rmk}
+
+\begin{proof}\proofbreak
+    (1) $\langle x, y+z \rangle = \overline{\langle y+z, x \rangle} = \overline{\langle y, x \rangle} + \overline{\langle z, x \rangle} = \langle x, y \rangle + \langle x, z \rangle$.
+
+    (2) $\langle x, ry \rangle = \overline{\langle ry, x \rangle} = \overline{r}\overline{\langle y, x \rangle} = \overline{r}\langle x, y \rangle$.
+
+    (3) $\langle x, \vec{0} \rangle = \langle x, x - x \rangle = \langle x, x \rangle - \langle x, x \rangle = 0$, $\langle \vec{0}, y \rangle = \langle y - y, y \rangle = \langle y, y \rangle - \langle y, y \rangle$.
+
+    (4) If $x \neq \vec{0}$, axiom (3) states that $\langle x, x \rangle > 0$. If $x = \vec{0}$, we have $\langle x, x \rangle = \langle x, \vec{0} \rangle = 0$ by property (3).
+
+    (5) Suppose that $\langle x, y \rangle = \langle x, z \rangle$ for all $x \in V$. Then $\langle x, y-z \rangle = \langle x, y \rangle - \langle x, z \rangle = 0$. Let $x = y-z$. Then $\langle y-z, y-z \rangle = 0$, so by property (4) we have $y - z = \vec{0}$, and so $y = z$.
+\end{proof}
