@@ -12,6 +12,7 @@
 \DeclareMathOperator{\nullity}{nullity}
 \DeclareMathOperator{\spn}{span}
 \DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\id}{id}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
@@ -43,3 +44,14 @@
 }
 
 \newcommand\spanset[1]{\ensuremath\spn(#1)}
+
+\newcommand\largeblock[3]{
+  \multicolumn{#1}{c}
+    {\raisebox{\dimexpr\normalbaselineskip+#2\ht\strutbox-1.15\height}[0pt][0pt]
+      {\scalebox{#1}{#3}}}
+}
+
+\newcommand\smallblock[3]{
+  \raisebox{\dimexpr\normalbaselineskip+#2\ht\strutbox-1.15\height}[0pt][0pt]
+    {\scalebox{#1}{#3}}
+}
