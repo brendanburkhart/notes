@@ -2163,3 +2163,34 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
     \[(-1)^n(t-\lambda_1)^{p_1}(t-\lambda_2)^{p_2}\cdots(t-\lambda_k)^{p_k}.\]
     Note that $p_i$ is the algebraic multiplicity of $\lambda_i$, and that $n = p_1 + \cdots + p_k$. Assembling bases for $V_{\lambda_1}, \ldots, V_{\lambda_k}$, we then have $n$ eigenvectors $v_1, \ldots, v_n$. It only remains to show that these eigenvectors are linearly independent. Consider some $c_1, \ldots, c_n \in F$ such that $c_1v_1 + \cdots + c_nv_n = \vec{0}$. Group $v_i$ by corresponding eigenvalue, and take the resulting linear combinations to be $w_1, \ldots, w_k$. Therefore, $w_1 + \cdots + w_k = \vec{0}$. By Lemma \ref{eigen-subspace}, $w_i \in V_{\lambda_i}$, and so by Theorem \ref{distinct-eigenvalues-linear-independence} it must be that each $w_i = \vec{0}$. Since $w_i$ is a linear combination of a basis for $V_{\lambda_i}$, we necessarily have $c_1 = c_2 = \cdots = c_n = 0$. Therefore, $v_1, \ldots, v_n$ are linearly independent and so $f$ must be diagonalizable.
 \end{proof}
+
+\section{Powers of a Matrix}
+
+Let $f: V \to V$ be a linear transformation. Define $f^m = f \circ f^{m-1}$ for $m > 1$. For any eigenvector $v$ with corresponding eigenvalue $\lambda$, we have $f^m(v) = \lambda^{m}v$. Now consider a diagonalizable matrix $A = PDP^{-1}$. Note that $A^2 = (PDP^{-1})(PDP^{-1}) = PD(P^{-1}P)DP^{-1} = PD^2P^{-1}$. In general, \[A^m = AA^{m-1} = (PDP^{-1})(PD^{m-1}P^{-1}) = PD(P^{-1}P)D^{m-1}P^{-1}) = PD^mP^{-1}.\] Now consider $D^m$. For every eigenvector $v$ with corresponding eigenvalue $\lambda$, we have $D^mv = \lambda^mv$, so
+\[D = \left(\begin{array}{ccc}
+    \lambda_1 & \largeblock{2}{-0.7}{0} \\
+    & \ddots & \\
+    \largeblock{2}{0.7}{0} & \lambda_n \\
+\end{array}
+\right) \implies D^m =\left(\begin{array}{ccc}
+    \lambda_1^m & \largeblock{2}{-0.7}{0} \\
+    & \ddots & \\
+    \largeblock{2}{0.7}{0} & \lambda_n^m \\
+\end{array}
+\right)\]
+
+We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$. Note that $(A^{-1})^mA^m = (A^{-1})^{m-1}(A^{-1}A)A^{m-1} = (A^{-1})^{m-1}A^{m-1} = I$, so $(A^{-1})^m = (A^m)^{-1}$.
+
+\begin{thm}
+    Consider a graph $G$ with vertices $v_1, \ldots, v_n$, and let $A$ be the adjacency matrix of $G$. The number of distinct graph walks between $v_i$ and $v_j$ of length $\ell$ is $(A^{\ell})_{ij}$.
+\end{thm}
+
+\begin{proof}
+Let $p(i, j, \ell)$ denote the number of distinct walks of length $\ell$ between $v_i$ and $v_j$. For any vertices $v_i, v_j, v_k$, let $a_k = p(k, j, 1)$ and $b_k = p(i, k, \ell-1)$. Then $p(i, j, \ell)$ is the sum of $a_kb_k$ for all $v_k$, since each $a_kb_k$ has a unique edge $v_k$ to $v_j$. Therefore, for all $i, j \in \left\{1, \ldots, n\right\}$ and $\ell \in \Z_{\geq 1}$, we know \[p(i, j, \ell) = \sum_{k=1}^n p(i,k,\ell-1)p(k,j,1).\]
+
+We now proceed by induction. When $\ell = 0$, we know that $p(i, j, 0)$ is $1$ when $v_i = v_j$, and zero otherwise. Therefore, $p(i, j, 0) = (A^0)_{ij}$ for all $i, j = 1,\ldots,n$.
+
+Assume for all $i, j = 1,\ldots,n$ that $p(i, j, \ell) = (A^\ell)_{ij}$ for some $l \geq 0$. Then by we know $p(i, j, \ell + 1) = \sum_{k=1}^n p(i, k, \ell)p(k, j, 1) = \sum_{k=1}^n (A^\ell)_{ik}A_{kj}$. By definition, $(A^\ell A)_{ij} = \sum_{k=1}^n (A^\ell)_{ik}A_{kj} = (A^{\ell+1})_{ij}$, so the number of walks of length $\ell+1$ from $v_i$ to $v_j$ is $(A^{\ell+1})_{ij}$.
+
+Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell})_{ij}$ for $\ell \in \Z_{\geq 0}$.
+\end{proof}
