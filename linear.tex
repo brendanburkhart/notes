@@ -1958,7 +1958,7 @@ Throughout this section, we will show that a function satisfying all of these pr
     \[[f]_{B}^{B} = \left(\begin{array}{cccc}
         \lambda_1 & & \largeblock{2}{-0.7}{0} \\
         & \lambda_2 & &  \\
-        &  & \ddots \\
+        & & & \ddots \\
         \largeblock{2}{0.7}{0} & & \lambda_n \\
     \end{array}
     \right)\] if and only if $f(v_i) = \lambda_iv_i$.
@@ -2065,7 +2065,7 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
     Consider $V = \R^2$, $f(v) = \begin{pmatrix}1 & 1 \\ 0 & 1\end{pmatrix}$. Then $V_1 = \spanset{\{\begin{pmatrix}1 \\ 0\end{pmatrix}\}}$.
 \end{exmp}
 
-\begin{lemma}
+\begin{lemma}\label{eigen-subspace}
     $V_{\lambda}$ is a vector subspace of $V$.
 \end{lemma}
 
@@ -2085,7 +2085,7 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
     Let $\lambda$ be an eigenvalue of $f$. The \emph{geometric multiplicity} of $\lambda$ is the dimension of $V_{\lambda}$.
 \end{defn}
 
-\begin{thm}
+\begin{thm}\label{distinct-eigenvalues-linear-independence}
     If $\{v_1, \ldots, v_k\}$ are eigenvectors of $f: V \to V$ corresponding to distinct eigenvalues $\lambda_1, \ldots, \lambda_k$, then $\{v_1, \ldots, v_k\}$ is linearly independent.
 \end{thm}
 
@@ -2105,7 +2105,7 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
     Follows from Lemma \ref{diagonalizable-eigenvectors}.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{eigenvalue-multiplicity-inequality}
     Let $\lambda$ be an eigenvalue for $f: V \to V$, where $V$ has finite dimension. Let $G[\lambda], A[\lambda]$ denote the geometric and algebraic multiplicities of $\lambda$ respectively. Then
     \[1 \leq G[\lambda] \leq A[\lambda].\]
 \end{thm}
@@ -2127,4 +2127,39 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
         \hline
         \raisebox{-1pt}[0pt][5pt]{0} & \raisebox{-1pt}[0pt][5pt]{$D - tI_{n-p}$}
     \end{array}\right) = \det((\lambda - t)I_p)\det(D - tI_{n-p}) = (\lambda - t)^{p} \cdot g(t).\]
+\end{proof}
+
+\begin{thm}
+    A linear transformation $f: V \to V$ is diagonalizable if and only if
+    \begin{itemize}
+        \item the characteristic polynomial of $f$ splits over $F$,
+        \item for all eigenvalues $\lambda$, the geometric and algebraic multiplicities of $\lambda$ are equal.
+    \end{itemize}
+\end{thm}
+
+\begin{proof}
+    Suppose that $f$ is diagonalizable, so there exists an ordered basis of eigenvectors $B = \langle v_1, \ldots, v_n \rangle$, grouped by corresponding eigenvalues $\lambda_i$.
+    \[[f]_B^B = \left(\begin{array}{cccc}
+        \raisebox{-10pt}[0pt][25pt]{$\begin{smallmatrix}
+            \lambda_1 & & \smallblock{1.2}{-0.8}{0}\\
+            & \ddots & \\
+            \smallblock{1.2}{-0.3}{0} & & \lambda_1
+        \end{smallmatrix}$} & & \largeblock{2}{-2}{0} \\
+        & \raisebox{-10pt}[0pt][25pt]{$\begin{smallmatrix}
+            \lambda_2 & & \smallblock{1.2}{-0.8}{0}\\
+            & \ddots & \\
+            \smallblock{1.2}{-0.3}{0} & & \lambda_2
+        \end{smallmatrix}$} & & \\
+        & & \scalebox{1.2}{$\ddots$} & \\
+        \largeblock{2}{0}{0} & & \raisebox{-10pt}[0pt][25pt]{$\begin{smallmatrix}
+            \lambda_k & & \smallblock{1.2}{-0.8}{0}\\
+            & \ddots & \\
+            \smallblock{1.2}{-0.3}{0} & & \lambda_k
+        \end{smallmatrix}$}
+    \end{array}\right).\]
+    Then the characteristic polynomial must be $(-1)^n(t - \lambda_1)^{p_1}(t - \lambda_2)^{p_2}\cdots(t - \lambda_k)^{p_k}$, and so the characteristic polynomial splits. Moreover, $p_i$ is the algebraic multiplicity of $\lambda_i$. Note that the geometric multiplicity of $\lambda_i$ is the dimension of $V_{\lambda_i}$, which must be at least $p_i$. By Theorem \ref{eigenvalue-multiplicity-inequality} the geometric multiplicity of $\lambda_i \leq p_i$, and so they must be equal.
+
+    Conversely, suppose that the characteristic polynomial splits and that the geometric and algebraic multiplicities are equal. Then the characteristic polynomial is necessarily
+    \[(-1)^n(t-\lambda_1)^{p_1}(t-\lambda_2)^{p_2}\cdots(t-\lambda_k)^{p_k}.\]
+    Note that $p_i$ is the algebraic multiplicity of $\lambda_i$, and that $n = p_1 + \cdots + p_k$. Assembling bases for $V_{\lambda_1}, \ldots, V_{\lambda_k}$, we then have $n$ eigenvectors $v_1, \ldots, v_n$. It only remains to show that these eigenvectors are linearly independent. Consider some $c_1, \ldots, c_n \in F$ such that $c_1v_1 + \cdots + c_nv_n = \vec{0}$. Group $v_i$ by corresponding eigenvalue, and take the resulting linear combinations to be $w_1, \ldots, w_k$. Therefore, $w_1 + \cdots + w_k = \vec{0}$. By Lemma \ref{eigen-subspace}, $w_i \in V_{\lambda_i}$, and so by Theorem \ref{distinct-eigenvalues-linear-independence} it must be that each $w_i = \vec{0}$. Since $w_i$ is a linear combination of a basis for $V_{\lambda_i}$, we necessarily have $c_1 = c_2 = \cdots = c_n = 0$. Therefore, $v_1, \ldots, v_n$ are linearly independent and so $f$ must be diagonalizable.
 \end{proof}
