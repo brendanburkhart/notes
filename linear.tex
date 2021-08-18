@@ -48,7 +48,7 @@ Row operations are certain operations on matrices or systems of linear equations
     \begin{enumerate}
         \item As the intersection of sets is commutative, by Definition \ref{linear-sys-solutions}, the solution set of a linear system is unaffected by the order of the individual linear systems, therefore swapping rows/equations does not change the solution set.
         \item Since multiplying a single row by a non-zero scalar is equivalent to multiplying both sides of the represented equation by that scalar, the solution set is clearly left unchanged.
-        \item Since adding a multiple of one row to another row is equivalent to adding equal quantities to both sides of the equation, no solutions are removed from the solution set. If the row $(sb_1 + a_1)x_1 + (sb_2 + a_2) + \cdots + (sb_n + a_n)x_n = sk_b + k_a$ is the result of adding $s$ times row $b_1x_1 + \cdots + b_nx_n = k_b$ to row $a_1x_1 + \cdots + a_nx_n = k_a$, then $(sb_1 + a_1)x_1 + (sb_2 + a_2) + \cdots + (sb_n + a_n)x_n = s(b_1x_1 + \cdots + b_nx_n) + k_a$  which implies that $a_1x_1 + \cdots + a_nx_n = k_a$, so no information was lost and the solution set remains the same.
+        \item Since adding a multiple of one row to another row is equivalent to adding equal quantities to both sides of the equation, no solutions are removed from the solution set. If the row $(sb_1 + a_1)x_1 + (sb_2 + a_2) + \cdots + (sb_n + a_n)x_n = sk_b + k_a$ is the result of adding $s$ times row $b_1x_1 + \cdots + b_nx_n = k_b$ to row $a_1x_1 + \cdots + a_nx_n = k_a$, then $(sb_1 + a_1)x_1 + (sb_2 + a_2) + \cdots + (sb_n + a_n)x_n = s(b_1x_1 + \cdots + b_nx_n) + k_a$  which implies that $a_1x_1 + \cdots + a_nx_n = k_a$, so no information was lost, and the solution set remains the same.
     \end{enumerate}
 \end{proof}
 
@@ -1454,7 +1454,7 @@ Let $B$ and $C$ be ordered basis for a vector space $V$, and consider $v \in V$ 
 
 \section{Determinants}
 
-When is an $n \times n$ matrix invertible? When $n = 1$, $[a]$ is invertible when $a \neq 0$, in which case $[a]^{-1} = [1/a]$. When $n = 2$, we can show that
+When is an $n \times n$ matrix invertible? When $n = 1$, $[a]$ is invertible when $a \neq 0$, in which case $[a]^{-1} = [1/a]$. If $n = 2$, we can show that
 \[\begin{bmatrix}
     a & b \\
     c & d
@@ -2238,7 +2238,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     An \emph{inner product space} is a vector space over $\R$ or $\C$ together with a particular inner product on $V$.
 \end{defn}
 
-\begin{thm}
+\begin{thm}\label{inner-product-properties}
     Let $(V, \langle,\rangle)$ be an inner product space over $F$. Then for all $x, y, z \in V$ and $r \in F$, the following hold:
     \begin{enumerate}[label=(\arabic*)]
         \item $\langle x, y+z \rangle = \langle x, y \rangle + \langle x, z \rangle$,
@@ -2279,7 +2279,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     We say that $x \in V$ is a \emph{unit vector} if $\norm{x} = 1$. We say that vectors $x, y \in V$ are \emph{perpendicular} or \emph{orthogonal} if $\langle x, y \rangle = 0$.
 \end{rmk}
 
-\begin{thm}Pythagorean Theorem\proofbreak
+\begin{thm}Pythagorean Theorem\label{pythagorean-thm}\proofbreak
     Let $(V, \langle,\rangle)$ be an inner product space over $F$. If $x, y \in V$ are orthogonal, then
     \[\norm{x}^2 + \norm{y}^2 = \norm{x + y}^2.\]
 \end{thm}
@@ -2290,4 +2290,42 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
         &= \langle x, x+y\rangle + \langle y, x+y\rangle = \langle x, x\rangle + \langle x, y\rangle + \langle y, x\rangle + \langle y, y\rangle \\
         &= \langle x, x\rangle + \langle y, y\rangle = \norm{x^2} + \norm{y^2}
     \end{align*}
+\end{proof}
+
+\begin{defn}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$. Let $x, y \in V$ such that $y \neq \vec{0}$. The \emph{component of $x$ along $y$} is the scalar
+    \[c = \frac{\langle x, y \rangle}{\norm{y}^2}.\] The \emph{orthogonal projection of $x$ along $y$} is the vector $cy$.
+\end{defn}
+
+\begin{lemma}\label{orthogonal-construction}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$. Let $x, y \in V$ such that $y \neq \vec{0}$ and let $c$ be the component of $x$ along $y$. Then $x - cy$ is orthogonal to $y$.
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        \langle x - cy, y \rangle &= \langle x, y \rangle - \langle cy, y \rangle = \langle x, y \rangle - \frac{\langle x, y \rangle}{\norm{y}^2}\langle y, y \rangle \\
+        &= \langle x, y \rangle - \frac{\langle x, y \rangle}{\norm{y}^2}\norm{y}^2 = \langle x, y \rangle - \langle x, y \rangle = 0
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$. Then for all $x, y \in V$ and $c \in F$, the following hold:
+    \begin{enumerate}[label=(\arabic*)]
+        \item $\norm{cx} = \abs{c}\norm{x}$,
+        \item $\norm{x} = 0$ if and only if $x = \vec{0}$,
+        \item $\abs{\langle x, y \rangle} \leq \norm{x}\norm{y}$ (Cauchy-Schwarz inequality),
+        \item $\norm{x + y} \leq \norm{x} + \norm{y}$ (Triangle inequality).
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}\proofbreak
+    (1) $\norm{cx} = \sqrt{\langle cx, cx\rangle} = \sqrt{c\langle x, cx\rangle} = \sqrt{c\overline{c}\langle x, x\rangle} = \sqrt{c\overline{c}}\sqrt{\langle x, x\rangle} = \abs{c}\norm{x}$.
+
+    (2) Follows directly from Theorem \ref{inner-product-properties} (4).
+
+    (3) If $y = \vec{0}$, then $\abs{\langle x, y \rangle} = 0 = \norm{x}\norm{\vec{0}} = \norm{x}\norm{y}$. If $y \neq \vec{0}$, let $c = \frac{\langle x, y \rangle}{\norm{y}^2}$. By Lemma \ref{orthogonal-construction} and the Pythagorean Theorem \ref{pythagorean-thm}, $\norm{x}^2 = \norm{x - cy}^2 + \norm{cy}^2 \geq \norm{cy}^2$, so $\norm{x} \geq \norm{cy} = \abs{c}\norm{y} = \abs{\frac{\langle x, y \rangle}{\norm{y}^2}}\norm{y} = \frac{\langle x, y \rangle}{\norm{y}}$. Therefore, $\norm{x}\norm{y} \geq \abs{\langle x, y \rangle}$.
+
+    (4) \[\norm{x+y}^2 = \langle x, x\rangle + \langle x, y\rangle + \langle y, x\rangle + \langle y, y\rangle = \norm{x}^2 + \langle x, y\rangle + \overline{\langle x, y \rangle} + \norm{y}^2\]
+    Note that $\langle x, y\rangle + \overline{\langle x, y \rangle} = 2\mathrm{Re}\left\{\langle x, y\rangle\right\} \leq 2\abs{\langle x, y \rangle}$, and so by the Cauchy-Schwarz inequality $\langle x, y\rangle + \overline{\langle x, y \rangle} \leq 2\norm{x}\norm{y}$. We then have \[\norm{x+y}^2 \leq \norm{x^2} + 2\norm{x}\norm{y} + \norm{y}^2 = \left(\norm{x} + \norm{y}\right)^2,\]
+    and so $\norm{x + y} \leq \norm{x} + \norm{y}$.
 \end{proof}
