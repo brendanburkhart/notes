@@ -2292,6 +2292,11 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \end{align*}
 \end{proof}
 
+\begin{rmk}
+    Given vectors $x$ and $y$ ($y \neq \vec{0}$), what value $c$ makes $x - cy$ orthogonal to $y$? We want $\langle x - cy, y \rangle = 0$, so $\langle x, y \rangle - c\langle y, y \rangle = 0$. Therefore,
+    \[c = \frac{\langle x, y \rangle}{\langle y, y \rangle} = \frac{\langle x, y \rangle}{\norm{y}^2}.\]
+\end{rmk}
+
 \begin{defn}
     Let $(V, \langle,\rangle)$ be an inner product space over $F$. Let $x, y \in V$ such that $y \neq \vec{0}$. The \emph{component of $x$ along $y$} is the scalar
     \[c = \frac{\langle x, y \rangle}{\norm{y}^2}.\] The \emph{orthogonal projection of $x$ along $y$} is the vector $cy$.
@@ -2302,10 +2307,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{lemma}
 
 \begin{proof}
-    \begin{align*}
-        \langle x - cy, y \rangle &= \langle x, y \rangle - \langle cy, y \rangle = \langle x, y \rangle - \frac{\langle x, y \rangle}{\norm{y}^2}\langle y, y \rangle \\
-        &= \langle x, y \rangle - \frac{\langle x, y \rangle}{\norm{y}^2}\norm{y}^2 = \langle x, y \rangle - \langle x, y \rangle = 0
-    \end{align*}
+    \[\langle x - cy, y \rangle = \langle x, y \rangle - \langle cy, y \rangle = \langle x, y \rangle - \frac{\langle x, y \rangle}{\norm{y}^2}\langle y, y \rangle = \langle x, y \rangle - \frac{\langle x, y \rangle}{\norm{y}^2}\norm{y}^2 = \langle x, y \rangle - \langle x, y \rangle = 0\]
 \end{proof}
 
 \begin{thm}
