@@ -2415,3 +2415,17 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \[B = \left\langle \frac{1}{\sqrt{2}}(1, 1, 0), \frac{1}{\sqrt{3}}(1, -1, 1), \frac{1}{\sqrt{6}}(-1, 1, 2)\right\rangle\]
     is an orthonormal basis for $\R^3$.
 \end{exmp}
+
+\begin{thm}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $S = \{v_1, \ldots, v_k\}$ be an orthogonal set of non-zero vectors. Given any $y \in \spanset{S}$, then $y$ is the sum of the orthogonal components of $y$ along each $v_i$:
+    \[y = \sum_{i=1}^{k}\frac{\langle y, v_i\rangle}{\norm{v_i}^2}v_i.\]
+\end{thm}
+
+\begin{proof}
+    Since $y \in \spanset{S}$, we know that $y = \sum_{i=1}^{k}a_iv_i$ for some $a_i \in F$. Fix $j \in \{1, \ldots, k\}$. Then
+    \[\langle y, v_j \rangle = \left\langle \sum_{i=1}^{k}a_iv_i, v_j \right\rangle = a_j\langle v_j, v_j \rangle, \textrm{ and so } a_j = \frac{\langle y, v_j \rangle}{\langle v_j, v_j \rangle} = \frac{\langle y, v_j\rangle}{\norm{v_j}^2}.\]
+\end{proof}
+
+\begin{rmk}
+    If $S$ is orthonormal, then $y = \sum_{i=1}^{k}\langle y, v_i\rangle v_i$.
+\end{rmk}
