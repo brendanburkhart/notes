@@ -2331,3 +2331,53 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     Note that $\langle x, y\rangle + \overline{\langle x, y \rangle} = 2\mathrm{Re}\left\{\langle x, y\rangle\right\} \leq 2\abs{\langle x, y \rangle}$, and so by the Cauchy-Schwarz inequality $\langle x, y\rangle + \overline{\langle x, y \rangle} \leq 2\norm{x}\norm{y}$. We then have \[\norm{x+y}^2 \leq \norm{x^2} + 2\norm{x}\norm{y} + \norm{y}^2 = \left(\norm{x} + \norm{y}\right)^2,\]
     and so $\norm{x + y} \leq \norm{x} + \norm{y}$.
 \end{proof}
+
+\begin{rmk}
+    Recall the Law of Cosines, which states in a triangle with sides $a, b, c$ and the angle opposite side $a$ being $\theta$, that \[a^2 = b^2 + c^2 - 2bc\cos(\theta).\]
+
+    \begin{figure}[ht!]
+        \centering
+        \begin{tikzpicture}
+            \coordinate (C) at (0, 0);
+            \coordinate (B) at (4, 0);
+            \coordinate (A) at (2, 1);
+
+            \draw (C) -- (B) node [midway,anchor=north] {$a$};
+            \draw (B) -- (A) node [midway,anchor=south west] {$c$};
+            \draw (A) -- (C) node [midway,anchor=south east] {$b$};
+
+            \tkzMarkAngle[size=0.3cm,mark=|](C,A,B)
+            \tkzLabelAngle[pos=0.5](C,A,B) {$\theta$}
+        \end{tikzpicture}
+    \caption{Law of Cosines}
+    \label{fig:law-of-cosines}
+    \end{figure}
+
+    We can use this to extend our notion of angle beyond $\R^2$. Let $a = \norm{x - y}$, $b = \norm{x}$, and $c = \norm{y}$ as in Figure \ref{fig:vector-law-of-cosines}. Then $\norm{x - y}^2 = \langle x-y, x-y \rangle = \langle x, x\rangle - 2\langle x, y\rangle + \langle y, y \rangle = \norm{x}^2 - 2\langle x, y \rangle + \norm{y}^2$. Applying the Law of Cosines, we obtain
+    \[\cos(\theta) = \frac{\langle x, y \rangle}{\norm{x}\norm{y}}.\]
+
+    \begin{figure}[ht!]
+        \centering
+        \begin{tikzpicture}
+            \coordinate (C) at (0, 0);
+            \coordinate (B) at (4, 0);
+            \coordinate (A) at (2, 1);
+
+            \begin{scope}[decoration={
+                markings,
+                mark=at position 0.5 with {\arrow{>}}}
+                ]
+                \draw[postaction={decorate}] (A)--(B) node [midway,anchor=south west] {$y$};
+                \draw[postaction={decorate}] (A)--(C) node [midway,anchor=south east] {$x$};
+                \draw[postaction={decorate}] (B)--(C) node [midway,anchor=north] {$x-y$};
+            \end{scope}
+        \end{tikzpicture}
+    \caption{Vector triangle}
+    \label{fig:vector-law-of-cosines}
+    \end{figure}
+\end{rmk}
+
+\begin{defn}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $x, y \in V$ be non-zero vectors. We define the \emph{angle} between $x$ and $y$ as
+    \[\theta = \arccos\left(\frac{\langle x, y \rangle}{\norm{x}\norm{y}}\right).\]
+\end{defn}
