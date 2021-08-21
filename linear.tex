@@ -2381,3 +2381,37 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $x, y \in V$ be non-zero vectors. We define the \emph{angle} between $x$ and $y$ as
     \[\theta = \arccos\left(\frac{\langle x, y \rangle}{\norm{x}\norm{y}}\right).\]
 \end{defn}
+
+\begin{defn}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$. A subset $S \subseteq V$ is
+    \begin{itemize}
+        \item \emph{orthogonal} if $x$ and $y$ are orthogonal for every $x, y \in S$ where $x \neq y$,
+        \item \emph{normal} if $\norm{x} = 1$ for all $x \in S$,
+        \item \emph{orthonormal} if $S$ is both orthogonal and normal.
+    \end{itemize}
+\end{defn}
+
+\begin{rmk}
+    If $x \in V$ is non-zero, then $\frac{x}{\norm{x}}$ is a unit vector since
+    \[\norm{\frac{x}{\norm{x}}} = \frac{1}{\norm{x}}\norm{x} = 1.\]
+\end{rmk}
+
+\begin{prop}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $S \subseteq V$ be orthogonal. If all $x \in S$ are non-zero then $S$ is linearly independent.
+\end{prop}
+
+\begin{proof}
+    Suppose that $a_1v_1 + \cdots + a_kv_k = \vec{0}$ for some distinct $v_1, \ldots, v_k \in S$ and non-zero $a_1, \ldots, a_k \in F$. Fix $j \in \{1, \ldots, k\}$. Then
+    \begin{align*}
+        0 &= \langle \vec{0}, v_j \rangle = \langle a_1v_1 + \cdots + a_kv_k, v_j \rangle \\
+        &= a_1\langle v_1, v_j \rangle + \cdots + a_k\langle v_k, v_j \rangle.
+    \end{align*}
+    Since $S$ is orthogonal, all $\langle v_i, v_j \rangle$ must be zero except for $i = j$. Therefore, $0 = a_j\langle v_j, v_j \rangle$. Since $v_j \neq \vec{0}$, $\langle v_j, v_j \rangle \neq 0$ and therefore $a_j = 0$. It follows that all $a_1, \ldots, a_k = 0$ and so $S$ is linearly independent.
+\end{proof}
+
+\begin{exmp}
+    \[S = \left\{(1, 1, 0), (1, -1, 1), (-1, 1, 2)\right\}\]
+    $S$ can easily to verified to be orthogonal, and so it must be linearly independent and therefore forms a basis for $\R^3$. Furthermore, it follows that
+    \[B = \left\langle \frac{1}{\sqrt{2}}(1, 1, 0), \frac{1}{\sqrt{3}}(1, -1, 1), \frac{1}{\sqrt{6}}(-1, 1, 2)\right\rangle\]
+    is an orthonormal basis for $\R^3$.
+\end{exmp}
