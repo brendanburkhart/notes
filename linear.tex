@@ -2429,3 +2429,27 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \begin{rmk}
     If $S$ is orthonormal, then $y = \sum_{i=1}^{k}\langle y, v_i\rangle v_i$.
 \end{rmk}
+
+\begin{thm}{Gram-Schimdt Process}\label{gram-schmidt-process}\proofbreak
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $S =\{w_1, \ldots, w_n\}$ be a linearly independent set. Define $S' = \{v_1, \ldots, v_n\}$ by $v_1 = w_1$, and for $k > 1$ by
+    \[v_k = w_k - \sum_{i=1}^{k-1}\frac{\langle w_k, v_i\rangle}{\norm{v_i}^2}v_i.\]
+    Then $S'$ is an orthogonal set of non-zero vectors, and has the same span as $S$.
+\end{thm}
+
+\begin{proof}
+    Let $S_k = \{w_1, \ldots, w_k\}$ and $S_{k}' = \{v_1, \ldots, v_k\}$. We will show by induction on $k$ that $S_{k}'$ is an orthogonal set of non-zero vectors such that $\spanset{S_k} = \spanset{S_{k}'}$.
+
+    When $k = 1$, $S_k = \{w_1\} = \{v_1\} = S_{k}'$ and so $S_{k}'$ is vacuously orthogonal, and $v_1 \neq \vec{0}$. Assume that the statement holds for some $k-1 \geq 1$. Then
+    \begin{align*}
+        v_k = w_k - \sum_{i=1}^{k-1}\frac{\langle w_k, v_i\rangle}{\norm{v_i}^2}v_i.
+    \end{align*}
+    Suppose that $v_k = \vec{0}$, then
+    \[w_k = \sum_{i=1}^{k-1}\frac{\langle w_k, v_i\rangle}{\norm{v_i}^2}v_i,\]
+    and so $w_k \in \spanset{S_{k-1}'} = \spanset{S_{k-1}}$. However, this violates the assumption that $S_{k-1}$ is linearly independent. Therefore, $v_k \neq \vec{0}$. For $j \in \{1, \ldots, k-1\}$,
+    \begin{align*}
+        \langle v_k, v_j \rangle = \langle w_k, v_j \rangle - \sum_{i=1}^{k-1}\frac{\langle w_k, v_i}{\norm{v_i}^2}\langle v_i, v_j \rangle = \langle w_k, v_j \rangle - \frac{\langle w_k, v_j}{\norm{v_j}^2}\langle v_j, v_j \rangle = 0,
+    \end{align*}
+    and so $S_{k}'$ must be orthogonal.
+
+    By construction, $v_k \in \spanset{S_k}$, and so $\spanset{S_{k}'}$ is a subspace of $\spanset{S_{k}}$. Since $S_{k}$ and $S_{k}'$ are linearly independent and each have $k$ vectors, they must have the same dimension. Then by Theorem \ref{subspace-is-finite}, it follows that $\spanset{S_{k}'} = \spanset{S_k}$.
+\end{proof}
