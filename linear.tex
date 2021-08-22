@@ -2461,3 +2461,14 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \begin{proof}
     Let $B$ be any basis for $V$. Apply the Gram-Schmidt process to obtain an orthogonal basis $B'$, and finally normalize each vector in $B'$ to obtain an orthonormal basis for $V$.
 \end{proof}
+
+\begin{exmp}
+    Consider $\R^4$ with the standard dot product, and let
+    \[S = \{(1, 0, 1, 0), (1, 1, 1, 1), (0, 1, 2, 1)\}.\]
+    We start with $v_1 = w_1 = (1, 0, 1, 0)$, and then
+    \[v_2 = w_2 - \frac{\langle w_2, v_1\rangle}{\norm{v_1}^2}v_1 = (1, 1, 1, 1) - \frac{2}{2}(1, 0, 1, 0) = (0, 1, 0, 1),\]
+    \[v_3 = w_3 - \frac{\langle w_3, v_1 \rangle}{\norm{v_1}^2}v_1 - \frac{\langle w_3, v_2 \rangle}{\norm{v_2}^2}v_2 = (0, 1, 2, 1) - \frac{2}{2}(1, 0, 1, 0) - \frac{2}{2}(0, 1, 0, 1) = (-1, 0, 1, 0).\]
+    Therefore, $\{(1, 0, 1, 0), (0, 1, 0, 1), (-1, 0, 1, 0)\}$ is an orthogonal set, and
+    \[\left\{\frac{1}{\sqrt{2}}(1, 0, 1, 0), \frac{1}{\sqrt{2}}(0, 1, 0, 1), \frac{1}{\sqrt{2}}(-1, 0, 1, 0)\right\}\]
+    is an orthonormal set.
+\end{exmp}
