@@ -2416,7 +2416,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     is an orthonormal basis for $\R^3$.
 \end{exmp}
 
-\begin{thm}
+\begin{thm}\label{orthogonal-decomposition}
     Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $S = \{v_1, \ldots, v_k\}$ be an orthogonal set of non-zero vectors. Given any $y \in \spanset{S}$, then $y$ is the sum of the orthogonal components of $y$ along each $v_i$:
     \[y = \sum_{i=1}^{k}\frac{\langle y, v_i\rangle}{\norm{v_i}^2}v_i.\]
 \end{thm}
@@ -2426,9 +2426,9 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \[\langle y, v_j \rangle = \left\langle \sum_{i=1}^{k}a_iv_i, v_j \right\rangle = a_j\langle v_j, v_j \rangle, \textrm{ and so } a_j = \frac{\langle y, v_j \rangle}{\langle v_j, v_j \rangle} = \frac{\langle y, v_j\rangle}{\norm{v_j}^2}.\]
 \end{proof}
 
-\begin{rmk}
+\begin{cor}\label{orthonormal-decomposition}
     If $S$ is orthonormal, then $y = \sum_{i=1}^{k}\langle y, v_i\rangle v_i$.
-\end{rmk}
+\end{cor}
 
 \begin{thm}{Gram-Schmidt Process}\label{gram-schmidt-process}\proofbreak
     Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $S =\{w_1, \ldots, w_n\}$ be a linearly independent set. Define $S' = \{v_1, \ldots, v_n\}$ by $v_1 = w_1$, and for $k > 1$ by
@@ -2472,3 +2472,57 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \[\left\{\frac{1}{\sqrt{2}}(1, 0, 1, 0), \frac{1}{\sqrt{2}}(0, 1, 0, 1), \frac{1}{\sqrt{2}}(-1, 0, 1, 0)\right\}\]
     is an orthonormal set.
 \end{exmp}
+
+\begin{defn}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and $S \subseteq V$ an arbitrary non-empty set. The \emph{orthogonal complement} of $S$ is the set
+    \[S^{\perp} = \left\{x \in V \compbar \langle x, y \rangle = 0 \,\forall y \in S \right\}.\]
+\end{defn}
+
+\begin{lemma}\label{orthogonal-complement-is-subspace}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and $S \subseteq V$ an arbitrary non-empty set. Then $S^{\perp}$ is a vector subspace of $V$.
+\end{lemma}
+
+\begin{proof}
+    Since $\langle \vec{0}, y \rangle = 0$ for all $y \in S$, we know that $\vec{0} \in S^{\perp}$. For any $x, z \in S^{\perp}$ and $r \in F$, and for all $y \in S$
+    \[\langle x + rz, y \rangle = \langle x, y \rangle + r\langle z, y \rangle = 0 + r(0) = 0,\]
+    so $x + rz \in S^{\perp}$. Therefore, $S^{\perp}$ by a subspace of $V$ by Proposition \ref{subspace-proof}.
+\end{proof}
+
+\begin{exmp}
+    Let $V$ be a vector space with an arbitrary inner product. Then $\{\vec{0}\}^{\perp} = V$ and $V^{\perp} = \{\vec{0}\}$.
+\end{exmp}
+
+\begin{exmp}
+    In $\R^3$ with the standard dot product, $\{e_3\}^{\perp} = \spanset{\{e_1, e_2\}}$.
+\end{exmp}
+
+\begin{lemma}\label{orthogonal-complement-of-orthogonal-complement}
+    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and $S \subseteq V$ an arbitrary non-empty set. Then $S \subseteq \left(S^{\perp}\right)^{\perp}$.
+\end{lemma}
+
+\begin{proof}
+    Fix some $x \in S$. For any $y \in S^{\perp}$, we know that $\langle x, y \rangle = 0$ by definition. But $\langle y, x \rangle = \overline{\langle x, y \rangle} = \overline{0} = 0$, and so $x \in \left(S^{\perp}\right)^{\perp}$.
+\end{proof}
+
+\begin{thm}
+    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace.
+    \begin{enumerate}
+        \item $W \intersection W^{\perp} = \{\vec{0}\}$.
+        \item Any $x \in V$ can be uniquely expressed as $x = w + u$ where $w \in W$ and $u \in W^{\perp}$.
+        \item The dimension of $V$ is the sum of the dimensions of $W$ and $W^{\perp}$.
+        \item $W = \left(W^{\perp}\right)^{\perp}$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}\proofbreak
+    (1) Let $x \in W \intersection W^{\perp}$. By definition, $\langle x, x \rangle = 0$, so $x = \vec{0}$.
+
+    Use the Gram-Schmidt process to construct an orthonormal basis $\{v_1, \ldots, v_n\}$ for $V$ such that $\{v_1, \ldots, v_k\}$ forms an orthonormal basis for $W$. We will show that $\{v_{k+1}, \ldots, v_n\}$ forms an orthonormal basis for $W^{\perp}$. First note that $\{v_{k+1}, \ldots, v_n\}$ is linearly independent by construction. Let $x \in V$, then by Corollary \ref{orthonormal-decomposition}
+    \[x = \sum_{i=1}^{n}\langle x, v_i\rangle v_i.\] In the case that $x \in W^{\perp}$, by definition $\langle x, v_i\rangle = 0$ and so $x \in \spanset{\{v_{k+1}, v_n\}}$, and so $W^{\perp} \subseteq \spanset{\{v_{k+1}, \ldots, v_n\}}$. Furthermore, for $y \in \spanset{\{v_{k+1}, \ldots, v_n\}}$ we know that \[y = \sum_{i={k+1}}^{n}\langle x, v_i\rangle v_i = \sum_{i=1}^{n}\langle x, v_i\rangle v_i.\] Since $\{v_1, \ldots, v_k\}$ is linearly independent, it follows that $\langle y, v_i \rangle = 0$ and so $\langle y, w \rangle = 0$ for all $w \in \spanset{\{v_1, \ldots, v_k\}} = W$. Therefore, $y \in W^{\perp}$ and so $\spanset{\{v_{k+1}, \ldots, v_n\}} \subseteq W^{\perp}$, implying that $\spanset{\{v_{k+1}, \ldots, v_n\}} = W^{\perp}$. It follows that $\{v_{k+1}, v_n\}$ is a basis for $W^{\perp}$ by definition.
+
+    (2) Let $x \in V$, then \[x = \sum_{i=1}^{n}\langle x, v_i \rangle v_i = \sum_{i=1}^{k}\langle x, v_i \rangle v_i = \sum_{i={k+1}}^{n}\langle x, v_i \rangle v_i = w + u,\] where $w \in W$ and $u \in W^{\perp}$. Therefore, there is at least one way to express $x \in V$ as $x = w + u$ where $w \in W$ and $u \in W^{\perp}$. To show uniqueness, assume that $x = w + u = w' + u'$ where $w, w' \in W$ and $u + u' \in W^{\perp}$. Then $w + u = w' + u'$, and so $w - w' = u - u' \in W \intersection W^{\perp} = \{\vec{0}\}$ by (1), and so $w = w'$ and $u = u'$.
+
+    (3) Since $\{v_1, \ldots, v_k\}$ is a basis for $W$ and $\{v_{k+1}, \ldots, v_n\}$ is a basis for $W^{\perp}$, it necessarily follows that the dimension of $V$ is the sum of the dimensions of $W$ and $W^{\perp}$.
+
+    (4) By (3), we know that $\dim V = \dim W + \dim W^{\perp}$ and also that $\dim V = \dim W^{\perp} + \dim\left(W^{\perp}\right)^{\perp}$, so $\dim W = \dim \left(W^{\perp}\right)^{\perp}$. Since $W$ and $\left(W^{\perp}\right)$ are both subspaces of $V$ by Lemma \ref{orthogonal-complement-is-subspace} and $W \subseteq \left(W^{\perp}\right)^{\perp}$ by Lemma \ref{orthogonal-complement-of-orthogonal-complement}, we know that $\dim W = \dim \left(W^{\perp}\right)^{\perp}$ implies that $W = \left(W^{\perp}\right)^{\perp}$ by Proposition \ref{subspace-is-finite}.
+\end{proof}
