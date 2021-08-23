@@ -2526,3 +2526,33 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 
     (4) By (3), we know that $\dim V = \dim W + \dim W^{\perp}$ and also that $\dim V = \dim W^{\perp} + \dim\left(W^{\perp}\right)^{\perp}$, so $\dim W = \dim \left(W^{\perp}\right)^{\perp}$. Since $W$ and $\left(W^{\perp}\right)$ are both subspaces of $V$ by Lemma \ref{orthogonal-complement-is-subspace} and $W \subseteq \left(W^{\perp}\right)^{\perp}$ by Lemma \ref{orthogonal-complement-of-orthogonal-complement}, we know that $\dim W = \dim \left(W^{\perp}\right)^{\perp}$ implies that $W = \left(W^{\perp}\right)^{\perp}$ by Proposition \ref{subspace-is-finite}.
 \end{proof}
+
+\begin{defn}
+    Let $V$ be a vector space over $F$, and $W$ and $U$ subspaces of $V$. If $W \intersection U = \{\vec{0}\}$, and every $x \in V$ can be uniquely expressed as $x = w + u$ with $w \in W$ and $u \in U$, we say that $V$ is the \emph{direct sum} of $W$ and $U$, denoted as $V = W \directsum U$.
+\end{defn}
+
+\begin{exmp}
+    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace. Then $V = W \directsum W^{\perp}$.
+\end{exmp}
+
+\begin{exmp}
+    $\R^3 = \spanset{\{e_1, e_2\}} \directsum \spanset{\{e_3\}}$.
+\end{exmp}
+
+\begin{defn}
+    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace. For $x = w + u \in V$ where $w \in W$ and $u \in W^{\perp}$, we say that $w$ is the \emph{orthogonal projection} of $x$ onto $W$.
+\end{defn}
+
+\begin{rmk}
+    If $\{v_1, \ldots, v_k\}$ is an orthonormal basis for $W$ and $x \in V$, then the orthogonal projection $w$ of $x$ on $W$ is
+    \[w = \sum_{i=1}^{k}\langle x, v_i \rangle v_i, \;\textrm{and}\, u = x - w.\]
+\end{rmk}
+
+\begin{prop}
+    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace. The orthogonal projection $w$ of $x$ is the unique vector in $W$ that is closest to $x$ --- that is, $\norm{x - w} \leq \norm{x - y}$ for all $y \in W$, with equality if and only if $y = w$.
+\end{prop}
+
+\begin{proof}
+    Let $w$ be the orthogonal projection of $x$ on $W$, and $u = x - w \in W^{\perp}$. Since $w, y \in W$ we have $w - y \in W$, and so $w - y$ is orthogonal to $u$. Then $\norm{x-y}^2 = \norm{w + u - y}^2$ and by the Pythagorean Theorem \ref{pythagorean-thm} we have $\norm{w + u - y}^2 = \norm{w - y}^2 + \norm{u^2}$. It follows that
+    \[\norm{x-y}^2 = \norm{w - y}^2 + \norm{u^2} \geq \norm{u^2} = \norm{x - w}^2.\]
+\end{proof}
