@@ -2347,7 +2347,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
             \draw (A) -- (C) node [midway,anchor=south east] {$b$};
 
             \tkzMarkAngle[size=0.3cm,mark=|](C,A,B)
-            \tkzLabelAngle[pos=0.5](C,A,B) {$\theta$}
+            \tkzLabelAngle[pos=0.6](C,A,B) {$\theta$}
         \end{tikzpicture}
     \caption{Law of Cosines}
     \label{fig:law-of-cosines}
@@ -2573,16 +2573,39 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     Therefore, $w = \sum_{i=1}^{n}\overline{\ell(v_i)v_i}$. Uniqueness follows from Theorem \ref{inner-product-properties} (5).
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{adjoint-existence-uniqueness}
     Let $(V, \langle, \rangle)$ and $(W, \langle, \rangle)$ be inner product spaces over $F$, and $T: V \to W$ be a linear transformation. The adjoint $T^*$ of $T$ exists and is unique.
 \end{thm}
 
 \begin{proof}
-    For given $w \in W$, consider $\ell: V \to F$ defined by $v \mapsto \langle T(v), w \rangle$. Since $T$ is linear in $v$ and $\langle,\rangle$ is linear in the first argument, $\ell$ is linear in $v$. By Lemma \ref{adjoint-representation-theorem}, there exists unique $y \in V$ such that $\langle T(v), w \rangle = \ell(v) = \langle v, y \rangle$. Define $T*(w) = y$ to obtain a function $T^*: W \to V$.
+    For given $w \in W$, consider $\ell: V \to F$ defined by $v \mapsto \langle T(v), w \rangle$. Since $T$ is linear in $v$ and $\langle,\rangle$ is linear in the first argument, $\ell$ is linear in $v$. By Lemma \ref{adjoint-representation-theorem}, there exists unique $y \in V$ such that $\langle T(v), w \rangle = \ell(v) = \langle v, y \rangle$. Define $T^*(w) = y$ to obtain a function $T^*: W \to V$.
+
+    All that remains is for us to show that $T^*$ is indeed a linear function. Note that
+    \begin{align*}
+        \langle T(v), w_1 + rw_2 \rangle = \langle v, T^*(w_1 + rw_2) \rangle
+    \end{align*}
+    and
+    \begin{align*}
+        \langle T(v), w_1 + rw_2 \rangle &= \langle T(v), w_1 \rangle + \overline{r}\langle T(v), w_2 \rangle = \langle v, T^*(w_1) \rangle + \overline{r}\langle v, T^*(w_2) \rangle \\
+        &= \langle v, T^*(w_1) + rT^*(w_2) \rangle.
+    \end{align*}
+    It follows that $T^*(w_1 + rw_2) = T^*(w_1) + rT^*(w_2)$ by Theorem \ref{inner-product-properties} (5). Therefore, $T^*$ is linear and is the unique function satisfying $\langle T(v), w \rangle = \langle v, T^*(w) \rangle$.
+\end{proof}
+
+\begin{prop}
+    Let $(V, \langle, \rangle)$ and $(W, \langle, \rangle)$ be inner product spaces over $F$, and $T: V \to W$ be a linear transformation. Then
+    \[(T^*)^* = T.\]
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        \langle T(v), w \rangle &= \langle v, T^*(w) \rangle = \langle v, T^*(w) \rangle \\
+        &= \overline{\langle T^*(w), v \rangle} = \overline{\langle w, (T^*)^*(v) \rangle} = \langle (T^*)^*(v), w \rangle \\
+    \end{align*}
 \end{proof}
 
 \begin{lemma}
-    Let $A \in M_{m \times n}(F)$, $x \in F^n$, and $y \in F^m$. Then $\langle Ax, y \rangle_m = \langle x A^{*}y \rangle_n$, where $\langle,\rangle_k$ denotes the standard dot product with in $F^k$.
+    Let $A \in M_{m \times n}(F)$, $x \in F^n$, and $y \in F^m$. Then $\langle Ax, y \rangle_m = \langle x, A^{*}y \rangle_n$, where $\langle,\rangle_k$ denotes the standard dot product with in $F^k$.
 \end{lemma}
 
 \begin{proof}
@@ -2590,6 +2613,6 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{proof}
 
 \begin{rmk}
-    Let $A$ be a matrix and $L_A$ the corresponding linear transformation. This lemma states that the adjoint of $L_A$ is equal to the linear transformation corresponding to the conjugate transpose of $A^{*}$. This is,
+    Let $A$ be a matrix and $L_A$ the corresponding linear transformation. This lemma states that the linear transformation corresponding to the conjugate transpose of $A^{*}$ satisfies the adjoint property for the standard dot product, and so by Theorem \ref{adjoint-existence-uniqueness} is the unique adjoint. This is,
     \[\left(L_A\right)^{*} = L_{A^{*}}.\]
 \end{rmk}
