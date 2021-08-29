@@ -2584,12 +2584,8 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 
     All that remains is for us to show that $T^*$ is indeed a linear function. Note that
     \begin{align*}
-        \langle T(v), w_1 + rw_2 \rangle = \langle v, T^*(w_1 + rw_2) \rangle
-    \end{align*}
-    and
-    \begin{align*}
-        \langle T(v), w_1 + rw_2 \rangle &= \langle T(v), w_1 \rangle + \overline{r}\langle T(v), w_2 \rangle = \langle v, T^*(w_1) \rangle + \overline{r}\langle v, T^*(w_2) \rangle \\
-        &= \langle v, T^*(w_1) + rT^*(w_2) \rangle.
+        \langle v, T^*(w_1 + rw_2) \rangle &= \langle T(v), w_1 + rw_2 \rangle = \langle T(v), w_1 \rangle + \overline{r}\langle T(v), w_2 \rangle \\
+        &= \langle v, T^*(w_1) \rangle + \overline{r}\langle v, T^*(w_2) \rangle = \langle v, T^*(w_1) + rT^*(w_2) \rangle.
     \end{align*}
     It follows that $T^*(w_1 + rw_2) = T^*(w_1) + rT^*(w_2)$ by Theorem \ref{inner-product-properties} (5). Therefore, $T^*$ is linear and is the unique function satisfying $\langle T(v), w \rangle = \langle v, T^*(w) \rangle$.
 \end{proof}
@@ -2600,10 +2596,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{prop}
 
 \begin{proof}
-    \begin{align*}
-        \langle T(v), w \rangle &= \langle v, T^*(w) \rangle = \langle v, T^*(w) \rangle \\
-        &= \overline{\langle T^*(w), v \rangle} = \overline{\langle w, (T^*)^*(v) \rangle} = \langle (T^*)^*(v), w \rangle \\
-    \end{align*}
+    \[\langle T(v), w \rangle = \langle v, T^*(w) \rangle = \langle v, T^*(w) \rangle = \overline{\langle T^*(w), v \rangle} = \overline{\langle w, (T^*)^*(v) \rangle} = \langle (T^*)^*(v), w \rangle\]
 \end{proof}
 
 \begin{lemma}
@@ -2650,4 +2643,75 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \[\langle Ax, y - Ax_0 \rangle = 0,\]
     and so $\langle x, A^*y - A^*Ax_0 \rangle = 0$. Then since this equation is true for all $x \in F^n$ we must have $A^*y - A^*Ax_0 = \vec{0}$, and so $A^*Ax_0 = A^*y$. Since $A^*A$ is invertible when $A$ has rank $n$, we finally have
     \[x_0 = \left(A^*A\right)^{-1}A^*y.\]
+\end{proof}
+
+\begin{defn}
+    A matrix $P \in M_{n \times n}(\C)$ is said to be \emph{orthogonal} when the columns of $P$ form an orthogonal basis for $\C^n$.
+\end{defn}
+
+\begin{lemma}
+    A matrix $P \in M_{n \times n}(\C)$ is orthogonal if and only if $P$ is invertible and $P^{-1} = P^{\transpose}$.
+\end{lemma}
+
+\begin{proof}
+    Let $v_i$ denote the $i$th column of $P$ (and therefore the $i$th column of $P^{\transpose}$). Note that $P$ is orthogonal is equivalent to saying that $v_i \cdot v_j = 1$ precisely when $i = j$ and $v_i \cdot v_j = 0$ otherwise. Therefore, $P$ is orthogonal is equivalent to $P^{\transpose}P = I_n$ and since $P^{\transpose}$ is also orthogonal, $PP^{\transpose} = I_n$. It follows that $P$ is orthogonal is precisely equivalent to $P$ is invertible and $P^{-1} = P^{\transpose}$.
+\end{proof}
+
+\begin{rmk}
+    If $P$ is orthogonal, then so is $P^{\transpose}$. If $S$ and $R$ are orthogonal, then $SR$ is orthogonal since $(SR)(SR)^{\transpose} = S(RR^{\transpose})S^{\transpose} = SS^{\transpose} = I$.
+\end{rmk}
+
+\begin{thm}Spectral Theorem\label{spectral-theorem}\proofbreak
+    Let $A \in M_{n \times n}(\R)$. If $A$ is symmetric ($A = A^{\transpose}$), then $A$ is diagonalizable and there exists an orthogonal basis for $\R^n$ composed of eigenvectors of $A$.
+\end{thm}
+
+\begin{proof}
+    Consider $A \in M_{n \times n}(\C)$, and let $\lambda \in \C$ be an eigenvalue of $A$.
+    \begin{align*}
+        \lambda\langle x, x\rangle = \langle Ax, x \rangle = \langle x, A^*x\rangle
+    \end{align*}
+    Since $A \in M_{n \times n}(\R)$, $A^* = A^{\transpose}$. Then $A = A^{\transpose}$ implies that $\langle x, A^*x \rangle = \langle x, Ax \rangle$. We then have
+    \begin{align*}
+        \lambda\langle x, x\rangle = \langle x, \lambda x\rangle = \overline{\lambda}\langle x, x \rangle.
+    \end{align*}
+    Since $x \neq 0$, it follows that $\lambda = \overline{\lambda}$ and so $\lambda \in \R$.
+
+    We will proceed by induction on $n$. First, a $1 \times 1$ matrix $A = (a)$ is trivially both symmetric and diagonalizable, and $\{(1)\}$ is a basis for $\R^1$ that is vacuously orthogonal and composed of eigenvectors of $A$. Now assume that for $m \leq n-1$, any $m \times m$ real symmetric matrix is diagonalizable, and there exists an orthogonal basis for $\R^m$ composed of its eigenvectors.
+    
+    Let $v_1$ be an eigenvector and $\lambda_1$ the corresponding eigenvalue. Complete to an ordered orthogonal basis $\langle v_1, \ldots, v_n \rangle$ for $\R^n$. Let $Q$ be a matrix whose $i$th column is $v_i$, and let
+    $\tilde{A} = [L_A]_{B}^{B}$. Then $\tilde{A} = Q^{-1}AQ = Q^{\transpose}AQ$. Note that $\tilde{A}$ is symmetric: $\left(Q^{\transpose}AQ\right)^{\transpose} = Q^{\transpose}A^{\transpose}\left(Q^{\transpose}\right)^{\transpose} = Q^{\transpose}AQ = \tilde{A}$.
+
+    Since $Av_1 = \lambda_1v_1$, we know that
+    \[\tilde{A} = \left(\begin{array}{c|ccc}
+        \lambda_1 & 0 & \cdots & 0 \\
+        \hline
+        0 & & & \\
+        \vdots & & & \\
+        0 & \largeblock{3}{2.2}{$B$}
+    \end{array}\right),\]
+    where $B$ is an $(n-1)\times(n-1)$ real symmetric matrix. By assumption, there exists an $(n-1)\times(n-1)$ diagonal matrix $E$ and $T$ an $(n-1)\times(n-1)$ orthogonal matrix such that $B = TET^{-1} = TET^{\transpose}$. Then
+    \[\tilde{A} = \left(\begin{array}{c|ccc}
+        1 & 0 & \cdots & 0 \\
+        \hline
+        0 & & & \\
+        \vdots & & & \\
+        0 & \largeblock{3}{2.0}{$T$}
+    \end{array}\right)
+    \left(\begin{array}{c|ccc}
+        \lambda_1 & 0 & \cdots & 0 \\
+        \hline
+        0 & & & \\
+        \vdots & & & \\
+        0 & \largeblock{3}{2.0}{$E$}
+    \end{array}\right)
+    \left(\begin{array}{c|ccc}
+        1 & 0 & \cdots & 0 \\
+        \hline
+        0 & & & \\
+        \vdots & & & \\
+        0 & \largeblock{3}{2.7}{$T^{\transpose}$}
+    \end{array}\right) = SDS^{\transpose},\]
+    where $S$, $D$, and $S^{\transpose}$ are simply the three matrices in the product. Then,
+    \[A = Q\tilde{A}Q^{\transpose} = QSDS^{\transpose}Q^{\transpose} = (QS)D(QS)^{\transpose}.\]
+    Note that $D$ is diagonal since $E$ is, and $S$ (and $S^{\transpose}$) are orthogonal since $T$ (and $T^{\transpose})$) is. Since $Q$ and $S$ are orthogonal, so is their product $QS$.
 \end{proof}
