@@ -2618,3 +2618,21 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     Let $A$ be a matrix and $L_A$ the corresponding linear transformation. This lemma states that the linear transformation corresponding to the conjugate transpose of $A^{*}$ satisfies the adjoint property for the standard dot product, and so by Theorem \ref{adjoint-existence-uniqueness} is the unique adjoint. This is,
     \[\left(L_A\right)^{*} = L_{A^{*}}.\]
 \end{rmk}
+
+\begin{lemma}
+    Let $A \in M_{m \times n}(F)$. Then the ranks of $A$ and $A*A$ are equal.
+\end{lemma}
+
+\begin{proof}
+    Note that $A$ is $m \times n$, so $A^*A$ is an $n \times n$ square matrix. If we can show that the nullity of $L_A$ is equal to the nullity $L_{A^*A}$, then by the Rank-nullity Theorem \ref{rank-nullity} $A$ and $A^*A$ must have the same rank.
+
+    For any $x$ in the kernel (null-space) of $L_A$, we have $Ax = \vec{0}$, and so $A^*Ax = A^*\vec{0} = \vec{0}$, and so the kernel of $L_A$ is a subset of the kernel of $L_{A^*A}$. Now consider $x$ in the kernel of $L_{A^*A}$. We know that
+    \begin{align*}
+        \langle Ax, Ax \rangle = \langle x, A^*Ax \rangle = \langle x, \vec{0} \rangle = 0,
+    \end{align*}
+    and so $Ax = \vec{0}$ by Theorem \ref{inner-product-properties} (4). Therefore, the kernel of $L_{A^*A}$ is also a subset of the kernel of $L_A$, and so the kernels (and therefore the nullities) of $L_A$ and $L_{A^*A}$ are equal.
+\end{proof}
+
+\begin{rmk}
+    Note that since $A^*A$ is an $n \times n$ matrix, it is invertible precisely when the rank of $A$ is $n$.
+\end{rmk}
