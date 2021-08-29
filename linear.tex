@@ -2548,7 +2548,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \[w = \sum_{i=1}^{k}\langle x, v_i \rangle v_i, \;\textrm{and}\, u = x - w.\]
 \end{rmk}
 
-\begin{prop}
+\begin{prop}\label{ortho-proj-closest}
     Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace. The orthogonal projection $w$ of $x$ is the unique vector in $W$ that is closest to $x$ --- that is, $\norm{x - w} \leq \norm{x - y}$ for all $y \in W$, with equality if and only if $y = w$.
 \end{prop}
 
@@ -2636,3 +2636,18 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \begin{rmk}
     Note that since $A^*A$ is an $n \times n$ matrix, it is invertible precisely when the rank of $A$ is $n$.
 \end{rmk}
+
+\begin{thm}
+    Let $A \in M_{m \times n}(F)$ and $y \in F^n$. Then there exists $x_0 \in F^n$ such that
+    \[\norm{y - Ax_0} \leq \norm{y - Ax}.\]
+    Furthermore, if $A$ has rank $n$, then $x_0$ is unique and is given by $x_0 = (A^*A)^{-1}A^*y$.
+\end{thm}
+
+\begin{proof}
+    Let $W$ be the column space of $A$, and let $w_0$ be the orthogonal projection of $y$ onto $W$. We know that $w_0$ is the unique vector in the column space of $A$ that satisfies $\norm{y - w_0} \leq \norm{y - w}$ for all $w$ in the column space of by Proposition \ref{ortho-proj-closest}. Since $w_0$ is the in column space of $A$, we are guaranteed the existence (although not the uniqueness) of $x_0$, which is simply the coordinates of $w_0$ in terms of the columns of $A$. If $A$ has rank $n$ then the columns of $A$ form a basis for the column space and so $x_0$ must be unique.
+
+    When $A$ has rank $n$, then $x_0$ satisfies $y = Ax_0 + u$ where $u \in W^{\perp}$ and $Ax \in W$. Therefore, $y - Ax_0 = u \in W^{\perp}$, so for all $x \in F^n$ we have
+    \[\langle Ax, y - Ax_0 \rangle = 0,\]
+    and so $\langle x, A^*y - A^*Ax_0 \rangle = 0$. Then since this equation is true for all $x \in F^n$ we must have $A^*y - A^*Ax_0 = \vec{0}$, and so $A^*Ax_0 = A^*y$. Since $A^*A$ is invertible when $A$ has rank $n$, we finally have
+    \[x_0 = \left(A^*A\right)^{-1}A^*y.\]
+\end{proof}

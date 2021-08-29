@@ -8,5 +8,8 @@
         "**/*.synctex.gz": true,
         "**/*.synctex(busy)": true,
         "**/*.toc": true
+    },
+    "[latex]": {
+        "editor.formatOnSave": false
     }
 }
