@@ -2047,7 +2047,7 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
     The characteristic polynomial of an $n \times n$ matrix is a polynomial of degree $n$, which we can see by recursively expanding the first term of the Laplace expansion of $\det(A - \lambda I_n)$ along the first row/column.
 \end{rmk}
 
-\begin{thm}{Fundamental theorem of algebra}\proofbreak
+\begin{thm}{Fundamental theorem of algebra}\label{algebra-fundamental-theorem}\proofbreak
     Let $f(t) = t^n + a_{n_1}t^{n-1} + \cdots + a_0$ be a polynomial where $a_i \in \C$. Then there exists $r_1, \ldots, r_n \in \C$ (not necessarily distinct) such that $f(t) = (t -r_1)(t-r_2)\cdots(t-r_n)$. By grouping repeated terms, we then have
     $f(t) = (t-\lambda_1)^{m_1}\cdots (t-\lambda_k)^{m_k}$, with $\lambda_i \neq \lambda_j$ when $i \neq j$. We call $m_i$ the \emph{algebraic multiplicity} of $\lambda_i$.
 \end{thm}
@@ -2666,15 +2666,15 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{thm}
 
 \begin{proof}
-    Consider $A \in M_{n \times n}(\C)$, and let $\lambda \in \C$ be an eigenvalue of $A$.
+    Consider $A \in M_{n \times n}(\C)$. We know that $A$ must have at least one eigenvalue $\lambda \in \C$ by the Fundamental theorem of algebra \ref{algebra-fundamental-theorem}.
     \begin{align*}
         \lambda\langle x, x\rangle = \langle Ax, x \rangle = \langle x, A^*x\rangle
     \end{align*}
-    Since $A \in M_{n \times n}(\R)$, $A^* = A^{\transpose}$. Then $A = A^{\transpose}$ implies that $\langle x, A^*x \rangle = \langle x, Ax \rangle$. We then have
+    Since $A \in M_{n \times n}(\R)$, $A^* = A^{\transpose}$. Then $A = A^{\transpose}$ implies that $A^* = A$, so $\langle x, A^*x \rangle = \langle x, Ax \rangle$. We then have
     \begin{align*}
         \lambda\langle x, x\rangle = \langle x, \lambda x\rangle = \overline{\lambda}\langle x, x \rangle.
     \end{align*}
-    Since $x \neq 0$, it follows that $\lambda = \overline{\lambda}$ and so $\lambda \in \R$.
+    Since $x \neq 0$, it follows that $\lambda = \overline{\lambda}$ and so $\lambda \in \R$. Therefore, all eigenvectors of $A$ are real and so $A$ has at least one real eigenvector.
 
     We will proceed by induction on $n$. First, a $1 \times 1$ matrix $A = (a)$ is trivially both symmetric and diagonalizable, and $\{(1)\}$ is a basis for $\R^1$ that is vacuously orthogonal and composed of eigenvectors of $A$. Now assume that for $m \leq n-1$, any $m \times m$ real symmetric matrix is diagonalizable, and there exists an orthogonal basis for $\R^m$ composed of its eigenvectors.
     
@@ -2712,6 +2712,6 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
         0 & \largeblock{3}{2.7}{$T^{\transpose}$}
     \end{array}\right) = SDS^{\transpose},\]
     where $S$, $D$, and $S^{\transpose}$ are simply the three matrices in the product. Then,
-    \[A = Q\tilde{A}Q^{\transpose} = QSDS^{\transpose}Q^{\transpose} = (QS)D(QS)^{\transpose}.\]
-    Note that $D$ is diagonal since $E$ is, and $S$ (and $S^{\transpose}$) are orthogonal since $T$ (and $T^{\transpose})$) is. Since $Q$ and $S$ are orthogonal, so is their product $QS$.
+    \[A = Q\tilde{A}Q^{\transpose} = QSDS^{\transpose}Q^{\transpose} = (QS)D(QS)^{\transpose} = (QS)D(QS)^{-1}.\]
+    Note that $D$ is diagonal since $E$ is, and $S$ (and $S^{\transpose}$) are orthogonal since $T$ (and $T^{\transpose})$) is. Since $Q$ and $S$ are orthogonal, so is their product $QS$. Since $D$ is a diagonal matrix of eigenvalues, the columns of $QS$ are necessarily eigenvectors of $A$, and so the columns of $QS$ form an orthogonal basis of eigenvectors.
 \end{proof}
