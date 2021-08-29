@@ -1,5 +1,6 @@
 abelian
 abelianization
+adjoints
 Archimedean
 arity
 Bézout
@@ -31,9 +32,11 @@ multigraph
 multilinear
 multilinearity
 nonhomogeneous
+nullities
 ODE
 ODEs
 orthogonality
+parallelepiped
 parameterizations
 PDE
 PDEs

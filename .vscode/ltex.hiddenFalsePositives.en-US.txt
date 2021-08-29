@@ -1,2 +1,3 @@
 {"rule":"CAPITALIZATION_NNP_DERIVED","sentence":"abelian"}
 {"rule":"MISSING_GENITIVE","sentence":"Fourier analysis"}
+{"rule":"MISSING_GENITIVE","sentence":"Laplace expansion"}
