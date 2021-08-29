@@ -11,4 +11,4 @@ Contains my notes from:
 - Signals and Systems
 - Ordinary Differential Equations
 
-Compiled PDFs are available as build artifacts - go to the `Actions` tab and select a commit and a zip file titled `notes` containing a PDF for every document will be listed.
+The compiled PDF is available as a build artifact --- go to the `Actions` tab and select a commit and a zip file titled `notes` containing a PDF will be listed. Build artifacts expire after 90 days, so only recent versions are available.
