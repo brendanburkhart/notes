@@ -1,0 +1,46 @@
+\chapter{Optimization}
+\label{ch:optimization}
+
+\section{Introduction}
+
+objective functions, constraints, feasible region
+
+Given a feasible region $S \subseteq \R^n$, the objective function is a function $f: S \to \R$.
+
+Maximize plant height due to nutrients $x_1, x_2$ given by $f(x_1, x_2) = 1 + x_1^2(x_2 - 1)^3e^{-x_1-x_2}$, such that $x_1, x_2 \geq 0$, $x_1 + x_2 \geq 6$, and $x_2 \geq \log x_1$. This is maximized by $(x_1, x_2) = (2, 4)$.
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+        \begin{axis}[
+            axis x line=middle,
+            axis y line=middle,
+            ymin=0,ymax=8,ylabel=$y$,
+            xmin=0,xmax=8,xlabel=$x$
+        ]
+            \addplot[domain=0:6, blue, dashed, ultra thick] {6-\x};
+            \addplot[domain=1:8, blue, dashed, ultra thick] {ln(\x)};
+            \addplot[domain=0:6, blue, dashed, ultra thick] {0};
+            \addplot[domain=0:6, blue, dashed, ultra thick, variable=\y] ({0}, {\y});
+        \end{axis}
+    \end{tikzpicture}
+\caption{Example Feasible Region}
+\label{fig:example-feasible-region}
+\end{figure}
+
+\begin{itemize}
+    \item unbounded, e.g. minimize $\log x$ such that $0 < x \leq 7$
+    \item bounded without solution, e.g. minimize $\log x$ such that $1 < x \leq 7$
+    \item infeasible, e.g. minimize $\log x$ such that $1 < x \leq 0.5$
+    \item interior point of the feasible region, e.g. minimize $f(x) = 3 + (x - 2)^2$ such that $1 \leq x \leq 3$. $x^* = 2$, $f'(2) = 0$
+    \item boundary point of the feasible region, e.g. minimize $3 + (x - 2)^2$ such that $x \leq 10$. $x^* = 10$, but $f'(10) \neq 0$.
+\end{itemize}
+
+local minimums, local maximums, unique vs many solutions. Strict?
+
+\begin{defn}
+    For any $x, y \in \R^n$, the Euclidean length of $x$ is
+    \[\norm{x} = \sqrt{x\cdot x} = \sqrt{\sum_{i=1}^{n}x_i^2},\]
+    and the Euclidean distance between $x$ and $y$ is $\norm{x - y}$.
+\end{defn}
+
