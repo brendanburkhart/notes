@@ -44,3 +44,48 @@ local minimums, local maximums, unique vs many solutions. Strict?
     and the Euclidean distance between $x$ and $y$ is $\norm{x - y}$.
 \end{defn}
 
+\begin{defn}
+    For all $x \in \R^n$ and $\varepsilon > 0$, the \emph{$\varepsilon$-neighborhood} of $x$ is
+    \[N_{\varepsilon}(x) = \left\{y \in \R^n \compbar \norm{x - y} < \varepsilon \right\}.\]
+\end{defn}
+
+\begin{exmp}
+    In $\R^1$, $N_{3}(7)$ is $(4, 10)$.
+\end{exmp}
+
+\begin{defn}
+    For any $S \subseteq \R^n$ and $x \in S$, we say that $x$ is an \emph{interior point} of $S$ if there exists an $\varepsilon$ neighborhood of $x$ $N_{\varepsilon}(x) \subseteq S$. If every $N_{\varepsilon}(x)$ contains a point inside $S$ and a point not inside $S$, we say that $x$ is a \emph{boundary point} of $x$.
+\end{defn}
+
+\begin{defn}
+    A set $S \subseteq \R^n$ is \emph{open} if every point in $S$ is an interior point of $S$, and \emph{closed} is $S$ contains every boundary point of $S$.
+\end{defn}
+
+\begin{exmp}
+    In $\R^1$, any non-empty interval $[a, b]$ is closed, and and non-empty $(a, b)$ is open.
+\end{exmp}
+
+\begin{exmp}
+    Both $\emptyset$ and $\R^n \subseteq \R^n$ are both open and closed.
+\end{exmp}
+
+continuous function on closed subset of $\R^n$ always attains minimum/maximum?
+
+\begin{prop}
+    Let $S \subseteq \R^n$. Then $S$ is open if and only if $\R^n - S$ is closed.
+\end{prop}
+
+\begin{defn}
+    Let $S \subseteq \R^n$ and $f: \R^n \to \R$. Consider $x^* \in S$. We say that $x^*$ is a \emph{global minimizer} if for all $y \in S$, $f(x^*) \leq f(y)$, and a \emph{strict} global minimizer if for all $y \in S - \{x^*\}$, $f(x^*) < f(y)$.
+\end{defn}
+
+\begin{defn}
+    Let $S \subseteq \R^n$ and $f: \R^n \to \R$. Consider $x^* \in S$. We say that $x^*$ is a \emph{local minimizer} if there exists an $\varepsilon$-neighborhood $N_{\varepsilon}(x^*)$ such that for all $y \in N_{\varepsilon}(x) \intersection S$, $f(x^*) \leq f(y)$, and a \emph{strict} local minimizer if for all $y \in \left(N_{\varepsilon}(x) \intersection S\right) - \{x^*\}$, $f(x^*) < f(y)$.
+\end{defn}
+
+stationary points := $\nabla f(x) = \vec{0}$
+
+\begin{rmk}
+    Let $S \subseteq \R^n$, $x^*$ be an interior point of $S$, and $f: S \to \R$ be a sufficiently smooth continuous function. If $x^* \in S$ is a local minimizer, then the \emph{gradient} of $f(x^*)$ is $\vec{0}$. However, $\nabla f(x^*) = \vec{0}$ does not imply that $x^*$ is a local minimizer. Note that
+    \[\nabla f(x^*) = \vec{0},\;\nabla^2 f(x^*) \neq 0\] does imply that $x^*$ is a local minimizer/maximizer.
+\end{rmk}
