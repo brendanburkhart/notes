@@ -3,11 +3,14 @@
 
 \section{Introduction}
 
-objective functions, constraints, feasible region
-
-Given a feasible region $S \subseteq \R^n$, the objective function is a function $f: S \to \R$.
-
-Maximize plant height due to nutrients $x_1, x_2$ given by $f(x_1, x_2) = 1 + x_1^2(x_2 - 1)^3e^{-x_1-x_2}$, such that $x_1, x_2 \geq 0$, $x_1 + x_2 \geq 6$, and $x_2 \geq \log x_1$. This is maximized by $(x_1, x_2) = (2, 4)$.
+\begin{defn}
+    In the context of an optimization problem, we try to find
+    \begin{itemize}
+        \item a \emph{constraint} is a condition that needs to be satisfied,
+        \item the \emph{feasible region} $S \subseteq \R^n$ is the region that satisfies all constraints,
+        \item and the objective function is a function $f: S \to \R$ that is to be minimized or maximized.
+    \end{itemize}
+\end{defn}
 
 \begin{figure}[ht!]
     \centering
@@ -18,15 +21,31 @@ Maximize plant height due to nutrients $x_1, x_2$ given by $f(x_1, x_2) = 1 + x_
             ymin=0,ymax=8,ylabel=$y$,
             xmin=0,xmax=8,xlabel=$x$
         ]
-            \addplot[domain=0:6, blue, dashed, ultra thick] {6-\x};
-            \addplot[domain=1:8, blue, dashed, ultra thick] {ln(\x)};
-            \addplot[domain=0:6, blue, dashed, ultra thick] {0};
-            \addplot[domain=0:6, blue, dashed, ultra thick, variable=\y] ({0}, {\y});
+            \begin{scope}
+                \path[clip]
+                    plot[domain=0:1] ({\x}, {0})
+                    --plot[domain=1:4.49666] ({\x}, {ln(\x)})
+                    --plot[domain=4.49666:0] ({\x}, {6-\x})
+                    --plot[domain=0:6, variable=\y] ({0}, {\y})
+                    --cycle;
+                
+                \fill [red!45!blue!65!] (0,0) rectangle (6,6);
+            \end{scope}
+
+            \plot[domain=0:6,blue,dashed,ultra thick] {6-\x};
+            \plot[domain=1:8,blue,dashed,ultra thick] {ln(\x)};
+            \plot[domain=0:6,blue,dashed,ultra thick] {0};
+            \plot[domain=0:6,blue,dashed,ultra thick,variable=\y] ({0}, {\y});
         \end{axis}
     \end{tikzpicture}
-\caption{Example Feasible Region}
+\caption{Example feasible region (light purple) satisfying four constraints (dashed blue line)}
 \label{fig:example-feasible-region}
 \end{figure}
+
+\begin{exmp}
+    Consider the problem of maximized plant growth by manipulating quantities of two nutrients, $x_1$ and $x_2$. Let the plant height be $f(x_1, x_2) = 1 + x_1^2(x_2 - 1)^3e^{-x_1-x_2}$, with the constraints that $x_1 \geq 0$, $x_2 \geq 0$, $x_1 + x_2 \geq 6$, and $x_2 \geq \log x_1$. Then within the feasible region (depicted in Figure \ref{fig:example-feasible-region}), $f$ is maximized by $(x_1, x_2) = (2, 4)$.
+\end{exmp}
+
 
 \begin{itemize}
     \item unbounded, e.g. minimize $\log x$ such that $0 < x \leq 7$
