@@ -2,3 +2,24 @@
 \label{ch:probability}
 
 \section{Introduction}
+
+\begin{defn}\proofbreak
+    \begin{itemize}
+        \item Sample point: a possible outcome of a probabilistic experiment, often denoted by $\omega$.
+        \item Sample space: the set of all sample points, often denoted by $\Omega$.
+        \item Event: any subset of the sample space.
+    \end{itemize}
+\end{defn}
+
+\begin{defn}
+    Let $\Omega$ be a sample space, and $A \subseteq \Omega$ an event. If all sample points $\omega \in \Omega$ are equally likely, the probability of event $A$ occuring is
+    \[P(A) = \frac{\abs{A}}{\abs{\Omega}}.\]
+\end{defn}
+
+\begin{prop}
+    Consider sample spaces $\Omega_1, \Omega_2$, and let $A \subseteq \Omega_1$ and $B \subseteq \Omega_2$ be independent events. Then the probability of both $A$ and $B$ occuring is $P(A)P(B)$.
+\end{prop}
+
+\begin{proof}
+    \[P(A)P(B) = \frac{\abs{A}}{\abs{\Omega_1}}\frac{\abs{B}}{\abs{\Omega_2}} = \frac{\abs{A \times B}}{\abs{\Omega_1 \times \Omega_2}}.\]
+\end{proof}
