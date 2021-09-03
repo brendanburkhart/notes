@@ -46,7 +46,6 @@
     Consider the problem of maximized plant growth by manipulating quantities of two nutrients, $x_1$ and $x_2$. Let the plant height be $f(x_1, x_2) = 1 + x_1^2(x_2 - 1)^3e^{-x_1-x_2}$, with the constraints that $x_1 \geq 0$, $x_2 \geq 0$, $x_1 + x_2 \geq 6$, and $x_2 \geq \log x_1$. Then within the feasible region (depicted in Figure \ref{fig:example-feasible-region}), $f$ is maximized by $(x_1, x_2) = (2, 4)$.
 \end{exmp}
 
-
 \begin{itemize}
     \item unbounded, e.g. minimize $\log x$ such that $0 < x \leq 7$
     \item bounded without solution, e.g. minimize $\log x$ such that $1 < x \leq 7$
@@ -73,7 +72,7 @@ local minimums, local maximums, unique vs many solutions. Strict?
 \end{exmp}
 
 \begin{defn}
-    For any $S \subseteq \R^n$ and $x \in S$, we say that $x$ is an \emph{interior point} of $S$ if there exists an $\varepsilon$ neighborhood of $x$ $N_{\varepsilon}(x) \subseteq S$. If every $N_{\varepsilon}(x)$ contains a point inside $S$ and a point not inside $S$, we say that $x$ is a \emph{boundary point} of $x$.
+    For any $S \subseteq \R^n$ and $x \in \R^n$, we say that $x$ is an \emph{interior point} of $S$ if there exists an $\varepsilon$ neighborhood of $x$ $N_{\varepsilon}(x) \subseteq S$. If every $N_{\varepsilon}(x)$ contains a point inside $S$ and a point not inside $S$, we say that $x$ is a \emph{boundary point} of $x$.
 \end{defn}
 
 \begin{defn}
@@ -93,6 +92,12 @@ continuous function on closed subset of $\R^n$ always attains minimum/maximum?
 \begin{prop}
     Let $S \subseteq \R^n$. Then $S$ is open if and only if $\R^n - S$ is closed.
 \end{prop}
+
+\begin{proof}
+    Assume that $S$ is open, and let $x$ be a boundary point of $\R^n - S$. Then for every $\varepsilon > 0$, by definition there exists $y, z \in N_{\varepsilon}(x)$ such that $y \in S$ and $z \in \R^n - S$. Therefore $N_{\varepsilon}(x) \centernot\subset S$. It follows that $x \notin S$ by definition, and so $x \in \R^n - S$. Therefore, $\R^n - S$ contains every boundary point of itself, and so it is closed.
+
+    Assume that $\R^n - S$ is closed, and let $x \in S$. Consider $N_{\varepsilon}(x)$. Since $\R^n - S$ contains all of its boundary points, $x$ cannot be a boundary point of $\R^n - S$ and so we know that there must be some $\varepsilon$ such that $N_{\varepsilon} \subseteq S$. Therefore, every $x \in S$ is an interior point of $S$, and so $S$ is closed by definition.
+\end{proof}
 
 \begin{defn}
     Let $S \subseteq \R^n$ and $f: \R^n \to \R$. Consider $x^* \in S$. We say that $x^*$ is a \emph{global minimizer} if for all $y \in S$, $f(x^*) \leq f(y)$, and a \emph{strict} global minimizer if for all $y \in S - \{x^*\}$, $f(x^*) < f(y)$.
