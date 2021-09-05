@@ -39,11 +39,11 @@
         \end{axis}
     \end{tikzpicture}
 \caption{Example feasible region (light purple) satisfying four constraints (dashed blue line)}
-\label{fig:example-feasible-region}
+\label{fig:exmp-plant-feasible-region}
 \end{figure}
 
 \begin{exmp}
-    Consider the problem of maximizing plant growth by manipulating quantities of two nutrients, $x_1$ and $x_2$. Let the plant height be $f(x_1, x_2) = 1 + x_1^2(x_2 - 1)^3e^{-x_1-x_2}$, with the constraints that $x_1 \geq 0$, $x_2 \geq 0$, $x_1 + x_2 \geq 6$, and $x_2 \geq \log x_1$. Then within the feasible region (depicted in Figure \ref{fig:example-feasible-region}), $f$ is maximized by $(x_1, x_2) = (2, 4)$.
+    Consider the problem of maximizing plant growth by manipulating quantities of two nutrients, $x_1$ and $x_2$. Let the plant height be $f(x_1, x_2) = 1 + x_1^2(x_2 - 1)^3e^{-x_1-x_2}$, with the constraints that $x_1 \geq 0$, $x_2 \geq 0$, $x_1 + x_2 \geq 6$, and $x_2 \geq \log x_1$. Then within the feasible region (depicted in Figure \ref{fig:exmp-plant-feasible-region}), $f$ is maximized by $(x_1, x_2) = (2, 4)$.
 \end{exmp}
 
 \begin{defn}
@@ -121,3 +121,58 @@
 \begin{rmk}
     Let $S \subseteq \R^n$, $x^*$ be an interior point of $S$, and $f: S \to \R$ be a sufficiently smooth continuous function. If $x^* \in S$ is a local minimizer, then the \emph{gradient} of $f(x^*)$ is $\vec{0}$. However, $\nabla f(x^*) = \vec{0}$ does not imply that $x^*$ is a local minimizer. {\color{red}Note what condition(s) on the Hessian does guarantee a local minimizer.}
 \end{rmk}
+
+\section{Forms of Linear Programming Problems}
+
+\begin{defn}
+    A maximization or minimization linear programming problem in \emph{standard form} is a problem of the form:
+    find $x \in \R^n$ that maximizes or minimizes $C \cdot x$ (also commonly seen as $C^{\transpose}x$) such that $Ax = b$ and $x \vec{0}$. The problem is said to be in \emph{canonical form} if the constaints are instead in the form $Ax \geq b$ (or $Ax \leq b$).
+\end{defn}
+
+\begin{exmp}
+    Consider the problem of minimizing the cost per unit of chicken feed, while ensuring necessary nutrients are provided. Let $x_1, x_2, x_3, x_4$ denote the quantities of each of four ingredients, with cost per unit of $6.2$, $2.0$, $1.6$, and $3.2$ respectively. Let $n_1$, $n_2$, $n_3$ be the nutrients, with minimium required values of $6.2$, $11.9$, and $10.0$ respectively.
+    
+    \begin{minipage}{\linewidth}
+        \begin{center}
+        \captionof{table}{Nutrition values}
+        \label{exmp-feed-nutrition-values}
+        \begin{tabular}{c|cccc}
+        & $x_1$ & $x_2$ & $x_3$ & $x_4$\\
+        \hline
+        $n_1$ & $1.2$ & $2.6$ & $0.0$ & $9.2$ \\ \hline
+        $n_2$ & $3.9$ & $1.0$ & $0.8$ & $2.0$ \\ \hline
+        $n_3$ & $6.0$ & $0.0$ & $4.0$ & $3.1$ \\
+        \end{tabular}
+        \end{center}
+    \end{minipage}
+    
+    Let
+    \[A = \begin{pmatrix}
+        1.2 & 2.6 & 0.0 & 9.2 \\
+        3.9 & 1.0 & 0.8 & 2.0 \\
+        6.0 & 0.0 & 4.0 & 3.1
+    \end{pmatrix},\; B = \begin{pmatrix}
+        6.2 \\ 11.9 \\ 10.0
+    \end{pmatrix},\; C = \begin{pmatrix}
+        6.2 \\ 2.0 \\ 1.6 \\ 3.2
+    \end{pmatrix},\; x = \begin{pmatrix}
+        x_1 \\ x_2 \\ x_3 \\ x_4
+    \end{pmatrix}\]
+    then our problem is to minimize $C^{\transpose}x$ such that $Ax \geq b$ and $x \geq \vec{0}$. This form is the \emph{canonical form} of a linear programming problem.
+\end{exmp}
+
+\begin{rmk}
+    We can easily convert problems expressed as a minimization problem into an equivalent maximization problem and vice versa, and between standard form and canonical form.
+\end{rmk}
+
+\begin{prop}
+    Minimizing $C^{\transpose}x$ is equivalent to maximizing $-C^{\transpose}x$ (and so maximizing $C^{\transpose}$ is equivalent to minimizing $C^{\transpose}x$).
+\end{prop}
+
+\begin{prop}
+    The constraint $Ax \geq b$ is equivalent to $-Ax \leq -b$, and $Ax \leq b$ is equivalent to $-Ax \geq -b$.
+\end{prop}
+
+\begin{prop}
+    The constraint $Ax = b$ is equivalent to having both $Ax \geq b$ and $Ax \leq b$, and therefore is equivalent to $[A; -A] \geq [b; -b]$.
+\end{prop}
