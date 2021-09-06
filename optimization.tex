@@ -28,7 +28,7 @@
                     --plot[domain=4.49666:0] ({\x}, {6-\x})
                     --plot[domain=0:6, variable=\y] ({0}, {\y})
                     --cycle;
-                
+
                 \fill [red!45!blue!65!] (0,0) rectangle (6,6);
             \end{scope}
 
@@ -70,7 +70,7 @@
 \end{defn}
 
 \begin{exmp}
-    In $\R^1$, any non-empty interval $[a, b]$ is closed, and and non-empty $(a, b)$ is open.
+    In $\R^1$, any non-empty interval $[a, b]$ is closed, and non-empty $(a, b)$ is open.
 \end{exmp}
 
 \begin{exmp}
@@ -82,9 +82,9 @@
 \end{prop}
 
 \begin{proof}
-    Assume that $S$ is open, and let $x$ be a boundary point of $\R^n - S$. Then for every $\varepsilon > 0$, by definition there exists $y, z \in N_{\varepsilon}(x)$ such that $y \in S$ and $z \in \R^n - S$. Therefore $N_{\varepsilon}(x) \centernot\subseteq S$. It follows that $x \notin S$ by definition, and so $x \in \R^n - S$. Therefore, $\R^n - S$ contains every boundary point of itself, and so it is closed.
+    Assume that $S$ is open, and let $x$ be a boundary point of $\R^n - S$. Then for every $\varepsilon > 0$, by definition there exists $y, z \in N_{\varepsilon}(x)$ such that $y \in S$ and $z \in \R^n - S$. Therefore, $N_{\varepsilon}(x) \centernot\subseteq S$. It follows that $x \notin S$ by definition, and so $x \in \R^n - S$. Therefore, $\R^n - S$ contains every boundary point of itself, and so it is closed.
 
-    Assume that $\R^n - S$ is closed, and let $x \in S$. Consider $N_{\varepsilon}(x)$. Since $\R^n - S$ contains all of its boundary points, $x$ cannot be a boundary point of $\R^n - S$ and so we know that there must be some $\varepsilon$ such that $N_{\varepsilon} \subseteq S$. Therefore, every $x \in S$ is an interior point of $S$, and so $S$ is closed by definition.
+    Assume that $\R^n - S$ is closed, and let $x \in S$. Consider $N_{\varepsilon}(x)$. Since $\R^n - S$ contains all of its boundary points, $x$ cannot be a boundary point of $\R^n - S$, and so we know that there must be some $\varepsilon$ such that $N_{\varepsilon} \subseteq S$. Therefore, every $x \in S$ is an interior point of $S$, and so $S$ is closed by definition.
 \end{proof}
 
 \begin{exmp}
@@ -126,12 +126,12 @@
 
 \begin{defn}
     A maximization or minimization linear programming problem in \emph{standard form} is a problem of the form:
-    find $x \in \R^n$ that maximizes or minimizes $C \cdot x$ (also commonly seen as $C^{\transpose}x$) such that $Ax = b$ and $x \vec{0}$. The problem is said to be in \emph{canonical form} if the constaints are instead in the form $Ax \geq b$ (or $Ax \leq b$).
+    find $x \in \R^n$ that maximizes or minimizes $C \cdot x$ (also commonly seen as $C^{\transpose}x$) such that $Ax = b$ and $x \vec{0}$. The problem is said to be in \emph{canonical form} if the constraints are instead in the form $Ax \geq b$ (or $Ax \leq b$).
 \end{defn}
 
 \begin{exmp}
-    Consider the problem of minimizing the cost per unit of chicken feed, while ensuring necessary nutrients are provided. Let $x_1, x_2, x_3, x_4$ denote the quantities of each of four ingredients, with cost per unit of $6.2$, $2.0$, $1.6$, and $3.2$ respectively. Let $n_1$, $n_2$, $n_3$ be the nutrients, with minimium required values of $6.2$, $11.9$, and $10.0$ respectively.
-    
+    Consider the problem of minimizing the cost per unit of chicken feed, while ensuring necessary nutrients are provided. Let $x_1, x_2, x_3, x_4$ denote the quantities of each of four ingredients, with cost per unit of $6.2$, $2.0$, $1.6$, and $3.2$ respectively. Let $n_1$, $n_2$, $n_3$ be the nutrients, with minimum required values of $6.2$, $11.9$, and $10.0$ respectively.
+
     \begin{minipage}{\linewidth}
         \begin{center}
         \captionof{table}{Nutrition values}
@@ -145,7 +145,7 @@
         \end{tabular}
         \end{center}
     \end{minipage}
-    
+
     Let
     \[A = \begin{pmatrix}
         1.2 & 2.6 & 0.0 & 9.2 \\
