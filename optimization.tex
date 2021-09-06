@@ -176,3 +176,41 @@
 \begin{prop}
     The constraint $Ax = b$ is equivalent to having both $Ax \geq b$ and $Ax \leq b$, and therefore is equivalent to $[A; -A] \geq [b; -b]$.
 \end{prop}
+
+\begin{prop}
+    The constraint $Ax \geq b$ is equivalent to $Ax - z = b$, where $A \in M_{m \times n}(\R)$, $x \in \R^n$, and $z \in \R^m$ where $z \geq 0$. Here, $z$ is a vector of \emph{slack} variables.
+\end{prop}
+
+\begin{exmp}
+    The constraints
+    \begin{align*}
+        a_{11}x_1 + a_{12}x_2 + a_{13}x_3 &\geq b_1 \\
+        a_{21}x_1 + a_{22}x_2 + a_{23}x_3 &\geq b_2 \\
+        a_{31}x_1 + a_{32}x_2 + a_{33}x_3 &\geq b_3 \\
+        a_{41}x_1 + a_{42}x_2 + a_{43}x_3 &\geq b_4
+    \end{align*}
+    are equivalent to
+    \begin{align*}
+        a_{11}x_1 + a_{12}x_2 + a_{13}x_3 - x_4 &= b_1 \\
+        a_{21}x_1 + a_{22}x_2 + a_{23}x_3 - x_5 &= b_2 \\
+        a_{31}x_1 + a_{32}x_2 + a_{33}x_3 - x_6 &= b_3 \\
+        a_{41}x_1 + a_{42}x_2 + a_{43}x_3 - x_7 &= b_4.
+    \end{align*}
+\end{exmp}
+
+\begin{prop}
+    We can incorporate the positivity constraints $x \geq 0$ into the general matrix constraints. The constraints $Ax \geq b$ and $x \geq 0$ are equivalent to \[\begin{bmatrix} A \\ I\end{bmatrix}x \geq \begin{bmatrix} b \\ 0 \end{bmatrix},\]
+    and the constraints $Ax \leq b$ and $x \geq 0$ are equivalent to \[\begin{bmatrix} A \\ -I\end{bmatrix}x \leq \begin{bmatrix} b \\ 0 \end{bmatrix}.\]
+\end{prop}
+
+\begin{prop}
+    We can transform an unconstrained problem into an equivalent problem with a positivity constraint.
+\end{prop}
+
+\begin{exmp}
+    Consider the problem of minimizing $5x_1 + 6x_2$ such that $2x_1 - 3x_2 \geq 9$ and $x_1 + x_2 \geq -8$, with $x_1 \geq 0$ but $x_2$ unconstrained in sign. Define $x_2'$ and $x_2''$, and constrain $x_2', x_2'' \geq 0$. Let $x_2 = x_2' - x_2''$.
+\end{exmp}
+
+\begin{rmk}
+    Constraints of the form $Ax = b$ are simply a system of equations, and therefore can be simplified using row operations by Theorem \ref{solutions-unchanged-by-row-ops}. Reduced row echelon form can help identified independent vs dependent variables.
+\end{rmk}
