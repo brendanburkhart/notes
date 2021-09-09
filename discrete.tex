@@ -31,6 +31,15 @@
     The sum of a finite geometric sequence from $a_0$ to $a_n$ is \[a_0\frac{r^n - 1}{r - 1}.\]
 \end{prop}
 
+\begin{proof}
+    Let $S = a_0(1 + r + r^2 + \cdots + r^n)$ be the sum of a finite geometric sequence from $a_0$ to $a_n$. Then $rs = a_0(r + r^2 + r^3 \cdots + r^{n+1})$, and so
+    \begin{align}
+        rs - s &= a_0(r^{n+1} + (r^n - r^n) + \cdots + (r - r) - 1)\\
+        s(r - 1) &= a_0(r^{n+1} - 1) \\
+    s &= a_0\frac{r^{n+1} - 1}{r - 1}.
+    \end{align}
+\end{proof}
+
 \section{Binomial Coefficients}
 
 \begin{defn}\label{binomial-coefficient}
@@ -132,6 +141,27 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \begin{proof}
     When selecting a specific subset with $k$ elements, there are $n$ choices for the first element, $n-1$ for the second, and so on until $n-k+1$ for the last. Therefore, there are $\frac{n!}{(n-k)!}$ different ways to select the subsets. Each subset can have its elements selected in $k!$ different orders, so there are $\frac{n!}{k!(n-k!)}$ such subsets.
 \end{proof}
+
+\section{Multinomial Coefficients}
+
+\begin{defn}
+    Let $n, x_1, x_2, \ldots, x_k \in \N$ such that $x_1 + x_2 + \cdots + x_k = n$. The \emph{multinomial coefficient} \[\binom{n}{x_1, x_2, \ldots, x_k}\] is the number of distinct ways subsets $X_1, X_2, \ldots, X_k$ with cardinalities $x_1, x_2, \ldots, x_k$ respectively can be selected from a set with $n$ elements such that $X_i \intersection X_j = \emptyset$ for all $i \neq j$. Note that this necessarily implies $\disjointunionbig_{i}X_i$ is the entire set elements are selected from.
+\end{defn}
+
+\begin{prop}
+    \begin{align}
+        \binom{n}{x_1, x_2, \ldots, x_k} &= \frac{n!}{x_1!x_2!\cdots x_k!} \\ &= \binom{x_1 + x_2 + \cdots + x_k}{x_1}\binom{x_2 + \cdots + x_k}{x_2}\cdots\binom{x_k}{x_k}.
+    \end{align}
+\end{prop}
+
+\begin{prop}
+    Let $n, k \in \N$. The number of $k$-tuples of positive integers that sum to $n$ is
+    \[\binom{n + k - 1}{k - 1}.\]
+\end{prop}
+
+\begin{rmk}
+    This also gives the numbers of ways to partition $n$ indistinguishable balls into $k$ distinct boxes.
+\end{rmk}
 
 \section{Recurrence Relations}
 
