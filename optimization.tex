@@ -214,3 +214,25 @@
 \begin{rmk}
     Constraints of the form $Ax = b$ are simply a system of equations, and therefore can be simplified using row operations by Theorem \ref{solutions-unchanged-by-row-ops}. Reduced row echelon form can help identified independent vs dependent variables.
 \end{rmk}
+
+\section{Polyhedrons}
+
+\begin{defn}
+    For non-zero $p \in \R^n$, the \emph{hyperplane} with normal vector $p$ is the orthogonal complement of $p$: \[\left\{x \in \R^n \compbar p \cdot x = 0 \right\},\]
+    and the closed \emph{half-space} with normal vector $p$ is
+    \[\left\{x \in \R^n \compbar p \cdot x \geq 0 \right\}.\]
+    If we have $p \cdot x > 0$, we say it is an open half-space. We can replace $\geq$ and $>$ with $\leq$ and $<$ respectively.
+\end{defn}
+
+\begin{defn}
+    A \emph{polyhedron} (or \emph{polyhedral set}) is the intersection of finitely many half spaces.
+\end{defn}
+
+\begin{defn}
+    A polyhedron $P$ is \emph{bounded} if there exists $r \in \R$ such that $\norm{x} < r$ for all $x \in P$. A bounded polyhedron is known as a \emph{polytope}.
+\end{defn}
+
+\begin{prop}
+    $P \subseteq \R^n$ is a polyhedron if and only if there exists $A \in M_{m \times n}(\R)$ and $b \in \R^m$ such that
+    \[P = \left\{x \in \R^n \compbar Ax \geq b\right\}.\]
+\end{prop}
