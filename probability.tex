@@ -1,7 +1,7 @@
 \chapter{Probability}
 \label{ch:probability}
 
-\section{Introduction}
+\section{Axioms of Probability}
 
 \begin{defn}\proofbreak
     \begin{itemize}
@@ -12,14 +12,77 @@
 \end{defn}
 
 \begin{defn}
-    Let $\Omega$ be a sample space, and $A \subseteq \Omega$ an event. If all sample points $\omega \in \Omega$ are equally likely, the probability of event $A$ occuring is
-    \[P(A) = \frac{\abs{A}}{\abs{\Omega}}.\]
+    If events $A_i \subseteq \Omega$ are disjoint, we say that these events are \emph{mutually exclusive}.
 \end{defn}
 
+\begin{defn}\label{kolmogorov-probability-axioms}
+    A \emph{probability space} is a sample space $\Omega$ together with a function $P: \mathcal{P}(\Omega) \to \R$ that satisfies the following axioms:
+    \begin{itemize}
+        \item Non-negativity: for any event $A \subseteq \Omega$, $P(A) \geq 0$.
+        \item Normalization: $P(\Omega) = 1$.
+        \item Countable-additivity: if $A_i$ are a countable sequence of mutually exclusive events, then $P(\disjointunionbig_{i}A_i) = \sum_{i}P(A_i)$.
+    \end{itemize}
+\end{defn}
+
+\begin{rmk}
+    These axioms are due to Andrey Kolmogorov.
+\end{rmk}
+
 \begin{prop}
-    Consider sample spaces $\Omega_1, \Omega_2$, and let $A \subseteq \Omega_1$ and $B \subseteq \Omega_2$ be independent events. Then the probability of both $A$ and $B$ occuring is $P(A)P(B)$.
+    Let $(\Omega, P)$ be a probability space, and $A \subseteq \Omega$ an event. Then since $A$ and $A^{c}$ are mutually exclusive such that $A \union A^{c} = \Omega$,
+    \begin{itemize}
+        \item $P(A) + P(A^{c}) = 1$,
+        \item
+    \end{itemize}
 \end{prop}
 
 \begin{proof}
-    \[P(A)P(B) = \frac{\abs{A}}{\abs{\Omega_1}}\frac{\abs{B}}{\abs{\Omega_2}} = \frac{\abs{A \times B}}{\abs{\Omega_1 \times \Omega_2}}.\]
+    $P(A) + P(A^{c}) = P(A \union A^{c}) = P(\Omega) = 1$.
+\end{proof}
+
+\begin{cor}
+    $P(\emptyset) = 0$.
+\end{cor}
+
+\begin{prop}Monotonicity\label{probability-monotonicity}\proofbreak
+    Let $A, B \subseteq \Omega$ be events such that $A \subseteq B$. Then $P(A) \leq P(B)$.
+\end{prop}
+
+\begin{proof}
+    Let $C = B - A$. Then $A \union C = B$ and $A \intersection C = \emptyset$. Since $A$ and $C$ are therefore mutually exclusive, $P(A) + P(C) = P(A \union C) = P(B)$. Since $P(C) \geq 0$ by the axiom of non-negativity, it follows that $P(A) \leq P(B)$.
+\end{proof}
+
+\begin{thm}{Inclusion-exclusion Principle}\label{inclusion-exclusion}
+    Let $A, B, C \subseteq \Omega$ be events. Then
+    \[P(A \union B) = P(A) + P(B) - P(A \intersection B),\]
+    and
+    \begin{align*}
+        P(A \union B \union C) &= P(A) + P(B) + P(C) \\
+                               &- P(A \intersection B) - P((A \intersection C) - P(B \intersection C) \\
+                               &+ P(A \intersection B \intersection C).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Since $A \union B = (A - B) \union (B - A) \union (A \intersection B)$, which are necessarily mutually exclusive events, we have
+    \[P(A \union B) = P(A - B) + P(B - A) + P(A \intersection B).\]
+    Now note that $A = (A - B) \union (A \intersection B)$ and $B = (B - A) \union (A \intersection B)$, and so $P(A) = P(A - B) + P(A \intersection B)$ and $P(B) = P(B - A) + P(A \intersection B)$. Therefore, \begin{align*}
+        P(A \union B) &= P(A - B) + P(B - A) + P(A \intersection B) \\
+                      &= \big[P(A - B) + P(A \intersection B)\big] + \big[P(B - A) + P(A \intersection B)\big] - P(A \intersection B) \\
+                      &= P(A) + P(B) - P(A \intersection B).
+    \end{align*}
+
+    To prove the three-way version of the principle, we can apply the two-way version to $A \union B$ and $C$. This gives us
+    \begin{align*}\label{inclusion-exclusion-three-intermediate}\tag{$1$}
+        P(A \union B \union C) &= P(A \union B) + P(C) - P((A \union B) \intersection C) \\
+        &= \big[P(A) + P(B) - P(A \intersection B)\big] + P(C) - P((A \union B) \intersection C).
+    \end{align*}
+    Since $(A \union B) \intersection C = (A \intersection C) \union (B \intersection C)$, we can apply the principle again to find that
+    \[P((A \union B) \intersection C) = P(A \intersection C) + P(B \intersection C) - P((A \intersection C) \intersection (B \intersection C)).\] Noting that $(A \intersection C) \intersection (B \intersection C) = A \intersection B \intersection C$ and substituting this back into \ref{inclusion-exclusion-three-intermediate}, we obtain
+    \begin{align*}
+        P(A \union B \union C) &= P(A) + P(B) + P(C) - P(A \intersection B) - \big[P(A \intersection C) + P(B \intersection C) - P(A \intersection B \intersection )\big] \\
+        &= P(A) + P(B) + P(C) \\
+        &- P(A \intersection B) - P((A \intersection C) - P(B \intersection C) \\
+        &+ P(A \intersection B \intersection C).
+    \end{align*}
 \end{proof}
