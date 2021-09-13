@@ -238,22 +238,44 @@
 \end{prop}
 
 \begin{defn}
-    Let $x_i \in \R^n$. A \emph{convex combination} of $x_i$ is
+    Let $X = \{x_1, \ldots, x_k\} \subset \R^n$. A \emph{convex combination} of $X$ is
     \[\lambda_1 x_1 + \lambda_2 x_2 + \cdots + \lambda_k x_k,\]
     where $\lambda_i \geq 0 \in \R$ and $\sum_{i=1}^{k}\lambda_i = 1$.
 \end{defn}
 
 \begin{defn}
-    A set $S \subseteq \R^n$ is \emph{convex} if for any $x_i \in S$ and convex combination $y$ of $x_i$, then $y \in S$.
+    A set $S \subseteq \R^n$ is \emph{convex} if for any $x, y \in S$ and convex combination $z$ of $x$ and $y$, then $z \in S$.
 \end{defn}
 
 \begin{thm}
     Every polyhedron is convex.
 \end{thm}
 
+\begin{proof}
+    Let $P = \left\{x \in \R^n, \compbar Ax \geq b\right\}$ be a polyhedron in $\R^n$. Let $x, y \in P$ and $z = \lambda x + (1 - \lambda) y$ be a convex combination of $x$ and $y$ for some $\lambda \in [0, 1]$.
+
+    We know that $Ax \geq b$ and $Ay \geq b$, and want to show that $Az \geq b$. Since $z = \lambda x + (1 - \lambda)y$,
+    \begin{align*}
+        Az = A\left(\lambda x + (1 - \lambda)y\right) = \lambda Ax + (1 - \lambda)Ay \geq \lambda b + (1 - \lambda) b = b,
+    \end{align*}
+    and so $Az \geq b$.
+\end{proof}
+
 \begin{thm}
-    A set $S \in \R^n$ is convex if and only if every convex combination of every finite subset of $S$ is in $S$.
+    A set $S \subseteq \R^n$ is convex if and only if every convex combination of every finite $X \in S$ is in $S$.
 \end{thm}
+
+\begin{proof}
+    We will prove this by showing that this is equivalent to the definition.
+    
+    $(\impliedby)$ If every convex combination of finite $X \subseteq S$ is in $S$, then every convex combination of $x, y \in S$ is in $X$.
+
+    $(\implies)$ We will prove, via induction on $n = \abs{X}$, that if $z$ is a convex combination of $x, y \in S$ implies that $z \in S$, then every convex combination of $X \in S$ is also in $S$.
+
+    First, consider the base case of $n=1$, so $X = \{x\} \subseteq S$. The only convex combination of $X$ is simply $x$, and so every convex combination of $X$ is in $S$. Next, assume that if $z$ is a convex combination of $x, y \in S$ implies that $z \in S$, then every convex combination of $X \in S$ where $\abs{X} = n$ is also in $S$. For any $X' \in S$ where $\abs{X'} = n+1$, there is some $X \subsetneq X'$ such that $\abs{X} = n$. Then every convex combination of $X$ is in $S$. Let \[\lambda_1x_1 + \cdots + \lambda_n x_n + \lambda_{n+1}x_{n+1}\] be a convex combination of $X$. Let $\Lambda = \lambda_1 + \cdots + \lambda_n$, and note that
+    \[\alpha = \frac{\lambda_1}{\Lambda}x_1 + \cdots + \frac{\lambda_n}{\Lambda}x_n\] is a convex combination of $X$ and so must be in $S$ by by the induction hypothesis. Furthermore, note that
+    \[\Lambda \alpha + \lambda_{n+1}x_{n+1}\] is our original convex combination of $X'$, but is also a convex combination of two points in $S$, and so is also in $S$ by assumption.
+\end{proof}
 
 \begin{defn}
     Let $S$ be a convex set, and consider $x \in S$. If $x$ being a convex combination of $y, z \in S$ implies that $x = y = z$, we say that $x$ is an \emph{extreme point}.
