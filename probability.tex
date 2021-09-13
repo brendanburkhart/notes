@@ -88,6 +88,49 @@
     \[A \union B \union C = A \disjointunion (B - A) \disjointunion (C - (A \union B)).\]
 \end{prop}
 
+\begin{exmp}{Finite, equally-likely probability law}\proofbreak
+    Let $(\Omega, P)$ be a sample space together with a function $P: \mathcal{P}(\Omega) \to \R$, where $\abs{\Omega} \in \Z^{+}$ and for all $A \in \mathcal{\Omega}$, \[P(A) = \frac{\abs{A}}{\abs{\Omega}}.\]
+
+    Since $\abs{A} \geq 0$ and $\abs{\Omega} > 0$, $P(A) \geq 0$ and so this model satifies the non-negativity axiom. Since $P(\Omega) = \frac{\abs{\Omega}}{\abs{\Omega}} = 1$, this model satisfies the normalization axiom.
+    
+    Let $A = A_1 \disjointunion A_2 \disjointunion \cdots$. Then
+    \begin{align*}
+        P(A) = \frac{\abs{A_1 \disjointunion A_2 \disjointunion \cdots}}{\abs{\Omega}} = \frac{\abs{A_1}}{\abs{\Omega}} + \frac{\abs{A_2}}{\abs{\Omega}} + \cdots = P(A_1) + P(A_2) + \cdots,
+    \end{align*}
+    and so this model also satisfies the countable-additivity axiom. Therefore, it is a probability space.
+\end{exmp}
+
+\begin{exmp}{Discrete probability law}\proofbreak
+    Let $\Omega$ be a sample space such that $\abs{\Omega}$ is countable, and let $M: \Omega \to R$ be a mass-function: $M(\omega) \geq 0$ for all $\omega \in \Omega$, and $\sum_{\omega \in \Omega}M(\omega) = 1$.
+
+    Now consider $P: \mathcal{P}(\Omega) \to \R$ defined by
+    \[P(A) = \sum_{\omega \in A}M(\omega).\]
+
+    Since $M(\omega) \geq 0$, $P(A) \geq$ and so $P$ satisfies the axiom of non-negativity. Since \[P(\Omega) = \sum_{\omega \in \Omega}M(\omega) = 1\] by the definition of $M$, $P$ satisfies the axiom of normalization. Finally, for $A = A_1 \disjointunion A_2 \disjointunion \cdots$,
+    \begin{align*}
+        P(\disjointunionbig_{i}A_i) = \sum_{i}P(A_i) = \sum_{i}\sum_{\omega \in A_i}M(\omega) = \sum_{\omega \in A}M(\Omega) = P(A).
+    \end{align*}
+    Therefore, $P$ satisfies the axiom of countable additivity and so $(\Omega, P)$ is a probability space.
+\end{exmp}
+
+
+\begin{exmp}{Geometric probability law}\proofbreak
+    Let $\Omega = \{\omega_1, \omega_2, \ldots\}$ be a sample space such that $\abs{\Omega} = \abs{\Z}$, and define $P: \mathcal{P}(\Omega) \to \R$ by
+    \[P(A) = \sum_{\omega_i \in A}\left(\frac{1}{2}\right)^{i}.\]
+    
+    Since $\left(\frac{1}{2}\right)^i \geq 0$, $P(A) \geq 0$ and so $P$ satisfies the axiom of non-negativity. Since
+    \begin{align*}
+        P(\Omega) = \sum_{\omega_i \in \Omega}\left(\frac{1}{2}\right)^{i} = \sum_{i=1}^{\infty}\left(\frac{1}{2}\right)^{i} = \frac{1/2}{1 - 1/2} = 1,
+    \end{align*}
+    we know that $P$ satisfies the axiom of normalization.
+
+    Finally, for $A = A_1 \disjointunion A_2 \disjointunion \cdots$,
+    \begin{align*}
+        P(\disjointunionbig_{i}A_i) = \sum_{\omega_j \in A}\left(\frac{1}{2}\right)^{j} = \sum_{i}\sum_{\omega_j \in A_i}\left(\frac{1}{2}\right)^{j} = \sum_{i}P(A_i).
+    \end{align*}
+    Therefore, $P$ satisfies the axiom of countable additivity and so $(\Omega, P)$ is a probability space.
+\end{exmp}
+
 \section{Conditional Probability}
 
 \begin{exmp}
