@@ -29,15 +29,11 @@
 \end{rmk}
 
 \begin{prop}
-    Let $(\Omega, P)$ be a probability space, and $A \subseteq \Omega$ an event. Then since $A$ and $A^{c}$ are mutually exclusive such that $A \union A^{c} = \Omega$,
-    \begin{itemize}
-        \item $P(A) + P(A^{c}) = 1$,
-        \item
-    \end{itemize}
+    Let $(\Omega, P)$ be a probability space, and $A \subseteq \Omega$ an event. Then $P(A) + P(A^{c}) = 1$.
 \end{prop}
 
 \begin{proof}
-    $P(A) + P(A^{c}) = P(A \union A^{c}) = P(\Omega) = 1$.
+    Since $A$ and $A^{c}$ are mutually exclusive, $P(A) + P(A^{c}) = P(A \union A^{c}) = P(\Omega) = 1$.
 \end{proof}
 
 \begin{cor}
@@ -86,3 +82,77 @@
         &+ P(A \intersection B \intersection C).
     \end{align*}
 \end{proof}
+
+\begin{prop}
+    \[A \union B = A \disjointunion (B - A).\]
+    \[A \union B \union C = A \disjointunion (B - A) \disjointunion (C - (A \union B)).\]
+\end{prop}
+
+\section{Conditional Probability}
+
+\begin{exmp}
+    Roll two six-sided dice, and only look at one of them. It is a six. Let $S$ denote the event that the sum of the values of the two dice is seven, and $A$ is the event that at least one of dice was a six. What is the probability of $P(S | A)?$ It is $\frac{2}{11}$, not $\frac{1}{6}$.
+\end{exmp}
+
+\begin{defn}
+    Let $A, B \in Omega$. Then the probability that $A$ occurred, given that $B$ occured, is denoted by $P(A | B)$ and read as ``the probability of $A$ given $B$''.
+\end{defn}
+
+\begin{prop}
+    If all sample points in $\Omega$ are equally likely, then $P(A | B) = \frac{P(A \intersection B)}{P(B)}$.
+\end{prop}
+
+\begin{cor}
+    $P(A \intersection B) = P(A | B)P(B)$.
+\end{cor}
+
+\begin{thm}
+    Let $(\Omega, P)$ be a probability space, and $B \subseteq \Omega$ an event such that $P(B) > 0$. Then $(B, P(\cdot | B))$ form a probability space.
+\end{thm}
+
+\begin{proof}
+    To show that $(B, P(\cdot|B))$ is a probability space, we need to show non-negativity (that $P(A | B) \geq 0$ for all $A$), normalization (that $P(B|B) = 1$), and countable additivity (that $P(A_1 \disjointunion A_2 \disjointunion \cdots | B) = P(A_1 | B) + P(A_2 | B) + \cdots$ if $A_i$ is a countable sequence).
+
+    For any $A \subseteq B$, we know that $P(A \intersection B), P(B) \geq 0$, and so \[P(A | B) = \frac{P(A \intersection B)}{P(B)} \geq 0.\]
+
+    \[P(B | B) = \frac{P(B \intersection B)}{P(B)} = \frac{P(B)}{P(B)} = 1.\]
+
+    \begin{align*}
+        P(A_1 \disjointunion A_2 \disjointunion \cdots | B) &= \frac{P\left((A_1 \disjointunion A_2 \disjointunion \cdots) \intersection B\right)}{P(B)} = \frac{P(A_1 \intersection B) \disjointunion (A_2 \intersection B) \disjointunion \cdots)}{P(B)} \\
+        &= \frac{P(A_1 \intersection B) + P(A_2 \intersection B) + \cdots)}{P(B)} = \frac{P(A_1 \intersection B)}{P(B)} + \frac{P(A_2 \intersection B)}{P(B)} + \cdots \\
+        &= P(A_1 | B) + P(A_2 | B) + \cdots.
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    Consider a sequence of coin tosses. Let $B$ be the event that the first head of the sequence occurs on an odd numbered toss (the first toss is \#1), and let $A$ be the event that the event first coin toss lands on heads. What is $P(A | B)$?
+
+    Since $A \subseteq B$, we know that $A \intersection B = A$. Furthermore, $P(A) = \frac{1}{2}$, and $P(B) = \frac{1}{2} + \frac{1}{8} + \cdots = \frac{1/2}{1-1/4} = \frac{1}{2}\cdot\frac{4}{3} = \frac{2}{3}$. Therefore, \[P(A | B) = \frac{P(A \intersection B)}{P(B)} = \frac{P(A)}{P(B)} = \frac{1}{2}\cdot\frac{3}{2} = \frac{3}{4}.\]
+\end{exmp}
+
+\begin{thm}Law of Total Probability\label{total-probability}\proofbreak
+    Let $B_1, \ldots, B_n \in Omega$ be mutually exclusive and exhaustive events. Then for any event $A \in \Omega$,
+    \[P(A) = \sum_{i=1}^{n}P(A \intersection B_i) = \sum_{i=1}^{n}P(A | B_i)P(B_i).\]
+\end{thm}
+
+\begin{proof}
+    Note that if $x \in (A \intersection B_i)$ and $x \in (A \intersection B_j)$, then $x \in B_i$ and $x \in B_j$. Since $B_1, \ldots, B_n$ are mutually exclusive they are disjoint, and so we must have $i = j$. Therefore, $A \intersection B_1, A \intersection B_2, \ldots, A \intersection B_n$ are disjoint.
+
+    Also note that
+    \begin{align*}
+        \disjointunionbig_{i=1}^{n}A \intersection B_i = A \intersection \left(\disjointunionbig_{i=1}^{n}B_i\right) = A \intersection \Omega = A
+    \end{align*}
+    since $B_1, \ldots, B_n$ are exhaustive.
+
+    Therefore, by the axiom of countable additivity,
+    \begin{align*}
+        P(A) = P\left(\disjointunionbig_{i=1}^{n}A \intersection B_i\right) = \sum_{i=1}^{n}P(A \intersection B_i).
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    Consider a box containing six coins. Three of these coins are fair, but one of them has two tails, and the remaining two have two heads each. If we randomly (uniformly) select one coin and flip it twice, what is the probability it comes up heads twice?
+
+    Let $A$ be the event we observe two heads. Let $B_1$ be the event we selected one of the fair coins, $B_2$ the event we selected the $2$-tailed coin, and $B_3$ the event that we selected the $2$-headed coin. Then by the Law of Total Probability \ref{total-probability},
+    \[P(A) = \sum_{i=1}^{n}P(A | B_i)P(B_i) = \left(\frac{1}{4}\cdot\frac{3}{6}\right) + \left(\frac{0}{1}\cdot\frac{1}{6}\right) + \left(\frac{1}{1}\cdot\frac{2}{6}\right) = \frac{1}{8} + \frac{1}{3} = \frac{11}{24}.\]
+\end{exmp}
