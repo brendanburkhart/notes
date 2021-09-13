@@ -236,3 +236,25 @@
     $P \subseteq \R^n$ is a polyhedron if and only if there exists $A \in M_{m \times n}(\R)$ and $b \in \R^m$ such that
     \[P = \left\{x \in \R^n \compbar Ax \geq b\right\}.\]
 \end{prop}
+
+\begin{defn}
+    Let $x_i \in \R^n$. A \emph{convex combination} of $x_i$ is
+    \[\lambda_1 x_1 + \lambda_2 x_2 + \cdots + \lambda_k x_k,\]
+    where $\lambda_i \geq 0 \in \R$ and $\sum_{i=1}^{k}\lambda_i = 1$.
+\end{defn}
+
+\begin{defn}
+    A set $S \subseteq \R^n$ is \emph{convex} if for any $x_i \in S$ and convex combination $y$ of $x_i$, then $y \in S$.
+\end{defn}
+
+\begin{thm}
+    Every polyhedron is convex.
+\end{thm}
+
+\begin{thm}
+    A set $S \in \R^n$ is convex if and only if every convex combination of every finite subset of $S$ is in $S$.
+\end{thm}
+
+\begin{defn}
+    Let $S$ be a convex set, and consider $x \in S$. If $x$ being a convex combination of $y, z \in S$ implies that $x = y = z$, we say that $x$ is an \emph{extreme point}.
+\end{defn}
