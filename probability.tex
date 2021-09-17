@@ -199,3 +199,41 @@
     Let $A$ be the event we observe two heads. Let $B_1$ be the event we selected one of the fair coins, $B_2$ the event we selected the $2$-tailed coin, and $B_3$ the event that we selected the $2$-headed coin. Then by the Law of Total Probability \ref{total-probability},
     \[P(A) = \sum_{i=1}^{n}P(A | B_i)P(B_i) = \left(\frac{1}{4}\cdot\frac{3}{6}\right) + \left(\frac{0}{1}\cdot\frac{1}{6}\right) + \left(\frac{1}{1}\cdot\frac{2}{6}\right) = \frac{1}{8} + \frac{1}{3} = \frac{11}{24}.\]
 \end{exmp}
+
+\begin{thm}{Bayes' Rule}\proofbreak
+    Let $B_1, \ldots, B_n \in Omega$ be mutually exclusive and exhaustive events. Then for any event $A \in \Omega$,
+    \begin{align*}
+        P(B_k | A) = \frac{P(A|B_k))P(B_k)}{\sum_{k}P(A \intersection B_k)} = \frac{P(A|B_k))P(B_k)}{\sum_{k}P(A | B_k)P(B_k)}.
+    \end{align*}
+\end{thm}
+
+\section{Independence}
+
+\begin{defn}
+    Events $A, B \in \Omega$ are \emph{independent} if $P(A \intersection B) = P(A)P(B)$.
+\end{defn}
+
+\begin{prop}
+    If $A$ and $B$ are independent events, then $P(A | B) = P(A)$ and $P(B | A) = P(B)$.
+\end{prop}
+
+\begin{proof}
+    \[P(A | B) = \frac{P(A \intersection B)}{P(B)} = \frac{P(A)P(B)}{P(B)} = P(A)\]
+\end{proof}
+
+\begin{prop}
+    If $A$ and $B$ are independent events, then $A$ and $B^{c}$ are independent.
+\end{prop}
+
+\begin{proof} Since $B$ and $B^{c}$ are necessarily mutually exclusive and exhaust $A$, we have $A = (A \intersection B) \disjointunion (A \intersection B^{c})$. Furthermore, $P(B^{c}) = 1- P(B)$. Then
+    \begin{align}
+        P(A \intersection B^{c}) &+ P(A \intersection B) = P(A) \\
+        P(A \intersection B^{c}) &+ P(A)P(B) = P(A) \\
+        P(A \intersection B^{c}) &= P(A)\left(1 - P(B)\right).
+    \end{align}
+\end{proof}
+
+\begin{defn}
+    We say events $A_1, A_2, \ldots$ are \emph{independent} if every for every finite subcollection $A_{i_1}, A_{i_2}, \ldots, A_{i_k}$ we have
+    \[P(A_{i_1} \intersection A_{i_2} \intersection \cdots \intersection A_{i_k}) = P(A_{i_1})P(A_{i_2})\cdots P(A_{i_k}).\]
+\end{defn}
