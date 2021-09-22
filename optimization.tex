@@ -312,3 +312,48 @@
         x_B \\ x_N
     \end{bmatrix}$ where $x_N$ is nonzero. We know that the columns of $A$ corresponding to the non-zero entries of $x$ must be linearly dependent, or else we can complete them to a basis for $\R^m$ and $x$ would be a basic feasible solution. Therefore, we know there exists $z$ such that $Az = \vec{0}$ and $z_i \neq 0$ implies $x_i \neq 0$. Note that for any $\alpha \in \R$, $A(x + \alpha z) = Ax + \alpha Az = b$, so any $x + \alpha z \geq \vec{0}$ is a feasible solution. Since $x_i$ is strictly greater than zero when $z_i \neq 0$, for sufficiently small $\varepsilon$ the points $x + \varepsilon z$ and $x - \varepsilon z$ must be feasible. Then $x = \frac{1}{2}\left(x + \varepsilon z\right) + \left(1 - \frac{1}{2}\right)\left(x - \varepsilon z\right)$, and so $x$ can be expressed as a non-trivial convex combination in $S$ and therefore is not extreme.
 \end{proof}
+
+\section{Simplex Method}
+
+\begin{defn}
+    Pre-tableau
+\end{defn}
+
+\begin{defn}
+    Basic feasible simplex tableau
+\end{defn}
+
+\begin{exmp}
+    Consider the problem of minimizing $c^{\transpose}x$ subject to $Ax = b$ and $x \geq 0$, where
+    \begin{align*}
+        [A|b] = \begin{bmatrix}
+            -1 & 2 & 3 & 6 & 9 & 8 & 26 \\
+            -2 & 3 & 1 & 1 & 6 & 8 & 17 \\
+            1 & 1 & -1 & 1 & 1 & 3 & 1
+        \end{bmatrix},\;\;
+        c^{\transpose} = [10, 10, 0, -3, -1, -3].
+    \end{align*}
+
+    Now introduce a new variable $z = c^{\transpose}x$ to $[A|b]$, so
+    \begin{align*}
+        [A|b]' = \begin{bmatrix}
+            1 & -10 & -10 & 0 & 3 & 1 & 3 & 0 \\
+            0 & -1 & 2 & 3 & 6 & 9 & 8 & 26 \\
+            0 & -2 & 3 & 1 & 1 & 6 & 8 & 17 \\
+            0 & 1 & 1 & -1 & 1 & 1 & 3 & 1
+        \end{bmatrix}.
+    \end{align*}
+    Let $E$ be the reduced row echelon form of $[A|b]'$, then
+    \begin{align*}
+        E = \begin{bmatrix}
+            1 & 0 & 0 & 0 & 33 & 31 & 43 & 70 \\
+            0 & 1 & 0 & 0 & 2 & 1 & 1 & 2 \\
+            0 & 0 & 1 & 0 & 1 & 2 & 3 & 5 \\
+            0 & 0 & 0 & 1 & 2 & 2 & 1 & 6
+        \end{bmatrix}
+    \end{align*}
+
+    Notice that we now have $x_N = N$. Basic feasible simplex tableau.
+
+    Pre-tableau.
+\end{exmp}

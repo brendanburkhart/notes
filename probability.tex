@@ -237,3 +237,33 @@
     We say events $A_1, A_2, \ldots$ are \emph{independent} if every for every finite subcollection $A_{i_1}, A_{i_2}, \ldots, A_{i_k}$ we have
     \[P(A_{i_1} \intersection A_{i_2} \intersection \cdots \intersection A_{i_k}) = P(A_{i_1})P(A_{i_2})\cdots P(A_{i_k}).\]
 \end{defn}
+
+\begin{defn}
+    A \emph{random variable} $X$ on a sample space $\Omega$ is a function $X: \Omega \to \R$.
+\end{defn}
+
+\begin{exmp}
+    Let $A \subseteq \Omega$ be an event, and let
+    \[X: \omega \mapsto \begin{dcases}
+        1, & \omega \in A \\
+        0, & \omega \not\in A
+    \end{dcases}.\]
+    Then $X$ is a random variable.
+\end{exmp}
+
+\begin{defn}
+    A random variable $X$ is said to be a \emph{discrete} random variable when its image $X(\Omega)$ is countable.
+\end{defn}
+
+\begin{defn}
+    The \emph{Bernoulli-p} distribution $Bernoulli(p)$ for $0 \leq p \leq 1$ is
+    \[P(X = x) = \begin{dcases}
+        p, & x = 1  \\
+        1 - p, & x = 0
+    \end{dcases} = p^x(1-p)^{1-x}.\]
+\end{defn}
+
+\begin{defn}
+    The \emph{binomial} distribution is
+    \[P(X = x) = \binom{n}{x}p^x(1 - p)^{n-x}.\]
+\end{defn}
