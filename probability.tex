@@ -269,7 +269,19 @@
 \end{defn}
 
 \begin{defn}
-    The \emph{Poission} distribution with parameter $\lambda > 0$, is the distribution of the number of independent events that occur in a fixed period when the events occur at a rate of $\lambda$ per unit period.
+    The \emph{Poission} distribution with parameter $\lambda > 0$, is the distribution of the number of independent events that occur in a fixed period when the events occur at a constant rate with $\lambda$ events per period on average. The probability of $k$ events during this period is
+    \[P(X = k) = \frac{e^{-\lambda}\lambda^k}{k!}.\]
+    Alternatively, if the independent events occur at a rate of $r$ per unit period, in a period of length $t$, we can use $\lambda = rt$.
+\end{defn}
+
+\begin{defn}
+    The \emph{geometric} distribution with parameter $0 \leq p \leq 1$ is the distribution of the number of independent Bernoulli $p$ trials needed to get the first success. It is given by
+    \[P(X = k) = (1-p)^{k-1}p.\]
+\end{defn}
+
+\begin{defn}
+    The \emph{negative binomial distribution} is a generalization of the geometric distribution. Rather than the distribution of the first success in a series of independent Bernoulli $p$ trials, it is the distribution of the $r$th success in such a series. For $k \geq r$, it is given by
+    \[P(X = k) = \binom{k-1}{r-1}p^r(1-p)^{x-r}.\]
 \end{defn}
 
 \begin{defn}
@@ -278,39 +290,39 @@
 \end{defn}
 
 \begin{exmp}
-    Show expected value of binomial is $np$.
+    Consider a discrete random variable $X$ with a Bernoulli $p$ distribution. The expected value of $X$ is
+    \begin{align*}
+        E(X) = \sum_{x \in {0, 1}}xP(X = x) = 0(1-p) + 1(p) = p.
+    \end{align*}
 \end{exmp}
 
-\begin{defn}
-    Poisson distribution
-\end{defn}
-
-\begin{defn}
-    Geometric
-\end{defn}
-
-\begin{defn}
-    Hyper-geometric
-\end{defn}
-
-\begin{defn}
-    Negative binomial distribution
-\end{defn}
-
-\begin{defn}
-    Zeta distribution
-\end{defn}
+\begin{exmp}
+    Consider a discrete random variable $X$ with a binomial $n, p$ distribution. The expected value of $X$ is then
+    \begin{align*}
+        E(X) &= \sum_{x \in {0, 1, \ldots, n}}xP(X = x) \\
+             &= \sum_{x=1}^{n}x\binom{n}{x}p^x(1 - p)^{n-x} \\
+             &= \sum_{x=1}^{n}x\frac{n!}{x!(n-x)!}p^x(1 - p)^{n-x} \\
+             &= p\sum_{x=1}^{n}\frac{n!}{(x-1)!(n-x)!}p^{x-1}(1 - p)^{n-x} \\
+             &= np\sum_{x=0}^{n-1}\frac{(n-1)!}{x!(n-x-1)!}p^x(1 - p)^{n-x-1} \\
+             &= np\sum_{x=0}^{n-1}\binom{n-1}{x}p^x(1 - p)^{(n-1)-x} \\
+             &= np\left(p+(1-p)\right)^{n-1} = np.
+    \end{align*}
+\end{exmp}
 
 \begin{prop}
     Expectation is linear, that is $E(kX_1+X_2) = kE(X_1) + E(X_2)$.
 \end{prop}
 
+\begin{proof}
+    Follows from linearity of sums.
+\end{proof}
+
 \begin{thm}{Law of the Unconscious Statistician ($\mathcal{LOTUS}$)}{\label{lotus}}\proofbreak
-    Let $X$ be a discrete random variable with expected value $E(X)$. For any function $f$, \[E(f(X)) = \sum_{x}f(x)P(X=x).\]
+    Let $X$ be a discrete random variable with expected value $E(X)$. For any function $f$, \[E[f(X)] = \sum_{x}f(x)P(X=x).\]
 \end{thm}
 
 \begin{defn}
-    Let $X$ be a discrete random variable. For $k \geq 1$, the $k$th \emph{moment} of $X$ is the expected variable of $X^k$.
+    Let $X$ be a discrete random variable. For $k \geq 1$, the $k$th \emph{moment} of $X$ is the expected value of $X^k$.
 \end{defn}
 
 \begin{rmk}
@@ -322,7 +334,7 @@
 \end{exmp}
 
 \begin{defn}
-    For a random variable $X$, the \emph{variance} of $X$ is the expected squared distance from the mean: \[\mathrm{Var}(x) = E\left[\left(X-E(X)\right)^2\right] = E\left[\left(x - \mu\right)^2\right].\]
+    For a random variable $X$, the \emph{variance} of $X$ is the expected squared distance from the mean: \[\variance(x) = E\left[\left(X-E(X)\right)^2\right] = E\left[\left(x - \mu\right)^2\right].\]
 \end{defn}
 
 \begin{rmk}
@@ -347,13 +359,15 @@
 \end{proof}
 
 \begin{exmp}
-    Let $X$ be a binomial $n, p$ distribution. Recall that the mean of $X$ is $np$. Note that $E(X^2) = E(X(X-1)+X)$, and by $\mathcal{LOTUS}$ \ref{lotus}
+    Let $X$ be a binomial $n, p$ distribution. Recall that the mean of $X$ is $np$. Note that $E(X^2) = E[X(X-1)+X]$, and by $\mathcal{LOTUS}$ \ref{lotus}
     \begin{align*}
-        E(X(X-1)) &= \sum_{n=0}^{n}x(x-1)\frac{n!}{x!(n-x)!}p^x(1-p)^{n-x} \\
-        &= \cdots \\
-        &= n(n-1)p^2.
+        E(X(X-1)) &= \sum_{x=0}^{n}x(x-1)\frac{n!}{x!(n-x)!}p^x(1-p)^{n-x} \\
+        &= \sum_{x=2}^{n}\frac{n!}{(x-2)!(n-x)!}p^x(1-p)^{n-x} \\
+        &= n(n-1)p^2\sum_{x=2}^{n}\frac{(n-2)!}{(x-2)!(n-x)!}p^{(x-2)}(1-p)^{n-x} \\
+        &= n(n-1)\sum_{x=0}^{n-2}\frac{(n-2)!}{x!((n-2)-x)!}p^x(1-p)^{(n-2)-x} \\
+        &= n(n-1)p^2\left(p+(1-p)\right)^{n-2} = n(n-1)p^2.
     \end{align*}
-    Therefore, $E(X^2) = n(n-1)p^2+np$, and so the variance is $n(n-1)p^2+np-n^2p^2 - n^2p^2-n^2o^2-np^2+np = n(p-p^2)$.
+    Therefore, $E(X^2) = E[X(X-1)]+E[X]=n(n-1)p^2+np = n^2p^2+np-np^2$, and so the variance is $E(X^2)-E(X)^2 = n^2p^2+np-np^2-n^2p^2 = np-np^2 = n(p-p^2)$.
 \end{exmp}
 
 \begin{defn}
@@ -364,14 +378,16 @@
 \end{defn}
 
 \begin{prop}
-    If the moment generating function exists for a random variable,
-    \begin{itemize}
+    If the moment generating function exists for a particular random variable,
+    \begin{enumerate}
         \item it uniquely identifies that random variablem i.e. it is injective,
         \item all moments of the random variable exist and are finite,
         \item the $n$th derivative of the moment generating function at $\theta = 0$ is the $n$th moment of the random variable.
-    \end{itemize}
+    \end{enumerate}
 \end{prop}
 
-\begin{prop}
-    Can show the last one by MacLaurin expansion around $\theta = 0$.
+\begin{prop}\proofbreak
+    3) Consider the Maclaurin series of $e^{\theta X}$, which is
+    \[e^{\theta X} = \sum_{n=0}^{\infty}\frac{(\theta X)^n}{n!} = 1 + X\theta + X^2\frac{\theta^2}{2} + \cdots.\]
+    Then by linearity of the expected value and by linearity of the derivative, $M^{(k)}(0) = E\left[X^k\right]$.
 \end{prop}
