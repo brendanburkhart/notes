@@ -256,16 +256,20 @@
 \end{defn}
 
 \begin{defn}
-    The \emph{Bernoulli-p} distribution $Bernoulli(p)$ for $0 \leq p \leq 1$ is
-    \[P(X = x) = \begin{dcases}
-        p, & x = 1  \\
-        1 - p, & x = 0
-    \end{dcases} = p^x(1-p)^{1-x}.\]
+    The \emph{Bernoulli distribution} distribution is the probability distribution of a random variable that takes value $1$ with probability $0 \leq p \leq 1$, and value $0$ with probability $1 - p$. For a random variable $X$ with this distribution and $k \in \{0, 1\}$:
+    \[P(X = k) = \begin{dcases}
+        p, & k = 1  \\
+        1 - p, & k = 0
+    \end{dcases} = p^k(1-p)^{1-k}.\]
 \end{defn}
 
 \begin{defn}
-    The \emph{binomial} distribution is
-    \[P(X = x) = \binom{n}{x}p^x(1 - p)^{n-x}.\]
+    The \emph{binomial} distribution with parameters $n$ and $p$ is the distribution of the number of successes in a sequence of $n$ independent trials which can take values $1, 0$ with probability $p$ and $1 - p$. The probability of $ 0 \leq k \leq n$ successes is
+    \[P(X = k) = \binom{n}{k}p^k(1 - p)^{n-k}.\]
+\end{defn}
+
+\begin{defn}
+    The \emph{Poission} distribution with parameter $\lambda > 0$, is the distribution of the number of independent events that occur in a fixed period when the events occur at a rate of $\lambda$ per unit period.
 \end{defn}
 
 \begin{defn}
@@ -298,7 +302,7 @@
 \end{defn}
 
 \begin{prop}
-    Linearity of expectation.
+    Expectation is linear, that is $E(kX_1+X_2) = kE(X_1) + E(X_2)$.
 \end{prop}
 
 \begin{thm}{Law of the Unconscious Statistician ($\mathcal{LOTUS}$)}{\label{lotus}}\proofbreak
@@ -310,5 +314,64 @@
 \end{defn}
 
 \begin{rmk}
-    The mean of a random variable $X$ is the first moment of $X$.
+    The mean of a random variable $X$ (denoted by $\mu$) is the first moment of $X$.
 \end{rmk}
+
+\begin{exmp}
+    All moments of a Bernoulli $p$ distribution are simply $p$.
+\end{exmp}
+
+\begin{defn}
+    For a random variable $X$, the \emph{variance} of $X$ is the expected squared distance from the mean: \[\mathrm{Var}(x) = E\left[\left(X-E(X)\right)^2\right] = E\left[\left(x - \mu\right)^2\right].\]
+\end{defn}
+
+\begin{rmk}
+    While the mean has the same units as $X$, the variance has measure of those units squared.
+\end{rmk}
+
+\begin{defn}
+    The \emph{standard deviation} $\sigma$ of a random variable $X$ is the positive square root of the variance of $X$.
+\end{defn}
+
+\begin{prop}
+    When the first and second moments of a random variable exist and are finite, the variance can be computed by $\sigma^2 = E(X^2) - E(X)^2$.
+\end{prop}
+
+\begin{proof}
+    By $\mathcal{LOTUS}$ \ref{lotus}, the variance is
+    \begin{align*}
+        E\left[(X-E(X))^2\right] &= E\left[X^2 - 2XE(X) + E(X)^2\right] \\
+        &= E(X^2) - 2E(X)E\left[X\right] + E\left[E(X)^2\right] \\
+        &= E(X^2) - 2E(X)^2 + E(X)^2 = E(X^2) - E(X)^2.
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    Let $X$ be a binomial $n, p$ distribution. Recall that the mean of $X$ is $np$. Note that $E(X^2) = E(X(X-1)+X)$, and by $\mathcal{LOTUS}$ \ref{lotus}
+    \begin{align*}
+        E(X(X-1)) &= \sum_{n=0}^{n}x(x-1)\frac{n!}{x!(n-x)!}p^x(1-p)^{n-x} \\
+        &= \cdots \\
+        &= n(n-1)p^2.
+    \end{align*}
+    Therefore, $E(X^2) = n(n-1)p^2+np$, and so the variance is $n(n-1)p^2+np-n^2p^2 - n^2p^2-n^2o^2-np^2+np = n(p-p^2)$.
+\end{exmp}
+
+\begin{defn}
+    Given a random variable $X$, the \emph{moment generating function} for $\theta \in \R$ is
+    \begin{align*}
+        M(\theta) = E(e^{\theta X}).
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    If the moment generating function exists for a random variable,
+    \begin{itemize}
+        \item it uniquely identifies that random variablem i.e. it is injective,
+        \item all moments of the random variable exist and are finite,
+        \item the $n$th derivative of the moment generating function at $\theta = 0$ is the $n$th moment of the random variable.
+    \end{itemize}
+\end{prop}
+
+\begin{prop}
+    Can show the last one by MacLaurin expansion around $\theta = 0$.
+\end{prop}
