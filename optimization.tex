@@ -316,11 +316,25 @@
 \section{Simplex Method}
 
 \begin{defn}
-    Pre-tableau
+    Consider a linear program in standard form. The \emph{pre-tableau} is the matrix
+    \begin{align*}
+        \left[\begin{array}{c|c|c}
+            1 & c^{\transpose} & 0 \\
+            \hline
+            \vec{0} & A & b
+        \end{array}\right].
+    \end{align*}
 \end{defn}
 
 \begin{defn}
-    Basic feasible simplex tableau
+    Given a linear program in standard form, and basic feasible solution $x^{\transpose} = [x_B^{\transpose}, \vec{0}]$, the corresponding \emph{basic feasible simplex tableau} is the matrix
+    \begin{align*}
+        \left[\begin{array}{c|c|c|c}
+            1 & 0 & c_N^{\transpose} & c_B^{\transpose}x_B \\
+            \hline
+            \vec{0} & I & B^{-1}N & x_B
+        \end{array}\right].
+    \end{align*}
 \end{defn}
 
 \begin{exmp}
