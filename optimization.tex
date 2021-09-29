@@ -316,56 +316,95 @@
 \section{Simplex Method}
 
 \begin{defn}
-    Consider a linear program in standard form. The \emph{pre-tableau} is the matrix
+    Consider a linear program in standard form. Given a choice of basis $B$ such that $A = [B | N]$, the \emph{pre-tableau} is the matrix
     \begin{align*}
-        \left[\begin{array}{c|c|c}
-            1 & c^{\transpose} & 0 \\
+        \left[\begin{array}{c|c|c|c}
+            1 & -c_B^{\transpose} & -c_N^{\transpose} & 0 \\
             \hline
-            \vec{0} & A & b
+            \vec{0} & B & N & b
         \end{array}\right].
     \end{align*}
+    In other words, we have augment $A = [B|N]$ with the constraint values $b$, and then again with a new variable $z$ in the first column/row such that $z - c^{\transpose}x = 0$. Note that $z$ is therefore the value of the objective function.
 \end{defn}
 
 \begin{defn}
     Given a linear program in standard form, and basic feasible solution $x^{\transpose} = [x_B^{\transpose}, \vec{0}]$, the corresponding \emph{basic feasible simplex tableau} is the matrix
     \begin{align*}
         \left[\begin{array}{c|c|c|c}
-            1 & 0 & c_N^{\transpose} & c_B^{\transpose}x_B \\
+            1 & 0 & c_B^{\transpose}B^{-1}N-c_N^{\transpose} & c_B^{\transpose}B^{-1}b \\
             \hline
-            \vec{0} & I & B^{-1}N & x_B
+            \vec{0} & I & B^{-1}N & B^{-1}b
         \end{array}\right].
     \end{align*}
 \end{defn}
 
-\begin{exmp}
-    Consider the problem of minimizing $c^{\transpose}x$ subject to $Ax = b$ and $x \geq 0$, where
+\begin{rmk}
+    The basic feasible tableau is the reduced row echelon form of the pre-tableau. It can also be obtain by left-multiplying the pre-tableau by
     \begin{align*}
-        [A|b] = \begin{bmatrix}
-            -1 & 2 & 3 & 6 & 9 & 8 & 26 \\
-            -2 & 3 & 1 & 1 & 6 & 8 & 17 \\
-            1 & 1 & -1 & 1 & 1 & 3 & 1
-        \end{bmatrix},\;\;
-        c^{\transpose} = [10, 10, 0, -3, -1, -3].
+        \left[\begin{array}{c|c}
+            1 & c_B^{\transpose}B^{-1} \\
+            \hline
+            \vec{0}^{\transpose} & B^{-1}
+        \end{array}\right].
     \end{align*}
+\end{rmk}
 
-    Now introduce a new variable $z = c^{\transpose}x$ to $[A|b]$, so
-    \begin{align*}
-        [A|b]' = \begin{bmatrix}
-            1 & -10 & -10 & 0 & 3 & 1 & 3 & 0 \\
-            0 & -1 & 2 & 3 & 6 & 9 & 8 & 26 \\
-            0 & -2 & 3 & 1 & 1 & 6 & 8 & 17 \\
-            0 & 1 & 1 & -1 & 1 & 1 & 3 & 1
-        \end{bmatrix}.
-    \end{align*}
-    Let $E$ be the reduced row echelon form of $[A|b]'$, then
-    \begin{align*}
-        E = \begin{bmatrix}
-            1 & 0 & 0 & 0 & 33 & 31 & 43 & 70 \\
-            0 & 1 & 0 & 0 & 2 & 1 & 1 & 2 \\
-            0 & 0 & 1 & 0 & 1 & 2 & 3 & 5 \\
-            0 & 0 & 0 & 1 & 2 & 2 & 1 & 6
-        \end{bmatrix}
-    \end{align*}
+\begin{rmk}
+    We can see that $z + (c_B^{\transpose}B^{-1}N-c_N^{\transpose})x_N = c_B^{\transpose}B^{-1}b$, so $z = c_B^{\transpose}B^{-1}b + (c_N^{\transpose} - c_B^{\transpose}B^{-1}N)x_N$. We often denote this as
+    \[z = c_B^{\transpose}B^{-1}b + r_N^{\transpose}x_N,\]
+    where
+    \[r_N^{\transpose} = c_N^{\transpose} - c_B^{\transpose}B^{-1}N.\]
+\end{rmk}
 
-    Notice that we now have $x_N = N$.
-\end{exmp}
+In the simplex, we start with a linear program $A, b, c$ in standard form. Assuming we already know a basis that leads to a basic feasible solution, we form the pre-tableau and either row-reduce or multiply through by the matrix from the above remark to obtain the basis feasible tableau.
+
+To illustrate the linear program, we will consider
+\begin{align*}
+    A =
+    \begin{bmatrix}
+        2 & -1 & 3 & 7 & 1 & 2 & 8 \\
+        5 & 2 & -8 & -1 & 2 & 0 & 1 \\
+        4 & 6 & -2 & 4 & 1 & 3 & -5
+    \end{bmatrix},\;\;
+    b = \begin{bmatrix}
+        2 \\ 4 \\ 3
+    \end{bmatrix},\;\;
+    c^{\transpose} = [6, -3, 2, 1, -1, 7, 1].
+\end{align*}
+
+We will use columns $1$, $3$, and $7$ as our basis columns, however we will leave the columns in their original order to make bookkeeping easier. Our pre-tableau is
+\begin{align*}
+    \left[\begin{array}{c|ccccccc|c}
+        1 & -6 & 3 & -2 & -1 & 1 & -7 & -1 & 0 \\
+        \hline
+        0 & 2 & -1 & 3 & 7 & 1 & 2 & 8 & 2 \\
+        0 & 5 & 2 & -8 & -1 & 2 & 0 & 1 & 4 \\
+        0 & 4 & 6 & -2 & 4 & 1 & 3 & -5 & 3
+    \end{array}\right].
+\end{align*}
+
+Row-reducing to the reduced row echelon form (while treating columns $1$, $3$, and $7$ as leading columns) brings us to our first basic feasible tableau:
+\begin{align*}
+    \left[\begin{array}{c|ccccccc|c}
+        1 & 0 & 9.35 & 0 & 11.06 & 2.82 & -1.22 & 0 & 4.93 \\
+        \hline
+        0 & 1 & 1.03 & 0 & 1.62 & 0.31 & 0.82 & 0 & 0.81 \\
+        0 & 0 & 0.33 & 1 & 1.14 & -0.05 & 0.50 & 0 & 0.01 \\
+        0 & 0 & -0.51 & 0 & 0.04 & 0.07 & -0.14 & 1 & 0.04
+    \end{array}\right].
+\end{align*}
+
+Now, we \emph{pivot} to a new (and improved!) basic feasible tableau by choosing a non-basis column to turn into a basis column. We make the greediest choice by choose the $4$th column ($5$th of the overall tableau) since it has the largest improvements to our objective function per unit chance in the corresponding non-basis variable.
+
+Letting $j = 4$, we choose the $k$th row (excluding the objective row on top) by \[\argmin_{k}\frac{b_k}{A_{kj}} \mathrm{ where } A_{kj} \geq 0.\] This gives us the $2$nd row, so we row-reduce again, replace the column whose leading term choose in the $2$nd row (which is column $3$) with column $4$. To do this, we treat column $4$ as if it was the second column while row-reducing. Our new basis columns are $1$, $4$, and $7$, giving us our second basic feasible tableau:
+\begin{align*}
+    \left[\begin{array}{c|ccccccc|c}
+        1 & 0 & 6.14  & -9.67 & 0 & 3.29  & -6.01 & 0 & 4.81 \\
+        \hline
+        0 & 1 & 0.56  & -1.41 & 0 & 0.37  & 0.11  & 0 & 0.79 \\
+        0 & 0 & 0.28  & 0.87  & 1 & -0.04 & 0.43  & 0 & 0.01 \\
+        0 & 0 & -0.57 & -0.03 & 0 & 0.06  & -0.15 & 1 & 0.04
+    \end{array}\right].
+\end{align*}
+
+Note that the objective function value has decreased from $4.93$ to $4.81$. We now continue pivoting in the manner, the objective function value decreasing from $4.81$, to $4.6$, to $-2.45$, to $-2.46$. When there are no positive entries in the objective function row (top row), there are no more improvements that can be made by changing our choice of basis and we have reached optimality.
