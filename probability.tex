@@ -238,6 +238,8 @@
     \[P(A_{i_1} \intersection A_{i_2} \intersection \cdots \intersection A_{i_k}) = P(A_{i_1})P(A_{i_2})\cdots P(A_{i_k}).\]
 \end{defn}
 
+\section{Random Variables}
+
 \begin{defn}
     A \emph{random variable} $X$ on a sample space $\Omega$ is a function $X: \Omega \to \R$.
 \end{defn}
@@ -390,4 +392,41 @@
     3) Consider the Maclaurin series of $e^{\theta X}$, which is
     \[e^{\theta X} = \sum_{n=0}^{\infty}\frac{(\theta X)^n}{n!} = 1 + X\theta + X^2\frac{\theta^2}{2} + \cdots.\]
     Then by linearity of the expected value and by linearity of the derivative, $M^{(k)}(0) = E\left[X^k\right]$.
+\end{prop}
+
+\begin{exmp}
+    Consider the Poission $\mu$ distribution, where $P(X = x) = \frac{e^{-\mu}\mu^x}{x!}$. The moment generating function, if it exists, by $\mathcal{LOTUS}$ \ref{lotus} would be given by
+    \begin{align*}
+       E(e^{\theta X})] &= \sum_{x=0}^{\infty}e^{\theta x}P(X = x) \\
+       &= \sum_{x=0}^{\infty}e^{\theta x}\frac{e^{-\mu}\mu^x}{x!} \\
+       &= e^{-\mu}\sum_{x=0}^{\infty}\frac{\left(\mu e^{\theta}\right)^{x}}{x!} \\
+       &= e^{-\mu}e^{e^{\theta}\mu} = e^{\mu(e^{\theta-1})}.
+    \end{align*}
+\end{exmp}
+
+\section{Cumulative Distribution Functions}
+
+\begin{defn}
+    Given a random variable $X$, the function $p(x) = P(X = x)$ is the \emph{probability mass function} (or PMF) of $X$.
+\end{defn}
+
+\begin{defn}
+    Given a random variable $X$, the function $F: \R \to [0, 1]$ defined by
+    \[x \mapsto P(X \leq x)\]
+    is the \emph{cumulative distribution function} (or CDF) of $X$.
+\end{defn}
+
+\begin{prop}
+    Given a random variable $X$ with CDF $F$, for any $x < y$, then $F(X) \leq F(Y)$.
+\end{prop}
+
+\begin{proof}
+    If $x < y$ then the event $X \leq x$ is a subset of the event $X \leq y$, so $P(X \leq x) \leq P(X \leq y)$ by Proposition \ref{probability-monotonicity}.
+\end{proof}
+
+\begin{prop}
+    Given a random variable $X$ with CDF $F$, for all  $F$ is right-continuous:
+    \[\forall x \in \R,\;\;\lim_{n \to\infty}F(x + \frac{1}{n}) = F(x),\]
+    and left-limits always exist:
+    \[\forall x \in \R,\;\;\lim_{n \to \infty}F(x - \frac{1}{n}).\]
 \end{prop}
