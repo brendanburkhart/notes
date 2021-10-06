@@ -138,7 +138,7 @@
 \end{exmp}
 
 \begin{defn}
-    Let $A, B \in Omega$. Then the probability that $A$ occurred, given that $B$ occured, is denoted by $P(A | B)$ and read as ``the probability of $A$ given $B$''.
+    Let $A, B \in \Omega$. Then the probability that $A$ occurred, given that $B$ occured, is denoted by $P(A | B)$ and read as ``the probability of $A$ given $B$''.
 \end{defn}
 
 \begin{prop}
@@ -174,7 +174,7 @@
 \end{exmp}
 
 \begin{thm}Law of Total Probability\label{total-probability}\proofbreak
-    Let $B_1, \ldots, B_n \in Omega$ be mutually exclusive and exhaustive events. Then for any event $A \in \Omega$,
+    Let $B_1, \ldots, B_n \in \Omega$ be mutually exclusive and exhaustive events. Then for any event $A \in \Omega$,
     \[P(A) = \sum_{i=1}^{n}P(A \intersection B_i) = \sum_{i=1}^{n}P(A | B_i)P(B_i).\]
 \end{thm}
 
@@ -417,19 +417,85 @@
 \end{defn}
 
 \begin{prop}
-    Given a random variable $X$ with CDF $F$, for any $x < y$, then $F(X) \leq F(Y)$.
+    Given a random variable $X$ with CDF $F_X$, for any $x < y$, then $F_X(x) \leq F_X(y)$.
 \end{prop}
 
 \begin{proof}
     If $x < y$ then the event $X \leq x$ is a subset of the event $X \leq y$, so $P(X \leq x) \leq P(X \leq y)$ by Proposition \ref{probability-monotonicity}.
 \end{proof}
 
+\begin{thm}\label{event-sequence-probability}
+    Consider sequences of events $E_i \in \Omega$ such that
+    \begin{align*}
+        E_1 \subseteq E_2 \subseteq E_3 \subseteq \cdots,
+    \end{align*}
+    or
+    \begin{align*}
+        E_1 \supseteq E_2 \supseteq E_3 \supseteq \cdots.
+    \end{align*}
+
+    Then
+    \begin{align*}
+        \lim_{n \to \infty}P(E_n) = P\left(\lim_{n \to \infty}E_n\right).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Consider the case of increasing events, so $E_1 \subseteq E_2 \cdots$. Let $F_n = E_n - \union_{i < n}E_i$. Then
+    \begin{align*}
+        \bigcup_{i=1}^{n}E_i = \bigsqcup_{i=1}^{n}F_i,\;\;\;\bigcup_{i=1}^{\infty}E_i = \bigsqcup_{i=1}^{\infty}F_i.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        P\left(\lim_{n \to \infty} E_n\right) &= P\left(\bigcup_{i=1}^{\infty}E_i\right) = P\left(\bigcup_{i=1}^{\infty}F_i\right) = \sum_{i =1}^{\infty}P(F_i) \\
+        &= \lim_{n \to \infty}\sum_{i}^{n}P(F_i) = \lim_{n \to \infty} P\left(\bigsqcup_{i}^{n}F_i\right) = \lim_{n \to \infty} P\left(\bigcup_{i}^{n}E_i\right) = \lim_{n \to \infty}P(E_n).
+    \end{align*}
+
+    Now consider the case where $E_1 \supseteq E_2 \cdots$. Notice that $E_1^{c} \subseteq E_2^{c} \cdots$, so $E_i^{c}$ forms an increasing sequence of events. Therefore,
+    \begin{align*}
+        \lim_{n \to \infty}P(E_n^{c}) = P\left(\lim_{n \to \infty}E_n^{c}\right) = P\left(\bigcup_{i}^{\infty}E_i^{c}\right).
+    \end{align*}
+    Since
+    \begin{align*}
+        \bigcup_{i}^{\infty}E_i^{c} = \left(\bigcap_{i}^{\infty}E_i\right)^{c},
+    \end{align*}
+    it follows that
+    \begin{align*}
+        \lim_{n \to \infty}P(E_n^{c}) = P\left(\left(\bigcap_{i}^{\infty}E_i\right)^{c}\right) = 1 - P\left(\bigcap_{i}^{\infty}E_i\right).
+    \end{align*}
+    Since $1 - P(E_i) = P(E_i^{c})$, we then have
+    \begin{align*}
+        \lim_{n \to \infty}P(E_n^{c}) = \lim_{n \to \infty}\left(1 - P(E_n)\right) = 1 - \left(\lim_{n \to \infty}P(E_n)\right).
+    \end{align*}
+    It follows that
+    \begin{align*}
+        \lim_{n \to \infty}P(E_n) = P\left(\bigcap_{i}^{\infty}E_i\right) = P\left(\lim_{n \to \infty}E_n\right).
+    \end{align*}
+\end{proof}
+
 \begin{prop}
-    Given a random variable $X$ with CDF $F$, for all  $F$ is right-continuous:
+    Given a random variable $X$ with CDF $F$, $F$ is right-continuous for all $x \in \R$:
     \[\forall x \in \R,\;\;\lim_{n \to\infty}F(x + \frac{1}{n}) = F(x),\]
-    and left-limits always exist:
+    and left-limits exist for all $x \in \R$:
     \[\forall x \in \R,\;\;\lim_{n \to \infty}F(x - \frac{1}{n}).\]
 \end{prop}
+
+\begin{proof}
+    The event that $X \leq x$ is
+    \begin{align*}
+        \bigcap_{n = 1}^{\infty}(X \leq x + \frac{1}{n}),
+    \end{align*}
+    and so by Theorem \ref{event-sequence-probability} right-continuity follows:
+    \begin{align*}
+        F(x) = P(X \leq x) = \lim_{n \to \infty}P(X \leq x + \frac{1}{n}) = \lim_{n \to \infty}F(x + \frac{1}{n}).
+    \end{align*}
+
+    Similarly,
+    \begin{align*}
+        \lim_{n \to \infty}F(x - \frac{1}{n}) = \lim_{n \to \infty}P(X \leq x - \frac{1}{n}) = P(X < x),
+    \end{align*}
+    so the left limits always exist. Note that $P(X < x)$ will not equal $P(X \leq x)$ if $P(X = x) > 0$, so $F$ may not be left-continuous.
+\end{proof}
 
 \begin{defn}
     A random variable with a continuous CDF is a \emph{continuous} random variable.
@@ -450,7 +516,7 @@
 \begin{defn}
     The \emph{probability density function} (PDF) of a continuous random variable $X$ is
     \begin{align*}
-        f(x) = \lim_{h \to 0}\frac{P(x - h < X \leq x)}{h}.
+        f(x) = \lim_{h \to 0}\frac{P(x - h < X \leq x)}{h} = \lim_{h \to 0}\frac{F(x) - F(x-h)}{h}.
     \end{align*}
 \end{defn}
 
@@ -460,13 +526,22 @@
 
 \begin{thm}
     Let $F(x)$ be the CDF and $f(x)$ the PDF of an absolutely continuous random variable $X$. Then:
-    \begin{itemize}
+    \begin{enumerate}
         \item $F'(x) = f(x)$,
         \item $F(x) = \int_{-\infty}^{x}f(x)dx$,
-        \item Since $F(x)$ exists for all $x \in \R$, so does $f(x)$,
+        \item $f(x)$ exists almost everywhere,
         \item $\int_{-\infty}^{\infty}f(x)dx = 1$.
-    \end{itemize}
+    \end{enumerate}
 \end{thm}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}
+        \item Definition of $f(x)$,
+        \item Follows from above,
+        \item Follows from absolute continuity of $F(x)$,
+        \item Follows from absolute continuity of $F(x)$.
+    \end{enumerate}
+\end{proof}
 
 \begin{cor}
     \begin{align*}
@@ -477,9 +552,209 @@
     \end{align*}
 \end{cor}
 
+\begin{prop}
+    A function $f: \R \to \R$ is a probability density function when $f(x) \geq 0$, $f(x)$ is defined for all $\R$, and $\int_{-\infty}^{\infty}f(x)dx = 1$.
+\end{prop}
+
 \begin{defn}
-    The expected value of a continuous random variable $X$ is
+    A random variable $X$ has the \emph{exponential} distribution with parameter $\lambda > 0$ when its probability density function is
+    \begin{align}
+        f(x) = \begin{dcases}
+            \lambda e^{-\lambda x}, & x > 0 \\
+            0, & x \leq 0
+        \end{dcases}.
+    \end{align}
+\end{defn}
+
+\begin{exmp}
+    This is a probability density function since $f(x)$ is clearly non-negative, defined for all $x \in \R$, and
+    \begin{align*}
+        \int_{-\infty}^{\infty}f(x)dx &= \int_{0}^{\infty}f(x)dx = \int_{0}^{\infty}\lambda e^{-\lambda x}dx \\
+        &= \lambda \frac{1}{-\lambda}e^{-\lambda x}\big\rvert_{0}^{\infty} = 0 - (-e^{0}) = 1.
+    \end{align*}
+\end{exmp}
+
+\begin{defn}
+    The expected value of a continuous random variable $X$ with probability density function $f_X(x)$ is
     \begin{align*}
         E(X) = \int_{-\infty}^{\infty}xf_X(x)dx.
     \end{align*}
 \end{defn}
+
+\begin{exmp}
+    The expected value of a random variable $X \distribution \mathrm{exp}(\lambda)$ is
+    \begin{align*}
+        E(X) = \int_{-\infty}^{\infty}xf_X(x)dx = \int_{0}^{\infty}x\lambda e^{-\lambda x}dx.
+    \end{align*}
+    Integrating by parts, we let $u = x$ and $dv = \lambda e^{-\lambda x}dx$. Therefore, $du = dx$ and $v = -e^{-\lambda x}$. It follows that
+    \begin{align*}
+        \int x\lambda e^{-\lambda x}dx &= \int udv = uv - \int vdu = -xe^{-\lambda x} + \int e^{-\lambda x}dx \\
+        &= -xe^{-\lambda x} - \frac{1}{\lambda}e^{-\lambda x} = -e^{-\lambda x}\left(x + \frac{1}{\lambda}\right).
+    \end{align*}
+
+    Note that since $\lambda > 0$, by L'Hopital's rule we have
+    \begin{align*}
+        \lim_{x \to \infty}xe^{-\lambda x} = \lim_{x \to \infty}\frac{x}{e^{\lambda x}} = \lim_{x \to \infty}\frac{1}{\lambda e^{\lambda x}} = 0.
+    \end{align*}
+
+    Therefore,
+    \begin{align*}
+        E(X) = \left(-e^{-\lambda x}\left(x + \frac{1}{\lambda}\right)\right)\big\rvert_{0}^{\infty} = 0 - \left(-\left(0 + \frac{1}{\lambda}\right)\right) = \frac{1}{\lambda}.
+    \end{align*}
+
+    The second moment of $X$ is
+    \begin{align*}
+        E(X^2) = \int_{-\infty}^{\infty}x^2f_X(x)dx = \int_{0}^{\infty}x\lambda e^{-\lambda x}dx.
+    \end{align*}
+    We can apply integration by parts twice to obtain $E(X^2)$
+\end{exmp}
+
+\begin{defn}
+    A random variable $X$ has the \emph{uniform} distribution with parameters $a, b$ ($a < b$) when its probability density function is
+    \begin{align}
+        f(x) = \begin{dcases}
+            0, & x \leq a \\
+            \frac{1}{b - a}, & a < x < b \\
+            0, & x \geq b
+        \end{dcases}.
+    \end{align}
+\end{defn}
+
+\begin{defn}
+    The first moment (expected value) of a random variable $X \distribution \mathrm{uniform}(a, b)$ is
+    \begin{align*}
+        E(X) = \int_{-\infty}^{\infty}xf_X(x)dx = \int_{a}^{b}\frac{x}{b - a}dx = \frac{1}{b - a}\int_{a}^{b}xdx = \frac{b^2 - a^2}{2(b - a)} = \frac{(b - a)(b + a)}{2(b - a)} = \frac{b+a}{2}.
+    \end{align*}
+
+    The second moment is
+    \begin{align*}
+        E(X^2) = \int_{-\infty}^{\infty}x^2f_X(x)dx = \int_{a}^{b}\frac{x^2}{b - a}dx = \frac{b^3 - a^3}{3(b - a)} = \frac{(b-a)(b^2 + ab + a^2)}{3(b - a)} = \frac{b^2+ab+a^2}{3}.
+    \end{align*}
+
+    Therefore, the variance is
+    \begin{align*}
+        \sigma^2 = E(X^2) - E(X)^2 = \frac{b^2+ab+a^2}{3} - \left(\frac{b+a}{2}\right)^2 = \frac{b^2-2ab+a^2}{12}.
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    When higher moments of random variables exist, there are additional quantities we can consider to understand distributions.
+\end{rmk}
+
+\begin{defn}
+    The \emph{skewness} of a random variable $X$ is
+    \begin{align*}
+        E\left[\left(\frac{X-\mu}{\sigma}\right)^3\right]
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    The \emph{kurtosis} of a random variable $X$ is
+    \begin{align*}
+        E\left[\left(\frac{X-\mu}{\sigma}\right)^4\right]
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    Skewness quantifies how skewed the distribution is --- positive skewness means it is right-tailed, and negative skewness means it is left tailed. When the skewness is zero, the distribution is perfectly symmetrical around its mean.
+
+    Kurtosis measure how heavy the tails of the distribution are.
+\end{rmk}
+
+\begin{rmk}
+    From the moment generating function, we can show that the $k$th moment of an exponentially distributed random variable is $k!\lambda^{-k}$. From there, we can calculate that the skewness of the exponential distribution is $2$ and the kurtosis is $9$, regardless of the specific value of $\lambda$.
+\end{rmk}
+
+\section{Gamma distribution}
+
+\begin{defn}
+    The Euler gamma function is
+    \begin{align*}
+        \Gamma(\alpha) = \int_{0}^{\infty}x^{\alpha-1}e^{-x}dx.
+    \end{align*}
+    for $\alpha \in \C$ where $\alpha \neq 0$ and $\alpha$ is not a negative even integer.
+\end{defn}
+
+\begin{exmp}
+    \begin{align*}
+        \Gamma(1) = \int_{0}^{\infty}x^{1 - 1}e^{-x}dx = \int_{0}^{\infty}e^{-x}dx \\
+        &= -e^{-x}\big\rvert_{0}^{\infty} = 1.
+    \end{align*}
+\end{exmp}
+
+\begin{exmp}
+    \begin{align*}
+        \Gamma\left(\frac{1}{2}\right) = \int_{0}^{\infty}x^{-1/2}e^{-x}dx
+    \end{align*}
+    Let $x = u^2$, $dx = 2udu$. Then
+    \begin{align*}
+        \int_{0}^{\infty}\frac{1}{u}e^{-u^2}2udu = 2\int_{0}^{\infty}e^{-u^2}du.
+    \end{align*}
+    Then
+    \begin{align*}
+        \left(\Gamma\left(\frac{1}{2}\right)^2\right) = 4\int_{0}^{\infty}\int_{0}^{\infty}e^{-u^2}e^{-v^2}dudv.
+    \end{align*}
+    With a change to polar coordinates we obtain
+    \begin{align*}
+        \left(\Gamma\left(\frac{1}{2}\right)^2\right) = 4\int_{0}^{\pi/2}\int_{0}^{\infty}e^{-r^2}rdrd\theta = 4\int_{0}^{\pi/2}\frac{1}{2}d\theta = \pi.
+    \end{align*}
+    Therefore, $\Gamma(\frac{1}{2}) = \sqrt{\pi}$ since it is clear that $\Gamma(\frac{1}{2}) \geq 0$.
+\end{exmp}
+
+\begin{prop}
+    For real $\alpha > 1$,
+    \begin{align*}
+        \Gamma(\alpha) = (\alpha - 1)\Gamma(\alpha - 1).
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        \Gamma(\alpha) = \int_{0}^{\infty}x^{\alpha - 1}e^{-x}du.
+    \end{align*}
+    We can integrate this by parts to obtain
+    \begin{align*}
+        \Gamma(\alpha) = (\alpha - 1)\int_{0}^{\infty}x^{\alpha - 1 - 1}e^{-x}du.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \Gamma(\alpha) = (\alpha - 1)\Gamma(\alpha - 1).
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    $\Gamma(n+1) = n!$ for $n \in \Z$, $n \geq 0$, since $\Gamma(1) = 1$ and $\Gamma(n+1) = (n)(n-1)\cdots(3)(2)\Gamma(1)$.
+
+    Additionally, if we know $\Gamma(x)$ for some $x \in (0, 1]$, then $\Gamma(x + n) = (x + n)(x + n - 1)\cdots(x + 1)\Gamma(x)$ for any $n \geq 0$.
+\end{rmk}
+
+\begin{prop}
+    Let $f: \R \to \R_{\geq 0}$ have a finite integral. Then
+    \begin{align*}
+        g(x) = \frac{f(x)}{\int_{-\infty}^{\infty}f(x)dx}
+    \end{align*}
+    is a probability density function. This method of converting functions into a probability density function is called \emph{normalization}.
+\end{prop}
+
+\begin{exmp}
+    Consider
+    \begin{align*}
+        g(x) = x^{a-1}e^{x/\beta}
+    \end{align*}
+    for $x > 0$, and $g(x) = 0$ elsewhere for any $\alpha, \beta > 0$.
+
+    With the substitution $u = x/\beta$,
+    \begin{align*}
+        \int_{-\infty}^{\infty}g(x)dx = \int_{-\infty}^{\infty}(\beta u)^{\alpha -1}e^{-u}\beta du = \beta^{\alpha}\Gamma(\alpha).
+    \end{align*}
+
+    We can then normalize $g(x)$ to obtain the probability density function
+    \begin{align*}
+        f(x) = \begin{dcases}
+            \frac{x^{a-1}e^{x/\beta}}{\beta^{\alpha}\Gamma(\alpha)}, & x > 0 \\
+            0, & x \leq 0
+        \end{dcases}.
+    \end{align*}
+
+    This defines the Gamma$(\alpha, \beta)$ distribution, where $\alpha$ is the \emph{shape} parameter and $\beta$ is the \emph{scale} parameter.
+\end{exmp}
