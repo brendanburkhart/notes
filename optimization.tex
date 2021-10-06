@@ -409,6 +409,36 @@ Letting $j = 4$, we choose the $k$th row (excluding the objective row on top) by
 
 Note that the objective function value has decreased from $4.93$ to $4.81$. We now continue pivoting in the manner, the objective function value decreasing from $4.81$, to $4.6$, to $-2.45$, to $-2.46$. When there are no positive entries in the objective function row (top row), there are no more improvements that can be made by changing our choice of basis and we have reached optimality.
 
+\subsection{Two-Phase Method}
+
+The Two-Phase Method is a technique for coming up with the initial basic feasible solution need to start off the Simplex Method. In Phase I, we solve a different linear program to find the initial basic feasible solution, and then in Phase II we use that basic feasible solution to apply the simplex method to the original linear program. We take a problem in standard form with constraints $Ax = b$, $x \geq 0$ where $A \in M_{m \times n}(\R)$. We then introduce \emph{artificial variables} $x_{n+1}, x_{n+2}, \ldots, x_{n+m}$ for each constraint (row) in $A$. Let $x'$ denote the vector obtained by appending the artificial variables to $x$.
+
+For Phase I, we solve a different problem using the Simplex Method: minimizing $x_{n+1} + x_{n+2} + \cdots + x_{n+m}$ such that $[A|I]x' = b$, $x' \geq 0$. Notice that any feasible solution to this new problem is a feasible solution to the original linear program if the objective function value is zero. Therefore, the $x$ part of an optimal solution $x'$ to the new problem is a feasible solution to the original if $x'$ has objective function value zero. If the optimal solution $x'$ has a positive objective function value, then no feasible solution exists for the original linear program.
+
+Note that
+\begin{align*}
+    x' = \begin{bmatrix}
+        x \\
+        x_{n+1} \\
+        \vdots \\
+        v_{n+m}
+    \end{bmatrix} = \begin{bmatrix}
+        0 \\
+        b_1 \\
+        \vdots \\
+        b_m
+    \end{bmatrix}
+\end{align*}
+is always a basic feasible solution to the Phase I problem. Therefore, we can immediately apply the Simplex method to determine the feasibility of the original linear program, and find a feasible solution if one exists. Additionally, since the number of columns in a basis for either linear program is the same (always just $m$), the feasible solution given to us by Phase I must in fact be a basic feasible solution for Phase II.
+
+\subsection{Big-M Method}
+
+In the Big-M method, we do essentially the same process, but in one phase instead of two. We do this by using an objective function of
+\begin{align*}
+    c^{\transpose}x + M(x_{n+1} + x_{n+2} + \cdots + x_{n+m}),
+\end{align*}
+where $M$ is a very large value. This penalizes the artificial variables and causes them to be zero in any optimal solution. Setting the artificial variables to $b$ gives us an initial basic feasible solution. If a basic feasible solution exists where the artificial variables are zero, the first $m$ pivots will replace each artificial variable with non-artificial variables, and so the final optimal solution will be a solution to the original linear program.
+
 \section{Duality}
 
 \begin{defn}{Canonical or symmetric duality}\proofbreak
