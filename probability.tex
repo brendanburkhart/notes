@@ -430,3 +430,56 @@
     and left-limits always exist:
     \[\forall x \in \R,\;\;\lim_{n \to \infty}F(x - \frac{1}{n}).\]
 \end{prop}
+
+\begin{defn}
+    A random variable with a continuous CDF is a \emph{continuous} random variable.
+\end{defn}
+
+\begin{prop}
+    Given a continuous random variable $X$, $P(X = x) = 0$ for all $x$.
+\end{prop}
+
+\begin{proof}
+    Let $F_X(x) = P(X \leq x)$ be the (continuous) CDF of $X$. Fix some $x$. Then for any $h > 0$,
+    \begin{align*}
+        P(x-h < X \leq x) = F(x) - F(x - h).
+    \end{align*}
+    Therefore, as $h \to 0$, $P(x - h < X \leq x) \to 0$. Therefore, $P(x < X \leq x) = 0$, and so $P(X = x) = 0$.
+\end{proof}
+
+\begin{defn}
+    The \emph{probability density function} (PDF) of a continuous random variable $X$ is
+    \begin{align*}
+        f(x) = \lim_{h \to 0}\frac{P(x - h < X \leq x)}{h}.
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    Not all continuous random variables possess a PDF, since the limit may not exist. Every continuous CDF can be decomposed into a linear combination of two functions: a \emph{absolutely continuous} part and a \emph{singlular continuous} part. The Cantor function is an example of a CDF whose absolutely continuous part is zero.
+\end{rmk}
+
+\begin{thm}
+    Let $F(x)$ be the CDF and $f(x)$ the PDF of an absolutely continuous random variable $X$. Then:
+    \begin{itemize}
+        \item $F'(x) = f(x)$,
+        \item $F(x) = \int_{-\infty}^{x}f(x)dx$,
+        \item Since $F(x)$ exists for all $x \in \R$, so does $f(x)$,
+        \item $\int_{-\infty}^{\infty}f(x)dx = 1$.
+    \end{itemize}
+\end{thm}
+
+\begin{cor}
+    \begin{align*}
+        P(a < X \leq b) &= P(X \leq b) - P(X \leq a) \\
+        &= F(b) - F(a) \\
+        &= \int_{-\infty}^{b}f(x)dx - \int_{-\infty}^{a}f(x)dx \\
+        &= \int_{a}^{b}f(x)dx.
+    \end{align*}
+\end{cor}
+
+\begin{defn}
+    The expected value of a continuous random variable $X$ is
+    \begin{align*}
+        E(X) = \int_{-\infty}^{\infty}xf_X(x)dx.
+    \end{align*}
+\end{defn}
