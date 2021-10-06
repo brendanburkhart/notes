@@ -536,3 +536,39 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
 \begin{cor}
     The optimal objective value function in the dual is less than or equal to the optimal objective function value in the primal.
 \end{cor}
+
+\begin{cor}{Supervisor principle}\label{supervisor-principle}\proofbreak
+    If $b^{\transpose}y = c^{\transpose}x$, then $x$ and $y$ are optimal in their respective linear programs.
+\end{cor}
+
+\begin{thm}{Strong Duality}\label{strong-duality}\proofbreak
+    Suppose a linear program has a feasible solution and its objective function is unbounded. Then the linear program and its dual have optimal solutions $x$ and $y$ respectively, and the objective function value of $x$ and $y$ are equal.
+\end{thm}
+
+\begin{proof}
+    Consider the primal in standard form. We can apply the Simplex method or similar to obtain an optimal basic feasible solution $x^*$. Without loss of generality, we can assume that the final basis consists of the first $m$ columns of $A$.
+
+    By the terminating condition of the Simplex method, we know that
+    \begin{align*}
+        r_N^{\transpose} = c_N^{\transpose} - c_B^{\transpose}B^{-1}N \geq \vec{0}.
+    \end{align*}
+    Let
+    \begin{align*}
+        {y^*}^{\transpose} = c_B^{\transpose}B^{-1}.
+    \end{align*}
+
+    Since $r_N^{\transpose} \geq \vec{0}$, we know that
+    \begin{align*}
+        c_B^{\transpose}B^{-1}N \leq c_N^{\transpose},
+    \end{align*}
+    and so it follows that
+    \begin{align*}
+        {y^*}^{\transpose}A = c_B^{\transpose}B^{-1}[B|N] = [c_B^{\transpose}|c_B^{\transpose}B^{-1}N] \leq [c_B^{\transpose}|c_N^{\transpose}] = c^{\transpose},
+    \end{align*}
+    so $y^*$ is a feasible solution to the dual. Now we can show that the objective function values are equal:
+    \begin{align*}
+        {y^{*}}^{\transpose}b = c_B^{\transpose}B^{-1}b = \begin{bmatrix}c_B \\ \vec{0}\end{bmatrix}^{\transpose}\begin{bmatrix}x_B \\ \vec{0}\end{bmatrix} = c^{\transpose}x^*.
+    \end{align*}
+
+    Therefore, $y^*$ is an optimal solution to the dual linear program by the supervisor principle \ref{supervisor-principle}.
+\end{proof}
