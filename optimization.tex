@@ -572,3 +572,56 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
 
     Therefore, $y^*$ is an optimal solution to the dual linear program by the supervisor principle \ref{supervisor-principle}.
 \end{proof}
+
+\section{Sensitivity Analysis}
+
+\begin{defn}
+    A basic feasible solution $b$ to a linear program with basis $B$ is \emph{non-degenerate} when $B^{-1}b > \vec{0}$.
+\end{defn}
+
+Consider solving a linear program $A, b, c$ in standard form by the Simplex method. What happens if we replace $b$ with $b' = b + \Delta b$ for some arbitrary $\Delta b$? If we replaced $B^{-1}b$ with $B^{-1}(b + \Delta b)$ and $c_B^{\transpose}B^{-1}b$ with $c_B^{\transpose}B^{-1}(b + \Delta b)$ in just the final basic feasible simplex tableau, what happens?
+
+If $B^{-1}(b + \Delta b) \geq \vec{0}$, then we still have a basic feasible solution! Furthermore, since the objective row would still be non-positive, our solution would also be an \emph{optimal} basic feasible solution. This would very likely only occur when $\Delta b$ is fairly small.
+
+If the linear program is non-degenerate, there always exists such $\Delta b$ small enough.
+
+In the corresponding dual linear program, we know that
+\begin{align*}
+    {y^*}^{\transpose} = c_B^{\transpose}B^{-1}.
+\end{align*}
+We also have $c^{\transpose}x^* = {y^*}^{\transpose}b$, and so when we replace $b$ with $b'$ we get
+$c^{\transpose}{x'}^{*} = {y^*}^{\transpose}(b + \Delta b) = {y^*}^{\transpose}b + {y^*}^{\transpose}\Delta b$. Therefore,
+\begin{align*}
+    \frac{c^{\transpose}x}{\partial b_i} = y_i^*.
+\end{align*}
+
+\begin{defn}
+    Vectors $x, y \in \R^n$ are \emph{complementary} if $x_i \neq 0 \implies y_i = 0$ and $y_i \neq 0 \implies x_i = 0$.
+\end{defn}
+
+\begin{prop}\label{complementary-orthogonal}
+    If $x \geq 0$ and $y \geq 0$, then $x$ and $y$ are complementary if and only if $x^{\transpose}y = 0$.
+\end{prop}
+
+\begin{proof}
+    If $x$ and $y$ are complementary, then $x_iy_i = 0$, and so $x^{\transpose}y = 0$.
+
+    Since $x \geq 0$ and $y \geq 0$, we know $x_iy_i \geq 0$. If $x^{\transpose}y = 0$, then we must have $x_iy_i = 0$. Therefore at least one of $x_i$ and $y_i$ is zero and so $x$ and $y$ are complementary.
+\end{proof}
+
+\begin{thm}{Complementary slackness}\label{complementary-slackness}\proofbreak
+    Consider a linear program $A, b, c$ in standard form. Let $x \in \R^n$ be a feasible solution. Let $y \in \R^m$ be a feasible solution in the dual. Then $x$ and $y$ are optimal solutions if and only if $c - A^{\transpose}y$ is complentary to $x$.
+\end{thm}
+
+\begin{proof}
+    Recall that
+    \begin{align*}
+        b^{\transpose}y = (Ax)^{\transpose}y = x^{\transpose}A^{\transpose}y \leq x^{\transpose}c = c^{\transpose}x.
+    \end{align*}
+    By the supervisor principle \ref{supervisor-principle}, $x$ and $y$ are optimal if and only if $b^{\transpose}y = c^{\transpose}x$, which is equivalent to $x^{\transpose}A^{\transpose}y = x^{\transpose}c$. Therefore,
+    \begin{align*}
+        x^{\transpose}\left(c - A^{\transpose}y\right) = \vec{0}.
+    \end{align*}
+
+    Since $y$ is feasible in the dual, by definition $A^{\transpose}y \leq c$, and so $c - A^{\transpose}y \geq \vec{0}$. Furthermore, $x \geq 0$ and so by Proposition \ref{complementary-orthogonal} it follows that this occurs precisely when $x$ and $c - A^{\transpose}y$ are complementary.
+\end{proof}
