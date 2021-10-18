@@ -645,3 +645,24 @@ Given a linear program and corresponding basic tableau, we have $y = c_B^{\trans
 The first condition, that $Ax = b$ is necessarily satisfied by any basic tableau. The fourth, that $c^{\transpose}x = b^{\transpose}y$, is also satisfied since $c_B^{\transpose}B^{-1}b = y^{\transpose}b = b^{\transpose}y$ and $c_B^{\transpose}B^{-1}b = c^{\transpose}x$. The third condition, that $A^{\transpose}y \leq c$, is satisfied when $r \geq 0$. Since the top row of the tableau is $-r$, the top row must be non-positive. This was shown as part of the proof for Strong Duality \ref{strong-duality}. Therefore, we need to come up with a ``dual pivot'' that preserves these properties while working towards achieving the second condition.
 
 To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, and pick a column to row-reduce on. Since we need to maintain a non-positive top row $-r$, we want to pick the column $k$ by \[\argmin_{k}\frac{r_k}{A_{jk}} \mathrm{ where } A_{jk} < 0.\]
+
+\section{Non-Linear Optimization}
+
+\begin{defn}
+    A symmetric matrix $A \in M_{n\times n}(\R)$ is \emph{positiive definite} is $z^{\transpose}Mz$ is strictly positive for \emph{every} non-zero real $z \in \R^n$. Also Hermitian matrix $z^{*}Hz$.
+\end{defn}
+
+\begin{thm}
+    Following are all equivalent:
+    \begin{itemize}
+        \item posiitive-definite,
+        \item congruent with positive diagonal matrix,
+        \item symmetric/Hermitian and eigenvalues are real and positive,
+        \item all leading principal minors are positive,
+        \item $M = B^{*}B$ where $B$ is invertible.
+    \end{itemize}
+\end{thm}
+
+\begin{rmk}
+    Positive-semi definite and invertible (so eigenvalues can't be zero) then implies positive definite.
+\end{rmk}
