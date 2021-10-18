@@ -665,7 +665,7 @@
     From the moment generating function, we can show that the $k$th moment of an exponentially distributed random variable is $k!\lambda^{-k}$. From there, we can calculate that the skewness of the exponential distribution is $2$ and the kurtosis is $9$, regardless of the specific value of $\lambda$.
 \end{rmk}
 
-\section{Gamma distribution}
+\section{Gamma Distribution}
 
 \begin{defn}
     The Euler gamma function is
@@ -739,19 +739,19 @@
 \begin{exmp}
     Consider
     \begin{align*}
-        g(x) = x^{a-1}e^{x/\beta}
+        g(x) = x^{a-1}e^{-x/\beta}
     \end{align*}
     for $x > 0$, and $g(x) = 0$ elsewhere for any $\alpha, \beta > 0$.
 
     With the substitution $u = x/\beta$,
     \begin{align*}
-        \int_{-\infty}^{\infty}g(x)dx = \int_{-\infty}^{\infty}(\beta u)^{\alpha -1}e^{-u}\beta du = \beta^{\alpha}\Gamma(\alpha).
+        \int_{-\infty}^{\infty}g(x)dx = \int_{0}^{\infty}(\beta u)^{\alpha -1}e^{-u}\beta du = \beta^{\alpha}\Gamma(\alpha).
     \end{align*}
 
     We can then normalize $g(x)$ to obtain the probability density function
     \begin{align*}
         f(x) = \begin{dcases}
-            \frac{x^{a-1}e^{x/\beta}}{\beta^{\alpha}\Gamma(\alpha)}, & x > 0 \\
+            \frac{x^{a-1}e^{-x/\beta}}{\beta^{\alpha}\Gamma(\alpha)}, & x > 0 \\
             0, & x \leq 0
         \end{dcases}.
     \end{align*}
@@ -760,41 +760,85 @@
 \end{exmp}
 
 \begin{rmk}
-    When $\alpha = 1$, the Gamma$(\alpha, \beta)$ distribution becomes exp$\left(\frac{1}{\beta}\right)$.
+    The fact that the Gamma distribution's PDF integrates to $1$ can be used to solve other integrals. For example, consider.
+    \begin{align*}
+        \int_{0}^{\infty}x^{1/2}e^{-2x}dx.
+    \end{align*}
+    Let $f(x)$ be the PDF of the Gamma$(3/2, 1/2)$ distribution. Then
+    \begin{align*}
+        \int_{0}^{\infty}x^{1/2}e^{-2x}dx &= (1/2)^{3/2}\Gamma(3/2)\int_{0}^{\infty}\frac{x^{1/2}e^{-2x}}{(1/2)^{3/2}\Gamma(3/2)}dx = (1/2)^{3/2}\Gamma(3/2)\int_{0}^{\infty}f(x)dx \\
+        &= \sqrt{\frac{1}{8}} \cdot \frac{1}{2}\Gamma\left(\frac{1}{2}\right) \cdot 1 = \frac{\sqrt{\pi}}{4\sqrt{2}}.
+    \end{align*}
+\end{rmk}
+
+\begin{rmk}
+    When $\alpha = 1$, the Gamma$(\alpha, \beta)$ distribution becomes the exp$\left(\frac{1}{\beta}\right)$ distribution.
 \end{rmk}
 
 \begin{prop}
-    Mean of Gamma is $\alpha \beta$.
-\end{prop}
-
-\begin{prop}
-    Variance of Gamma is $\alpha \beta^2$.
-\end{prop}
-
-\begin{prop}
-    The moment generating function of Gamma is
+    The mean of $X \distribution \mathrm{Gamma}(\alpha, \beta)$ is $\alpha\beta$.
 \end{prop}
 
 \begin{proof}
     \begin{align*}
-        M(\theta) &= E(e^{\theta X}) = \int_{0}^{-\infty}e^{\theta x}\frac{x^{\alpha-1}e^{-x/\beta}}{\beta^{\alpha}\Gamma(\alpha)}dx \\
-        &= \frac{1}{\beta^{\alpha}\Gamma(\alpha)}\int_{0}^{-\infty}x^{\alpha-1}e^{-x(1/\beta-\theta)}dx = \frac{\left[\left(\frac{1}{\beta}-\theta\right)^{-1}\right]^{\alpha}}{\beta^{\alpha}} = (1 - \beta\theta)^{-\alpha}.
+        E(X) &= \int_{-\infty}^{\infty}xf_X(x)dx = \int_{0}^{\infty}x\left(\frac{x^{\alpha-1}e^{-x/\beta}}{\beta^{\alpha}\Gamma(\alpha)}\right)dx = \frac{1}{\beta^{\alpha}\Gamma(\alpha)}\int_{0}^{\infty}x^{\alpha}e^{-x/\beta}dx \\
+        &= \frac{1}{\beta^{\alpha}\Gamma(\alpha)}\int_{0}^{\infty}x^{\alpha}e^{-x/\beta}dx = \frac{\beta^{\alpha+1}\Gamma(\alpha+1)}{\beta^{\alpha}\Gamma(\alpha)} = \beta\alpha.
     \end{align*}
 \end{proof}
 
+\begin{prop}
+    The variance of $X \distribution \mathrm{Gamma}(\alpha, \beta)$ is $\alpha \beta^2$.
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        E(X^2) &= \int_{-\infty}^{\infty}x^2f_X(x)dx = \int_{0}^{\infty}x^2\left(\frac{x^{\alpha-1}e^{-x/\beta}}{\beta^{\alpha}\Gamma(\alpha)}\right)dx = \frac{1}{\beta^{\alpha}\Gamma(\alpha)}\int_{0}^{\infty}x^{\alpha+1}e^{-x/\beta}dx \\
+        &= \frac{1}{\beta^{\alpha}\Gamma(\alpha)}\int_{0}^{\infty}x^{\alpha+1}e^{-x/\beta}dx = \frac{\beta^{\alpha+2}\Gamma(\alpha+2)}{\beta^{\alpha}\Gamma(\alpha)} = \beta^2(\alpha+1)\alpha.
+    \end{align*}
+
+    The variance of $X \distribution \mathrm{Gamma}(\alpha, \beta)$ is therefore
+    \begin{align*}
+        E(X^2) - E(X)^2 = \beta^2(\alpha+1)\alpha - \alpha^2\beta^2 = \alpha\beta^2.
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    The moment generating function of $X \distribution \mathrm{Gamma}(\alpha, \beta)$ is
+    \begin{align*}
+        \left(1 - \beta\theta\right)^{-\alpha}.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        M(\theta) &= E(e^{\theta X}) = \int_{0}^{\infty}e^{\theta x}\frac{x^{\alpha-1}e^{-x/\beta}}{\beta^{\alpha}\Gamma(\alpha)}dx \\
+        &= \frac{1}{\beta^{\alpha}\Gamma(\alpha)}\int_{0}^{\infty}x^{\alpha-1}e^{-x(1/\beta-\theta)}dx = \frac{\left[\left(\frac{1}{\beta}-\theta\right)^{-1}\right]^{\alpha}}{\beta^{\alpha}} = (1 - \beta\theta)^{-\alpha}.
+    \end{align*}
+\end{proof}
+
+\section{Normal Distribution}
+
 \begin{defn}
-    A continuous random variable $X$ has the probability density function
+    A continuous random variable $X$ with the \emph{Normal} (or \emph{Gaussian}) distribution with parameters $\mu, \sigma$ has the probability density function
     \begin{align*}
         f(x) = \frac{e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2}}{\sigma\sqrt{2\pi}} = \frac{e^{-\frac{\left(x - \mu\right)^2}{2\sigma^2}}}{\sqrt{2\pi\sigma^2}}.
     \end{align*}
 \end{defn}
 
 \begin{defn}
-    The \emph{standard normal distribution} is
+    The \emph{standard normal distribution} is the normal distribution with $\mu = 0$ and $\sigma = 1$, and has probability density function
     \begin{align*}
         \varphi(x) = \frac{e^{-\frac{x^2}{2}}}{\sqrt{2\pi}}.
     \end{align*}
 \end{defn}
+
+\begin{rmk}\proofbreak
+    \begin{itemize}
+        \item For large $n$ and fixed $p$, the binomial$(n, p)$ distribution approximates the Normal distribution.
+        \item For large $\lambda$, the Poisson distribution approximates the Normal distribution.
+        \item For large $\alpha$ and fixed $\beta$, the Gamma distribution approximates the Normal distribution.
+    \end{itemize}
+\end{rmk}
 
 \begin{thm}
     If $X \distribution \mathrm{Normal}(\mu, \sigma^2)$ and $Y = \alpha X + \beta$ where $\alpha \neq 0$, then
@@ -813,18 +857,86 @@
         f_Y(y) &= \frac{d}{dy}F_Y(y) = \frac{d}{dy}\int_{-\infty}^{\frac{y-\beta}{\alpha}}\frac{e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2}}{\sqrt{2\pi\sigma^2}}dx \\
         &= \frac{e^{-\frac{1}{2}\left(\frac{\frac{y-\beta}{\alpha} - \mu}{\sigma}\right)^2}}{\sqrt{2\pi\sigma^2}}\frac{d}{dy}\frac{y - \beta}{\alpha} = \frac{e^{-\frac{1}{2}\left(\frac{y - \beta - \alpha\mu}{\alpha\sigma}\right)^2}}{\alpha\sqrt{2\pi\sigma^2}} = \frac{e^{-\frac{1}{2}\left(\frac{y - \left(\alpha\mu + \beta\right)}{\sigma}\right)^2}}{\sqrt{2\pi\alpha^2\sigma^2}}.
     \end{align*}
+    The proof for the case $\alpha < 0$ is nearly identical.
 \end{proof}
 
 \begin{cor}\proofbreak
     \begin{itemize}
         \item If $X \distribution \mathrm{Normal}(\mu, \sigma^2)$, then $Z = \frac{X - \mu}{\sigma} \distribution \mathrm{Normal}(0, 1)$.
-        \item If $Z \distribution \mathrm{Normal}(0, 1)$, then $X = \mu + \alpha Z \distribution \mathrm{Normal}(\mu, \sigma^2)$.
+        \item If $Z \distribution \mathrm{Normal}(0, 1)$, then $X = \mu + \sigma Z \distribution \mathrm{Normal}(\mu, \sigma^2)$.
     \end{itemize}
 \end{cor}
 
-\begin{rmk}
-    Given the standard normal distribution with PDF $\varphi$, its CDF is
+\begin{lemma}\label{gaussian-integral}
     \begin{align*}
-        \Phi(x) = \int_{-\infty}^{\infty}\varphi(u)du.
+        \int_{-\infty}^{\infty}e^{-x^2}dx = \sqrt{\pi}.
     \end{align*}
-\end{rmk}
+\end{lemma}
+
+\begin{proof}
+    Notice that $x^2 = (-x)^2$, and so $e^{-x^2}$ is even. Therefore,
+    \begin{align*}
+        \int_{-\infty}^{\infty}e^{-x^2}dx = 2\int_{0}^{\infty}e^{-x^2}dx.
+    \end{align*}
+    Let $t = x^2$, so $dt = 2xdx = 2\sqrt{t}dx$. Then
+    \begin{align*}
+        2\int_{0}^{\infty}e^{-x^2}dx &= \int_{0}^{\infty}x^{-1/2}e^{-x^2}2x^{1/2}dx = \int_{0}^{\infty}t^{-1/2}e^{-t}dt \\
+        &= 1^{1/2}\Gamma(1/2)\int_{0}^{\infty}\frac{t^{-1/2}e^{-t}}{1^{1/2}\Gamma(1/2)}dt = \Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}.
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    The moment generating function of $Z \distribution \mathrm{Normal}(0, 1)$ is
+    \begin{align*}
+        E\left(e^{\theta Z}\right) = e^{\frac{\theta^2}{2}}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        E\left(e^{\theta Z}\right) &= \int_{-\infty}^{\infty}e^{\theta z}\frac{e^{-\frac{z^2}{2}}}{\sqrt{2\pi}}dz = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-\frac{z^2}{2}+\theta}dz.
+    \end{align*}
+    Note that from $\theta z - \frac{z^2}{2}$, we can take $2\theta z - z^2$ and completing the square into $(z - \theta)^2$, obtaining
+    \begin{align*}
+        \theta z - \frac{z^2}{2} = -\frac{1}{2}\left(z - \theta\right)^2 + \frac{\theta^2}{2}.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        E\left(e^{\theta Z}\right) &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-\frac{z^2}{2}+\theta}dz = \frac{1}{\sqrt{2\pi}}e^{\theta^2/2}\int_{-\infty}^{\infty}e^{-\frac{1}{2}\left(z - \theta\right)^2}dz.
+    \end{align*}
+    Now we make the substitution $u = \frac{z - \theta}{\sqrt{2}}$, so $du = \frac{1}{\sqrt{2}}dz$. By Lemma \ref{gaussian-integral}, we know that
+    \begin{align*}
+        \int_{-\infty}^{\infty}e^{-u^2}du = \sqrt{\pi},
+    \end{align*}
+    and so
+    \begin{align*}
+        \int_{-\infty}^{\infty}e^{-\frac{1}{2}\left(z - \theta\right)^2}dz = \sqrt{2\pi}.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        E\left(e^{\theta Z}\right) &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-\frac{z^2}{2}+\theta}dz = \frac{1}{\sqrt{2\pi}}e^{\theta^2/2}\sqrt{2\pi} = e^{\frac{\theta^2}{2}}.
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    Let $X \distribution \mathrm{Normal}(\mu, \sigma)$, then
+    \begin{itemize}
+        \item $E(Z) = 0$,
+        \item $E(Z^2) = 1$,
+        \item $E(X) = \mu$, and
+        \item $\variance{X} = \sigma^2$.
+    \end{itemize}
+\end{cor}
+
+\begin{proof}
+    \begin{align*}
+        E(Z) &= M_{Z}'(0) = \frac{d}{d\theta}\big\rvert_{\theta=0}e^{\theta^2/2} = \left[\theta e^{\theta^2/2}\right]_{\theta = 0} = 0 \\
+        E(Z^2) &= M_{Z}''(0) = \frac{d^2}{d\theta^2}\big\rvert_{\theta=0}e^{\theta^2/2} = \left[\theta^2 e^{\theta^2/2} + e^{\theta^2/2}\right]_{\theta = 0} = 1.
+    \end{align*}
+    Then,
+    \begin{align*}
+        E(X) &= E(\sigma Z + \mu) = \sigma E(Z) + \mu = \mu \\
+        E(X^2) &= E(\sigma^2Z^2 + \sigma\mu Z + \mu^2) = \sigma^2E(Z^2) + \sigma\mu E(Z) + \mu^2 = \sigma^2 + \mu^2 \\
+        \variance{X} &= E(X^2) - E(X)^2 = \sigma^2 + \mu^2 - \mu^2 = \sigma^2.
+    \end{align*}
+\end{proof}
