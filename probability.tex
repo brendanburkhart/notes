@@ -823,6 +823,7 @@
     \begin{align*}
         f(x) = \frac{e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2}}{\sigma\sqrt{2\pi}} = \frac{e^{-\frac{\left(x - \mu\right)^2}{2\sigma^2}}}{\sqrt{2\pi\sigma^2}}.
     \end{align*}
+    We write $X \distribution \mathrm{Normal}(\mu, \sigma^2)$.
 \end{defn}
 
 \begin{defn}
@@ -919,7 +920,7 @@
 \end{proof}
 
 \begin{cor}
-    Let $X \distribution \mathrm{Normal}(\mu, \sigma)$, then
+    Let $X \distribution \mathrm{Normal}(\mu, \sigma^2)$, then
     \begin{itemize}
         \item $E(Z) = 0$,
         \item $E(Z^2) = 1$,
@@ -940,3 +941,70 @@
         \variance{X} &= E(X^2) - E(X)^2 = \sigma^2 + \mu^2 - \mu^2 = \sigma^2.
     \end{align*}
 \end{proof}
+
+\section{Transformations of Continuous Random Variables}
+
+\begin{defn}{CDF Method}\label{cdf-method}\proofbreak
+    Given random variables $X$ and $Y$ such that $Y = g(X)$ and the CDF of $X$ is known, we can find the CDF and PDF of $Y$ as follows:
+    \begin{itemize}
+        \item Determine the support of $Y$.
+        \item Compute $F_Y(y) = P(Y \leq y) = P(g(X) \leq y)$.
+        \item Finally, the PDF of $Y$ is $f_Y' = \frac{d}{dy}F_Y(y)$.
+    \end{itemize}
+\end{defn}
+
+\begin{exmp}
+    Let $Z \distribution \mathrm{Normal}(0, 1)$, and $X = Z^2$. Then the support of $X$ is the non-negative real numbers, and so
+    \begin{align*}
+        F_X(x) &= P(X \leq x) = P(Z^2 \leq x) = P(\abs{Z} \leq \sqrt{x}) \\
+        &= P(-\sqrt{x} \leq Z \leq \sqrt{x}) = P(Z \leq \sqrt{x}) - P(Z \leq -\sqrt{x}) = \varPhi(\sqrt{x}) - \varPhi(-\sqrt{x}).
+    \end{align*}
+    for $x \geq 0$ and $F_X(x) = 0$ otherwise. Finally, for $x > 0$,
+    \begin{align*}
+        f_X(x) &= F_X'(x) = \frac{d}{dx}\varPhi(\sqrt{x}) - \frac{d}{dx}\varPhi(-\sqrt{x}) = \frac{1}{2\sqrt{x}}\left[\varphi(\sqrt{x}) + \varphi(-\sqrt{x})\right] \\
+        &= \frac{1}{2\sqrt{x}}\left[\frac{e^{-\frac{x}{2}}}{\sqrt{2\pi}} + \frac{e^{-\frac{x}{2}}}{\sqrt{2\pi}}\right] = \frac{e^{-\frac{x}{2}}}{\sqrt{2\pi x}}.
+    \end{align*}
+    Note that this is the PDF of a continuous random variable with the Gamma$(1/2, 2)$ distribution.
+\end{exmp}
+
+\begin{rmk}
+    The $\chi^2$ (\emph{chi-square}) distribution with $k$ degrees of freedom is the Gamma$\left(\frac{k}{2}, 2\right)$ distribution. 
+\end{rmk}
+
+\begin{thm}\label{single-variable-jacobian-method}
+    Let $X, Y$ be continuous random variables such that $Y = g(X)$, where $g$ is \emph{strictly} monotonic. Then,
+    \begin{align*}
+        f_Y(y) = f_X(g^{-1}(y))\abs{\frac{d}{dy}g^{-1}(y)}.
+    \end{align*} 
+\end{thm}
+
+\begin{proof}
+    Recall that if $g$ is a strictly increasing (or decreasing) function that is smooth, then $g^{-1}$ exists and is also strictly increasing (or decreasing respectively).
+
+    We first consider only the case where $g$ is strictly increasing, so $\frac{d}{dy}g^{-1} > 0$.
+    \begin{align*}
+        F_Y(y) &= P(Y \leq y) = P(g(X) \leq y) \\
+        &= P(X \leq g^{-1}(y)) = F_X(g^{-1}(y)),
+    \end{align*}
+    and so
+    \begin{align*}
+        f_Y(y) &= \frac{d}{dx}F_X(g^{-1}(y)) = f_X\left(g^{-1}(y)\right)\frac{d}{dy}g^{-1}(y).
+    \end{align*}
+
+    Now we consider when $g$ is strictly decreasing, so $\frac{d}{dy}g^{-1} < 0$.
+    \begin{align*}
+        F_Y(y) &= P(Y \leq y) = P(g(X) \leq y) = P(g(X) \leq y) \\
+        &= P(X \geq g^{-1}(y)) = 1 - P(X \leq g^{-1}(y)) = 1 - F_X(g^{-1}(y)),
+    \end{align*}
+    and so
+    \begin{align*}
+        f_Y(y) &= \frac{d}{dx}\left[1-F_X(g^{-1}(y))\right] = -f_X\left(g^{-1}(y)\right)\frac{d}{dy}g^{-1}(y) = f_X(g^{-1}(y))\abs{\frac{d}{dy}g^{-1}(y)}.
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    Let $X \distribution \mathrm{Normal}(\mu, \sigma^2)$, and $Z = \frac{X - \mu}{\sigma}$ for some $\sigma > 0 0$. Note that $g(x) = \frac{x - \mu}{\sigma}$ is strictly increasing (or decreasing if $\sigma < 0$), and $g^{-1}(z) = \sigma z + \mu$. Then by Theorem \ref{single-variable-jacobian-method},
+    \begin{align*}
+        f_Z(z) = f_X(\sigma z + \mu)\frac{1}{\sigma} = \frac{e^{-\frac{1}{2}\left(\frac{\sigma z + \mu - \mu}{\sigma}\right)^2}}{\sigma\sqrt{2\pi}}\frac{1}{\sigma} = \frac{e^{-\frac{1}{2}z^2}}{\sqrt{2\pi}}.
+    \end{align*}
+\end{exmp}
