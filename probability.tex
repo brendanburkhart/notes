@@ -758,3 +758,73 @@
 
     This defines the Gamma$(\alpha, \beta)$ distribution, where $\alpha$ is the \emph{shape} parameter and $\beta$ is the \emph{scale} parameter.
 \end{exmp}
+
+\begin{rmk}
+    When $\alpha = 1$, the Gamma$(\alpha, \beta)$ distribution becomes exp$\left(\frac{1}{\beta}\right)$.
+\end{rmk}
+
+\begin{prop}
+    Mean of Gamma is $\alpha \beta$.
+\end{prop}
+
+\begin{prop}
+    Variance of Gamma is $\alpha \beta^2$.
+\end{prop}
+
+\begin{prop}
+    The moment generating function of Gamma is
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        M(\theta) &= E(e^{\theta X}) = \int_{0}^{-\infty}e^{\theta x}\frac{x^{\alpha-1}e^{-x/\beta}}{\beta^{\alpha}\Gamma(\alpha)}dx \\
+        &= \frac{1}{\beta^{\alpha}\Gamma(\alpha)}\int_{0}^{-\infty}x^{\alpha-1}e^{-x(1/\beta-\theta)}dx = \frac{\left[\left(\frac{1}{\beta}-\theta\right)^{-1}\right]^{\alpha}}{\beta^{\alpha}} = (1 - \beta\theta)^{-\alpha}.
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    A continuous random variable $X$ has the probability density function
+    \begin{align*}
+        f(x) = \frac{e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2}}{\sigma\sqrt{2\pi}} = \frac{e^{-\frac{\left(x - \mu\right)^2}{2\sigma^2}}}{\sqrt{2\pi\sigma^2}}.
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    The \emph{standard normal distribution} is
+    \begin{align*}
+        \varphi(x) = \frac{e^{-\frac{x^2}{2}}}{\sqrt{2\pi}}.
+    \end{align*}
+\end{defn}
+
+\begin{thm}
+    If $X \distribution \mathrm{Normal}(\mu, \sigma^2)$ and $Y = \alpha X + \beta$ where $\alpha \neq 0$, then
+    \begin{align*}
+        Y \distribution \mathrm{Normal}(\alpha\mu + \beta, \alpha^2\sigma^2).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Assume $\alpha > 0$. Then the CDF of $Y$ is $F_Y(y) = P(Y \leq y)$, which is $P(\alpha X + \beta \leq y)$ and so
+    \begin{align*}
+        F_Y(y) = P\left(X \leq \frac{y - \beta}{\alpha}\right) = \int_{-\infty}^{\frac{y-\beta}{\alpha}}\frac{e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2}}{\sqrt{2\pi\sigma^2}}dx.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        f_Y(y) &= \frac{d}{dy}F_Y(y) = \frac{d}{dy}\int_{-\infty}^{\frac{y-\beta}{\alpha}}\frac{e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2}}{\sqrt{2\pi\sigma^2}}dx \\
+        &= \frac{e^{-\frac{1}{2}\left(\frac{\frac{y-\beta}{\alpha} - \mu}{\sigma}\right)^2}}{\sqrt{2\pi\sigma^2}}\frac{d}{dy}\frac{y - \beta}{\alpha} = \frac{e^{-\frac{1}{2}\left(\frac{y - \beta - \alpha\mu}{\alpha\sigma}\right)^2}}{\alpha\sqrt{2\pi\sigma^2}} = \frac{e^{-\frac{1}{2}\left(\frac{y - \left(\alpha\mu + \beta\right)}{\sigma}\right)^2}}{\sqrt{2\pi\alpha^2\sigma^2}}.
+    \end{align*}
+\end{proof}
+
+\begin{cor}\proofbreak
+    \begin{itemize}
+        \item If $X \distribution \mathrm{Normal}(\mu, \sigma^2)$, then $Z = \frac{X - \mu}{\sigma} \distribution \mathrm{Normal}(0, 1)$.
+        \item If $Z \distribution \mathrm{Normal}(0, 1)$, then $X = \mu + \alpha Z \distribution \mathrm{Normal}(\mu, \sigma^2)$.
+    \end{itemize}
+\end{cor}
+
+\begin{rmk}
+    Given the standard normal distribution with PDF $\varphi$, its CDF is
+    \begin{align*}
+        \Phi(x) = \int_{-\infty}^{\infty}\varphi(u)du.
+    \end{align*}
+\end{rmk}
