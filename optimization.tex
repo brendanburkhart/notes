@@ -396,7 +396,7 @@ Row-reducing to the reduced row echelon form (while treating columns $1$, $3$, a
 
 Now, we \emph{pivot} to a new (and improved!) basic feasible tableau by choosing a non-basis column to turn into a basis column. We make the greediest choice by choose the $4$th column ($5$th of the overall tableau) since it has the largest improvements to our objective function per unit chance in the corresponding non-basis variable.
 
-Letting $j = 4$, we choose the $k$th row (excluding the objective row on top) by \[\argmin_{k}\frac{b_k}{A_{kj}} \mathrm{ where } A_{kj} \geq 0.\] This gives us the $2$nd row, so we row-reduce again, replace the column whose leading term choose in the $2$nd row (which is column $3$) with column $4$. To do this, we treat column $4$ as if it was the second column while row-reducing. Our new basis columns are $1$, $4$, and $7$, giving us our second basic feasible tableau:
+Letting $j = 4$, we choose the $k$th row (excluding the objective row on top) by \[\argmin_{k}\frac{b_k}{A_{kj}} \mathrm{ where } A_{kj} > 0.\] This gives us the $2$nd row, so we row-reduce again, replace the column whose leading term choose in the $2$nd row (which is column $3$) with column $4$. To do this, we treat column $4$ as if it was the second column while row-reducing. Our new basis columns are $1$, $4$, and $7$, giving us our second basic feasible tableau:
 \begin{align*}
     \left[\begin{array}{c|ccccccc|c}
         1 & 0 & 6.14  & -9.67 & 0 & 3.29  & -6.01 & 0 & 4.81 \\
@@ -592,7 +592,7 @@ In the corresponding dual linear program, we know that
 We also have $c^{\transpose}x^* = {y^*}^{\transpose}b$, and so when we replace $b$ with $b'$ we get
 $c^{\transpose}{x'}^{*} = {y^*}^{\transpose}(b + \Delta b) = {y^*}^{\transpose}b + {y^*}^{\transpose}\Delta b$. Therefore,
 \begin{align*}
-    \frac{c^{\transpose}x}{\partial b_i} = y_i^*.
+    \frac{c^{\transpose}{x'}^{*}}{\partial b_i} = y_i^*.
 \end{align*}
 
 \begin{defn}
@@ -625,3 +625,23 @@ $c^{\transpose}{x'}^{*} = {y^*}^{\transpose}(b + \Delta b) = {y^*}^{\transpose}b
 
     Since $y$ is feasible in the dual, by definition $A^{\transpose}y \leq c$, and so $c - A^{\transpose}y \geq \vec{0}$. Furthermore, $x \geq 0$ and so by Proposition \ref{complementary-orthogonal} it follows that this occurs precisely when $x$ and $c - A^{\transpose}y$ are complementary.
 \end{proof}
+
+\section{Dual Simplex Method}
+
+In the dual simplex method, we have a linear program in standard form $A, b, c$. Unlike when we start the simplex method, rather than knowing a starting feasible solution and working towards optimality, we know a starting solution that is essentially optimal and works towards feasibility. We actually start with a vector $y$ that is feasible in the dual linear program, and work towards making the corresponding primal vector $x$ feasible in the primal. Due to the setup of the dual simplex method, both $y$ and $x$ will have the same objective function value, and so once $x$ is feasible we have an optimal solution by the supervisor principle \ref{supervisor-principle}.
+
+\begin{defn}{Basic tableau}\proofbreak
+    A basic tableau is a tableau formed from a basic, but not necessarily feasible, solution.
+\end{defn}
+
+Given a linear program and corresponding basic tableau, we have $y = c_B^{\transpose}B^{-1}$ and $x = B^{-1}b$. Recall that $y$ is an optimal solution to the dual problem when:
+\begin{itemize}
+    \item $Ax = b$,
+    \item $x \geq 0$,
+    \item $A^{\transpose}y \leq c$,
+    \item $c^{\transpose}x = b^{\transpose}y$.
+\end{itemize}
+
+The first condition, that $Ax = b$ is necessarily satisfied by any basic tableau. The fourth, that $c^{\transpose}x = b^{\transpose}y$, is also satisfied since $c_B^{\transpose}B^{-1}b = y^{\transpose}b = b^{\transpose}y$ and $c_B^{\transpose}B^{-1}b = c^{\transpose}x$. The third condition, that $A^{\transpose}y \leq c$, is satisfied when $r \geq 0$. Since the top row of the tableau is $-r$, the top row must be non-positive. This was shown as part of the proof for Strong Duality \ref{strong-duality}. Therefore, we need to come up with a ``dual pivot'' that preserves these properties while working towards achieving the second condition.
+
+To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, and pick a column to row-reduce on. Since we need to maintain a non-positive top row $-r$, we want to pick the column $k$ by \[\argmin_{k}\frac{r_k}{A_{jk}} \mathrm{ where } A_{jk} < 0.\]
