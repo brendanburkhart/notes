@@ -1008,3 +1008,57 @@
         f_Z(z) = f_X(\sigma z + \mu)\frac{1}{\sigma} = \frac{e^{-\frac{1}{2}\left(\frac{\sigma z + \mu - \mu}{\sigma}\right)^2}}{\sigma\sqrt{2\pi}}\frac{1}{\sigma} = \frac{e^{-\frac{1}{2}z^2}}{\sqrt{2\pi}}.
     \end{align*}
 \end{exmp}
+
+\begin{defn}
+    Discrete random variables $X_1, X_2, \ldots, X_n$ are \emph{independent} when
+    \begin{align*}
+        P(X_1 = x_1, X_2 = x_2, \ldots, X_n = x_n) = P(X_1 = x_1)P(X_2 = x_2)\cdots P(X_n = x_n).
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    Continuous random variables $X_1, X_2, \ldots, X_n$ are \emph{independent} when
+    \begin{align*}
+        f_{X_1,X_2,\ldots,X_n}(x_1, x_2, \ldots, x_n) = f_{X_1}(x_1)f_{X_2}(x_2)\cdots f_{X_n}(x_n).
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    Let $X, Y$ be continuous random variables, and consider $U = X + Y$. If $X$ and $Y$ are independent,
+    $f_U(u) = (f_X * f_Y)(u)$. Similarly, if $X$ and $Y$ are independent discrete random variables,
+    $P_U(u) = (P_X * P_Y)(u)$.
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        F_U(u) &= P(U \leq u) = P(X + Y \leq u) \\
+        &= \int_{-\infty}^{\infty}\int_{-\infty}^{u-x}f_{X,Y}(x,y)dydx,
+    \end{align*}
+    and so
+    \begin{align*}
+        f_U(u) &= \frac{d}{du}\int_{-\infty}^{\infty}\int_{-\infty}^{u-x}f_{X,Y}(x,y)dydx = \int_{-\infty}^{\infty}\frac{\partial}{\partial u}\int_{-\infty}^{u-x}f_{X,Y}(x,y)dydx \\
+        &= \int_{-\infty}^{\infty}f_{X,Y}(x,u-x)dx.
+    \end{align*}
+    In the case that $X,Y$ are independent, we know that $f_{X,Y}(x,u-x) = f_X(x)f_Y(u-x)$, so
+    \begin{align*}
+        f_U(u) = \int_{-\infty}^{\infty}f_X(x)f_Y(u-x)dx = (f_X * f_Y)(u).
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    Let $X,Y \distribution \mathrm{exp}(1)$ be independent continuous random variables. Then the PDF of $U = X+Y$ is
+    \begin{align*}
+        \int_{-\infty}^{\infty}f_X(x)f_Y(u-x)dx = \int_{0}^{u}e^{-x}e^{-(u-x)}dx = e^{-u}\int_{0}^{u}dx = ue^{-u}.
+    \end{align*}
+    Therefore, $U \distribution \Gamma(2, 1)$.
+\end{exmp}
+
+\begin{exmp}
+    Let $X \distribution \mathrm{binomial}(n,p)$ and $Y \distribution \mathrm{binomial}(m, p)$ be independent discrete random variables. Then the PMF of $U = X+Y$ is
+    \begin{align*}
+        \sum_{x=0}^{u}P_X(x)P_Y(u-x) &= \sum_{x=0}^{u}\binom{n}{x}p^{x}(1-p)^{n-x}\binom{m}{u-x}p^{u-x}(1-p)^{m+x-u} \\
+        &= \sum_{x=0}^{u}\binom{n}{x}\binom{m}{u-x}p^{u}(1-p)^{n+m-u} = p^{u}(1-p)^{n+m-u}\sum_{x=0}^{u}\binom{n}{x}\binom{m}{u-x} \\
+        &= \binom{n+m}{u}p^{u}(1-p)^{n+m-u}.
+    \end{align*}
+    Therefore, $U \distribution \mathrm{binomial}(n+m, p)$.
+\end{exmp}
