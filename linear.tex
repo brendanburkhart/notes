@@ -2674,11 +2674,11 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \begin{align*}
         \lambda\langle x, x\rangle = \langle x, \lambda x\rangle = \overline{\lambda}\langle x, x \rangle.
     \end{align*}
-    Since $x \neq 0$, it follows that $\lambda = \overline{\lambda}$ and so $\lambda \in \R$. Therefore, all eigenvectors of $A$ are real and so $A$ has at least one real eigenvector.
+    Since $x \neq 0$, it follows that $\lambda = \overline{\lambda}$ and so $\lambda \in \R$. Therefore, all eigenvalues of $A$ are real and so $A$ has at least one real eigenvalue.
 
     We will proceed by induction on $n$. First, a $1 \times 1$ matrix $A = (a)$ is trivially both symmetric and diagonalizable, and $\{(1)\}$ is a basis for $\R^1$ that is vacuously orthogonal and composed of eigenvectors of $A$. Now assume that for $m \leq n-1$, any $m \times m$ real symmetric matrix is diagonalizable, and there exists an orthogonal basis for $\R^m$ composed of its eigenvectors.
     
-    Let $v_1$ be an eigenvector and $\lambda_1$ the corresponding eigenvalue. Complete to an ordered orthogonal basis $\langle v_1, \ldots, v_n \rangle$ for $\R^n$. Let $Q$ be a matrix whose $i$th column is $v_i$, and let
+    Let $\lambda_1$ be a real eigenvalue and $v_1$ be the corresponding eigenvector. Complete to an ordered orthogonal basis $B = \langle v_1, \ldots, v_n \rangle$ for $\R^n$. Let $Q$ be a matrix whose $i$th column is $v_i$, and let
     $\tilde{A} = [L_A]_{B}^{B}$. Then $\tilde{A} = Q^{-1}AQ = Q^{\transpose}AQ$. Note that $\tilde{A}$ is symmetric: $\left(Q^{\transpose}AQ\right)^{\transpose} = Q^{\transpose}A^{\transpose}\left(Q^{\transpose}\right)^{\transpose} = Q^{\transpose}AQ = \tilde{A}$.
 
     Since $Av_1 = \lambda_1v_1$, we know that
@@ -2715,3 +2715,36 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \[A = Q\tilde{A}Q^{\transpose} = QSDS^{\transpose}Q^{\transpose} = (QS)D(QS)^{\transpose} = (QS)D(QS)^{-1}.\]
     Note that $D$ is diagonal since $E$ is, and $S$ (and $S^{\transpose}$) are orthogonal since $T$ (and $T^{\transpose})$) is. Since $Q$ and $S$ are orthogonal, so is their product $QS$. Since $D$ is a diagonal matrix of eigenvalues, the columns of $QS$ are necessarily eigenvectors of $A$, and so the columns of $QS$ form an orthogonal basis of eigenvectors.
 \end{proof}
+
+\begin{defn}
+    A symmetric matrix $A \in M_{n\times n}(\R)$ is \emph{positiive definite} is $z^{\transpose}Mz$ is strictly positive for \emph{every} non-zero real $z \in \R^n$, and \emph{positive semidefinite} if $z^{\transpose}Mz$ is positive or zero for every non-zero real $z \in \R^n$. Negative definite and negative semidefinite are defined similarly.
+    
+    For Hermitian matrices $H \in M_{n\times n}(\C)$, these are defined similarly using $z^{*}Hz$.
+
+    A matrix that is neither positive nor negative (semi)definite is said to be \emph{indefinite}.
+\end{defn}
+
+\begin{thm}\label{positive-semidefinite-criteria}
+    Let $A \in M_{n \times n}(\R)$ be a symmetric matrix. Then $A$ is positive definite, positive semidefinite, negative definite, or negative semidefinite if and only if the eigenvalues of $A$ are real and strictly positive, non-negative, strictly negative, or non-positive respectively.
+\end{thm}
+
+\begin{proof}
+    By the Spectral Theorem \ref{spectral-theorem}, we know that there is an orthogonal basis $B = \langle v_1, \ldots, v_n\rangle$ for $\R^n$ composed of eigenvectors of $A$, where $\lambda_1, \ldots, \lambda_n$ are the associated rela eigenvalues. For any non-zero $z \in \R^n$, consider
+    \begin{align*}
+        z &= a_1v_1 + \cdots + a_nv_n.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        z^{\transpose}Az &= z^{\transpose}A\left(a_1v_1 + \cdots + a_nv_n\right) \\
+        &= z^{\transpose}\left(a_1\lambda_1v_1 + \cdots + a_n\lambda_{n}v_n\right).
+    \end{align*}
+    Since $B$ is orthogonal, $v_i^{\transpose}v_j = 0$ whenever $i \neq j$, and so
+    \begin{align*}
+        z^{\transpose}Az &= a_1^2\lambda_1v_1^{\transpose}v_1 + \cdots + a_n^2\lambda_{n}v_n^{\transpose}v_n.
+    \end{align*}
+    Since $z \in \R^n$ we have $a_i \in \R$, and so $a_i^2 \geq 0$ and of course $v_i \in \R^n$ and so $v_i^2 > 0$. Therefore, the sign of $z^{\transpose}Az$ depends only on the signs of $\lambda_i$.
+\end{proof}
+
+\begin{cor}
+    If a matrix is positive semidefinite and invertible (so no eigenvalues can't be zero) then it must be positive definite.
+\end{cor}
