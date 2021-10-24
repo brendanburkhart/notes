@@ -315,6 +315,18 @@ Therefore, we have $E = \frac{1}{2}\frac{\partial^2 f}{\partial x^2}(a)$, $F = \
 It follows that \[T_2(x, y) = f(a) + \frac{\partial f}{\partial x}(a)(x-x_0) + \frac{\partial f}{\partial y}(a)(y-y_0) + \frac{1}{2}\frac{\partial^2 f}{\partial xy}(a)(x-x_0)(y-y_0) + \]
 \[\frac{1}{2}\frac{\partial^2 f}{\partial x^2}(a)(x-x_0)^2 + \frac{1}{2}\frac{\partial^2 f}{\partial y^2}(a)(y-y_0)^2.\]
 
+Let's generalize this to $f: \R^n \to \R$. We will find fitting a quadratic $T$ to $f$ around $\bar{x} \in \R^n$ gives us
+\begin{align*}
+    T(x) = f(\bar{x}) + \nabla f(\bar{x})\left(x-\bar{x}\right) + \frac{1}{2}\left(x-\bar{x}\right)\nabla^2f\left(x - \bar{x}\right).
+\end{align*}
+
+We can verify this:
+\begin{itemize}
+    \item $T(\bar{x}) = f(\bar{x})$,
+    \item $\nabla T(\bar{x}) = \nabla f(\bar{x})$,
+    \item $\nabla^2 T(\bar{x}) = \nabla^2 f(\bar{x})$.
+\end{itemize}
+
 \section{Vector Fields}
 
 \begin{defn}
