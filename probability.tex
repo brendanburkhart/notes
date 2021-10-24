@@ -1062,3 +1062,29 @@
     \end{align*}
     Therefore, $U \distribution \mathrm{binomial}(n+m, p)$.
 \end{exmp}
+
+\begin{thm}
+    Let $X_1, X_2, \ldots, X_n, Y_1, Y_2, \ldots, Y_k$ be independent random variables. Then for any functions $h_1, h_2$,
+    \begin{align*}
+        H_1 &= h_1(X_1, \ldots, X_n) \\
+        H_2 &= h_2(Y_1, \ldots, Y_k)
+    \end{align*}
+    are independent.
+\end{thm}
+
+\begin{thm}
+    Let $X$ and $Y$ be independent random variables with moment generating functions $M_X(\theta), M_Y(\theta)$. Then
+    \begin{align*}
+        M_{X+Y}(\theta) = M_X(\theta)M_Y(\theta).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    \begin{align}
+        M_{X+Y}(\theta) = E\left(e^{\theta(X+Y)}\right) = E\left(e^{\theta X}e^{\theta Y)}\right) = E\left(e^{\theta X}\right)E\left(e^{\theta Y)}\right) = M_X(\theta)M_Y(\theta).
+    \end{align}
+\end{proof}
+
+\begin{rmk}
+    If $U$ and $V$ are random variables with moment generating functions that agree in an open neighborhood of $\theta = 0$, then $U$ and $V$ have the same distribution.
+\end{rmk}
