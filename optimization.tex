@@ -647,3 +647,89 @@ The first condition, that $Ax = b$ is necessarily satisfied by any basic tableau
 To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, and pick a column to row-reduce on. Since we need to maintain a non-positive top row $-r$, we want to pick the column $k$ by \[\argmin_{k}\frac{r_k}{A_{jk}} \mathrm{ where } A_{jk} < 0.\]
 
 \section{Non-Linear Optimization}
+
+\begin{defn}
+    Let $S \subseteq \R^n$ be a non-empty convex set, and let $f: S \to \R$. We say that $f$ is \emph{convex} when
+    \begin{align*}
+        f\left(\lambda x + (1 - \lambda)y\right) \leq \lambda f(x) + (1 - \lambda)f(y)
+    \end{align*}
+    for all $x, y \in S$ and $\lambda \in [0, 1]$.
+
+    Similarly, we say that $f$ is \emph{strictly convex} when
+    \begin{align*}
+        f\left(\lambda x + (1 - \lambda)y\right) < \lambda f(x) + (1 - \lambda)f(y)
+    \end{align*}
+    for all $x, y \in S$ and $\lambda \in (0, 1)$.
+
+    We analogously define \emph{concave} and \emph{strictly concave} functions using $\geq$ and $>$ respectively.
+\end{defn}
+
+\begin{rmk}
+    Note that we use an open interval for $\lambda$ in the strict case, and a closed interval otherwise. This is because at $\lambda = 0$ or $\lambda = 1$ we will always have equality.
+\end{rmk}
+
+\begin{defn}
+    Let $S \subseteq \R^n$, and consider $f: S \to \R$. The \emph{epigraph} of $f$ 
+    \begin{align*}
+        \left\{\begin{bmatrix}
+            x \\ y
+        \end{bmatrix} \compbar x \in S, y \in R, y \geq f(x)\right\} \subseteq \R^{n+1}
+    \end{align*}
+    and is denoted by $\epigraph(f)$. That is, the epigraph is all points above the graph of the function.
+\end{defn}
+
+\begin{prop}
+    Let $S \subseteq \R^n$, and consider $f: S \to \R$. Then $f$ is convex if and only if $\epigraph(f)$ is convex.
+\end{prop}
+
+\begin{proof}\proofbreak
+    ($\implies$) Assume that $f$ is convex. Then for any $[x_1, y_1]^{\transpose}, [x_2, y_2]^{\transpose} \in \epigraph(f)$ and $\lambda \in [0, 1]$, we know that
+    \begin{align*}
+        f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda f(x_1) + (1 - \lambda)f(x_2).
+    \end{align*}
+    
+\end{proof}
+
+\begin{thm}{Support Theorem}\label{support-theorem}\proofbreak
+    Let $S \subseteq \R^n$ be a convex set, and let $\bar{x}$ be a boundary point of $S$. There exists a hyperplane containing $\bar{x}$ such that $S$ is contained in an associated closed half-space.
+\end{thm}
+
+\begin{thm}
+    Let $S \subseteq \R^n$ be an open convex set, and let $f: S \to \R$ be continuously differentiable. Then $f$ is a convex function if and only if
+    \begin{align*}
+        f(x) \geq f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x})
+    \end{align*}
+    for all $x, \bar{x} \in S$. 
+\end{thm}
+
+\begin{thm}
+    Let $S \subseteq \R^n$ be an open convex set, and let $f: S \to \R$ be continuously differentiable. Then $f$ is strictly convex if and only if 
+    \begin{align*}
+        f(x) > f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x})
+    \end{align*}
+    for all $x, \bar{x} \in S$ where $x \neq \bar{x}$. 
+\end{thm}
+
+\begin{cor}
+    Let $S \subseteq \R^n$ be an open convex set, and let $f: S \to \R$ be \emph{twice} continuously differentiable. Then $f$ is convex if and only if $\nabla^2f(\bar{x})$ is positive semi-definite for all $\bar{x} \in S$.
+\end{cor}
+
+\begin{proof}\proofbreak
+    Assume $\nabla^2f(\bar{x})$ is positive semi-definite for all $\bar{x} \in S$. By Taylor's theorem, for all $x \in S$ we have
+    \begin{align*}
+        f(x) = f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x}) + \frac{1}{2}(x - \bar{x})^{\transpose}\nabla^2f(z)(x - \bar{x})
+    \end{align*}
+    for some $z \in S$. Since $\nabla^2f(\bar{x})$ is positive semi-definite, we know that $\frac{1}{2}(x - \bar{x})^{\transpose}\nabla^2f(z)(x - \bar{x}) \geq 0$, and so we have
+    \begin{align*}
+        f(x) \geq f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x}).
+    \end{align*}
+
+    Now assume $\nabla^2f(\bar{x})$ is \emph{not} positive semi-definite for all $\bar{x} \in S$. Then there exists $d \in \R^n$ such that $d^{\transpose}\nabla^2f(\bar{x})d < 0$. By continuity of $\nabla^2f(\bar{x})$, there is a neighborhood around $\bar{x}$ such that $d^{\transpose}\nabla^2f(z)d < 0$ for all $z$ in that neighborhood. By Taylor's theorem, for all $x \in S$ we have
+    \begin{align*}
+        f(x) = f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x}) + \frac{1}{2}(x - \bar{x})^{\transpose}\nabla^2f(z)(x - \bar{x})
+    \end{align*}
+    for some $z \in S$. Choose $x = \bar{x} + \alpha d$ for $\alpha > 0$ small enough that $x$ is in that neighborhood, and since $z$ falls between $x$ and $\bar{x}$, $z$ is also in that neighborhood. Then $\frac{1}{2}(x - \bar{x})^{\transpose}\nabla^2f(z)(x - \bar{x}) < 0$, and so we have
+    \begin{align*}
+        f(x) < f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x}).
+    \end{align*}
+\end{proof}
