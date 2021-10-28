@@ -678,16 +678,40 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     and is denoted by $\epigraph(f)$. That is, the epigraph is all points above the graph of the function.
 \end{defn}
 
-\begin{prop}
-    Let $S \subseteq \R^n$, and consider $f: S \to \R$. Then $f$ is convex if and only if $\epigraph(f)$ is convex.
+\begin{prop}\label{epigraph-convexity}
+    Let $S \subseteq \R^n$, and consider $f: S \to \R$. Then $f$ is a convex function if and only if $\epigraph(f)$ is a convex set.
 \end{prop}
 
 \begin{proof}\proofbreak
     ($\implies$) Assume that $f$ is convex. Then for any $[x_1, y_1]^{\transpose}, [x_2, y_2]^{\transpose} \in \epigraph(f)$ and $\lambda \in [0, 1]$, we know that
     \begin{align*}
-        f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda f(x_1) + (1 - \lambda)f(x_2).
+        f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda f(x_1) + (1 - \lambda)f(x_2) = \lambda y_1 + (1 - \lambda)y_2.
     \end{align*}
-    
+    Therefore,
+    \begin{align*}
+        \begin{bmatrix}
+            \lambda x_1 + (1 - \lambda)x_2 \\
+            \lambda y_1 + (1 - \lambda)y_2
+        \end{bmatrix} = \lambda \begin{bmatrix}
+            x_1 \\ y_1
+        \end{bmatrix} + (1-\lambda)\begin{bmatrix}
+            x_2 \\ y_2
+        \end{bmatrix} \in \epigraph(f),
+    \end{align*}
+    and so $\epigraph(f)$ is a convex set.
+
+    ($\impliedby$) Assume that $\epigraph(f)$ is a convex set. Then for any $[x_1, y_1]^{\transpose}, [x_2, y_2]^{\transpose} \in \epigraph(f)$ and $\lambda \in [0, 1]$, we know that
+    \begin{align*}
+        \lambda \begin{bmatrix}
+            x_1 \\ y_1
+        \end{bmatrix} + (1-\lambda)\begin{bmatrix}
+            x_2 \\ y_2
+        \end{bmatrix} = \begin{bmatrix}
+            \lambda x_1 + (1 - \lambda)x_2 \\
+            \lambda y_1 + (1 - \lambda)y_2
+        \end{bmatrix} \in \epigraph(f).
+    \end{align*}
+    Therefore, $f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda y_1 + (1 - \lambda)y_2 = \lambda f(x_1) + (1-\lambda)f(x_2)$ by the definition of $\epigraph(f)$, and so $f$ is a convex function.
 \end{proof}
 
 \begin{thm}{Support Theorem}\label{support-theorem}\proofbreak
