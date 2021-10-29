@@ -718,7 +718,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     Let $S \subseteq \R^n$ be a convex set, and let $\bar{x}$ be a boundary point of $S$. There exists a hyperplane containing $\bar{x}$ such that $S$ is contained in an associated closed half-space.
 \end{thm}
 
-\begin{thm}
+\begin{thm}\label{convex-function-tangent-hyperplane}
     Let $S \subseteq \R^n$ be an open convex set, and let $f: S \to \R$ be continuously differentiable. Then $f$ is a convex function if and only if
     \begin{align*}
         f(x) \geq f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x})
@@ -757,3 +757,25 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
         f(x) < f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x}).
     \end{align*}
 \end{proof}
+
+\begin{prop}
+    Let $S \in \R^n$ be an open convex set, and let $f: S \to \R$ be a continuously differentiable convex function. Then for any $\bar{x} \in S$, the following are equivalent:
+    \begin{itemize}
+        \item $\bar{x}$ is a global minimizer,
+        \item $\bar{x}$ is a local minimizer,
+        \item $\bar{x}$ is stationary point.
+    \end{itemize}
+\end{prop}
+
+\begin{proof}
+    If $\bar{x}$ is a global minimizer, then $\bar{x}$ is a local minimizer. If $\bar{x}$ is a local minimizer, then $\bar{x}$ is a stationary point. Therefore, we only need to show that stationary points are global minimizers, and the result will follow.
+
+    By convexity of $f$, for all $x \in S$ we know that $f(x) \geq f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x})$ by Theorem \ref{convex-function-tangent-hyperplane}. If $\bar{x}$ is a stationary point, then $\nabla f(\bar{x})$ by definition, and so $f(x) \geq f(\bar{x})$. Then $\bar{x}$ is a global minimizer by definition.
+\end{proof}
+
+\begin{defn}{Newton's Method}\label{newtons-method}
+    Let $f: \R^n \to \R$ be twice continuously differentiable, and pick some $x^{(0)} \in \R^n$. For $i = 1, 2, \ldots, $ while $f(x^{(i)}) \neq 0$, let
+    \begin{align*}
+        x^{(i+1)} = x^{i} - \left(\nabla^2f(x^{(i)})\right)^{-1}\nabla f(x^{(i)}).
+    \end{align*}
+\end{defn}
