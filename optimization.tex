@@ -776,6 +776,20 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{defn}{Newton's Method}\label{newtons-method}
     Let $f: \R^n \to \R$ be twice continuously differentiable, and pick some $x^{(0)} \in \R^n$. For $i = 1, 2, \ldots, $ while $f(x^{(i)}) \neq 0$, let
     \begin{align*}
-        x^{(i+1)} = x^{i} - \left(\nabla^2f(x^{(i)})\right)^{-1}\nabla f(x^{(i)}).
+        x^{(i+1)} = x^{(i)} - \left(\nabla^2f(x^{(i)})\right)^{-1}\nabla f(x^{(i)}).
     \end{align*}
 \end{defn}
+
+\begin{rmk}
+    Assume that $\nabla^2f$ is constant, and that all derivatives of $f$ of order higher than two are zero. Then a local minimum occurs when $\nabla^2f(x) = 0$, and so we want $\nabla f(x^{(i+1)}) = 0$. Since the higher derivatives are zero,
+    \begin{align*}
+        \nabla f(x^{(i+1)}) = \nabla f(x^{(i)}) + \nabla^2f(x^{(i)})(x^{(i+1)} - x^{(i)}).
+    \end{align*}
+    Therefore, if we want the gradient to be zero, we have
+    \begin{align*}
+        0 &= \nabla f(x^{(i)}) + \nabla^2f(x^{(i)})(x^{(i+1)} - x^{(i)}) \\
+        x^{(i+1)} - x^{(i)} &= -\left(\nabla^2f(x^{(i)})\right)^{-1}\nabla f(x^{(i)}) \\
+        x^{(i+1)} &= x^{(i)} - \left(\nabla^2f(x^{(i)})\right)^{-1}\nabla f(x^{(i)}).
+    \end{align*}
+    While our assumptions will almost certainly be invalid, making these ``Newton steps'' will often produce rapid progress towards a local minimum. For non-pathological functions, the closer to the local minimum the better our linear approximation of $\nabla f$ will be.
+\end{rmk}
