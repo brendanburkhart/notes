@@ -793,3 +793,66 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     While our assumptions will almost certainly be invalid, making these ``Newton steps'' will often produce rapid progress towards a local minimum. For non-pathological functions, the closer to the local minimum the better our linear approximation of $\nabla f$ will be.
 \end{rmk}
+
+\begin{thm}{Farkas' Theorem}\label{farkas}\proofbreak
+    Let $A \in M_{m \times n}(\R)$, $b \in \R^m$. Then exactly one of the following is true:
+    \begin{itemize}
+        \item there exists $x \in \R^n$ such that $Ax = b$ and $x \geq \vec{0}$,
+        \item there exists $y \in \R^m$ such that $b^{\transpose}y > 0$ and $A^{\transpose}y \leq \vec{0}$.
+    \end{itemize}
+\end{thm}
+
+\begin{proof}
+    Consider the linear program of minimizing $\vec{0}^{\transpose}x$ such that $Ax = b$ and $x \geq {0}$. The dual program is maximizing $b^{\transpose}y$ such that $A^{\transpose}y \leq \vec{0}$.
+
+    In the first case, the primal program is feasible and the objective function value at $x$ is necessarily zero. Then by Weak Duality \ref{weak-duality}, we know that the dual program has no feasible solution with objective function value greater than zero, and so the second case cannot be true.
+
+    If the second case is false, then the dual program has no feasible solutions with positive objective function value. We know however that the $y = \vec{0}$ is a feasible solution to the dual with objective function value of zero, and is therefore the optimal solution. By Strong Duality \ref{strong-duality}, the primal program must have a feasible solution $x$, and so the first case is true.
+\end{proof}
+
+\begin{thm}{Gordon's Theorem}\label{gordons}\proofbreak
+    Let $A = M_{m \times n}(\R)$. Then exactly one of the following is true:
+    \begin{itemize}
+        \item there exists $x \in \R^n$ such that $Ax = \vec{0}$, $x \geq \vec{0}$, $x \neq \vec{0}$.
+        \item there exists $y \in \R^m$ such that $A^{\transpose}y < \vec{0}$.
+    \end{itemize}
+\end{thm}
+
+\begin{proof}
+    Assume the second case is true, so there exists $y \in \R^m$ such that $A^{\transpose}y < \vec{0}$. Equivalently, there exists $\varepsilon > 0$ such that $A^{\transpose}y + \varepsilon\vec{1} \leq \vec{0}$. However, this is equivalent to saying that there exists
+    \begin{align*}
+        \begin{bmatrix}
+            y \\ \varepsilon
+        \end{bmatrix} \in \R^{m+1}
+    \end{align*}
+    such that
+    \begin{align*}
+        \begin{bmatrix}
+            \vec{0} \\ 1
+        \end{bmatrix}^{\transpose}
+        \begin{bmatrix}
+            y \\ \varepsilon
+        \end{bmatrix} > 0,\;\;\;\begin{bmatrix}
+            A^{\transpose} | \vec{1}
+        \end{bmatrix}\begin{bmatrix}
+            y \\ \varepsilon
+        \end{bmatrix} \leq \vec{0}.
+    \end{align*}
+    Then by Farkas \ref{farkas}, we know that there cannot be any $x \geq \vec{0}$ such that
+    \begin{align*}
+        \begin{bmatrix}
+            A \\ \vec{1}^{\transpose}
+        \end{bmatrix}x = \begin{bmatrix}
+            \vec{0} \\ 1
+        \end{bmatrix}.
+    \end{align*}
+    This is equivalent to
+    \begin{align*}
+        Ax = \vec{0},\;\;\;x \geq \vec{0}\;\;\;\vec{1}^{\transpose}x = 1.
+    \end{align*}
+    Therefore, the first case must be false, or else we could take
+    \begin{align*}
+        x' = \frac{1}{\vec{1}^{\transpose}x}x,
+    \end{align*}
+    and we would have $Ax' = \frac{1}{\vec{1}^{\transpose}x}\vec{0} = \vec{0}$, $x' \geq \vec{0}$, $\vec{1}^{\transpose}x' = 1$.
+\end{proof}
