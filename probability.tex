@@ -1089,7 +1089,7 @@
     If $U$ and $V$ are random variables with moment generating functions that agree in an open neighborhood of $\theta = 0$, then $U$ and $V$ have the same distribution.
 \end{rmk}
 
-\section{Distributions of Ordered Statistics}
+\section{Ordered Statistics}
 
 Let $X_1, X_2, \ldots, X_n$ be independent and identically distributed random variables with PDF $f_X(x)$ and CDF $F_X(x)$.
 
@@ -1101,7 +1101,7 @@ Similarly, $Y_1 \leq u = 1 - Y_1 \geq u = 1 - X_i \geq u$, so $F_{Y_1}(u) = 1 - 
 
 Let $Y_j$ be the $j$th smallest value of $X_1, X_2, \ldots, X_n$. Recall that, by definition,
 \begin{align*}
-    f_{Y_j}(y) = \lim_{h \to 0^{+}}\frac{P(y-h)<Y_j\leq y}{h}.
+    f_{Y_j}(y) = \lim_{h \to 0^{+}}\frac{P(y-h < Y_j \leq y)}{h}.
 \end{align*}
 Fix some $0 < h << 1$. Then $y-h < Y_j \leq y$ is equivalent to having $j-1$ of $X_i$ strictly less than $y-h$, one of $X_i$ must be between $y-h$ and $y$, and $n-j$ of $X_i$ strictly greater than $y$. This probability is
 \begin{align*}
@@ -1110,7 +1110,7 @@ Fix some $0 < h << 1$. Then $y-h < Y_j \leq y$ is equivalent to having $j-1$ of 
 \end{align*}
 and so
 \begin{align*}
-    f_{Y_j}(y) &= \lim_{h \to 0^{+}}\frac{P(y-h)<Y_j\leq y}{h} \\
+    f_{Y_j}(y) &= \lim_{h \to 0^{+}}\frac{P(y-h<Y_j\leq y)}{h} \\
     &= \lim_{h \to 0^{+}}\frac{n!}{(j-1)!(n-j)!}F(y-h)^{j-1}\left(1-F(y)\right)^{n-j}\frac{\left(F(y)-F(h)\right)}{h} \\
     &= \frac{n!}{(j-1)!(n-j)!}F(y-h)^{j-1}\left(1-F(y)\right)^{n-j}f_X(y).
 \end{align*}
