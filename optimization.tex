@@ -1,7 +1,7 @@
 \chapter{Optimization}
 \label{ch:optimization}
 
-\section{Introduction}
+\section{Linear Programming}
 
 \begin{defn}
     In the context of an optimization problem:
@@ -122,7 +122,7 @@
     Let $S \subseteq \R^n$, $x^*$ be an interior point of $S$, and $f: S \to \R$ be a sufficiently smooth continuous function. If $x^* \in S$ is a local minimizer, then the \emph{gradient} of $f(x^*)$ is $\vec{0}$. However, $\nabla f(x^*) = \vec{0}$ does not imply that $x^*$ is a local minimizer.
 \end{rmk}
 
-\section{Forms of Linear Programming Problems}
+\subsection{Forms of Linear Programming Problems}
 
 \begin{defn}
     A maximization or minimization linear programming problem in \emph{standard form} is a problem of the form:
@@ -215,7 +215,7 @@
     Constraints of the form $Ax = b$ are simply a system of equations, and therefore can be simplified using row operations by Theorem \ref{solutions-unchanged-by-row-ops}. Reduced row echelon form can help identified independent vs dependent variables.
 \end{rmk}
 
-\section{Polyhedrons}
+\subsection{Polyhedrons}
 
 \begin{defn}
     For non-zero $p \in \R^n$, the \emph{hyperplane} with normal vector $p$ is the orthogonal complement of $p$: \[\left\{x \in \R^n \compbar p \cdot x = 0 \right\},\]
@@ -281,7 +281,7 @@
     Let $S$ be a convex set, and consider $x \in S$. If $x$ being a convex combination of $y, z \in S$ implies that $x = y = z$, we say that $x$ is an \emph{extreme point}.
 \end{defn}
 
-\section{Basic Feasible Solutions}
+\subsection{Basic Feasible Solutions}
 
 \begin{defn}
     Let $c \in \R^n$, $A \in M_{m \times n}(\R)$, and $b \in \R^m$ be the linear program with feasibility region \[S = \left\{x \in \R^n \compbar Ax = b, x \geq \vec{0}\right\}.\] Let $A$ have rank $m$, or else eliminate redundant constraints until it does.
@@ -313,7 +313,7 @@
     \end{bmatrix}$ where $x_N$ is nonzero. We know that the columns of $A$ corresponding to the non-zero entries of $x$ must be linearly dependent, or else we can complete them to a basis for $\R^m$ and $x$ would be a basic feasible solution. Therefore, we know there exists $z$ such that $Az = \vec{0}$ and $z_i \neq 0$ implies $x_i \neq 0$. Note that for any $\alpha \in \R$, $A(x + \alpha z) = Ax + \alpha Az = b$, so any $x + \alpha z \geq \vec{0}$ is a feasible solution. Since $x_i$ is strictly greater than zero when $z_i \neq 0$, for sufficiently small $\varepsilon$ the points $x + \varepsilon z$ and $x - \varepsilon z$ must be feasible. Then $x = \frac{1}{2}\left(x + \varepsilon z\right) + \left(1 - \frac{1}{2}\right)\left(x - \varepsilon z\right)$, and so $x$ can be expressed as a non-trivial convex combination in $S$ and therefore is not extreme.
 \end{proof}
 
-\section{Simplex Method}
+\subsection{Simplex Method}
 
 \begin{defn}
     Consider a linear program in standard form. Given a choice of basis $B$ such that $A = [B | N]$, the \emph{pre-tableau} is the matrix
@@ -439,7 +439,7 @@ In the Big-M method, we do essentially the same process, but in one phase instea
 \end{align*}
 where $M$ is a very large value. This penalizes the artificial variables and causes them to be zero in any optimal solution. Setting the artificial variables to $b$ gives us an initial basic feasible solution. If a basic feasible solution exists where the artificial variables are zero, the first $m$ pivots will replace each artificial variable with non-artificial variables, and so the final optimal solution will be a solution to the original linear program.
 
-\section{Duality}
+\subsection{Duality}
 
 \begin{defn}{Canonical or symmetric duality}\proofbreak
     Consider a linear program of the form minimize $c^{\transpose}x$ such that $Ax \geq b$ and $x \geq \vec{0}$. The \emph{dual} problem is maximizing $b^{\transpose}y$ such that $A^{\transpose}y \leq c$ and $y \geq \vec{0}$. The original linear program is referred to as the \emph{primal} probem in relation to its dual.
@@ -573,7 +573,7 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
     Therefore, $y^*$ is an optimal solution to the dual linear program by the supervisor principle \ref{supervisor-principle}.
 \end{proof}
 
-\section{Sensitivity Analysis}
+\subsection{Sensitivity Analysis}
 
 \begin{defn}
     A basic feasible solution $b$ to a linear program with basis $B$ is \emph{non-degenerate} when $B^{-1}b > \vec{0}$.
@@ -626,7 +626,7 @@ $c^{\transpose}{x'}^{*} = {y^*}^{\transpose}(b + \Delta b) = {y^*}^{\transpose}b
     Since $y$ is feasible in the dual, by definition $A^{\transpose}y \leq c$, and so $c - A^{\transpose}y \geq \vec{0}$. Furthermore, $x \geq 0$ and so by Proposition \ref{complementary-orthogonal} it follows that this occurs precisely when $x$ and $c - A^{\transpose}y$ are complementary.
 \end{proof}
 
-\section{Dual Simplex Method}
+\subsection{Dual Simplex Method}
 
 In the dual simplex method, we have a linear program in standard form $A, b, c$. Unlike when we start the simplex method, rather than knowing a starting feasible solution and working towards optimality, we know a starting solution that is essentially optimal and works towards feasibility. We actually start with a vector $y$ that is feasible in the dual linear program, and work towards making the corresponding primal vector $x$ feasible in the primal. Due to the setup of the dual simplex method, both $y$ and $x$ will have the same objective function value, and so once $x$ is feasible we have an optimal solution by the supervisor principle \ref{supervisor-principle}.
 
@@ -646,7 +646,7 @@ The first condition, that $Ax = b$ is necessarily satisfied by any basic tableau
 
 To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, and pick a column to row-reduce on. Since we need to maintain a non-positive top row $-r$, we want to pick the column $k$ by \[\argmin_{k}\frac{r_k}{A_{jk}} \mathrm{ where } A_{jk} < 0.\]
 
-\section{Non-Linear Optimization}
+\section{Non-Linear Programming}
 
 \begin{defn}
     Let $S \subseteq \R^n$ be a non-empty convex set, and let $f: S \to \R$. We say that $f$ is \emph{convex} when
@@ -794,6 +794,8 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     While our assumptions will almost certainly be invalid, making these ``Newton steps'' will often produce rapid progress towards a local minimum. For non-pathological functions, the closer to the local minimum the better our linear approximation of $\nabla f$ will be.
 \end{rmk}
 
+\subsection{Karush-Kuhn-Tucker Conditions}
+
 \begin{thm}{Farkas' Theorem}\label{farkas}\proofbreak
     Let $A \in M_{m \times n}(\R)$, $b \in \R^m$. Then exactly one of the following is true:
     \begin{itemize}
@@ -819,7 +821,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{thm}
 
 \begin{proof}
-    Assume the second case is true, so there exists $y \in \R^m$ such that $A^{\transpose}y < \vec{0}$. Equivalently, there exists $\varepsilon > 0$ such that $A^{\transpose}y + \varepsilon\vec{1} \leq \vec{0}$. However, this is equivalent to saying that there exists
+    Assume the second case is true, so there exists $y \in \R^m$ such that $A^{\transpose}y < \vec{0}$. Equivalently, there exists $\varepsilon > 0$ such that $A^{\transpose}y + \varepsilon\vec{1} \leq \vec{0}$ --- that is, there exists
     \begin{align*}
         \begin{bmatrix}
             y \\ \varepsilon
@@ -838,7 +840,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
             y \\ \varepsilon
         \end{bmatrix} \leq \vec{0}.
     \end{align*}
-    Then by Farkas \ref{farkas}, we know that there cannot be any $x \geq \vec{0}$ such that
+    By Farkas \ref{farkas}, this is true if and only if there is no $x \geq \vec{0}$ such that
     \begin{align*}
         \begin{bmatrix}
             A \\ \vec{1}^{\transpose}
@@ -846,13 +848,122 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
             \vec{0} \\ 1
         \end{bmatrix}.
     \end{align*}
-    This is equivalent to
+    This is in turn equivalent to
     \begin{align*}
         Ax = \vec{0},\;\;\;x \geq \vec{0}\;\;\;\vec{1}^{\transpose}x = 1.
     \end{align*}
-    Therefore, the first case must be false, or else we could take
+    Note that this is equivalent to the first case from this theorem: the existence of such $x \neq 0$ implies the existence of
     \begin{align*}
         x' = \frac{1}{\vec{1}^{\transpose}x}x,
     \end{align*}
     and we would have $Ax' = \frac{1}{\vec{1}^{\transpose}x}\vec{0} = \vec{0}$, $x' \geq \vec{0}$, $\vec{1}^{\transpose}x' = 1$.
+
+    Therefore, the second case is equivalent to the negation of the first, and so exactly one of them is true for any $A$.
+\end{proof}
+
+From here until the Karush-Kuhn-Tucker Theorem, let $P$ be the problem of minimizing $f(x)$ such that $g_i(x) \leq 0$ for $i = 1, \ldots, m$ where $f: \R^n \to \R$ and $g_i: \R^n \to \R$ are continuously differentiable.
+
+\begin{defn}
+    For all feasible $x \in \R^n$, the \emph{active constraints} at $x$ are
+    \begin{align*}
+        \mathcal{A}_x = \left\{i \compbar g_i(x) = 0\right\}.
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    For a function $f: \R^n \to \R$ and point $x_0 \in \R^n$, a vector $d \in \R^n$ is a \emph{descent direction} if there exists $\alpha_0 > 0$ such that $f(x + \alpha d) < f(x)$ for all $0 < \alpha \leq \alpha_0$.
+\end{defn}
+
+\begin{lemma}\label{kkt-lemma-1}
+    If $x$ is a local minimum of $P$ (and therefore feasible), then there \emph{does not} exist $d \in \R^n$ that is a descent direction for $f(x)$ and for $g_i(x)$ for all $i \in \mathcal{A}_x$. 
+\end{lemma}
+
+\begin{proof}
+    If such $d$ existed, then there would exist $\varepsilon > 0$ small enough that $f(x + \alpha d) < f(x)$ and $g_i(x + \alpha d) < g_i(x) = 0$ for $i \in \mathcal{A}_x$. For $i \notin \mathcal{A}_x$, we know that $g_i(x) < 0$ and so for $\varepsilon$ small enough we also have $g_i(x + \alpha d) < 0$. Then $x + \alpha d$ would be feasible, and so $x$ would not be a local minimum.
+\end{proof}
+
+\begin{lemma}\label{kkt-lemma-2}
+    Let
+    \begin{align*}
+        J^{\transpose} = \begin{bmatrix}
+            \nabla f^{\transpose}(x) \\ \nabla g_{k_1}^{\transpose}(x) \\ \vdots \\ \nabla g_{k_n}^{\transpose}(x)
+        \end{bmatrix}
+    \end{align*}
+    for all $k_i \in \mathcal{A}(x)$.
+
+    If $x$ is a local minimum of $P$, then there \emph{does not} exist $d \in \R^n$ such that $J^{\transpose}d < \vec{0}$.
+\end{lemma}
+
+\begin{proof}
+    If such $d$ existed, then it would be a descent direction for $f$ and $g_{k_i}$ since $\nabla f^{\transpose}(x)d = \nabla f(x) \cdot d$ and $\nabla g_{k_i}^{\transpose}(x)d = \nabla g_{k_i}(x) \cdot d$. Therefore, no such $d$ exists by Lemma \ref{kkt-lemma-1}
+\end{proof}
+
+\begin{lemma}\label{kkt-lemma-3}
+    If $x$ is a local minimum of $P$, then there exists non-zero $\lambda \geq \vec{0}$ such that $J\lambda = \vec{0}$.
+\end{lemma}
+
+\begin{proof}
+    By Lemma \ref{kkt-lemma-2}, there is no $d$ such that $J^{\transpose}d < \vec{0}$. Therefore, by Gordon's Theorem \ref{gordons}, there must be $\lambda \geq 0$, $\lambda \neq \vec{0}$ such that $J\lambda = \vec{0}$.
+\end{proof}
+
+\begin{lemma}\label{kkt-lemma-4}
+    If $x$ is a local minimum of $P$, then there exists non-zero
+    \begin{align*}
+        \begin{bmatrix}
+            \beta \\ \lambda
+        \end{bmatrix} \geq \vec{0}
+    \end{align*}
+    where $\beta \in \R$ and $\lambda \in \R^m$ such that
+    \begin{align*}
+        \left[\begin{array}{c|c|c|c|c}
+            \nabla f(x) & \nabla g_1(x) & \nabla g_2(x) & \vdots & \nabla g_m(x)
+        \end{array}\right]\begin{bmatrix}
+            \beta \\ \lambda
+        \end{bmatrix} = \vec{0},\;\;\textrm{and}\;\sum_{i=1}^{n}\lambda_ig_i(x) = 0.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    Since $g_i(x) \leq 0$ and $\lambda_i \geq 0$, it follows from
+    \begin{align*}
+        \sum_{i=1}^{n}\lambda_ig_i(x) = 0
+    \end{align*}
+    that $\lambda_i = 0$ whenever $g_i(x) \neq 0$, or else the sum would be less than zero. Therefore, we can ignore the columns inactive constaints, and this result follows from Lemma \ref{kkt-lemma-3}.
+\end{proof}
+
+\begin{thm}{Fritz-John Conditions}\label{fritz-john-conditions}\proofbreak
+    If $x$ is a local minimum of $P$, then there exists $\lambda \in \R^m$ and $\beta \in \R$ such that
+    \begin{align*}
+        \beta\nabla f(x) + \nabla \vec{g}(x)\lambda = \vec{0} \\
+        \lambda^{\transpose}\vec{g}(x) = 0 \\
+        \lambda \geq \vec{0},\;\beta \geq 0 \\
+        \begin{bmatrix}
+            \beta \\ \lambda
+        \end{bmatrix} \neq \vec{0}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    This is equivalent to Lemma \ref{kkt-lemma-4}.
+\end{proof}
+
+\begin{thm}{Karush-Kuhn-Tucker Conditions}\label{kkt-conditions}\proofbreak
+    Let $x$ be a local minimum of $P$. Suppose $x$ satisfies the constraint qualification that
+    \begin{align}
+        \left\{\nabla g_i(x) \compbar i \in \mathcal{A}_x\right\}
+    \end{align}
+    is linearly independent. Then there exists $\lambda \in \R^m$ such that
+    \begin{align*}
+        \nabla f(x) + \nabla \vec{g}(x)\lambda = \vec{0} \\
+        \lambda^{\transpose}\vec{g}(x) = 0 \\
+        \lambda \geq \vec{0}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    We can apply the Fritz-John Conditions \ref{fritz-john-conditions} to obtain $\beta$ and $\lambda_0$. Since $\nabla g_i(x)$ are linearly independent, it follows that $\nabla g_i(x)\lambda_0 \neq \vec{0}$. Therefore, $\beta \neq 0$. Let $\lambda = \frac{1}{\beta}\lambda_0$. Then
+    \begin{align*}
+        \nabla f(x) + \nabla \vec{g}(x)\lambda = \vec{0},
+    \end{align*}
+    and the other conditions follow directly from the Fritz-John conditions.
 \end{proof}
