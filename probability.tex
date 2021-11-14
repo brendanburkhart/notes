@@ -1251,3 +1251,34 @@ We can also find the join distribution of multiple ordered random variables. For
 
     That is, for some random variable $\theta$, $S | \theta \distribution Binomial(n, \theta)$. The distribution of $\theta$ is referred to as the \emph{mixing distribution}.
 \end{thm}
+
+\section{Covariance}
+
+\begin{defn}
+    Let $X$ and $Y$ be random variables. Then the \emph{covariance} of $X$ and $Y$ is
+    \begin{align*}
+        \covariance(X, Y) = E\left[(X - \mu_X)(Y - \mu_Y)\right].
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    Let $X$ and $Y$ be random variables. The covariance of $X$ and $Y$ is given by $E(XY) - E(X)E(Y)$.
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        \covariance(X, Y) &= E\left[(X - \mu_X)(Y - \mu_Y)\right] \\
+        &= E\left[XY - \mu_{X}Y - \mu_{Y}X + \mu_{X}\mu{Y}\right] \\
+        &= E(XY) - 2E(X)E(Y) + E(X)E(Y) \\
+        &= E(XY) - E(X)E(Y).
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $X$ and $Y$ be random variables. Then
+    \begin{align*}
+        \covariance(X,X) &= \variance(X), \\
+        \covariance(X,Y) &= \covariance(Y,X), \\
+        \covariance\left(\sum_{i=1}^{n}a_iX_i, \sum_{i=1}^{m}b_iY_i\right) &= \sum_{i=1}^{n}\sum_{j=1}^{m}a_ib_i\covariance\left(X_i, Y_i\right).
+    \end{align*}
+\end{thm}
