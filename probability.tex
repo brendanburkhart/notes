@@ -1254,8 +1254,28 @@ We can also find the join distribution of multiple ordered random variables. For
 
 \section{Covariance}
 
+\begin{prop}
+    Let $X$ and $Y$ be random variables with finite means $\mu_X$ and $\mu_Y$. Then
+    \begin{align*}
+        E[X + Y] = E[X] + E[Y].
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    If $X$ and $Y$ are continuous random variables with joint PDF $f_{X,Y}(x,y)$, then
+    \begin{align*}
+        E[X + Y] &= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\left(x + y\right)f_{X,Y}(x,y)dxdy \\ 
+        &= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}xf_{X,Y}(x,y)dxdy + \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}yf_{X,Y}(x,y)dxdy \\
+        &= \int_{-\infty}^{\infty}x\int_{-\infty}^{\infty}f_{X,Y}(x,y)dydx + \int_{-\infty}^{\infty}y\int_{-\infty}^{\infty}f_{X,Y}(x,y)dxdy \\
+        &= \int_{-\infty}^{\infty}xf_{X}(x)dx + \int_{-\infty}^{\infty}yf_{Y}(y)dy \\
+        &= E[X] + E[Y].
+    \end{align*}
+
+    The case for jointly discrete random variables can be handled analogously.
+\end{proof}
+
 \begin{defn}
-    Let $X$ and $Y$ be random variables. Then the \emph{covariance} of $X$ and $Y$ is
+    Let $X$ and $Y$ be random variables with finite means $\mu_{X}$ and $\mu_{Y}$, and finite variances $\sigma_{X}^2$ and $\sigma_{Y}^2$. Then the \emph{covariance} of $X$ and $Y$ is
     \begin{align*}
         \covariance(X, Y) = E\left[(X - \mu_X)(Y - \mu_Y)\right].
     \end{align*}
@@ -1274,11 +1294,57 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{covariance-properties}
     Let $X$ and $Y$ be random variables. Then
     \begin{align*}
         \covariance(X,X) &= \variance(X), \\
         \covariance(X,Y) &= \covariance(Y,X), \\
+        \covariance(X,c) &= 0, \\
+        \covariance(X - a, Y) &= \covariance(X, Y), \\
         \covariance\left(\sum_{i=1}^{n}a_iX_i, \sum_{i=1}^{m}b_iY_i\right) &= \sum_{i=1}^{n}\sum_{j=1}^{m}a_ib_i\covariance\left(X_i, Y_i\right).
     \end{align*}
 \end{thm}
+
+\begin{rmk}
+    If $X$ and $Y$ are independent, then
+    \begin{align*}
+        \covariance(X,Y) = E(XY) - E(X)E(Y) = E(X)E(Y) - E(X)E(Y) = 0.
+    \end{align*}
+\end{rmk}
+
+\begin{prop}
+    Let $X$ and $Y$ be random variables with variances $\sigma_X^2$ and $\sigma_Y^2$. Then
+    \begin{align*}
+        \covariance(X, Y) \leq \sigma_X\sigma_Y.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Define $\langle X, Y \rangle = E(XY)$. This is an inner product since
+    \begin{itemize}
+        \item $\langle X + Y, Z \rangle = E\left[(X + Y)Z\right] = E\left[XZ + YZ\right] = E(XZ) + E(YZ) = \langle X, Z \rangle + \langle Y, Z \rangle$,
+        \item $\langle X, Y \rangle = E(XY) = E(YX) = \langle Y, X \rangle$,
+        \item $\langle X, X \rangle = E(X^2) > 0$ when $X \neq 0$.
+    \end{itemize}
+    
+    Therefore, by the Cauchy-Schwarz Inequality \ref{cauchy-schwarz-triangle} it follows that
+    \begin{align*}
+        E(XY) \leq \sqrt{E(X^2)E(Y^2)},
+    \end{align*}
+    and so
+    \begin{align*}
+        E\left[(X - \mu_X)(Y - \mu_Y)\right] \leq \sqrt{E\left[(X - \mu_X)^2\right]E\left[(Y - \mu_Y)^2\right]},
+        \covariance(X, Y) \leq \sqrt{\sigma_{X}^2\sigma_{Y}^2} = \sigma_X\sigma_Y.
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    We can use this fact to \emph{normalize} the covariance of random variables, obtaining a value in the interval $[-1, 1]$.
+\end{rmk}
+
+\begin{defn}
+    Let $X$ and $Y$ be random variables with variances $\sigma_X^2$ and $\sigma_Y^2$. The \emph{correlation} between $X$ and $Y$ is
+    \begin{align*}
+        \rho_{XY} = \frac{\covariance(X,Y)}{\sigma_X\sigma_Y}.
+    \end{align*}
+\end{defn}
