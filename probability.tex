@@ -1178,3 +1178,76 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
     We can similarly extend this to $N > 1$.
 \end{proof}
+
+\section{Symmetry and Exchangeability}
+
+\begin{defn}
+    A collection of random variables $X_1, X_2, \ldots, X_n$ are said to be \emph{exchangeable} if for every permutation $\sigma$ of $(1, 2, \ldots, n)$,
+    \begin{align*}
+        (X_{\sigma(1)}, X_{\sigma(2)}, \ldots, X_{\sigma(n)})\textrm{ and } (X_1, X_2, \ldots, X_n)
+    \end{align*}
+    have the same distribution.
+\end{defn}
+
+\begin{prop}
+    A collection of independent and identically distributed variables are always exchangeable.
+\end{prop}
+
+\begin{proof}
+    Let $\sigma$ be a permutation of $(1, 2, \ldots, n)$. Then
+    \begin{align*}
+        P(X_{\sigma(1)} = j_1, X_{\sigma(2)} = j_2, \ldots, X_{\sigma(n)} = j_n) &= P(X_{\sigma(1)} = j_1)P(X_{\sigma(2)} = j_2)\cdots P(X_{\sigma(n)} = j_n)
+    \end{align*}
+    by independence, and since they're identically distributed we have
+    \begin{align*}
+        P(X_{\sigma(1)} = j_1)P(X_{\sigma(2)} = j_2)\cdots P(X_{\sigma(n)} = j_n) &= P(X_{1} = j_1)P(X_{2} = j_2)\cdots P(X_{n} = j_n) \\
+        &= P(X_{1} = j_1, X_{2} = j_2, \ldots, (X_{n} = j_n).
+    \end{align*}
+
+    Note that this only covers the case of discrete random variables --- the continuous case can be analogously handled by considering the relevant PDFs.
+\end{proof}
+
+\begin{defn}
+    Consider a function $f: \R^n \to n$. If for every permutation $\sigma$ of $1, 2, \ldots, n$ and $(x_1, \ldots, x_n) \in \R^n$, we have
+    \begin{align*}
+        f(x_1, \ldots, x_n) = f(x_{\sigma(1)}, \ldots, x_{\sigma)n}),
+    \end{align*}
+    then $f$ is said to be a \emph{symmetric} function.
+\end{defn}
+
+\begin{prop}
+    A collection of random variables $X_1, X_2, \ldots, X_n$ with joint PMF/PDF $p$ are \emph{exchangeable} if and only if $p$ is a symmetric function.
+\end{prop}
+
+\begin{prop}\label{exchangeability-subset}
+    Let $X_1, \ldots, X_n$ be exchangeable random variables. Then for $1 \leq k \leq n$ and permutation $\sigma$,
+    \begin{align*}
+        (X_{\sigma(1)}, X_{\sigma(2)}, \ldots, X_{\sigma(k)})\textrm{ and } (X_1, X_2, \ldots, X_k)
+    \end{align*}
+    have the same distribution.
+\end{prop}
+
+\begin{cor}
+    Any collection of exchangeable random variables must be identically distributed.
+\end{cor}
+
+\begin{proof}
+    This is an immediate consequence of Proposition \ref{exchangeability-subset} when $k = 1$.
+\end{proof}
+
+\begin{exmp}
+    Let $X_1, \ldots, X_n$ by exchangeable continuous random variables. What is $P(X_i < X_j)$? We know that $P(X_i < X_j) = P(X_j < X_i)$ by exchangeability, and that $P(X_i < X_j) =  - P(X_j < X_i)$, so $2P(X_i < X_j) = 1$. Therefore, $P(X_i < X_j) = 1/2$. Similarly, $P(X_i < X_j < X_k) = 1/6$.
+\end{exmp}
+
+\begin{defn}
+    Consider a collection of events $A_1, \ldots, A_n$. If the indicator random variables for these events are exchangeable, then we say that the events are exchangeable.
+\end{defn}
+
+\begin{thm}{de Finetti's Theorem}\label{de-finetti}\proofbreak
+    Let $A_1, \ldots, A_n$ be exchangeable events, and let $S$ count the number of events which occur. Then there exists a unique PDF $f$ on $[0, 1]$ such that for any $0 \leq k \leq n$,
+    \begin{align*}
+        P(S = k) = \int_{0}^{1}\binom{n}{k}\theta^{k}(1-\theta)^{n-k}f(\theta)d\theta.
+    \end{align*}
+
+    That is, for some random variable $\theta$, $S | \theta \distribution Binomial(n, \theta)$. The distribution of $\theta$ is referred to as the \emph{mixing distribution}.
+\end{thm}
