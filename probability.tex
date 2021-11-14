@@ -1089,6 +1089,17 @@
     If $U$ and $V$ are random variables with moment generating functions that agree in an open neighborhood of $\theta = 0$, then $U$ and $V$ have the same distribution.
 \end{rmk}
 
+\begin{thm}{Method of Jacobians}\proofbreak
+    Let $X$ and $Y$ be random variables with joint distribution $f_{X,Y}(x,y)$. Let $U = f_1(X, Y)$ and $V = f_2(X, Y)$ where $(x, y) \mapsto \left(f(x, y), g(x, y)\right)$ is injective, and let $X = g_1(U, V)$ and $Y = g_2(U, V)$. Then
+    \begin{align*}
+        f_{U,V}(u, v) &= f_{X,Y}\left(g_1(u, v), g_2(u, v)\right)\abs{\frac{\partial X,Y}{\partial U,V}} \\
+        &= f_{X,Y}\left(g_1(u, v), g_2(u, v)\right)\abs{\begin{array}{cc}
+            \frac{\partial X}{\partial U} & \frac{\partial V}{\partial U} \\
+            \frac{\partial Y}{\partial U} & \frac{\partial Y}{\partial V}
+        \end{array}}.
+    \end{align*}
+\end{thm}
+
 \section{Ordered Statistics}
 
 Let $X_1, X_2, \ldots, X_n$ be independent and identically distributed random variables with PDF $f_X(x)$ and CDF $F_X(x)$.
@@ -1116,8 +1127,15 @@ and so
 \end{align*}
 
 \begin{defn}
-    Given $X_1, X_2, \ldots, X_{2n+1}$ independent and identically distributed random variables, $X_{n+1}$ is the \emph{sample median} and has PDF given by
+    Given $X_1, X_2, \ldots, X_{2n+1}$ independent and identically distributed random variables, $Y_{n+1}$ is the \emph{sample median} and has PDF given by
     \begin{align*}
-        f_{X_{n+1}}(x) = \frac{(2n+1)!}{(n!)^2}F(x)^{n}\left(1-F(y)\right)^{n}f_X(x)
+        f_{Y_{n+1}}(y) = \frac{(2n+1)!}{(n!)^2}F(y)^{n}\left(1-F(y)\right)^{n}f_X(y)
     \end{align*}
 \end{defn}
+
+We can also find the join distribution of multiple ordered random variables. For example,
+\begin{align*}
+    f_{Y_i,Y_j}(y_i, y_j) &= \lim_{h_1, h_2 \to 0^+}\frac{P(y_i - h_i < Y_i \leq y_i, y_j - h_j < Y_j \leq y_j)}{h_1h_2} \\
+    &= \binom{n}{i-1, j-i-1, n-j}F(y_i-h_i)^{i-1}\left(F(y_j-h_j)-F(y_i)\right)^{j-i-i}\left(1-F(y_j)\right)^{n-j} \\
+    &= \frac{n!}{(i-1)!(j-i-1)!(n-j)!}F(y_i-h_i)^{i-1}\left(F(y_j-h_j)-F(y_i)\right)^{j-i-i}\left(1-F(y_j)\right)^{n-j}.
+\end{align*}
