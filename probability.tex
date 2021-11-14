@@ -1139,3 +1139,42 @@ We can also find the join distribution of multiple ordered random variables. For
     &= \binom{n}{i-1, j-i-1, n-j}F(y_i-h_i)^{i-1}\left(F(y_j-h_j)-F(y_i)\right)^{j-i-i}\left(1-F(y_j)\right)^{n-j} \\
     &= \frac{n!}{(i-1)!(j-i-1)!(n-j)!}F(y_i-h_i)^{i-1}\left(F(y_j-h_j)-F(y_i)\right)^{j-i-i}\left(1-F(y_j)\right)^{n-j}.
 \end{align*}
+
+\begin{defn} A stochastic process $N(t)$ for $t \geq 0$ is a time-homogeneous \emph{Poisson-process} with rate $\lambda$ if
+    \begin{itemize}
+        \item $P(N(0) = 0) = 1$,
+        \item for $0 \leq s < t$, $N(t) - N(s) \distribution Poisson(\lambda(t-s))$,
+        \item and for $0 \leq t_1 < t_2 < t_3 < \cdots$, the collection \[N(t_1), N(t_2), \ldots\] is independent.
+    \end{itemize}
+\end{defn}
+
+\begin{rmk}
+    Let $S_n$ be the time of the $n$th event in a Poisson-process with rate $\lambda$. Then
+    \begin{align*}
+        S_n \distribution Gamma\left(n, \frac{1}{\lambda}\right).
+    \end{align*}
+\end{rmk}
+
+\begin{prop}
+    Consider some time $T$. Let $Y_1, \ldots, Y_n$ be the ordered statistics of $n$ independent and identically distributed uniform $0, T$ random variables. Let $S_i$ be the time of the $i$th event in a Poisson-process with rate $\lambda$. Then
+    \begin{align*}
+        (S_1, S_2, \ldots, S_n) | N(T) = n
+    \end{align*} 
+    have the same distribution as $Y_1, \ldots, Y_n$.
+\end{prop}
+
+\begin{proof}
+    In the case that $n = 1$, for $0 < t < T$ and $0 < h << 1$,
+    \begin{align*}
+        P\left(t - h < S_1 \leq t \compbar N(T) = 1\right) &= \frac{P\left(t - h < S_1 \leq t, N(T) = 1\right)}{P(N(T) = 1)} \\
+        &= \frac{P\left(N(t - h) = 0, N(t) - N(t-h) = 1, N(T) - N(t)= 0\right)}{P(N(T) = 1)} \\
+        &= \frac{P\left(N(t - h) = 0\right)P\left(N(t) - N(t-h) = 1\right)P\left(N(T) - N(t)= 0\right)}{P(N(T) = 1)} \\
+        &= \frac{\frac{e^{-\lambda(t-h)\left[\lambda(t-h)\right]^{0}}}{0!}\frac{e^{-\lambda(h)\left[\lambda(h)\right]^{0}}}{1!}\frac{e^{-\lambda(T-t)\left[\lambda(T-t)\right]^{0}}}{0!}}{\frac{e^{-\lambda(T)\left[\lambda(T)\right]^{1}}}{1!}} \\
+        &= \frac{h}{T},
+    \end{align*}
+    and so
+    \begin{align*}
+        f_{S_1|N(T)}(t|1) = \lim_{h \to 0+}\frac{P\left(t - h < S_1 \leq t \compbar N(T) = 1\right)}{h} =  \lim_{h \to 0+}\frac{h}{hT} = \frac{1}{T}.
+    \end{align*}
+    We can similarly extend this to $N > 1$.
+\end{proof}
