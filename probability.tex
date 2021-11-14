@@ -1112,5 +1112,12 @@ and so
 \begin{align*}
     f_{Y_j}(y) &= \lim_{h \to 0^{+}}\frac{P(y-h<Y_j\leq y)}{h} \\
     &= \lim_{h \to 0^{+}}\frac{n!}{(j-1)!(n-j)!}F(y-h)^{j-1}\left(1-F(y)\right)^{n-j}\frac{\left(F(y)-F(h)\right)}{h} \\
-    &= \frac{n!}{(j-1)!(n-j)!}F(y-h)^{j-1}\left(1-F(y)\right)^{n-j}f_X(y).
+    &= \frac{n!}{(j-1)!(n-j)!}F(y)^{j-1}\left(1-F(y)\right)^{n-j}f_X(y).
 \end{align*}
+
+\begin{defn}
+    Given $X_1, X_2, \ldots, X_{2n+1}$ independent and identically distributed random variables, $X_{n+1}$ is the \emph{sample median} and has PDF given by
+    \begin{align*}
+        f_{X_{n+1}}(x) = \frac{(2n+1)!}{(n!)^2}F(x)^{n}\left(1-F(y)\right)^{n}f_X(x)
+    \end{align*}
+\end{defn}
