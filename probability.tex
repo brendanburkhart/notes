@@ -258,7 +258,7 @@
 \end{defn}
 
 \begin{defn}
-    The \emph{Bernoulli distribution} distribution is the probability distribution of a random variable that takes value $1$ with probability $0 \leq p \leq 1$, and value $0$ with probability $1 - p$. For a random variable $X$ with this distribution and $k \in \{0, 1\}$:
+    The \emph{Bernoulli distribution} is the probability distribution of a random variable that takes value $1$ with probability $0 \leq p \leq 1$, and value $0$ with probability $1 - p$. For a random variable $X$ with this distribution and $k \in \{0, 1\}$:
     \[P(X = k) = \begin{dcases}
         p, & k = 1  \\
         1 - p, & k = 0
@@ -1348,3 +1348,25 @@ We can also find the join distribution of multiple ordered random variables. For
         \rho_{XY} = \frac{\covariance(X,Y)}{\sigma_X\sigma_Y}.
     \end{align*}
 \end{defn}
+
+\section{Conditional Expectation}
+
+\begin{defn}
+    The expected value of a random variable $X$ conditioned on event $A$ is
+    \[E(X|A) = \sum_{x \in \Omega}xP(X = x|A).\]
+\end{defn}
+
+\begin{exmp}
+    Consider $X \distribution Geometric\left(\frac{1}{3}\right)$, and $A = X \leq 3$. Then
+    \begin{align*}
+        E(X|A) &= \sum_{x = 1}^{\infty}xP(X = x|A) = \sum_{x = 1}^{\infty}x\frac{P(X = x \land X \leq 3)}{P(X \leq 3)} \\
+        &= \frac{1}{P(X \leq 3)}\sum_{x = 1}^{3}xP(X = x) = \frac{3}{1 + (2/3) + (2/3)^2}\sum_{x = 1}^{3}x(2/3)^{x-1}(1/3) \\
+        &= \frac{9}{19}\left(1 + 2(2/3) + 3(4/9)\right) = \frac{33}{19}.
+    \end{align*}
+\end{exmp}
+
+\begin{thm}{Law of Total Expectation}\label{total-expectation-law}
+    \begin{align*}
+        E\left[E(X|Y)\right] = E(X)
+    \end{align*}
+\end{thm}
