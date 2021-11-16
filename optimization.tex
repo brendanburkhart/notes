@@ -773,8 +773,8 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     By convexity of $f$, for all $x \in S$ we know that $f(x) \geq f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x})$ by Theorem \ref{convex-function-tangent-hyperplane}. If $\bar{x}$ is a stationary point, then $\nabla f(\bar{x})$ by definition, and so $f(x) \geq f(\bar{x})$. Then $\bar{x}$ is a global minimizer by definition.
 \end{proof}
 
-\begin{defn}{Newton's Method}\label{newtons-method}
-    Let $f: \R^n \to \R$ be twice continuously differentiable, and pick some $x^{(0)} \in \R^n$. For $i = 1, 2, \ldots, $ while $f(x^{(i)}) \neq 0$, let
+\begin{defn}{Newton's Method}\label{newtons-method}\proofbreak
+    Let $f: \R^n \to \R$ be twice continuously differentiable, and pick some $x^{(0)} \in \R^n$. For $i = 1, 2, \ldots, $ while $f(x^{(i)}) \neq 0$ (or until some other terminating condition), let
     \begin{align*}
         x^{(i+1)} = x^{(i)} - \left(\nabla^2f(x^{(i)})\right)^{-1}\nabla f(x^{(i)}).
     \end{align*}
@@ -793,6 +793,19 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     While our assumptions will almost certainly be invalid, making these ``Newton steps'' will often produce rapid progress towards a local minimum. For non-pathological functions, the closer to the local minimum the better our linear approximation of $\nabla f$ will be.
 \end{rmk}
+
+\begin{defn}{Steepest Descent}\label{steepest-method}\proofbreak
+    Let $f: \R^n \to \R$ be continuously differentiable, and pick some $x^{(0)} \in \R^n$. 
+    For $i = 1, 2, \ldots, $ while $f(x^{(i)}) \neq 0$ (or until some other terminating condition), define
+    \begin{align*}
+        g(\alpha) = f(x^{(i)} - \alpha\nabla f(x^{(i)})),
+    \end{align*}
+    and then let
+    \begin{align*}
+        \alpha^* &= \argmin_{\alpha}g(\alpha) \\
+        x^{(i+1)} &= x^{(i)} - \alpha^{*}\nabla f(x^{(i)}).
+    \end{align*}
+\end{defn}
 
 \subsection{Karush-Kuhn-Tucker Conditions}
 
