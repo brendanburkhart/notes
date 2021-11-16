@@ -1370,3 +1370,17 @@ We can also find the join distribution of multiple ordered random variables. For
         E\left[E(X|Y)\right] = E(X)
     \end{align*}
 \end{thm}
+
+\begin{proof}
+    Let $f(y) = E(X|Y=y)$. Then in the case of jointly discrete random variables,
+    \begin{align*}
+        f(y) = \sum_{x=-\infty}^{\infty}xP(X=x|Y=y) = \sum_{x=-\infty}^{\infty}x\frac{P(X=x,Y=y)}{P(Y=y)},
+    \end{align*}
+    and so we have
+    \begin{align*}
+        E\left[E(X|Y)\right] &= E(f(Y)) = \sum_{y=-\infty}^{\infty}\left(\sum_{x=-\infty}^{\infty}x\frac{P(X=x,Y=y)}{P(Y=y)}\right)P(Y=y) \\
+        &= \sum_{y=-\infty}^{\infty}\sum_{x=-\infty}^{\infty}xP(X=x,Y=y) = \sum_{x=-\infty}^{\infty}x\sum_{y=-\infty}^{\infty}P(X=x,Y=y) \\
+        &= \sum_{x=-\infty}^{\infty}xP(X=x) = E(X).
+    \end{align*}
+    Jointly continuous, or mixed continuous and discrete random variables can be handled analogously.
+\end{proof}
