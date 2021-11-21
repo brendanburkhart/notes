@@ -982,3 +982,124 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     and the other conditions follow directly from the Fritz-John conditions.
 \end{proof}
+
+\begin{exmp}
+    Consider the problem of minimizing $f(x, y) = x^2 + y^2$ such that $x \geq 1$ (that is, $g(x, y) = 1 - x \leq 0$), and imagine we want to find all KKT points and their multipliers. Note that
+    \begin{align*}
+        \nabla f\begin{bmatrix}
+            x \\ y
+        \end{bmatrix} = \begin{bmatrix}
+            2x \\ 2y
+        \end{bmatrix},\;\;
+        \nabla g\begin{bmatrix}
+            x \\ y
+        \end{bmatrix} = \begin{bmatrix}
+            -1 \\ 0
+        \end{bmatrix}.
+    \end{align*}
+
+    Note that since $\nabla g \neq \vec{0}$, the KKT constraint qualification is always satisfied. Therefore, any optimal point must satisfy the KKT conditions. We can consider two separate cases: when $g$ is active or inactive. When $g$ is inactive, $g(x, y) < 0 \implies x > 1$, and also $\lambda = 0$. Therefore, any optimal point must satisfy
+    \begin{align*}
+        \nabla f(x, y) + \nabla g(x, y)\lambda = \vec{0} \implies \nabla f(x, y) = \vec{0}.
+    \end{align*}
+    However, this is impossible when $x > 1$. Therefore, any optimal point can only occur when the constraint $g$ is active, so $x = 1$. Then there must exist $\lambda$ such that
+    \begin{align*}
+        \nabla f(x, y) + \nabla g(x, y)\lambda = \vec{0} \implies \begin{bmatrix}
+            2 \\ y
+        \end{bmatrix} + \lambda \begin{bmatrix}
+            -1 \\ 0
+        \end{bmatrix} = \vec{0},
+    \end{align*}
+    which of course implies that $\lambda = 2$, and so $y = 0$. Therefore, the only KKT point is $(1, 0)$, and so it must be optimal.
+\end{exmp}
+
+\begin{exmp}
+    Consdier the problem of minimizing $f(x, y) = \frac{x^2}{2} + \frac{y^2}{2}$ such that $g(x, y) = 1 + x + y \leq 0$, and imagine we want to find all KKT points and their multipliers. Note that
+    \begin{align*}
+        \nabla f\begin{bmatrix}
+            x \\ y
+        \end{bmatrix} = \begin{bmatrix}
+            x \\ y
+        \end{bmatrix},\;\;
+        \nabla g\begin{bmatrix}
+            x \\ y
+        \end{bmatrix} = \begin{bmatrix}
+            1 \\ 1
+        \end{bmatrix}.
+    \end{align*}
+    If $(x, y)$ is feasible, then either $g$ is active or not. If $g$ is inactive, then the constraint qualification is vacously satisfied. Then $(x, y)$ is not a KKT point, since the KKT conditions are only satisfied at $(0, 0)$ which is infeasible. So KKT points can only occur when $g$ is active, and so $y = -x - 1$. Then the KKT conditions state that
+    \begin{align*}
+        \begin{bmatrix}
+            x \\ -x - 1
+        \end{bmatrix} + \lambda\begin{bmatrix}
+            1 \\ 1
+        \end{bmatrix} = \begin{bmatrix}
+            0 \\ 0
+        \end{bmatrix},
+    \end{align*}
+    and so we have $\lambda = -x$ and $\lambda = x + 1$, so $2x + 1 = 0$. It follows that $x = -\frac{1}{2}$ and so $\lambda = \frac{1}{2}$ and $y = -\frac{1}{2}$.
+\end{exmp}
+
+\begin{exmp}
+    Let $A \in M_{n\times n}(\R)$ be symmetric and positive definite, $b \in \R^n$ be non-zero, and $c \in \R$ be positive. Consider the problem of minimizing $f(x) = \frac{1}{2}x^{\transpose}Ax$ such that $g(x) = b^{\transpose}x + c \leq 0$. Imagine we want to find all KKT points and their multipliers. Note that
+    \begin{align*}
+        \nabla f(x) = Ax,\;\;
+        \nabla g(x) = b.
+    \end{align*}
+    For any feasible $x$, we know that $g$ is either active or inactive. If $g$ is inactive, then the constraint qualification is vacously satisfied and so $Ax = \vec{0}$. Since $A$ is positive definite, $x = \vec{0}$, which is infeasible since $c > 0$. Therefore, $g$ must be active. Note that since $b$ is non-zero, the constraint qualification is satisfied. Therefore, we want to find feasible $x$ such that
+    \begin{align*}
+        Ax + \lambda b = \vec{0},
+    \end{align*}
+    for $\lambda \geq 0$. We then have $x = -\lambda A^{-1}b$. For $x$ to be feasible and $g$ be active, we need $b^{\transpose}\left(-\lambda A^{-1}b\right) + c = \vec{0}$ and so the only KKT multiplier and point is
+    \begin{align*}
+        \lambda = \frac{c}{b^{\transpose}A^{-1}b},\;\; x = -\frac{c}{b^{\transpose}A^{-1}b}A^{-1}b.
+    \end{align*}
+\end{exmp}
+
+\begin{exmp}
+    Consider the linear program of minimizing $c^{\transpose}x$ such that $Ax \geq b$ and $x \geq 0$. Alternatively, minimize $f(x) = c^{\transpose}x$ such that
+    \begin{align*}
+        \vec{g}(x) = \begin{bmatrix}
+            -A \\ -I
+        \end{bmatrix}x + \begin{bmatrix}
+            b \\ \vec{0}
+        \end{bmatrix} \leq \vec{0}.
+    \end{align*}
+    Imagine we want to find all KKT points and their multipliers. Note that
+    \begin{align*}
+        \nabla f(x) = c,\;\;
+        \nabla \vec{g}(x) = \begin{bmatrix}
+            -A^{\transpose} | -I^{\transpose}
+        \end{bmatrix}.
+    \end{align*}
+    The constraint qualification requires that $A$ is full row-rank, we can always reduce $A$ if that is not the case. Therefore, we can safely assume that the constraint qualification is always satisfied. The KKT conditions are then
+    \begin{align*}
+        c + \begin{bmatrix}
+            -A^{\transpose} | -I^{\transpose}
+        \end{bmatrix}\begin{bmatrix}
+            y \\ z
+        \end{bmatrix} = \vec{0} \\
+        \begin{bmatrix}
+            y^{\transpose} | z^{\transpose}
+        \end{bmatrix}\left(\begin{bmatrix}
+            -A \\ -I
+        \end{bmatrix}x + \begin{bmatrix}
+            b \\ \vec{0}
+        \end{bmatrix}\right) = 0 \\
+        \begin{bmatrix}
+            y \\ z
+        \end{bmatrix} \geq \vec{0}.
+    \end{align*}
+    It follows that
+    \begin{align*}
+        A^{\transpose}y + z &= c, \\
+        y^{\transpose}Ax &= y^{\transpose}b = b^{\transpose}y, \\
+        z^{\transpose}x &= 0.
+    \end{align*}
+    Therefore, $z = c - A^{\transpose}y$, and so $z^{\transpose}x = 0$ implies that $c^{\transpose}x = b^{\transpose}y$ and $z \geq \vec{0}$ implies that $A^{\transpose}y \leq c$. Altogether, the KKT conditions then require that
+    \begin{align*}
+        Ax &\geq b, \;\; x \geq \vec{0}, \\
+        A^{\transpose}y &\leq c, \;\; y \geq \vec{0},
+    \end{align*}
+    and $c^{\transpose}x = b^{\transpose}y$. Notice that these are equivalent to the requirements for complementary slackness \ref{complementary-slackness}.
+\end{exmp}
