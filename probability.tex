@@ -1349,7 +1349,7 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
 \end{defn}
 
-\section{Conditional Expectation}
+\section{Conditional Expectation and Variance}
 
 \begin{defn}
     The expected value of a random variable $X$ conditioned on event $A$ is
@@ -1384,3 +1384,134 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
     Jointly continuous, or mixed continuous and discrete random variables can be handled analogously.
 \end{proof}
+
+\begin{exmp}
+    Consider a miner who is trapped underground in a tunnel. There are three branches they can choose from:
+    \begin{itemize}
+        \item one which will take them to the surface after three hours,
+        \item one which takes them in a five hour loop,
+        \item and one which takes them in a seven hour loop.
+    \end{itemize}
+    If they have an equal chance of choosing any of the branches, what is the expected time until they reach the surface?
+
+    Let $B$ be the branch they took. We can given that $P(B = 1) = P(B = 2) = P(B = 3) = \frac{1}{3}$, and also that
+    \begin{align*}
+        E(X|B=1) &= 3, \\
+        E(X|B=2) &= 5 + E(X), \\
+        E(X|B=3) &= 7 + E(X).
+    \end{align*}
+    By the Law of Total Expectation \ref{total-expectation-law},
+    \begin{align*}
+        E(X) &= E(X|B=1)P(B=1) + E(X|B=2)P(B=2) + E(X|B=3)P(B=3) \\
+        &= \frac{1}{3}\left(3 + 5 + E(X) + 7 + E(X)\right),
+    \end{align*}
+    and so $E(X) = 15$. Similarly,
+    \begin{align*}
+        E(X^2) &= E(X^2|B=1)P(B=1) + E(X^2|B=2)P(B=2) + E(X^2|B=3)P(B=3) \\
+        &= \frac{1}{3}\left(9 + 25 + 10E(X) + E(X)^2 + 49 + 14E(X) + E(X)^2\right), \\
+        &= \frac{1}{3}\left(83 + 24E(X) + 2E(X)^2\right), \\
+        &= \frac{1}{3}\left(443 + 2E(X)^2\right),
+    \end{align*}
+    and so $E(X^2) = 443$. Therefore, $\variance(X) = E(X^2) - E(X)^2 = 218$.
+\end{exmp}
+
+\section{Laws of Large Numbers}
+
+\begin{thm}{Markov Inequality}\label{markov-inequality}\proofbreak
+    Let $X$ be a positive random variable with finite expected value. Then for any $a > 0$,
+    \begin{align*}
+        P(X \geq a) \leq \frac{E(X)}{a}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    We will assume that $X$ is a continuous random variable with PDF $f(x)$. Then
+    \begin{align*}
+        E(X) &= \int_{0}^{\infty}xf(x)dx = \int_{0}^{a}xf(x)dx + \int_{a}^{\infty}xf(x)dx \\
+        &\geq \int_{a}^{\infty}xf(x)dx \geq \int_{a}^{\infty}af(x)dx = a\int_{a}^{\infty}f(x)dx \\
+        &= aP(X \geq a).
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    The Markov Inequality can be quite useful, however it often provides a quite loose upper bound.
+\end{rmk}
+
+\begin{cor}{Chebyshev's Inequality}\label{chebyshev-inequality}\proofbreak
+    Let $Y$ be a random variable with finite mean $\mu_Y$ and finite variance $\sigma_Y^2$. Then for any $k > 0$,
+    \begin{align*}
+        P\left(\abs{Y - \mu_Y} \geq k\right) &\leq \frac{\sigma_Y^2}{k^2},\;\;\; P\left(\abs{Y - \mu_Y} < k\right) \geq 1 - \frac{\sigma_Y^2}{k^2} \\
+    \end{align*}
+    Alternatively,
+    \begin{align*}
+        P\left(\abs{Y - \mu_Y} \geq k\sigma_Y\right) &\leq \frac{1}{k^2},\;\;\; P\left(\abs{Y - \mu_Y} < k\sigma_Y\right) \geq 1 - \frac{1}{k^2} \\
+    \end{align*}
+\end{cor}
+
+\begin{proof}
+    We know that
+    \begin{align*}
+        P\left(\abs{Y - \mu_Y} \geq k\right) = P\left(\abs{Y - \mu_Y}^2 \geq k^2\right).
+    \end{align*}
+    By the Markov Inequality,
+    \begin{align*}
+        P\left(\abs{Y - \mu_Y}^2 \geq k^2\right) \leq \frac{E\left(\abs{Y - \mu_Y}^2\right)}{k^2}.
+    \end{align*}
+    By definition, $\sigma_Y^2 = E\left(\left(Y - \mu_Y\right)^2\right) = E\left(\abs{Y - \mu_Y}^2\right)$, and so
+    \begin{align*}
+        P\left(\abs{Y - \mu_Y}^2 \geq k^2\right) \leq \frac{\sigma_Y^2}{k^2}.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}{Weak Law of Large Numbers}\label{wlln}\proofbreak
+    Let $X_1, X_2, X_3, \ldots$ be independent and identically distributed random variables with finite mean $\mu$ and finite variance $\sigma^2$. Fix any $\varepsilon > 0$. Then
+    \begin{align*}
+        \lim_{n \to \infty}P\left(\abs{\frac{1}{n}\sum_{i=1}^{n}X_i - \mu} < \varepsilon\right) = 1.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    For every $n > 0$, let $Y_n = \frac{1}{n}\sum_{i=1}^{n}X_i$ (this is the sample mean). Then
+    \begin{align*}
+        \mu_{Y_n} = E(Y_n) = E\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right) = \frac{1}{n}\sum_{i=1}^{n}E(X_i) = \frac{1}{n}\left(n\mu\right) = \mu,
+    \end{align*}
+    and
+    \begin{align*}
+        \sigma_{Y_n}^2 = \variance\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right) = \frac{1}{n^2}\variance\left(\sum_{i=1}^{n}X_i\right) = \frac{1}{n^2}\left(n\sigma^2\right) = \frac{\sigma^2}{n}.
+    \end{align*}
+    Therefore, by Chebyshev's Inequality \ref{chebyshev-inequality},
+    \begin{align*}
+        1 \geq P\left(\abs{Y_n - \mu} < \varepsilon\right) \geq 1 - \frac{\sigma^2}{n\varepsilon^2}.
+    \end{align*}
+    It follows that as $n \to \infty$, $P\left(\abs{Y_n - \mu} < \varepsilon\right)$ must tend to $1$ by the squeeze theorem.
+\end{proof}
+
+\begin{rmk}
+    The Weak Law of Large Numbers actually holds even when $X_i$ do not possess finite variancem although the proof is more complicated.
+\end{rmk}
+
+\begin{thm}{Monte-Carlo Integration}\proofbreak
+    Consider $I = \int_{0}^{1}g(u)du$, where $\abs{g(u)}$ is bounded some $M > 0$ on $[0, 1]$. For many functions $g$, we will not be able to find an analytic solution. Let $U_1, U_2, \ldots$ be independent and identically distributed $Uniform(0, 1)$ random variables. Let $X_i = g(U_i)$, so $X_1, X_2, \ldots$ are independent and identically distributed. Then
+    \begin{align*}
+        P\left(\abs{\frac{1}{n}\sum_{i=1}^{n}g(U_i) - I} \geq \varepsilon\right) \leq \frac{M^2}{n\varepsilon^2}. 
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        E(X_i) &= E\left(g(U_i)\right) = \int_{0}^{1}g(u)du = I \\
+        \variance\left(X_i\right) &= E\left(g(U_i)^2\right) - E\left(g(U_i)\right)^2 \leq E\left(g(U_i)^2\right) = \int_{0}^{1}g(u)^2du \leq M^2 \\
+        \variance\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right) &= \frac{n\variance\left(X_i\right)}{n^2} = \frac{\variance\left(X_i\right)}{n} \leq \frac{M^2}{n}.
+    \end{align*}
+    By the Weak Law of Large Numbers \ref{wlln},
+    \begin{align*}
+        P\left(\abs{\frac{1}{n}\sum_{i=1}^{n}g(U_i) - I} \leq \varepsilon\right) \geq 1 - \frac{1}{\varepsilon^2}\variance\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right) \geq 1 - \frac{M^2}{n\varepsilon^2}.
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    Consider $g(u) = u^2$. Assume we want an approximation that has a 99\% chance of being with $\varepsilon = 0.01$ of $\int_{0}^{1}g(u)du$. Since $g$ is bounded by $1$ on $[0, 1]$, we want $\frac{1}{n\varepsilon^2} \leq 0.01$, so $n \geq 10^6$. Then our approximation is given by
+    \begin{align*}
+        \frac{1}{n}\sum_{i=1}^{n}g(U_i) = \frac{1}{n}\sum_{i=1}^{n}U_i^2.
+    \end{align*}
+\end{exmp}
