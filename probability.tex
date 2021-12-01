@@ -1534,3 +1534,98 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
     where $\varPhi(x)$ is the CDF of the standard normal distribution.
 \end{thm}
+
+\begin{rmk}
+    The approximation that
+    \begin{align*}
+        \frac{S_n - n\mu}{\sigma\sqrt{n}} \distribution Z
+    \end{align*}
+    converges much faster for more symmetric distributions (that is, where $E(X_i^3)$ is small). For fully symmetric distributions, $n = 10$ often gives quite good results. For a $Bernoulli(p)$ distribution (which is skewed),
+    \begin{align*}
+        n \geq \frac{5}{p(1-p)}
+    \end{align*}
+    will give good results.
+\end{rmk}
+
+\begin{thm}{Berry-Esseen Theorem}\label{berry-esseen}\proofbreak
+    Let $X_1, X_2, \ldots, X_n$ be independent and identically distributed random variables with mean $\mu$, finite variance $\sigma^2$, and finite absolute third moment
+    \begin{align*}
+        E\left(\abs{X_i - \mu}^3\right) = \tau.
+    \end{align*}
+    \begin{align*}
+        S_n = \sum_{i=1}^{n}\frac{X_i - \mu}{\sigma}.
+    \end{align*}
+    Then
+    \begin{align*}
+        E(S_n) = n\mu, \\
+        \variance(S_n) = n\sigma^2,
+    \end{align*}
+    and there exists a universal positive constant $c$ such that
+    \begin{align*}
+        \abs{P\left(\frac{S_n- n\mu}{\sigma\sqrt{n}} \leq x\right) - \varPhi(x)} \leq \frac{c\tau}{\sigma^3\sqrt{n}} = \frac{c}{\sqrt{n}}E\left(\abs{\frac{X_i-\mu}{\sigma}}^3\right)
+    \end{align*}
+    for all $x$ and $n$.
+\end{thm}
+
+\begin{rmk}
+    As of 2021, it is known that
+    \begin{align*}
+        0.40973 \approx \frac{\sqrt{10}+3}{6\sqrt{2\pi}} \leq c < 0.4748.
+    \end{align*}
+\end{rmk}
+
+\begin{exmp}{Stirling's Approximation}\proofbreak
+    We can derive Stirling's approximation from the central limit theorem, which states that $n! \approx \sqrt{2\pi n}\left(\frac{n}{e}\right)^n$.
+
+    Let $X \distribution Poisson(n)$. We know that
+    \begin{align*}
+        X = \sum_{i=1}^{n}X_i
+    \end{align*}
+    where $X_i$ are independent and identically distributed $Poisson(1)$ random variables. Then we have
+    \begin{align*}
+        P(X = n) &= P(n \leq X \leq n) = P\left(n-\frac{1}{2} \leq X \leq n + \frac{1}{2}\right) \\
+        = P\left(-\frac{1}{2\sqrt{n}} \leq \frac{X-n}{\sqrt{n}} \leq \frac{1}{2\sqrt{n}}\right).
+    \end{align*}
+    It follows from the central limit theorem \ref{central-limit-theorem} that
+    \begin{align*}
+        P(X = n) &= P\left(-\frac{1}{2\sqrt{n}} \leq \frac{X-n}{\sqrt{n}} \leq \frac{1}{2\sqrt{n}}\right) \approx \int_{-\frac{1}{2\sqrt{n}}}^{\frac{1}{2\sqrt{n}}}\frac{e^{-x^2/2}}{\sqrt{2\pi}}dx.
+    \end{align*}
+    We can take a single-term Riemann sum approximation of this integral, to obtain
+    \begin{align*}
+        P(X = n) &\approx \int_{-\frac{1}{2\sqrt{n}}}^{\frac{1}{2\sqrt{n}}}\frac{e^{-x^2/2}}{\sqrt{2\pi}}dx \approx \frac{2}{2\sqrt{n}}\frac{e^{-0^2/2}}{\sqrt{2\pi}} = \frac{1}{\sqrt{2\pi n}}.
+    \end{align*}
+    We know of course that $P(X = n) = \frac{{n^n}e^{-n}}{n!}$, so
+    \begin{align*}
+        \frac{{n^n}e^{-n}}{n!} \approx \frac{1}{\sqrt{2\pi n}},
+    \end{align*}
+    and Stirling's approximation follows directly.
+\end{exmp}
+
+\begin{prop}{Jensen's Inequality}\label{jensen-inequality}\proofbreak
+    Consider a random variable $X$ with support $S$, and a convex function $h: S \to \R$. Then
+    \begin{align*}
+        h\left(E(X)\right) \leq E\left(h(X)\right).
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    We will only prove Jensen's inequality for discrete random variables, and will do so by induction on the cardinality of the support $S$. The cases where $\abs{S} = 0$ or $\abs{S} = 0$ both lead to the inequality $0 \leq 0$ which is trivially true. For our base, consider $S = \{a, b\}$. Then $E(X) = aP(X = a) + bP(X = b)$, and so by the convexity of $h$ we must have
+    \begin{align*}
+        h(E(X)) \leq P(X = a)h(a) + P(X = b)h(b) = E\left(h(X)\right).
+    \end{align*}
+    Now assuming the Jensen's inequality is true when $\abs{S} = n$, let $\abs{S} = n+1$. Enumerate the elements of $S$ as $s_i$ for $i = 1, \ldots, n+1$. Let $\lambda_i = P(X = s_i)$. Note that there must be $0 < \lambda_i < 1$ or else the support of $X$ would just be $s_i$, or not include $s_i$ when $\lambda_i = 1$ or $\lambda_i = 0$ respectively. Without loss of generality, let $\lambda_{n+1} < 1$. Then by convexity,
+    \begin{align*}
+        h\left(E(X)\right) &= h\left(\sum_{i=1}^{n+1}s_i\lambda_i\right) = h\left(s_{n+1}\lambda_{n+1} + \sum_{i=1}^{n}s_i\lambda_i\right) \\
+        & = h\left(s_{n+1}\lambda_{n+1} + \left(1 - \lambda_{n+1}\right)\sum_{i=1}^{n}\frac{s_i\lambda_i}{1 - \lambda_{n+1}}\right) \\
+        &\leq \lambda_{n+1}h\left(s_{n+1}\right) + \left(1 - \lambda_{n+1})\right)h\left(\sum_{i=1}^{n}\frac{s_i\lambda_i}{1 - \lambda_{n+1}}\right).
+    \end{align*}
+    By the induction hypothesis, we then have
+    \begin{align*}
+        h\left(E(X)\right) &\leq \lambda_{n+1}h\left(s_{n+1}\right) + \left(1 - \lambda_{n+1})\right)h\left(\sum_{i=1}^{n}\frac{s_i\lambda_i}{1 - \lambda_{n+1}}\right) \\
+        &\leq \lambda_{n+1}h\left(s_{n+1}\right) + \left(1 - \lambda_{n+1})\right)\sum_{i=1}^{n}\frac{h(s_i)\lambda_i}{1 - \lambda_{n+1}} = E\left(h(X)\right).
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    Since $h(x) = x^2$ is convex, $E(X)^2 \leq E(X^2)$. Therefore, if a random variable possess a finite second moment, it must posses a finite first moment. 
+\end{cor}
