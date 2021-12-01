@@ -1463,12 +1463,12 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
 \end{proof}
 
-\begin{lemma}{Weak Law of Large Numbers}\label{wlln}\proofbreak
+\begin{thm}{Weak Law of Large Numbers}\label{wlln}\proofbreak
     Let $X_1, X_2, X_3, \ldots$ be independent and identically distributed random variables with finite mean $\mu$ and finite variance $\sigma^2$. Fix any $\varepsilon > 0$. Then
     \begin{align*}
         \lim_{n \to \infty}P\left(\abs{\frac{1}{n}\sum_{i=1}^{n}X_i - \mu} < \varepsilon\right) = 1.
     \end{align*}
-\end{lemma}
+\end{thm}
 
 \begin{proof}
     For every $n > 0$, let $Y_n = \frac{1}{n}\sum_{i=1}^{n}X_i$ (this is the sample mean). Then
@@ -1515,3 +1515,22 @@ We can also find the join distribution of multiple ordered random variables. For
         \frac{1}{n}\sum_{i=1}^{n}g(U_i) = \frac{1}{n}\sum_{i=1}^{n}U_i^2.
     \end{align*}
 \end{exmp}
+
+\begin{thm}{Strong Law of Large Numbers}\label{slln}\proofbreak
+    Let $X_1, X_2, X_3, \ldots$ be independent and identically distributed random variables with finite mean $\mu$. Then
+    \begin{align*}
+        P\left(\lim_{n \to \infty}\frac{\sum_{i=1}^{n}X_i}{n} = \mu\right) = 1.
+    \end{align*}
+\end{thm}
+
+\begin{thm}{Central Limit Theorem}\label{central-limit-theorem}\proofbreak
+    Let $X_1, X_2, \ldots, X_n$ be independent and identically distributed random variables with mean $\mu$ and finite variance $\sigma^2$. Let
+    \begin{align*}
+        S_n = \sum_{i=1}^{n}X_i.
+    \end{align*}
+    Then
+    \begin{align*}
+        \lim_{n \to \infty}P\left(\frac{S_n - n\mu}{\sigma\sqrt{n}} \leq x\right) = \varPhi(x),
+    \end{align*}
+    where $\varPhi(x)$ is the CDF of the standard normal distribution.
+\end{thm}
