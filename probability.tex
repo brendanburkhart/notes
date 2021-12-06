@@ -1523,6 +1523,43 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
 \end{thm}
 
+\begin{proof}
+    We will only prove the strong law of large numbers under the additional assumption that $E(X_i^4) < \infty$.
+
+    Without loss of generality, we assume $E(X_i) = 0$, so
+    \begin{align}
+        S_n = \sum_{i=1}^{n}X_i.
+    \end{align}
+    We will show that if the expected value of
+    \begin{align}
+        \sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^{4}
+    \end{align}
+    is finite, then
+    \begin{align*}
+        P\left(\sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^{4} < \infty\right) = 1.
+    \end{align*}
+    This would imply that
+    \begin{align*}
+        P\left(\lim_{n\to\infty}\left(\frac{S_n}{n}\right)^{4} = 0\right) = P\left(\lim_{n\to\infty}\frac{S_n}{n} = 0\right) = 1.
+    \end{align*}
+
+    Note that since $\left(S_n/n\right)^4 \geq 0$, by the Fubini-Tonelli theorem
+    \begin{align*}
+        E\left[\sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^4\right] = \sum_{n=1}^{\infty}\frac{E\left(S_n^4\right)}{n^4}.
+    \end{align*}
+    Then we have \begin{align*}
+        S_n^4 = n^4\left(X_i^4\right),
+    \end{align*}
+    and so
+    \begin{align}
+        E(S_n^4) = n^4E(X_i^4),
+    \end{align}
+    and so
+    \begin{align*}
+        E\left[\sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^4\right] = \sum_{n=1}^{\infty}\frac{E\left(S_n^4\right)}{n^4} = \sum_{n=1}^{\infty}\mu.
+    \end{align*}
+\end{proof}
+
 \begin{thm}{Central Limit Theorem}\label{central-limit-theorem}\proofbreak
     Let $X_1, X_2, \ldots, X_n$ be independent and identically distributed random variables with mean $\mu$ and finite variance $\sigma^2$. Let
     \begin{align*}
