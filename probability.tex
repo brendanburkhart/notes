@@ -1490,32 +1490,6 @@ We can also find the join distribution of multiple ordered random variables. For
     The Weak Law of Large Numbers actually holds even when $X_i$ do not possess finite variancem although the proof is more complicated.
 \end{rmk}
 
-\begin{thm}{Monte-Carlo Integration}\proofbreak
-    Consider $I = \int_{0}^{1}g(u)du$, where $\abs{g(u)}$ is bounded some $M > 0$ on $[0, 1]$. For many functions $g$, we will not be able to find an analytic solution. Let $U_1, U_2, \ldots$ be independent and identically distributed $Uniform(0, 1)$ random variables. Let $X_i = g(U_i)$, so $X_1, X_2, \ldots$ are independent and identically distributed. Then
-    \begin{align*}
-        P\left(\abs{\frac{1}{n}\sum_{i=1}^{n}g(U_i) - I} \geq \varepsilon\right) \leq \frac{M^2}{n\varepsilon^2}. 
-    \end{align*}
-\end{thm}
-
-\begin{proof}
-    \begin{align*}
-        E(X_i) &= E\left(g(U_i)\right) = \int_{0}^{1}g(u)du = I \\
-        \variance\left(X_i\right) &= E\left(g(U_i)^2\right) - E\left(g(U_i)\right)^2 \leq E\left(g(U_i)^2\right) = \int_{0}^{1}g(u)^2du \leq M^2 \\
-        \variance\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right) &= \frac{n\variance\left(X_i\right)}{n^2} = \frac{\variance\left(X_i\right)}{n} \leq \frac{M^2}{n}.
-    \end{align*}
-    By the Weak Law of Large Numbers \ref{wlln},
-    \begin{align*}
-        P\left(\abs{\frac{1}{n}\sum_{i=1}^{n}g(U_i) - I} \leq \varepsilon\right) \geq 1 - \frac{1}{\varepsilon^2}\variance\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right) \geq 1 - \frac{M^2}{n\varepsilon^2}.
-    \end{align*}
-\end{proof}
-
-\begin{exmp}
-    Consider $g(u) = u^2$. Assume we want an approximation that has a 99\% chance of being with $\varepsilon = 0.01$ of $\int_{0}^{1}g(u)du$. Since $g$ is bounded by $1$ on $[0, 1]$, we want $\frac{1}{n\varepsilon^2} \leq 0.01$, so $n \geq 10^6$. Then our approximation is given by
-    \begin{align*}
-        \frac{1}{n}\sum_{i=1}^{n}g(U_i) = \frac{1}{n}\sum_{i=1}^{n}U_i^2.
-    \end{align*}
-\end{exmp}
-
 \begin{thm}{Strong Law of Large Numbers}\label{slln}\proofbreak
     Let $X_1, X_2, X_3, \ldots$ be independent and identically distributed random variables with finite mean $\mu$. Then
     \begin{align*}
