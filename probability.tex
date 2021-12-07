@@ -1394,7 +1394,7 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{itemize}
     If they have an equal chance of choosing any of the branches, what is the expected time until they reach the surface?
 
-    Let $B$ be the branch they took. We can given that $P(B = 1) = P(B = 2) = P(B = 3) = \frac{1}{3}$, and also that
+    Let $B$ be the branch they took. We are given that $P(B = 1) = P(B = 2) = P(B = 3) = \frac{1}{3}$, and also that
     \begin{align*}
         E(X|B=1) &= 3, \\
         E(X|B=2) &= 5 + E(X), \\
@@ -1414,6 +1414,35 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
     and so $E(X^2) = 443$. Therefore, $\variance(X) = E(X^2) - E(X)^2 = 218$.
 \end{exmp}
+
+\begin{thm}{Law of Total Variance}\label{total-variance-law}
+    \begin{align*}
+        \variance\left(X\right) = E\left[\variance\left(X|Y\right)\right] + \variance\left[E(X|Y)\right]
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Applying the definition of variance, and then inserting $0 = - E(X|Y) + E(X|Y)$, we can show that
+    \begin{align*}
+        \variance\left(X\right) =&\,E\left[\left(X - E(X)\right)^2\right] = E\left[\left(X - E(X|Y) + E(X|Y) - E(X)\right)^2\right] \\
+        =&\,E\left[\left(X - E(X|Y)\right)^2\right] + E\left[\left(E(X|Y) - E(X)\right)^2\right] \\
+        &+ 2E\left[\left(X - E(X|Y)\right)\left(E(X|Y) - E(X)\right)\right].
+    \end{align*}
+    Then, by expanding using the Law of Total Expectation \ref{total-expectation-law} and applying the definition of variance, we obtain:
+    \begin{align*}
+        E\left[\left(X - E(X|Y)\right)^2\right] &= E\left\{E\left[\left(X - E(X|Y)\right)^2\compbar Y\right]\right\} = E\left[\variance(X|Y)\right], \\
+        E\left[\left(E(X|Y) - E(X)\right)^2\right] &= E\left[\left(E(X|Y) - E\left[E(X|Y)\right]\right)^2\right] = \variance\left[E(X|Y)\right].
+    \end{align*}
+    For the third term in $\variance(X)$, we also expand using the Law of Total Expectation,
+    \begin{align*}
+        E\left[\left(X - E(X|Y)\right)\left(E(X|Y) - E(X)\right)\right] &= E\left\{E\left[\left(X - E(X|Y)\right)\left(E(X|Y) - E(X)\right)\right]\compbar Y\right\} \\
+        &= E\left\{\left(E(X|Y) - E(X)\right)E\left[\left(X - E(X|Y)\right)\right]\compbar Y\right\} \\
+        &= E\left\{\left(E(X|Y) - E(X)\right)E\left[\left(X - E(X|Y)\right)\compbar Y\right]\compbar Y\right\} \\
+        &= E\left\{\left(E(X|Y) - E(X)\right)\left(E(X|Y) - E(X|Y)\right)\compbar Y\right\} \\
+        &= E\left\{\left(E(X|Y) - E(X)\right)\left(0\right)\compbar Y\right\} = E\left(0|Y\right) = 0.
+    \end{align*}
+    Therefore, $\variance\left(X\right) = E\left[\variance\left(X|Y\right)\right] + \variance\left[E(X|Y)\right] + 0$.
+\end{proof}
 
 \section{Laws of Large Numbers}
 
