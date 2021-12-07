@@ -1446,7 +1446,7 @@ We can also find the join distribution of multiple ordered random variables. For
 
 \section{Laws of Large Numbers}
 
-\begin{thm}{Markov Inequality}\label{markov-inequality}\proofbreak
+\begin{thm}{Markov's inequality}\label{markov-inequality}\proofbreak
     Let $X$ be a positive random variable with finite expected value. Then for any $a > 0$,
     \begin{align*}
         P(X \geq a) \leq \frac{E(X)}{a}.
@@ -1463,17 +1463,13 @@ We can also find the join distribution of multiple ordered random variables. For
 \end{proof}
 
 \begin{rmk}
-    The Markov Inequality can be quite useful, however it often provides a quite loose upper bound.
+    Markov's inequality can be quite useful, however it often provides a quite loose upper bound.
 \end{rmk}
 
 \begin{cor}{Chebyshev's Inequality}\label{chebyshev-inequality}\proofbreak
     Let $Y$ be a random variable with finite mean $\mu_Y$ and finite variance $\sigma_Y^2$. Then for any $k > 0$,
     \begin{align*}
         P\left(\abs{Y - \mu_Y} \geq k\right) &\leq \frac{\sigma_Y^2}{k^2},\;\;\; P\left(\abs{Y - \mu_Y} < k\right) \geq 1 - \frac{\sigma_Y^2}{k^2} \\
-    \end{align*}
-    Alternatively,
-    \begin{align*}
-        P\left(\abs{Y - \mu_Y} \geq k\sigma_Y\right) &\leq \frac{1}{k^2},\;\;\; P\left(\abs{Y - \mu_Y} < k\sigma_Y\right) \geq 1 - \frac{1}{k^2} \\
     \end{align*}
 \end{cor}
 
@@ -1482,7 +1478,7 @@ We can also find the join distribution of multiple ordered random variables. For
     \begin{align*}
         P\left(\abs{Y - \mu_Y} \geq k\right) = P\left(\abs{Y - \mu_Y}^2 \geq k^2\right).
     \end{align*}
-    By the Markov Inequality,
+    By Markov's inequality \ref{markov-inequality},
     \begin{align*}
         P\left(\abs{Y - \mu_Y}^2 \geq k^2\right) \leq \frac{E\left(\abs{Y - \mu_Y}^2\right)}{k^2}.
     \end{align*}
@@ -1491,6 +1487,13 @@ We can also find the join distribution of multiple ordered random variables. For
         P\left(\abs{Y - \mu_Y}^2 \geq k^2\right) \leq \frac{\sigma_Y^2}{k^2}.
     \end{align*}
 \end{proof}
+
+\begin{rmk}
+    Chebyshev's inequality can also be expressed as
+    \begin{align*}
+        P\left(\abs{Y - \mu_Y} \geq k\sigma_Y\right) &\leq \frac{1}{k^2},\;\;\; P\left(\abs{Y - \mu_Y} < k\sigma_Y\right) \geq 1 - \frac{1}{k^2} \\
+    \end{align*}
+\end{rmk}
 
 \begin{thm}{Weak Law of Large Numbers}\label{wlln}\proofbreak
     Let $X_1, X_2, X_3, \ldots$ be independent and identically distributed random variables with finite mean $\mu$ and finite variance $\sigma^2$. Fix any $\varepsilon > 0$. Then
@@ -1508,7 +1511,7 @@ We can also find the join distribution of multiple ordered random variables. For
     \begin{align*}
         \sigma_{Y_n}^2 = \variance\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right) = \frac{1}{n^2}\variance\left(\sum_{i=1}^{n}X_i\right) = \frac{1}{n^2}\left(n\sigma^2\right) = \frac{\sigma^2}{n}.
     \end{align*}
-    Therefore, by Chebyshev's Inequality \ref{chebyshev-inequality},
+    Therefore, by Chebyshev's inequality \ref{chebyshev-inequality},
     \begin{align*}
         1 \geq P\left(\abs{Y_n - \mu} < \varepsilon\right) \geq 1 - \frac{\sigma^2}{n\varepsilon^2}.
     \end{align*}
