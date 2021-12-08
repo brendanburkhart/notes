@@ -443,7 +443,7 @@
     If $x < y$ then the event $X \leq x$ is a subset of the event $X \leq y$, so $P(X \leq x) \leq P(X \leq y)$ by Proposition \ref{probability-monotonicity}.
 \end{proof}
 
-\begin{thm}\label{event-sequence-probability}
+\begin{thm}{Continuity of Probability}\label{continuity-of-probability}\proofbreak
     Consider sequences of events $E_i \in \Omega$ such that
     \begin{align*}
         E_1 \subseteq E_2 \subseteq E_3 \subseteq \cdots,
@@ -504,7 +504,7 @@
     \begin{align*}
         \bigcap_{n = 1}^{\infty}(X \leq x + \frac{1}{n}),
     \end{align*}
-    and so by Theorem \ref{event-sequence-probability} right-continuity follows:
+    and so by the continuity of probability \ref{continuity-of-probability} right-continuity follows:
     \begin{align*}
         F(x) = P(X \leq x) = \lim_{n \to \infty}P(X \leq x + \frac{1}{n}) = \lim_{n \to \infty}F(x + \frac{1}{n}).
     \end{align*}
@@ -1610,7 +1610,7 @@ We can also find the join distribution of multiple ordered random variables. For
         1 - P\left(\limsup_{n \to \infty}E_n\right) &= 1 - P\left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j\right) = P\left(\left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j\right)^{c}\right) \\
         &= P\left(\bigunion_{n \geq 1}\bigintersection_{j \geq n}E_j^{c}\right) = \lim_{n\to\infty}P\left(\bigintersection_{j \geq n}E_j^{c}\right).
     \end{align*}
-    The last equality is because $\bigintersection_{j \geq n_1}E_j^{c} \subseteq \bigintersection_{j \geq n_2}E_j^{c}$ when $n_1 \leq n_2$.
+    Since $\bigintersection_{j \geq n}$ forms a non-decreasing sequence, that last equality follows from the continuity of probability \ref{continuity-of-probability}.
     
     Next, we will show that $P\left(\bigintersection_{j \geq n}E_j^{c}\right) = 0$ for all $n$. For any $N \geq n$, $P\left(\bigintersection_{j \geq n}E_j^{c}\right) \leq P\left(\bigintersection_{j=n}^{N}E_j^{c}\right)$. Then by the independence of $E_j$, $E_j^{c}$ are independent, and so
     \begin{align*}
@@ -1650,34 +1650,66 @@ We can also find the join distribution of multiple ordered random variables. For
 \end{thm}
 
 \begin{proof}
-    We will assume that $\mu = E(X_i) = 0$. We can make this assumption without any loss of generality, because if $E(X_i) = \mu$, we can define $Y_i = X_i - \mu$. Then $E(Y_i) = E(X_i) - E(\mu) = 0$, and then our result will show that
+    We will only prove this result under the additional requirement that $E(X_i^4) < \infty$ --- that is, that $X_i$ possesses a finite fourth moment (and therefore a finite second moment).
+
+    We will also assume that $\mu = E(X_i) = 0$. We can make this assumption without any loss of generality, because if $E(X_i) = \mu$, we can define $Y_i = X_i - \mu$. Then $E(Y_i) = E(X_i) - E(\mu) = 0$, and then our result will show that
     \begin{align*}
         1 = P\left(\lim_{n \to \infty}\frac{\sum_{i=1}^{n}Y_i}{n} = 0\right) = P\left(\lim_{n \to \infty}\frac{\sum_{i=1}^{n}X_i}{n} - \mu = 0\right) = P\left(\lim_{n \to \infty}\frac{\sum_{i=1}^{n}X_i}{n} = \mu\right).
     \end{align*}
-    We will show that if the expected value of
+    
+    Our first step will be to show that
     \begin{align*}
-        \sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^{4},\;\;\textrm{ where } S_n = \sum_{i=1}^{n}X_i,
+        \sum_{n=1}^{\infty}\frac{E\left(S_n^4\right)}{n^4} < \infty.
     \end{align*}
-    is finite, then
+    Expanding $E(S_n^4)$, we have
     \begin{align*}
-        P\left(\sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^{4} < \infty\right) = 1.
+        E(S_n^4) = E\left[\sum_{1 \leq i, j, k, l \leq n}X_iX_jX_kX_l\right].
     \end{align*}
-    Since the terms of convergent series must tend to zero, this would imply our desired result, since
+    The terms of this sum can be placed into five categorizes, which due to the independence of $X_i$ can be simplified:
+    \begin{itemize}
+        \item $E\left[X_i^4\right]$,
+        \item $E\left[X_i^3X_j\right] = E\left[X_i^3\right]E\left[X_j\right] = E\left[X_i^3\right](0) = 0$,
+        \item $E\left[X_i^2X_j^2\right] = E\left[X_i^2\right]E\left[X_j^2\right] = E\left[X_i^2\right]E\left[X_i^2\right] = \left(E\left[X_i^2\right]\right)^4$,
+        \item $E\left[X_i^2X_jX_k\right] = E\left[X_i^2\right]E\left[X_j\right]E\left[X_k\right] = E\left[X_i^2\right](0^2) = 0$,
+        \item $E\left[X_iX_jX_kX_l\right] = E\left[X_i\right]E\left[X_j\right]E\left[X_k\right]E\left[X_l\right] = 0^4 = 0$.
+    \end{itemize}
+    We can see that three of the five catagories of terms will vanish, and so by linearity and exchangeability,
     \begin{align*}
-        P\left(\lim_{n\to\infty}\left(\frac{S_n}{n}\right)^{4} = 0\right) = P\left(\lim_{n\to\infty}\frac{S_n}{n} = 0\right) = 1.
+        E\left(S_n^4\right) = \binom{n}{1}E\left(X_i^4\right) + \binom{4}{2}\binom{n}{2}E\left(X_i^2\right)^2.
     \end{align*}
+    Therefore,
+    \begin{align*}
+        \sum_{n=1}^{\infty}\frac{E\left(S_n^4\right)}{n^4} = \sum_{n=1}^{\infty}\frac{nE\left(X_i^4\right) + 3(n^2 - n)E\left(X_i^2\right)^2}{n^4} = \sum_{n=1}^{\infty}\frac{E\left(X_i^4\right)- 3E\left(X_i^2\right)^2}{n^3} + \sum_{n=1}^{\infty}\frac{3E\left(X_i^2\right)^2}{n^2},
+    \end{align*}
+    which are convergent $p$-series, and so the sum must be finite.
 
-    Note that since $\left(S_n/n\right)^4 \geq 0$, by the Fubini-Tonelli theorem
+    Now that we have completed our goal of showing that this sum is finite, we can complete the rest of the proof. For any $\varepsilon > 0$, by Markov's inequality \ref{markov-inequality} we have that
     \begin{align*}
-        E\left[\sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^4\right] = \sum_{n=1}^{\infty}\frac{E\left[\left(S_n\right)^4\right]}{n^4}.
+        P\left(\abs{\frac{S_n}{n}} \geq \varepsilon\right) = P\left(\left(\frac{S_n}{n}\right)^4 \geq \varepsilon^4\right) \leq \frac{E\left(S_n^4\right)}{\varepsilon^4n^4},\;\;\textrm{ where } S_n = \sum_{i=1}^{n}X_i.
     \end{align*}
-    Then we have  $\left(S_n\right)^4 = n^4\left(X_i^4\right)$, and so
+    Therefore,
     \begin{align*}
-        E\left[\left(S_n\right)^4\right] = n^4E(X_i^4),
+        \sum_{n=1}^{\infty}P\left(\abs{\frac{S_n}{n}} \geq \varepsilon\right) \leq \frac{1}{\varepsilon^4}\sum_{n=1}^{\infty}\frac{E\left(S_n^4\right)}{n^4} < \infty.
+    \end{align*}
+    By the first Borel-Cantelli lemma \ref{borel-cantelli} it follows that for any $\varepsilon > 0$,
+    \begin{align*}
+        P\left(\limsup_{n\to\infty} \abs{\frac{S_n}{n}} \geq \varepsilon \right) = 0.
+    \end{align*}
+    For $k \geq 1$, let $D_{1/k}$ be the event that
+    \begin{align*}
+        \limsup_{n\to\infty} \abs{\frac{S_n}{n}} \geq \frac{1}{k},
+    \end{align*}
+    that is, the event that $\abs{S_n/n} \geq 1/k$ infinitely many times as $n \to \infty$. We have just shown that $P(D_{1/k}) = 0$ for all $k \geq 1$. Notice that $D_{1/k_1} \subseteq D_{1/k_2}$ for all $k_1 \leq k_2$, so $D_{1/k}$ forms a non-decreasing sequence of events. Therefore, it follows from the continuity of probability \ref{continuity-of-probability} that
+    \begin{align*}
+        P\left(\bigunion_{k\to\infty}D_{1/k}\right) = P\left(\lim_{k\to\infty}D_{i/k}\right) = \lim_{k\to\infty}P\left(D_{1/k}\right) = \lim_{k\to\infty}(0) = 0.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        1 = 1 - P\left(\bigunion_{k\to\infty}D_{1/k}\right) = P\left(\bigintersection_{k\to\infty}D_{1/k}^{c}\right) = P\left(\lim_{k\to\infty}D_{i/k}^{c}\right),
     \end{align*}
     and so
     \begin{align*}
-        E\left[\sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^4\right] = \sum_{n=1}^{\infty}\frac{E\left(S_n^4\right)}{n^4} = \sum_{n=1}^{\infty}\mu.
+        P\left(\lim_{k\to\infty}D_{i/k}^{c}\right) = P\left(\lim_{k\to\infty}\left(\limsup_{n\to\infty} \abs{\frac{S_n}{n}} < \frac{1}{k}\right)\right) = P\left(\limsup_{n\to\infty} \abs{\frac{S_n}{n}} = 0\right) = 1
     \end{align*}
 \end{proof}
 
