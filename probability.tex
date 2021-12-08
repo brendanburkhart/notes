@@ -20,7 +20,7 @@
     \begin{itemize}
         \item Non-negativity: for any event $A \subseteq \Omega$, $P(A) \geq 0$.
         \item Normalization: $P(\Omega) = 1$.
-        \item Countable-additivity: if $A_i$ are a countable sequence of mutually exclusive events, then $P(\disjointunionbig_{i}A_i) = \sum_{i}P(A_i)$.
+        \item Countable-additivity: if $A_i$ are a countable sequence of mutually exclusive events, then \[P\left(\disjointunionbig_{i}A_i\right) = \sum_{i}P(A_i).\]
     \end{itemize}
 \end{defn}
 
@@ -48,7 +48,7 @@
     Let $C = B - A$. Then $A \union C = B$ and $A \intersection C = \emptyset$. Since $A$ and $C$ are therefore mutually exclusive, $P(A) + P(C) = P(A \union C) = P(B)$. Since $P(C) \geq 0$ by the axiom of non-negativity, it follows that $P(A) \leq P(B)$.
 \end{proof}
 
-\begin{thm}{Inclusion-exclusion Principle}\label{inclusion-exclusion}
+\begin{thm}{Inclusion-exclusion Principle}\label{inclusion-exclusion-probability}\proofbreak
     Let $A, B, C \subseteq \Omega$ be events. Then
     \[P(A \union B) = P(A) + P(B) - P(A \intersection B),\]
     and
@@ -88,6 +88,26 @@
     \[A \union B \union C = A \disjointunion (B - A) \disjointunion (C - (A \union B)).\]
 \end{prop}
 
+\begin{prop}{Subadditivity}\label{subadditivity}\proofbreak
+    Let $A_1, A_2, \ldots$ be a sequence of events. Then for any $n \geq 1$ we have
+    \begin{align*}
+        P\left(\bigunion_{i=1}^{n}A_i\right) \leq \sum_{i=1}^{n}P(A_i),\;\;\;\;
+        P\left(\bigunion_{i=1}^{\infty}A_i\right) \leq \sum_{i=1}^{\infty}P(A_i).
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Let $B_0 = \bigunion_{i=1}^{\infty}A_i$, and then form the sequence $B_1, B_2, \ldots$ defined by $B_i = A_i - B_0$. Note that this implies $P(B_i) \leq P(A_i)$. We know that the sequence $B_0, B_1, B_2, \ldots$ are mutually exclusive, and so
+    \begin{align*}
+        P\left(\disjointunionbig_{i=0}^{\infty}B_i\right) = P(B_0) + \sum_{i=1}^{\infty}P(B_i) \leq \sum_{i=1}^{\infty}P(A_i).
+    \end{align*}
+    Since $\disjointunionbig_{i=0}^{\infty}B_i = \bigunion_{i=1}^{\infty}A_i$, we then have
+    \begin{align*}
+        P\left(\disjointunionbig_{i=1}^{\infty}A_i\right) \leq \sum_{i=1}^{\infty}P(A_i).
+    \end{align*}
+    The proof for a finite sequence is analogous.
+\end{proof}
+
 \begin{exmp}{Finite, equally-likely probability law}\proofbreak
     Let $(\Omega, P)$ be a sample space together with a function $P: \mathcal{P}(\Omega) \to \R$, where $\abs{\Omega} \in \Z^{+}$ and for all $A \in \mathcal{\Omega}$, \[P(A) = \frac{\abs{A}}{\abs{\Omega}}.\]
 
@@ -113,7 +133,6 @@
     Therefore, $P$ satisfies the axiom of countable additivity and so $(\Omega, P)$ is a probability space.
 \end{exmp}
 
-
 \begin{exmp}{Geometric probability law}\proofbreak
     Let $\Omega = \{\omega_1, \omega_2, \ldots\}$ be a sample space such that $\abs{\Omega} = \abs{\Z}$, and define $P: \mathcal{P}(\Omega) \to \R$ by
     \[P(A) = \sum_{\omega_i \in A}\left(\frac{1}{2}\right)^{i}.\]
@@ -126,7 +145,7 @@
 
     Finally, for $A = A_1 \disjointunion A_2 \disjointunion \cdots$,
     \begin{align*}
-        P(\disjointunionbig_{i}A_i) = \sum_{\omega_j \in A}\left(\frac{1}{2}\right)^{j} = \sum_{i}\sum_{\omega_j \in A_i}\left(\frac{1}{2}\right)^{j} = \sum_{i}P(A_i).
+        P\left(\disjointunionbig_{i}A_i\right) = \sum_{\omega_j \in A}\left(\frac{1}{2}\right)^{j} = \sum_{i}\sum_{\omega_j \in A_i}\left(\frac{1}{2}\right)^{j} = \sum_{i}P(A_i).
     \end{align*}
     Therefore, $P$ satisfies the axiom of countable additivity and so $(\Omega, P)$ is a probability space.
 \end{exmp}
@@ -1519,8 +1538,109 @@ We can also find the join distribution of multiple ordered random variables. For
 \end{proof}
 
 \begin{rmk}
-    The Weak Law of Large Numbers actually holds even when $X_i$ do not possess finite variancem although the proof is more complicated.
+    The Weak Law of Large Numbers actually holds even when $X_i$ do not possess finite variances, although the proof is more complicated in this case.
 \end{rmk}
+
+\begin{defn}
+    The limit infimum and limit supremum of a sequence of events $E_1, E_2, \ldots$ in a probability space are, respectively,
+    \begin{align*}
+        \liminf_{n \to \infty} = \bigunion_{n \geq 1}\bigintersection_{j \geq n}E_j, \\
+        \limsup_{n \to \infty} = \bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j.
+    \end{align*}
+
+    The limit infimum and limit supremum always exists for a given sequence. When they coincide, we say that the limit of that sequence is their value.
+\end{defn}
+
+\begin{lemma}{(First) Borel-Cantelli Lemma}\label{borel-cantelli}\proofbreak
+    Let $E_1, E_2, \ldots$ be an infinite sequence of events in a probability space. If
+    \begin{align*}
+        \sum_{i=1}^{\infty}P(E_i) < \infty,
+    \end{align*}
+    then
+    \begin{align*}
+        P\left(\limsup_{n \to \infty}E_n\right) = 0.
+    \end{align*}
+\end{lemma}
+
+\begin{rmk}
+    The Borel-Cantelli lemma essentially states that if the sum of the probabilities of an infinite sequence of events if finite, then the probability that an infinite number of these events occurs is zero.
+\end{rmk}
+
+\begin{proof}
+    First, note that for any $k \geq 1$ we have
+    \begin{align*}
+        \limsup_{n \to \infty}E_n \subseteq \bigunion_{n \geq k}E_n,
+    \end{align*}
+    which follows immediately from the definition of the limit supremum. Then by monotonicity \ref{probability-monotonicity}, it follows that
+    \begin{align*}
+        P\left(\limsup_{n\to\infty}E_n\right) \leq P\left(\bigunion_{n \geq k}E_n\right).
+    \end{align*}
+    By subadditivity \ref{subadditivity}, we have
+    \begin{align*}
+        P\left(\bigunion_{n \geq k}E_n\right) \leq \sum_{n \geq k}P(E_n).
+    \end{align*}
+    Since the sum of probabilities is finite, we know that
+    \begin{align*}
+        \lim_{n\to\infty}\sum_{n \geq k}P(E_n) = 0,
+    \end{align*}
+    and so by the Archimedean property \ref{archimedean-property} of the real numbers we have
+    \begin{align*}
+        P\left(\limsup_{n\to\infty}E_n\right) = 0.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}{Second Borel-Cantelli Lemma}\label{borel-cantelli-two}\proofbreak
+    Let $E_1, E_2, \ldots$ be an infinite sequence of \emph{independent} events in a probability space. If
+    \begin{align*}
+        \sum_{i=1}^{\infty}P(E_i) = \infty,
+    \end{align*}
+    then
+    \begin{align*}
+        P\left(\limsup_{n \to \infty}E_n\right) = 1.
+    \end{align*}
+\end{lemma}
+
+\begin{rmk}
+    Note that the Second Borel-Cantelli lemma adds the requirement that the sequence of events are independent, which the first lemma does not require.
+\end{rmk}
+
+\begin{proof}
+    We want to show that $P\left(\limsup_{n \to \infty}E_n\right) = 1$, or equivalently that $1 - P\left(\limsup_{n \to \infty}E_n\right) = 0$. Then
+    \begin{align*}
+        1 - P\left(\limsup_{n \to \infty}E_n\right) &= 1 - P\left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j\right) = P\left(\left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j\right)^{c}\right) \\
+        &= P\left(\bigunion_{n \geq 1}\bigintersection_{j \geq n}E_j^{c}\right) = \lim_{n\to\infty}P\left(\bigintersection_{j \geq n}E_j^{c}\right).
+    \end{align*}
+    The last equality is because $\bigintersection_{j \geq n_1}E_j^{c} \subseteq \bigintersection_{j \geq n_2}E_j^{c}$ when $n_1 \leq n_2$.
+    
+    Next, we will show that $P\left(\bigintersection_{j \geq n}E_j^{c}\right) = 0$ for all $n$. For any $N \geq n$, $P\left(\bigintersection_{j \geq n}E_j^{c}\right) \leq P\left(\bigintersection_{j=n}^{N}E_j^{c}\right)$. Then by the independence of $E_j$, $E_j^{c}$ are independent, and so
+    \begin{align*}
+        P\left(\bigintersection_{j=n}^{N}E_j^{c}\right) &= \prod_{j=n}^{N}P\left(E_j^{c}\right) = \prod_{j=n}^{N}\left(1 - P\left(E_j\right)\right).
+    \end{align*}
+    Next, since
+    \begin{align*}
+        e^{-x} = 1 - x + \frac{x^2}{2!} - \frac{x^3}{3!} + \cdots\;\;,
+    \end{align*}
+    for any $0 \leq x \leq 1$ we can see that $e^{-x} \geq 1 - x$, and so
+    \begin{align*}
+        \prod_{j=n}^{N}\left(1 - P\left(E_j\right)\right) \leq \prod_{j=n}^{N}e^{-P\left(E_j\right)} = \exp\left(-\sum_{j=n}^{N}P(E_j)\right).
+    \end{align*}
+    We therefore have
+    \begin{align*}
+        P\left(\bigintersection_{j \geq n}E_j^{c}\right) \leq \lim_{n\to\infty}\exp\left(-\sum_{j=n}^{N}P(E_j)\right) = 0
+    \end{align*}
+    since
+    \begin{align*}
+        \lim_{N\to\infty}\sum_{j=n}^{N}P(E_j) = \infty.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \lim_{n\to\infty}P\left(\bigintersection_{j \geq n}E_j^{c}\right) = \lim_{n\to\infty}\left(0\right) = 0,
+    \end{align*}
+    and so
+    \begin{align*}
+        P\left(\limsup_{n \to \infty}E_n\right) = 1.
+    \end{align*}
+\end{proof}
 
 \begin{thm}{Strong Law of Large Numbers}\label{slln}\proofbreak
     Let $X_1, X_2, X_3, \ldots$ be independent and identically distributed random variables with finite mean $\mu$. Then
@@ -1530,36 +1650,31 @@ We can also find the join distribution of multiple ordered random variables. For
 \end{thm}
 
 \begin{proof}
-    We will only prove the strong law of large numbers under the additional assumption that $E(X_i^4) < \infty$.
-
-    Without loss of generality, we assume $E(X_i) = 0$, so
-    \begin{align}
-        S_n = \sum_{i=1}^{n}X_i.
-    \end{align}
+    We will assume that $\mu = E(X_i) = 0$. We can make this assumption without any loss of generality, because if $E(X_i) = \mu$, we can define $Y_i = X_i - \mu$. Then $E(Y_i) = E(X_i) - E(\mu) = 0$, and then our result will show that
+    \begin{align*}
+        1 = P\left(\lim_{n \to \infty}\frac{\sum_{i=1}^{n}Y_i}{n} = 0\right) = P\left(\lim_{n \to \infty}\frac{\sum_{i=1}^{n}X_i}{n} - \mu = 0\right) = P\left(\lim_{n \to \infty}\frac{\sum_{i=1}^{n}X_i}{n} = \mu\right).
+    \end{align*}
     We will show that if the expected value of
-    \begin{align}
-        \sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^{4}
-    \end{align}
+    \begin{align*}
+        \sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^{4},\;\;\textrm{ where } S_n = \sum_{i=1}^{n}X_i,
+    \end{align*}
     is finite, then
     \begin{align*}
         P\left(\sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^{4} < \infty\right) = 1.
     \end{align*}
-    This would imply that
+    Since the terms of convergent series must tend to zero, this would imply our desired result, since
     \begin{align*}
         P\left(\lim_{n\to\infty}\left(\frac{S_n}{n}\right)^{4} = 0\right) = P\left(\lim_{n\to\infty}\frac{S_n}{n} = 0\right) = 1.
     \end{align*}
 
     Note that since $\left(S_n/n\right)^4 \geq 0$, by the Fubini-Tonelli theorem
     \begin{align*}
-        E\left[\sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^4\right] = \sum_{n=1}^{\infty}\frac{E\left(S_n^4\right)}{n^4}.
+        E\left[\sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^4\right] = \sum_{n=1}^{\infty}\frac{E\left[\left(S_n\right)^4\right]}{n^4}.
     \end{align*}
-    Then we have \begin{align*}
-        S_n^4 = n^4\left(X_i^4\right),
+    Then we have  $\left(S_n\right)^4 = n^4\left(X_i^4\right)$, and so
+    \begin{align*}
+        E\left[\left(S_n\right)^4\right] = n^4E(X_i^4),
     \end{align*}
-    and so
-    \begin{align}
-        E(S_n^4) = n^4E(X_i^4),
-    \end{align}
     and so
     \begin{align*}
         E\left[\sum_{n=1}^{\infty}\left(\frac{S_n}{n}\right)^4\right] = \sum_{n=1}^{\infty}\frac{E\left(S_n^4\right)}{n^4} = \sum_{n=1}^{\infty}\mu.
