@@ -20,7 +20,7 @@
     \begin{itemize}
         \item Non-negativity: for any event $A \subseteq \Omega$, $P(A) \geq 0$.
         \item Normalization: $P(\Omega) = 1$.
-        \item Countable-additivity: if $A_i$ are a countable sequence of mutually exclusive events, then \[P\left(\disjointunionbig_{i}A_i\right) = \sum_{i}P(A_i).\]
+        \item Countable-additivity: if $A_i$ are a countable sequence of mutually exclusive events, then \[P\left(\bigdisjointunion_{i}A_i\right) = \sum_{i}P(A_i).\]
     \end{itemize}
 \end{defn}
 
@@ -99,11 +99,11 @@
 \begin{proof}
     Let $B_0 = \bigunion_{i=1}^{\infty}A_i$, and then form the sequence $B_1, B_2, \ldots$ defined by $B_i = A_i - B_0$. Note that this implies $P(B_i) \leq P(A_i)$. We know that the sequence $B_0, B_1, B_2, \ldots$ are mutually exclusive, and so
     \begin{align*}
-        P\left(\disjointunionbig_{i=0}^{\infty}B_i\right) = P(B_0) + \sum_{i=1}^{\infty}P(B_i) \leq \sum_{i=1}^{\infty}P(A_i).
+        P\left(\bigdisjointunion_{i=0}^{\infty}B_i\right) = P(B_0) + \sum_{i=1}^{\infty}P(B_i) \leq \sum_{i=1}^{\infty}P(A_i).
     \end{align*}
-    Since $\disjointunionbig_{i=0}^{\infty}B_i = \bigunion_{i=1}^{\infty}A_i$, we then have
+    Since $\bigdisjointunion_{i=0}^{\infty}B_i = \bigunion_{i=1}^{\infty}A_i$, we then have
     \begin{align*}
-        P\left(\disjointunionbig_{i=1}^{\infty}A_i\right) \leq \sum_{i=1}^{\infty}P(A_i).
+        P\left(\bigdisjointunion_{i=1}^{\infty}A_i\right) \leq \sum_{i=1}^{\infty}P(A_i).
     \end{align*}
     The proof for a finite sequence is analogous.
 \end{proof}
@@ -128,7 +128,7 @@
 
     Since $M(\omega) \geq 0$, $P(A) \geq$ and so $P$ satisfies the axiom of non-negativity. Since \[P(\Omega) = \sum_{\omega \in \Omega}M(\omega) = 1\] by the definition of $M$, $P$ satisfies the axiom of normalization. Finally, for $A = A_1 \disjointunion A_2 \disjointunion \cdots$,
     \begin{align*}
-        P(\disjointunionbig_{i}A_i) = \sum_{i}P(A_i) = \sum_{i}\sum_{\omega \in A_i}M(\omega) = \sum_{\omega \in A}M(\Omega) = P(A).
+        P(\bigdisjointunion_{i}A_i) = \sum_{i}P(A_i) = \sum_{i}\sum_{\omega \in A_i}M(\omega) = \sum_{\omega \in A}M(\Omega) = P(A).
     \end{align*}
     Therefore, $P$ satisfies the axiom of countable additivity and so $(\Omega, P)$ is a probability space.
 \end{exmp}
@@ -145,7 +145,7 @@
 
     Finally, for $A = A_1 \disjointunion A_2 \disjointunion \cdots$,
     \begin{align*}
-        P\left(\disjointunionbig_{i}A_i\right) = \sum_{\omega_j \in A}\left(\frac{1}{2}\right)^{j} = \sum_{i}\sum_{\omega_j \in A_i}\left(\frac{1}{2}\right)^{j} = \sum_{i}P(A_i).
+        P\left(\bigdisjointunion_{i}A_i\right) = \sum_{\omega_j \in A}\left(\frac{1}{2}\right)^{j} = \sum_{i}\sum_{\omega_j \in A_i}\left(\frac{1}{2}\right)^{j} = \sum_{i}P(A_i).
     \end{align*}
     Therefore, $P$ satisfies the axiom of countable additivity and so $(\Omega, P)$ is a probability space.
 \end{exmp}
@@ -202,13 +202,13 @@
 
     Also note that
     \begin{align*}
-        \disjointunionbig_{i=1}^{n}A \intersection B_i = A \intersection \left(\disjointunionbig_{i=1}^{n}B_i\right) = A \intersection \Omega = A
+        \bigdisjointunion_{i=1}^{n}A \intersection B_i = A \intersection \left(\bigdisjointunion_{i=1}^{n}B_i\right) = A \intersection \Omega = A
     \end{align*}
     since $B_1, \ldots, B_n$ are exhaustive.
 
     Therefore, by the axiom of countable additivity,
     \begin{align*}
-        P(A) = P\left(\disjointunionbig_{i=1}^{n}A \intersection B_i\right) = \sum_{i=1}^{n}P(A \intersection B_i).
+        P(A) = P\left(\bigdisjointunion_{i=1}^{n}A \intersection B_i\right) = \sum_{i=1}^{n}P(A \intersection B_i).
     \end{align*}
 \end{proof}
 
