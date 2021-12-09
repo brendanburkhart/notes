@@ -1544,12 +1544,26 @@ We can also find the join distribution of multiple ordered random variables. For
 \begin{defn}
     The limit infimum and limit supremum of a sequence of events $E_1, E_2, \ldots$ in a probability space are, respectively,
     \begin{align*}
-        \liminf_{n \to \infty} = \bigunion_{n \geq 1}\bigintersection_{j \geq n}E_j, \\
-        \limsup_{n \to \infty} = \bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j.
+        \liminf_{n \to \infty}E_n = \bigunion_{n \geq 1}\bigintersection_{j \geq n}E_j, \\
+        \limsup_{n \to \infty}E_n = \bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j.
     \end{align*}
 
     The limit infimum and limit supremum always exists for a given sequence. When they coincide, we say that the limit of that sequence is their value.
 \end{defn}
+
+\begin{prop}\label{set-infimum-supremum-complement}
+    \begin{align*}
+        \liminf_{n \to \infty}E_n = \left(\limsup_{n \to \infty}E_n^{c}\right)^{c}.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    By De Morgan's laws,
+    \begin{align*}
+        \liminf_{n \to \infty}E_n &= \bigunion_{n \geq 1}\bigintersection_{j \geq n}E_j = \bigunion_{n \geq 1}\left(\bigunion_{j \geq n}E_j^{c}\right)^{c} \\
+        &= \left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j^{c}\right)^{c} = \left(\limsup_{n \to \infty}E_n^{c}\right)^{c}.
+    \end{align*}
+\end{proof}
 
 \begin{lemma}{(First) Borel-Cantelli Lemma}\label{borel-cantelli}\proofbreak
     Let $E_1, E_2, \ldots$ be an infinite sequence of events in a probability space. If
@@ -1705,12 +1719,22 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
     Therefore,
     \begin{align*}
-        1 = 1 - P\left(\bigunion_{k\to\infty}D_{1/k}\right) = P\left(\bigintersection_{k\to\infty}D_{1/k}^{c}\right) = P\left(\lim_{k\to\infty}D_{i/k}^{c}\right),
+        1 = 1 - P\left(\bigunion_{k\to\infty}D_{1/k}\right) = P\left(\bigintersection_{k\to\infty}D_{1/k}^{c}\right).
+    \end{align*}
+    By Proposition \ref{set-infimum-supremum-complement},
+    \begin{align*}
+        D_{1/k}^{c} = \liminf_{n\to\infty}\abs{\frac{S_n}{n}} < \frac{1}{k},
     \end{align*}
     and so
     \begin{align*}
-        P\left(\lim_{k\to\infty}D_{i/k}^{c}\right) = P\left(\lim_{k\to\infty}\left(\limsup_{n\to\infty} \abs{\frac{S_n}{n}} < \frac{1}{k}\right)\right) = P\left(\limsup_{n\to\infty} \abs{\frac{S_n}{n}} = 0\right) = 1
+        1 &= P\left(\bigintersection_{k\to\infty}D_{1/k}^{c}\right) = P\left(\bigintersection_{k\to\infty}\liminf_{n\to\infty}\abs{\frac{S_n}{n}} < \frac{1}{k}\right) \\
+        &= P\left(\lim_{n\to\infty}\abs{\frac{S_n}{n}} = 0\right),
     \end{align*}
+    and so finally we have
+    \begin{align*}
+        P\left(\lim_{n\to\infty}\frac{S_n}{n} = 0\right) = 1.
+    \end{align*}
+    Together with our initial demonstration that we can assume $E(X_i) = 0$ without any loss of generality, we are done.
 \end{proof}
 
 \begin{thm}{Central Limit Theorem}\label{central-limit-theorem}\proofbreak
