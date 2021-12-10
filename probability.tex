@@ -1558,7 +1558,7 @@ We can also find the join distribution of multiple ordered random variables. For
 \end{prop}
 
 \begin{proof}
-    By De Morgan's laws,
+    By extension of De Morgan's laws \ref{demorgan-set},
     \begin{align*}
         \liminf_{n \to \infty}E_n &= \bigunion_{n \geq 1}\bigintersection_{j \geq n}E_j = \bigunion_{n \geq 1}\left(\bigunion_{j \geq n}E_j^{c}\right)^{c} \\
         &= \left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j^{c}\right)^{c} = \left(\limsup_{n \to \infty}E_n^{c}\right)^{c}.

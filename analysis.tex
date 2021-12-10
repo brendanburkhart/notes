@@ -71,7 +71,7 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
     \end{enumerate}
 \end{thm}
 
-\begin{thm}{DeMorgan's Laws}\label{demorgan}\proofbreak
+\begin{thm}{De Morgan's Laws}\label{demorgan-boolean}\proofbreak
     \begin{enumerate}
         \item $\neg(x \land y) = (\neg x) \lor (\neg y)$
         \item $\neg(x \lor y) = (\neg x) \land (\neg y)$
@@ -79,7 +79,7 @@ Since Boolean algebra has only two elements, it is possible to enumerate all var
 \end{thm}
 
 \begin{rmk}
-    All properties in Theorem \ref{boolean-algebraic-properties}, Theorem \ref{additional-boolean-properties}, and Theorem \ref{demorgan} can be proved by simply writing out the corresponding truth tables.
+    All properties in Theorem \ref{boolean-algebraic-properties}, Theorem \ref{additional-boolean-properties}, and Theorem \ref{demorgan-boolean} can be proved by simply writing out the corresponding truth tables.
 \end{rmk}
 
 \section{Sets}
@@ -178,6 +178,20 @@ Two sets are equal when they contain precisely the same elements. For example, i
 \begin{rmk}
     $(A \triangle B)' = (A \intersection B)$ when $U = A \union B$.
 \end{rmk}
+
+\begin{thm}\label{set-distributive-rule}\proofbreak
+    \begin{enumerate}
+        \item $A \land (B \lor C) = (A \land B) \lor (A \land C)$
+        \item $A \lor (B \land C) = (A \lor B) \land (A \lor C)$
+    \end{enumerate}
+\end{thm}
+
+\begin{thm}{De Morgan's Laws}\label{demorgan-set}\proofbreak
+    \begin{enumerate}
+        \item $(A \land B)^{c} = A^{c} \lor B^{c}$
+        \item $(A \lor B)^{c} = A^{c} \land B^{c}$
+    \end{enumerate}
+\end{thm}
 
 \section{Constructions}
 
