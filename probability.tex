@@ -355,7 +355,7 @@
 \end{exmp}
 
 \begin{defn}
-    For a random variable $X$, the \emph{variance} of $X$ is the expected squared distance from the mean: \[\variance(x) = E\left[\left(X-E(X)\right)^2\right] = E\left[\left(x - \mu\right)^2\right].\]
+    For a random variable $X$, the \emph{variance} of $X$ is the expected squared distance from the mean: \[\varianceof{X} = E\left[\left(X-E(X)\right)^2\right] = E\left[\left(x - \mu\right)^2\right].\]
 \end{defn}
 
 \begin{rmk}
@@ -601,7 +601,7 @@
 \end{defn}
 
 \begin{exmp}
-    The expected value of a random variable $X \distribution \mathrm{exp}(\lambda)$ is
+    The expected value of a random variable $X \distributed \mathrm{exp}(\lambda)$ is
     \begin{align*}
         E(X) = \int_{-\infty}^{\infty}xf_X(x)dx = \int_{0}^{\infty}x\lambda e^{-\lambda x}dx.
     \end{align*}
@@ -640,7 +640,7 @@
 \end{defn}
 
 \begin{defn}
-    The first moment (expected value) of a random variable $X \distribution \mathrm{uniform}(a, b)$ is
+    The first moment (expected value) of a random variable $X \distributed \mathrm{uniform}(a, b)$ is
     \begin{align*}
         E(X) = \int_{-\infty}^{\infty}xf_X(x)dx = \int_{a}^{b}\frac{x}{b - a}dx = \frac{1}{b - a}\int_{a}^{b}xdx = \frac{b^2 - a^2}{2(b - a)} = \frac{(b - a)(b + a)}{2(b - a)} = \frac{b+a}{2}.
     \end{align*}
@@ -795,7 +795,7 @@
 \end{rmk}
 
 \begin{prop}
-    The mean of $X \distribution \mathrm{Gamma}(\alpha, \beta)$ is $\alpha\beta$.
+    The mean of $X \distributed \mathrm{Gamma}(\alpha, \beta)$ is $\alpha\beta$.
 \end{prop}
 
 \begin{proof}
@@ -806,7 +806,7 @@
 \end{proof}
 
 \begin{prop}
-    The variance of $X \distribution \mathrm{Gamma}(\alpha, \beta)$ is $\alpha \beta^2$.
+    The variance of $X \distributed \mathrm{Gamma}(\alpha, \beta)$ is $\alpha \beta^2$.
 \end{prop}
 
 \begin{proof}
@@ -815,14 +815,14 @@
         &= \frac{1}{\beta^{\alpha}\Gamma(\alpha)}\int_{0}^{\infty}x^{\alpha+1}e^{-x/\beta}dx = \frac{\beta^{\alpha+2}\Gamma(\alpha+2)}{\beta^{\alpha}\Gamma(\alpha)} = \beta^2(\alpha+1)\alpha.
     \end{align*}
 
-    The variance of $X \distribution \mathrm{Gamma}(\alpha, \beta)$ is therefore
+    The variance of $X \distributed \mathrm{Gamma}(\alpha, \beta)$ is therefore
     \begin{align*}
         E(X^2) - E(X)^2 = \beta^2(\alpha+1)\alpha - \alpha^2\beta^2 = \alpha\beta^2.
     \end{align*}
 \end{proof}
 
 \begin{prop}
-    The moment generating function of $X \distribution \mathrm{Gamma}(\alpha, \beta)$ is
+    The moment generating function of $X \distributed \mathrm{Gamma}(\alpha, \beta)$ is
     \begin{align*}
         \left(1 - \beta\theta\right)^{-\alpha}.
     \end{align*}
@@ -842,7 +842,7 @@
     \begin{align*}
         f(x) = \frac{e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2}}{\sigma\sqrt{2\pi}} = \frac{e^{-\frac{\left(x - \mu\right)^2}{2\sigma^2}}}{\sqrt{2\pi\sigma^2}}.
     \end{align*}
-    We write $X \distribution \mathrm{Normal}(\mu, \sigma^2)$.
+    We write $X \distributed \mathrm{Normal}(\mu, \sigma^2)$.
 \end{defn}
 
 \begin{defn}
@@ -861,9 +861,9 @@
 \end{rmk}
 
 \begin{thm}
-    If $X \distribution \mathrm{Normal}(\mu, \sigma^2)$ and $Y = \alpha X + \beta$ where $\alpha \neq 0$, then
+    If $X \distributed \mathrm{Normal}(\mu, \sigma^2)$ and $Y = \alpha X + \beta$ where $\alpha \neq 0$, then
     \begin{align*}
-        Y \distribution \mathrm{Normal}(\alpha\mu + \beta, \alpha^2\sigma^2).
+        Y \distributed \mathrm{Normal}(\alpha\mu + \beta, \alpha^2\sigma^2).
     \end{align*}
 \end{thm}
 
@@ -882,8 +882,8 @@
 
 \begin{cor}\proofbreak
     \begin{itemize}
-        \item If $X \distribution \mathrm{Normal}(\mu, \sigma^2)$, then $Z = \frac{X - \mu}{\sigma} \distribution \mathrm{Normal}(0, 1)$.
-        \item If $Z \distribution \mathrm{Normal}(0, 1)$, then $X = \mu + \sigma Z \distribution \mathrm{Normal}(\mu, \sigma^2)$.
+        \item If $X \distributed \mathrm{Normal}(\mu, \sigma^2)$, then $Z = \frac{X - \mu}{\sigma} \distributed \mathrm{Normal}(0, 1)$.
+        \item If $Z \distributed \mathrm{Normal}(0, 1)$, then $X = \mu + \sigma Z \distributed \mathrm{Normal}(\mu, \sigma^2)$.
     \end{itemize}
 \end{cor}
 
@@ -906,7 +906,7 @@
 \end{proof}
 
 \begin{thm}
-    The moment generating function of $Z \distribution \mathrm{Normal}(0, 1)$ is
+    The moment generating function of $Z \distributed \mathrm{Normal}(0, 1)$ is
     \begin{align*}
         E\left(e^{\theta Z}\right) = e^{\frac{\theta^2}{2}}.
     \end{align*}
@@ -939,12 +939,12 @@
 \end{proof}
 
 \begin{cor}
-    Let $X \distribution \mathrm{Normal}(\mu, \sigma^2)$, then
+    Let $X \distributed \mathrm{Normal}(\mu, \sigma^2)$, then
     \begin{itemize}
         \item $E(Z) = 0$,
         \item $E(Z^2) = 1$,
         \item $E(X) = \mu$, and
-        \item $\variance{X} = \sigma^2$.
+        \item $\varianceof{X} = \sigma^2$.
     \end{itemize}
 \end{cor}
 
@@ -957,7 +957,7 @@
     \begin{align*}
         E(X) &= E(\sigma Z + \mu) = \sigma E(Z) + \mu = \mu \\
         E(X^2) &= E(\sigma^2Z^2 + \sigma\mu Z + \mu^2) = \sigma^2E(Z^2) + \sigma\mu E(Z) + \mu^2 = \sigma^2 + \mu^2 \\
-        \variance{X} &= E(X^2) - E(X)^2 = \sigma^2 + \mu^2 - \mu^2 = \sigma^2.
+        \varianceof{X} &= E(X^2) - E(X)^2 = \sigma^2 + \mu^2 - \mu^2 = \sigma^2.
     \end{align*}
 \end{proof}
 
@@ -973,7 +973,7 @@
 \end{defn}
 
 \begin{exmp}
-    Let $Z \distribution \mathrm{Normal}(0, 1)$, and $X = Z^2$. Then the support of $X$ is the non-negative real numbers, and so
+    Let $Z \distributed \mathrm{Normal}(0, 1)$, and $X = Z^2$. Then the support of $X$ is the non-negative real numbers, and so
     \begin{align*}
         F_X(x) &= P(X \leq x) = P(Z^2 \leq x) = P(\abs{Z} \leq \sqrt{x}) \\
         &= P(-\sqrt{x} \leq Z \leq \sqrt{x}) = P(Z \leq \sqrt{x}) - P(Z \leq -\sqrt{x}) = \varPhi(\sqrt{x}) - \varPhi(-\sqrt{x}).
@@ -1022,7 +1022,7 @@
 \end{proof}
 
 \begin{exmp}
-    Let $X \distribution \mathrm{Normal}(\mu, \sigma^2)$, and $Z = \frac{X - \mu}{\sigma}$ for some $\sigma > 0 0$. Note that $g(x) = \frac{x - \mu}{\sigma}$ is strictly increasing (or decreasing if $\sigma < 0$), and $g^{-1}(z) = \sigma z + \mu$. Then by Theorem \ref{single-variable-jacobian-method},
+    Let $X \distributed \mathrm{Normal}(\mu, \sigma^2)$, and $Z = \frac{X - \mu}{\sigma}$ for some $\sigma > 0 0$. Note that $g(x) = \frac{x - \mu}{\sigma}$ is strictly increasing (or decreasing if $\sigma < 0$), and $g^{-1}(z) = \sigma z + \mu$. Then by Theorem \ref{single-variable-jacobian-method},
     \begin{align*}
         f_Z(z) = f_X(\sigma z + \mu)\frac{1}{\sigma} = \frac{e^{-\frac{1}{2}\left(\frac{\sigma z + \mu - \mu}{\sigma}\right)^2}}{\sigma\sqrt{2\pi}}\frac{1}{\sigma} = \frac{e^{-\frac{1}{2}z^2}}{\sqrt{2\pi}}.
     \end{align*}
@@ -1065,21 +1065,21 @@
 \end{proof}
 
 \begin{exmp}
-    Let $X,Y \distribution \mathrm{exp}(1)$ be independent continuous random variables. Then the PDF of $U = X+Y$ is
+    Let $X,Y \distributed \mathrm{exp}(1)$ be independent continuous random variables. Then the PDF of $U = X+Y$ is
     \begin{align*}
         \int_{-\infty}^{\infty}f_X(x)f_Y(u-x)dx = \int_{0}^{u}e^{-x}e^{-(u-x)}dx = e^{-u}\int_{0}^{u}dx = ue^{-u}.
     \end{align*}
-    Therefore, $U \distribution \Gamma(2, 1)$.
+    Therefore, $U \distributed \Gamma(2, 1)$.
 \end{exmp}
 
 \begin{exmp}
-    Let $X \distribution \mathrm{binomial}(n,p)$ and $Y \distribution \mathrm{binomial}(m, p)$ be independent discrete random variables. Then the PMF of $U = X+Y$ is
+    Let $X \distributed \mathrm{binomial}(n,p)$ and $Y \distributed \mathrm{binomial}(m, p)$ be independent discrete random variables. Then the PMF of $U = X+Y$ is
     \begin{align*}
         \sum_{x=0}^{u}P_X(x)P_Y(u-x) &= \sum_{x=0}^{u}\binom{n}{x}p^{x}(1-p)^{n-x}\binom{m}{u-x}p^{u-x}(1-p)^{m+x-u} \\
         &= \sum_{x=0}^{u}\binom{n}{x}\binom{m}{u-x}p^{u}(1-p)^{n+m-u} = p^{u}(1-p)^{n+m-u}\sum_{x=0}^{u}\binom{n}{x}\binom{m}{u-x} \\
         &= \binom{n+m}{u}p^{u}(1-p)^{n+m-u}.
     \end{align*}
-    Therefore, $U \distribution \mathrm{binomial}(n+m, p)$.
+    Therefore, $U \distributed \mathrm{binomial}(n+m, p)$.
 \end{exmp}
 
 \begin{thm}
@@ -1162,7 +1162,7 @@ We can also find the join distribution of multiple ordered random variables. For
 \begin{defn} A stochastic process $N(t)$ for $t \geq 0$ is a time-homogeneous \emph{Poisson-process} with rate $\lambda$ if
     \begin{itemize}
         \item $P(N(0) = 0) = 1$,
-        \item for $0 \leq s < t$, $N(t) - N(s) \distribution Poisson(\lambda(t-s))$,
+        \item for $0 \leq s < t$, $N(t) - N(s) \distributed Poisson(\lambda(t-s))$,
         \item and for $0 \leq t_1 < t_2 < t_3 < \cdots$, the collection \[N(t_1), N(t_2), \ldots\] is independent.
     \end{itemize}
 \end{defn}
@@ -1170,7 +1170,7 @@ We can also find the join distribution of multiple ordered random variables. For
 \begin{rmk}
     Let $S_n$ be the time of the $n$th event in a Poisson-process with rate $\lambda$. Then
     \begin{align*}
-        S_n \distribution Gamma\left(n, \frac{1}{\lambda}\right).
+        S_n \distributed Gamma\left(n, \frac{1}{\lambda}\right).
     \end{align*}
 \end{rmk}
 
@@ -1268,7 +1268,7 @@ We can also find the join distribution of multiple ordered random variables. For
         P(S = k) = \int_{0}^{1}\binom{n}{k}\theta^{k}(1-\theta)^{n-k}f(\theta)d\theta.
     \end{align*}
 
-    That is, for some random variable $\theta$, $S | \theta \distribution Binomial(n, \theta)$. The distribution of $\theta$ is referred to as the \emph{mixing distribution}.
+    That is, for some random variable $\theta$, $S | \theta \distributed Binomial(n, \theta)$. The distribution of $\theta$ is referred to as the \emph{mixing distribution}.
 \end{thm}
 
 \section{Covariance}
@@ -1296,7 +1296,7 @@ We can also find the join distribution of multiple ordered random variables. For
 \begin{defn}
     Let $X$ and $Y$ be random variables with finite means $\mu_{X}$ and $\mu_{Y}$, and finite variances $\sigma_{X}^2$ and $\sigma_{Y}^2$. Then the \emph{covariance} of $X$ and $Y$ is
     \begin{align*}
-        \covariance(X, Y) = E\left[(X - \mu_X)(Y - \mu_Y)\right].
+        \covarianceof{X}{Y} = E\left[(X - \mu_X)(Y - \mu_Y)\right].
     \end{align*}
 \end{defn}
 
@@ -1306,7 +1306,7 @@ We can also find the join distribution of multiple ordered random variables. For
 
 \begin{proof}
     \begin{align*}
-        \covariance(X, Y) &= E\left[(X - \mu_X)(Y - \mu_Y)\right] \\
+        \covarianceof{X}{Y} &= E\left[(X - \mu_X)(Y - \mu_Y)\right] \\
         &= E\left[XY - \mu_{X}Y - \mu_{Y}X + \mu_{X}\mu{Y}\right] \\
         &= E(XY) - 2E(X)E(Y) + E(X)E(Y) \\
         &= E(XY) - E(X)E(Y).
@@ -1316,25 +1316,25 @@ We can also find the join distribution of multiple ordered random variables. For
 \begin{thm}\label{covariance-properties}
     Let $X$ and $Y$ be random variables. Then
     \begin{align*}
-        \covariance(X,X) &= \variance(X), \\
-        \covariance(X,Y) &= \covariance(Y,X), \\
-        \covariance(X,c) &= 0, \\
-        \covariance(X - a, Y) &= \covariance(X, Y), \\
-        \covariance\left(\sum_{i=1}^{n}a_iX_i, \sum_{i=1}^{m}b_iY_i\right) &= \sum_{i=1}^{n}\sum_{j=1}^{m}a_ib_i\covariance\left(X_i, Y_i\right).
+        \covarianceof{X}{X} &= \varianceof{X}, \\
+        \covarianceof{X}{Y} &= \covarianceof{Y}{X}, \\
+        \covarianceof{X}{c} &= 0, \\
+        \covarianceof{X - a}{Y} &= \covarianceof{X}{Y}, \\
+        \covarianceof{\sum_{i=1}^{n}a_iX_i}{\sum_{i=1}^{m}b_iY_i} &= \sum_{i=1}^{n}\sum_{j=1}^{m}a_ib_i\covarianceof{X_i}{Y_i}.
     \end{align*}
 \end{thm}
 
 \begin{rmk}
     If $X$ and $Y$ are independent, then
     \begin{align*}
-        \covariance(X,Y) = E(XY) - E(X)E(Y) = E(X)E(Y) - E(X)E(Y) = 0.
+        \covarianceof{X}{Y} = E(XY) - E(X)E(Y) = E(X)E(Y) - E(X)E(Y) = 0.
     \end{align*}
 \end{rmk}
 
 \begin{prop}
     Let $X$ and $Y$ be random variables with variances $\sigma_X^2$ and $\sigma_Y^2$. Then
     \begin{align*}
-        \covariance(X, Y) \leq \sigma_X\sigma_Y.
+        \covarianceof{X}{Y} \leq \sigma_X\sigma_Y.
     \end{align*}
 \end{prop}
 
@@ -1353,7 +1353,7 @@ We can also find the join distribution of multiple ordered random variables. For
     and so
     \begin{align*}
         E\left[(X - \mu_X)(Y - \mu_Y)\right] \leq \sqrt{E\left[(X - \mu_X)^2\right]E\left[(Y - \mu_Y)^2\right]},
-        \covariance(X, Y) \leq \sqrt{\sigma_{X}^2\sigma_{Y}^2} = \sigma_X\sigma_Y.
+        \covarianceof{X}{Y} \leq \sqrt{\sigma_{X}^2\sigma_{Y}^2} = \sigma_X\sigma_Y.
     \end{align*}
 \end{proof}
 
@@ -1364,7 +1364,7 @@ We can also find the join distribution of multiple ordered random variables. For
 \begin{defn}
     Let $X$ and $Y$ be random variables with variances $\sigma_X^2$ and $\sigma_Y^2$. The \emph{correlation} between $X$ and $Y$ is
     \begin{align*}
-        \rho_{XY} = \frac{\covariance(X,Y)}{\sigma_X\sigma_Y}.
+        \correlationof{X}{Y} = \frac{\covarianceof{X}{Y}}{\sigma_X\sigma_Y}.
     \end{align*}
 \end{defn}
 
@@ -1376,7 +1376,7 @@ We can also find the join distribution of multiple ordered random variables. For
 \end{defn}
 
 \begin{exmp}
-    Consider $X \distribution Geometric\left(\frac{1}{3}\right)$, and $A = X \leq 3$. Then
+    Consider $X \distributed Geometric\left(\frac{1}{3}\right)$, and $A = X \leq 3$. Then
     \begin{align*}
         E(X|A) &= \sum_{x = 1}^{\infty}xP(X = x|A) = \sum_{x = 1}^{\infty}x\frac{P(X = x \land X \leq 3)}{P(X \leq 3)} \\
         &= \frac{1}{P(X \leq 3)}\sum_{x = 1}^{3}xP(X = x) = \frac{3}{1 + (2/3) + (2/3)^2}\sum_{x = 1}^{3}x(2/3)^{x-1}(1/3) \\
@@ -1431,28 +1431,28 @@ We can also find the join distribution of multiple ordered random variables. For
         &= \frac{1}{3}\left(83 + 24E(X) + 2E(X)^2\right), \\
         &= \frac{1}{3}\left(443 + 2E(X)^2\right),
     \end{align*}
-    and so $E(X^2) = 443$. Therefore, $\variance(X) = E(X^2) - E(X)^2 = 218$.
+    and so $E(X^2) = 443$. Therefore, $\varianceof{X} = E(X^2) - E(X)^2 = 218$.
 \end{exmp}
 
 \begin{thm}{Law of Total Variance}\label{total-variance-law}
     \begin{align*}
-        \variance\left(X\right) = E\left[\variance\left(X|Y\right)\right] + \variance\left[E(X|Y)\right]
+        \varianceof{X} = E\left[\varianceof{X|Y}\right] + \varianceof{E(X|Y)}
     \end{align*}
 \end{thm}
 
 \begin{proof}
     Applying the definition of variance, and then inserting $0 = - E(X|Y) + E(X|Y)$, we can show that
     \begin{align*}
-        \variance\left(X\right) =&\,E\left[\left(X - E(X)\right)^2\right] = E\left[\left(X - E(X|Y) + E(X|Y) - E(X)\right)^2\right] \\
+        \varianceof{X} =&\,E\left[\left(X - E(X)\right)^2\right] = E\left[\left(X - E(X|Y) + E(X|Y) - E(X)\right)^2\right] \\
         =&\,E\left[\left(X - E(X|Y)\right)^2\right] + E\left[\left(E(X|Y) - E(X)\right)^2\right] \\
         &+ 2E\left[\left(X - E(X|Y)\right)\left(E(X|Y) - E(X)\right)\right].
     \end{align*}
     Then, by expanding using the Law of Total Expectation \ref{total-expectation-law} and applying the definition of variance, we obtain:
     \begin{align*}
-        E\left[\left(X - E(X|Y)\right)^2\right] &= E\left\{E\left[\left(X - E(X|Y)\right)^2\compbar Y\right]\right\} = E\left[\variance(X|Y)\right], \\
-        E\left[\left(E(X|Y) - E(X)\right)^2\right] &= E\left[\left(E(X|Y) - E\left[E(X|Y)\right]\right)^2\right] = \variance\left[E(X|Y)\right].
+        E\left[\left(X - E(X|Y)\right)^2\right] &= E\left\{E\left[\left(X - E(X|Y)\right)^2\compbar Y\right]\right\} = E\left[\varianceof{X|Y}\right], \\
+        E\left[\left(E(X|Y) - E(X)\right)^2\right] &= E\left[\left(E(X|Y) - E\left[E(X|Y)\right]\right)^2\right] = \varianceof{E(X|Y)}.
     \end{align*}
-    For the third term in $\variance(X)$, we also expand using the Law of Total Expectation,
+    For the third term in $\varianceof{X}$, we also expand using the Law of Total Expectation,
     \begin{align*}
         E\left[\left(X - E(X|Y)\right)\left(E(X|Y) - E(X)\right)\right] &= E\left\{E\left[\left(X - E(X|Y)\right)\left(E(X|Y) - E(X)\right)\right]\compbar Y\right\} \\
         &= E\left\{\left(E(X|Y) - E(X)\right)E\left[\left(X - E(X|Y)\right)\right]\compbar Y\right\} \\
@@ -1460,7 +1460,7 @@ We can also find the join distribution of multiple ordered random variables. For
         &= E\left\{\left(E(X|Y) - E(X)\right)\left(E(X|Y) - E(X|Y)\right)\compbar Y\right\} \\
         &= E\left\{\left(E(X|Y) - E(X)\right)\left(0\right)\compbar Y\right\} = E\left(0|Y\right) = 0.
     \end{align*}
-    Therefore, $\variance\left(X\right) = E\left[\variance\left(X|Y\right)\right] + \variance\left[E(X|Y)\right] + 0$.
+    Therefore, $\varianceof{X} = E\left[\variance{X|Y}\right] + \variance{E(X|Y)} + 0$.
 \end{proof}
 
 \section{Laws of Large Numbers}
@@ -1528,7 +1528,7 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
     and
     \begin{align*}
-        \sigma_{Y_n}^2 = \variance\left(\frac{1}{n}\sum_{i=1}^{n}X_i\right) = \frac{1}{n^2}\variance\left(\sum_{i=1}^{n}X_i\right) = \frac{1}{n^2}\left(n\sigma^2\right) = \frac{\sigma^2}{n}.
+        \sigma_{Y_n}^2 = \varianceof{\frac{1}{n}\sum_{i=1}^{n}X_i} = \frac{1}{n^2}\varianceof{\sum_{i=1}^{n}X_i} = \frac{1}{n^2}\left(n\sigma^2\right) = \frac{\sigma^2}{n}.
     \end{align*}
     Therefore, by Chebyshev's inequality \ref{chebyshev-inequality},
     \begin{align*}
@@ -1752,7 +1752,7 @@ We can also find the join distribution of multiple ordered random variables. For
 \begin{rmk}
     The approximation that
     \begin{align*}
-        \frac{S_n - n\mu}{\sigma\sqrt{n}} \distribution Z
+        \frac{S_n - n\mu}{\sigma\sqrt{n}} \distributed Z
     \end{align*}
     converges much faster for more symmetric distributions (that is, where $E(X_i^3)$ is small). For fully symmetric distributions, $n = 10$ often gives quite good results. For a $Bernoulli(p)$ distribution (which is skewed),
     \begin{align*}
@@ -1772,7 +1772,7 @@ We can also find the join distribution of multiple ordered random variables. For
     Then
     \begin{align*}
         E(S_n) = n\mu, \\
-        \variance(S_n) = n\sigma^2,
+        \varianceof{S_n} = n\sigma^2,
     \end{align*}
     and there exists a universal positive constant $c$ such that
     \begin{align*}
@@ -1791,7 +1791,7 @@ We can also find the join distribution of multiple ordered random variables. For
 \begin{exmp}{Stirling's Approximation}\proofbreak
     We can derive Stirling's approximation from the central limit theorem, which states that $n! \approx \sqrt{2\pi n}\left(\frac{n}{e}\right)^n$.
 
-    Let $X \distribution Poisson(n)$. We know that
+    Let $X \distributed Poisson(n)$. We know that
     \begin{align*}
         X = \sum_{i=1}^{n}X_i
     \end{align*}
