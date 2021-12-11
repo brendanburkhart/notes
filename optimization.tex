@@ -126,7 +126,7 @@
 
 \begin{defn}
     A maximization or minimization linear programming problem in \emph{standard form} is a problem of the form:
-    find $x \in \R^n$ that maximizes or minimizes $C \cdot x$ (also commonly seen as $C^{\transpose}x$) such that $Ax = b$ and $x \vec{0}$. The problem is said to be in \emph{canonical form} if the constraints are instead in the form $Ax \geq b$ (or $Ax \leq b$).
+    find $x \in \R^n$ that maximizes or minimizes $C \cdot x$ (also commonly seen as $\transposeof{C}x$) such that $Ax = b$ and $x \vec{0}$. The problem is said to be in \emph{canonical form} if the constraints are instead in the form $Ax \geq b$ (or $Ax \leq b$).
 \end{defn}
 
 \begin{exmp}
@@ -158,7 +158,7 @@
     \end{pmatrix},\; x = \begin{pmatrix}
         x_1 \\ x_2 \\ x_3 \\ x_4
     \end{pmatrix}\]
-    then our problem is to minimize $C^{\transpose}x$ such that $Ax \geq b$ and $x \geq \vec{0}$. This form is the \emph{canonical form} of a linear programming problem.
+    then our problem is to minimize $\transposeof{C}x$ such that $Ax \geq b$ and $x \geq \vec{0}$. This form is the \emph{canonical form} of a linear programming problem.
 \end{exmp}
 
 \begin{rmk}
@@ -166,7 +166,7 @@
 \end{rmk}
 
 \begin{prop}
-    Minimizing $C^{\transpose}x$ is equivalent to maximizing $-C^{\transpose}x$ (and so maximizing $C^{\transpose}$ is equivalent to minimizing $C^{\transpose}x$).
+    Minimizing $\transposeof{C}x$ is equivalent to maximizing $-\transposeof{C}x$ (and so maximizing $\transposeof{C}$ is equivalent to minimizing $\transposeof{C}x$).
 \end{prop}
 
 \begin{prop}
@@ -319,19 +319,19 @@
     Consider a linear program in standard form. Given a choice of basis $B$ such that $A = [B | N]$, the \emph{pre-tableau} is the matrix
     \begin{align*}
         \left[\begin{array}{c|c|c|c}
-            1 & -c_B^{\transpose} & -c_N^{\transpose} & 0 \\
+            1 & -\transposeof{c_B} & -\transposeof{c_N} & 0 \\
             \hline
             \vec{0} & B & N & b
         \end{array}\right].
     \end{align*}
-    In other words, we have augment $A = [B|N]$ with the constraint values $b$, and then again with a new variable $z$ in the first column/row such that $z - c^{\transpose}x = 0$. Note that $z$ is therefore the value of the objective function.
+    In other words, we have augment $A = [B|N]$ with the constraint values $b$, and then again with a new variable $z$ in the first column/row such that $z - \transposeof{c}x = 0$. Note that $z$ is therefore the value of the objective function.
 \end{defn}
 
 \begin{defn}
-    Given a linear program in standard form, and basic feasible solution $x^{\transpose} = [x_B^{\transpose}, \vec{0}]$, the corresponding \emph{basic feasible simplex tableau} is the matrix
+    Given a linear program in standard form, and basic feasible solution $\transposeof{x} = [\transposeof{x_B}, \vec{0}]$, the corresponding \emph{basic feasible simplex tableau} is the matrix
     \begin{align*}
         \left[\begin{array}{c|c|c|c}
-            1 & 0 & c_B^{\transpose}B^{-1}N-c_N^{\transpose} & c_B^{\transpose}B^{-1}b \\
+            1 & 0 & \transposeof{c_B}B^{-1}N-\transposeof{c_N} & \transposeof{c_B}B^{-1}b \\
             \hline
             \vec{0} & I & B^{-1}N & B^{-1}b
         \end{array}\right].
@@ -342,18 +342,18 @@
     The basic feasible tableau is the reduced row echelon form of the pre-tableau. It can also be obtain by left-multiplying the pre-tableau by
     \begin{align*}
         \left[\begin{array}{c|c}
-            1 & c_B^{\transpose}B^{-1} \\
+            1 & \transposeof{c_B}B^{-1} \\
             \hline
-            \vec{0}^{\transpose} & B^{-1}
+            \transposeof{\vec{0}} & B^{-1}
         \end{array}\right].
     \end{align*}
 \end{rmk}
 
 \begin{rmk}
-    We can see that $z + (c_B^{\transpose}B^{-1}N-c_N^{\transpose})x_N = c_B^{\transpose}B^{-1}b$, so $z = c_B^{\transpose}B^{-1}b + (c_N^{\transpose} - c_B^{\transpose}B^{-1}N)x_N$. We often denote this as
-    \[z = c_B^{\transpose}B^{-1}b + r_N^{\transpose}x_N,\]
+    We can see that $z + (\transposeof{c_B}B^{-1}N-\transposeof{c_N})x_N = \transposeof{c_B}B^{-1}b$, so $z = \transposeof{c_B}B^{-1}b + (\transposeof{c_N} - \transposeof{c_B}B^{-1}N)x_N$. We often denote this as
+    \[z = \transposeof{c_B}B^{-1}b + \transposeof{r_N}x_N,\]
     where
-    \[r_N^{\transpose} = c_N^{\transpose} - c_B^{\transpose}B^{-1}N.\]
+    \[\transposeof{r_N} = \transposeof{c_N} - \transposeof{c_B}B^{-1}N.\]
 \end{rmk}
 
 In the simplex, we start with a linear program $A, b, c$ in standard form. Assuming we already know a basis that leads to a basic feasible solution, we form the pre-tableau and either row-reduce or multiply through by the matrix from the above remark to obtain the basis feasible tableau.
@@ -369,7 +369,7 @@ To illustrate the linear program, we will consider
     b = \begin{bmatrix}
         2 \\ 4 \\ 3
     \end{bmatrix},\;\;
-    c^{\transpose} = [6, -3, 2, 1, -1, 7, 1].
+    \transposeof{c} = [6, -3, 2, 1, -1, 7, 1].
 \end{align*}
 
 We will use columns $1$, $3$, and $7$ as our basis columns, however we will leave the columns in their original order to make bookkeeping easier. Our pre-tableau is
@@ -435,14 +435,14 @@ is always a basic feasible solution to the Phase I problem. Therefore, we can im
 
 In the Big-M method, we do essentially the same process, but in one phase instead of two. We do this by using an objective function of
 \begin{align*}
-    c^{\transpose}x + M(x_{n+1} + x_{n+2} + \cdots + x_{n+m}),
+    \transposeof{c}x + M(x_{n+1} + x_{n+2} + \cdots + x_{n+m}),
 \end{align*}
 where $M$ is a very large value. This penalizes the artificial variables and causes them to be zero in any optimal solution. Setting the artificial variables to $b$ gives us an initial basic feasible solution. If a basic feasible solution exists where the artificial variables are zero, the first $m$ pivots will replace each artificial variable with non-artificial variables, and so the final optimal solution will be a solution to the original linear program.
 
 \subsection{Duality}
 
 \begin{defn}{Canonical or symmetric duality}\proofbreak
-    Consider a linear program of the form minimize $c^{\transpose}x$ such that $Ax \geq b$ and $x \geq \vec{0}$. The \emph{dual} problem is maximizing $b^{\transpose}y$ such that $A^{\transpose}y \leq c$ and $y \geq \vec{0}$. The original linear program is referred to as the \emph{primal} probem in relation to its dual.
+    Consider a linear program of the form minimize $\transposeof{c}x$ such that $Ax \geq b$ and $x \geq \vec{0}$. The \emph{dual} problem is maximizing $\transposeof{b}y$ such that $\transposeof{A}y \leq c$ and $y \geq \vec{0}$. The original linear program is referred to as the \emph{primal} probem in relation to its dual.
 \end{defn}
 
 \begin{exmp}
@@ -463,11 +463,11 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
 \end{exmp}
 
 \begin{defn}{Standard duality}\proofbreak
-    Consider a linear program of the form minimization of $c^{\transpose}x$ such that $Ax = b$ and $x \geq \vec{0}$. The \emph{dual} problem is maximizing $b^{\transpose}y$ such that $A^{\transpose}y \leq c$, \emph{without} a non-negativity constraint on $y$. The original linear program is again referred to as the \emph{primal} probem in relation to its dual.
+    Consider a linear program of the form minimization of $\transposeof{c}x$ such that $Ax = b$ and $x \geq \vec{0}$. The \emph{dual} problem is maximizing $\transposeof{b}y$ such that $\transposeof{A}y \leq c$, \emph{without} a non-negativity constraint on $y$. The original linear program is again referred to as the \emph{primal} probem in relation to its dual.
 \end{defn}
 
 \begin{rmk}
-    We can derive the canonical form of duality from the standard form, and vice versa. Imagine we know that the dual of minimizing $c^{\transpose}x$ such that $Ax = b$ and $x \geq \vec{0}$ was to maximize $b^{\transpose}y$ such that $A^{\transpose}y \leq c$. If we were now given a linear program in canonical form and wanted to find its dual, we could first convert it into standard form by the introduction of slack variables, obtaining minimize $c^{\transpose}x$ such that $[A|-I]\begin{bmatrix}x \\ z\end{bmatrix} = b$ such that $\begin{bmatrix}x \\ z\end{bmatrix} \geq 0$. The standard dual of this is to maximize $b^{\transpose}y$ such that $[A|-I]^{\transpose}y \leq \begin{bmatrix}c \\ \vec{0}\end{bmatrix}$, which is equivalent to maximizing $b^{\transpose}y$ such that $A^{\transpose}y \leq c$ and $y \geq \vec{0}$ (from $-y \leq \vec{0}$).
+    We can derive the canonical form of duality from the standard form, and vice versa. Imagine we know that the dual of minimizing $\transposeof{c}x$ such that $Ax = b$ and $x \geq \vec{0}$ was to maximize $\transposeof{b}y$ such that $\transposeof{A}y \leq c$. If we were now given a linear program in canonical form and wanted to find its dual, we could first convert it into standard form by the introduction of slack variables, obtaining minimize $\transposeof{c}x$ such that $[A|-I]\begin{bmatrix}x \\ z\end{bmatrix} = b$ such that $\begin{bmatrix}x \\ z\end{bmatrix} \geq 0$. The standard dual of this is to maximize $\transposeof{b}y$ such that $\transposeof{[A|-I]}y \leq \begin{bmatrix}c \\ \vec{0}\end{bmatrix}$, which is equivalent to maximizing $\transposeof{b}y$ such that $\transposeof{A}y \leq c$ and $y \geq \vec{0}$ (from $-y \leq \vec{0}$).
 \end{rmk}
 
 \begin{prop}
@@ -480,29 +480,29 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
         \begin{tikzpicture}[{baseline=(current bounding box.north)}]
             \node[align=center] at (-3,2.5) {$
                 \begin{aligned}
-                    \mathrm{min.}\;c^{\transpose}&x \\
+                    \mathrm{min.}\;\transposeof{c}&x \\
                     \mathrm{s.t.}\;A&x \geq b, \\
                           &x \geq \vec{0}.
                 \end{aligned}
             $};
             \node[align=center] at (3,2.5) {$
                 \begin{aligned}
-                    \mathrm{max.}\;b^{\transpose}&y \\
-                    \mathrm{s.t.}\;A^{\transpose}&y \leq c, \\
+                    \mathrm{max.}\;\transposeof{b}&y \\
+                    \mathrm{s.t.}\;\transposeof{A}&y \leq c, \\
                           &y \geq \vec{0}.
                 \end{aligned}
             $};
             \node[align=center] at (-3,-3) {$
                 \begin{aligned}
-                    \mathrm{min.}\;\begin{bmatrix}c \\ \vec{0}\end{bmatrix}^{\transpose}&\begin{bmatrix}x \\ z\end{bmatrix} \\
+                    \mathrm{min.}\;\transposeof{\begin{bmatrix}c \\ \vec{0}\end{bmatrix}}&\begin{bmatrix}x \\ z\end{bmatrix} \\
                     \mathrm{s.t.}\;\left[A|-I\right]&\begin{bmatrix}x \\ z\end{bmatrix} = b, \\
                           &x, z \geq \vec{0}.
                 \end{aligned}
             $};
             \node[align=center] at (3,-3) {$
                 \begin{aligned}
-                    \mathrm{max.}\;&b^{\transpose}y \\
-                    \mathrm{s.t.}\;&\begin{bmatrix}A^{\transpose} \\ -I\end{bmatrix}y \leq \begin{bmatrix}c \\ \vec{0}\end{bmatrix}.
+                    \mathrm{max.}\;&\transposeof{b}y \\
+                    \mathrm{s.t.}\;&\begin{bmatrix}\transposeof{A} \\ -I\end{bmatrix}y \leq \begin{bmatrix}c \\ \vec{0}\end{bmatrix}.
                 \end{aligned}
             $};
 
@@ -520,7 +520,7 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
 \end{prop} 
 
 \begin{proof}
-    Consider a linear program in canonical form.  By definition, the dual is maximizing $b^{\transpose}y$ such that $A^{\transpose}y \leq c$ and $y \geq 0$. This program is equivalent to minimizing $-b^{\transpose}y$ such that $-A^{\transpose}y \geq -c$ and $y \geq 0$. The dual of this equivalent form of the dual is to maximizing $-c^{\transpose}x$ such that $\left(-A^{\transpose}\right)^{\transpose}x \leq -b$ and $x \geq 0$. Finally, this program is equivalent to minimizing $c^{\transpose}x$ such that $Ax \geq b$ and $x \geq 0$, which is the primal linear program.
+    Consider a linear program in canonical form.  By definition, the dual is maximizing $\transposeof{b}y$ such that $\transposeof{A}y \leq c$ and $y \geq 0$. This program is equivalent to minimizing $-\transposeof{B}y$ such that $-\transposeof{A}y \geq -c$ and $y \geq 0$. The dual of this equivalent form of the dual is to maximizing $-\transposeof{c}x$ such that $\transposeof{\left(-\transposeof{A}\right)}x \leq -b$ and $x \geq 0$. Finally, this program is equivalent to minimizing $\transposeof{c}x$ such that $Ax \geq b$ and $x \geq 0$, which is the primal linear program.
 \end{proof}
 
 \begin{thm}{Weak Duality}\label{weak-duality}\proofbreak
@@ -528,9 +528,9 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
 \end{thm}
 
 \begin{proof}
-    When the primal is in standard form, we have $Ax = b$, $x \geq \vec{0}$ and $A^{\transpose}y \leq c$. It follows that $b^{\transpose}y = (Ax)^{\transpose}y = x^{\transpose}A^{\transpose}y$. Since we have $x \geq \vec{0}$, we know that $x^{\transpose}A^{\transpose}y \leq x^{\transpose}c$, and so $b^{\transpose}y \leq c^{\transpose}x$.
+    When the primal is in standard form, we have $Ax = b$, $x \geq \vec{0}$ and $\transposeof{A}y \leq c$. It follows that $\transposeof{b}y = \transposeof{(Ax)}y = \transposeof{x}\transposeof{A}y$. Since we have $x \geq \vec{0}$, we know that $\transposeof{x}\transposeof{A}y \leq \transposeof{x}c$, and so $\transposeof{b}y \leq \transposeof{c}x$.
 
-    When the primal is in canonical form, we have $Ax \geq b$, $x \geq \vec{0}$, $A^{\transpose}y \leq c$, and $y \geq 0$. Since $y \geq \vec{0}$, $Ax \geq b$ implies that $b^{\transpose}y \leq (Ax)^{\transpose}y$, and so $b^{\transpose}y \leq x^{\transpose}A^{\transpose}y$. Furthermore, since $A^{\transpose}y \leq c$ and $x \geq \vec{0}$, $x^{\transpose}A^{\transpose}y \leq x^{\transpose}c = c^{\transpose}x$. Combining these, we arrive at $b^{\transpose}y \leq c^{\transpose}y$.
+    When the primal is in canonical form, we have $Ax \geq b$, $x \geq \vec{0}$, $\transposeof{A}y \leq c$, and $y \geq 0$. Since $y \geq \vec{0}$, $Ax \geq b$ implies that $\transposeof{b}y \leq \transposeof{(Ax)}y$, and so $\transposeof{b}y \leq \transposeof{x}\transposeof{A}y$. Furthermore, since $\transposeof{A}y \leq c$ and $x \geq \vec{0}$, $\transposeof{x}\transposeof{A}y \leq \transposeof{x}c = \transposeof{c}x$. Combining these, we arrive at $\transposeof{b}y \leq \transposeof{c}y$.
 \end{proof}
 
 \begin{cor}
@@ -538,7 +538,7 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
 \end{cor}
 
 \begin{cor}{Supervisor principle}\label{supervisor-principle}\proofbreak
-    If $b^{\transpose}y = c^{\transpose}x$, then $x$ and $y$ are optimal in their respective linear programs.
+    If $\transposeof{b}y = \transposeof{c}x$, then $x$ and $y$ are optimal in their respective linear programs.
 \end{cor}
 
 \begin{thm}{Strong Duality}\label{strong-duality}\proofbreak
@@ -550,24 +550,24 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
 
     By the terminating condition of the Simplex method, we know that
     \begin{align*}
-        r_N^{\transpose} = c_N^{\transpose} - c_B^{\transpose}B^{-1}N \geq \vec{0}.
+        \transposeof{r_N} = \transposeof{c_N} - \transposeof{c_B}B^{-1}N \geq \vec{0}.
     \end{align*}
     Let
     \begin{align*}
-        {y^*}^{\transpose} = c_B^{\transpose}B^{-1}.
+        \transposeof{y^*} = \transposeof{c_B}B^{-1}.
     \end{align*}
 
-    Since $r_N^{\transpose} \geq \vec{0}$, we know that
+    Since $\transposeof{r_N} \geq \vec{0}$, we know that
     \begin{align*}
-        c_B^{\transpose}B^{-1}N \leq c_N^{\transpose},
+        \transposeof{c_B}B^{-1}N \leq \transposeof{c_N},
     \end{align*}
     and so it follows that
     \begin{align*}
-        {y^*}^{\transpose}A = c_B^{\transpose}B^{-1}[B|N] = [c_B^{\transpose}|c_B^{\transpose}B^{-1}N] \leq [c_B^{\transpose}|c_N^{\transpose}] = c^{\transpose},
+        \transposeof{y^*}A = \transposeof{c_B}B^{-1}[B|N] = [\transposeof{c_B}|\transposeof{c_B}B^{-1}N] \leq [\transposeof{c_B}|\transposeof{c_N}] = \transposeof{c},
     \end{align*}
     so $y^*$ is a feasible solution to the dual. Now we can show that the objective function values are equal:
     \begin{align*}
-        {y^{*}}^{\transpose}b = c_B^{\transpose}B^{-1}b = \begin{bmatrix}c_B \\ \vec{0}\end{bmatrix}^{\transpose}\begin{bmatrix}x_B \\ \vec{0}\end{bmatrix} = c^{\transpose}x^*.
+        \transposeof{y^*}b = \transposeof{c_B}B^{-1}b = \transposeof{\begin{bmatrix}c_B \\ \vec{0}\end{bmatrix}}\begin{bmatrix}x_B \\ \vec{0}\end{bmatrix} = \transposeof{c}x^*.
     \end{align*}
 
     Therefore, $y^*$ is an optimal solution to the dual linear program by the supervisor principle \ref{supervisor-principle}.
@@ -579,7 +579,7 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
     A basic feasible solution $b$ to a linear program with basis $B$ is \emph{non-degenerate} when $B^{-1}b > \vec{0}$.
 \end{defn}
 
-Consider solving a linear program $A, b, c$ in standard form by the Simplex method. What happens if we replace $b$ with $b' = b + \Delta b$ for some arbitrary $\Delta b$? If we replaced $B^{-1}b$ with $B^{-1}(b + \Delta b)$ and $c_B^{\transpose}B^{-1}b$ with $c_B^{\transpose}B^{-1}(b + \Delta b)$ in just the final basic feasible simplex tableau, what happens?
+Consider solving a linear program $A, b, c$ in standard form by the Simplex method. What happens if we replace $b$ with $b' = b + \Delta b$ for some arbitrary $\Delta b$? If we replaced $B^{-1}b$ with $B^{-1}(b + \Delta b)$ and $\transposeof{c_B}B^{-1}b$ with $\transposeof{c_B}B^{-1}(b + \Delta b)$ in just the final basic feasible simplex tableau, what happens?
 
 If $B^{-1}(b + \Delta b) \geq \vec{0}$, then we still have a basic feasible solution! Furthermore, since the objective row would still be non-positive, our solution would also be an \emph{optimal} basic feasible solution. This would very likely only occur when $\Delta b$ is fairly small.
 
@@ -587,12 +587,12 @@ If the linear program is non-degenerate, there always exists such $\Delta b$ sma
 
 In the corresponding dual linear program, we know that
 \begin{align*}
-    {y^*}^{\transpose} = c_B^{\transpose}B^{-1}.
+    \transposeof{y^*} = \transposeof{c_B}B^{-1}.
 \end{align*}
-We also have $c^{\transpose}x^* = {y^*}^{\transpose}b$, and so when we replace $b$ with $b'$ we get
-$c^{\transpose}{x'}^{*} = {y^*}^{\transpose}(b + \Delta b) = {y^*}^{\transpose}b + {y^*}^{\transpose}\Delta b$. Therefore,
+We also have $\transposeof{c}x^* = \transposeof{y^*}b$, and so when we replace $b$ with $b'$ we get
+$\transposeof{c}{x'}^{*} = \transposeof{y^*}(b + \Delta b) = \transposeof{y^*}b + \transposeof{y^*}\Delta b$. Therefore,
 \begin{align*}
-    \frac{c^{\transpose}{x'}^{*}}{\partial b_i} = y_i^*.
+    \frac{\transposeof{c}{x'}^{*}}{\partial b_i} = y_i^*.
 \end{align*}
 
 \begin{defn}
@@ -600,30 +600,30 @@ $c^{\transpose}{x'}^{*} = {y^*}^{\transpose}(b + \Delta b) = {y^*}^{\transpose}b
 \end{defn}
 
 \begin{prop}\label{complementary-orthogonal}
-    If $x \geq 0$ and $y \geq 0$, then $x$ and $y$ are complementary if and only if $x^{\transpose}y = 0$.
+    If $x \geq 0$ and $y \geq 0$, then $x$ and $y$ are complementary if and only if $\transposeof{x}y = 0$.
 \end{prop}
 
 \begin{proof}
-    If $x$ and $y$ are complementary, then $x_iy_i = 0$, and so $x^{\transpose}y = 0$.
+    If $x$ and $y$ are complementary, then $x_iy_i = 0$, and so $\transposeof{x}y = 0$.
 
-    Since $x \geq 0$ and $y \geq 0$, we know $x_iy_i \geq 0$. If $x^{\transpose}y = 0$, then we must have $x_iy_i = 0$. Therefore at least one of $x_i$ and $y_i$ is zero and so $x$ and $y$ are complementary.
+    Since $x \geq 0$ and $y \geq 0$, we know $x_iy_i \geq 0$. If $\transposeof{x}y = 0$, then we must have $x_iy_i = 0$. Therefore at least one of $x_i$ and $y_i$ is zero and so $x$ and $y$ are complementary.
 \end{proof}
 
 \begin{thm}{Complementary slackness}\label{complementary-slackness}\proofbreak
-    Consider a linear program $A, b, c$ in standard form. Let $x \in \R^n$ be a feasible solution. Let $y \in \R^m$ be a feasible solution in the dual. Then $x$ and $y$ are optimal solutions if and only if $c - A^{\transpose}y$ is complentary to $x$.
+    Consider a linear program $A, b, c$ in standard form. Let $x \in \R^n$ be a feasible solution. Let $y \in \R^m$ be a feasible solution in the dual. Then $x$ and $y$ are optimal solutions if and only if $c - \transposeof{A}y$ is complentary to $x$.
 \end{thm}
 
 \begin{proof}
     Recall that
     \begin{align*}
-        b^{\transpose}y = (Ax)^{\transpose}y = x^{\transpose}A^{\transpose}y \leq x^{\transpose}c = c^{\transpose}x.
+        \transposeof{b}y = \transposeof{(Ax)}y = \transposeof{x}\transposeof{A}y \leq \transposeof{x}c = \transposeof{c}x.
     \end{align*}
-    By the supervisor principle \ref{supervisor-principle}, $x$ and $y$ are optimal if and only if $b^{\transpose}y = c^{\transpose}x$, which is equivalent to $x^{\transpose}A^{\transpose}y = x^{\transpose}c$. Therefore,
+    By the supervisor principle \ref{supervisor-principle}, $x$ and $y$ are optimal if and only if $\transposeof{b}y = \transposeof{c}x$, which is equivalent to $\transposeof{x}\transposeof{A}y = \transposeof{x}c$. Therefore,
     \begin{align*}
-        x^{\transpose}\left(c - A^{\transpose}y\right) = \vec{0}.
+        \transposeof{x}\left(c - \transposeof{A}y\right) = \vec{0}.
     \end{align*}
 
-    Since $y$ is feasible in the dual, by definition $A^{\transpose}y \leq c$, and so $c - A^{\transpose}y \geq \vec{0}$. Furthermore, $x \geq 0$ and so by Proposition \ref{complementary-orthogonal} it follows that this occurs precisely when $x$ and $c - A^{\transpose}y$ are complementary.
+    Since $y$ is feasible in the dual, by definition $\transposeof{A}y \leq c$, and so $c - \transposeof{A}y \geq \vec{0}$. Furthermore, $x \geq 0$ and so by Proposition \ref{complementary-orthogonal} it follows that this occurs precisely when $x$ and $c - \transposeof{A}y$ are complementary.
 \end{proof}
 
 \subsection{Dual Simplex Method}
@@ -634,15 +634,15 @@ In the dual simplex method, we have a linear program in standard form $A, b, c$.
     A basic tableau is a tableau formed from a basic, but not necessarily feasible, solution.
 \end{defn}
 
-Given a linear program and corresponding basic tableau, we have $y = c_B^{\transpose}B^{-1}$ and $x = B^{-1}b$. Recall that $y$ is an optimal solution to the dual problem when:
+Given a linear program and corresponding basic tableau, we have $y = \transposeof{c_B}B^{-1}$ and $x = B^{-1}b$. Recall that $y$ is an optimal solution to the dual problem when:
 \begin{itemize}
     \item $Ax = b$,
     \item $x \geq 0$,
-    \item $A^{\transpose}y \leq c$,
-    \item $c^{\transpose}x = b^{\transpose}y$.
+    \item $\transposeof{A}y \leq c$,
+    \item $\transposeof{c}x = \transposeof{b}y$.
 \end{itemize}
 
-The first condition, that $Ax = b$ is necessarily satisfied by any basic tableau. The fourth, that $c^{\transpose}x = b^{\transpose}y$, is also satisfied since $c_B^{\transpose}B^{-1}b = y^{\transpose}b = b^{\transpose}y$ and $c_B^{\transpose}B^{-1}b = c^{\transpose}x$. The third condition, that $A^{\transpose}y \leq c$, is satisfied when $r \geq 0$. Since the top row of the tableau is $-r$, the top row must be non-positive. This was shown as part of the proof for Strong Duality \ref{strong-duality}. Therefore, we need to come up with a ``dual pivot'' that preserves these properties while working towards achieving the second condition.
+The first condition, that $Ax = b$ is necessarily satisfied by any basic tableau. The fourth, that $\transposeof{c}x = \transposeof{b}y$, is also satisfied since $\transposeof{c_B}B^{-1}b = \transposeof{y}b = \transposeof{b}y$ and $\transposeof{c_B}B^{-1}b = \transposeof{c}x$. The third condition, that $\transposeof{A}y \leq c$, is satisfied when $r \geq 0$. Since the top row of the tableau is $-r$, the top row must be non-positive. This was shown as part of the proof for Strong Duality \ref{strong-duality}. Therefore, we need to come up with a ``dual pivot'' that preserves these properties while working towards achieving the second condition.
 
 To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, and pick a column to row-reduce on. Since we need to maintain a non-positive top row $-r$, we want to pick the column $k$ by \[\argmin_{k}\frac{r_k}{A_{jk}} \mathrm{ where } A_{jk} < 0.\]
 
@@ -683,7 +683,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{prop}
 
 \begin{proof}\proofbreak
-    ($\implies$) Assume that $f$ is convex. Then for any $[x_1, y_1]^{\transpose}, [x_2, y_2]^{\transpose} \in \epigraph(f)$ and $\lambda \in [0, 1]$, we know that
+    ($\implies$) Assume that $f$ is convex. Then for any $\transposeof{[x_1, y_1]}, \transposeof{[x_2, y_2]} \in \epigraph(f)$ and $\lambda \in [0, 1]$, we know that
     \begin{align*}
         f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda f(x_1) + (1 - \lambda)f(x_2) = \lambda y_1 + (1 - \lambda)y_2.
     \end{align*}
@@ -700,7 +700,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     and so $\epigraph(f)$ is a convex set.
 
-    ($\impliedby$) Assume that $\epigraph(f)$ is a convex set. Then for any $[x_1, y_1]^{\transpose}, [x_2, y_2]^{\transpose} \in \epigraph(f)$ and $\lambda \in [0, 1]$, we know that
+    ($\impliedby$) Assume that $\epigraph(f)$ is a convex set. Then for any $\transposeof{[x_1, y_1]}, \transposeof{[x_2, y_2]} \in \epigraph(f)$ and $\lambda \in [0, 1]$, we know that
     \begin{align*}
         \lambda \begin{bmatrix}
             x_1 \\ y_1
@@ -721,7 +721,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{thm}\label{convex-function-tangent-hyperplane}
     Let $S \subseteq \R^n$ be an open convex set, and let $f: S \to \R$ be continuously differentiable. Then $f$ is a convex function if and only if
     \begin{align*}
-        f(x) \geq f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x})
+        f(x) \geq f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x})
     \end{align*}
     for all $x, \bar{x} \in S$. 
 \end{thm}
@@ -729,7 +729,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{thm}
     Let $S \subseteq \R^n$ be an open convex set, and let $f: S \to \R$ be continuously differentiable. Then $f$ is strictly convex if and only if 
     \begin{align*}
-        f(x) > f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x})
+        f(x) > f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x})
     \end{align*}
     for all $x, \bar{x} \in S$ where $x \neq \bar{x}$. 
 \end{thm}
@@ -741,20 +741,20 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{proof}\proofbreak
     Assume $\nabla^2f(\bar{x})$ is positive semi-definite for all $\bar{x} \in S$. By Taylor's theorem, for all $x \in S$ we have
     \begin{align*}
-        f(x) = f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x}) + \frac{1}{2}(x - \bar{x})^{\transpose}\nabla^2f(z)(x - \bar{x})
+        f(x) = f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x}) + \frac{1}{2}\transposeof{(x - \bar{x})}\nabla^2f(z)(x - \bar{x})
     \end{align*}
-    for some $z \in S$. Since $\nabla^2f(\bar{x})$ is positive semi-definite, we know that $\frac{1}{2}(x - \bar{x})^{\transpose}\nabla^2f(z)(x - \bar{x}) \geq 0$, and so we have
+    for some $z \in S$. Since $\nabla^2f(\bar{x})$ is positive semi-definite, we know that $\frac{1}{2}\transposeof{(x - \bar{x})}\nabla^2f(z)(x - \bar{x}) \geq 0$, and so we have
     \begin{align*}
-        f(x) \geq f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x}).
+        f(x) \geq f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x}).
     \end{align*}
 
-    Now assume $\nabla^2f(\bar{x})$ is \emph{not} positive semi-definite for all $\bar{x} \in S$. Then there exists $d \in \R^n$ such that $d^{\transpose}\nabla^2f(\bar{x})d < 0$. By continuity of $\nabla^2f(\bar{x})$, there is a neighborhood around $\bar{x}$ such that $d^{\transpose}\nabla^2f(z)d < 0$ for all $z$ in that neighborhood. By Taylor's theorem, for all $x \in S$ we have
+    Now assume $\nabla^2f(\bar{x})$ is \emph{not} positive semi-definite for all $\bar{x} \in S$. Then there exists $d \in \R^n$ such that $\transposeof{d}\nabla^2f(\bar{x})d < 0$. By continuity of $\nabla^2f(\bar{x})$, there is a neighborhood around $\bar{x}$ such that $\transposeof{d}\nabla^2f(z)d < 0$ for all $z$ in that neighborhood. By Taylor's theorem, for all $x \in S$ we have
     \begin{align*}
-        f(x) = f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x}) + \frac{1}{2}(x - \bar{x})^{\transpose}\nabla^2f(z)(x - \bar{x})
+        f(x) = f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x}) + \frac{1}{2}\transposeof{(x - \bar{x})}\nabla^2f(z)(x - \bar{x})
     \end{align*}
-    for some $z \in S$. Choose $x = \bar{x} + \alpha d$ for $\alpha > 0$ small enough that $x$ is in that neighborhood, and since $z$ falls between $x$ and $\bar{x}$, $z$ is also in that neighborhood. Then $\frac{1}{2}(x - \bar{x})^{\transpose}\nabla^2f(z)(x - \bar{x}) < 0$, and so we have
+    for some $z \in S$. Choose $x = \bar{x} + \alpha d$ for $\alpha > 0$ small enough that $x$ is in that neighborhood, and since $z$ falls between $x$ and $\bar{x}$, $z$ is also in that neighborhood. Then $\frac{1}{2}\transposeof{(x - \bar{x})}\nabla^2f(z)(x - \bar{x}) < 0$, and so we have
     \begin{align*}
-        f(x) < f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x}).
+        f(x) < f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x}).
     \end{align*}
 \end{proof}
 
@@ -770,7 +770,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{proof}
     If $\bar{x}$ is a global minimizer, then $\bar{x}$ is a local minimizer. If $\bar{x}$ is a local minimizer, then $\bar{x}$ is a stationary point. Therefore, we only need to show that stationary points are global minimizers, and the result will follow.
 
-    By convexity of $f$, for all $x \in S$ we know that $f(x) \geq f(\bar{x}) + \nabla f(\bar{x})^{\transpose}(x - \bar{x})$ by Theorem \ref{convex-function-tangent-hyperplane}. If $\bar{x}$ is a stationary point, then $\nabla f(\bar{x})$ by definition, and so $f(x) \geq f(\bar{x})$. Then $\bar{x}$ is a global minimizer by definition.
+    By convexity of $f$, for all $x \in S$ we know that $f(x) \geq f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x})$ by Theorem \ref{convex-function-tangent-hyperplane}. If $\bar{x}$ is a stationary point, then $\nabla f(\bar{x})$ by definition, and so $f(x) \geq f(\bar{x})$. Then $\bar{x}$ is a global minimizer by definition.
 \end{proof}
 
 \begin{defn}{Newton's Method}\label{newtons-method}\proofbreak
@@ -813,12 +813,12 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     Let $A \in M_{m \times n}(\R)$, $b \in \R^m$. Then exactly one of the following is true:
     \begin{itemize}
         \item there exists $x \in \R^n$ such that $Ax = b$ and $x \geq \vec{0}$,
-        \item there exists $y \in \R^m$ such that $b^{\transpose}y > 0$ and $A^{\transpose}y \leq \vec{0}$.
+        \item there exists $y \in \R^m$ such that $\transposeof{b}y > 0$ and $\transposeof{A}y \leq \vec{0}$.
     \end{itemize}
 \end{thm}
 
 \begin{proof}
-    Consider the linear program of minimizing $\vec{0}^{\transpose}x$ such that $Ax = b$ and $x \geq {0}$. The dual program is maximizing $b^{\transpose}y$ such that $A^{\transpose}y \leq \vec{0}$.
+    Consider the linear program of minimizing $\transposeof{\vec{0}}x$ such that $Ax = b$ and $x \geq {0}$. The dual program is maximizing $\transposeof{b}y$ such that $\transposeof{A}y \leq \vec{0}$.
 
     In the first case, the primal program is feasible and the objective function value at $x$ is necessarily zero. Then by Weak Duality \ref{weak-duality}, we know that the dual program has no feasible solution with objective function value greater than zero, and so the second case cannot be true.
 
@@ -829,12 +829,12 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     Let $A = M_{m \times n}(\R)$. Then exactly one of the following is true:
     \begin{itemize}
         \item there exists $x \in \R^n$ such that $Ax = \vec{0}$, $x \geq \vec{0}$, $x \neq \vec{0}$.
-        \item there exists $y \in \R^m$ such that $A^{\transpose}y < \vec{0}$.
+        \item there exists $y \in \R^m$ such that $\transposeof{A}y < \vec{0}$.
     \end{itemize}
 \end{thm}
 
 \begin{proof}
-    Assume the second case is true, so there exists $y \in \R^m$ such that $A^{\transpose}y < \vec{0}$. Equivalently, there exists $\varepsilon > 0$ such that $A^{\transpose}y + \varepsilon\vec{1} \leq \vec{0}$ --- that is, there exists
+    Assume the second case is true, so there exists $y \in \R^m$ such that $\transposeof{A}y < \vec{0}$. Equivalently, there exists $\varepsilon > 0$ such that $\transposeof{A}y + \varepsilon\vec{1} \leq \vec{0}$ --- that is, there exists
     \begin{align*}
         \begin{bmatrix}
             y \\ \varepsilon
@@ -842,13 +842,13 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     such that
     \begin{align*}
-        \begin{bmatrix}
+        \transposeof{\begin{bmatrix}
             \vec{0} \\ 1
-        \end{bmatrix}^{\transpose}
+        \end{bmatrix}}
         \begin{bmatrix}
             y \\ \varepsilon
         \end{bmatrix} > 0,\;\;\;\begin{bmatrix}
-            A^{\transpose} | \vec{1}
+            \transposeof{A} | \vec{1}
         \end{bmatrix}\begin{bmatrix}
             y \\ \varepsilon
         \end{bmatrix} \leq \vec{0}.
@@ -856,20 +856,20 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     By Farkas \ref{farkas}, this is true if and only if there is no $x \geq \vec{0}$ such that
     \begin{align*}
         \begin{bmatrix}
-            A \\ \vec{1}^{\transpose}
+            A \\ \transposeof{\vec{1}}
         \end{bmatrix}x = \begin{bmatrix}
             \vec{0} \\ 1
         \end{bmatrix}.
     \end{align*}
     This is in turn equivalent to
     \begin{align*}
-        Ax = \vec{0},\;\;\;x \geq \vec{0}\;\;\;\vec{1}^{\transpose}x = 1.
+        Ax = \vec{0},\;\;\;x \geq \vec{0}\;\;\;\transposeof{\vec{1}}x = 1.
     \end{align*}
     Note that this is equivalent to the first case from this theorem: the existence of such $x \neq 0$ implies the existence of
     \begin{align*}
-        x' = \frac{1}{\vec{1}^{\transpose}x}x,
+        x' = \frac{1}{\transposeof{\vec{1}}x}x,
     \end{align*}
-    and we would have $Ax' = \frac{1}{\vec{1}^{\transpose}x}\vec{0} = \vec{0}$, $x' \geq \vec{0}$, $\vec{1}^{\transpose}x' = 1$.
+    and we would have $Ax' = \frac{1}{\transposeof{\vec{1}}x}\vec{0} = \vec{0}$, $x' \geq \vec{0}$, $\transposeof{\vec{1}}x' = 1$.
 
     Therefore, the second case is equivalent to the negation of the first, and so exactly one of them is true for any $A$.
 \end{proof}
@@ -900,17 +900,17 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{lemma}\label{kkt-lemma-2}
     Let
     \begin{align*}
-        J^{\transpose} = \begin{bmatrix}
-            \nabla f^{\transpose}(x) \\ \nabla g_{k_1}^{\transpose}(x) \\ \vdots \\ \nabla g_{k_n}^{\transpose}(x)
+        \transposeof{J} = \begin{bmatrix}
+            \nabla \transposeof{f}(x) \\ \nabla \transposeof{g_{k_1}}(x) \\ \vdots \\ \nabla \transposeof{g_{k_n}}(x)
         \end{bmatrix}
     \end{align*}
     for all $k_i \in \mathcal{A}(x)$.
 
-    If $x$ is a local minimum of $P$, then there \emph{does not} exist $d \in \R^n$ such that $J^{\transpose}d < \vec{0}$.
+    If $x$ is a local minimum of $P$, then there \emph{does not} exist $d \in \R^n$ such that $\transposeof{J}d < \vec{0}$.
 \end{lemma}
 
 \begin{proof}
-    If such $d$ existed, then it would be a descent direction for $f$ and $g_{k_i}$ since $\nabla f^{\transpose}(x)d = \nabla f(x) \cdot d$ and $\nabla g_{k_i}^{\transpose}(x)d = \nabla g_{k_i}(x) \cdot d$. Therefore, no such $d$ exists by Lemma \ref{kkt-lemma-1}
+    If such $d$ existed, then it would be a descent direction for $f$ and $g_{k_i}$ since $\nabla \transposeof{f}(x)d = \nabla f(x) \cdot d$ and $\nabla \transposeof{g_{k_i}}(x)d = \nabla g_{k_i}(x) \cdot d$. Therefore, no such $d$ exists by Lemma \ref{kkt-lemma-1}
 \end{proof}
 
 \begin{lemma}\label{kkt-lemma-3}
@@ -918,7 +918,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{lemma}
 
 \begin{proof}
-    By Lemma \ref{kkt-lemma-2}, there is no $d$ such that $J^{\transpose}d < \vec{0}$. Therefore, by Gordon's Theorem \ref{gordons}, there must be $\lambda \geq 0$, $\lambda \neq \vec{0}$ such that $J\lambda = \vec{0}$.
+    By Lemma \ref{kkt-lemma-2}, there is no $d$ such that $\transposeof{J}d < \vec{0}$. Therefore, by Gordon's Theorem \ref{gordons}, there must be $\lambda \geq 0$, $\lambda \neq \vec{0}$ such that $J\lambda = \vec{0}$.
 \end{proof}
 
 \begin{lemma}\label{kkt-lemma-4}
@@ -950,7 +950,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     If $x$ is a local minimum of $P$, then there exists $\lambda \in \R^m$ and $\beta \in \R$ such that
     \begin{align*}
         \beta\nabla f(x) + \nabla \vec{g}(x)\lambda = \vec{0} \\
-        \lambda^{\transpose}\vec{g}(x) = 0 \\
+        \transposeof{\lambda}\vec{g}(x) = 0 \\
         \lambda \geq \vec{0},\;\beta \geq 0 \\
         \begin{bmatrix}
             \beta \\ \lambda
@@ -970,7 +970,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     is linearly independent. Then there exists $\lambda \in \R^m$ such that
     \begin{align*}
         \nabla f(x) + \nabla \vec{g}(x)\lambda = \vec{0} \\
-        \lambda^{\transpose}\vec{g}(x) = 0 \\
+        \transposeof{\lambda}\vec{g}(x) = 0 \\
         \lambda \geq \vec{0}.
     \end{align*}
 \end{thm}
@@ -1041,7 +1041,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{exmp}
 
 \begin{exmp}
-    Let $A \in M_{n\times n}(\R)$ be symmetric and positive definite, $b \in \R^n$ be non-zero, and $c \in \R$ be positive. Consider the problem of minimizing $f(x) = \frac{1}{2}x^{\transpose}Ax$ such that $g(x) = b^{\transpose}x + c \leq 0$. Imagine we want to find all KKT points and their multipliers. Note that
+    Let $A \in M_{n\times n}(\R)$ be symmetric and positive definite, $b \in \R^n$ be non-zero, and $c \in \R$ be positive. Consider the problem of minimizing $f(x) = \frac{1}{2}\transposeof{x}Ax$ such that $g(x) = \transposeof{b}x + c \leq 0$. Imagine we want to find all KKT points and their multipliers. Note that
     \begin{align*}
         \nabla f(x) = Ax,\;\;
         \nabla g(x) = b.
@@ -1050,14 +1050,14 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \begin{align*}
         Ax + \lambda b = \vec{0},
     \end{align*}
-    for $\lambda \geq 0$. We then have $x = -\lambda A^{-1}b$. For $x$ to be feasible and $g$ be active, we need $b^{\transpose}\left(-\lambda A^{-1}b\right) + c = \vec{0}$ and so the only KKT multiplier and point is
+    for $\lambda \geq 0$. We then have $x = -\lambda A^{-1}b$. For $x$ to be feasible and $g$ be active, we need $\transposeof{b}\left(-\lambda A^{-1}b\right) + c = \vec{0}$ and so the only KKT multiplier and point is
     \begin{align*}
-        \lambda = \frac{c}{b^{\transpose}A^{-1}b},\;\; x = -\frac{c}{b^{\transpose}A^{-1}b}A^{-1}b.
+        \lambda = \frac{c}{\transposeof{b}A^{-1}b},\;\; x = -\frac{c}{\transposeof{b}A^{-1}b}A^{-1}b.
     \end{align*}
 \end{exmp}
 
 \begin{exmp}
-    Consider the linear program of minimizing $c^{\transpose}x$ such that $Ax \geq b$ and $x \geq 0$. Alternatively, minimize $f(x) = c^{\transpose}x$ such that
+    Consider the linear program of minimizing $\transposeof{c}x$ such that $Ax \geq b$ and $x \geq 0$. Alternatively, minimize $f(x) = \transposeof{c}x$ such that
     \begin{align*}
         \vec{g}(x) = \begin{bmatrix}
             -A \\ -I
@@ -1069,18 +1069,18 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \begin{align*}
         \nabla f(x) = c,\;\;
         \nabla \vec{g}(x) = \begin{bmatrix}
-            -A^{\transpose} | -I^{\transpose}
+            -\transposeof{A} | -\transposeof{I}
         \end{bmatrix}.
     \end{align*}
     The constraint qualification requires that $A$ is full row-rank, we can always reduce $A$ if that is not the case. Therefore, we can safely assume that the constraint qualification is always satisfied. The KKT conditions are then
     \begin{align*}
         c + \begin{bmatrix}
-            -A^{\transpose} | -I^{\transpose}
+            -\transposeof{A} | -\transposeof{I}
         \end{bmatrix}\begin{bmatrix}
             y \\ z
         \end{bmatrix} = \vec{0} \\
         \begin{bmatrix}
-            y^{\transpose} | z^{\transpose}
+            \transposeof{y} | \transposeof{z}
         \end{bmatrix}\left(\begin{bmatrix}
             -A \\ -I
         \end{bmatrix}x + \begin{bmatrix}
@@ -1092,14 +1092,14 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     It follows that
     \begin{align*}
-        A^{\transpose}y + z &= c, \\
-        y^{\transpose}Ax &= y^{\transpose}b = b^{\transpose}y, \\
-        z^{\transpose}x &= 0.
+        \transposeof{A}y + z &= c, \\
+        \transposeof{y}Ax &= \transposeof{y}b = \transposeof{b}y, \\
+        \transposeof{z}x &= 0.
     \end{align*}
-    Therefore, $z = c - A^{\transpose}y$, and so $z^{\transpose}x = 0$ implies that $c^{\transpose}x = b^{\transpose}y$ and $z \geq \vec{0}$ implies that $A^{\transpose}y \leq c$. Altogether, the KKT conditions then require that
+    Therefore, $z = c - \transposeof{A}y$, and so $\transposeof{z}x = 0$ implies that $\transposeof{c}x = \transposeof{b}y$ and $z \geq \vec{0}$ implies that $\transposeof{A}y \leq c$. Altogether, the KKT conditions then require that
     \begin{align*}
         Ax &\geq b, \;\; x \geq \vec{0}, \\
-        A^{\transpose}y &\leq c, \;\; y \geq \vec{0},
+        \transposeof{A}y &\leq c, \;\; y \geq \vec{0},
     \end{align*}
-    and $c^{\transpose}x = b^{\transpose}y$. Notice that these are equivalent to the requirements for complementary slackness \ref{complementary-slackness}.
+    and $\transposeof{c}x = \transposeof{b}y$. Notice that these are equivalent to the requirements for complementary slackness \ref{complementary-slackness}.
 \end{exmp}

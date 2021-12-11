@@ -1610,50 +1610,50 @@ Throughout this section, we will show that a function satisfying all of these pr
 \end{rmk}
 
 \begin{defn}
-    Let $A$ be an $m \times n$ matrix. The \emph{transpose} of $A$, denoted by $A^{\transpose}$ is the $n \times m$ matrix given by
-    \[\left(A^{\transpose}\right)_{ij} = A_{ji}.\]
+    Let $A$ be an $m \times n$ matrix. The \emph{transpose} of $A$, denoted by $\transposeof{A}$ is the $n \times m$ matrix given by
+    \[\left(\transposeof{A}\right)_{ij} = A_{ji}.\]
 \end{defn}
 
 \begin{exmp}
-    \[\begin{pmatrix}
+    \[\transposeof{\begin{pmatrix}
         a & b \\ c & d
-    \end{pmatrix}^{\transpose} = \begin{pmatrix}
+    \end{pmatrix}} = \begin{pmatrix}
         a & c \\ b & d
     \end{pmatrix}.\]
 
-    Note that $\det A = ad - bc$, and $\det A^{\transpose} = ad - cb$, so $\det A = \det A^{\transpose}$.
+    Note that $\det A = ad - bc$, and $\det\transposeof{A} = ad - cb$, so $\det A = \det\transposeof{A}$.
 \end{exmp}
 
 \begin{thm}\label{transpose-properties}
     Let $A$ and $B$ be $n \times n$ matrices. Then
     \begin{enumerate}[label=(\arabic*)]
-        \item $\left(AB\right)^{\transpose} = B^{\transpose}A^{\transpose}$.
-        \item If $A$ is invertible, so is $A^{\transpose}$ and $\left(A^{\transpose}\right)^{-1} = \left(A^{-1}\right)^{\transpose}$.
+        \item $\transposeof{\left(AB\right)} = \transposeof{B}\transposeof{A}$.
+        \item If $A$ is invertible, so is $\transposeof{A}$ and $\left(\transposeof{A}\right)^{-1} = \transposeof{\left(A^{-1}\right)}$.
     \end{enumerate}
 \end{thm}
 
 \begin{proof}\proofbreak
     \begin{enumerate}[label=(\arabic*)]
-        \item Since $A$ and $B$ are both $n \times n$, $(AB)^{\transpose}$ and $B^{\transpose}A^{\transpose}$ are both $n \times n$ as well. Then \[\left(\left(AB\right)^{\transpose}\right)_{ij} = (AB)_{ji} = \sum_{k=1}^{n}A_{jk}B_{ki} = \sum_{k=1}^{n}B^{\transpose}_{ik}A^{\transpose}_{kj} = \left(B^{\transpose}A^{\transpose}\right)_{ij}.\]
-        \item If $A$ is invertible, then $I = AA^{-1}$. By (1), $\left(AA^{-1}\right)^{\transpose} = \left(A^{-1}\right)^{\transpose}A^{\transpose}$. Since $I = I^{\transpose}$, we then have $\left(A^{-1}\right)^{\transpose}A^{\transpose} = I$, so $\left(A^{\transpose}\right)^{-1} = \left(A^{-1}\right)^{\transpose}$.
+        \item Since $A$ and $B$ are both $n \times n$, $\transposeof{(AB)}$ and $\transposeof{B}\transposeof{A}$ are both $n \times n$ as well. Then \[\left(\transposeof{\left(AB\right)}\right)_{ij} = (AB)_{ji} = \sum_{k=1}^{n}A_{jk}B_{ki} = \sum_{k=1}^{n}\transposeof{B}_{ik}\transposeof{A}_{kj} = \left(\transposeof{B}\transposeof{A}\right)_{ij}.\]
+        \item If $A$ is invertible, then $I = AA^{-1}$. By (1), $\transposeof{\left(AA^{-1}\right)} = \transposeof{\left(A^{-1}\right)}\transposeof{A}$. Since $I = \transposeof{I}$, we then have $\transposeof{\left(A^{-1}\right)}\transposeof{A} = I$, so $\left(\transposeof{A}\right)^{-1} = \transposeof{\left(A^{-1}\right)}$.
     \end{enumerate}
 \end{proof}
 
 \begin{cor}\label{transpose-of-product}
-    $\left(A_1A_2\cdots A_{k_1}A_k\right)^{\transpose} = A_k^{\transpose}A_{k-1}^{\transpose}\cdots A_2^{\transpose}A_1^{\transpose}$
+    $\transposeof{\left(A_1A_2\cdots A_{k_1}A_k\right)} = \transposeof{A_k}\transposeof{A_{k-1}}\cdots \transposeof{A_2}\transposeof{A_1}$
 \end{cor}
 
 \begin{lemma}\label{elementary-transpose-determinant}
-    Let $E$ be an elementary matrix. Then $\det E = \det E^{\transpose} \neq 0$.
+    Let $E$ be an elementary matrix. Then $\det E = \det\transposeof{E} \neq 0$.
 \end{lemma}
 
 \begin{proof}
     We will divide our proof into three cases, by which of the three row operators $E$ was obtained by.
 
     \begin{itemize}
-        \item Since swapping rows and swapping columns in $I_n$ is the same thing, if $E$ is obtained from $I_n$ by swapping two rows, then $E = E^{\transpose}$. Then $\det E = \det E^{\transpose} = (-1)\det I_n = -1$ by Proposition \ref{det-row-ops} (\ref{det-row-swap}).
-        \item If $E$ is obtained from $I_n$ by multiplying row $i$ by $k \neq 0$, then $E$ only has non-zero entries on the major diagonal and so $E = E^{\transpose}$. Therefore, $\det E = \det E^{\transpose} = k \det I_n = k$ by multilinearity.
-        \item If $E$ is obtained from $I_n$ by adding $kr_j$ to $r_i$, then $E^{\transpose}$ is obtained from $I_n$ by adding $kr_i$ to $r_j$. Therefore, $\det E = \det I_n = \det E^{\transpose} = 1$ by Proposition \ref{det-row-ops} (\ref{det-add-multiple}).
+        \item Since swapping rows and swapping columns in $I_n$ is the same thing, if $E$ is obtained from $I_n$ by swapping two rows, then $E = \transposeof{E}$. Then $\det E = \det\transposeof{E} = (-1)\det I_n = -1$ by Proposition \ref{det-row-ops} (\ref{det-row-swap}).
+        \item If $E$ is obtained from $I_n$ by multiplying row $i$ by $k \neq 0$, then $E$ only has non-zero entries on the major diagonal and so $E = \transposeof{E}$. Therefore, $\det E = \det\transposeof{E} = k \det I_n = k$ by multilinearity.
+        \item If $E$ is obtained from $I_n$ by adding $kr_j$ to $r_i$, then $\transposeof{E}$ is obtained from $I_n$ by adding $kr_i$ to $r_j$. Therefore, $\det E = \det I_n = \det\transposeof{E} = 1$ by Proposition \ref{det-row-ops} (\ref{det-add-multiple}).
     \end{itemize}
 \end{proof}
 
@@ -1696,18 +1696,18 @@ Throughout this section, we will show that a function satisfying all of these pr
 \end{proof}
 
 \begin{thm}
-    If $A$ is an $n \times n$ matrix, then $\det A = \det A^{\transpose}$.
+    If $A$ is an $n \times n$ matrix, then $\det A = \det\transposeof{A}$.
 \end{thm}
 
 \begin{proof}
-    If $A$ is not invertible, then by Theorem \ref{matrix-invertible-rank} the rank of $A$ is less than $n$. Since the rank of $A$ is the rank of $A^{\transpose}$ by Theorem \ref{row-column-rank-equivalence}, by Proposition \ref{det-zero} (2) $\det A = 0 = \det A^{\transpose}$.
+    If $A$ is not invertible, then by Theorem \ref{matrix-invertible-rank} the rank of $A$ is less than $n$. Since the rank of $A$ is the rank of $\transposeof{A}$ by Theorem \ref{row-column-rank-equivalence}, by Proposition \ref{det-zero} (2) $\det A = 0 = \det\transposeof{A}$.
 
     If $A$ is invertible, then by Proposition \ref{matrix-inverse-reduction} there exists elementary matrices $E_1, \ldots, E_{k}$ such that $I_n = E_{k}\cdots E_1A$. Then $\det I_n = \det E_{k}\cdots \det E_1 \det A$. By Corollary \ref{transpose-of-product}, we know that
-    \[I_n^{\transpose} = A^{\transpose}E_1^{\transpose}\cdots E_k^{\transpose}.\]
+    \[\transposeof{I_n} = \transposeof{A}\transposeof{E_1}\cdots \transposeof{E_k}.\]
     Therefore, by Lemma \ref{determinant-respects-product}
     \[\det A = \frac{1}{\det E_k\cdots \det E_1},\]
-    \[\det A^{\transpose} = \frac{1}{\det E_1^{\transpose}\cdots \det E_k^{\transpose}}.\]
-    Then by Lemma \ref{elementary-transpose-determinant}, we have $\det A = \det A^{\transpose}$.
+    \[\det\transposeof{A} = \frac{1}{\det\transposeof{E_1}\cdots \det\transposeof{E_k}}.\]
+    Then by Lemma \ref{elementary-transpose-determinant}, we have $\det A = \det\transposeof{A}$.
 \end{proof}
 
 \begin{rmk}
@@ -1724,7 +1724,7 @@ Throughout this section, we will show that a function satisfying all of these pr
 \end{thm}
 
 \begin{rmk}
-    Laplace expansion is also known as cofactor expansion. Since we expanded along the $k$th column of $A$, this is called the column expansion. Since $\det A = \det A^{\transpose}$, we could also do a row expansion along the $k$th row once we've proven this theorem.
+    Laplace expansion is also known as cofactor expansion. Since we expanded along the $k$th column of $A$, this is called the column expansion. Since $\det A = \det\transposeof{A}$, we could also do a row expansion along the $k$th row once we've proven this theorem.
 \end{rmk}
 
 \begin{exmp}
@@ -2226,7 +2226,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{exmp}
 
 \begin{exmp}
-    Let $V = M_{m \times n}(F)$, and for all $A \in V$ define the conjugate transpose of $A$ to be $A^* = \overline{A^{\transpose}}$, where the matrix conjugate is taken entry-wise. Then
+    Let $V = M_{m \times n}(F)$, and for all $A \in V$ define the conjugate transpose of $A$ to be $A^* = \overline{\transposeof{A}}$, where the matrix conjugate is taken entry-wise. Then
     \[\langle A, B \rangle = \textrm{tr}(B^*A) = \sum_{i=1}^{n}(B^*A)_{ii}.\]
 \end{exmp}
 
@@ -2650,19 +2650,19 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{defn}
 
 \begin{lemma}
-    A matrix $P \in M_{n \times n}(\C)$ is orthogonal if and only if $P$ is invertible and $P^{-1} = P^{\transpose}$.
+    A matrix $P \in M_{n \times n}(\C)$ is orthogonal if and only if $P$ is invertible and $P^{-1} = \transposeof{P}$.
 \end{lemma}
 
 \begin{proof}
-    Let $v_i$ denote the $i$th column of $P$ (and therefore the $i$th column of $P^{\transpose}$). Note that $P$ is orthogonal is equivalent to saying that $v_i \cdot v_j = 1$ precisely when $i = j$ and $v_i \cdot v_j = 0$ otherwise. Therefore, $P$ is orthogonal is equivalent to $P^{\transpose}P = I_n$ and since $P^{\transpose}$ is also orthogonal, $PP^{\transpose} = I_n$. It follows that $P$ is orthogonal is precisely equivalent to $P$ is invertible and $P^{-1} = P^{\transpose}$.
+    Let $v_i$ denote the $i$th column of $P$ (and therefore the $i$th column of $\transposeof{P}$). Note that $P$ is orthogonal is equivalent to saying that $v_i \cdot v_j = 1$ precisely when $i = j$ and $v_i \cdot v_j = 0$ otherwise. Therefore, $P$ is orthogonal is equivalent to $\transposeof{P}P = I_n$ and since $\transposeof{P}$ is also orthogonal, $P\transposeof{P} = I_n$. It follows that $P$ is orthogonal is precisely equivalent to $P$ is invertible and $P^{-1} = \transposeof{P}$.
 \end{proof}
 
 \begin{rmk}
-    If $P$ is orthogonal, then so is $P^{\transpose}$. If $S$ and $R$ are orthogonal, then $SR$ is orthogonal since $(SR)(SR)^{\transpose} = S(RR^{\transpose})S^{\transpose} = SS^{\transpose} = I$.
+    If $P$ is orthogonal, then so is $\transposeof{P}$. If $S$ and $R$ are orthogonal, then $SR$ is orthogonal since $(SR)\transposeof{(SR)} = S(R\transposeof{R})\transposeof{S} = S\transposeof{S} = I$.
 \end{rmk}
 
 \begin{thm}Spectral Theorem\label{spectral-theorem}\proofbreak
-    Let $A \in M_{n \times n}(\R)$. If $A$ is symmetric ($A = A^{\transpose}$), then $A$ is diagonalizable and there exists an orthogonal basis for $\R^n$ composed of eigenvectors of $A$.
+    Let $A \in M_{n \times n}(\R)$. If $A$ is symmetric ($A = \transposeof{A}$), then $A$ is diagonalizable and there exists an orthogonal basis for $\R^n$ composed of eigenvectors of $A$.
 \end{thm}
 
 \begin{proof}
@@ -2670,7 +2670,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \begin{align*}
         \lambda\langle x, x\rangle = \langle Ax, x \rangle = \langle x, A^*x\rangle
     \end{align*}
-    Since $A \in M_{n \times n}(\R)$, $A^* = A^{\transpose}$. Then $A = A^{\transpose}$ implies that $A^* = A$, so $\langle x, A^*x \rangle = \langle x, Ax \rangle$. We then have
+    Since $A \in M_{n \times n}(\R)$, $A^* = \transposeof{A}$. Then $A = \transposeof{A}$ implies that $A^* = A$, so $\langle x, A^*x \rangle = \langle x, Ax \rangle$. We then have
     \begin{align*}
         \lambda\langle x, x\rangle = \langle x, \lambda x\rangle = \overline{\lambda}\langle x, x \rangle.
     \end{align*}
@@ -2679,7 +2679,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     We will proceed by induction on $n$. First, a $1 \times 1$ matrix $A = (a)$ is trivially both symmetric and diagonalizable, and $\{(1)\}$ is a basis for $\R^1$ that is vacuously orthogonal and composed of eigenvectors of $A$. Now assume that for $m \leq n-1$, any $m \times m$ real symmetric matrix is diagonalizable, and there exists an orthogonal basis for $\R^m$ composed of its eigenvectors.
     
     Let $\lambda_1$ be a real eigenvalue and $v_1$ be the corresponding eigenvector. Complete to an ordered orthogonal basis $B = \langle v_1, \ldots, v_n \rangle$ for $\R^n$. Let $Q$ be a matrix whose $i$th column is $v_i$, and let
-    $\tilde{A} = [L_A]_{B}^{B}$. Then $\tilde{A} = Q^{-1}AQ = Q^{\transpose}AQ$. Note that $\tilde{A}$ is symmetric: $\left(Q^{\transpose}AQ\right)^{\transpose} = Q^{\transpose}A^{\transpose}\left(Q^{\transpose}\right)^{\transpose} = Q^{\transpose}AQ = \tilde{A}$.
+    $\tilde{A} = [L_A]_{B}^{B}$. Then $\tilde{A} = Q^{-1}AQ = \transposeof{Q}AQ$. Note that $\tilde{A}$ is symmetric: $\transposeof{\left(\transposeof{Q}AQ\right)} = \transposeof{Q}\transposeof{A}\transposeof{\left(\transposeof{Q}\right)} = \transposeof{Q}AQ = \tilde{A}$.
 
     Since $Av_1 = \lambda_1v_1$, we know that
     \[\tilde{A} = \left(\begin{array}{c|ccc}
@@ -2689,7 +2689,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
         \vdots & & & \\
         0 & \largeblock{3}{2.2}{$B$}
     \end{array}\right),\]
-    where $B$ is an $(n-1)\times(n-1)$ real symmetric matrix. By assumption, there exists an $(n-1)\times(n-1)$ diagonal matrix $E$ and $T$ an $(n-1)\times(n-1)$ orthogonal matrix such that $B = TET^{-1} = TET^{\transpose}$. Then
+    where $B$ is an $(n-1)\times(n-1)$ real symmetric matrix. By assumption, there exists an $(n-1)\times(n-1)$ diagonal matrix $E$ and $T$ an $(n-1)\times(n-1)$ orthogonal matrix such that $B = TET^{-1} = TE\transposeof{T}$. Then
     \[\tilde{A} = \left(\begin{array}{c|ccc}
         1 & 0 & \cdots & 0 \\
         \hline
@@ -2709,15 +2709,15 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
         \hline
         0 & & & \\
         \vdots & & & \\
-        0 & \largeblock{3}{2.7}{$T^{\transpose}$}
-    \end{array}\right) = SDS^{\transpose},\]
-    where $S$, $D$, and $S^{\transpose}$ are simply the three matrices in the product. Then,
-    \[A = Q\tilde{A}Q^{\transpose} = QSDS^{\transpose}Q^{\transpose} = (QS)D(QS)^{\transpose} = (QS)D(QS)^{-1}.\]
-    Note that $D$ is diagonal since $E$ is, and $S$ (and $S^{\transpose}$) are orthogonal since $T$ (and $T^{\transpose})$) is. Since $Q$ and $S$ are orthogonal, so is their product $QS$. Since $D$ is a diagonal matrix of eigenvalues, the columns of $QS$ are necessarily eigenvectors of $A$, and so the columns of $QS$ form an orthogonal basis of eigenvectors.
+        0 & \largeblock{3}{2.7}{$\transposeof{T}$}
+    \end{array}\right) = SD\transposeof{S},\]
+    where $S$, $D$, and $\transposeof{S}$ are simply the three matrices in the product. Then,
+    \[A = Q\tilde{A}\transposeof{Q} = QSD\transposeof{S}\transposeof{Q} = (QS)D\transposeof{(QS)} = (QS)D(QS)^{-1}.\]
+    Note that $D$ is diagonal since $E$ is, and $S$ (and $\transposeof{S}$) are orthogonal since $T$ (and $\transposeof{T}$) is. Since $Q$ and $S$ are orthogonal, so is their product $QS$. Since $D$ is a diagonal matrix of eigenvalues, the columns of $QS$ are necessarily eigenvectors of $A$, and so the columns of $QS$ form an orthogonal basis of eigenvectors.
 \end{proof}
 
 \begin{defn}
-    A symmetric matrix $A \in M_{n\times n}(\R)$ is \emph{positiive definite} is $z^{\transpose}Mz$ is strictly positive for \emph{every} non-zero real $z \in \R^n$, and \emph{positive semidefinite} if $z^{\transpose}Mz$ is positive or zero for every non-zero real $z \in \R^n$. Negative definite and negative semidefinite are defined similarly.
+    A symmetric matrix $A \in M_{n\times n}(\R)$ is \emph{positiive definite} is $\transposeof{z}Mz$ is strictly positive for \emph{every} non-zero real $z \in \R^n$, and \emph{positive semidefinite} if $\transposeof{z}Mz$ is positive or zero for every non-zero real $z \in \R^n$. Negative definite and negative semidefinite are defined similarly.
     
     For Hermitian matrices $H \in M_{n\times n}(\C)$, these are defined similarly using $z^{*}Hz$.
 
@@ -2735,14 +2735,14 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \end{align*}
     Therefore,
     \begin{align*}
-        z^{\transpose}Az &= z^{\transpose}A\left(a_1v_1 + \cdots + a_nv_n\right) \\
-        &= z^{\transpose}\left(a_1\lambda_1v_1 + \cdots + a_n\lambda_{n}v_n\right).
+        \transposeof{z}Az &= \transposeof{z}A\left(a_1v_1 + \cdots + a_nv_n\right) \\
+        &= \transposeof{z}\left(a_1\lambda_1v_1 + \cdots + a_n\lambda_{n}v_n\right).
     \end{align*}
-    Since $B$ is orthogonal, $v_i^{\transpose}v_j = 0$ whenever $i \neq j$, and so
+    Since $B$ is orthogonal, $\transposeof{v_i}v_j = 0$ whenever $i \neq j$, and so
     \begin{align*}
-        z^{\transpose}Az &= a_1^2\lambda_1v_1^{\transpose}v_1 + \cdots + a_n^2\lambda_{n}v_n^{\transpose}v_n.
+        \transposeof{z}Az &= a_1^2\lambda_1\transposeof{v_1}v_1 + \cdots + a_n^2\lambda_{n}\transposeof{v_n}v_n.
     \end{align*}
-    Since $z \in \R^n$ we have $a_i \in \R$, and so $a_i^2 \geq 0$ and of course $v_i \in \R^n$ and so $v_i^2 > 0$. Therefore, the sign of $z^{\transpose}Az$ depends only on the signs of $\lambda_i$.
+    Since $z \in \R^n$ we have $a_i \in \R$, and so $a_i^2 \geq 0$ and of course $v_i \in \R^n$ and so $v_i^2 > 0$. Therefore, the sign of $\transposeof{z}Az$ depends only on the signs of $\lambda_i$.
 \end{proof}
 
 \begin{cor}

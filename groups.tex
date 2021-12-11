@@ -546,7 +546,7 @@ We can construct a full multiplication table for the six symmetries of the $3$-g
     The set of $n \times n$ matrices with determinant $+1$ forms a subgroup of $GL_n(F)$: the \emph{Special Linear Group} over $F$, denoted by $SL_n(F)$.
 \end{defn}
 
-Recall the \emph{orthogonal matrices}, which are all invertible matrices $A$ such that $AA^{\transpose} = I$, or equivalently $A^{-1} = A^{\transpose}$. These matrices have columns which form an orthonormal basis for $F^n$.
+Recall the \emph{orthogonal matrices}, which are all invertible matrices $A$ such that $A\transposeof{A} = I$, or equivalently $A^{-1} = \transposeof{A}$. These matrices have columns which form an orthonormal basis for $F^n$.
 
 \begin{prop}
     The orthogonal matrices are a subgroup of $GL_n(F)$, denoted by $O_n(F)$.
@@ -555,8 +555,8 @@ Recall the \emph{orthogonal matrices}, which are all invertible matrices $A$ suc
 \begin{proof}
     Clearly $I_n \in O_n$, so $O_n$ is non-empty. Furthermore, for any $A, B \in O_n$ we have
     \begin{align*}
-        \left(AB^{-1}\right)\left(AB^{-1}\right)^{\transpose} &= AB^{-1}\left(B^{-1}\right)^{\transpose}A^{\transpose} \\
-        &= AIA^{\transpose} = I.
+        \left(AB^{-1}\right)\transposeof{\left(AB^{-1}\right)} &= AB^{-1}\transposeof{\left(B^{-1}\right)}\transposeof{A} \\
+        &= AI\transposeof{A} = I.
     \end{align*}
     Therefore, $AB^{-1} \in O_n$, and so the result follows by Theorem \ref{subgroup-test}.
 \end{proof}
