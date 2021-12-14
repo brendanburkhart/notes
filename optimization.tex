@@ -47,12 +47,6 @@
 \end{exmp}
 
 \begin{defn}
-    For any $x, y \in \R^n$, the Euclidean length of $x$ is
-    \[\norm{x} = \sqrt{x\cdot x} = \sqrt{\sum_{i=1}^{n}x_i^2},\]
-    and the Euclidean distance between $x$ and $y$ is $\norm{x - y}$.
-\end{defn}
-
-\begin{defn}
     For all $x \in \R^n$ and $\varepsilon > 0$, the \emph{$\varepsilon$-neighborhood} of $x$ is
     \[N_{\varepsilon}(x) = \left\{y \in \R^n \compbar \norm{x - y} < \varepsilon \right\}.\]
 \end{defn}
@@ -62,7 +56,7 @@
 \end{exmp}
 
 \begin{defn}
-    For any $S \subseteq \R^n$ and $x \in \R^n$, we say that $x$ is an \emph{interior point} of $S$ if there exists an $\varepsilon$ neighborhood of $x$ $N_{\varepsilon}(x) \subseteq S$. If every $N_{\varepsilon}(x)$ contains a point inside $S$ and a point not inside $S$, we say that $x$ is a \emph{boundary point} of $x$.
+    For any $S \subseteq \R^n$ and $x \in \R^n$, we say that $x$ is an \emph{interior point} of $S$ if there exists $N_{\varepsilon}(x) \subseteq S$. If every $N_{\varepsilon}(x)$ contains a point inside $S$ and a point not inside $S$, we say that $x$ is a \emph{boundary point} of $x$.
 \end{defn}
 
 \begin{defn}
@@ -93,7 +87,7 @@
     \begin{itemize}
         \item Unbounded objective function, e.g. minimizing $\ln x$ such that $0 < x \leq 7$.
         \item Bounded objective function on open set, e.g. minimizing $\ln x$ such that $1 < x \leq 7$.
-        \item Infeasible (feasible region is empty), e.g. minimizing $\ln x$ such that $1 < x \leq 0.5$.
+        \item Infeasible (feasible region is empty), e.g. minimizing $\ln x$ such that $1 < x$ and $x \leq 0.5$.
     \end{itemize}
 \end{exmp}
 
@@ -107,11 +101,11 @@
 \end{exmp}
 
 \begin{defn}
-    Let $S \subseteq \R^n$ and $f: \R^n \to \R$. Consider $x^* \in S$. We say that $x^*$ is a \emph{global minimizer} if for all $y \in S$, $f(x^*) \leq f(y)$, and a \emph{strict} global minimizer if for all $y \in S - \{x^*\}$, $f(x^*) < f(y)$.
+    Let $S \subseteq \R^n$ and $f: \R^n \to \R$. Consider $x^* \in S$. We say that $x^*$ is a \emph{global minimum} if for all $y \in S$, $f(x^*) \leq f(y)$, and a \emph{strict} global minimum if for all $y \in S - \{x^*\}$, $f(x^*) < f(y)$.
 \end{defn}
 
 \begin{defn}
-    Let $S \subseteq \R^n$ and $f: \R^n \to \R$. Consider $x^* \in S$. We say that $x^*$ is a \emph{local minimizer} if there exists an $\varepsilon$-neighborhood $N_{\varepsilon}(x^*)$ such that for all $y \in N_{\varepsilon}(x) \intersection S$, $f(x^*) \leq f(y)$, and a \emph{strict} local minimizer if for all $y \in \left(N_{\varepsilon}(x) \intersection S\right) - \{x^*\}$, $f(x^*) < f(y)$.
+    Let $S \subseteq \R^n$ and $f: \R^n \to \R$. Consider $x^* \in S$. We say that $x^*$ is a \emph{local minimum} if there exists an $\varepsilon$-neighborhood $N_{\varepsilon}(x^*)$ such that for all $y \in N_{\varepsilon}(x) \intersection S$, $f(x^*) \leq f(y)$, and a \emph{strict} local minimum if for all $y \in \left(N_{\varepsilon}(x) \intersection S\right) - \{x^*\}$, $f(x^*) < f(y)$.
 \end{defn}
 
 \begin{defn}
@@ -119,7 +113,7 @@
 \end{defn}
 
 \begin{rmk}
-    Let $S \subseteq \R^n$, $x^*$ be an interior point of $S$, and $f: S \to \R$ be a sufficiently smooth continuous function. If $x^* \in S$ is a local minimizer, then the \emph{gradient} of $f(x^*)$ is $\vec{0}$. However, $\nabla f(x^*) = \vec{0}$ does not imply that $x^*$ is a local minimizer.
+    Let $S \subseteq \R^n$, $x^*$ be an interior point of $S$, and $f: S \to \R$ be a sufficiently smooth continuous function. If $x^* \in S$ is a local minimum, then the \emph{gradient} of $f(x^*)$ is $\vec{0}$. However, $\nabla f(x^*) = \vec{0}$ does not imply that $x^*$ is a local minimum.
 \end{rmk}
 
 \subsection{Forms of Linear Programming Problems}
@@ -761,16 +755,16 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{prop}
     Let $S \in \R^n$ be an open convex set, and let $f: S \to \R$ be a continuously differentiable convex function. Then for any $\bar{x} \in S$, the following are equivalent:
     \begin{itemize}
-        \item $\bar{x}$ is a global minimizer,
-        \item $\bar{x}$ is a local minimizer,
+        \item $\bar{x}$ is a global minimum,
+        \item $\bar{x}$ is a local minimum,
         \item $\bar{x}$ is stationary point.
     \end{itemize}
 \end{prop}
 
 \begin{proof}
-    If $\bar{x}$ is a global minimizer, then $\bar{x}$ is a local minimizer. If $\bar{x}$ is a local minimizer, then $\bar{x}$ is a stationary point. Therefore, we only need to show that stationary points are global minimizers, and the result will follow.
+    If $\bar{x}$ is a global minimum, then $\bar{x}$ is a local minimum. If $\bar{x}$ is a local minimum, then $\bar{x}$ is a stationary point. Therefore, we only need to show that stationary points are global minimums, and the result will follow.
 
-    By convexity of $f$, for all $x \in S$ we know that $f(x) \geq f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x})$ by Theorem \ref{convex-function-tangent-hyperplane}. If $\bar{x}$ is a stationary point, then $\nabla f(\bar{x})$ by definition, and so $f(x) \geq f(\bar{x})$. Then $\bar{x}$ is a global minimizer by definition.
+    By convexity of $f$, for all $x \in S$ we know that $f(x) \geq f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x})$ by Theorem \ref{convex-function-tangent-hyperplane}. If $\bar{x}$ is a stationary point, then $\nabla f(\bar{x})$ by definition, and so $f(x) \geq f(\bar{x})$. Then $\bar{x}$ is a global minimum by definition.
 \end{proof}
 
 \begin{defn}{Newton's Method}\label{newtons-method}\proofbreak
