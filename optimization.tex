@@ -693,19 +693,6 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     Therefore,
     \begin{align*}
-        \begin{bmatrix}
-            \lambda x_1 + (1 - \lambda)x_2 \\
-            \lambda y_1 + (1 - \lambda)y_2
-        \end{bmatrix} = \lambda \begin{bmatrix}
-            x_1 \\ y_1
-        \end{bmatrix} + (1-\lambda)\begin{bmatrix}
-            x_2 \\ y_2
-        \end{bmatrix} \in \epigraph(f),
-    \end{align*}
-    and so $\epigraph(f)$ is a convex set.
-
-    ($\impliedby$) Assume that $\epigraph(f)$ is a convex set. Then for any $\transposeof{[x_1, y_1]}, \transposeof{[x_2, y_2]} \in \epigraph(f)$ and $\lambda \in [0, 1]$, we know that
-    \begin{align*}
         \lambda \begin{bmatrix}
             x_1 \\ y_1
         \end{bmatrix} + (1-\lambda)\begin{bmatrix}
@@ -713,9 +700,30 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
         \end{bmatrix} = \begin{bmatrix}
             \lambda x_1 + (1 - \lambda)x_2 \\
             \lambda y_1 + (1 - \lambda)y_2
+        \end{bmatrix} \in \epigraph(f),
+    \end{align*}
+    and so $\epigraph(f)$ is a convex set.
+
+    ($\impliedby$) Assume that $\epigraph(f)$ is a convex set. Since we trivially have $f(x) \leq f(x)$ for all $x \in S$, we know that for any $x_1, x_2 \in S$ we have
+    \begin{align*}
+        \transposeof{[x_1, f(x_1)]}, \transposeof{[x_2, f(x_2)]} \in \epigraph(f).
+    \end{align*}
+    Since $\epigraph(f)$ is convex, for all $\lambda \in [0, 1]$ we also know that
+    \begin{align*}
+        \lambda \begin{bmatrix}
+            x_1 \\ f(x_1)
+        \end{bmatrix} + (1-\lambda)\begin{bmatrix}
+            x_2 \\ f(x_2)
+        \end{bmatrix} = \begin{bmatrix}
+            \lambda x_1 + (1 - \lambda)x_2 \\
+            \lambda f(x_1) + (1 - \lambda)f(x_2)
         \end{bmatrix} \in \epigraph(f).
     \end{align*}
-    Therefore, $f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda y_1 + (1 - \lambda)y_2 = \lambda f(x_1) + (1-\lambda)f(x_2)$ by the definition of $\epigraph(f)$, and so $f$ is a convex function.
+    Therefore,
+    \begin{align*}
+        f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda f(x_1) + (1-\lambda)f(x_2)
+    \end{align*}
+    by the definition of $\epigraph(f)$, and so $f$ is a convex function.
 \end{proof}
 
 \begin{thm}{Support Theorem}\label{support-theorem}\proofbreak
