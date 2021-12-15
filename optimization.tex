@@ -392,7 +392,7 @@ Row-reducing to the reduced row echelon form (while treating columns $1$, $3$, a
     \end{array}\right].
 \end{align*}
 
-Now, we \emph{pivot} to a new (and improved!) basic feasible tableau by choosing a non-basis column to turn into a basis column. We make the greediest choice by choose the $4$th column ($5$th of the overall tableau) since it has the largest improvements to our objective function per unit chance in the corresponding non-basis variable.
+Now, we \emph{pivot} to a new (and improved!) basic feasible tableau by choosing a non-basis column to turn into a basis column. We make the greediest choice by choose the $4$th column ($5$th of the overall tableau) since it has the largest improvement to our objective function per unit change in the corresponding non-basis variable.
 
 Letting $j = 4$, we choose the $k$th row (excluding the objective row on top) by \[\argmin_{k}\frac{b_k}{A_{kj}} \mathrm{ where } A_{kj} > 0.\] This gives us the $2$nd row, so we row-reduce again, replace the column whose leading term choose in the $2$nd row (which is column $3$) with column $4$. To do this, we treat column $4$ as if it was the second column while row-reducing. Our new basis columns are $1$, $4$, and $7$, giving us our second basic feasible tableau:
 \begin{align*}
@@ -431,7 +431,7 @@ is always a basic feasible solution to the Phase I problem. Therefore, we can im
 
 \subsection{Big-M Method}
 
-In the Big-M method, we do essentially the same process, but in one phase instead of two. We do this by using an objective function of
+In the Big-M method, we essentially combine the two phases of the Two-Phase method by using the objective function
 \begin{align*}
     \transposeof{c}x + M(x_{n+1} + x_{n+2} + \cdots + x_{n+m}),
 \end{align*}
