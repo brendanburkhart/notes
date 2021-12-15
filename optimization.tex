@@ -1000,8 +1000,8 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align}
     is linearly independent. Then there exists $\lambda \in \R^m$ such that
     \begin{align*}
-        \nabla f(x) + \nabla \vec{g}(x)\lambda = \vec{0} \\
-        \transposeof{\lambda}\vec{g}(x) = 0 \\
+        \nabla f(x) + \nabla \vec{g}(x)\lambda = \vec{0}, \\
+        \transposeof{\lambda}\vec{g}(x) = 0, \\
         \lambda \geq \vec{0}.
     \end{align*}
 \end{thm}
@@ -1134,3 +1134,21 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     and $\transposeof{c}x = \transposeof{b}y$. Notice that these are equivalent to the requirements for complementary slackness \ref{complementary-slackness}.
 \end{exmp}
+
+\begin{thm}\label{convex-KKT-sufficiency}
+    Let $S \subseteq \R^n$ be a non-empty open convex set, and let $f: S \to \R$ and $g_i: S \to \R$ be continuously differentiable and convex for $i = 1, \ldots, m$. Consider the linear program where we seek to minimize $f(x)$ such that $g_i(x) \leq 0$. For any $x \in S$, if there exists $\lambda \in \R^m$ such that
+    \begin{align*}
+        \nabla f(x) + \nabla \vec{g}(x)\lambda = \vec{0}, \\
+        \transposeof{\lambda}\vec{g}(x) = 0, \\
+        \lambda \geq \vec{0},
+    \end{align*}
+    then $x$ is a global minimum.
+\end{thm}
+
+\begin{rmk}
+    This theorem says that if $f$ and $g_i$ are convex and continuously differentiable, then the KKT conditions, without needing the constraint qualification, are sufficient for global optimality.
+\end{rmk}
+
+\begin{cor}
+    If $f, g_i$ are not globally convex, but have positive definite Hessians at some feasible $\bar{x}$, then $\bar{x}$ being a KKT point is sufficient for $\bar{x}$ to be a local minimum.
+\end{cor}
