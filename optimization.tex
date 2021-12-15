@@ -577,8 +577,6 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
     Therefore, $y^*$ is an optimal solution to the dual linear program by the supervisor principle \ref{supervisor-principle}.
 \end{proof}
 
-\subsection{Sensitivity Analysis}
-
 \begin{defn}
     A basic feasible solution $b$ to a linear program with basis $B$ is \emph{non-degenerate} when $B^{-1}b > \vec{0}$.
 \end{defn}
@@ -596,7 +594,7 @@ In the corresponding dual linear program, we know that
 We also have $\transposeof{c}x^* = \transposeof{y^*}b$, and so when we replace $b$ with $b'$ we get
 $\transposeof{c}{x'}^{*} = \transposeof{y^*}(b + \Delta b) = \transposeof{y^*}b + \transposeof{y^*}\Delta b$. Therefore,
 \begin{align*}
-    \frac{\transposeof{c}{x'}^{*}}{\partial b_i} = y_i^*.
+    \frac{\partial\transposeof{c}{x}^{*}}{\partial b_i} = y_i^*.
 \end{align*}
 
 \begin{defn}
