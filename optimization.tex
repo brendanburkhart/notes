@@ -689,7 +689,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{proof}\proofbreak
     ($\implies$) Assume that $f$ is convex. Then for any $\transposeof{[x_1, y_1]}, \transposeof{[x_2, y_2]} \in \epigraph(f)$ and $\lambda \in [0, 1]$, we know that
     \begin{align*}
-        f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda f(x_1) + (1 - \lambda)f(x_2) = \lambda y_1 + (1 - \lambda)y_2.
+        f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda f(x_1) + (1 - \lambda)f(x_2) \leq \lambda y_1 + (1 - \lambda)y_2.
     \end{align*}
     Therefore,
     \begin{align*}
