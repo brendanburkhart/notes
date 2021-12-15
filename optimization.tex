@@ -807,14 +807,14 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{proof}
 
 \begin{defn}{Newton's Method}\label{newtons-method}\proofbreak
-    Let $f: \R^n \to \R$ be twice continuously differentiable, and pick some $x^{(0)} \in \R^n$. For $i = 1, 2, \ldots, $ while $f(x^{(i)}) \neq 0$ (or until some other terminating condition), let
+    Let $f: \R^n \to \R$ be twice continuously differentiable, and pick some $x^{(0)} \in \R^n$. For $i = 1, 2, \ldots, $ while $\nabla f(x^{(i)}) \neq 0$ (or until some other terminating condition), let
     \begin{align*}
         x^{(i+1)} = x^{(i)} - \left(\nabla^2f(x^{(i)})\right)^{-1}\nabla f(x^{(i)}).
     \end{align*}
 \end{defn}
 
 \begin{rmk}
-    Assume that $\nabla^2f$ is constant, and that all derivatives of $f$ of order higher than two are zero. Then a local minimum occurs when $\nabla^2f(x) = 0$, and so we want $\nabla f(x^{(i+1)}) = 0$. Since the higher derivatives are zero,
+    Assume that $\nabla^2f$ is constant, and that all derivatives of $f$ of order higher than two are zero. Then a local minimum occurs when $\nabla f(x) = 0$, and so we want $\nabla f(x^{(i+1)}) = 0$. Since the higher derivatives are zero,
     \begin{align*}
         \nabla f(x^{(i+1)}) = \nabla f(x^{(i)}) + \nabla^2f(x^{(i)})(x^{(i+1)} - x^{(i)}).
     \end{align*}
@@ -829,7 +829,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 
 \begin{defn}{Steepest Descent}\label{steepest-method}\proofbreak
     Let $f: \R^n \to \R$ be continuously differentiable, and pick some $x^{(0)} \in \R^n$. 
-    For $i = 1, 2, \ldots, $ while $f(x^{(i)}) \neq 0$ (or until some other terminating condition), define
+    For $i = 1, 2, \ldots, $ while $\nabla f(x^{(i)}) \neq 0$ (or until some other terminating condition), define
     \begin{align*}
         g(\alpha) = f(x^{(i)} - \alpha\nabla f(x^{(i)})),
     \end{align*}
@@ -898,11 +898,11 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \begin{align*}
         Ax = \vec{0},\;\;\;x \geq \vec{0}\;\;\;\transposeof{\vec{1}}x = 1.
     \end{align*}
-    Note that this is equivalent to the first case from this theorem: the existence of such $x \neq 0$ implies the existence of
+    Note that this is equivalent to the first case from this theorem: the existence of $x \neq 0$ implies the existence of
     \begin{align*}
         x' = \frac{1}{\transposeof{\vec{1}}x}x,
     \end{align*}
-    and we would have $Ax' = \frac{1}{\transposeof{\vec{1}}x}\vec{0} = \vec{0}$, $x' \geq \vec{0}$, $\transposeof{\vec{1}}x' = 1$.
+    and we would have $Ax' = \frac{1}{\transposeof{\vec{1}}x}\vec{0} = \vec{0}$, $x' \geq \vec{0}$, $\transposeof{\vec{1}}x' = 1$. Conversely, if $x = \vec{0}$ then $\transposeof{\vec{1}}x = \vec{0}$, so if $\transposeof{\vec{1}}x = 1$, then $x \neq \vec{0}$.
 
     Therefore, the second case is equivalent to the negation of the first, and so exactly one of them is true for any $A$.
 \end{proof}
