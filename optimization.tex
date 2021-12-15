@@ -746,6 +746,27 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     for all $x, \bar{x} \in S$ where $x \neq \bar{x}$. 
 \end{thm}
 
+% \begin{proof}\proofbreak
+%     ($\implies$) Assume that $f$ is strictly convex, and consider some $x, \bar{x} \in S$ such that $x \neq \bar{x}$. Then since $S$ is open, we know that there exists sufficiently small $\varepsilon > 0$ such that $\bar{x} \pm \varepsilon\nabla f\left(\bar{x}\right) \in S$. Since $f$ is strictly convex, for any $0 < \lambda < 1$ we know that
+%     \begin{align*}
+%         f(\bar{x}) = f\left(\lambda\frac{\bar{x} - \varepsilon\nabla f\left(\bar{x}\right)}{2} + (1 - \lambda)\frac{\bar{x} + \varepsilon\nabla f\left(\bar{x}\right)}{2}\right) \leq \lambda f\left(\frac{\bar{x} - \varepsilon\nabla f\left(\bar{x}\right)}{2}\right) + (1- \lambda)f\left(\frac{\bar{x} + \varepsilon\nabla f\left(\bar{x}\right)}{2}\right).
+%     \end{align*}
+
+%     ($\impliedby$) Consider distinct $x_1, x_2 \in S$, and $0 < \lambda < 1$. Let $\bar{x} = \lambda x_1 + (1 - \lambda)x_2$. Then
+%     \begin{align*}
+%         f\left(x_1\right) &> f\left(\bar{x}\right) + \transposeof{\nabla f(\bar{x})}(x_1 - \bar{x}) \\
+%         f\left(x_2\right) &> f\left(\bar{x}\right) + \transposeof{\nabla f(\bar{x})}(x_2 - \bar{x}).
+%     \end{align*}
+%     It follows that
+%     \begin{align*}
+%         f\left(\bar{x}\right) + \transposeof{\nabla f(\bar{x})}\left(\lambda x_1 + (1 - \lambda)x_2 - \bar{x}\right) < \lambda f\left(x_1\right) + (1 - \lambda)f\left(x_2\right),
+%     \end{align*}
+%     and since $\lambda x_1 + (1 - \lambda)x_2 - \bar{x} = \vec{0}$, we have
+%     \begin{align*}
+%         f\left(\bar{x}\right) < \lambda f\left(x_1\right) + (1 - \lambda)f\left(x_2\right).
+%     \end{align*}
+% \end{proof}
+
 \begin{cor}
     Let $S \subseteq \R^n$ be an open convex set, and let $f: S \to \R$ be \emph{twice} continuously differentiable. Then $f$ is convex if and only if $\nabla^2f(\bar{x})$ is positive semi-definite for all $\bar{x} \in S$.
 \end{cor}
