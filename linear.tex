@@ -1643,6 +1643,17 @@ Throughout this section, we will show that a function satisfying all of these pr
     $\transposeof{\left(A_1A_2\cdots A_{k_1}A_k\right)} = \transposeof{A_k}\transposeof{A_{k-1}}\cdots \transposeof{A_2}\transposeof{A_1}$
 \end{cor}
 
+\begin{thm}
+    Let $A$ be an $m \times n$ matrix. If $A$ is full column rank, then $\transposeof{A}A$ is invertible. If $A$ is full row rank, then $A\transposeof{A}$ is invertible.
+\end{thm}
+
+\begin{proof}
+    Consider the case where $A$ is full column rank. Then for any $x \in \R^n$, we know that $Ax = \vec{0}$ if and only if $x = \vec{0}$. Then,
+    \begin{align*}
+        \transposeof{A}Ax = \vec{0} \iff \vec{0} = \transposeof{x}\transposeof{A}Ax = \transposeof{\left(Ax\right)}\left(Ax\right) \iff Ax = \vec{0}.
+    \end{align*}
+\end{proof}
+
 \begin{lemma}\label{elementary-transpose-determinant}
     Let $E$ be an elementary matrix. Then $\det E = \det\transposeof{E} \neq 0$.
 \end{lemma}
