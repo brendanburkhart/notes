@@ -677,15 +677,15 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
             x \\ y
         \end{bmatrix} \compbar x \in S, y \in R, y \geq f(x)\right\} \subseteq \R^{n+1}
     \end{align*}
-    and is denoted by $\epigraph(f)$. That is, the epigraph is all points above the graph of the function.
+    and is denoted by $\epigraphof{f}$. That is, the epigraph is all points above the graph of the function.
 \end{defn}
 
 \begin{prop}\label{epigraph-convexity}
-    Let $S \subseteq \R^n$, and consider $f: S \to \R$. Then $f$ is a convex function if and only if $\epigraph(f)$ is a convex set.
+    Let $S \subseteq \R^n$, and consider $f: S \to \R$. Then $f$ is a convex function if and only if $\epigraphof{f}$ is a convex set.
 \end{prop}
 
 \begin{proof}\proofbreak
-    ($\implies$) Assume that $f$ is convex. Then for any $\transposeof{[x_1, y_1]}, \transposeof{[x_2, y_2]} \in \epigraph(f)$ and $\lambda \in [0, 1]$, we know that
+    ($\implies$) Assume that $f$ is convex. Then for any $\transposeof{[x_1, y_1]}, \transposeof{[x_2, y_2]} \in \epigraphof{f}$ and $\lambda \in [0, 1]$, we know that
     \begin{align*}
         f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda f(x_1) + (1 - \lambda)f(x_2) \leq \lambda y_1 + (1 - \lambda)y_2.
     \end{align*}
@@ -698,15 +698,15 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
         \end{bmatrix} = \begin{bmatrix}
             \lambda x_1 + (1 - \lambda)x_2 \\
             \lambda y_1 + (1 - \lambda)y_2
-        \end{bmatrix} \in \epigraph(f),
+        \end{bmatrix} \in \epigraphof{f},
     \end{align*}
-    and so $\epigraph(f)$ is a convex set.
+    and so $\epigraphof{f}$ is a convex set.
 
-    ($\impliedby$) Assume that $\epigraph(f)$ is a convex set. Since we trivially have $f(x) \leq f(x)$ for all $x \in S$, we know that for any $x_1, x_2 \in S$ we have
+    ($\impliedby$) Assume that $\epigraphof{f}$ is a convex set. Since we trivially have $f(x) \leq f(x)$ for all $x \in S$, we know that for any $x_1, x_2 \in S$ we have
     \begin{align*}
-        \transposeof{[x_1, f(x_1)]}, \transposeof{[x_2, f(x_2)]} \in \epigraph(f).
+        \transposeof{[x_1, f(x_1)]}, \transposeof{[x_2, f(x_2)]} \in \epigraphof{f}.
     \end{align*}
-    Since $\epigraph(f)$ is convex, for all $\lambda \in [0, 1]$ we also know that
+    Since $\epigraphof{f}$ is convex, for all $\lambda \in [0, 1]$ we also know that
     \begin{align*}
         \lambda \begin{bmatrix}
             x_1 \\ f(x_1)
@@ -715,13 +715,13 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
         \end{bmatrix} = \begin{bmatrix}
             \lambda x_1 + (1 - \lambda)x_2 \\
             \lambda f(x_1) + (1 - \lambda)f(x_2)
-        \end{bmatrix} \in \epigraph(f).
+        \end{bmatrix} \in \epigraphof{f}.
     \end{align*}
     Therefore,
     \begin{align*}
         f(\lambda x_1 + (1 - \lambda)x_2) \leq \lambda f(x_1) + (1-\lambda)f(x_2)
     \end{align*}
-    by the definition of $\epigraph(f)$, and so $f$ is a convex function.
+    by the definition of $\epigraphof{f}$, and so $f$ is a convex function.
 \end{proof}
 
 \begin{thm}{Support Theorem}\label{support-theorem}\proofbreak
