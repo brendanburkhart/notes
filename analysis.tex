@@ -152,19 +152,19 @@ Two sets are equal when they contain precisely the same elements. For example, i
 
 \begin{defn}
     The complement of set $A$ with respect to some super set $U$ is
-    \[A' = \left\{x \in U \compbar x \notin A\right\}.\]
+    \[\complementof{A} = \left\{x \in U \compbar x \notin A\right\}.\]
 \end{defn}
 
 \begin{exmp}
-    Let $U = \{1, 2, 3, 4, 5\}$, and $A = \{1, 2\}$. Then $A' = \{3, 4, 5\}$.
+    Let $U = \{1, 2, 3, 4, 5\}$, and $A = \{1, 2\}$. Then $\complementof{A} = \{3, 4, 5\}$.
 \end{exmp}
 
 \begin{exmp}
-    Let $U = \Z$, and $A$ the even numbers. Then $A'$ is the set of the odd numbers.
+    Let $U = \Z$, and $A$ the even numbers. Then $\complementof{A}$ is the set of the odd numbers.
 \end{exmp}
 
 \begin{rmk}
-    $A' \union A = U$. $A' \intersection A = \emptyset$.
+    $\complementof{A} \union A = U$. $\complementof{A} \intersection A = \emptyset$.
 \end{rmk}
 
 \begin{defn}\label{set-difference}
@@ -188,8 +188,8 @@ Two sets are equal when they contain precisely the same elements. For example, i
 
 \begin{thm}{De Morgan's Laws}\label{demorgan-set}\proofbreak
     \begin{enumerate}
-        \item $(A \land B)^{c} = A^{c} \lor B^{c}$
-        \item $(A \lor B)^{c} = A^{c} \land B^{c}$
+        \item $\complementof{(A \land B)} = \complementof{A} \lor \complementof{B}$
+        \item $\complementof{(A \lor B)} = \complementof{A} \land \complementof{B}$
     \end{enumerate}
 \end{thm}
 

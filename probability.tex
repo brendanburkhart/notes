@@ -29,11 +29,11 @@
 \end{rmk}
 
 \begin{prop}
-    Let $(\Omega, P)$ be a probability space, and $A \subseteq \Omega$ an event. Then $P(A) + P(A^{c}) = 1$.
+    Let $(\Omega, P)$ be a probability space, and $A \subseteq \Omega$ an event. Then $P(A) + P(\complementof{A}) = 1$.
 \end{prop}
 
 \begin{proof}
-    Since $A$ and $A^{c}$ are mutually exclusive, $P(A) + P(A^{c}) = P(A \union A^{c}) = P(\Omega) = 1$.
+    Since $A$ and $\complementof{A}$ are mutually exclusive, $P(A) + P(\complementof{A}) = P(A \union \complementof{A}) = P(\Omega) = 1$.
 \end{proof}
 
 \begin{cor}
@@ -241,14 +241,14 @@
 \end{proof}
 
 \begin{prop}
-    If $A$ and $B$ are independent events, then $A$ and $B^{c}$ are independent.
+    If $A$ and $B$ are independent events, then $A$ and $\complementof{B}$ are independent.
 \end{prop}
 
-\begin{proof} Since $B$ and $B^{c}$ are necessarily mutually exclusive and exhaust $A$, we have $A = (A \intersection B) \disjointunion (A \intersection B^{c})$. Furthermore, $P(B^{c}) = 1- P(B)$. Then
+\begin{proof} Since $B$ and $\complementof{B}$ are necessarily mutually exclusive and exhaust $A$, we have $A = (A \intersection B) \disjointunion (A \intersection \complementof{B})$. Furthermore, $P(\complementof{B}) = 1- P(B)$. Then
     \begin{align}
-        P(A \intersection B^{c}) &+ P(A \intersection B) = P(A) \\
-        P(A \intersection B^{c}) &+ P(A)P(B) = P(A) \\
-        P(A \intersection B^{c}) &= P(A)\left(1 - P(B)\right).
+        P(A \intersection \complementof{B}) &+ P(A \intersection B) = P(A) \\
+        P(A \intersection \complementof{B}) &+ P(A)P(B) = P(A) \\
+        P(A \intersection \complementof{B}) &= P(A)\left(1 - P(B)\right).
     \end{align}
 \end{proof}
 
@@ -470,21 +470,21 @@
         &= \lim_{n \to \infty}\sum_{i}^{n}P(F_i) = \lim_{n \to \infty} P\left(\bigsqcup_{i}^{n}F_i\right) = \lim_{n \to \infty} P\left(\bigcup_{i}^{n}E_i\right) = \lim_{n \to \infty}P(E_n).
     \end{align*}
 
-    Now consider the case where $E_1 \supseteq E_2 \cdots$. Notice that $E_1^{c} \subseteq E_2^{c} \cdots$, so $E_i^{c}$ forms an increasing sequence of events. Therefore,
+    Now consider the case where $E_1 \supseteq E_2 \cdots$. Notice that $\complementof{E_1} \subseteq \complementof{E_2} \cdots$, so $\complementof{E_i}$ forms an increasing sequence of events. Therefore,
     \begin{align*}
-        \lim_{n \to \infty}P(E_n^{c}) = P\left(\lim_{n \to \infty}E_n^{c}\right) = P\left(\bigcup_{i}^{\infty}E_i^{c}\right).
+        \lim_{n \to \infty}P(\complementof{E_n}) = P\left(\lim_{n \to \infty}\complementof{E_n}\right) = P\left(\bigcup_{i}^{\infty}\complementof{E_i}\right).
     \end{align*}
     Since
     \begin{align*}
-        \bigcup_{i}^{\infty}E_i^{c} = \left(\bigcap_{i}^{\infty}E_i\right)^{c},
+        \bigcup_{i}^{\infty}\complementof{E_i} = \complementof{\left(\bigcap_{i}^{\infty}E_i\right)},
     \end{align*}
     it follows that
     \begin{align*}
-        \lim_{n \to \infty}P(E_n^{c}) = P\left(\left(\bigcap_{i}^{\infty}E_i\right)^{c}\right) = 1 - P\left(\bigcap_{i}^{\infty}E_i\right).
+        \lim_{n \to \infty}P(\complementof{E_n}) = P\left(\complementof{\left(\bigcap_{i}^{\infty}E_i\right)}\right) = 1 - P\left(\bigcap_{i}^{\infty}E_i\right).
     \end{align*}
-    Since $1 - P(E_i) = P(E_i^{c})$, we then have
+    Since $1 - P(E_i) = P(\complementof{E_i})$, we then have
     \begin{align*}
-        \lim_{n \to \infty}P(E_n^{c}) = \lim_{n \to \infty}\left(1 - P(E_n)\right) = 1 - \left(\lim_{n \to \infty}P(E_n)\right).
+        \lim_{n \to \infty}P(\complementof{E_n}) = \lim_{n \to \infty}\left(1 - P(E_n)\right) = 1 - \left(\lim_{n \to \infty}P(E_n)\right).
     \end{align*}
     It follows that
     \begin{align*}
@@ -1553,15 +1553,15 @@ We can also find the join distribution of multiple ordered random variables. For
 
 \begin{prop}\label{set-infimum-supremum-complement}
     \begin{align*}
-        \liminf_{n \to \infty}E_n = \left(\limsup_{n \to \infty}E_n^{c}\right)^{c}.
+        \liminf_{n \to \infty}E_n = \complementof{\left(\limsup_{n \to \infty}\complementof{E_n}\right)}.
     \end{align*}
 \end{prop}
 
 \begin{proof}
     By extension of De Morgan's laws \ref{demorgan-set},
     \begin{align*}
-        \liminf_{n \to \infty}E_n &= \bigunion_{n \geq 1}\bigintersection_{j \geq n}E_j = \bigunion_{n \geq 1}\left(\bigunion_{j \geq n}E_j^{c}\right)^{c} \\
-        &= \left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j^{c}\right)^{c} = \left(\limsup_{n \to \infty}E_n^{c}\right)^{c}.
+        \liminf_{n \to \infty}E_n &= \bigunion_{n \geq 1}\bigintersection_{j \geq n}E_j = \bigunion_{n \geq 1}\complementof{\left(\bigunion_{j \geq n}\complementof{E_j}\right)} \\
+        &= \complementof{\left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}\complementof{E_j}\right)} = \complementof{\left(\limsup_{n \to \infty}\complementof{E_n}\right)}.
     \end{align*}
 \end{proof}
 
@@ -1621,14 +1621,14 @@ We can also find the join distribution of multiple ordered random variables. For
 \begin{proof}
     We want to show that $P\left(\limsup_{n \to \infty}E_n\right) = 1$, or equivalently that $1 - P\left(\limsup_{n \to \infty}E_n\right) = 0$. Then
     \begin{align*}
-        1 - P\left(\limsup_{n \to \infty}E_n\right) &= 1 - P\left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j\right) = P\left(\left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j\right)^{c}\right) \\
-        &= P\left(\bigunion_{n \geq 1}\bigintersection_{j \geq n}E_j^{c}\right) = \lim_{n\to\infty}P\left(\bigintersection_{j \geq n}E_j^{c}\right).
+        1 - P\left(\limsup_{n \to \infty}E_n\right) &= 1 - P\left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j\right) = P\left(\complementof{\left(\bigintersection_{n \geq 1}\bigunion_{j \geq n}E_j\right)}\right) \\
+        &= P\left(\bigunion_{n \geq 1}\bigintersection_{j \geq n}\complementof{E_j}\right) = \lim_{n\to\infty}P\left(\bigintersection_{j \geq n}\complementof{E_j}\right).
     \end{align*}
     Since $\bigintersection_{j \geq n}$ forms a non-decreasing sequence, that last equality follows from the continuity of probability \ref{continuity-of-probability}.
     
-    Next, we will show that $P\left(\bigintersection_{j \geq n}E_j^{c}\right) = 0$ for all $n$. For any $N \geq n$, $P\left(\bigintersection_{j \geq n}E_j^{c}\right) \leq P\left(\bigintersection_{j=n}^{N}E_j^{c}\right)$. Then by the independence of $E_j$, $E_j^{c}$ are independent, and so
+    Next, we will show that $P\left(\bigintersection_{j \geq n}\complementof{E_j}\right) = 0$ for all $n$. For any $N \geq n$, $P\left(\bigintersection_{j \geq n}\complementof{E_j}\right) \leq P\left(\bigintersection_{j=n}^{N}\complementof{E_j}\right)$. Then by the independence of $E_j$, $\complementof{E_j}$ are independent, and so
     \begin{align*}
-        P\left(\bigintersection_{j=n}^{N}E_j^{c}\right) &= \prod_{j=n}^{N}P\left(E_j^{c}\right) = \prod_{j=n}^{N}\left(1 - P\left(E_j\right)\right).
+        P\left(\bigintersection_{j=n}^{N}\complementof{E_j}\right) &= \prod_{j=n}^{N}P\left(\complementof{E_j}\right) = \prod_{j=n}^{N}\left(1 - P\left(E_j\right)\right).
     \end{align*}
     Next, since
     \begin{align*}
@@ -1640,7 +1640,7 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
     We therefore have
     \begin{align*}
-        P\left(\bigintersection_{j \geq n}E_j^{c}\right) \leq \lim_{n\to\infty}\exp\left(-\sum_{j=n}^{N}P(E_j)\right) = 0
+        P\left(\bigintersection_{j \geq n}\complementof{E_j}\right) \leq \lim_{n\to\infty}\exp\left(-\sum_{j=n}^{N}P(E_j)\right) = 0
     \end{align*}
     since
     \begin{align*}
@@ -1648,7 +1648,7 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
     Therefore,
     \begin{align*}
-        \lim_{n\to\infty}P\left(\bigintersection_{j \geq n}E_j^{c}\right) = \lim_{n\to\infty}\left(0\right) = 0,
+        \lim_{n\to\infty}P\left(\bigintersection_{j \geq n}\complementof{E_j}\right) = \lim_{n\to\infty}\left(0\right) = 0,
     \end{align*}
     and so
     \begin{align*}
@@ -1719,15 +1719,15 @@ We can also find the join distribution of multiple ordered random variables. For
     \end{align*}
     Therefore,
     \begin{align*}
-        1 = 1 - P\left(\bigunion_{k\to\infty}D_{1/k}\right) = P\left(\bigintersection_{k\to\infty}D_{1/k}^{c}\right).
+        1 = 1 - P\left(\bigunion_{k\to\infty}D_{1/k}\right) = P\left(\bigintersection_{k\to\infty}\complementof{D_{1/k}}\right).
     \end{align*}
     By Proposition \ref{set-infimum-supremum-complement},
     \begin{align*}
-        D_{1/k}^{c} = \liminf_{n\to\infty}\abs{\frac{S_n}{n}} < \frac{1}{k},
+        \complementof{D_{1/k}} = \liminf_{n\to\infty}\abs{\frac{S_n}{n}} < \frac{1}{k},
     \end{align*}
     and so
     \begin{align*}
-        1 &= P\left(\bigintersection_{k\to\infty}D_{1/k}^{c}\right) = P\left(\bigintersection_{k\to\infty}\liminf_{n\to\infty}\abs{\frac{S_n}{n}} < \frac{1}{k}\right) \\
+        1 &= P\left(\bigintersection_{k\to\infty}\complementof{D_{1/k}}\right) = P\left(\bigintersection_{k\to\infty}\liminf_{n\to\infty}\abs{\frac{S_n}{n}} < \frac{1}{k}\right) \\
         &= P\left(\lim_{n\to\infty}\abs{\frac{S_n}{n}} = 0\right),
     \end{align*}
     and so finally we have
