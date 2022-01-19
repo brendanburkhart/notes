@@ -2175,6 +2175,14 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
     Note that $p_i$ is the algebraic multiplicity of $\lambda_i$, and that $n = p_1 + \cdots + p_k$. Assembling bases for $V_{\lambda_1}, \ldots, V_{\lambda_k}$, we then have $n$ eigenvectors $v_1, \ldots, v_n$. It only remains to show that these eigenvectors are linearly independent. Consider some $c_1, \ldots, c_n \in F$ such that $c_1v_1 + \cdots + c_nv_n = \vec{0}$. Group $v_i$ by corresponding eigenvalue, and take the resulting linear combinations to be $w_1, \ldots, w_k$. Therefore, $w_1 + \cdots + w_k = \vec{0}$. By Lemma \ref{eigen-subspace}, $w_i \in V_{\lambda_i}$, and so by Theorem \ref{distinct-eigenvalues-linear-independence} it must be that each $w_i = \vec{0}$. Since $w_i$ is a linear combination of a basis for $V_{\lambda_i}$, we necessarily have $c_1 = c_2 = \cdots = c_n = 0$. Therefore, $v_1, \ldots, v_n$ are linearly independent and so $f$ must be diagonalizable.
 \end{proof}
 
+\begin{thm}
+    Let $A$ be an invertible matrix with eigenvectors $v_1, \ldots, v_n$ with corresponding eigenvalues $\lambda_1, \ldots, \lambda_n$. Then $A^{-1}$ has the same eigenvectors, with $v_i$ have corresponding eigenvalue $1/\lambda_i$.
+\end{thm}
+
+\begin{proof}
+    If $Av = \lambda v$, then $A^{-1}Av = A^{-1}\lambda v$, so $v/\lambda = A^{-1}v$.
+\end{proof}
+
 \section{Powers of a Matrix}
 
 Let $f: V \to V$ be a linear transformation. Define $f^m = f \circ f^{m-1}$ for $m > 1$. For any eigenvector $v$ with corresponding eigenvalue $\lambda$, we have $f^m(v) = \lambda^{m}v$. Now consider a diagonalizable matrix $A = PDP^{-1}$. Note that $A^2 = (PDP^{-1})(PDP^{-1}) = PD(P^{-1}P)DP^{-1} = PD^2P^{-1}$. In general, \[A^m = AA^{m-1} = (PDP^{-1})(PD^{m-1}P^{-1}) = PD(P^{-1}P)D^{m-1}P^{-1}) = PD^mP^{-1}.\] Now consider $D^m$. For every eigenvector $v$ with corresponding eigenvalue $\lambda$, we have $D^mv = \lambda^mv$, so
