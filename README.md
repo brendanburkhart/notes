@@ -10,6 +10,7 @@ Contains my notes from:
 - Vector Calculus
 - Intro to Optimization
 - Intro to Probability
+- Intro to Statistics
 - Signals and Systems
 - Mathematics of Images and Shapes
 

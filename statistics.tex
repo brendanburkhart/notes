@@ -1,0 +1,38 @@
+\chapter{Statistics}
+\label{ch:statistics}
+
+\section{Simple Random Sampling}
+
+Consider a finite population of $N$ distinct objects, each with two associated measurements $x$ and $y$. We denote the $k$th object by $z_k = ((x_k, y_k), k)$. Let $\underline{\pi}(z_k) = (x_k, y_k)$, let $\pi_x(z_k) = x_k$, let $\pi_y(z_k) = y_k$, and finally let $\pi_{\mathrm{ind}}(z_k) = k$.
+
+\subsection{Population Parameters}
+
+Population parameters are \emph{deterministic} functions of the measurements associated with objects in a population.
+
+For example, the population mean of the $y$-measurements is
+\begin{align*}
+    \mu_y = \frac{1}{N}\sum_{k=1}^{N}\pi_{y}(z_k),
+\end{align*}
+and the population variance of the $y$-measurements is
+\begin{align*}
+    \sigma_{y}^2 = \frac{1}{N}\sum_{k=1}^{N}\left(y_k - \mu_y\right)^2.
+\end{align*}
+
+The population covariance between the $x$ and $y$ measurements is
+\begin{align*}
+    \sigma_{xy} = \frac{1}{N}\sum_{k=1}^{N}\left(x_k-\mu_x\right)\left(y_k-\mu_y\right).
+\end{align*}
+
+\subsection{Sample Parameters}
+
+Suppose we have a finite sample $Z_1, \ldots, Z_n$ of the entire population. Functions of such samples are known as \emph{statistics}, and will be used to construct useful \emph{estimators} of our population parameters. For example, the \emph{sample mean} can be used to estimate the population mean, and is defined by
+\begin{align*}
+    \bar{X} = \frac{1}{n}\sum_{k=1}^{n}\pi_{x}(Z_k),\;\; \bar{Y} = \frac{1}{n}\sum_{k=1}^{n}\pi_{y}(Z_k).
+\end{align*}
+
+What do we mean by \emph{useful estimators}? Suppose $\theta$ is a population parameter, and $\hat{\theta}$ is an estimator for $\theta$. We say that
+\begin{itemize}
+    \item $\hat{\theta}$ is \emph{unbiased} for $\theta$ if $E(\hat{\theta}) = \theta$,
+    \item $\hat{\theta}$ is \emph{consistent} for $\theta$ if for all $\varepsilon > 0$, the limit as $n$ approaches infinity of $P\left(\abs{\hat{\theta} - \theta} > \varepsilon\right)$ is zero.
+\end{itemize}
+We can then define useful estimators to simply be those that are unbiased and consistent.
