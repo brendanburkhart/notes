@@ -1,0 +1,53 @@
+\chapter{Numerical Analysis}
+\label{ch:numerical}
+
+\section{Floating Point Approximations}
+
+Given $x \in \R$, and a floating point representation $\hat{x}$, we define the relative error to be $r = \frac{\abs{\hat{x}-x}}{x}$. We then define the \emph{significant figures} of $\hat{x}$ to be maximum $m \in \N$ such that $10^{m}r \leq 5$.
+
+Consider a method to calculate from value. Let
+\begin{itemize}
+    \item $x$ be the input,
+    \item $\hat{x}$ be the approximated input,
+    \item $f(x)$ be the correct value of the output,
+    \item $\hat{f}$ approximate of $f$.
+\end{itemize}
+Then the total error is
+\begin{align*}
+    \hat{f}\left(\hat{x}\right) - f(x) = \underbrace{\hat{f}\left(\hat{x}\right) - f(\hat{x})}_{\textrm{Computational error}} + \overbrace{f\left(\hat{x}\right) - f(x)}^{\textrm{Propagated error}}.
+\end{align*}
+
+\begin{exmp}
+    Consider a $\mathbb{C}^2$ function $f: \R \to \R$. Using a small value for $h$, we can approximate the derivative of $f$ as
+    \begin{align*}
+        D_{h}f(x) = \frac{f(x + h) - f(x)}{h}.
+    \end{align*}
+
+    The computational error in this approximation is
+    \begin{align*}
+        D_{h}f(x) - f'(x).
+    \end{align*}
+\end{exmp}
+
+\begin{exmp}
+    Consider a function $f: \R \times \R \to \R$ given by $f(x, y) = xy$. If the approximation error for $x$ and $y$ is $\delta_x$ and $\delta_y$ respectively, then
+    \begin{align*}
+        \hat{x} &= x + \delta_x, \\
+        \hat{y} &= y + \delta_y.
+    \end{align*}
+
+    Therefore, the propagated error is simply
+    \begin{align*}
+        f\left(\hat{x}, \hat{y}\right) - f(x, y) &= x\delta_y + y\delta_x + \delta_x\delta_y,
+    \end{align*}
+    and so the relative propagated error is
+    \begin{align*}
+        \frac{f\left(\hat{x}, \hat{y}\right) - f(x, y)}{f(x, y)} = \frac{x\delta_y + y\delta_x + \delta_x\delta_y}{xy} = \frac{\delta_x}{x} + \frac{\delta_y}{y} + \frac{\delta_x\delta_y}{xy}.
+    \end{align*}
+    Under the reasonable assumption that $\delta_x \ll x$ and $\delta_y \ll y$, the term $\frac{\delta_x\delta_y}{xy}$ is negligible, and so the relative error of $xy$ is roughly $R(x) + R(y)$.
+\end{exmp}
+
+\begin{defn}
+    A mathematical problem is \emph{well-posed} or \emph{stable} when a solution \emph{existts}, is \emph{unique}, and is \emph{continuous} with respect to the input.
+\end{defn}
+
