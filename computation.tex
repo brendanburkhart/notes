@@ -1,0 +1,95 @@
+\chapter{Computation Theory}
+\label{ch:computation}
+
+\section{Finite Automata}
+
+\begin{defn}
+    An \emph{alphabet} is a non-empty set whose elements are referred to as \emph{symbols}. \emph{Strings} (or \emph{words}) over a given alphabet are finite sequences of symbols from the alphabet. A \emph{language} is a set of strings over an alphabet.
+\end{defn}
+
+\begin{rmk}
+    Alphabets and languages may be non-finite, but strings are generally considered to only include finite sequences. The empty string will be denoted by $\emptystring$.
+\end{rmk}
+
+\begin{defn}
+    Let $\Sigma$ be an alphabet. Then the language consisting of all strings over $\Sigma$ of length $n$ is denoted by $\Sigma^{n}$. The \emph{Kleene closure} of $\Sigma$ is
+    \begin{align*}
+        \Sigma^{*} = \bigunion_{i\in\N}\Sigma^{i}.
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    A \emph{finite automata} is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
+    \begin{itemize}
+        \item $Q$ is a finite set of \emph{states},
+        \item $\Sigma$ is an alphabet,
+        \item $\delta: Q \times \Sigma \to Q$ is the \emph{transition function},
+        \item $q_0 \in Q$ is the \emph{start state},
+        \item $F \subseteq Q$ are the \emph{accept states}.
+    \end{itemize}
+    An automata starts in state $q_0$, and is given an input consisting over a string over $\Sigma$. For each symbol $s$ in the input, the automata moves from state $q$ to state $\delta(q, s)$. Once the end of the input is reached, if the state $q$ of the automata is an accept state --- that is, $q \in F$, then the automata is said to have \emph{accepted} the input.
+\end{defn}
+
+\begin{defn}
+    The \emph{language accepted by} a finite automata $M$ is a language $A$ consisting of all strings over $\Sigma$ that are accepted by the finite automata. We denote this by $L(M) = A$. A \emph{regular language} is any language accepted by some finite automata.
+\end{defn}
+
+\begin{rmk}
+    Finite automata can be represented as a graph, where states are represented as nodes, and transitions are edges between states, labelled by the symbol that triggers the transition. When graphically representing a finite automata as a graph, accept states may be represented as double-circled nodes.
+\end{rmk}
+
+\begin{exmp}
+    \begin{figure}[ht!]
+        \centering
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=2 cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20}
+        ]
+            \node[initial, state]   (S) {$q_0$};
+            \node[state]            (0) [right of=S] {$q_1$};
+            \node[state]            (00) [right of=0] {$q_2$};
+            \node[state, accepting] (001) [right of=00] {$q_3$};
+    
+            \path[->] (S)   edge [above, bend left]     node [align=center] {0} (0)
+                      (S)   edge [loop below]           node [align=center] {1} ()
+                      (0)   edge [above, bend left]     node [align=center] {0} (00)
+                            edge [above, bend left]     node [align=center] {1} (S)
+                      (00)  edge [loop above]           node [align=center] {0} ()
+                            edge [above, bend left]     node [align=center] {1} (001)
+                      (001) edge [below, bend left]     node [align=center] {0} (0)
+                            edge [above, bend right=60] node [align=center] {1} (S);
+        \end{tikzpicture}
+        \caption{Example finite automata}
+        \label{fig:example-finite-automata}
+    \end{figure}
+
+    In the finite automata shown in Figure \ref{fig:example-finite-automata}, $Q = \left\{q_0, q_1, q_2, q_3\right\}$, $\Sigma = \left\{0, 1\right\}$, $F = \{q_3\}$, and $\delta$ is
+    \begin{center}
+        \begin{tabular}{|c||c|c|}
+            \hline
+            \thead{$\delta$} & \thead{$0$}    & \thead{$1$} \\
+            \hline\hline
+            \textsc{$q_0$}   & \textsc{$q_1$} & \textsc{$q_0$} \\
+            \hline
+            \textsc{$q_1$}   & \textsc{$q_2$} & \textsc{$q_0$} \\
+            \hline
+            \textsc{$q_2$}   & \textsc{$q_2$} & \textsc{$q_3$} \\
+            \hline
+            \textsc{$q_3$}   & \textsc{$q_1$} & \textsc{$q_0$} \\
+            \hline
+        \end{tabular}.
+    \end{center}
+
+    This language accepted by this finite automata is the set of all binary strings which end with \texttt{001}. We can use an inductive proof on the length of the longest input to prove this.
+\end{exmp}
+
+\begin{thm}
+    Let $A$ and $B$ be regular languages, then $A \union B$ and $A \intersection B$ are also regular languages.
+\end{thm}
+
+\begin{proof}
+    Let $\Sigma$ be the union of the alphabets of $A$ and $B$. Since $A$ and $B$ are regular, we know that there exists finite automata $M_A = \left(Q_1, \Sigma, \delta_1, s_1, F_1\right)$ and $M_B = \left(Q_2, \Sigma, \delta_2, s_2, F_2\right)$. Now we construct a new finite automata that runs $M_A$ and $M_B$ in parallel. To do this, consider the finite automata $M = \left(Q, \Sigma, \delta, s, F\right)$, where $Q = Q_1 \times Q_2$, $s = (s_1, s_2)$, and  $\delta: (Q_1 \times Q_2) \times \Sigma \to Q_1 \times Q_2$ is defined by $\delta\left((p_1, p_2), a\right) = \left(\delta_1\left(p_1, a\right), \delta_2\left(p_2, a\right)\right)$.
+    
+    If $F = F_1 \times F_2$, then $M$ accepts precisely the strings accepted by both $M_A$ and $M_B$ --- that is, $L(M) = A \intersection B$. If instead $F = \left(F_1 \times Q_2\right) \union \left(Q_1 \times F_2\right)$, then $M$ accepts the strings accepted by at least one of $M_A$ and $M_B$ --- that is, $L(M) = A \union B$.
+\end{proof}
