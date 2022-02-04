@@ -75,11 +75,6 @@ Then the total error is
     \begin{align*}
         \varepsilon_{y} \approx \sum_{i=1}^{d}\frac{\partial f}{\partial x_i}(x)\frac{x_i}{f(x)}\varepsilon_{x_i}.
     \end{align*}
-
-    Also
-    \begin{align*}
-        K_{y,x_i} \ll \sup_{x}\abs{\frac{x_i}{f(x)}\frac{\partial f(x)}{\partial x_i}}.
-    \end{align*}
 \end{defn}
 
 \begin{exmp}
@@ -87,4 +82,27 @@ Then the total error is
     \begin{align*}
         K_f(x_1, x_2) = \abs{\frac{x_1}{x_1 - x_2}} + \abs{\frac{x_2}{x_1 - x_2}}.
     \end{align*}
+\end{exmp}
+
+\begin{defn}
+    Let $f(x)$ be a function with condition number $K_f$, and let $x_y = g(x_n)$ be an iterative algorithm, where $K_n(y_n)$ is the condition number of $g(x_n)$. Then we define
+    \begin{align*}
+        \hat{K}(y) = \sup_{n \leq N}K_n(y_n),
+    \end{align*}
+    and say that an algorithm is \emph{numerically stable} when
+    \begin{align*}
+        \hat{K}(y) \lesssim 2K_f.
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    The transformation of an ill-posed problem into a well-posed one is \emph{regularization}.
+\end{defn}
+
+\begin{exmp}
+    Consider a linear system $Ax = b$, where $\det A = 0$. If $b$ is in the null space of $A$, then there are infinite solutions, and otherwise there are no solutions. Therefore it is not a well-posed problem. However, if we consider
+    \begin{align*}
+        \min_{x}\norm{Ax - b},
+    \end{align*}
+    this clearly always has a solution. Furthermore, when a solution exists to $Ax - b$ it will coincide.
 \end{exmp}
