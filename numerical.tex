@@ -106,3 +106,39 @@ Then the total error is
     \end{align*}
     this clearly always has a solution. Furthermore, when a solution exists to $Ax - b$ it will coincide.
 \end{exmp}
+
+\begin{defn}
+    Consider functions $f(h)$ and $g(h)$ such that $g(h)$ goes to zero as $h$ does. We use Landau big-$O$ notation and say that
+    \begin{align*}
+        f(h) = L + O(g(h))
+    \end{align*}
+    if there exists $h_0$ and $C$ such that $\abs{f(h) - L} < Cg(h)$ for all $\abs{h} < h_0$.
+\end{defn}
+
+\begin{defn}
+    Consider an iterative algorithm $f_n(x_n)$ to compute a function $f(x)$. We say that it is a \emph{$p$th order approximation} when
+    \begin{align*}
+        \abs{f_n(x_n) - f(x)} = O\left(\frac{1}{n^p}\right).
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    When we increase $n$ (the number of iterations used) by a factor of ten, a $p$th order approximation will gain $p$ significant figures.
+\end{rmk}
+
+\begin{defn}
+    Consider an iterative algorithm $f_n(x_n)$ to compute a function $f(x)$. If
+    \begin{align*}
+        \lim_{n\to\infty}\frac{\abs{f_{n+1}(x_{n+1}) - f(x)}}{\abs{f_{n}(x_{n}) - f(x)}^{p}} = \mu
+    \end{align*}
+    for some $\mu > 0$, we say that $f_n$ converges with rate of order $p$.
+\end{defn}
+
+\begin{rmk}
+    When an algorithm converges with a rate of order $p$, we say that we have
+    \begin{itemize}
+        \item \emph{linear convergence} if $p = 1$ and $\mu < 1$,
+        \item \emph{quadratic convergence} if $p = 2$,
+        \item \emph{cubic convergence} if $p = 3$.
+    \end{itemize}
+\end{rmk}
