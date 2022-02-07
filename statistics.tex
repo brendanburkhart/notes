@@ -30,9 +30,88 @@ Suppose we have a finite sample $Z_1, \ldots, Z_n$ of the entire population. Fun
     \bar{X} = \frac{1}{n}\sum_{k=1}^{n}\pi_{x}(Z_k),\;\; \bar{Y} = \frac{1}{n}\sum_{k=1}^{n}\pi_{y}(Z_k).
 \end{align*}
 
+\begin{defn}
+    An \emph{estimator} is a deterministic function of the sample data.
+\end{defn}
+
 What do we mean by \emph{useful estimators}? Suppose $\theta$ is a population parameter, and $\hat{\theta}$ is an estimator for $\theta$. We say that
 \begin{itemize}
     \item $\hat{\theta}$ is \emph{unbiased} for $\theta$ if $E(\hat{\theta}) = \theta$,
     \item $\hat{\theta}$ is \emph{consistent} for $\theta$ if for all $\varepsilon > 0$, the limit as $n$ approaches infinity of $P\left(\abs{\hat{\theta} - \theta} > \varepsilon\right)$ is zero.
 \end{itemize}
 We can then define useful estimators to simply be those that are unbiased and consistent.
+
+\begin{prop}
+    Let $Z_1, \ldots, Z_n$ be a finite sample drawn uniformly at random \emph{with replacement} from the entire population. Then for any $k_1, \ldots, k_n \in {1, \ldots, N}$,
+    \begin{align*}
+        P\left(Z_1=z_{k_1}, \ldots, Z_n=z_{k_n}\right) = \prod_{i=1}^{n}P(Z_{i}=z_{k_i}) = \left(\frac{1}{N}\right)^{n}.
+    \end{align*}
+    The draws are independent and identically distributed.
+\end{prop}
+
+\begin{prop}
+    Now consider instead $Z_1, \ldots, Z_n$ drawn uniformly at random \emph{without replacement} from the entire population. Then for any distinct $k_1, \ldots, k_n \in {1, \ldots, N}$, where $n \leq N$,
+    \begin{align*}
+        P\left(Z_1=z_{k_1}, \ldots, Z_n=z_{k_n}\right) = \frac{(N-n)!}{N!}.
+    \end{align*}
+    The draws are exchangeable but dependent.
+\end{prop}
+
+\begin{rmk}
+    We can view draws without replacement from a population with $N$ objects as being deterministic viewing of a specific permutation of the population.
+\end{rmk}
+
+\begin{exmp}
+    Consider some $f$, and let
+    \begin{align*}
+        \beta = \frac{1}{N}\sum_{k=1}^{N}f(z_k),
+    \end{align*}
+    and a corresponding estimator
+    \begin{align*}
+        \frac{1}{n}\sum_{i=1}^{n}f(Z_i).
+    \end{align*}
+    Note that this estimator is unbiased by $\mathcal{LOTUS}$ \ref{lotus}.
+\end{exmp}
+
+\begin{prop}
+    If we are sampling $X_1, \ldots, X_n$ with replacement, then $\varianceof{\bar{X}} = \frac{\sigma_x^2}{n}$.
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        \varianceof{\bar{X}} &= \varianceof{\frac{1}{n}\sum_{k=1}^{n}\pi_{x}(Z_k)} = \sum_{i=1}^{n}\sum_{j=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_j} \\
+        &= \sum_{i=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_i} + 2\sum_{i=1}^{n}\sum_{j=i+1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_j} \\
+        &= \sum_{i=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_i} + 2\sum_{i=1}^{n}\sum_{j=i+1}^{n}\frac{1}{n^2}\left(0\right) \\
+        &= \frac{1}{n^2}\sum_{i=1}^{n}\varianceof{X_i} = \frac{1}{n}\varianceof{X_i} = \frac{\sigma_x^2}{n}.
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    We have seen that $\bar{X}$ is unbiased, and it must be consistent by the Weak Law of Large Numbers \ref{wlln}.
+\end{rmk}
+
+\begin{prop}
+    If we are sampling $X_1, \ldots, X_n$ without replacement, then $\varianceof{\bar{X}} = \frac{\sigma_x^2}{n} + \frac{\covarianceof{X_1}{X_2}}{n}\left(n-1\right)$.
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        \varianceof{\bar{X}} &= \varianceof{\frac{1}{n}\sum_{k=1}^{n}\pi_{x}(Z_k)} = \sum_{i=1}^{n}\sum_{j=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_j} \\
+        &= \sum_{i=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_i} + 2\sum_{i=1}^{n}\sum_{j=i+1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_j} \\
+        &= \sum_{i=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_i} + \frac{\covarianceof{X_1}{X_2}}{n^2}\left(n^2 - n\right) \\
+        &= \frac{\sigma_x^2}{n} + \frac{\covarianceof{X_1}{X_2}\left(n-1\right)}{n}.
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    \begin{align*}
+        \covarianceof{X_1}{X_2} = -\frac{\sigma_x^2}{n-1}
+    \end{align*}
+\end{cor}
+
+\begin{proof}
+    We know that when drawing without replacement, if $n = N$ then $\varianceof{\bar{X}} = 0$. Therefore,
+    \begin{align*}
+        0 = \frac{\sigma_x^2}{n} + \frac{\covarianceof{X_1}{X_2}\left(n-1\right)}{n}.
+    \end{align*}
+\end{proof}
