@@ -105,13 +105,35 @@ We can then define useful estimators to simply be those that are unbiased and co
 
 \begin{cor}
     \begin{align*}
-        \covarianceof{X_1}{X_2} = -\frac{\sigma_x^2}{n-1}
+        \covarianceof{X_1}{X_2} = -\frac{\sigma_x^2}{N-1}
     \end{align*}
 \end{cor}
 
 \begin{proof}
     We know that when drawing without replacement, if $n = N$ then $\varianceof{\bar{X}} = 0$. Therefore,
     \begin{align*}
-        0 = \frac{\sigma_x^2}{n} + \frac{\covarianceof{X_1}{X_2}\left(n-1\right)}{n}.
+        0 = \frac{\sigma_x^2}{N} + \frac{\covarianceof{X_1}{X_2}\left(N-1\right)}{N}.
     \end{align*}
+\end{proof}
+
+\begin{cor}
+    \begin{align*}
+        \varianceof{\bar{X}} = \frac{\sigma_x^2}{n}\left(\frac{N-n}{N-1}\right).
+    \end{align*}
+\end{cor}
+
+\begin{prop}
+    If we are sampling $X_1, \ldots, X_n$ without replacement, then $\hat{\sigma}_x^2$ is a biased estimator.
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        \hat{\sigma}_x^2 = \frac{1}{n}\sum_{i=1}^{n}\left(X_i - \bar{X}\right)^{2} = \frac{1}{n}\left[\sum_{i=1}^{n}X_i^2 - 2\sum_{i=1}^{n}X_i\bar{X} + \sum_{i=1}^{n}\bar{X}^{2}\right] = \frac{1}{n}\sum_{i=1}^{n}X_i^2 - \bar{X}^2.
+    \end{align*}
+    \begin{align*}
+        \expectationof{\hat{\sigma}_x^2} &= \expectationof{\frac{1}{n}\sum_{i=1}^{n}X_i^2} - \expectationof{\bar{X}^2} = \frac{n\left(\sigma_x^2 + \mu_x^2\right))}{n} - \left(\varianceof{\bar{X}} + \mu_x^2\right) \\
+        &= \left(\sigma_x^2 + \mu_x^2\right) - \frac{\sigma_x^2}{n}\left(\frac{N-n}{N-1}\right) - \mu_x^2 = \sigma_x^2 - \frac{\sigma_x^2}{n}\left(\frac{N-n}{N-1}\right) \\
+        &= \sigma_x^2\left[\frac{N\left(n-1\right)}{n\left(N-1\right)}\right].
+    \end{align*}
+    Clearly $\expectationof{\hat{\sigma}_x^2} \neq \sigma_x^2$ when $n \neq N$.
 \end{proof}
