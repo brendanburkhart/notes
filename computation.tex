@@ -19,7 +19,7 @@
 \end{defn}
 
 \begin{defn}
-    A \emph{finite automata} is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
+    A (determinstic) \emph{finite automata} is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
     \begin{itemize}
         \item $Q$ is a finite set of \emph{states},
         \item $\Sigma$ is an alphabet,
@@ -84,7 +84,7 @@
     This language accepted by this finite automata is the set of all binary strings which end with \texttt{001}. We can use an inductive proof on the length of the longest input to prove this.
 \end{exmp}
 
-\begin{thm}
+\begin{thm}\label{regular-language-union-intersection}
     Let $A$ and $B$ be regular languages, then $A \union B$ and $A \intersection B$ are also regular languages.
 \end{thm}
 
@@ -93,3 +93,27 @@
     
     If $F = F_1 \times F_2$, then $M$ accepts precisely the strings accepted by both $M_A$ and $M_B$ --- that is, $L(M) = A \intersection B$. If instead $F = \left(F_1 \times Q_2\right) \union \left(Q_1 \times F_2\right)$, then $M$ accepts the strings accepted by at least one of $M_A$ and $M_B$ --- that is, $L(M) = A \union B$.
 \end{proof}
+
+\begin{defn}
+    A \emph{non-determinstic} finite automata is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
+    \begin{itemize}
+        \item $Q$ is a finite set of \emph{states},
+        \item $\Sigma$ is an alphabet,
+        \item $\delta: Q \times \left(\Sigma \union \{\varepsilon\}\right) \to 2^{Q}$ is the \emph{transition function},
+        \item $q_0 \in Q$ is the \emph{start state},
+        \item $F \subseteq Q$ are the \emph{accept states}.
+    \end{itemize}
+    A non-determinstic finite automata $M$ accepts an input $w$ over $\Sigma$ when there exists $w'$ that causes $M$ to end in an accept state, where $w'$ is constructed by inserting any finite number of $\varepsilon$ into $w$.
+\end{defn}
+
+\begin{rmk}
+    Standard determinstic finite automata may be referred to as DFAs, while non-determinstic finite automata may be referred to as NFAs.
+\end{rmk}
+
+\begin{rmk}
+    A NFA can essentially be viewed as a DFA which can split into multiple parallel copies of itself.
+\end{rmk}
+
+\begin{thm}\label{dfa-nfa-equivalence}
+    Let $N$ be a non-determinstic finite automata, and $L$ be the language it accepts. Then $L$ is a regular language. Equivalently, there is an equivalent determinstic finite automata for every non-determinstic finite automata.
+\end{thm}
