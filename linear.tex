@@ -2576,6 +2576,54 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \[\norm{x-y}^2 = \norm{w - y}^2 + \norm{u^2} \geq \norm{u^2} = \norm{x - w}^2.\]
 \end{proof}
 
+\section{Norms}
+
+\begin{defn}
+    Let $V$ be a vector space over $\R$ or $\C$. A \emph{norm} on $V$ is a function $\norm{\cdot}: V \to \R$ satisfying, for all $x, y \in V$ and scalar $s$:
+    \begin{itemize}
+        \item absolute homogeneity: $\norm{sx} = \abs{s}\norm{x}$,
+        \item positive definiteness: $\norm{x} = 0$ if and only if $x = \vec{0}$,
+        \item sub-additivity (triangle inequality): $\norm{x + y} \leq \norm{x} + \norm{y}$.
+    \end{itemize}
+\end{defn}
+
+\begin{defn}
+    We define the $\ell_p$ norm, for real $p \geq 1$ and $x = (x_1, x_2, \ldots, x_n)$, by
+    \begin{align*}
+        \norm{x}_p = \left[\sum_{i=1}^{n}\abs{x_i}^p\right]^{1/p}.
+    \end{align*}    
+\end{defn}
+
+\begin{exmp}
+    The $\ell_1$ is the taxi-cab norm, while $\ell_2$ is the Euclidean norm. We can also show that
+    \begin{align*}
+        \norm{x}_{\infty} = \lim_{p\to\infty}\norm{x}_p
+    \end{align*}
+    defines a norm, called the infinity norm.
+\end{exmp}
+
+\begin{prop}{Reverse triangle inequality}\label{reverse-triangle-inequality}\proofbreak
+    Let $\norm{\cdot}$ be a norm on a vector space $V$. Then for all $x, y \in V$,
+    \begin{align*}
+        \abs{\norm{x} - \norm{y}} \leq \norm{x - y}.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Consider applying the triangle inequality to $x - y$ and $y$. We have
+    \begin{align*}
+        \norm{x - y + y} \leq \norm{x - y} + \norm{y},
+    \end{align*}
+    so $\norm{x} - \norm{y} \leq \norm{x - y}$. By interchanging the roles of $x$ and $y$ we also have $\norm{y} - \norm{x} \leq \norm{y - x}$. Since
+    \begin{align*}
+        \norm{y - x} = \norm{(-1)(x-y)} = \abs{-1}\norm{x - y} = \norm{x - y},
+    \end{align*}
+    we have
+    \begin{align*}
+        \abs{\norm{x} - \norm{y}} \leq \norm{x - y}.
+    \end{align*}
+\end{proof}
+
 \section{Adjoints}
 
 \begin{defn}
