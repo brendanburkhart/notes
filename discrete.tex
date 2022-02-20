@@ -1200,7 +1200,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{lemma}
 
 \begin{proof}
-    Assume, for the sake of contradiction, that $p \centernot\mid a$ and $p \centernot\mid b$. Since $p \centernot\mid a$, it must be that $\gcdof{a}{p} = 1$, and so by Corollary \ref{relatively-prime-linear-combination}, there exists $x_1, y_1 \in \Z$ such that $ax_1 + py_1 = 1$. Similarly, for some $x_2, y_2 \in \Z$, $bx_2 + py_2 = 1$. Therefore, $1 = (ax_1 + py_1)(bx_2 + py_2) = abx_1x_2 + apx_1y_2 + bpx_2y_1 + p^2y_1y_2$. Since $p$ divides all four terms of this expression (the first term by the assumption that $p \mid ab$), and so $p \mid 1$, which is a contradiction since $p$ is prime.
+    Assume, for the sake of contradiction, that $p \centernot\mid a$ and $p \centernot\mid b$. Since $p \centernot\mid a$, it must be that $\gcdof{a}{p} = 1$, and so by Corollary \ref{relatively-prime-linear-combination}, there exists $x_1, y_1 \in \Z$ such that $ax_1 + py_1 = 1$. Similarly, for some $x_2, y_2 \in \Z$, $bx_2 + py_2 = 1$. Therefore, $1 = (ax_1 + py_1)(bx_2 + py_2) = abx_1x_2 + apx_1y_2 + bpx_2y_1 + p^2y_1y_2$. Since $p$ divides all four terms of this expression (the first term by the assumption that $p \mid ab$), it must be that $p \mid 1$, which is a contradiction since $p$ is prime.
 \end{proof}
 
 \begin{lemma}\label{prime-division-two}
@@ -1220,7 +1220,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \begin{proof}\proofbreak
 \textbf{Existence} We will proceed by induction on $n$. In the base case $n=1$, the empty product is equal to $1$ and is vacuously a product of primes.
 
-Assume for some $n \geq 1$, all $m \in \Z$ such that $1 \leq m \leq n$ can be factored into a product of primes. There are two possible cases for $n+1$: either it is prime or it is composite. If $n+1$ is prime, then $(n+1)$ is a product of primes, and a factoring of $(n+1)$. If it is composite, there exists some $a, b \in \Z$ such that $n+1 = ab$ and $1 < a < n+1$ and $1 < b < n+1$. Therefore, $a$ and $b$ can be factored into a product of primes by assumption, and so $ab$ is can be factored into a product of primes, and the induction is complete.
+Assume for some $n \geq 1$, all $m \in \Z$ such that $1 \leq m \leq n$ can be factored into a product of primes. There are two possible cases for $n+1$: either it is prime or it is composite. If $n+1$ is prime, then $(n+1)$ is a product of primes, and a factoring of $(n+1)$. If it is composite, there exists some $a, b \in \Z$ such that $n+1 = ab$ and $1 < a < n+1$ and $1 < b < n+1$. Therefore, $a$ and $b$ can be factored into a product of primes by assumption, and so $ab$ can be factored into a product of primes, and the induction is complete.
 
 \textbf{Uniqueness} Assume, for that sake of contradiction that there are some positive integers that can be factored into a product of primes in at least two distinct ways. Let $Y$ be the set of all such positive integers. By the well-ordering principle, there exists some smallest element $y \in Y$.
 

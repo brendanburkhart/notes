@@ -72,7 +72,11 @@ Any linear first order autonomous ODE with independent variable $x$ and dependen
     &= a(y - \frac{b}{a})
 \end{align*}
 
-Note that $\frac{\mathrm{d}}{\mathrm{d}x}{y - \frac{b}{a}} = \frac{\mathrm{d}}{\mathrm{d}x}y$. If $y \neq \frac{b}{a}$, it follows that $\ln(y - \frac{b}{a}) = ax + C$ for some constant of integration $C$, so $\abs{y - \frac{b}{a}} = ke^{ax}$ for some $k$. If $y > \frac{b}{a}$, then $y = \frac{b}{a} + ke^{ax}$, and similarly if $y < \frac{b}{a}$, then $y = \frac{b}{a} + ke^{ax}$ for some $k$. In the case that $y = \frac{b}{a}$, it follows that $\frac{\mathrm{d}y}{\mathrm{d}x} = 0$, so $y = \frac{b}{a} + ke^{ax}$ where $k = 0$.
+Note that $\frac{\mathrm{d}}{\mathrm{d}x}{\left[y - \frac{b}{a}\right]} = \frac{\mathrm{d}}{\mathrm{d}x}y$. If $y \neq \frac{b}{a}$, we then have
+\begin{align*}
+    \frac{dy/dx}{y - b/a} = a,
+\end{align*}
+and so it follows that $\ln(y - \frac{b}{a}) = ax + C$ for some constant of integration $C$, so $\abs{y - \frac{b}{a}} = ke^{ax}$ for some $k$. If $y > \frac{b}{a}$, then $y = \frac{b}{a} + ke^{ax}$, and similarly if $y < \frac{b}{a}$, then $y = \frac{b}{a} + ke^{ax}$ for some $k$. In the case that $y = \frac{b}{a}$, it follows that $\frac{\mathrm{d}y}{\mathrm{d}x} = 0$, so $y = \frac{b}{a} + ke^{ax}$ where $k = 0$.
 
 Therefore, $y = \frac{b}{a} + ke^{ax}$ is a solution to any linear first order autonomous differential equation.
 
