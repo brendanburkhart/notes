@@ -137,3 +137,122 @@ We can then define useful estimators to simply be those that are unbiased and co
     \end{align*}
     Clearly $\expectationof{\hat{\sigma}_x^2} \neq \sigma_x^2$ when $n \neq N$.
 \end{proof}
+
+\section{Dichotomous Populations}
+
+\begin{defn}
+    A \emph{dichotomous} random variable is one which has only two possible values, often $0$ and $1$.
+\end{defn}
+
+\begin{exmp}
+    Consider a population
+    \begin{align*}
+        \left\{z_1, \ldots, z_k\right\},
+    \end{align*}
+    where $z_i = \left((x_i, y_i), i\right)$, and $x_i$ is a dichotomous random variables. Note that the second moment is equal to the first moment, because $0^2 = 0$ and $1^2 = 1$. Therefore, $\sigma_x^2 = \mu_x - \mu_x^2 = \mu_x\left(1 - \mu_x\right)$. Then using $\hat{p_x} = \bar{X}$,
+    \begin{align*}
+        \varianceof{\hat{p}_x} = \frac{\sigma_x^2}{2} = \frac{p_x\left(1-p_x\right)}{n}.
+    \end{align*}
+    However, we need to know $p_x$ to calculate this variance, and if we already knew $p_x$ we likely wouldn't be looking at the variance of an estimator of $p_x$. Can we put a bound on $\varianceof{\hat{p}_x}$ without knowing $p_x$? Since $0 \leq p_{x} \leq 1$, we know that $p_{x}\left(1 - p_{x}\right) \leq \frac{1}{4}$, and so
+    \begin{align*}
+        \varianceof{\hat{p}_x} \leq \frac{1}{4n}.
+    \end{align*}
+
+    Now suppose $y_i$ is also dichotomous, and so
+    \begin{align*}
+        \sigma_{xy} = \frac{1}{N}\sum_{k=1}^{N}\left(x_k - \mu_x\right)\left(y_k - \mu_y\right) = \frac{1}{N}\sum_{k=1}^{N}x_ky_k - \mu_x\mu_y.
+    \end{align*}
+    Note that if $\covarianceof{X_1}{Y_1} = 0$, since $\covarianceof{X_1}{Y_1} = \sigma_{xy}$, we have
+    \begin{align*}
+        \frac{1}{N}\sum_{k=1}^{N}x_ky_k = \mu_x\mu_y,
+    \end{align*}
+    which is equivalent to $P(X_1 = 1, Y_1 = 1) = P(X_1 = 1)P(Y_1 = 1)$, and so zero covaraince between $X_1$ and $Y_1$ implies they must be independent when they are Bernoulli random variables.
+\end{exmp}
+
+\section{Approximation Methods}
+
+Suppose $X: \Omega \to \R$ is a random variable with mean $\mu$ and variance $\sigma^2$, and $g: \R \to \R$ is a deterministic, $C^2$ function. What can we say about $g(X)$?
+
+Let $f$ be the density of $X$, then by $\mathcal{LOTUS}$ \ref{lotus} we have
+\begin{align*}
+    \expectationof{g(X)} = \int_{\R}g(x)f(x)dx.
+\end{align*}
+Suppose we know that $X$ is very likely ``close to'' $\mu$, that is, that $\sigma^2$ is small. Consider the Taylor expansion of $g$ about $\mu$. We know that for some $\xi$ between $x$ and $\mu$, we have
+\begin{align*}
+    g(x) = g(\mu) + g'(\mu)(x-\mu) + \frac{g''(\xi)}{2}(x-\mu)^2
+\end{align*}
+If $x$ is near $\mu$, then we can use $\xi \approx \mu$. If we can guarantee certain conditions to be explored later, we can guarantee that
+\begin{align*}
+    \expectationof{g(X)} &\approx \expectationof{g(\mu) + g'(\mu)(x-\mu) + \frac{g''(\mu)}{2}(x-\mu)^2} \\
+    &= g(\mu) + g'(\mu)\expectationof{X - \mu} + \frac{g''(\mu)}{2}\expectationof{\left(X - u\right)^2} = g(\mu) + \frac{g''(\mu)}{2}\sigma^2.
+\end{align*}
+
+Now let's expand our focus to random variables $X$ and $Y$, and a deterministic function $h: \R \times \R \to \R$. We know that
+\begin{align*}
+    h(x, y) &\approx h(\mu_x, \mu_y) + \frac{\partial h}{\partial x}\left(\mu_x, \mu_y\right)(x - \mu_x) + \frac{\partial h}{\partial y}\left(\mu_x, \mu_y\right)(y - \mu_y) \\
+    &+ \frac{\partial^2h}{2\partial x^2}(\mu_x, \mu_y)\left(x - \mu_x\right)^2 + \frac{\partial^2h}{2\partial y^2}(\mu_x, \mu_y)\left(y - \mu_y\right)^2 + \frac{\partial^2h}{\partial x\partial y}(\mu_x, \mu_y)\left(x - \mu_x\right)\left(y - \mu_y\right).
+\end{align*}
+Note that
+\begin{align*}
+    \expectationof{h(x, y)} \approx \expectationof{h(\mu_x, \mu_y)}
+\end{align*}
+
+\begin{thm}
+    Let $\theta$ be a random variable, and $\hat{\theta}$ be an estimator for $\theta$. Then the \emph{mean squared error} of $\hat{\theta}$ is
+    \begin{align*}
+        \expectationof{\left(\hat{\theta} - \theta\right)^2} = \varianceof{\hat{\theta}} + \biasof{\hat{\theta}}^2.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        \expectationof{\left(\hat{\theta} - \theta\right)^2} &= \expectationof{\left(\hat{\theta} - \expectationof{\hat{\theta}} + \expectationof{\hat{\theta}} - \theta\right)^2} \\
+        &= \expectationof{\left(\hat{\theta} - \expectationof{\hat{\theta}}\right)^2 + 2\left(\hat{\theta} - \expectationof{\hat{\theta}}\right)\left(\expectationof{\hat{\theta}} - \theta\right) + \left(\expectationof{\hat{\theta}} - \theta\right)^2} \\
+        &= \expectationof{\left(\hat{\theta} - \expectationof{\hat{\theta}}\right)^2} + 2\expectationof{\hat{\theta} - \expectationof{\hat{\theta}}}\left(\expectationof{\hat{\theta}} - \theta\right) + \expectationof{\left(\expectationof{\hat{\theta}} - \theta\right)^2}.
+    \end{align*}
+    Since $\expectationof{\hat{\theta} - \expectationof{\hat{\theta}}} = \expectationof{\hat{\theta}} - \expectationof{\hat{\theta}} = 0$, we have
+    \begin{align*}
+        \expectationof{\left(\hat{\theta} - \theta\right)^2} = \expectationof{\left(\hat{\theta} - \expectationof{\hat{\theta}}\right)^2} + \left(\expectationof{\hat{\theta}} - \theta\right)^2.
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    Consider a bivariate population $z_i = ((x_i, y_i), i)$ for $1 \leq i \leq N$. We take a sample $Z_1, \ldots, Z_n$ (without replacement) from this population, and compute the sample means $\bar{X}$ and $\bar{Y}$. Suppose we want to estimate $\mu_y$, and happen to know $\mu_x$, where $\mu_x \neq 0$. Let
+    \begin{align*}
+        r = \frac{\mu_y}{\mu_y},
+    \end{align*}
+    which we can estimate as
+    \begin{align*}
+        R = \frac{\bar{Y}}{\bar{X}}.
+    \end{align*}
+    Then we can choose
+    \begin{align*}
+        \bar{Y}_R = \mu_xR = \mu_x\frac{\bar{Y}}{\bar{X}}.
+    \end{align*}
+    Note that $\bar{Y}_R$ is not $\bar{Y}$. Let us use our approximation method to obtain approximations of $\expectationof{R}$ and $\varianceof{R}$. We use $R = g(\bar{X}, \bar{Y})$, where $g(x, y) = y/x$. Then we have
+    \begin{align*}
+        g(x, y) &\approx g(\mu_x, \mu_y) + \frac{\partial g}{\partial x}(x - \mu_x) + \frac{\partial g}{\partial y}(y - \mu_y) \\
+        &+ \frac{\partial^2g}{2\partial x^2}(x - \mu_x)^2 + \frac{\partial^2g}{2\partial y^2}(y - \mu_y)^2 + \frac{\partial^2g}{\partial xy}(x - \mu_x)(y - \mu_y) \\
+        &= g(\mu_x, \mu_y) + \frac{1}{2}\frac{2\mu_y}{\mu_x^3}(x-\mu_x)^2 + \frac{1}{2}(0)(y-\mu_y)^2 - \frac{1}{\mu_x^2}(x-\mu_x)(y-\mu_y).
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \expectationof{R} &\approx g(\mu_x, \mu_y) + \frac{1}{2}\frac{2\mu_y}{\mu_x^2}\varianceof{\bar{X}} - \frac{1}{\mu_x^2}\covarianceof{\bar{X}}{\bar{Y}} \\
+        &= \frac{\mu_y}{\mu_x} + \frac{\mu_y}{\mu_x^3}\frac{\sigma_x^2}{n}\left[\frac{N-n}{N-1}\right] - \frac{1}{\mu_x^2}\left[\frac{\sigma_{xy}}{n}\left(\frac{N-n}{N-1}\right)\right].
+    \end{align*}
+
+    For the variance, we instead use a first-order Taylor approximation. Note that, in general for
+    \begin{align*}
+        g(x,y) = c_1 + c_2(x - \mu_x) + c_2(y - \mu_y),
+    \end{align*}
+    the variance of $g$ is given by
+    \begin{align*}
+        \varianceof{c_1 + c_2(x - \mu_x) + c_2(y - \mu_y)} = c_2^2\varianceof{x} + c_3^2\varianceof{y}  + 2c_2c_3\covarianceof{x}{y}.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \varianceof{R} &\approx \left(\frac{-\mu_y}{\mu_x}\right)^2\varianceof{\overline{X}} + \left(\frac{1}{\mu_x}\right)^2\varianceof{\overline{Y}} - 2\left(\frac{-\mu_y}{\mu_x^2}\right)\covarianceof{\overline{X}}{\overline{Y}} \\
+        &= \left(\frac{-\mu_y}{\mu_x}\right)^2\frac{\sigma_{x}^2}{n}\left[\frac{N-n}{N-1}\right] + \left(\frac{1}{\mu_x}\right)^2\frac{\sigma_{y}^2}{n}\left[\frac{N-n}{N-1}\right] - 2\frac{\mu_y}{\mu_x^2}\frac{\sigma_{xy}}{n}\left[\frac{N-n}{N-1}\right].
+    \end{align*}
+\end{exmp}
+
