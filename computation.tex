@@ -114,6 +114,72 @@
     A NFA can essentially be viewed as a DFA which can split into multiple parallel copies of itself.
 \end{rmk}
 
+\begin{defn}
+    Given a transition function $\delta: Q \times \left(\Sigma \union \{\varepsilon\}\right) \to 2^{Q}$ and $R \subseteq Q$, the \emph{epsilon-closure} of $R$ is
+    \begin{align*}
+        E\left(R\right) = \left\{q \in Q \compbar \exists r \in R\left[\delta\left(r, \varepsilon\right) = q\right]\right\}.
+    \end{align*}
+\end{defn}
+
 \begin{thm}\label{dfa-nfa-equivalence}
     Let $N$ be a non-determinstic finite automata, and $L$ be the language it accepts. Then $L$ is a regular language. Equivalently, there is an equivalent determinstic finite automata for every non-determinstic finite automata.
 \end{thm}
+
+\begin{proof}
+    Let $V = \left(Q, \Sigma, \delta, q_0, F\right)$ be a non-determinstic finite automata. We will construct an equivalent determinstic finite automata $M$. Let $M = \left(Q', \Sigma, \delta', q_0', F'\right)$, where
+    \begin{itemize}
+        \item $Q' = 2^Q$,
+        \item For all $R \in Q'$, define $\delta'(R, a) = E\left(\bigunion_{r \in R}\delta(r, a)\right)$,
+        \item $q_0' = \left\{q_0\right\}$,
+        \item $F' = \left\{R \in Q \compbar R \intersection F \neq \emptyset\right\}$.
+    \end{itemize}
+\end{proof}
+
+\begin{defn}
+    The \emph{regular operations} are union, intersection, complement, concatenation, and star, which the set of regular languages is closed under.
+\end{defn}
+
+\begin{defn}
+    A \emph{regular expression} is a sequence of regular operations applied to regular languages. Formally, given an alphabet $\Sigma$, the following are regular expressions:
+    \begin{itemize}
+        \item $a$, for any $a \in \Sigma$,
+        \item $\varepsilon$,
+        \item $\emptyset$,
+        \item $R_1 \union R_2$, where $R_1$ and $R_2$ are themselves regular expressions,
+        \item $R_1 \cdot R_2$, where $R_1$ and $R_2$ are themselves regular expressions,
+        \item $R_1^{\star}$, where $R_1$ is a regular expression,
+    \end{itemize}
+\end{defn}
+
+\begin{defn}
+    For a regular expression $R_1$, we also define $R_1^{+} = R_1R_1^{\star}$.
+\end{defn}
+
+\begin{exmp}
+    The regular expression $1^{\star}(0\union 1^{+})^{\star}$ is the language of binary strings where every $0$ is followed by at least one $1$.
+\end{exmp}
+
+\section{Non-Regular Languages}
+
+\begin{lemma}{Pumping Lemma}{\label{pumping-lemma}}\proofbreak
+    Let $A$ be a regular language. There exists $p \in \N$, the \emph{pumping length}, such that if $s \in A$ has length at least $p$, then we can divide $s$ into three pieces $s = xyz$ satisfying
+    \begin{itemize}
+        \item $\abs{y} > 0$,
+        \item $\abs{xy} \leq p$,
+        \item $xy^{i}z \in A$ for all $i \geq 0$.
+    \end{itemize}
+\end{lemma}
+
+\begin{proof}
+    Let $M = (Q, \Sigma, \delta, q_s, F)$ be a determinstic finite automata recognizing $A$. Let $p = \abs{Q}$. Then for any $s = s_1s_2 \cdots s_n \in A$, where $n \geq p$, let $r_1, r_2, \ldots, r_n, r_{n+1}$ be the sequence of states that $M$ visits in input $s$. Since $n+1 \geq p + 1 > p$, by the pigeonhole principle \ref{pigeonhole}, it follows that at least one state must be visited twice within the first $p+1$ states --- that is, that there must be $i > j$ such that $r_i = r_j$ and $i \leq p + 1$.
+
+    Then, take $x = s_1s_2 \cdots s_{i-1}$, $y = s_{i}s_{i+1} \cdots s_{j-1}$, and $z = s_{j}s_{j+1}\cdots s_n$. Notice that since $i > j$, $j-1 \geq i$, and so $\abs{y} > 0$. Furthermore, $\abs{xy} = j-1$ and since $j < i \leq p + 1$, it follows that $j-1 < i-1 \leq p$, and so $\abs{xy} \leq p$. Finally, since $r_{i}r_{i+1}\cdots r_{j}$ is a cycle that occurs on input $y$, we clearly have $xy^{i}z \in A$ for all $i \geq 0$.
+\end{proof}
+
+\begin{exmp}
+    Consider the language $A = \{0^n1^n | n \geq 0\}$. Assume, for the sake of contradiction, that $A$ is regular and so by the pumping lemma \ref{pumping-lemma} there must exist a pumping length $p$. We consider $s = 0^{p}1^{p} \in A$, and by the pumping lemma are guaranteed $xyz = 0^{p}1^{p}$ since $\abs{s} = 2p \geq p$. In particular, we have $\abs{xy} \leq p$, and so $xy = 0^{t}$ for some $t \leq p$. It follows that $y = 0^{s}$ for some $0 < s \leq p$, and so by the pumping lemma we must have $xy^{i}z = 0^{p+(i-1)s}1^{p} \in A$. However, this is false by the definition of $A$ whenever $i \neq 1$, and so we have a contradiction. It follows that $A$ cannot be a regular language.
+\end{exmp}
+
+\begin{exmp}
+    Consider the language $C$ consisting of all binary strings containing an equal number of $0$s and $1$s. Notice that $A = C \intersection 0^{*}1^{*}$ --- that is, $A$ is precisely the subset of $0^{*}1^{*}$ where the number of $0$s and $1$s are equal. If $C$ was regular, then $A$ would be regular since regular languages are closed under intersection. Therefore, $C$ cannot be a regular language.
+\end{exmp}
