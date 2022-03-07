@@ -2633,15 +2633,19 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{prop}
 
 \begin{proof}
-    Let $v$ be an eigenvector of $A$ with associated eigenvalue $\lambda$. Then by definition,
+    Let $v$ be an eigenvector of $A$ with associated eigenvalue $\lambda$. Since $\norm{\cdot}$ is consistent with some vector norm $\norm{\cdot}$, we know that
     \begin{align*}
-        \norm{A} = \sup_{x \neq 0}\frac{\norm{Ax}}{\norm{x}}.
+        \norm{Av} \leq \norm{A}\norm{v}.
     \end{align*}
-    Since
+    Therefore,
     \begin{align*}
-        \frac{\norm{Av}}{\norm{v}} = \frac{\norm{\lambda v}}{\norm{v}} = \abs{\lambda},
+        \frac{\norm{Av}}{\norm{v}} \leq \norm{A},
     \end{align*}
-    it follows that $\norm{A} \geq \abs{\lambda}$ for all eigenvalues $\lambda$ of $A$ and so $\norm{A} \geq \rho(A)$.
+    and since
+    \begin{align*}
+        \frac{\norm{Av}}{\norm{v}} = \frac{\abs{\lambda}\norm{v}}{\norm{v}} = \abs{\lambda},
+    \end{align*}
+    it follows that $\abs{\lambda} \leq \norm{A}$ for all eigenvalues $\lambda$ of $A$ and so $\rho(A) \leq \norm{A}$.
 \end{proof}
 
 \begin{thm}
