@@ -2624,6 +2624,33 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \end{align*}
 \end{proof}
 
+\begin{defn}
+    The \emph{spectral radius} of an $n \times n$ matrix $A$ is the magnitude of the largest eigenvalue of $A$.
+\end{defn}
+
+\begin{prop}
+    Let $A \in M_{n \times n}(\R)$. Then for any consistent matrix norm, $\rho(A) \leq \norm{A}$.
+\end{prop}
+
+\begin{proof}
+    Let $v$ be an eigenvector of $A$ with associated eigenvalue $\lambda$. Then by definition,
+    \begin{align*}
+        \norm{A} = \sup_{x \neq 0}\frac{\norm{Ax}}{\norm{x}}.
+    \end{align*}
+    Since
+    \begin{align*}
+        \frac{\norm{Av}}{\norm{v}} = \frac{\norm{\lambda v}}{\norm{v}} = \abs{\lambda},
+    \end{align*}
+    it follows that $\norm{A} \geq \abs{\lambda}$ for all eigenvalues $\lambda$ of $A$ and so $\norm{A} \geq \rho(A)$.
+\end{proof}
+
+\begin{thm}
+    Let $A \in M_{n \times n}(\R)$, and consider any $\varepsilon > 0$. There exists a natural matrix norm (which may differ depending on $A$), denoted by $\norm{\cdot}_{\varepsilon, A}$, such that
+    \begin{align*}
+        \norm{A} \leq \rho(A) + \varepsilon.
+    \end{align*}
+\end{thm}
+
 \section{Adjoints}
 
 \begin{defn}
