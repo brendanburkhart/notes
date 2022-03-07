@@ -1334,7 +1334,7 @@ We can also find the join distribution of multiple ordered random variables. For
 \begin{prop}
     Let $X$ and $Y$ be random variables with variances $\sigma_X^2$ and $\sigma_Y^2$. Then
     \begin{align*}
-        \covarianceof{X}{Y} \leq \sigma_X\sigma_Y.
+        \abs{\covarianceof{X}{Y}} \leq \sigma_X\sigma_Y.
     \end{align*}
 \end{prop}
 
@@ -1348,12 +1348,12 @@ We can also find the join distribution of multiple ordered random variables. For
     
     Therefore, by the Cauchy-Schwarz Inequality \ref{cauchy-schwarz-triangle} it follows that
     \begin{align*}
-        E(XY) \leq \sqrt{E(X^2)E(Y^2)},
+        \abs{E(XY)} \leq \sqrt{E(X^2)E(Y^2)},
     \end{align*}
     and so
     \begin{align*}
-        E\left[(X - \mu_X)(Y - \mu_Y)\right] \leq \sqrt{E\left[(X - \mu_X)^2\right]E\left[(Y - \mu_Y)^2\right]},
-        \covarianceof{X}{Y} \leq \sqrt{\sigma_{X}^2\sigma_{Y}^2} = \sigma_X\sigma_Y.
+        \abs{E\left[(X - \mu_X)(Y - \mu_Y)\right]} \leq \sqrt{E\left[(X - \mu_X)^2\right]E\left[(Y - \mu_Y)^2\right]},
+        \abs{\covarianceof{X}{Y}} \leq \sqrt{\sigma_{X}^2\sigma_{Y}^2} = \sigma_X\sigma_Y.
     \end{align*}
 \end{proof}
 
