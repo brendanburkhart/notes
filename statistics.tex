@@ -27,7 +27,7 @@ The population covariance between the $x$ and $y$ measurements is
 
 Suppose we have a finite sample $Z_1, \ldots, Z_n$ of the entire population. Functions of such samples are known as \emph{statistics}, and will be used to construct useful \emph{estimators} of our population parameters. For example, the \emph{sample mean} can be used to estimate the population mean, and is defined by
 \begin{align*}
-    \bar{X} = \frac{1}{n}\sum_{k=1}^{n}\pi_{x}(Z_k),\;\; \bar{Y} = \frac{1}{n}\sum_{k=1}^{n}\pi_{y}(Z_k).
+    \samplemeanof{X} = \frac{1}{n}\sum_{k=1}^{n}\pi_{x}(Z_k),\;\; \samplemeanof{Y} = \frac{1}{n}\sum_{k=1}^{n}\pi_{y}(Z_k).
 \end{align*}
 
 \begin{defn}
@@ -74,12 +74,12 @@ We can then define useful estimators to simply be those that are unbiased and co
 \end{exmp}
 
 \begin{prop}
-    If we are sampling $X_1, \ldots, X_n$ with replacement, then $\varianceof{\bar{X}} = \frac{\sigma_x^2}{n}$.
+    If we are sampling $X_1, \ldots, X_n$ with replacement, then $\varianceof{\samplemeanof{X}} = \frac{\sigma_x^2}{n}$.
 \end{prop}
 
 \begin{proof}
     \begin{align*}
-        \varianceof{\bar{X}} &= \varianceof{\frac{1}{n}\sum_{k=1}^{n}\pi_{x}(Z_k)} = \sum_{i=1}^{n}\sum_{j=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_j} \\
+        \varianceof{\samplemeanof{X}} &= \varianceof{\frac{1}{n}\sum_{k=1}^{n}\pi_{x}(Z_k)} = \sum_{i=1}^{n}\sum_{j=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_j} \\
         &= \sum_{i=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_i} + 2\sum_{i=1}^{n}\sum_{j=i+1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_j} \\
         &= \sum_{i=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_i} + 2\sum_{i=1}^{n}\sum_{j=i+1}^{n}\frac{1}{n^2}\left(0\right) \\
         &= \frac{1}{n^2}\sum_{i=1}^{n}\varianceof{X_i} = \frac{1}{n}\varianceof{X_i} = \frac{\sigma_x^2}{n}.
@@ -87,16 +87,16 @@ We can then define useful estimators to simply be those that are unbiased and co
 \end{proof}
 
 \begin{rmk}
-    We have seen that $\bar{X}$ is unbiased, and it must be consistent by the Weak Law of Large Numbers \ref{wlln}.
+    We have seen that $\samplemeanof{X}$ is unbiased, and it must be consistent by the Weak Law of Large Numbers \ref{wlln}.
 \end{rmk}
 
 \begin{prop}
-    If we are sampling $X_1, \ldots, X_n$ without replacement, then $\varianceof{\bar{X}} = \frac{\sigma_x^2}{n} + \frac{\covarianceof{X_1}{X_2}}{n}\left(n-1\right)$.
+    If we are sampling $X_1, \ldots, X_n$ without replacement, then $\varianceof{\samplemeanof{X}} = \frac{\sigma_x^2}{n} + \frac{\covarianceof{X_1}{X_2}}{n}\left(n-1\right)$.
 \end{prop}
 
 \begin{proof}
     \begin{align*}
-        \varianceof{\bar{X}} &= \varianceof{\frac{1}{n}\sum_{k=1}^{n}\pi_{x}(Z_k)} = \sum_{i=1}^{n}\sum_{j=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_j} \\
+        \varianceof{\samplemeanof{X}} &= \varianceof{\frac{1}{n}\sum_{k=1}^{n}\pi_{x}(Z_k)} = \sum_{i=1}^{n}\sum_{j=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_j} \\
         &= \sum_{i=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_i} + 2\sum_{i=1}^{n}\sum_{j=i+1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_j} \\
         &= \sum_{i=1}^{n}\frac{1}{n^2}\covarianceof{X_i}{X_i} + \frac{\covarianceof{X_1}{X_2}}{n^2}\left(n^2 - n\right) \\
         &= \frac{\sigma_x^2}{n} + \frac{\covarianceof{X_1}{X_2}\left(n-1\right)}{n}.
@@ -110,7 +110,7 @@ We can then define useful estimators to simply be those that are unbiased and co
 \end{cor}
 
 \begin{proof}
-    We know that when drawing without replacement, if $n = N$ then $\varianceof{\bar{X}} = 0$. Therefore,
+    We know that when drawing without replacement, if $n = N$ then $\varianceof{\samplemeanof{X}} = 0$. Therefore,
     \begin{align*}
         0 = \frac{\sigma_x^2}{N} + \frac{\covarianceof{X_1}{X_2}\left(N-1\right)}{N}.
     \end{align*}
@@ -118,7 +118,7 @@ We can then define useful estimators to simply be those that are unbiased and co
 
 \begin{cor}
     \begin{align*}
-        \varianceof{\bar{X}} = \frac{\sigma_x^2}{n}\left(\frac{N-n}{N-1}\right).
+        \varianceof{\samplemeanof{X}} = \frac{\sigma_x^2}{n}\left(\frac{N-n}{N-1}\right).
     \end{align*}
 \end{cor}
 
@@ -128,10 +128,10 @@ We can then define useful estimators to simply be those that are unbiased and co
 
 \begin{proof}
     \begin{align*}
-        \hat{\sigma}_x^2 = \frac{1}{n}\sum_{i=1}^{n}\left(X_i - \bar{X}\right)^{2} = \frac{1}{n}\left[\sum_{i=1}^{n}X_i^2 - 2\sum_{i=1}^{n}X_i\bar{X} + \sum_{i=1}^{n}\bar{X}^{2}\right] = \frac{1}{n}\sum_{i=1}^{n}X_i^2 - \bar{X}^2.
+        \hat{\sigma}_x^2 = \frac{1}{n}\sum_{i=1}^{n}\left(X_i - \samplemeanof{X}\right)^{2} = \frac{1}{n}\left[\sum_{i=1}^{n}X_i^2 - 2\sum_{i=1}^{n}X_i\samplemeanof{X} + \sum_{i=1}^{n}\samplemeanof{X}^{2}\right] = \frac{1}{n}\sum_{i=1}^{n}X_i^2 - \samplemeanof{X}^2.
     \end{align*}
     \begin{align*}
-        \expectationof{\hat{\sigma}_x^2} &= \expectationof{\frac{1}{n}\sum_{i=1}^{n}X_i^2} - \expectationof{\bar{X}^2} = \frac{n\left(\sigma_x^2 + \mu_x^2\right))}{n} - \left(\varianceof{\bar{X}} + \mu_x^2\right) \\
+        \expectationof{\hat{\sigma}_x^2} &= \expectationof{\frac{1}{n}\sum_{i=1}^{n}X_i^2} - \expectationof{\samplemeanof{X}^2} = \frac{n\left(\sigma_x^2 + \mu_x^2\right))}{n} - \left(\varianceof{\samplemeanof{X}} + \mu_x^2\right) \\
         &= \left(\sigma_x^2 + \mu_x^2\right) - \frac{\sigma_x^2}{n}\left(\frac{N-n}{N-1}\right) - \mu_x^2 = \sigma_x^2 - \frac{\sigma_x^2}{n}\left(\frac{N-n}{N-1}\right) \\
         &= \sigma_x^2\left[\frac{N\left(n-1\right)}{n\left(N-1\right)}\right].
     \end{align*}
@@ -149,7 +149,7 @@ We can then define useful estimators to simply be those that are unbiased and co
     \begin{align*}
         \left\{z_1, \ldots, z_k\right\},
     \end{align*}
-    where $z_i = \left((x_i, y_i), i\right)$, and $x_i$ is a dichotomous random variables. Note that the second moment is equal to the first moment, because $0^2 = 0$ and $1^2 = 1$. Therefore, $\sigma_x^2 = \mu_x - \mu_x^2 = \mu_x\left(1 - \mu_x\right)$. Then using $\hat{p_x} = \bar{X}$,
+    where $z_i = \left((x_i, y_i), i\right)$, and $x_i$ is a dichotomous random variables. Note that the second moment is equal to the first moment, because $0^2 = 0$ and $1^2 = 1$. Therefore, $\sigma_x^2 = \mu_x - \mu_x^2 = \mu_x\left(1 - \mu_x\right)$. Then using $\hat{p_x} = \samplemeanof{X}$,
     \begin{align*}
         \varianceof{\hat{p}_x} = \frac{\sigma_x^2}{2} = \frac{p_x\left(1-p_x\right)}{n}.
     \end{align*}
@@ -217,19 +217,19 @@ Note that
 \end{proof}
 
 \begin{exmp}
-    Consider a bivariate population $z_i = ((x_i, y_i), i)$ for $1 \leq i \leq N$. We take a sample $Z_1, \ldots, Z_n$ (without replacement) from this population, and compute the sample means $\bar{X}$ and $\bar{Y}$. Suppose we want to estimate $\mu_y$, and happen to know $\mu_x$, where $\mu_x \neq 0$. Let
+    Consider a bivariate population $z_i = ((x_i, y_i), i)$ for $1 \leq i \leq N$. We take a sample $Z_1, \ldots, Z_n$ (without replacement) from this population, and compute the sample means $\samplemeanof{X}$ and $\samplemeanof{Y}$. Suppose we want to estimate $\mu_y$, and happen to know $\mu_x$, where $\mu_x \neq 0$. Let
     \begin{align*}
         r = \frac{\mu_y}{\mu_y},
     \end{align*}
     which we can estimate as
     \begin{align*}
-        R = \frac{\bar{Y}}{\bar{X}}.
+        R = \frac{\samplemeanof{Y}}{\samplemeanof{X}}.
     \end{align*}
     Then we can choose
     \begin{align*}
-        \bar{Y}_R = \mu_xR = \mu_x\frac{\bar{Y}}{\bar{X}}.
+        \samplemeanof{Y}_R = \mu_xR = \mu_x\frac{\samplemeanof{Y}}{\samplemeanof{X}}.
     \end{align*}
-    Note that $\bar{Y}_R$ is not $\bar{Y}$. Let us use our approximation method to obtain approximations of $\expectationof{R}$ and $\varianceof{R}$. We use $R = g(\bar{X}, \bar{Y})$, where $g(x, y) = y/x$. Then we have
+    Note that $\samplemeanof{Y}_R$ is not $\samplemeanof{Y}$. Let us use our approximation method to obtain approximations of $\expectationof{R}$ and $\varianceof{R}$. We use $R = g(\samplemeanof{X}, \samplemeanof{Y})$, where $g(x, y) = y/x$. Then we have
     \begin{align*}
         g(x, y) &\approx g(\mu_x, \mu_y) + \frac{\partial g}{\partial x}(x - \mu_x) + \frac{\partial g}{\partial y}(y - \mu_y) \\
         &+ \frac{\partial^2g}{2\partial x^2}(x - \mu_x)^2 + \frac{\partial^2g}{2\partial y^2}(y - \mu_y)^2 + \frac{\partial^2g}{\partial xy}(x - \mu_x)(y - \mu_y) \\
@@ -237,7 +237,7 @@ Note that
     \end{align*}
     Therefore,
     \begin{align*}
-        \expectationof{R} &\approx g(\mu_x, \mu_y) + \frac{1}{2}\frac{2\mu_y}{\mu_x^2}\varianceof{\bar{X}} - \frac{1}{\mu_x^2}\covarianceof{\bar{X}}{\bar{Y}} \\
+        \expectationof{R} &\approx g(\mu_x, \mu_y) + \frac{1}{2}\frac{2\mu_y}{\mu_x^2}\varianceof{\samplemeanof{X}} - \frac{1}{\mu_x^2}\covarianceof{\samplemeanof{X}}{\samplemeanof{Y}} \\
         &= \frac{\mu_y}{\mu_x} + \frac{\mu_y}{\mu_x^3}\frac{\sigma_x^2}{n}\left[\frac{N-n}{N-1}\right] - \frac{1}{\mu_x^2}\left[\frac{\sigma_{xy}}{n}\left(\frac{N-n}{N-1}\right)\right].
     \end{align*}
 
@@ -251,8 +251,227 @@ Note that
     \end{align*}
     Therefore,
     \begin{align*}
-        \varianceof{R} &\approx \left(\frac{-\mu_y}{\mu_x}\right)^2\varianceof{\overline{X}} + \left(\frac{1}{\mu_x}\right)^2\varianceof{\overline{Y}} - 2\left(\frac{-\mu_y}{\mu_x^2}\right)\covarianceof{\overline{X}}{\overline{Y}} \\
-        &= \left(\frac{-\mu_y}{\mu_x}\right)^2\frac{\sigma_{x}^2}{n}\left[\frac{N-n}{N-1}\right] + \left(\frac{1}{\mu_x}\right)^2\frac{\sigma_{y}^2}{n}\left[\frac{N-n}{N-1}\right] - 2\frac{\mu_y}{\mu_x^2}\frac{\sigma_{xy}}{n}\left[\frac{N-n}{N-1}\right].
+        \varianceof{R} &\approx \left(\frac{-\mu_y}{\mu_x^2}\right)^2\varianceof{\overline{X}} + \left(\frac{1}{\mu_x}\right)^2\varianceof{\overline{Y}} - 2\left(\frac{-\mu_y}{\mu_x^3}\right)\covarianceof{\overline{X}}{\overline{Y}} \\
+        &= \left(\frac{-\mu_y}{\mu_x^2}\right)^2\frac{\sigma_{x}^2}{n}\left[\frac{N-n}{N-1}\right] + \left(\frac{1}{\mu_x}\right)^2\frac{\sigma_{y}^2}{n}\left[\frac{N-n}{N-1}\right] - 2\frac{\mu_y}{\mu_x^3}\frac{\sigma_{xy}}{n}\left[\frac{N-n}{N-1}\right].
     \end{align*}
 \end{exmp}
 
+\section{Sigma Algebras}
+
+\begin{defn}
+    A \emph{$\sigma$-algebra} is a set $X$ of sets such that $X$ contains $\emptyset$, and $X$ is closed under complements and countable unions.
+\end{defn}
+
+\begin{defn}
+    The \emph{Borel $\sigma$-algebra} is the $\sigma$-algebra consisting of the closure of all opens subsets of $\R$.
+\end{defn}
+
+\section{Convergence of Random Variables}
+
+\begin{defn}
+    Let $(\Omega, \mathcal{F}, P)$ be a probability space. Let $\{X_n : n \in \N\}$ be a sequence of random variables defined on $\Omega$, and let $X: \Omega \to \R$ be a random variable.
+
+    We say that $X_n$ converges \emph{pointwise everywhere} to $X$ if for all $\omega \in \Omega$, and for all $\varepsilon > 0$, there exists $N \in \N$ such that $d\left(X_n, X(\omega)\right) < \varepsilon$.
+
+    We say that $X_n$ converges \emph{uniformly} to $X$ if for all $\varepsilon > 0$, there exists $N \in \N$ such that for all 
+    $\omega \in \Omega$ we have $d\left(X_n, X(\omega)\right) < \varepsilon$.
+
+    We say that $X_n$ converges \emph{pointwise almost surely} or \emph{pointwise almost everywhere} to $X$ if there exists $
+    A \in \mathcal{F}$ where $P(A) = 0$ such that $X_n$ converges pointwise to $X$ on $A^{c}$.
+\end{defn}
+
+\begin{defn}
+    We say that $X_n$ converges to $X$ \emph{in probability}, denoted by
+    \begin{align*}
+        X_n \to X
+    \end{align*}
+    if for all $\delta > 0$, the collection of sets
+    \begin{align*}
+        A_{n,\delta} = \left\{\omega \in \Omega \compbar d\left(X_n(\omega), X(\omega)\right) > \delta\right\}
+    \end{align*}
+    satisfies $P(A_{n,\delta}) \to 0$ as $n \to \infty$.
+\end{defn}
+
+\begin{defn}
+    We say that $X_n$ converges to $X$ using $L^{p}$ convergence when
+    \begin{align*}
+        \expectationof{\abs{X_n(\omega) - X(\omega)}^{p}} \to 0
+    \end{align*}
+    as $n \to \infty$.
+\end{defn}
+
+\begin{defn}
+    We say that $t$ is a \emph{continuity point} of $F$ if $F$ is continuous at $t$.
+\end{defn}
+
+\begin{defn}
+    Let $X_n$ be a sequence of random variables, not necessarily defined on the same probability same. Let $X$ be a random variable with cumulative distribution function $F$. We say that $X_n$ converges to $X$ \emph{in distribution} if for every continuity point $t$ of $F$, the limit of $F_n(t)$ as $n \to \infty$ is $F(t)$.
+\end{defn}
+
+\begin{exmp}
+    Let $\Omega = [0, 1]$, $\mathcal{F} = \mathcal{B}(\Omega)$, and $P$ be the uniform probability measure. Let $X_n(\omega)$ be an indicator of whether $\omega$ is contained in $[0, 1/n]$ or not. This sequence has pointwise convergence almost surely to $0$, but it is not pointwise everywhere nor uniform.
+\end{exmp}
+
+\begin{exmp}
+    Let $\Omega = [0, 1]$, $\mathcal{F} = \mathcal{B}(\Omega)$, and $P$ be the uniform probability measure. Let $X_n(\omega)$ be equal to $n^2$ when $0 \leq \omega \leq 1/n$ and zero otherwise. This sequence has pointwise convergence almost surely to $0$, but it is not pointwise everywhere nor uniform.
+\end{exmp}
+
+\begin{thm}{Slutsky's Theorem}\label{slutsky}\proofbreak
+    Let $X_n$ and $Y_n$ be sequences of random variables such that $X_n$ converges in distribution to a random variable $X$ and $Y_n$ converges in probability to a real constant $c$. Suppose $X_n$ and $y_n$ are defined on the same probability space, so that $X_n + Y_n$ and $X_n \cdot Y_n$ are well-defined. Then we have
+    \begin{itemize}
+        \item $X_n + Y_n$ converges in distribution to $X + c$,
+        \item $X_nY_n$ converges in distribution to $X \cdot c$,
+        \item if $c \neq 0$ then $X_n / Y_n$ converges in distribution to $X/c$.
+    \end{itemize}
+\end{thm}
+
+\begin{lemma}
+    Let $X_n$ be a sequence of random variables defined on a probability space $\Omega$. If $X_n$ converges in distribution to a real constant $c$, then $X_n$ converges in probability to $c$.
+\end{lemma}
+
+\begin{defn}
+    The \emph{delta-method} takes an independent and identically distributed sequence of random variables $X_1, X_2, \ldots$, with $\expectationof{X_i = \mu}$ and $\varianceof{X_i} = \sigma^2$. Let $g: \R \to \R$ be a $C^2$ function, then
+    \begin{align}
+        g\left(\overline{X}\right)
+    \end{align}
+\end{defn}
+
+\section{Paramnetric Estimation}
+
+\subsection{Method of Moments}
+
+\begin{defn}
+    Consider a collection of independent and identically distributed random variables $X_1, \ldots, X_n$ with a common distribution function $F_{\theta}$, where $\theta \in \R^k$ is a non-random fixed but unknown parameter. We say that the set of all $X$ with distribution $F_{\theta}$ for some $\theta \in \R^k$ forms a \emph{parametric family}.
+\end{defn}
+
+\begin{rmk}
+    If $\theta \in \R^{k}$ is known, then we know $F_{\theta}$.
+\end{rmk}
+
+\begin{exmp}
+    Consider $X_1, \ldots, X_n, \ldots$ independent and identically distributed Poisson($\lambda$) random variables, where $\lambda > 0$. We have parameter space $\Theta = \{\lambda \in \R: \lambda > 0\}$, and
+    \begin{align*}
+        P(X_i = \ell) = \frac{e^{-\lambda}\lambda^{\ell}}{\ell!},\;\;\ell \geq 0.
+    \end{align*}
+\end{exmp}
+
+\begin{exmp}
+    Consider $X_1, \ldots, X_n, \ldots$ independent and identically distributed uniform random variables on $[0, \theta]$, where $\theta > 0$. Since the support of the distribution function is $[0, \frac{1}{\theta}]$, which is probabilistically equivalent to $(0, \frac{1}{\theta})$. Note that the support then depends on $\theta$.
+\end{exmp}
+
+\begin{defn}
+    In the \emph{Method of Moments}, we find expressions for the moments of a distribution in terms of the parameters of the distribution, and then invert these functions to estimate the parameters in terms of the \emph{sample moments}.
+\end{defn}
+
+\begin{exmp}
+    Consider $X_1, \ldots, X_n, \ldots$ independent and identically distributed exponential($\lambda$) random variables. Notice that
+    \begin{align*}
+        \expectationof{X_i} = \int_{0}^{\infty}x\lambda e^{-\lambda x}dx = \frac{1}{\lambda},
+    \end{align*}
+    and so $\lambda = 1/\mu$. We can therefore estimate
+    \begin{align*}
+        \hat{\lambda}_{\textrm{MoM}} = \frac{1}{\samplemeanof{X}}.
+    \end{align*}
+
+    Since $g(x) = 1/x$ is smooth when $x \neq 0$, and the Weak Law of Large Numbers \ref{wlln} guarantees $\samplemeanof{X}$ converges to $\mu$ in probability, it follows that $1/\samplemeanof{X}$ converges to $1/\mu = \lambda$ in probability, and so this estimator is \emph{consistent}.
+\end{exmp}
+
+\begin{exmp}
+    Consider $X_1, \ldots, X_n, \ldots$ independent and identically distributed normal variables with distribution $N(\mu, \sigma^2)$, so $\theta = (\mu, \sigma^2)$. We find that
+    \begin{align*}
+        \mu &= \mu_1 \\
+        \sigma^2 &= \mu_2 - \mu_1^2.
+    \end{align*}
+    In follows that we can estimate
+    \begin{align*}
+        \hat{\mu}_{\textrm{MoM}} &= \samplemeanof{X} \\
+        \hat{\sigma^2}_{\textrm{MoM}} &= \varianceof{x} - \samplemeanof{X}^2.
+    \end{align*}
+\end{exmp}
+
+\subsection{Maximum Likelihood Estimators}
+
+Consider the joint density $f(x_1,\ldots,x_n|\theta)$ of $X_1, \ldots, X_n$. If we can maximize this value over $\theta$, we have an estimate of $\theta$ which has the ``maximum likelihood'' of us having observed the sample data we have.
+
+\begin{defn}
+    Let $X_1, \ldots, X_n, \ldots$ random variables drawn from a common distribution with parameter vector $\theta \in \R^k$. Let
+    \begin{align*}
+        \hat{\theta}(x_1, \ldots, x_n) = \argmax_{\theta}f(x_1,\ldots,x_n|\theta).
+    \end{align*}
+    We define the \emph{maximum likelihood estimator} of $\theta$ as
+    \begin{align*}
+        \theta(X_1, \ldots, X_n).
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    When $X_1, \ldots, X_n$ are independent and identically distributed,
+    \begin{align*}
+        \hat{\theta}(x_1, \ldots, x_n) = \argmax_{\theta}\sum_{i=1}^{n}\ln f(x_i|\theta).
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Since $X_1, \ldots, X_n$ are independent and identically distributed, it follows that
+    \begin{align*}
+        f(x_1, \ldots, x_n | \theta) = \prod_{i=1}^{n}f(x_i,\theta).
+    \end{align*}
+    Since $\ln(x)$ is monotonic, the argument at the maximum of $f(x_1, \ldots, x_n|\theta)$ is the argument at the maximum of $\ln f(x_1, \ldots, x_n|\theta)$. Therefore,
+    \begin{align*}
+        \hat{\theta}(x_1, \ldots, x_n) = \argmax_{\theta}\ln\left[\prod_{i=1}^{n}f(x_i,\theta)\right] = \argmax_{\theta}\sum_{i=1}^{n}\ln f(x_i|\theta).
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    Consider $X_1, \ldots, X_n, \ldots$ independent and identically distributed exponential($\lambda$) random variables. Then
+    \begin{align*}
+        f(x_1, \ldots, x_n|\lambda) = \lambda^n\exp\left(-\lambda\sum_{i=1}^{n}x_i\right),
+    \end{align*}
+    so
+    \begin{align*}
+        \ln f(x_1, \ldots, x_n|\lambda) = n\ln(\lambda) - \lambda\sum_{i=1}^{n}x_i.
+    \end{align*}
+\end{exmp}
+
+\begin{exmp}
+    Consider $X_1, \ldots, X_n, \ldots$ independent and identically distributed normal variables with distribution $N(\mu, \sigma^2)$, so $\theta = (\mu, \sigma^2)$. We find that
+    \begin{align*}
+        f\left(x_1, \ldots, x_n|\theta\right) = \left[\frac{1}{\sigma\sqrt{2}\pi}\right]^{n}\exp\left[-\frac{1}{2\sigma^2}\sum_{i=1}^{n}\left(x_i-\mu\right)^2\right],
+    \end{align*}
+    and so
+    \begin{align*}
+        \ln f\left(x_1, \ldots, x_n|\theta\right) = -n\ln(\sigma\sqrt{2}\pi) -\frac{1}{2\sigma^2}\sum_{i=1}^{n}\left(x_i-\mu\right)^2.
+    \end{align*}
+    Then we have
+    \begin{align*}
+        \begin{pmatrix}
+            \frac{\partial \ln f\left(x_1, \ldots, x_n|\theta\right)}{\partial \mu} \\
+            \frac{\partial \ln f\left(x_1, \ldots, x_n|\theta\right)}{\partial \sigma}
+        \end{pmatrix} = \begin{pmatrix}
+            \frac{1}{\sigma^2}\sum_{i=1}^{n}\left(x_i-\mu\right) \\
+            \frac{-n}{\sigma} + \frac{1}{\sigma^3}\sum_{i=1}^{n}\left(x_i-\mu\right)^2.
+        \end{pmatrix}
+    \end{align*}
+    Since our estimator is smooth, its maximum must occur when this derivative is zero. Therefore, we find
+    \begin{align*}
+        \sum_{i=1}^{n}(x_i - \mu) &= 0 \implies \hat{\mu}_{\textrm{MLE}} = \samplemeanof{X} \\
+        \frac{-n}{\sigma} + \frac{1}{\sigma^3}\sum_{i=1}^{n}\left(x_i-\mu\right)^2 &= 0 \implies \hat{\sigma^2}_{\textrm{MLE}} = \frac{1}{n}\sum_{i=1}^{n}\left(X_i-\samplemeanof{X}\right)^2.
+    \end{align*}
+\end{exmp}
+
+\begin{exmp}
+    Consider $X_1, \ldots, X_n, \ldots$ independent and identically distributed uniform variables on $[0, \theta]$. Then
+    \begin{align*}
+        f(x_1, \ldots, x_n|\theta) = \left(\frac{1}{\theta}\right)^{n}1_{[0, \theta]}.
+    \end{align*}
+    We can see that $f(x_1, \ldots, x_n)$ is maximized when $\theta$ is as small as possible, but at least as large as any $X_i$ so that all indicators are one. It follows that
+    \begin{align*}
+        \hat{\theta}_{\textrm{MLE}} = \max_{i}(X_i).
+    \end{align*}
+    Contrast this with the Method of Moments estimator for $\theta$, which is
+    \begin{align*}
+        \hat{\theta}_{\textrm{MoM}} = 2\samplemeanof{X}.
+    \end{align*}
+\end{exmp}
+
+\subsection{Fisher Information}
