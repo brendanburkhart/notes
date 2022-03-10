@@ -1,0 +1,44 @@
+\makepagestyle{onesideruled}
+\makeevenfoot{onesideruled}{}{\thepage}{}
+\makeoddfoot{onesideruled}{}{\thepage}{}
+\makeheadrule{onesideruled}{\textwidth}{\normalrulethickness}
+\makeevenhead{onesideruled}{\scshape\leftmark}{}\rightmark{}
+\makeoddhead{onesideruled}{\scshape\leftmark}{}{\rightmark}
+
+\makepsmarks{onesideruled}{
+    \nouppercaseheads
+    \createmark{chapter}{left}{shownumber}{}{. \space}
+    \createmark{section}{right}{shownumber}{}{. \space}
+    \createplainmark{toc}{left}{\contentsname}
+    \createplainmark{lof}{left}{\listfigurename}
+    \createplainmark{lot}{left}{\listtablename}
+    \createplainmark{bib}{left}{\bibname}
+    \createplainmark{index}{left}{\indexname}
+    \createplainmark{glossary}{left}{\glossaryname}
+}
+
+\makechapterstyle{peregrine}{
+    \chapterstyle{default}
+    \renewcommand*{\chapnamefont}{\normalfont\LARGE\scshape}
+    \renewcommand*{\printchaptername}{\raggedleft\chapnamefont \@chapapp}
+    \renewcommand*{\chapnumfont}{\normalfont\Huge}
+    \renewcommand*{\chaptitlefont}{\normalfont\Huge\scshape}
+    \setlength{\chapindent}{\marginparsep}
+    \addtolength{\chapindent}{\marginparwidth}
+    \renewcommand*{\printchaptertitle}[1]{
+        \begin{adjustwidth}{}{-\chapindent}
+            \raggedleft \chaptitlefont ##1\par\nobreak
+        \end{adjustwidth}
+    }
+    \renewcommand*{\afterchaptertitle}{
+        \vskip\onelineskip \hrule\vskip\afterchapskip
+    }
+}
+
+\setlrmarginsandblock{3cm}{3cm}{*}
+\setulmarginsandblock{3cm}{3cm}{*}
+\setmarginnotes{1pt}{2pt}{0pt}
+\checkandfixthelayout
+
+\pagestyle{onesideruled}
+\chapterstyle{peregrine}
