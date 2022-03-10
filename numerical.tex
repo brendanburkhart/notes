@@ -144,3 +144,63 @@ Then the total error is
         \item \emph{cubic convergence} if $p = 3$.
     \end{itemize}
 \end{rmk}
+
+\section{Matrix Factorization}
+
+\begin{defn}
+    LU composition
+\end{defn}
+
+\begin{defn}
+    Diagonally dominant
+\end{defn}
+
+\begin{thm}
+    Positive definite $\iff$ $\forall k A_k$ is positive definite.
+    Positive definite $\iff$ $\forall k \det A_k > 0$ \emph{and} $A$ is Hermitian.
+    Positive definite $\iff$ $A$ is Hermitian and Gaussian elimination can be performed without permutations.
+\end{thm}
+
+\begin{thm}{Cholesky Factorization}\label{cholesky-factorization}\proofbreak
+    Let $A \in M_{n \times n}(\C)$ be a positive definite matrix. There exists a unique lower triangular matrix $L \in M_{n \times n}(\C)$ such that $L_{ii} > 0$ such that $A = LL^{*}$. 
+\end{thm}
+
+\begin{proof}
+    We will proceed by induction on $n$. In the base case $n=1$, we simply have $A = [a]$, and so for $L = [l]$, $LL^{*} = l\overline{l}$, and since $l_{ii}$ must be real we have $l = \sqrt{a}$. Since $A$ is positive definite, by \ref{positive-semidefinite-criteria} it follows that $a > 0$ and so $\sqrt{a} \in \R$.
+
+    Assume that a unique decomposition exists for all $0 \leq n < k$ for some $k$. Consider any positive definite matrix $A \in M_{k \times k}(\C)$. We can write
+    \[
+        A = \begin{pmatrix}
+            A_{k-1} & b \\
+            \overline{b} & a_{kk}
+        \end{pmatrix}
+    \]
+\end{proof}
+
+\begin{defn}
+    A \emph{band matrix} is a particular type of sparse matrix in which the non-zero entries occur only within $p$ diagonals above the major diagonal, and $q$ diagonals above. Formally, $A \in M_{n \times n}$ is a \emph{band matrix} if there exists \emph{unique} $p, q \in \{1, \ldots, n\}$ such that $A_{ij}$ is zero whenever $j - i \geq p$ or $i - j \geq q$.
+\end{defn}
+
+\begin{rmk}
+    Gaussian elimination is always successful as long as a pivot can be found.
+\end{rmk}
+
+\begin{defn}
+    In \emph{partial pivoting}, at step $k$ of Gaussian elimination, we choose
+    \begin{align*}
+        i_{k} = \argmax_{k\leq i\leq n}\abs{a_{ik}^{(k)}}
+    \end{align*}
+    as the pivot. If $i_k > k$, we swap rows $k$ and $i_k$, and then proceed as normal. We can construct a permutation matrix $P$ such that $PA = LU$.
+\end{defn}
+
+\begin{defn}
+    In \emph{complete pivoting}, at step $k$ of Gaussian elimination, we choose
+    \begin{align*}
+        (i_{k}, j_{k}) = \argmax_{k\leq i, j\leq n}\abs{a_{ik}^{(k)}}
+    \end{align*}
+    as the pivot. If $i_k > k$, we swap rows $k$ and $i_k$, if $j_k > k$, we swap columns $k$ and $j_k$, and then proceed as normal. We can construct permutation matrices $P$ and $Q$ such that $PAQ = LU$.
+\end{defn}
+
+\begin{rmk}
+    While complete pivoting may be theoretically superior, partial pivoting yields similar results and so is preferred in practice.
+\end{rmk}
