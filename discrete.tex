@@ -1349,7 +1349,7 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
     \end{align*}
     Note that $N_i$ is invertible mod $n_i$ by the Invertible Elements Theorem \ref{invertible-elements}, so we can let $\overline{N_i} = N_i^{-1} \bmod n_i$. Also note that we can efficiently compute $\overline{N_i}$ using the Euclidean algorithm.
 
-    Take $x = b_1N_1\overline{N_1} + b_2N_2\overline{N_2} + \cdots + b_kN_k\overline{N_k}$. Then $x \bmod n_i = b_i$ since $b_jN_j\overline{N_j} \bmod n_i = 0$ for $i \neq j$ and $b_iN_i\overline{N_i} \bmod n_i = b_i$. Therefore, such a solution exists. To verify uniqueness, suppose we have $x$ and $x'$ that both satisfy the conditions. Then clearly $x \equiv x' \bmod n_i$ for all $1 \leq i \leq k$, and so $n_i \div \abs{x - x'}$. Since the $n_i$s are relatively prime, $n \div \abs{x - x'}$. Since $0 \leq x, x' < n$, we know that $\abs{x - x'} < n$, and so we must have $\abs{x - x'} = 0$ which implies $x = x'$.
+    Take $y = b_1N_1\overline{N_1} + b_2N_2\overline{N_2} + \cdots + b_kN_k\overline{N_k}$. Then $y \bmod n_i = b_i$ since $b_jN_j\overline{N_j} \bmod n_i = 0$ for $i \neq j$ and $b_iN_i\overline{N_i} \bmod n_i = b_i$. Therefore, such a solution exists, and moreover if we take $x = y \bmod n$ then $0 \leq x \leq n$. To verify uniqueness, suppose we have $x$ and $x'$ that both satisfy the conditions. Then clearly $x \equiv x' \bmod n_i$ for all $1 \leq i \leq k$, and so every $n_i$ divides $\abs{x - x'}$. Since the $n_i$'s are relatively prime, $n$ divides $\abs{x - x'}$. Since $0 \leq x, x' < n$, we know that $\abs{x - x'} < n$, and so we must have $\abs{x - x'} = 0$ which implies $x = x'$.
 \end{proof}
 
 \begin{exmp}
