@@ -1196,7 +1196,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{proof}
 
 \begin{lemma}\label{prime-division-one}
-    Let $a, b, p \Z$ with $p$ a prime number. If $p \mid ab$, then at least one of $p \mid a$ and $p \mid b$ must be true.
+    Let $a, b, p \in \Z$ with $p$ a prime number. If $p \mid ab$, then at least one of $p \mid a$ and $p \mid b$ must be true.
 \end{lemma}
 
 \begin{proof}
@@ -1279,6 +1279,54 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
     Let $n \in \Z^+$. For every $a \in \Z_n$ such that $\gcdof{a}{n} = 1$, then
     \[a^{\phi(n)} \equiv 1 \pmod n.\]
 \end{thm}
+
+\begin{lemma}\label{divisor-bijection}
+    Let $n \in \Z^+$, and let $d_1, d_2, \ldots, d_k$ be the positive divisors of $n$ in ascending order. Let
+    \begin{align*}
+        A_{d_i} &= \left\{a\in \Z\compbar 1 \leq a \leq n, \gcdof{a}{n} = d_i\right\}.
+    \end{align*}
+    Then $\abs{A_{d_i}} = \varphi(d_{k-(i-1)})$.
+\end{lemma}
+
+\begin{proof}
+    Recall that if $a|n$, then $n = qa$ and so $q|n$. Therefore, we can uniquely pair-off the divisors of $n$. Furthermore, if $aq = n$ and $br = n$, and $a<b$, then
+    \begin{align}
+        q = \frac{n}{a} > \frac{n}{b} = r.
+    \end{align}
+    Since there are exactly $i-1$ divisors of $n$ less than $d_{i}$ and exactly $i-1$ divisors of $n$ greater than $d_{k-(i-1)}$, it follows that $d_{i}$ is paired-off with $d_{k-(i-1)}$.
+
+    Let $B_{d_i} = \left\{b\in \Z\compbar 1 \leq b \leq \frac{n}{d_i}, \gcdof{b}{\frac{n}{d_i}} = 1\right\}$. Note that we just proved that $n/d_i = d_{k-(i-1)}$, so $\abs{B_{d_i}} = \varphi(d_{k-(i-1)})$.
+    
+    It just remains for us to show that $\abs{B_{d_i}} = \abs{A_{d_i}}$. Consider $f: B_{d_i} \to A_{d_i}$ defined by $b \mapsto d_ib$. I claim this is a bijection between $B_{d_i}$ and $A_{d_i}$. First, we prove that $d_ib$ is actually in $A_{d_i}$. Since $1 \leq b \leq \frac{n}{d_i}$, we have $d_i \leq bd_i \leq n$. We know by Corollary \ref{relatively-prime-linear-combination} that there exists integers $x$ and $y$ such that $bx + \frac{n}{d_i}y = 1$, so $d_{i}bx + ny = d_i$. Since $d_ibx + ny = g$ implies $bx + \frac{n}{d_i}y = \frac{g}{d_i}$, and we know that $1$ is the minimum positive value of $bx + \frac{n}{d_i}y$ by Theorem \ref{gcd-characterization}, it follows that if $g > 1$ then $\frac{g}{d_i} = 1$ and so $g = d_i$. Therefore, by the same theorem we have $\gcdof{d_{i}b}{n} = d_i$, and so $d_{i}b \in A_{d_i}$.
+
+    Now that we have proved $f$ is a function, we must show it is injective and surjective. Consider $a \in A_{d_i}$, so $\gcdof{a}{n} = d_i$ and then by Theorem \ref{gcd-characterization} there exists integers $x$ and $y$ such that $ax + ny = d_i$. Therefore, $\frac{a}{d_i}x + \frac{n}{d_i}y = 1$, and so $\gcdof{\frac{a}{d_i}}{\frac{n}{d_i}} = 1$. Since $1 \leq a \leq n$, and $\frac{a}{d_i}$ must clearly be an integer, it follows that $1 \leq \frac{a}{d_i} \leq \frac{n}{d_i}$, and so we have $\frac{a}{d_i} \in B_{d_i}$. Finally, if $b_1d_i = b_2d_i$, then $b_1 = b_2$. Therefore, $f$ is a bijection and so $\abs{B_{d_i}} = \abs{A_{d_i}}$.
+\end{proof}
+
+\begin{lemma}\label{gcd-partition}
+    The set $\{1, \ldots, n\}$ is the disjoint union of $A_{d_i}$ for all positive divisors $d_i$ of $n$.
+\end{lemma}
+
+\begin{thm}
+    Let $n \in \Z^+$, and let $d_1, d_2, \ldots, d_k$ be the positive divisors of $n$. Then
+    \begin{align*}
+        n = \sum_{i=1}^{k}\varphi(d_i).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Notice that
+    \begin{align*}
+        n = \abs{\left\{a \in \Z | 1 \leq a \leq n\right\}},
+    \end{align*}
+    and so by Lemma \ref{gcd-partition} we know that
+    \begin{align*}
+        n = \sum_{i=1}^{k}\abs{A_{d_i}}.
+    \end{align*}
+    Therefore by Lemma \ref{divisor-bijection} we have
+    \begin{align*}
+        n = \sum_{i=1}^{k}\abs{A_{d_i}} = \sum_{i=1}^{k}\varphi(d_{k-(i-1)}) = \sum_{i=1}^{k}\varphi(d_i).
+    \end{align*}
+\end{proof}
 
 \begin{thm}{Chinese Remainder Theorem}\label{chinese-remainder-theorem}\proofbreak
     Let $n_1, \ldots, n_k \in \Z^+$ such that $\gcdof{n_i}{n_j} = 1$ for all $i \neq j$, and consider $b_1, \ldots, b_k \in \Z$. Let
