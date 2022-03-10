@@ -204,3 +204,16 @@ Then the total error is
 \begin{rmk}
     While complete pivoting may be theoretically superior, partial pivoting yields similar results and so is preferred in practice.
 \end{rmk}
+
+\begin{thm}
+    Let $A \in M_{n \times n}(\C)$ be Hermitian. There exists a unitary matrix $U$ such that $A = UDU^{*}$, where
+    \begin{align*}
+        D = \begin{pmatrix}
+            \lambda_1 & 0 & \cdots & 0 \\
+            0 & \lambda_2 & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \lambda_n \\
+        \end{pmatrix}
+    \end{align*}
+    and $\lambda_1, \ldots, \lambda_n$ are the eigenvalues (with multiplicity) of $A$.
+\end{thm}
