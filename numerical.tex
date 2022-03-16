@@ -318,7 +318,7 @@ Then the total error is
 \end{defn}
 
 \begin{rmk}
-    We know that $\norm{A}_2 = \sqrt{\rho(A^{*}A)}$, in which case $K(A)$ is
+    We know that $\norm{A}_2 = \sqrt{\rho(A^{*}A)}$, in which case $\kappa(A)$ is
     \begin{align*}
         \frac{\max_{\lambda \in \sigma(A)}\abs{\lambda}}{\min_{\lambda \in \sigma(A)}\abs{\lambda}}.
     \end{align*}
@@ -336,10 +336,83 @@ Then the total error is
     \end{itemize}
     and
     \begin{align*}
-        \frac{\norm{\delta x}}{\norm{x}} \leq \frac{K(A)}{1 - K(A)\frac{\norm{delta A}}{\norm{A}}}\left(\frac{\norm{\delta A}}{\norm{A}} + \frac{\norm{\delta b}}{\norm{b}}\right).
+        \frac{\norm{\delta x}}{\norm{x}} \leq \frac{\kappa(A)}{1 - \kappa(A)\frac{\norm{\delta A}}{\norm{A}}}\left(\frac{\norm{\delta A}}{\norm{A}} + \frac{\norm{\delta b}}{\norm{b}}\right).
     \end{align*}
 \end{thm}
 
-% \begin{thm}
-%     Bounds/control on error for Gaussian elimination.
-% \end{thm}
+\begin{proof}
+    Notice that
+    \begin{align*}
+        \norm{\delta A} \leq \frac{1}{\norm{A^{-1}}} \implies \norm{A^{-1}\delta A} \leq \norm{A^{-1}}\norm{\delta A} < 1,
+    \end{align*}
+    and
+    \begin{align*}
+        A + \delta A = A\left(I_n + A^{-1}\delta A\right)
+    \end{align*}
+    Let $M = -A^{-2}\delta A$, so $\norm{A} < 1$, and then
+    \begin{align*}
+        I_n + A^{-1}\delta A)
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    Consider an $n \times n$ invertible matrix $A$, then the \emph{growth factor} of $A$ is
+    \begin{align*}
+        \rho = \frac{1}{\norm{A}_{\infty}}\max_{1 \leq i,j,k \leq n} \abs{A_{ij}^{(k)}},
+    \end{align*}
+    where $A^{(k)}$ is the $k$th iterate obtained via Gaussian elimination.
+\end{defn}
+
+\begin{thm}
+    Bounds/control on error for Gaussian elimination.
+
+    Consider the linear system $Ax = b$, where $A$ is an $n \times n$ invertible matrix, and its $LU$ decomposition obtained via Gaussian elimination. Assume presence of numerical error, so
+    \begin{align*}
+        LU = A + E
+    \end{align*}
+    for some $n \times n$ matrix $E$. Then
+    \begin{align*}
+        \frac{\norm{E}_{\infty}}{\norm{A}_{\infty}} \leq n^2\rho\delta,
+    \end{align*}
+    where $\rho$ is the growth factor of $A$ and $\delta$ is the machine epsilon.
+\end{thm}
+
+\begin{rmk}
+    Using different pivoting strategies, the growth factor $\rho$ may be controlled to an extent. Using \emph{complete pivoting}, we can bound it as
+    \begin{align*}
+        \rho \leq (1.8)n^{\ln(n)/4}.
+    \end{align*}
+\end{rmk}
+
+\section{Solving Linear Systems Efficiently}
+
+We will attempt to transform the linear system $Ax = b$ into the form $x = Tx + c$, the so-called ``fixed-point'' form of $x$, since the solutions are the fixed-points of the affine transformation.
+
+Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ for some vector $b$, we can write $Ax = b$ as $Bx + (A - B)x = b$, which in turn may be rewritten as $x = B^{-1}(B-A)x + B^{-1}b = (I_n - B^{-1}A)x + B^{-1}b$.
+
+\begin{defn}
+    Select (arbitrary) point $x^{(0)} \in \R^{d}$ and recursively define
+    \begin{align*}
+        x^{(k+1)} &= Tx^{(k)} + c = \left(I_n - B^{-1}A\right)x^{(k)} + B^{-1}b
+    \end{align*}
+    which is equivalent to
+    \begin{align*}
+        B\left(x^{(k+1)} - x^{(k)}\right) = b - Ax^{(k)}.
+    \end{align*}
+    We call the expression on the right hand side the \emph{residual}. Various \emph{stoppping criterion} for termination of this algorithm are possible, such as when the relatively  (or absolute) error falls beneath a chosen threshold.
+\end{defn}
+
+\begin{defn}{Jacobi method}
+    Let
+    \begin{align*}
+        A = -L + D - U,
+    \end{align*}
+    where $-L$, $D$, $-U$ are lower triangular, diagonal, and upper triangular matrices respectively. In the \emph{Jacobi method}, we choose $B = D$, and so
+    \begin{align*}
+        T_{J} = I - B^{-1}A = I - D^{-1}A = I-D^{-1}(D - L - U) = D^{-1}(L + U).
+    \end{align*}
+    Notice that we then have
+    \begin{align*}
+        x^{(k + 1)}_{i} = \frac{-\sum_{j\neq i}A_{ij}x^{(k_j)} + b_i}{A_{ii}}.
+    \end{align*}
+\end{defn}
