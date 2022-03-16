@@ -1358,3 +1358,59 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
         x = 4(35 \cdot 31)\overline{(35 \cdot 31)} + 5(33 \cdot 31)\overline{(33 \cdot 31)} + 6(35 \cdot 33)\overline{(35 \cdot 33)}.
     \end{align*}
 \end{exmp}
+
+\begin{prop}
+    Let $p$ be prime, and consider $c \in \Z_{p}$ that has a square root $m$ mod $p$. Then $\pm m$ are the \emph{only} square roots of $c$ mod $p$.
+\end{prop}
+
+\begin{proof}
+    Consider a square root $a$ of $c$ mod $p$. Then $a^2 = c \bmod p$, and $m^2 = c \bmod p$, therefore $a^2 - m^2 = qp$ for some $q \in \Z$ by definition. Therefore,
+    \begin{align*}
+        p | (m - a)(m + a).
+    \end{align*}
+    Since $p$ is prime, by Lemma \ref{prime-division-one} we must have $p | m - a$ or $p | a - (-m)$. Therefore, $a = m \bmod p$ or $a = -m \bmod p$.
+\end{proof}
+
+\begin{prop}\label{modular-square-roots}
+    Let $p$ be a prime such that $p = 3 \bmod 4$. If there exists $c \in \Z_p$ with square root $m$ mod $p$, then
+    \begin{align*}
+        \pm m = \pm c^{\frac{p+1}{4}} \bmod p.
+    \end{align*}
+\end{prop}
+
+\begin{proof} Since $m^2 = c$ mod $p$, we have
+    \begin{align*}
+        \left(c^{\frac{p+1}{4}}\right)^2 = \left[\left(m^2\right)^{\frac{p+1}{4}}\right]^{2} = m^{p+1} = m^{p-1}m^2 = m^2 = c \bmod p.
+    \end{align*}
+    Note that we hae $m^{p-1} = 1 \bmod p$ by Fermat's Little theorem \ref{fermat-little-corallary}.
+\end{proof}
+
+\begin{prop}
+    Let $p, q$ be distinct primes such that $p = q = 3 \bmod 4$. If $c \in \Z_{pq}$ has a square root mod $pq$, then all squares roots of $c$ mod $pq$ are (not necessarily all distinct):
+    \begin{align*}
+        m_1 &= c^{\frac{p+1}{4}} \bmod p = c^{\frac{q+1}{4}} \bmod q \\
+        m_2 &= c^{\frac{p+1}{4}} \bmod p = -c^{\frac{q+1}{4}} \bmod q \\
+        m_3 &= -c^{\frac{p+1}{4}} \bmod p = c^{\frac{q+1}{4}} \bmod q \\
+        m_4 &= -c^{\frac{p+1}{4}} \bmod p = -c^{\frac{q+1}{4}} \bmod q.
+    \end{align*}
+\end{prop}
+
+\begin{rmk}
+    We can find such $m_1, \ldots, m_2$ efficiently given $c$, $p$, and $q$ via the Chinese Remainder Theorem \ref{chinese-remainder-theorem}.
+\end{rmk}
+
+\begin{proof}
+    We know that $m \in \Z_{pq}$ is a square root of $c$ mod $\Z_{pq}$ if and only if $pq | m^2 - c$, which occurs if and only if $p | m^2 - c$ \emph{and} $q | m^2 - c$ by Lemma \ref{prime-division-one}. In turn, this occurs if and only if $m = \pm c^{\frac{p+1}{4}} \bmod p$ and $m = \pm c^{\frac{q+1}{4}} \bmod q$ by Proposition \ref{modular-square-roots}.
+\end{proof}
+
+\begin{thm}{Rabin Cryptosystem Security}
+    Let $p$ and $q$ be unknown distinct primes, and let $n = pq$ be known. Then an \emph{efficient} (polynomial time complexity) method for finding $4$ distinct square roots of $c$ mod $pq$ provides an efficient factorization of $n = pq$.
+\end{thm}
+
+\begin{proof}
+    Suppose we have a method to efficiently find $m_1, \ldots, m_2$ mod $pq$, where $m_1 \neq \pm m_2$ mod $pq$. Then we know that
+    \begin{align*}
+        pq | m_{1}^2 - m_{2}^2
+    \end{align*}
+    so $pq | (m_1 - m_2)(m_1 + m_2)$. However, by assumption $pq \not| m_1 + m_2$, and $pq \not| m_1 - m_2$. It follows that $p$ divides one factor and $q$ divides the other. We can efficiently compute $\gcdof{m_1 - m_2}{n}$ using the Euclidean algorithm. Since $n$ has only $p$ and $q$ as factors, and $m_1 - m_2$ has precisely one of $p$ or $q$ as factors, this greatest common divisor must be one of $p$ or $q$, and then the other can be found by dividing $n$ by the first.
+\end{proof}
