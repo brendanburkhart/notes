@@ -17,6 +17,9 @@
     \createplainmark{glossary}{left}{\glossaryname}
 }
 
+\providecommand\currentchaptergraphic{}
+\newcommand\setchaptergraphic[1]{\def\currentchaptergraphic{#1}}
+
 \makechapterstyle{peregrine}{
     \chapterstyle{default}
     \renewcommand*{\chapnamefont}{\normalfont\LARGE\scshape}
@@ -29,6 +32,13 @@
         \begin{adjustwidth}{}{-\chapindent}
             \raggedleft \chaptitlefont ##1\par\nobreak
         \end{adjustwidth}
+    }
+    \renewcommand*{\chapterheadstart}{
+        \begin{flushleft}
+            \hspace{1cm}
+            \vspace{-2cm}
+            \currentchaptergraphic
+        \end{flushleft}
     }
     \renewcommand*{\afterchaptertitle}{
         \vskip\onelineskip \hrule\vskip\afterchapskip
