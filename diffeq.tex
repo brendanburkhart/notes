@@ -9,45 +9,14 @@
         \begin{axis}[
             ymin=-2,ymax=2,
             xmin=-1.25,xmax=1.25,
-            axis line style={draw=none},
-            tick style={draw=none},
-            xticklabels=\empty,
-            yticklabels=\empty,
+            hide axis,
         ]
-        \begin{scope}[decoration={
-            markings,
-            mark=at position 0.18 with {\arrow{latex}},
-            mark=at position 0.5 with {\arrow{latex}}}
-            ]
-
-            \foreach \h in {0.7,0.9}{
-	            \addplot[blue, domain=0:3, postaction={decorate}, samples=60, variable=\t] plot ({\h*f(t)+(1.0-\h)*0.5*s(t)},{\h*g(t)+(1.0-\h)*0.5*d(t)});
-
-                \addplot[blue, domain=0:3, postaction={decorate}, samples=60, variable=\t] plot ({-\h*f(t)-(1.0-\h)*0.5*s(t)},{-\h*g(t)-(1.0-\h)*0.5*d(t)});
-
-                \addplot[blue, domain=0:3, postaction={decorate}, samples=60, variable=\t] plot ({-\h*f(t)+(1.0-\h)*0.5*s(t)},{-\h*g(t)+(1.0-\h)*0.5*d(t)});
-
-                \addplot[blue, domain=0:3, postaction={decorate}, samples=60, variable=\t] plot ({\h*f(t)-(1.0-\h)*0.5*s(t)},{\h*g(t)-(1.0-\h)*0.5*d(t)});
-            }
-        \end{scope}
-
-        \begin{scope}[decoration={
-            markings,
-            mark=at position 0.4 with {\arrow{latex}},
-            mark=at position 0.6 with {\arrow{latex reversed}}}
-            ]
-
-            \addplot[very thick, domain=-1:1, postaction={decorate}] plot {2*x};
-        \end{scope}
-
-        \begin{scope}[decoration={
-            markings,
-            mark=at position 0.4 with {\arrow{latex reversed}},
-            mark=at position 0.6 with {\arrow{latex}}}
-            ]
-
-            \addplot[very thick, domain=-1:1, postaction={decorate}] plot {-2*x};
-        \end{scope}
+        \foreach \h in {0.7,0.85,0.95,1.0}{
+            \addplot[NavyBlue, domain=0:3, samples=60, variable=\t] plot ({\h*f(t)+(1.0-\h)*0.5*s(t)},{\h*g(t)+(1.0-\h)*0.5*d(t)});
+            \addplot[NavyBlue, domain=0:3, samples=60, variable=\t] plot ({-\h*f(t)-(1.0-\h)*0.5*s(t)},{-\h*g(t)-(1.0-\h)*0.5*d(t)});
+            \addplot[NavyBlue, domain=0:3, samples=60, variable=\t] plot ({-\h*f(t)+(1.0-\h)*0.5*s(t)},{-\h*g(t)+(1.0-\h)*0.5*d(t)});
+            \addplot[NavyBlue, domain=0:3, samples=60, variable=\t] plot ({\h*f(t)-(1.0-\h)*0.5*s(t)},{\h*g(t)-(1.0-\h)*0.5*d(t)});
+        }
         \end{axis}
     \end{tikzpicture}
 }
