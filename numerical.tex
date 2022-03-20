@@ -56,7 +56,7 @@ Then the total error is
 \end{defn}
 
 \begin{defn}
-    Given a function $f$, the \emph{condition number} is the ratio of the relative change in output to the relative change in input.
+    Given a function $f$, the \emph{condition number}, or \emph{conditioning number}, is the supremum of ratio of the relative change in output to the relative change in input.
 \end{defn}
 
 \begin{exmp}
@@ -80,6 +80,36 @@ Then the total error is
         \varepsilon_{y} \approx \sum_{i=1}^{d}\frac{\partial f}{\partial x_i}(x)\frac{x_i}{f(x)}\varepsilon_{x_i}.
     \end{align*}
 \end{defn}
+
+\begin{thm}\label{matrix-condition-number}
+    Let $A$ be a non-singular matrix, and $\norm{\cdot}$ be an induced norm. Then
+    \begin{align*}
+        \kappa(A) = \norm{A}\norm{A^{-1}}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    By definition, the conditioning number at $b$ is
+    \begin{align*}
+        \sup_{\delta b \neq 0}\frac{\norm{A^{-1}(b + \delta b) - A^{-1}b}}{\norm{A^{-1}b}}\frac{\norm{b}}{\norm{\delta b}}.
+    \end{align*}
+    Notice that
+    \begin{align*}
+        \frac{\norm{A^{-1}(b + \delta b) - A^{-1}b}}{\norm{A^{-1}b}} = \frac{\norm{A^{-1}\delta b}}{\norm{A^{-1}b}}.
+    \end{align*}
+    Therefore, the supremum of this across all $b$ is
+    \begin{align*}
+        \kappa(A) = \sup_{b \neq 0,\delta b \neq 0}\frac{\norm{A^{-1}\delta b}}{\norm{A^{-1}b}}\frac{\norm{b}}{\norm{\delta b}}.
+    \end{align*}
+    Let $c = A^{-1}b$, then we can separate the supremums over $c$ and $\delta b$ to obtain
+    \begin{align*}
+        \kappa(A) = \sup_{c \neq 0,\delta b \neq 0}\frac{\norm{A^{-1}\delta b}}{\norm{c}}\frac{\norm{Ac}}{\norm{\delta b}} = \left[\sup_{c \neq 0}\frac{\norm{Ac}}{\norm{c}}\right]\left[\sup_{\delta b \neq 0}\frac{\norm{A^{-1}\delta b}}{\norm{\delta b}}\right].
+    \end{align*}
+    Then {\color{red}add theorem to cite here} we have
+    \begin{align*}
+        \kappa(A) = \norm{A}\norm{A^{-1}}.
+    \end{align*}
+\end{proof}
 
 \begin{exmp}
     Consider $f(x_1, x_2) = x_1 - x_2$. Then
@@ -146,3 +176,245 @@ Then the total error is
         \item \emph{cubic convergence} if $p = 3$.
     \end{itemize}
 \end{rmk}
+
+\section{Matrix Factorization}
+
+\begin{defn}
+    LU composition
+\end{defn}
+
+\begin{defn}
+    Diagonally dominant
+\end{defn}
+
+\begin{thm}
+    Positive definite $\iff$ $\forall k A_k$ is positive definite.
+    Positive definite $\iff$ $\forall k \det A_k > 0$ \emph{and} $A$ is Hermitian.
+    Positive definite $\iff$ $A$ is Hermitian and Gaussian elimination can be performed without permutations.
+\end{thm}
+
+\begin{thm}{Cholesky Factorization}\label{cholesky-factorization}\proofbreak
+    Let $A \in M_{n \times n}(\C)$ be a positive definite matrix. There exists a unique lower triangular matrix $L \in M_{n \times n}(\C)$ such that $L_{ii} > 0$ such that $A = LL^{*}$. 
+\end{thm}
+
+\begin{proof}
+    We will proceed by induction on $n$. In the base case $n=1$, we simply have $A = [a]$, and so for $L = [l]$, $LL^{*} = l\overline{l}$, and since $l_{ii}$ must be real we have $l = \sqrt{a}$. Since $A$ is positive definite, by \ref{positive-semidefinite-criteria} it follows that $a > 0$ and so $\sqrt{a} \in \R$.
+
+    Assume that a unique decomposition exists for all $0 \leq n < k$ for some $k$. Consider any positive definite matrix $A \in M_{k \times k}(\C)$. We can write
+    \[
+        A = \begin{pmatrix}
+            A_{k-1} & b \\
+            \overline{b} & a_{kk}
+        \end{pmatrix}
+    \]
+\end{proof}
+
+\begin{defn}
+    A \emph{band matrix} is a particular type of sparse matrix in which the non-zero entries occur only within $p$ diagonals above the major diagonal, and $q$ diagonals above. Formally, $A \in M_{n \times n}$ is a \emph{band matrix} if there exists \emph{unique} $p, q \in \{1, \ldots, n\}$ such that $A_{ij}$ is zero whenever $j - i \geq p$ or $i - j \geq q$.
+\end{defn}
+
+\begin{rmk}
+    Gaussian elimination is always successful as long as a pivot can be found.
+\end{rmk}
+
+\begin{defn}
+    In \emph{partial pivoting}, at step $k$ of Gaussian elimination, we choose
+    \begin{align*}
+        i_{k} = \argmax_{k\leq i\leq n}\abs{a_{ik}^{(k)}}
+    \end{align*}
+    as the pivot. If $i_k > k$, we swap rows $k$ and $i_k$, and then proceed as normal. We can construct a permutation matrix $P$ such that $PA = LU$.
+\end{defn}
+
+\begin{defn}
+    In \emph{complete pivoting}, at step $k$ of Gaussian elimination, we choose
+    \begin{align*}
+        (i_{k}, j_{k}) = \argmax_{k\leq i, j\leq n}\abs{a_{ik}^{(k)}}
+    \end{align*}
+    as the pivot. If $i_k > k$, we swap rows $k$ and $i_k$, if $j_k > k$, we swap columns $k$ and $j_k$, and then proceed as normal. We can construct permutation matrices $P$ and $Q$ such that $PAQ = LU$.
+\end{defn}
+
+\begin{rmk}
+    While complete pivoting may be theoretically superior, partial pivoting yields similar results and so is preferred in practice.
+\end{rmk}
+
+\begin{thm}
+    Let $A \in M_{n \times n}(\C)$ be Hermitian. There exists a unitary matrix $U$ such that $A = UDU^{*}$, where
+    \begin{align*}
+        D = \begin{pmatrix}
+            \lambda_1 & 0 & \cdots & 0 \\
+            0 & \lambda_2 & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \lambda_n \\
+        \end{pmatrix}
+    \end{align*}
+    and $\lambda_1, \ldots, \lambda_n$ are the eigenvalues (with multiplicity) of $A$.
+\end{thm}
+
+\begin{lemma}\label{singular-non-difference-inequality}
+    Consider any singular matrix $B$, and a proper (and therefore induced) norm $\norm{\cdot}$, then
+    \begin{align*}
+        \norm{A^{-1}}\norm{A - B} \geq 1.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    Since $\norm{\cdot}$ is proper by assumption,
+    \begin{align*}
+        \norm{A^{-1}B - I_n} = \norm{A^{-1}(A-B)} \leq \norm{A^{-1}}\norm{A-B}.
+    \end{align*}
+    For convenience, let $C = A^{-1}B - I_n$. If we can show $\norm{C} \geq 1$ we are done. For any $x \in F^n$, note that since $C$ is induced we have
+    \begin{align*}
+        \norm{C} \geq \frac{\norm{Cx}}{\norm{x}} = \frac{\norm{A^{-1}Bx - x}}{\norm{x}} \geq \abs{\frac{\norm{A^{-1}Bx}}{\norm{x}} - \frac{\norm{x}}{\norm{x}}}.
+    \end{align*}
+    Since $B$ is singular, there exists $x$ such that $Bx = 0$ and $x \neq 0$ so $\norm{x} \neq 0$. Then for $x \in \mathcal{N}(B)$
+    \begin{align*}
+        \norm{C} \geq \abs{\frac{0}{\norm{x}} - \frac{\norm{x}}{\norm{x}}} = 1.
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    The condition number of a matrix $A$ is
+    \begin{align*}
+        \frac{1}{\kappa(A)} = \min\left\{\frac{\norm{A - B}}{\norm{A}}: \det(B) = 0\right\}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Let $A$ be a non-singular matrix, and $B$ be any singular matrix. Then by Lemma \ref{singular-non-difference-inequality}
+    \begin{align*}
+        \frac{\norm{A - B}}{\norm{A}} \geq \frac{1}{\norm{A}\norm{A^{-1}}}.
+    \end{align*}
+    and since $\norm{A}\norm{A^{-1}} = \kappa(A)$ by Theorem \ref{matrix-condition-number} we find that $1/\kappa(A)$ is at most the infimum of the set.
+\end{proof}
+
+\begin{defn}
+    Given a linear system $Ax = b$ with solution $x_0$ and an approximate solution $\tilde{x}$, let the \emph{residual} of $\tilde{x}$ be $r = A\tilde{x} - Ax_0 = A\tilde{x} - b$ and let $e = \tilde{x} - x_0 = A^{-1}r$.
+\end{defn}
+
+\begin{prop}
+    Let $Ax = b$ be a linear system with solution $x$, and let $r$ be the residual of some approximate solution. Then by consistency of the norm, we obtain
+    \begin{itemize}
+        \item $\norm{r} \leq \norm{A}\norm{e}$,
+        \item $\norm{e} \leq \norm{A^{-1}}\norm{r}$,
+        \item $\norm{b} \leq \norm{A}\norm{x}$,
+        \item $\norm{x} \leq \norm{A^{-1}}\norm{b}$.
+    \end{itemize}
+\end{prop}
+
+\begin{prop}
+    The relative error in an approximate solution $\tilde{x}$ can be founded by
+    \begin{align*}
+        \frac{\norm{e}}{\norm{x_0}} \leq \kappa(A)\frac{\norm{r}}{\norm{b}}.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Note that $\norm{e} \leq \norm{A^{-1}}\norm{r}$ and $\norm{b} \leq \norm{A}\norm{x_0}$ so $\norm{x_0} \geq \norm{b}/\norm{A}$. Therefore,
+    \begin{align*}
+        \frac{\norm{e}}{\norm{x_0}} \leq \norm{A}\norm{A^{-1}}\frac{\norm{r}}{\norm{b}} = \kappa(A)\frac{\norm{r}}{\norm{b}}.
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    Consider a matrix $A$. The \emph{singular values} of $A$, denoted by $\sigma(A)$, are the eigenvalues of $A^{*}A$.
+\end{defn}
+
+\begin{rmk}
+    We know that $\norm{A}_2 = \sqrt{\rho(A^{*}A)}$, in which case $\kappa(A)$ is
+    \begin{align*}
+        \frac{\max_{\lambda \in \sigma(A)}\abs{\lambda}}{\min_{\lambda \in \sigma(A)}\abs{\lambda}}.
+    \end{align*}
+\end{rmk}
+
+\begin{thm}
+    Consider a linear system $Ax = b$ with a induced matrix norm and $A$ non-singular. For perturbations $\delta A$ and $\delta b$ such that
+    \begin{align*}
+        \norm{\delta A} < \frac{1}{\norm{A^{-1}}},
+    \end{align*}
+    the following hold:
+    \begin{itemize}
+        \item $A + \delta A$ is non-singular,
+        \item $(A + \delta A)(x + \delta x) = (b + \delta b)$,
+    \end{itemize}
+    and
+    \begin{align*}
+        \frac{\norm{\delta x}}{\norm{x}} \leq \frac{\kappa(A)}{1 - \kappa(A)\frac{\norm{\delta A}}{\norm{A}}}\left(\frac{\norm{\delta A}}{\norm{A}} + \frac{\norm{\delta b}}{\norm{b}}\right).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Notice that
+    \begin{align*}
+        \norm{\delta A} \leq \frac{1}{\norm{A^{-1}}} \implies \norm{A^{-1}\delta A} \leq \norm{A^{-1}}\norm{\delta A} < 1,
+    \end{align*}
+    and
+    \begin{align*}
+        A + \delta A = A\left(I_n + A^{-1}\delta A\right)
+    \end{align*}
+    Let $M = -A^{-2}\delta A$, so $\norm{A} < 1$, and then
+    \begin{align*}
+        I_n + A^{-1}\delta A)
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    Consider an $n \times n$ invertible matrix $A$, then the \emph{growth factor} of $A$ is
+    \begin{align*}
+        \rho = \frac{1}{\norm{A}_{\infty}}\max_{1 \leq i,j,k \leq n} \abs{A_{ij}^{(k)}},
+    \end{align*}
+    where $A^{(k)}$ is the $k$th iterate obtained via Gaussian elimination.
+\end{defn}
+
+\begin{thm}
+    Bounds/control on error for Gaussian elimination.
+
+    Consider the linear system $Ax = b$, where $A$ is an $n \times n$ invertible matrix, and its $LU$ decomposition obtained via Gaussian elimination. Assume presence of numerical error, so
+    \begin{align*}
+        LU = A + E
+    \end{align*}
+    for some $n \times n$ matrix $E$. Then
+    \begin{align*}
+        \frac{\norm{E}_{\infty}}{\norm{A}_{\infty}} \leq n^2\rho\delta,
+    \end{align*}
+    where $\rho$ is the growth factor of $A$ and $\delta$ is the machine epsilon.
+\end{thm}
+
+\begin{rmk}
+    Using different pivoting strategies, the growth factor $\rho$ may be controlled to an extent. Using \emph{complete pivoting}, we can bound it as
+    \begin{align*}
+        \rho \leq (1.8)n^{\ln(n)/4}.
+    \end{align*}
+\end{rmk}
+
+\section{Solving Linear Systems Efficiently}
+
+We will attempt to transform the linear system $Ax = b$ into the form $x = Tx + c$, the so-called ``fixed-point'' form of $x$, since the solutions are the fixed-points of the affine transformation.
+
+Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ for some vector $b$, we can write $Ax = b$ as $Bx + (A - B)x = b$, which in turn may be rewritten as $x = B^{-1}(B-A)x + B^{-1}b = (I_n - B^{-1}A)x + B^{-1}b$.
+
+\begin{defn}
+    Select (arbitrary) point $x^{(0)} \in \R^{d}$ and recursively define
+    \begin{align*}
+        x^{(k+1)} &= Tx^{(k)} + c = \left(I_n - B^{-1}A\right)x^{(k)} + B^{-1}b
+    \end{align*}
+    which is equivalent to
+    \begin{align*}
+        B\left(x^{(k+1)} - x^{(k)}\right) = b - Ax^{(k)}.
+    \end{align*}
+    We call the expression on the right hand side the \emph{residual}. Various \emph{stoppping criterion} for termination of this algorithm are possible, such as when the relatively  (or absolute) error falls beneath a chosen threshold.
+\end{defn}
+
+\begin{defn}{Jacobi method}
+    Let
+    \begin{align*}
+        A = -L + D - U,
+    \end{align*}
+    where $-L$, $D$, $-U$ are lower triangular, diagonal, and upper triangular matrices respectively. In the \emph{Jacobi method}, we choose $B = D$, and so
+    \begin{align*}
+        T_{J} = I - B^{-1}A = I - D^{-1}A = I-D^{-1}(D - L - U) = D^{-1}(L + U).
+    \end{align*}
+    Notice that we then have
+    \begin{align*}
+        x^{(k + 1)}_{i} = \frac{-\sum_{j\neq i}A_{ij}x^{(k_j)} + b_i}{A_{ii}}.
+    \end{align*}
+\end{defn}
