@@ -1,4 +1,15 @@
-\setchaptergraphic{}
+\setchaptergraphic{
+    \begin{tikzpicture}[scale=0.875]
+        \begin{axis}[hide axis,colormap/viridis]
+            \addplot3[surf,domain=-2:2,y domain=-2:2] {7*x*y/exp(x^2+y^2)};
+        \end{axis}
+    \end{tikzpicture}
+    \begin{tikzpicture}[scale=0.875]
+        \begin{axis}[hide axis,colormap/bluered]
+            \addplot3[surf,domain=-1:1,y domain=-1:1] {(1-y)^2+100*(x-y^2)^2};
+        \end{axis}
+    \end{tikzpicture}
+}
 
 \chapter{Optimization}
 \label{ch:optimization}
