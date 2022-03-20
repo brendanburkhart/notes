@@ -1,6 +1,6 @@
-\documentclass[11pt]{report}
+\documentclass[oneside,openany]{memoir}
 
-\usepackage{fullpage}
+\usepackage{layout}
 
 \usepackage{common}
 \usepackage{drawing}
@@ -18,12 +18,12 @@
 
 \begin{document}
 
-\begin{titlepage}
+\begin{titlingpage}
     \centering
     \vspace*{1cm}
-	{\scshape\huge Mathematics Notes \par}
+	{\scshape\Huge Mathematics Notes \par}
     \vspace{1cm}
-    {\Large Foundations of mathematics and applications \par}
+    {\LARGE Foundations of mathematics and applications \par}
     \vfill
     \vfill
     \begin{tikzpicture}
@@ -35,14 +35,12 @@
     {\scshape\large Brendan Burkhart \par}
     \vspace{0.5cm}
     {\scshape Johns Hopkins University \par}
+    \vspace{0.5cm}
+    {\scshape \number\year \par}
     \vfill
-\end{titlepage}
+\end{titlingpage}
 
 \tableofcontents
-\newpage
-
-\parskip=1em
-\parindent=0em
 
 \input{discrete}
 \input{analysis}

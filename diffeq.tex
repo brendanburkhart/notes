@@ -1,3 +1,26 @@
+\setchaptergraphic{
+    \begin{tikzpicture}[
+        scale=0.75,
+        declare function={f(\t) = 2*exp(-3*\t);
+                          g(\t) = 4*exp(-3*\t);
+                          s(\t) = 2*exp(\t);
+                          d(\t) = -4*exp(\t);}
+    ]
+        \begin{axis}[
+            ymin=-2,ymax=2,
+            xmin=-1.25,xmax=1.25,
+            hide axis,
+        ]
+        \foreach \h in {0.7,0.85,0.95,1.0}{
+            \addplot[NavyBlue, domain=0:3, samples=60, variable=\t] plot ({\h*f(t)+(1.0-\h)*0.5*s(t)},{\h*g(t)+(1.0-\h)*0.5*d(t)});
+            \addplot[NavyBlue, domain=0:3, samples=60, variable=\t] plot ({-\h*f(t)-(1.0-\h)*0.5*s(t)},{-\h*g(t)-(1.0-\h)*0.5*d(t)});
+            \addplot[NavyBlue, domain=0:3, samples=60, variable=\t] plot ({-\h*f(t)+(1.0-\h)*0.5*s(t)},{-\h*g(t)+(1.0-\h)*0.5*d(t)});
+            \addplot[NavyBlue, domain=0:3, samples=60, variable=\t] plot ({\h*f(t)-(1.0-\h)*0.5*s(t)},{\h*g(t)-(1.0-\h)*0.5*d(t)});
+        }
+        \end{axis}
+    \end{tikzpicture}
+}
+
 \chapter{Ordinary Differential Equations}
 \label{ch:diffeq}
 

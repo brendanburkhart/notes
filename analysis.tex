@@ -1,3 +1,21 @@
+\setchaptergraphic{
+    % Cauchy sequence convergence
+    \begin{tikzpicture}[scale=1.0]
+        \begin{axis}[
+            xmin=0,xmax=20,
+            ymin=-0.75,ymax=0.75,
+            axis line style={draw=none},
+            tick style={draw=none},
+            xticklabels=\empty,
+            yticklabels=\empty,
+        ]
+            \addplot[domain=0:20, MidnightBlue, dashed, ultra thick, samples=100] {+1/x};
+            \addplot[domain=0:20, MidnightBlue, dashed, ultra thick, samples=100] {-1/x};
+            \addplot[domain=0.1:20, black, thick, samples=100] {sin(deg(2*x))/x};
+        \end{axis}
+    \end{tikzpicture}
+}
+
 \chapter{Analysis}
 \label{ch:analysis}
 

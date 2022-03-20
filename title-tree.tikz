@@ -14,5 +14,5 @@
     \draw[line width=5pt] (0, 0) -- (0, 2.25);
 \end{scope}
 
-% draw broder circle
+% draw border circle
 \draw[line width=3pt] (0, 1) circle (5);

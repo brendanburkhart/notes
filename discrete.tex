@@ -1,3 +1,43 @@
+\setchaptergraphic{
+    % Petersen graph
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (a1) at ({3*cos(90)}, {3*sin(90)}) {};
+            \node (a2) at ({1.5*cos(90)}, {1.5*sin(90)}) {};
+            \node (b1) at ({3*cos(162)}, {3*sin(162)}) {};
+            \node (b2) at ({1.5*cos(162)}, {1.5*sin(162)}) {};
+            \node (c1) at ({3*cos(234)}, {3*sin(234)}) {};
+            \node (c2) at ({1.5*cos(234)}, {1.5*sin(234)}) {};
+            \node (d1) at ({3*cos(306)}, {3*sin(306)}) {};
+            \node (d2) at ({1.5*cos(306)}, {1.5*sin(306)}) {};
+            \node (e1) at ({3*cos(18)}, {3*sin(18)}) {};
+            \node (e2) at ({1.5*cos(18)}, {1.5*sin(18)}) {};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (a1) edge (a2);
+            \path [-] (b1) edge (b2);
+            \path [-] (c1) edge (c2);
+            \path [-] (d1) edge (d2);
+            \path [-] (e1) edge (e2);
+
+            \path [-] (a1) edge (b1);
+            \path [-] (b1) edge (c1);
+            \path [-] (c1) edge (d1);
+            \path [-] (d1) edge (e1);
+            \path [-] (e1) edge (a1);
+
+            \path [-] (a2) edge (c2);
+            \path [-] (c2) edge (e2);
+            \path [-] (e2) edge (b2);
+            \path [-] (b2) edge (d2);
+            \path [-] (d2) edge (a2);
+        \end{scope}
+    \end{tikzpicture}
+}
+
 \chapter{Discrete Mathematics}
 \label{ch:discrete}
 

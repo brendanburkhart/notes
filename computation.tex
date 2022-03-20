@@ -1,3 +1,22 @@
+\setchaptergraphic{
+    \begin{tikzpicture}[
+        shorten >=1pt,>={Stealth[round]},
+        node distance=2.5 cm,
+        every state/.style={draw=blue!50,very thick,fill=blue!20}
+    ]
+        \node[initial, state]   (A)                    {$q_0$};
+        \node[state, accepting] (B) [right of=A]       {$q_1$};
+        \node[state, accepting] (C) [above right of=B] {$q_2$};
+        \node[state]            (R) [below right of=B] {$q_3$};
+
+        \path[->] (A) edge [above]                  node [align=center] {0,1} (B)
+                  (B) edge [above left, bend left]  node [align=center] {1} (C)
+                      edge [below left]             node [align=center] {0} (R)
+                  (C) edge [below right, bend left] node [align=center] {0,1} (B)
+                  (R) edge [loop right]             node [align=center] {0,1} ();
+    \end{tikzpicture}
+}
+
 \chapter{Computation Theory}
 \label{ch:computation}
 

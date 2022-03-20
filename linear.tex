@@ -1,3 +1,22 @@
+\setchaptergraphic{
+    \begin{tikzpicture}[scale=1.0]
+        \coordinate (A1) at (0, 0);
+        \coordinate (B1) at (2, 0);
+        \coordinate (C1) at (2, 2);
+        \coordinate (D1) at (0, 2);
+
+        \coordinate (A2) at (6, 0);
+        \coordinate (B2) at (8, 1);
+        \coordinate (C2) at (9, 4);
+        \coordinate (D2) at (7, 3);
+
+        \tkzFillPolygon[draw, fill=red!65](A1,B1,C1,D1);
+        \tkzFillPolygon[draw, fill=blue!65](A2,B2,C2,D2);
+
+        \path[->, draw] (2.5, 1) to node[->,midway,above,inner sep=6pt] {\Huge$\mathcal{L}$} (6, 1.75);
+    \end{tikzpicture}
+}
+
 \chapter{Linear Algebra}
 \label{ch:linear}
 
