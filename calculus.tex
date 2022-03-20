@@ -1,14 +1,14 @@
 \setchaptergraphic{
     % Hyperboloid of one sheet
     \begin{tikzpicture}[scale=1.25]
-        \begin{axis}[hide axis,axis equal]
+        \begin{axis}[hide axis,axis equal,colormap/hot]
             \addplot3[surf,domain=0:360,y domain=-1.75:1.75] ({cosh(y)*cos(x)},{cosh(y)*sin(x)},{sinh(y)});
         \end{axis}
     \end{tikzpicture}
     \hspace{1cm}
     % Saddle
     \begin{tikzpicture}[scale=0.875]
-        \begin{axis}[hide axis]
+        \begin{axis}[hide axis,colormap/cool]
             \addplot3[surf,domain=-1.5:1.5,y domain=-1.5:1.5] {x^2-y^2};
         \end{axis}
     \end{tikzpicture}
