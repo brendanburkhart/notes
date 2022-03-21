@@ -2614,21 +2614,6 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     See Theorem \ref{cauchy-schwarz-triangle}.
 \end{proof}
 
-\begin{defn}
-    We define the $\ell_p$ norm, for real $p \geq 1$ and $x = (x_1, x_2, \ldots, x_n)$, by
-    \begin{align*}
-        \norm{x}_p = \left[\sum_{i=1}^{n}\abs{x_i}^p\right]^{1/p}.
-    \end{align*}    
-\end{defn}
-
-\begin{exmp}
-    The $\ell_1$ is the taxi-cab norm, while $\ell_2$ is the Euclidean norm. We can also show that
-    \begin{align*}
-        \norm{x}_{\infty} = \lim_{p\to\infty}\norm{x}_p
-    \end{align*}
-    defines a norm, called the infinity norm.
-\end{exmp}
-
 \begin{prop}{Reverse triangle inequality}\label{reverse-triangle-inequality}\proofbreak
     Let $\norm{\cdot}$ be a norm on a vector space $V$. Then for all $x, y \in V$,
     \begin{align*}
@@ -2652,7 +2637,32 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{proof}
 
 \begin{defn}
-    A \emph{matrix norm} is simply a norm on the vector space $M_{m \times n}(F)$ (where $F$ is $\R$ or $\C$). Such a norm is said to be
+    We define the $\ell_p$ norm, for real $p \geq 1$ and $x = (x_1, x_2, \ldots, x_n)$, by
+    \begin{align*}
+        \norm{x}_p = \left[\sum_{i=1}^{n}\abs{x_i}^p\right]^{1/p}.
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    Let $\norm{v}_{\infty} = \max_{i}\abs{v_i}$ be the \emph{infinity norm}.
+\end{defn}
+
+\begin{prop} The infinity norm is the limit of the $\ell_p$ norms --- that is,
+    \begin{align*}
+        \norm{v}_{\infty} = \lim_{p\to\infty}\norm{v}_p.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Notice that $\norm{v}_{p} \geq \abs{v_i}$, so $\norm{v}_{\infty} \leq \norm{v}_p$. Furthermore, by the Cauchy-Schwarz inequality \ref{cauchy-schwarz-triangle} we have
+    \begin{align*}
+        \norm{v}_p = \left[\sum_{i=1}^{n}\abs{v_i}^p\right]^{1/p} \leq \left[\sum_{i=1}^{n}\max_{i}\abs{v_i}^p\right]^{1/p} = n^{1/p}\norm{v}_{\infty}.
+    \end{align*}
+    Finally, note that $\lim_{p\to\infty}n^{1/p}\norm{v}_{\infty} = \norm{v}_{\infty}$, and the result follows.
+\end{proof}
+
+\begin{defn}
+    A \emph{matrix norm} is a norm on the vector space $M_{m \times n}(F)$ (where $F$ is $\R$ or $\C$). Such a norm is said to be
     \begin{itemize}
         \item \emph{proper} or \emph{submultiplicative} if $m = n$ and $\norm{AB} \leq \norm{A}\norm{B}$,
         \item \emph{consistent} if there exists a norm on $F^n$ such that $\norm{Av} \leq \norm{A}\norm{v}$.
@@ -2681,6 +2691,36 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
         \frac{\norm{Av}}{\norm{v}} = \frac{\abs{\lambda}\norm{v}}{\norm{v}} = \abs{\lambda},
     \end{align*}
     it follows that $\abs{\lambda} \leq \norm{A}$ for all eigenvalues $\lambda$ of $A$ and so $\rho(A) \leq \norm{A}$.
+\end{proof}
+
+\begin{thm}
+    Every proper (submultiplicative) matrix norm is consistent.
+\end{thm}
+
+\begin{proof}
+    Consider a matrix norm $\norm{\cdot}_M$ on $M_{n \times n}(F)$, then define the following vector norm on $F^n$: $\norm{x}_v = \norm{xy^{*}}_M$ where $y$ is any non-zero vector in $F^n$. We clearly see that $x = \vec{0} \iff xy^{*} \neq 0$, so this norm is positive-definite, inherits absolute homogeneity from $\norm{\cdot}_M$, and
+    \begin{align*}
+        \norm{x + z}_v = \norm{(x + z)y^*}_M = \norm{xy^* + zy^*}_M \leq \norm{xy^*}_M + \norm{zy^*}_M = \norm{x}_v + \norm{z}_v.
+    \end{align*}
+    Finally,
+    \begin{align*}
+        \norm{Av}_v = \norm{Avy^*}_M \leq \norm{A}_M\norm{vy^*}_M = \norm{A}_M\norm{v}_v,
+    \end{align*}
+    so it is consistent with the described vector norm.
+\end{proof}
+
+\begin{thm}
+    Let $\norm{\cdot}_v$ be a norm on $F^n$. Then
+    \begin{align*}
+        \norm{A} = \sup_{\norm{v}\neq 0}\frac{\norm{Av}_v}{\norm{v}_v}
+    \end{align*}
+    is a norm on $M_{n\times n}(F)$. This norm is an called \emph{induced norm}, or the norm \emph{induced by} $\norm{\cdot}_v$, and is both proper (submultiplicative) and consistent with the inducing vector norm.
+\end{thm}
+
+\begin{proof}
+    Clearly if $A = 0$ then $\norm{A} = 0$, and if $A \neq 0$ there must exist $v \neq \vec{0}$ such $Av \neq \vec{0}$, and so $\norm{A} > 0$, giving us positive definiteness. Additionally, since $\norm{(sA)v} = \abs{s}\norm{Av}$, it follows that $\norm{sA} = \abs{s}\norm{A}$ so we have absolute homogeneity. Finally, for matrices $A$ and $B$, since $\norm{(A + B)v} = \norm{Av + Bv} \leq \norm{Av} + \norm{Bv}$, it follows that $\norm{A + B} \leq \norm{A} + \norm{B}$.
+
+    Notice that $\norm{A} \geq \norm{Av}/\norm{v}$ by definition, so $\norm{Av} \leq \norm{A}\norm{v}$ and therefore this norm is consistent with the inducing norm. Furthermore, $\norm{ABv} \leq \norm{A}\norm{Bv} \leq \norm{A}\norm{B}\norm{v}$, and so $\norm{AB} \leq \norm{A}\norm{B}$. Therefore, this norm must be submultiplicative.
 \end{proof}
 
 \section{Adjoints}
