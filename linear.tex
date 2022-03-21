@@ -2709,10 +2709,10 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     so it is consistent with the described vector norm.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{induced-norm}
     Let $\norm{\cdot}_v$ be a norm on $F^n$. Then
     \begin{align*}
-        \norm{A} = \sup_{\norm{v}\neq 0}\frac{\norm{Av}_v}{\norm{v}_v}
+        \norm{A} = \sup_{v \neq 0}\frac{\norm{Av}_v}{\norm{v}_v} = \sup_{\norm{v} = 1}\norm{Av}_v = \sup_{\norm{v} \leq 1}\norm{Av}_v
     \end{align*}
     is a norm on $M_{n\times n}(F)$. This norm is an called \emph{induced norm}, or the norm \emph{induced by} $\norm{\cdot}_v$, and is both proper (submultiplicative) and consistent with the inducing vector norm.
 \end{thm}
@@ -2721,6 +2721,19 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     Clearly if $A = 0$ then $\norm{A} = 0$, and if $A \neq 0$ there must exist $v \neq \vec{0}$ such $Av \neq \vec{0}$, and so $\norm{A} > 0$, giving us positive definiteness. Additionally, since $\norm{(sA)v} = \abs{s}\norm{Av}$, it follows that $\norm{sA} = \abs{s}\norm{A}$ so we have absolute homogeneity. Finally, for matrices $A$ and $B$, since $\norm{(A + B)v} = \norm{Av + Bv} \leq \norm{Av} + \norm{Bv}$, it follows that $\norm{A + B} \leq \norm{A} + \norm{B}$.
 
     Notice that $\norm{A} \geq \norm{Av}/\norm{v}$ by definition, so $\norm{Av} \leq \norm{A}\norm{v}$ and therefore this norm is consistent with the inducing norm. Furthermore, $\norm{ABv} \leq \norm{A}\norm{Bv} \leq \norm{A}\norm{B}\norm{v}$, and so $\norm{AB} \leq \norm{A}\norm{B}$. Therefore, this norm must be submultiplicative.
+
+    Since
+    \begin{align*}
+        \frac{\norm{Av}}{\norm{v}} = \norm{\frac{Av}{\norm{v}}} \norm{A\frac{v}{\norm{v}}},
+    \end{align*}
+    we clearly have
+    \begin{align*}
+        \sup_{v \neq 0}\frac{\norm{Av}_v}{\norm{v}_v} = \sup_{\norm{v} = 1}\norm{Av}_v.
+    \end{align*}
+    For the final equivalence, notice that
+    \begin{align*}
+        \sup_{\norm{v} \leq 1}\norm{Av} = \sup_{0 < \norm{v} \leq 1}\norm{v}\norm{A\frac{v}{\norm{v}}} \leq \sup_{\norm{v}=1}\norm{Av} \leq \sup_{\norm{v} \leq 1}\norm{Av}.
+    \end{align*}
 \end{proof}
 
 \section{Adjoints}
