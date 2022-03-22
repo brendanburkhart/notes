@@ -103,6 +103,14 @@
     This language accepted by this finite automata is the set of all binary strings which end with \texttt{001}. We can use an inductive proof on the length of the longest input to prove this.
 \end{exmp}
 
+\begin{prop}
+    Let $A$ be a regular language, then $\complementof{A}$ is also a regular lanaguage.
+\end{prop}
+
+\begin{proof}
+    Let $M = (Q, \Sigma, \delta, s_0, F)$ be a finite automata that recognizes $A$, and define $M' = (Q, \Sigma, \delta, s_0, Q \setminus F)$. For any $w \in \Sigma^{*}$, we can see that $M$ and $M'$ reach the same final state, let this be $s_f$. Since $s_f \in F$ if and only if $s_f \in Q \setminus F$, it follows that $M'$ accepts $w$ if and only if $M$ \emph{does not}, therefore the regular language that $M'$ recognizes is precisely $\complementof{A}$.
+\end{proof}
+
 \begin{thm}\label{regular-language-union-intersection}
     Let $A$ and $B$ be regular languages, then $A \union B$ and $A \intersection B$ are also regular languages.
 \end{thm}
@@ -122,7 +130,7 @@
         \item $q_0 \in Q$ is the \emph{start state},
         \item $F \subseteq Q$ are the \emph{accept states}.
     \end{itemize}
-    A non-determinstic finite automata $M$ accepts an input $w$ over $\Sigma$ when there exists $w'$ that causes $M$ to end in an accept state, where $w'$ is constructed by inserting any finite number of $\varepsilon$ into $w$.
+    A non-determinstic finite automata $M$ accepts an input $w$ over $\Sigma$ when there exists $w_{\varepsilon}$ that causes $M$ to end in an accept state, where $w_{\varepsilon}$ is constructed by inserting any finite number of $\varepsilon$ into $w$.
 \end{defn}
 
 \begin{rmk}
@@ -134,11 +142,41 @@
 \end{rmk}
 
 \begin{defn}
-    Given a transition function $\delta: Q \times \left(\Sigma \union \{\varepsilon\}\right) \to 2^{Q}$ and $R \subseteq Q$, the \emph{epsilon-closure} of $R$ is
+    Given a transition function $\delta: Q \times \left(\Sigma \union \{\varepsilon\}\right) \to 2^{Q}$ and $R \subseteq Q$,
+    the \emph{$\varepsilon$-closure} of $R$ is the set of all states reachable from $R$ via zero or more \emph{$\varepsilon$-transitions}. Formally, we recursively define
     \begin{align*}
-        E\left(R\right) = \left\{q \in Q \compbar \exists r \in R\left[\delta\left(r, \varepsilon\right) = q\right]\right\}.
+        E_0\left(R\right) &= R, \\
+        E_{i+1}\left(R\right) &= \left\{q \in Q : \exists r \in E_{i}\left(R\right)\left[q \in \delta\left(r, \varepsilon\right)\right]\right\}.
     \end{align*}
+    and then the $\varepsilon$-closure of $R$ is
+    \begin{align*}
+        E\left(R\right) = \bigunion_{0\leq i < n}E_{i}\left(R\right),
+    \end{align*}
+    where $n = \abs{Q}$.
 \end{defn}
+
+\begin{lemma}\label{epsilon-closure}
+    Consider an NFA with states $Q$ and transition function $\delta$, and consider $s\in Q$ and $R \subseteq Q$. Then $s \in E(R)$ if and only if $s$ is reachable from some $q \in R$ via zero or more $\varepsilon$-transitions.
+\end{lemma}
+
+\begin{lemma}\label{epsilon-closure-union}
+    Consider an NFA with states $Q$ and transition function $\delta$, and consider $A \subseteq Q$ and $B \subseteq Q$. Then
+    \begin{align*}
+        E(A) \union E(B) = E(A \union B).
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    If $x \in E(A) \union E(B)$, then since $A$ and $B$ are arbitrary we have without loss of generality that $x \in E(A)$. It follows by Lemma \ref{epsilon-closure} that $x$ is reachable via $\varepsilon$-transitions from some $a \in A$, and since $a \in A \union B$ we then have $x \in E(\union B)$.
+
+    If $x \in E(A \union B)$, then by Lemma \ref{epsilon-closure} we know that $x$ is reachable via $\varepsilon$-transitions from some $a \in A$ or some $b \in B$. Then $x \in E(A)$ or $x \in E(B)$, and so $x \in E(E) \union E(B)$.
+\end{proof}
+
+\begin{proof}\proofbreak
+    ($\implies$) If $s \in E(R)$, then $s \in E_{i}(R)$ for some $0 \leq i < n$. If $i = 0$, then $s \in R$ and so $s$ is reachable from $q = s \in R$ via zero $\varepsilon$-transitions. If $i > 0$, then there exists $r \in E_{i=1}(R)$ such that $s \in \delta(r, \varepsilon)$, and so by induction there exists $q \in R$ such that $s$ is reachable from $q$ via zero or more $\varepsilon$-transitions.
+
+    ($\impliedby$) If $s$ is reachable from $q_0 \in R$ via zero of more $\varepsilon$-transitions, then clearly there exists a sequence $q_0, q_1, \ldots, q_{k}, s$ such that $q_{i+1} \in \delta(q_i, \varepsilon)$ and $s \in \delta(q_k, \varepsilon)$. Therefore, $q_i \in E_i(R)$, and so $s \in E_{k+1}$. Notice that if $q_i = q_j$, we can take reach $s$ from $q_0$ via the subsequence $q_0, q_1, \ldots, q_i, q_{j+1}, q_{j+2}, \ldots, q_k, s$. Since $n = \abs{Q}$, it follows by the pigeonhole principle that such a sequence with at most $n$ states must exist, and so $k + 2 \leq n$, which in turn implies $s \in E_{i = k+1}(R)$ for some $0 \leq i < n$, and so $s \in E(R)$.
+\end{proof}
 
 \begin{thm}\label{dfa-nfa-equivalence}
     Let $N$ be a non-determinstic finite automata, and $L$ be the language it accepts. Then $L$ is a regular language. Equivalently, there is an equivalent determinstic finite automata for every non-determinstic finite automata.
@@ -152,6 +190,16 @@
         \item $q_0' = \left\{q_0\right\}$,
         \item $F' = \left\{R \in Q \compbar R \intersection F \neq \emptyset\right\}$.
     \end{itemize}
+
+    For any $w \in \Sigma^*$ such that $V$ accepts $w$, by we can construct $w_{\varepsilon}$ from $w$ by inserting some number of $\varepsilon$'s into $w$ such that $w_{\varepsilon}$ acuses $V$ to run to an accept state. Let $q_0, q_1, \ldots, q_n$ be the states that $w_{\varepsilon}$ causes $V$ to visit. I claim that if $V$ is in state $q_i$ after seeing $w_1, \ldots, w_i$ then $M$ is in state $R$ where $q_i \in R$. We will prove this by induction. The base case is true by construction since $V$ starts in state $q_0$ and $M$ in state $\{q_0\}$. The induction step simply amounts to showing that if $q_i \in R$ then $q_{i+1} \in \delta'(R, w_{i+1})$.
+    \begin{align*}
+        R' = \delta'(R, w_{i+1}) = E\left(\bigunion_{r\in R}\delta(r, w_{i+1})\right).
+    \end{align*}
+    Since $w_i$ causes $V$ to move from $q_i$ to $q_{i+1}$, it follows that there is a (possibly empty) sequence of $\varepsilon$-transitions from $q_i$ to some state $a$, then $d \in \delta(a, w_i)$, and then a (again possibly empty) sequence of $\varepsilon$-transitions from $d$ to $q_{i+1}$. By Lemma \ref{epsilon-closure}, we know that $a \in R$, and therefore $d \in \bigunion_{r \in R}\delta(r, w_i)$, and so again using Lemma \ref{epsilon-closure} we can conclude that $q_{i+i} \in R'$.
+
+    We have therefore shown that $q_n \in R_f$, where $R_f$ is the final state of $M$. Since $V$ accepts $w$ we know that $q_n \in F$ and so $R_f \intersection F \neq \empty$ which implies $R_f \in F'$, and so $M$ also accepts $w$.
+
+    Now consider instead $w$ accepted by $M$. Let $R_0 = \{q_0\}, R_1, \ldots, R_n$ be the sequence of states visited by $M$. Since $w$ is accepted by $M$, we know $R_n \intersection F \neq \emptyset$, so take $q_n \in R_n \intersection F$. It follows that there exists some $q_{n-1} \in R_{n-1}$ such that $q_n \in E(\delta(q_{n-1}, w_{i+1}))$ by Lemmas \ref{epsilon-closure} and \ref{epsilon-closure-union}, and so inductively there must exist a sequence of states of $V$ $q_0, \ldots, q_n$ such that $q_n \in F$ and $q_{i+1}$ is reachable from $q_i$ via $w_i$ and some number of $\varepsilon$-transitions. Let $w_{\varepsilon}$ be constructed from $w$ by inserting the relevant $\varepsilon$'s, and then $w_{\varepsilon}$ causes $V$ to end in an accept state, and so $w$ is accepted by $V$ by definition.
 \end{proof}
 
 \begin{defn}
