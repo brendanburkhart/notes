@@ -2817,6 +2817,71 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \end{align*}
 \end{proof}
 
+\begin{prop}
+    The matrix norm induced by the $\ell_1$ norm is
+    \begin{align*}
+        \norm{A}_1 = \max_{j}\sum_{i}\abs{A_{ij}}.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    By Theorem \ref{induced-norm} we know that $\norm{A}_1 = \sup_{\norm{x}_{1}=1}\norm{Ax}_1$. For any $x \in F^n$ such that $\norm{x}_1 = 1$, notice that
+    \begin{align*}
+        \norm{Ax}_1 = \sum_{i=1}^{n}\abs{\left(Ax\right)_i} = \sum_{i=1}^{n}\abs{\sum_{j=1}^{n}A_{ij}x_{j}} \leq \sum_{i=1}^{n}\sum_{j=1}^{n}\abs{A_{ij}x_{j}} = \sum_{j=1}^{n}\left[\abs{x_j}\sum_{i=1}^{n}\abs{A_{ij}}\right].
+    \end{align*}
+    Let $M = \max_{1\leq j \leq n}\sum_{i=1}^{n}\abs{A_{ij}}$. Then clearly
+    \begin{align*}
+        \sum_{j=1}^{n}\left[\abs{x_j}\sum_{i=1}^{n}\abs{A_{ij}}\right] \leq \sum_{j=1}^{n}\abs{x_j}M = M\norm{x}_{1} = M.
+    \end{align*}
+    Therefore,
+    \begin{equation}\tag{$\star$}\label{1norm_leq}
+        \norm{A}_1 \leq \max_{1\leq j \leq n}\sum_{i=1}^{n}\abs{A_{ij}}.
+    \end{equation}
+    Let's examine what happens when we chooose
+    \begin{align*}
+        w &= \argmax_{1\leq j \leq n}\sum_{i=1}^{n}\abs{A_{ij}}, \\
+        x &= e_{w}.
+    \end{align*}
+    Note that $\norm{x}_1 = \abs{1} = 1$. With this choice of $x$ 
+    \begin{align*}
+        \norm{Ax}_1 = \sum_{i=1}^{n}\abs{\left(Ax\right)_i} = \sum_{i=1}^{n}\abs{A_{iw}} = \max_{1\leq j \leq n}\sum_{i=1}^{n}\abs{A_{ij}}
+    \end{align*}
+    by our definition of $w$. Since $\norm{A} = \sup_{\norm{x}_1=1}\norm{Ax}_1$, it follows that
+    \begin{align*}
+        \norm{A} \geq \max_{1\leq j \leq n}\sum_{i=1}^{n}\abs{A_{ij}}.
+    \end{align*}
+    Together with (\ref{1norm_leq}), we then have
+    \begin{align*}
+        \norm{A} = \max_{1\leq j \leq n}\sum_{i=1}^{n}\abs{A_{ij}}.
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    The matrix norm induced by the $\ell_{\infty}$ norm is
+    \begin{align*}
+        \norm{A}_{\infty} = \max_{i}\sum_{j}\abs{A_{ij}}.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    By Theorem \ref{induced-norm} we know that $\norm{A}_{\infty} = \sup_{\norm{x}_{\infty}=1}\norm{Ax}_{\infty}$. For any $x \in F^n$ such that $\norm{x}_{\infty} = 1$, notice that $\abs{x_j} \leq 1$ so
+    \begin{align*}
+        \norm{Ax}_{\infty} = \max_{1\leq i\leq n}\abs{\left(Ax\right)_i} = \max_{1\leq i\leq n}\abs{\sum_{j=1}^{n}A_{ij}x_{j}} \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}}\abs{x_{j}} \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}}.
+    \end{align*}
+    If $\norm{x}_{\infty} = 1$, then 
+    \begin{align*}
+        \norm{A}_{\infty} \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}}.
+    \end{align*}
+    Let $x = (1, 1, \ldots, 1)^{\transpose}$, so $\norm{x}_{\infty} = 1$ and
+    \begin{align*}
+        \norm{Ax}_{\infty} = \max_{1\leq i\leq n}\abs{\left(Ax\right)_i} = \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}},
+    \end{align*}
+    and so
+    \begin{align*}
+        \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}} \leq \norm{A}_{\infty} \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}}.
+    \end{align*}
+\end{proof}
+
 \section{Adjoints}
 
 \begin{defn}
