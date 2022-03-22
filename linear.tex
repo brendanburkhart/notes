@@ -2645,6 +2645,228 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \[\norm{x-y}^2 = \norm{w - y}^2 + \norm{u^2} \geq \norm{u^2} = \norm{x - w}^2.\]
 \end{proof}
 
+\section{Adjoints}
+
+\begin{defn}
+    Let $(V, \langle, \rangle_V)$ and $(W, \langle, \rangle_W)$ be inner product spaces over $F$. Given a linear transformation $T: V \to W$, the \emph{adjoint} of $T$ is the linear transformation $T^{*}: W \to V$ satisfying \[\langle T(V), W\rangle_W = \langle V, T^{*}(W)\rangle_V.\]
+\end{defn}
+
+\begin{lemma}Representation Theorem\label{adjoint-representation-theorem}\proofbreak
+    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$, and let $\ell: V \to F$ be a linear function. There exists unique $w \in V$ such that $\ell(v) = \langle v, w \rangle$ for all $v \in V$.
+\end{lemma}
+
+\begin{proof}
+    Let $\{v_1, \ldots, v_n\}$ be an orthonormal basis for $V$. For any $v \in V$, we know that
+    \[v = \sum_{i=1}^{n}\langle v, v_i \rangle v_i,\]
+    and so it follows that
+    \[\ell(v) = \ell\left(\sum_{i=1}^{n}\langle v, v_i \rangle v_i\right) = \sum_{i=1}^{n}\langle v, v_i \rangle \ell(v_i) = \left\langle v, \sum_{i=1}^{n}\overline{\ell(v_i)v_i} \right\rangle.\]
+    Therefore, $w = \sum_{i=1}^{n}\overline{\ell(v_i)v_i}$. Uniqueness follows from Theorem \ref{inner-product-properties} (5).
+\end{proof}
+
+\begin{thm}\label{adjoint-existence-uniqueness}
+    Let $(V, \langle, \rangle)$ and $(W, \langle, \rangle)$ be inner product spaces over $F$, and $T: V \to W$ be a linear transformation. The adjoint $T^*$ of $T$ exists and is unique.
+\end{thm}
+
+\begin{proof}
+    For given $w \in W$, consider $\ell: V \to F$ defined by $v \mapsto \langle T(v), w \rangle$. Since $T$ is linear in $v$ and $\langle,\rangle$ is linear in the first argument, $\ell$ is linear in $v$. By Lemma \ref{adjoint-representation-theorem}, there exists unique $y \in V$ such that $\langle T(v), w \rangle = \ell(v) = \langle v, y \rangle$. Define $T^*(w) = y$ to obtain a function $T^*: W \to V$.
+
+    All that remains is for us to show that $T^*$ is indeed a linear function. Note that
+    \begin{align*}
+        \langle v, T^*(w_1 + rw_2) \rangle &= \langle T(v), w_1 + rw_2 \rangle = \langle T(v), w_1 \rangle + \overline{r}\langle T(v), w_2 \rangle \\
+        &= \langle v, T^*(w_1) \rangle + \overline{r}\langle v, T^*(w_2) \rangle = \langle v, T^*(w_1) + rT^*(w_2) \rangle.
+    \end{align*}
+    It follows that $T^*(w_1 + rw_2) = T^*(w_1) + rT^*(w_2)$ by Theorem \ref{inner-product-properties} (5). Therefore, $T^*$ is linear and is the unique function satisfying $\langle T(v), w \rangle = \langle v, T^*(w) \rangle$.
+\end{proof}
+
+\begin{prop}\label{adjoint-is-involution}
+    Let $(V, \langle, \rangle)$ and $(W, \langle, \rangle)$ be inner product spaces over $F$, and $T: V \to W$ be a linear transformation. Then
+    \[(T^*)^* = T.\]
+\end{prop}
+
+\begin{proof}
+    \[\langle T(v), w \rangle = \langle v, T^*(w) \rangle = \langle v, T^*(w) \rangle = \overline{\langle T^*(w), v \rangle} = \overline{\langle w, (T^*)^*(v) \rangle} = \langle (T^*)^*(v), w \rangle\]
+\end{proof}
+
+\begin{lemma}\label{standard-inner-product-adjoint}
+    Let $A \in M_{m \times n}(F)$, $x \in F^n$, and $y \in F^m$. Then $\langle Ax, y \rangle_m = \langle x, A^{*}y \rangle_n$, where $\langle,\rangle_k$ denotes the standard dot product with in $F^k$.
+\end{lemma}
+
+\begin{proof}
+    \[\langle x, A^{*}y\rangle_n = (A^{*}y)^{*}x = y^{*}(A^*)^{*}x = y^*Ax = \langle Ax, y \rangle_m\]
+\end{proof}
+
+\begin{rmk}
+    Let $A$ be a matrix and $L_A$ the corresponding linear transformation. This lemma states that the linear transformation corresponding to the conjugate transpose of $A^{*}$ satisfies the adjoint property for the standard dot product, and so by Theorem \ref{adjoint-existence-uniqueness} is the unique adjoint. This is,
+    \[\left(L_A\right)^{*} = L_{A^{*}}.\]
+\end{rmk}
+
+\begin{prop}\label{adjoint-eigenvalues}
+    Let $A \in M_{n \times n}(F)$, then $\lambda$ is an eigenvalue of $A$ if and only if $\overline{\lambda}$ is an eigenvalue of $A^{*}$.
+\end{prop}
+
+\begin{proof}
+    Let $\lambda$ be an eigenvalue of $A$ with associated \emph{non-zero} eigenvector $v$. Let $\langle,\rangle$ be the standard inner product over $F^n$, then we know that for any $w \in F^n$
+    \begin{align*}
+        \langle Av, w\rangle = \langle \lambda v, w\rangle = \langle v, \overline{\lambda}w\rangle.
+    \end{align*}
+    By Lemma \ref{standard-inner-product-adjoint} we then have $\langle v, A^{*}w \rangle = \langle v, \overline{\lambda}w\rangle$ and so
+    \begin{align*}
+        0 = \langle v, A^{*}w \rangle - \langle v, \overline{\lambda}w\rangle = \langle v, \left(A^{*} - \overline{\lambda}I\right)\rangle.
+    \end{align*}
+    Since $v \neq \vec{0}$, it follows that $A^{*} - \overline{\lambda}I$ or else we could choose $w$ such that $\left(A^{*} - \overline{\lambda}I\right)w = v$, violating positive-definiteness. It follows that there exists non-zero $w$ such that $\left(A^{*} - \overline{\lambda}I\right)w = \vec{0}$, and so $\overline{\lambda}$ is an eigenvalue of $A^{*}$.
+
+    Since $\left(A^*\right)^* = A$ by Proposition \ref{adjoint-is-involution}, it follows that any eigenvalue of $A$ must be an eigenvalue of $A^*$ and vice versa.
+\end{proof}
+
+\begin{prop}\label{astara-eigenvalues-positive-real}
+    Let $A$ be an $m \times n$ matrix. Then $A^{*}A$ has non-negative real eigenvalues.
+\end{prop}
+
+\begin{proof}
+    Let $u$ be an eigenvector of $A^{*}A$ with associated eigenvalue $\lambda$. Then by Lemma \ref{standard-inner-product-adjoint} we know that
+    \begin{align*}
+        \lambda\norm{u}^2 = \langle u, \lambda u \rangle = \lambda\langle u, A^{*}Au \rangle = \langle Au, Au \rangle = \norm{Au}^2,
+    \end{align*}
+    and therefore $\lambda \in \R^{\geq 0}$.
+\end{proof}
+
+\begin{lemma}
+    Let $A \in M_{m \times n}(F)$. Then the ranks of $A$ and $A^{*}A$ are equal.
+\end{lemma}
+
+\begin{proof}
+    Note that $A$ is $m \times n$, so $A^*A$ is an $n \times n$ square matrix. If we can show that the nullity of $L_A$ is equal to the nullity $L_{A^*A}$, then by the Rank-nullity Theorem \ref{rank-nullity} $A$ and $A^*A$ must have the same rank.
+
+    For any $x$ in the kernel (null-space) of $L_A$, we have $Ax = \vec{0}$, and so $A^*Ax = A^*\vec{0} = \vec{0}$, and so the kernel of $L_A$ is a subset of the kernel of $L_{A^*A}$. Now consider $x$ in the kernel of $L_{A^*A}$. We know that
+    \begin{align*}
+        \langle Ax, Ax \rangle = \langle x, A^*Ax \rangle = \langle x, \vec{0} \rangle = 0,
+    \end{align*}
+    and so $Ax = \vec{0}$ by Theorem \ref{inner-product-properties} (4). Therefore, the kernel of $L_{A^*A}$ is also a subset of the kernel of $L_A$, and so the kernels (and therefore the nullities) of $L_A$ and $L_{A^*A}$ are equal.
+\end{proof}
+ 
+\begin{rmk}
+    Note that since $A^*A$ is an $n \times n$ matrix, it is invertible precisely when the rank of $A$ is $n$.
+\end{rmk}
+
+\begin{thm}
+    Let $A \in M_{m \times n}(F)$ and $y \in F^n$. Then there exists $x_0 \in F^n$ such that
+    \[\norm{y - Ax_0} \leq \norm{y - Ax}.\]
+    Furthermore, if $A$ has rank $n$, then $x_0$ is unique and is given by $x_0 = (A^*A)^{-1}A^*y$.
+\end{thm}
+
+\begin{proof}
+    Let $W$ be the column space of $A$, and let $w_0$ be the orthogonal projection of $y$ onto $W$. We know that $w_0$ is the unique vector in the column space of $A$ that satisfies $\norm{y - w_0} \leq \norm{y - w}$ for all $w$ in the column space of by Proposition \ref{ortho-proj-closest}. Since $w_0$ is the in column space of $A$, we are guaranteed the existence (although not the uniqueness) of $x_0$, which is simply the coordinates of $w_0$ in terms of the columns of $A$. If $A$ has rank $n$ then the columns of $A$ form a basis for the column space and so $x_0$ must be unique.
+
+    When $A$ has rank $n$, then $x_0$ satisfies $y = Ax_0 + u$ where $u \in W^{\perp}$ and $Ax \in W$. Therefore, $y - Ax_0 = u \in W^{\perp}$, so for all $x \in F^n$ we have
+    \[\langle Ax, y - Ax_0 \rangle = 0,\]
+    and so $\langle x, A^*y - A^*Ax_0 \rangle = 0$. Then since this equation is true for all $x \in F^n$ we must have $A^*y - A^*Ax_0 = \vec{0}$, and so $A^*Ax_0 = A^*y$. Since $A^*A$ is invertible when $A$ has rank $n$, we finally have
+    \[x_0 = \left(A^*A\right)^{-1}A^*y.\]
+\end{proof}
+
+\begin{defn}
+    A matrix $P \in M_{n \times n}(\C)$ is said to be \emph{orthogonal} when the columns of $P$ form an orthogonal basis for $\C^n$.
+\end{defn}
+
+\begin{lemma}
+    A matrix $P \in M_{n \times n}(\C)$ is orthogonal if and only if $P$ is invertible and $P^{-1} = \transposeof{P}$.
+\end{lemma}
+
+\begin{proof}
+    Let $v_i$ denote the $i$th column of $P$ (and therefore the $i$th column of $\transposeof{P}$). Note that $P$ is orthogonal is equivalent to saying that $v_i \cdot v_j = 1$ precisely when $i = j$ and $v_i \cdot v_j = 0$ otherwise. Therefore, $P$ is orthogonal is equivalent to $\transposeof{P}P = I_n$ and since $\transposeof{P}$ is also orthogonal, $P\transposeof{P} = I_n$. It follows that $P$ is orthogonal is precisely equivalent to $P$ is invertible and $P^{-1} = \transposeof{P}$.
+\end{proof}
+
+\begin{rmk}
+    If $P$ is orthogonal, then so is $\transposeof{P}$. If $S$ and $R$ are orthogonal, then $SR$ is orthogonal since $(SR)\transposeof{(SR)} = S(R\transposeof{R})\transposeof{S} = S\transposeof{S} = I$.
+\end{rmk}
+
+\begin{thm}Spectral Theorem\label{spectral-theorem}\proofbreak
+    Let $A \in M_{n \times n}(\R)$. If $A$ is symmetric ($A = \transposeof{A}$), then $A$ is diagonalizable and there exists an orthogonal basis for $\R^n$ composed of eigenvectors of $A$.
+\end{thm}
+
+\begin{proof}
+    Consider $A \in M_{n \times n}(\C)$. We know that $A$ must have at least one eigenvalue $\lambda \in \C$ by the Fundamental theorem of algebra \ref{algebra-fundamental-theorem}.
+    \begin{align*}
+        \lambda\langle x, x\rangle = \langle Ax, x \rangle = \langle x, A^*x\rangle
+    \end{align*}
+    Since $A \in M_{n \times n}(\R)$, $A^* = \transposeof{A}$. Then $A = \transposeof{A}$ implies that $A^* = A$, so $\langle x, A^*x \rangle = \langle x, Ax \rangle$. We then have
+    \begin{align*}
+        \lambda\langle x, x\rangle = \langle x, \lambda x\rangle = \overline{\lambda}\langle x, x \rangle.
+    \end{align*}
+    Since $x \neq 0$, it follows that $\lambda = \overline{\lambda}$ and so $\lambda \in \R$. Therefore, all eigenvalues of $A$ are real and so $A$ has at least one real eigenvalue.
+
+    We will proceed by induction on $n$. First, a $1 \times 1$ matrix $A = (a)$ is trivially both symmetric and diagonalizable, and $\{(1)\}$ is a basis for $\R^1$ that is vacuously orthogonal and composed of eigenvectors of $A$. Now assume that for $m \leq n-1$, any $m \times m$ real symmetric matrix is diagonalizable, and there exists an orthogonal basis for $\R^m$ composed of its eigenvectors.
+    
+    Let $\lambda_1$ be a real eigenvalue and $v_1$ be the corresponding eigenvector. Complete to an ordered orthogonal basis $B = \langle v_1, \ldots, v_n \rangle$ for $\R^n$. Let $Q$ be a matrix whose $i$th column is $v_i$, and let
+    $\tilde{A} = [L_A]_{B}^{B}$. Then $\tilde{A} = Q^{-1}AQ = \transposeof{Q}AQ$. Note that $\tilde{A}$ is symmetric: $\transposeof{\left(\transposeof{Q}AQ\right)} = \transposeof{Q}\transposeof{A}\transposeof{\left(\transposeof{Q}\right)} = \transposeof{Q}AQ = \tilde{A}$.
+
+    Since $Av_1 = \lambda_1v_1$, we know that
+    \[\tilde{A} = \left(\begin{array}{c|ccc}
+        \lambda_1 & 0 & \cdots & 0 \\
+        \hline
+        0 & & & \\
+        \vdots & & & \\
+        0 & \largeblock{3}{2.2}{$B$}
+    \end{array}\right),\]
+    where $B$ is an $(n-1)\times(n-1)$ real symmetric matrix. By assumption, there exists an $(n-1)\times(n-1)$ diagonal matrix $E$ and $T$ an $(n-1)\times(n-1)$ orthogonal matrix such that $B = TET^{-1} = TE\transposeof{T}$. Then
+    \[\tilde{A} = \left(\begin{array}{c|ccc}
+        1 & 0 & \cdots & 0 \\
+        \hline
+        0 & & & \\
+        \vdots & & & \\
+        0 & \largeblock{3}{2.0}{$T$}
+    \end{array}\right)
+    \left(\begin{array}{c|ccc}
+        \lambda_1 & 0 & \cdots & 0 \\
+        \hline
+        0 & & & \\
+        \vdots & & & \\
+        0 & \largeblock{3}{2.0}{$E$}
+    \end{array}\right)
+    \left(\begin{array}{c|ccc}
+        1 & 0 & \cdots & 0 \\
+        \hline
+        0 & & & \\
+        \vdots & & & \\
+        0 & \largeblock{3}{2.7}{$\transposeof{T}$}
+    \end{array}\right) = SD\transposeof{S},\]
+    where $S$, $D$, and $\transposeof{S}$ are simply the three matrices in the product. Then,
+    \[A = Q\tilde{A}\transposeof{Q} = QSD\transposeof{S}\transposeof{Q} = (QS)D\transposeof{(QS)} = (QS)D(QS)^{-1}.\]
+    Note that $D$ is diagonal since $E$ is, and $S$ (and $\transposeof{S}$) are orthogonal since $T$ (and $\transposeof{T}$) is. Since $Q$ and $S$ are orthogonal, so is their product $QS$. Since $D$ is a diagonal matrix of eigenvalues, the columns of $QS$ are necessarily eigenvectors of $A$, and so the columns of $QS$ form an orthogonal basis of eigenvectors.
+\end{proof}
+
+\begin{defn}
+    A symmetric matrix $A \in M_{n\times n}(\R)$ is \emph{positive definite} if $\transposeof{z}Mz$ is strictly positive for \emph{every} non-zero real $z \in \R^n$, and \emph{positive semidefinite} if $\transposeof{z}Mz$ is positive or zero for every non-zero real $z \in \R^n$. Negative definite and negative semidefinite are defined similarly.
+    
+    For Hermitian matrices $H \in M_{n\times n}(\C)$, these are defined similarly using $z^{*}Hz$.
+
+    A matrix that is neither positive nor negative (semi)definite is said to be \emph{indefinite}.
+\end{defn}
+
+\begin{thm}\label{positive-semidefinite-criteria}
+    Let $A \in M_{n \times n}(\R)$ be a symmetric matrix. Then $A$ is positive definite, positive semidefinite, negative definite, or negative semidefinite if and only if the eigenvalues of $A$ are real and strictly positive, non-negative, strictly negative, or non-positive respectively.
+\end{thm}
+
+\begin{proof}
+    By the Spectral Theorem \ref{spectral-theorem}, we know that there is an orthogonal basis $B = \langle v_1, \ldots, v_n\rangle$ for $\R^n$ composed of eigenvectors of $A$, where $\lambda_1, \ldots, \lambda_n$ are the associated real eigenvalues. For any non-zero $z \in \R^n$, consider
+    \begin{align*}
+        z &= a_1v_1 + \cdots + a_nv_n.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \transposeof{z}Az &= \transposeof{z}A\left(a_1v_1 + \cdots + a_nv_n\right) \\
+        &= \transposeof{z}\left(a_1\lambda_1v_1 + \cdots + a_n\lambda_{n}v_n\right).
+    \end{align*}
+    Since $B$ is orthogonal, $\transposeof{v_i}v_j = 0$ whenever $i \neq j$, and so
+    \begin{align*}
+        \transposeof{z}Az &= a_1^2\lambda_1\transposeof{v_1}v_1 + \cdots + a_n^2\lambda_{n}\transposeof{v_n}v_n.
+    \end{align*}
+    Since $z \in \R^n$ we have $a_i \in \R$, and so $a_i^2 \geq 0$ and of course $v_i \in \R^n$ and so $v_i^2 > 0$. Therefore, the sign of $\transposeof{z}Az$ depends only on the signs of $\lambda_i$.
+\end{proof}
+
+\begin{cor}
+    If a matrix is positive semidefinite and invertible (so no eigenvalues can't be zero) then it must be positive definite.
+\end{cor}
+
 \section{Norms}
 
 \begin{defn}
@@ -2857,6 +3079,29 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{proof}
 
 \begin{prop}
+    The matrix norm induced by the $\ell_2$ norm is
+    \begin{align*}
+        \norm{A}_2 = \sqrt{\rho(A^{*}A)}.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Since $\left(A^{*}A\right)^{*} = A^{*}A$ is Hermitian, by the Spectral theorem \ref{spectral-theorem} for Hermitian matrices there exists an orthonormal basis $B = \{ u_1, u_2, \ldots, u_n \}$ consisting of eigenvectors of $A^{*}A$. For any $x$, let $x = x_1u_1 + x_2u_2 + \cdots + x_nu_n$, and therefore
+    \begin{align*}
+        \norm{Ax}_2^2 &= \langle x, A^{*}Ax \rangle = \left\langle \sum_{i=1}^{n}x_iu_i, \sum_{i=1}^{n}x_i\lambda_i u_i \right\rangle \\
+        &= \sum_{i=1}^{n}x_i^2\lambda_i = \max_{i}\lambda_i\norm{x}_2^2 = \rho(A^{*}A)\norm{x}_2^2,
+    \end{align*}
+    and therefore $\norm{A}_2^2 \leq \rho(A^{*}A)$. Furthermore,
+    \begin{align*}
+        \norm{A}_2^2 \geq \frac{\norm{Au_i}_2^2}{\norm{u_i}_2^2} = \lambda_i,
+    \end{align*}
+    and so $\norm{A}_2^2 \geq \rho(A^{*}A)$. Altogether, we have
+    \begin{align*}
+        \sqrt{\rho(A^{*}A)} \leq \norm{A}_2 \leq \sqrt{\rho(A^{*}A)}.
+    \end{align*}
+\end{proof}
+
+\begin{prop}
     The matrix norm induced by the $\ell_{\infty}$ norm is
     \begin{align*}
         \norm{A}_{\infty} = \max_{i}\sum_{j}\abs{A_{ij}}.
@@ -2881,213 +3126,3 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
         \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}} \leq \norm{A}_{\infty} \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}}.
     \end{align*}
 \end{proof}
-
-\section{Adjoints}
-
-\begin{defn}
-    Let $(V, \langle, \rangle_V)$ and $(W, \langle, \rangle_W)$ be inner product spaces over $F$. Given a linear transformation $T: V \to W$, the \emph{adjoint} of $T$ is the linear transformation $T^{*}: W \to V$ satisfying \[\langle T(V), W\rangle_W = \langle V, T^{*}(W)\rangle_V.\]
-\end{defn}
-
-\begin{lemma}Representation Theorem\label{adjoint-representation-theorem}\proofbreak
-    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$, and let $\ell: V \to F$ be a linear function. There exists unique $w \in V$ such that $\ell(v) = \langle v, w \rangle$ for all $v \in V$.
-\end{lemma}
-
-\begin{proof}
-    Let $\{v_1, \ldots, v_n\}$ be an orthonormal basis for $V$. For any $v \in V$, we know that
-    \[v = \sum_{i=1}^{n}\langle v, v_i \rangle v_i,\]
-    and so it follows that
-    \[\ell(v) = \ell\left(\sum_{i=1}^{n}\langle v, v_i \rangle v_i\right) = \sum_{i=1}^{n}\langle v, v_i \rangle \ell(v_i) = \left\langle v, \sum_{i=1}^{n}\overline{\ell(v_i)v_i} \right\rangle.\]
-    Therefore, $w = \sum_{i=1}^{n}\overline{\ell(v_i)v_i}$. Uniqueness follows from Theorem \ref{inner-product-properties} (5).
-\end{proof}
-
-\begin{thm}\label{adjoint-existence-uniqueness}
-    Let $(V, \langle, \rangle)$ and $(W, \langle, \rangle)$ be inner product spaces over $F$, and $T: V \to W$ be a linear transformation. The adjoint $T^*$ of $T$ exists and is unique.
-\end{thm}
-
-\begin{proof}
-    For given $w \in W$, consider $\ell: V \to F$ defined by $v \mapsto \langle T(v), w \rangle$. Since $T$ is linear in $v$ and $\langle,\rangle$ is linear in the first argument, $\ell$ is linear in $v$. By Lemma \ref{adjoint-representation-theorem}, there exists unique $y \in V$ such that $\langle T(v), w \rangle = \ell(v) = \langle v, y \rangle$. Define $T^*(w) = y$ to obtain a function $T^*: W \to V$.
-
-    All that remains is for us to show that $T^*$ is indeed a linear function. Note that
-    \begin{align*}
-        \langle v, T^*(w_1 + rw_2) \rangle &= \langle T(v), w_1 + rw_2 \rangle = \langle T(v), w_1 \rangle + \overline{r}\langle T(v), w_2 \rangle \\
-        &= \langle v, T^*(w_1) \rangle + \overline{r}\langle v, T^*(w_2) \rangle = \langle v, T^*(w_1) + rT^*(w_2) \rangle.
-    \end{align*}
-    It follows that $T^*(w_1 + rw_2) = T^*(w_1) + rT^*(w_2)$ by Theorem \ref{inner-product-properties} (5). Therefore, $T^*$ is linear and is the unique function satisfying $\langle T(v), w \rangle = \langle v, T^*(w) \rangle$.
-\end{proof}
-
-\begin{prop}\label{adjoint-is-involution}
-    Let $(V, \langle, \rangle)$ and $(W, \langle, \rangle)$ be inner product spaces over $F$, and $T: V \to W$ be a linear transformation. Then
-    \[(T^*)^* = T.\]
-\end{prop}
-
-\begin{proof}
-    \[\langle T(v), w \rangle = \langle v, T^*(w) \rangle = \langle v, T^*(w) \rangle = \overline{\langle T^*(w), v \rangle} = \overline{\langle w, (T^*)^*(v) \rangle} = \langle (T^*)^*(v), w \rangle\]
-\end{proof}
-
-\begin{lemma}\label{standard-inner-product-adjoint}
-    Let $A \in M_{m \times n}(F)$, $x \in F^n$, and $y \in F^m$. Then $\langle Ax, y \rangle_m = \langle x, A^{*}y \rangle_n$, where $\langle,\rangle_k$ denotes the standard dot product with in $F^k$.
-\end{lemma}
-
-\begin{proof}
-    \[\langle x, A^{*}y\rangle_n = (A^{*}y)^{*}x = y^{*}(A^*)^{*}x = y^*Ax = \langle Ax, y \rangle_m\]
-\end{proof}
-
-\begin{rmk}
-    Let $A$ be a matrix and $L_A$ the corresponding linear transformation. This lemma states that the linear transformation corresponding to the conjugate transpose of $A^{*}$ satisfies the adjoint property for the standard dot product, and so by Theorem \ref{adjoint-existence-uniqueness} is the unique adjoint. This is,
-    \[\left(L_A\right)^{*} = L_{A^{*}}.\]
-\end{rmk}
-
-\begin{prop}\label{adjoint-eigenvalues}
-    Let $A \in M_{n \times n}(F)$, then $\lambda$ is an eigenvalue of $A$ if and only if $\overline{\lambda}$ is an eigenvalue of $A^{*}$.
-\end{prop}
-
-\begin{proof}
-    Let $\lambda$ be an eigenvalue of $A$ with associated \emph{non-zero} eigenvector $v$. Let $\langle,\rangle$ be the standard inner product over $F^n$, then we know that for any $w \in F^n$
-    \begin{align*}
-        \langle Av, w\rangle = \langle \lambda v, w\rangle = \langle v, \overline{\lambda}w\rangle.
-    \end{align*}
-    By Lemma \ref{standard-inner-product-adjoint} we then have $\langle v, A^{*}w \rangle = \langle v, \overline{\lambda}w\rangle$ and so
-    \begin{align*}
-        0 = \langle v, A^{*}w \rangle - \langle v, \overline{\lambda}w\rangle = \langle v, \left(A^{*} - \overline{\lambda}I\right)\rangle.
-    \end{align*}
-    Since $v \neq \vec{0}$, it follows that $A^{*} - \overline{\lambda}I$ or else we could choose $w$ such that $\left(A^{*} - \overline{\lambda}I\right)w = v$, violating positive-definiteness. It follows that there exists non-zero $w$ such that $\left(A^{*} - \overline{\lambda}I\right)w = \vec{0}$, and so $\overline{\lambda}$ is an eigenvalue of $A^{*}$.
-
-    Since $\left(A^*\right)^* = A$ by Proposition \ref{adjoint-is-involution}, it follows that any eigenvalue of $A$ must be an eigenvalue of $A^*$ and vice versa.
-\end{proof}
-
-\begin{lemma}
-    Let $A \in M_{m \times n}(F)$. Then the ranks of $A$ and $A^{*}A$ are equal.
-\end{lemma}
-
-\begin{proof}
-    Note that $A$ is $m \times n$, so $A^*A$ is an $n \times n$ square matrix. If we can show that the nullity of $L_A$ is equal to the nullity $L_{A^*A}$, then by the Rank-nullity Theorem \ref{rank-nullity} $A$ and $A^*A$ must have the same rank.
-
-    For any $x$ in the kernel (null-space) of $L_A$, we have $Ax = \vec{0}$, and so $A^*Ax = A^*\vec{0} = \vec{0}$, and so the kernel of $L_A$ is a subset of the kernel of $L_{A^*A}$. Now consider $x$ in the kernel of $L_{A^*A}$. We know that
-    \begin{align*}
-        \langle Ax, Ax \rangle = \langle x, A^*Ax \rangle = \langle x, \vec{0} \rangle = 0,
-    \end{align*}
-    and so $Ax = \vec{0}$ by Theorem \ref{inner-product-properties} (4). Therefore, the kernel of $L_{A^*A}$ is also a subset of the kernel of $L_A$, and so the kernels (and therefore the nullities) of $L_A$ and $L_{A^*A}$ are equal.
-\end{proof}
- 
-\begin{rmk}
-    Note that since $A^*A$ is an $n \times n$ matrix, it is invertible precisely when the rank of $A$ is $n$.
-\end{rmk}
-
-\begin{thm}
-    Let $A \in M_{m \times n}(F)$ and $y \in F^n$. Then there exists $x_0 \in F^n$ such that
-    \[\norm{y - Ax_0} \leq \norm{y - Ax}.\]
-    Furthermore, if $A$ has rank $n$, then $x_0$ is unique and is given by $x_0 = (A^*A)^{-1}A^*y$.
-\end{thm}
-
-\begin{proof}
-    Let $W$ be the column space of $A$, and let $w_0$ be the orthogonal projection of $y$ onto $W$. We know that $w_0$ is the unique vector in the column space of $A$ that satisfies $\norm{y - w_0} \leq \norm{y - w}$ for all $w$ in the column space of by Proposition \ref{ortho-proj-closest}. Since $w_0$ is the in column space of $A$, we are guaranteed the existence (although not the uniqueness) of $x_0$, which is simply the coordinates of $w_0$ in terms of the columns of $A$. If $A$ has rank $n$ then the columns of $A$ form a basis for the column space and so $x_0$ must be unique.
-
-    When $A$ has rank $n$, then $x_0$ satisfies $y = Ax_0 + u$ where $u \in W^{\perp}$ and $Ax \in W$. Therefore, $y - Ax_0 = u \in W^{\perp}$, so for all $x \in F^n$ we have
-    \[\langle Ax, y - Ax_0 \rangle = 0,\]
-    and so $\langle x, A^*y - A^*Ax_0 \rangle = 0$. Then since this equation is true for all $x \in F^n$ we must have $A^*y - A^*Ax_0 = \vec{0}$, and so $A^*Ax_0 = A^*y$. Since $A^*A$ is invertible when $A$ has rank $n$, we finally have
-    \[x_0 = \left(A^*A\right)^{-1}A^*y.\]
-\end{proof}
-
-\begin{defn}
-    A matrix $P \in M_{n \times n}(\C)$ is said to be \emph{orthogonal} when the columns of $P$ form an orthogonal basis for $\C^n$.
-\end{defn}
-
-\begin{lemma}
-    A matrix $P \in M_{n \times n}(\C)$ is orthogonal if and only if $P$ is invertible and $P^{-1} = \transposeof{P}$.
-\end{lemma}
-
-\begin{proof}
-    Let $v_i$ denote the $i$th column of $P$ (and therefore the $i$th column of $\transposeof{P}$). Note that $P$ is orthogonal is equivalent to saying that $v_i \cdot v_j = 1$ precisely when $i = j$ and $v_i \cdot v_j = 0$ otherwise. Therefore, $P$ is orthogonal is equivalent to $\transposeof{P}P = I_n$ and since $\transposeof{P}$ is also orthogonal, $P\transposeof{P} = I_n$. It follows that $P$ is orthogonal is precisely equivalent to $P$ is invertible and $P^{-1} = \transposeof{P}$.
-\end{proof}
-
-\begin{rmk}
-    If $P$ is orthogonal, then so is $\transposeof{P}$. If $S$ and $R$ are orthogonal, then $SR$ is orthogonal since $(SR)\transposeof{(SR)} = S(R\transposeof{R})\transposeof{S} = S\transposeof{S} = I$.
-\end{rmk}
-
-\begin{thm}Spectral Theorem\label{spectral-theorem}\proofbreak
-    Let $A \in M_{n \times n}(\R)$. If $A$ is symmetric ($A = \transposeof{A}$), then $A$ is diagonalizable and there exists an orthogonal basis for $\R^n$ composed of eigenvectors of $A$.
-\end{thm}
-
-\begin{proof}
-    Consider $A \in M_{n \times n}(\C)$. We know that $A$ must have at least one eigenvalue $\lambda \in \C$ by the Fundamental theorem of algebra \ref{algebra-fundamental-theorem}.
-    \begin{align*}
-        \lambda\langle x, x\rangle = \langle Ax, x \rangle = \langle x, A^*x\rangle
-    \end{align*}
-    Since $A \in M_{n \times n}(\R)$, $A^* = \transposeof{A}$. Then $A = \transposeof{A}$ implies that $A^* = A$, so $\langle x, A^*x \rangle = \langle x, Ax \rangle$. We then have
-    \begin{align*}
-        \lambda\langle x, x\rangle = \langle x, \lambda x\rangle = \overline{\lambda}\langle x, x \rangle.
-    \end{align*}
-    Since $x \neq 0$, it follows that $\lambda = \overline{\lambda}$ and so $\lambda \in \R$. Therefore, all eigenvalues of $A$ are real and so $A$ has at least one real eigenvalue.
-
-    We will proceed by induction on $n$. First, a $1 \times 1$ matrix $A = (a)$ is trivially both symmetric and diagonalizable, and $\{(1)\}$ is a basis for $\R^1$ that is vacuously orthogonal and composed of eigenvectors of $A$. Now assume that for $m \leq n-1$, any $m \times m$ real symmetric matrix is diagonalizable, and there exists an orthogonal basis for $\R^m$ composed of its eigenvectors.
-    
-    Let $\lambda_1$ be a real eigenvalue and $v_1$ be the corresponding eigenvector. Complete to an ordered orthogonal basis $B = \langle v_1, \ldots, v_n \rangle$ for $\R^n$. Let $Q$ be a matrix whose $i$th column is $v_i$, and let
-    $\tilde{A} = [L_A]_{B}^{B}$. Then $\tilde{A} = Q^{-1}AQ = \transposeof{Q}AQ$. Note that $\tilde{A}$ is symmetric: $\transposeof{\left(\transposeof{Q}AQ\right)} = \transposeof{Q}\transposeof{A}\transposeof{\left(\transposeof{Q}\right)} = \transposeof{Q}AQ = \tilde{A}$.
-
-    Since $Av_1 = \lambda_1v_1$, we know that
-    \[\tilde{A} = \left(\begin{array}{c|ccc}
-        \lambda_1 & 0 & \cdots & 0 \\
-        \hline
-        0 & & & \\
-        \vdots & & & \\
-        0 & \largeblock{3}{2.2}{$B$}
-    \end{array}\right),\]
-    where $B$ is an $(n-1)\times(n-1)$ real symmetric matrix. By assumption, there exists an $(n-1)\times(n-1)$ diagonal matrix $E$ and $T$ an $(n-1)\times(n-1)$ orthogonal matrix such that $B = TET^{-1} = TE\transposeof{T}$. Then
-    \[\tilde{A} = \left(\begin{array}{c|ccc}
-        1 & 0 & \cdots & 0 \\
-        \hline
-        0 & & & \\
-        \vdots & & & \\
-        0 & \largeblock{3}{2.0}{$T$}
-    \end{array}\right)
-    \left(\begin{array}{c|ccc}
-        \lambda_1 & 0 & \cdots & 0 \\
-        \hline
-        0 & & & \\
-        \vdots & & & \\
-        0 & \largeblock{3}{2.0}{$E$}
-    \end{array}\right)
-    \left(\begin{array}{c|ccc}
-        1 & 0 & \cdots & 0 \\
-        \hline
-        0 & & & \\
-        \vdots & & & \\
-        0 & \largeblock{3}{2.7}{$\transposeof{T}$}
-    \end{array}\right) = SD\transposeof{S},\]
-    where $S$, $D$, and $\transposeof{S}$ are simply the three matrices in the product. Then,
-    \[A = Q\tilde{A}\transposeof{Q} = QSD\transposeof{S}\transposeof{Q} = (QS)D\transposeof{(QS)} = (QS)D(QS)^{-1}.\]
-    Note that $D$ is diagonal since $E$ is, and $S$ (and $\transposeof{S}$) are orthogonal since $T$ (and $\transposeof{T}$) is. Since $Q$ and $S$ are orthogonal, so is their product $QS$. Since $D$ is a diagonal matrix of eigenvalues, the columns of $QS$ are necessarily eigenvectors of $A$, and so the columns of $QS$ form an orthogonal basis of eigenvectors.
-\end{proof}
-
-\begin{defn}
-    A symmetric matrix $A \in M_{n\times n}(\R)$ is \emph{positive definite} if $\transposeof{z}Mz$ is strictly positive for \emph{every} non-zero real $z \in \R^n$, and \emph{positive semidefinite} if $\transposeof{z}Mz$ is positive or zero for every non-zero real $z \in \R^n$. Negative definite and negative semidefinite are defined similarly.
-    
-    For Hermitian matrices $H \in M_{n\times n}(\C)$, these are defined similarly using $z^{*}Hz$.
-
-    A matrix that is neither positive nor negative (semi)definite is said to be \emph{indefinite}.
-\end{defn}
-
-\begin{thm}\label{positive-semidefinite-criteria}
-    Let $A \in M_{n \times n}(\R)$ be a symmetric matrix. Then $A$ is positive definite, positive semidefinite, negative definite, or negative semidefinite if and only if the eigenvalues of $A$ are real and strictly positive, non-negative, strictly negative, or non-positive respectively.
-\end{thm}
-
-\begin{proof}
-    By the Spectral Theorem \ref{spectral-theorem}, we know that there is an orthogonal basis $B = \langle v_1, \ldots, v_n\rangle$ for $\R^n$ composed of eigenvectors of $A$, where $\lambda_1, \ldots, \lambda_n$ are the associated real eigenvalues. For any non-zero $z \in \R^n$, consider
-    \begin{align*}
-        z &= a_1v_1 + \cdots + a_nv_n.
-    \end{align*}
-    Therefore,
-    \begin{align*}
-        \transposeof{z}Az &= \transposeof{z}A\left(a_1v_1 + \cdots + a_nv_n\right) \\
-        &= \transposeof{z}\left(a_1\lambda_1v_1 + \cdots + a_n\lambda_{n}v_n\right).
-    \end{align*}
-    Since $B$ is orthogonal, $\transposeof{v_i}v_j = 0$ whenever $i \neq j$, and so
-    \begin{align*}
-        \transposeof{z}Az &= a_1^2\lambda_1\transposeof{v_1}v_1 + \cdots + a_n^2\lambda_{n}\transposeof{v_n}v_n.
-    \end{align*}
-    Since $z \in \R^n$ we have $a_i \in \R$, and so $a_i^2 \geq 0$ and of course $v_i \in \R^n$ and so $v_i^2 > 0$. Therefore, the sign of $\transposeof{z}Az$ depends only on the signs of $\lambda_i$.
-\end{proof}
-
-\begin{cor}
-    If a matrix is positive semidefinite and invertible (so no eigenvalues can't be zero) then it must be positive definite.
-\end{cor}
