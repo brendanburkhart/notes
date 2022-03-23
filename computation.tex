@@ -38,9 +38,9 @@
 \end{defn}
 
 \begin{defn}
-    Given languages $A$ and $B$, the \emph{concatenation} of $A$ and $B$, denoted by $A \cdot B$, is
+    Given languages $A$ and $B$, the \emph{concatenation} of $A$ and $B$, denoted by $A \concat B$, is
     \begin{align*}
-        A + B = \left\{\alpha\beta : \alpha \in A, \beta \in B \right\},
+        A \concat B = \left\{\alpha\beta : \alpha \in A, \beta \in B \right\},
     \end{align*}
     where $\alpha\beta$ is the string formed by concatenating $\alpha$ and $\beta$.
 \end{defn}
@@ -49,7 +49,7 @@
     Let $L$ be a language. We can also apply the Kleene star operator to this language, creating its Kleene closure $L^*$ by defining
     \begin{align*}
         L^0 &= \{\emptystring\}, \\
-        L^{i+1} &= L^{i} + L, \\
+        L^{i+1} &= L^{i} \concat L, \\
         L^{*} &= \bigunion_{i \geq 0}L^{i}.
     \end{align*}
 \end{defn}
@@ -224,11 +224,11 @@
 \end{rmk}
 
 \begin{thm}\label{regular-language-concatenation}
-    Let $A$ and $B$ be regular languages, then $A + B$ is also regular.
+    Let $A$ and $B$ be regular languages, then $A \concat B$ is also regular.
 \end{thm}
 
 \begin{proof}
-    Let $A = (Q_A, \Sigma, \delta_A, q_A, F_A)$ and $B = (Q_B, \Sigma, \delta_B, q_B, F_B)$ be determinstic finite automata recognizing language $A$ and $B$ respectively. We now construct a non-determinstic finite automata which recognizes $A + B$. Consider $M = \left(Q, \Sigma, \delta, q_0, F\right)$, where
+    Let $A = (Q_A, \Sigma, \delta_A, q_A, F_A)$ and $B = (Q_B, \Sigma, \delta_B, q_B, F_B)$ be determinstic finite automata recognizing language $A$ and $B$ respectively. We now construct a non-determinstic finite automata which recognizes $A \concat B$. Consider $M = \left(Q, \Sigma, \delta, q_0, F\right)$, where
     \begin{itemize}
         \item $Q = Q_A \union Q_B$,
         \item For $a \in \Sigma$, define $\delta(q, a) = \begin{dcases}
@@ -243,7 +243,7 @@
     \end{itemize}
     Notice that if $w = \alpha\beta$, then the input $\alpha\emptystring\beta$ will cause $M$ to end in an accept state, and so any such $w$ is accepted. If $w$ is accepted, then since the only transition possible from states in $Q_A$ to those in $Q_B$ (which contains all possible accept states) is an $\emptystring$-transition from a state in $F_A$, and so $w = \alpha\beta$ for some $\alpha \in A$ and $\beta \in B$.
 
-    Since $M$ recognizes $A + B$, by Theorem \ref{dfa-nfa-equivalence} we know that $A + B$ must be a regular language.
+    Since $M$ recognizes $A \concat B$, by Theorem \ref{dfa-nfa-equivalence} we know that $A \concat B$ must be a regular language.
 \end{proof}
 
 \begin{thm}\label{regular-language-kleene-star}
@@ -281,7 +281,7 @@
         \item $\emptystring$,
         \item $\emptyset$,
         \item $R_1 \union R_2$, where $R_1$ and $R_2$ are themselves regular expressions,
-        \item $R_1 \cdot R_2$, where $R_1$ and $R_2$ are themselves regular expressions,
+        \item $R_1 \concat R_2$, where $R_1$ and $R_2$ are themselves regular expressions,
         \item $R_1^{*}$, where $R_1$ is a regular expression,
     \end{itemize}
 \end{defn}
