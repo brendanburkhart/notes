@@ -38,6 +38,23 @@
 \end{defn}
 
 \begin{defn}
+    Given languages $A$ and $B$, the \emph{concatenation} of $A$ and $B$, denoted by $A + B$, is
+    \begin{align*}
+        A + B = \left\{\alpha\beta : \alpha \in A, \beta \in B \right\},
+    \end{align*}
+    where $\alpha\beta$ is the string formed by concatenating $\alpha$ and $\beta$.
+\end{defn}
+
+\begin{defn}
+    Let $L$ be a language. We can also apply the Kleene star operator to this language, creating its Kleene closure $L^*$ by defining
+    \begin{align*}
+        L^0 &= \{\varepsilon\}, \\
+        L^{i+1} &= L^{i} + L, \\
+        L^{*} &= \bigunion_{i \geq 0}L^{i}.
+    \end{align*}
+\end{defn}
+
+\begin{defn}
     A (determinstic) \emph{finite automata} is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
     \begin{itemize}
         \item $Q$ is a finite set of \emph{states},
@@ -159,6 +176,12 @@
     Consider an NFA with states $Q$ and transition function $\delta$, and consider $s\in Q$ and $R \subseteq Q$. Then $s \in E(R)$ if and only if $s$ is reachable from some $q \in R$ via zero or more $\varepsilon$-transitions.
 \end{lemma}
 
+\begin{proof}\proofbreak
+    ($\implies$) If $s \in E(R)$, then $s \in E_{i}(R)$ for some $0 \leq i < n$. If $i = 0$, then $s \in R$ and so $s$ is reachable from $q = s \in R$ via zero $\varepsilon$-transitions. If $i > 0$, then there exists $r \in E_{i=1}(R)$ such that $s \in \delta(r, \varepsilon)$, and so by induction there exists $q \in R$ such that $s$ is reachable from $q$ via zero or more $\varepsilon$-transitions.
+
+    ($\impliedby$) If $s$ is reachable from $q_0 \in R$ via zero of more $\varepsilon$-transitions, then clearly there exists a sequence $q_0, q_1, \ldots, q_{k}, s$ such that $q_{i+1} \in \delta(q_i, \varepsilon)$ and $s \in \delta(q_k, \varepsilon)$. Therefore, $q_i \in E_i(R)$, and so $s \in E_{k+1}$. Notice that if $q_i = q_j$, we can take reach $s$ from $q_0$ via the subsequence $q_0, q_1, \ldots, q_i, q_{j+1}, q_{j+2}, \ldots, q_k, s$. Since $n = \abs{Q}$, it follows by the pigeonhole principle that such a sequence with at most $n$ states must exist, and so $k + 2 \leq n$, which in turn implies $s \in E_{i = k+1}(R)$ for some $0 \leq i < n$, and so $s \in E(R)$.
+\end{proof}
+
 \begin{lemma}\label{epsilon-closure-union}
     Consider an NFA with states $Q$ and transition function $\delta$, and consider $A \subseteq Q$ and $B \subseteq Q$. Then
     \begin{align*}
@@ -170,12 +193,6 @@
     If $x \in E(A) \union E(B)$, then since $A$ and $B$ are arbitrary we have without loss of generality that $x \in E(A)$. It follows by Lemma \ref{epsilon-closure} that $x$ is reachable via $\varepsilon$-transitions from some $a \in A$, and since $a \in A \union B$ we then have $x \in E(\union B)$.
 
     If $x \in E(A \union B)$, then by Lemma \ref{epsilon-closure} we know that $x$ is reachable via $\varepsilon$-transitions from some $a \in A$ or some $b \in B$. Then $x \in E(A)$ or $x \in E(B)$, and so $x \in E(E) \union E(B)$.
-\end{proof}
-
-\begin{proof}\proofbreak
-    ($\implies$) If $s \in E(R)$, then $s \in E_{i}(R)$ for some $0 \leq i < n$. If $i = 0$, then $s \in R$ and so $s$ is reachable from $q = s \in R$ via zero $\varepsilon$-transitions. If $i > 0$, then there exists $r \in E_{i=1}(R)$ such that $s \in \delta(r, \varepsilon)$, and so by induction there exists $q \in R$ such that $s$ is reachable from $q$ via zero or more $\varepsilon$-transitions.
-
-    ($\impliedby$) If $s$ is reachable from $q_0 \in R$ via zero of more $\varepsilon$-transitions, then clearly there exists a sequence $q_0, q_1, \ldots, q_{k}, s$ such that $q_{i+1} \in \delta(q_i, \varepsilon)$ and $s \in \delta(q_k, \varepsilon)$. Therefore, $q_i \in E_i(R)$, and so $s \in E_{k+1}$. Notice that if $q_i = q_j$, we can take reach $s$ from $q_0$ via the subsequence $q_0, q_1, \ldots, q_i, q_{j+1}, q_{j+2}, \ldots, q_k, s$. Since $n = \abs{Q}$, it follows by the pigeonhole principle that such a sequence with at most $n$ states must exist, and so $k + 2 \leq n$, which in turn implies $s \in E_{i = k+1}(R)$ for some $0 \leq i < n$, and so $s \in E(R)$.
 \end{proof}
 
 \begin{thm}\label{dfa-nfa-equivalence}
@@ -205,14 +222,6 @@
 \begin{rmk}
     In addition to a proof of the equivalence of determinstic and non-determinstic finite automata, this is an explicit method to construct a determinstic finite automata from a non-determinstic one.
 \end{rmk}
-
-\begin{defn}
-    Given languages $A$ and $B$, the \emph{concatenation} of $A$ and $B$, denoted by $A + B$, is
-    \begin{align*}
-        A + B = \left\{\alpha\beta : \alpha \in A, \beta \in B \right\},
-    \end{align*}
-    where $\alpha\beta$ is the string formed by concatenating $\alpha$ and $\beta$.
-\end{defn}
 
 \begin{thm}\label{regular-language-concatenation}
     Let $A$ and $B$ be regular languages, then $A + B$ is also regular.
@@ -262,6 +271,8 @@
 \begin{defn}
     The \emph{regular operations} are union, intersection, complement, concatenation, and star, under which we have shown the set of regular languages is closed.
 \end{defn}
+
+\section{Regular Expressions}
 
 \begin{defn}
     A \emph{regular expression} is a sequence of regular operations applied to regular languages. Formally, given an alphabet $\Sigma$, the following are regular expressions:
