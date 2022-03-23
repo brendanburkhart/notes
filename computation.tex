@@ -38,7 +38,7 @@
 \end{defn}
 
 \begin{defn}
-    Given languages $A$ and $B$, the \emph{concatenation} of $A$ and $B$, denoted by $A + B$, is
+    Given languages $A$ and $B$, the \emph{concatenation} of $A$ and $B$, denoted by $A \cdot B$, is
     \begin{align*}
         A + B = \left\{\alpha\beta : \alpha \in A, \beta \in B \right\},
     \end{align*}
@@ -48,7 +48,7 @@
 \begin{defn}
     Let $L$ be a language. We can also apply the Kleene star operator to this language, creating its Kleene closure $L^*$ by defining
     \begin{align*}
-        L^0 &= \{\varepsilon\}, \\
+        L^0 &= \{\emptystring\}, \\
         L^{i+1} &= L^{i} + L, \\
         L^{*} &= \bigunion_{i \geq 0}L^{i}.
     \end{align*}
@@ -143,11 +143,11 @@
     \begin{itemize}
         \item $Q$ is a finite set of \emph{states},
         \item $\Sigma$ is an alphabet,
-        \item $\delta: Q \times \left(\Sigma \union \{\varepsilon\}\right) \to 2^{Q}$ is the \emph{transition function},
+        \item $\delta: Q \times \left(\Sigma \union \{\emptystring\}\right) \to 2^{Q}$ is the \emph{transition function},
         \item $q_0 \in Q$ is the \emph{start state},
         \item $F \subseteq Q$ are the \emph{accept states}.
     \end{itemize}
-    A non-determinstic finite automata $M$ accepts an input $w$ over $\Sigma$ when there exists $w_{\varepsilon}$ that causes $M$ to end in an accept state, where $w_{\varepsilon}$ is constructed by inserting any finite number of $\varepsilon$ into $w$.
+    A non-determinstic finite automata $M$ accepts an input $w$ over $\Sigma$ when there exists $w_{\emptystring}$ that causes $M$ to end in an accept state, where $w_{\emptystring}$ is constructed by inserting any finite number of $\emptystring$ into $w$.
 \end{defn}
 
 \begin{rmk}
@@ -159,13 +159,13 @@
 \end{rmk}
 
 \begin{defn}
-    Given a transition function $\delta: Q \times \left(\Sigma \union \{\varepsilon\}\right) \to 2^{Q}$ and $R \subseteq Q$,
-    the \emph{$\varepsilon$-closure} of $R$ is the set of all states reachable from $R$ via zero or more \emph{$\varepsilon$-transitions}. Formally, we recursively define
+    Given a transition function $\delta: Q \times \left(\Sigma \union \{\emptystring\}\right) \to 2^{Q}$ and $R \subseteq Q$,
+    the \emph{$\emptystring$-closure} of $R$ is the set of all states reachable from $R$ via zero or more \emph{$\emptystring$-transitions}. Formally, we recursively define
     \begin{align*}
         E_0\left(R\right) &= R, \\
-        E_{i+1}\left(R\right) &= \left\{q \in Q : \exists r \in E_{i}\left(R\right)\left[q \in \delta\left(r, \varepsilon\right)\right]\right\}.
+        E_{i+1}\left(R\right) &= \left\{q \in Q : \exists r \in E_{i}\left(R\right)\left[q \in \delta\left(r, \emptystring\right)\right]\right\}.
     \end{align*}
-    and then the $\varepsilon$-closure of $R$ is
+    and then the $\emptystring$-closure of $R$ is
     \begin{align*}
         E\left(R\right) = \bigunion_{0\leq i < n}E_{i}\left(R\right),
     \end{align*}
@@ -173,13 +173,13 @@
 \end{defn}
 
 \begin{lemma}\label{epsilon-closure}
-    Consider an NFA with states $Q$ and transition function $\delta$, and consider $s\in Q$ and $R \subseteq Q$. Then $s \in E(R)$ if and only if $s$ is reachable from some $q \in R$ via zero or more $\varepsilon$-transitions.
+    Consider an NFA with states $Q$ and transition function $\delta$, and consider $s\in Q$ and $R \subseteq Q$. Then $s \in E(R)$ if and only if $s$ is reachable from some $q \in R$ via zero or more $\emptystring$-transitions.
 \end{lemma}
 
 \begin{proof}\proofbreak
-    ($\implies$) If $s \in E(R)$, then $s \in E_{i}(R)$ for some $0 \leq i < n$. If $i = 0$, then $s \in R$ and so $s$ is reachable from $q = s \in R$ via zero $\varepsilon$-transitions. If $i > 0$, then there exists $r \in E_{i=1}(R)$ such that $s \in \delta(r, \varepsilon)$, and so by induction there exists $q \in R$ such that $s$ is reachable from $q$ via zero or more $\varepsilon$-transitions.
+    ($\implies$) If $s \in E(R)$, then $s \in E_{i}(R)$ for some $0 \leq i < n$. If $i = 0$, then $s \in R$ and so $s$ is reachable from $q = s \in R$ via zero $\emptystring$-transitions. If $i > 0$, then there exists $r \in E_{i=1}(R)$ such that $s \in \delta(r, \emptystring)$, and so by induction there exists $q \in R$ such that $s$ is reachable from $q$ via zero or more $\emptystring$-transitions.
 
-    ($\impliedby$) If $s$ is reachable from $q_0 \in R$ via zero of more $\varepsilon$-transitions, then clearly there exists a sequence $q_0, q_1, \ldots, q_{k}, s$ such that $q_{i+1} \in \delta(q_i, \varepsilon)$ and $s \in \delta(q_k, \varepsilon)$. Therefore, $q_i \in E_i(R)$, and so $s \in E_{k+1}$. Notice that if $q_i = q_j$, we can take reach $s$ from $q_0$ via the subsequence $q_0, q_1, \ldots, q_i, q_{j+1}, q_{j+2}, \ldots, q_k, s$. Since $n = \abs{Q}$, it follows by the pigeonhole principle that such a sequence with at most $n$ states must exist, and so $k + 2 \leq n$, which in turn implies $s \in E_{i = k+1}(R)$ for some $0 \leq i < n$, and so $s \in E(R)$.
+    ($\impliedby$) If $s$ is reachable from $q_0 \in R$ via zero of more $\emptystring$-transitions, then clearly there exists a sequence $q_0, q_1, \ldots, q_{k}, s$ such that $q_{i+1} \in \delta(q_i, \emptystring)$ and $s \in \delta(q_k, \emptystring)$. Therefore, $q_i \in E_i(R)$, and so $s \in E_{k+1}$. Notice that if $q_i = q_j$, we can take reach $s$ from $q_0$ via the subsequence $q_0, q_1, \ldots, q_i, q_{j+1}, q_{j+2}, \ldots, q_k, s$. Since $n = \abs{Q}$, it follows by the pigeonhole principle that such a sequence with at most $n$ states must exist, and so $k + 2 \leq n$, which in turn implies $s \in E_{i = k+1}(R)$ for some $0 \leq i < n$, and so $s \in E(R)$.
 \end{proof}
 
 \begin{lemma}\label{epsilon-closure-union}
@@ -190,9 +190,9 @@
 \end{lemma}
 
 \begin{proof}
-    If $x \in E(A) \union E(B)$, then since $A$ and $B$ are arbitrary we have without loss of generality that $x \in E(A)$. It follows by Lemma \ref{epsilon-closure} that $x$ is reachable via $\varepsilon$-transitions from some $a \in A$, and since $a \in A \union B$ we then have $x \in E(\union B)$.
+    If $x \in E(A) \union E(B)$, then since $A$ and $B$ are arbitrary we have without loss of generality that $x \in E(A)$. It follows by Lemma \ref{epsilon-closure} that $x$ is reachable via $\emptystring$-transitions from some $a \in A$, and since $a \in A \union B$ we then have $x \in E(\union B)$.
 
-    If $x \in E(A \union B)$, then by Lemma \ref{epsilon-closure} we know that $x$ is reachable via $\varepsilon$-transitions from some $a \in A$ or some $b \in B$. Then $x \in E(A)$ or $x \in E(B)$, and so $x \in E(E) \union E(B)$.
+    If $x \in E(A \union B)$, then by Lemma \ref{epsilon-closure} we know that $x$ is reachable via $\emptystring$-transitions from some $a \in A$ or some $b \in B$. Then $x \in E(A)$ or $x \in E(B)$, and so $x \in E(E) \union E(B)$.
 \end{proof}
 
 \begin{thm}\label{dfa-nfa-equivalence}
@@ -208,15 +208,15 @@
         \item $F' = \left\{R \in Q \compbar R \intersection F \neq \emptyset\right\}$.
     \end{itemize}
 
-    For any $w \in \Sigma^*$ such that $V$ accepts $w$, by we can construct $w_{\varepsilon}$ from $w$ by inserting some number of $\varepsilon$'s into $w$ such that $w_{\varepsilon}$ acuses $V$ to run to an accept state. Let $q_0, q_1, \ldots, q_n$ be the states that $w_{\varepsilon}$ causes $V$ to visit. I claim that if $V$ is in state $q_i$ after seeing $w_1, \ldots, w_i$ then $M$ is in state $R$ where $q_i \in R$. We will prove this by induction. The base case is true by construction since $V$ starts in state $q_0$ and $M$ in state $\{q_0\}$. The induction step simply amounts to showing that if $q_i \in R$ then $q_{i+1} \in \delta'(R, w_{i+1})$.
+    For any $w \in \Sigma^*$ such that $V$ accepts $w$, by we can construct $w_{\emptystring}$ from $w$ by inserting some number of $\emptystring$'s into $w$ such that $w_{\emptystring}$ causes $V$ to run to an accept state. Let $q_0, q_1, \ldots, q_n$ be the states that $w_{\emptystring}$ causes $V$ to visit. I claim that if $V$ is in state $q_i$ after seeing $w_1, \ldots, w_i$ then $M$ is in state $R$ where $q_i \in R$. We will prove this by induction. The base case is true by construction since $V$ starts in state $q_0$ and $M$ in state $\{q_0\}$. The induction step simply amounts to showing that if $q_i \in R$ then $q_{i+1} \in \delta'(R, w_{i+1})$.
     \begin{align*}
         R' = \delta'(R, w_{i+1}) = E\left(\bigunion_{r\in R}\delta(r, w_{i+1})\right).
     \end{align*}
-    Since $w_i$ causes $V$ to move from $q_i$ to $q_{i+1}$, it follows that there is a (possibly empty) sequence of $\varepsilon$-transitions from $q_i$ to some state $a$, then $d \in \delta(a, w_i)$, and then a (again possibly empty) sequence of $\varepsilon$-transitions from $d$ to $q_{i+1}$. By Lemma \ref{epsilon-closure}, we know that $a \in R$, and therefore $d \in \bigunion_{r \in R}\delta(r, w_i)$, and so again using Lemma \ref{epsilon-closure} we can conclude that $q_{i+i} \in R'$.
+    Since $w_i$ causes $V$ to move from $q_i$ to $q_{i+1}$, it follows that there is a (possibly empty) sequence of $\emptystring$-transitions from $q_i$ to some state $a$, then $d \in \delta(a, w_i)$, and then a (again possibly empty) sequence of $\emptystring$-transitions from $d$ to $q_{i+1}$. By Lemma \ref{epsilon-closure}, we know that $a \in R$, and therefore $d \in \bigunion_{r \in R}\delta(r, w_i)$, and so again using Lemma \ref{epsilon-closure} we can conclude that $q_{i+i} \in R'$.
 
     We have therefore shown that $q_n \in R_f$, where $R_f$ is the final state of $M$. Since $V$ accepts $w$ we know that $q_n \in F$ and so $R_f \intersection F \neq \empty$ which implies $R_f \in F'$, and so $M$ also accepts $w$.
 
-    Now consider instead $w$ accepted by $M$. Let $R_0 = \{q_0\}, R_1, \ldots, R_n$ be the sequence of states visited by $M$. Since $w$ is accepted by $M$, we know $R_n \intersection F \neq \emptyset$, so take $q_n \in R_n \intersection F$. It follows that there exists some $q_{n-1} \in R_{n-1}$ such that $q_n \in E(\delta(q_{n-1}, w_{i+1}))$ by Lemmas \ref{epsilon-closure} and \ref{epsilon-closure-union}, and so inductively there must exist a sequence of states of $V$ $q_0, \ldots, q_n$ such that $q_n \in F$ and $q_{i+1}$ is reachable from $q_i$ via $w_i$ and some number of $\varepsilon$-transitions. Let $w_{\varepsilon}$ be constructed from $w$ by inserting the relevant $\varepsilon$'s, and then $w_{\varepsilon}$ causes $V$ to end in an accept state, and so $w$ is accepted by $V$ by definition.
+    Now consider instead $w$ accepted by $M$. Let $R_0 = \{q_0\}, R_1, \ldots, R_n$ be the sequence of states visited by $M$. Since $w$ is accepted by $M$, we know $R_n \intersection F \neq \emptyset$, so take $q_n \in R_n \intersection F$. It follows that there exists some $q_{n-1} \in R_{n-1}$ such that $q_n \in E(\delta(q_{n-1}, w_{i+1}))$ by Lemmas \ref{epsilon-closure} and \ref{epsilon-closure-union}, and so inductively there must exist a sequence of states of $V$ $q_0, \ldots, q_n$ such that $q_n \in F$ and $q_{i+1}$ is reachable from $q_i$ via $w_i$ and some number of $\emptystring$-transitions. Let $w_{\emptystring}$ be constructed from $w$ by inserting the relevant $\emptystring$'s, and then $w_{\emptystring}$ causes $V$ to end in an accept state, and so $w$ is accepted by $V$ by definition.
 \end{proof}
 
 \begin{rmk}
@@ -234,14 +234,14 @@
         \item For $a \in \Sigma$, define $\delta(q, a) = \begin{dcases}
             \{\delta_A(q, a)\}, &q \in Q_A \\
             \{\delta_B(q, a)\}, &q \in Q_B \\
-        \end{dcases}$ and $\delta(q, \varepsilon) = \begin{dcases}
+        \end{dcases}$ and $\delta(q, \emptystring) = \begin{dcases}
             \{q_B\}, &q \in F_A \\
             \emptyset, &\textrm{otherwise} \\
         \end{dcases}$,
         \item $q_0 = q_A$,
         \item $F = F_B$.
     \end{itemize}
-    Notice that if $w = \alpha\beta$, then the input $\alpha\varepsilon\beta$ will cause $M$ to end in an accept state, and so any such $w$ is accepted. If $w$ is accepted, then since the only transition possible from states in $Q_A$ to those in $Q_B$ (which contains all possible accept states) is an $\varepsilon$-transition from a state in $F_A$, and so $w = \alpha\beta$ for some $\alpha \in A$ and $\beta \in B$.
+    Notice that if $w = \alpha\beta$, then the input $\alpha\emptystring\beta$ will cause $M$ to end in an accept state, and so any such $w$ is accepted. If $w$ is accepted, then since the only transition possible from states in $Q_A$ to those in $Q_B$ (which contains all possible accept states) is an $\emptystring$-transition from a state in $F_A$, and so $w = \alpha\beta$ for some $\alpha \in A$ and $\beta \in B$.
 
     Since $M$ recognizes $A + B$, by Theorem \ref{dfa-nfa-equivalence} we know that $A + B$ must be a regular language.
 \end{proof}
@@ -251,7 +251,7 @@
 \end{thm}
 
 \begin{proof}
-    Given a deterministic finite automata $M = (Q, \Sigma, \delta, q_0, F)$, we make a number of small modifications in order to produce a non-determinstic finite automata $N$ recognizing $A^{*}$ and thus proving it is regular. Specifically, we add $\varepsilon$-transitions from every accept state of $M$ back to $q_0$ --- this allows $N$ to recognize any string you can form by concatenating strings from $A$. We also introduce a new start state with a single $\varepsilon$-transition to the original start state, and make this new start state an accept state, thus allowing $N$ to also recognize $\varepsilon$.
+    Given a deterministic finite automata $M = (Q, \Sigma, \delta, q_0, F)$, we make a number of small modifications in order to produce a non-determinstic finite automata $N$ recognizing $A^{*}$ and thus proving it is regular. Specifically, we add $\emptystring$-transitions from every accept state of $M$ back to $q_0$ --- this allows $N$ to recognize any string you can form by concatenating strings from $A$. We also introduce a new start state with a single $\emptystring$-transition to the original start state, and make this new start state an accept state, thus allowing $N$ to also recognize $\emptystring$.
 
     Formally, we define $N = (Q_N, \Sigma, \delta_N, q_N, F_N)$ where
     \begin{itemize}
@@ -259,9 +259,9 @@
         \item $\delta_N(q, a) = \begin{dcases}
             \delta(q, a), &q \in Q \\
             \{\}, &q = q_N \\
-        \end{dcases}$ and $\delta_N(q, \varepsilon) = \begin{dcases}
-            \delta(q, \varepsilon) \union \{q_0\}, &q \in F, q \neq q_N \\
-            \delta(q, \varepsilon), &q \not\in F, q \neq q_N \\
+        \end{dcases}$ and $\delta_N(q, \emptystring) = \begin{dcases}
+            \delta(q, \emptystring) \union \{q_0\}, &q \in F, q \neq q_N \\
+            \delta(q, \emptystring), &q \not\in F, q \neq q_N \\
             \{q_0\}, &q = q_N \\
         \end{dcases}$,
         \item $F_N = F \union \{q_N\}$.
@@ -275,23 +275,23 @@
 \section{Regular Expressions}
 
 \begin{defn}
-    A \emph{regular expression} is a sequence of regular operations applied to regular languages. Formally, given an alphabet $\Sigma$, the following are regular expressions:
+    A \emph{regular expression} is a sequence of regular operations applied to regular languages. Formally, given an alphabet $\Sigma$, we recursively define the regular expressions over $\Sigma$ as:
     \begin{itemize}
         \item $a$, for any $a \in \Sigma$,
-        \item $\varepsilon$,
+        \item $\emptystring$,
         \item $\emptyset$,
         \item $R_1 \union R_2$, where $R_1$ and $R_2$ are themselves regular expressions,
         \item $R_1 \cdot R_2$, where $R_1$ and $R_2$ are themselves regular expressions,
-        \item $R_1^{\star}$, where $R_1$ is a regular expression,
+        \item $R_1^{*}$, where $R_1$ is a regular expression,
     \end{itemize}
 \end{defn}
 
 \begin{defn}
-    For a regular expression $R_1$, we also define $R_1^{+} = R_1R_1^{\star}$.
+    For a regular expression $R_1$, we also define $R_1^{+} = R_1R_1^{*}$.
 \end{defn}
 
 \begin{exmp}
-    The regular expression $1^{\star}(0\union 1^{+})^{\star}$ is the language of binary strings where every $0$ is followed by at least one $1$.
+    The regular expression $1^{*}(0\union 1^{+})^{*}$ is the language of consisting of binary strings where every $0$ is followed by at least one $1$.
 \end{exmp}
 
 \section{Non-Regular Languages}
