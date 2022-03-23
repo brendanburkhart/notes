@@ -103,7 +103,7 @@
     This language accepted by this finite automata is the set of all binary strings which end with \texttt{001}. We can use an inductive proof on the length of the longest input to prove this.
 \end{exmp}
 
-\begin{prop}
+\begin{prop}\label{regular-language-complement}
     Let $A$ be a regular language, then $\complementof{A}$ is also a regular lanaguage.
 \end{prop}
 
@@ -202,8 +202,65 @@
     Now consider instead $w$ accepted by $M$. Let $R_0 = \{q_0\}, R_1, \ldots, R_n$ be the sequence of states visited by $M$. Since $w$ is accepted by $M$, we know $R_n \intersection F \neq \emptyset$, so take $q_n \in R_n \intersection F$. It follows that there exists some $q_{n-1} \in R_{n-1}$ such that $q_n \in E(\delta(q_{n-1}, w_{i+1}))$ by Lemmas \ref{epsilon-closure} and \ref{epsilon-closure-union}, and so inductively there must exist a sequence of states of $V$ $q_0, \ldots, q_n$ such that $q_n \in F$ and $q_{i+1}$ is reachable from $q_i$ via $w_i$ and some number of $\varepsilon$-transitions. Let $w_{\varepsilon}$ be constructed from $w$ by inserting the relevant $\varepsilon$'s, and then $w_{\varepsilon}$ causes $V$ to end in an accept state, and so $w$ is accepted by $V$ by definition.
 \end{proof}
 
+\begin{rmk}
+    In addition to a proof of the equivalence of determinstic and non-determinstic finite automata, this is an explicit method to construct a determinstic finite automata from a non-determinstic one.
+\end{rmk}
+
 \begin{defn}
-    The \emph{regular operations} are union, intersection, complement, concatenation, and star, which the set of regular languages is closed under.
+    Given languages $A$ and $B$, the \emph{concatenation} of $A$ and $B$, denoted by $A + B$, is
+    \begin{align*}
+        A + B = \left\{\alpha\beta : \alpha \in A, \beta \in B \right\},
+    \end{align*}
+    where $\alpha\beta$ is the string formed by concatenating $\alpha$ and $\beta$.
+\end{defn}
+
+\begin{thm}\label{regular-language-concatenation}
+    Let $A$ and $B$ be regular languages, then $A + B$ is also regular.
+\end{thm}
+
+\begin{proof}
+    Let $A = (Q_A, \Sigma, \delta_A, q_A, F_A)$ and $B = (Q_B, \Sigma, \delta_B, q_B, F_B)$ be determinstic finite automata recognizing language $A$ and $B$ respectively. We now construct a non-determinstic finite automata which recognizes $A + B$. Consider $M = \left(Q, \Sigma, \delta, q_0, F\right)$, where
+    \begin{itemize}
+        \item $Q = Q_A \union Q_B$,
+        \item For $a \in \Sigma$, define $\delta(q, a) = \begin{dcases}
+            \{\delta_A(q, a)\}, &q \in Q_A \\
+            \{\delta_B(q, a)\}, &q \in Q_B \\
+        \end{dcases}$ and $\delta(q, \varepsilon) = \begin{dcases}
+            \{q_B\}, &q \in F_A \\
+            \emptyset, &\textrm{otherwise} \\
+        \end{dcases}$,
+        \item $q_0 = q_A$,
+        \item $F = F_B$.
+    \end{itemize}
+    Notice that if $w = \alpha\beta$, then the input $\alpha\varepsilon\beta$ will cause $M$ to end in an accept state, and so any such $w$ is accepted. If $w$ is accepted, then since the only transition possible from states in $Q_A$ to those in $Q_B$ (which contains all possible accept states) is an $\varepsilon$-transition from a state in $F_A$, and so $w = \alpha\beta$ for some $\alpha \in A$ and $\beta \in B$.
+
+    Since $M$ recognizes $A + B$, by Theorem \ref{dfa-nfa-equivalence} we know that $A + B$ must be a regular language.
+\end{proof}
+
+\begin{thm}\label{regular-language-kleene-star}
+    Let $A$ be a regular language, then $A^{*}$ is also regular.
+\end{thm}
+
+\begin{proof}
+    Given a deterministic finite automata $M = (Q, \Sigma, \delta, q_0, F)$, we make a number of small modifications in order to produce a non-determinstic finite automata $N$ recognizing $A^{*}$ and thus proving it is regular. Specifically, we add $\varepsilon$-transitions from every accept state of $M$ back to $q_0$ --- this allows $N$ to recognize any string you can form by concatenating strings from $A$. We also introduce a new start state with a single $\varepsilon$-transition to the original start state, and make this new start state an accept state, thus allowing $N$ to also recognize $\varepsilon$.
+
+    Formally, we define $N = (Q_N, \Sigma, \delta_N, q_N, F_N)$ where
+    \begin{itemize}
+        \item $Q_N = Q \union \{q_N\}$,
+        \item $\delta_N(q, a) = \begin{dcases}
+            \delta(q, a), &q \in Q \\
+            \{\}, &q = q_N \\
+        \end{dcases}$ and $\delta_N(q, \varepsilon) = \begin{dcases}
+            \delta(q, \varepsilon) \union \{q_0\}, &q \in F, q \neq q_N \\
+            \delta(q, \varepsilon), &q \not\in F, q \neq q_N \\
+            \{q_0\}, &q = q_N \\
+        \end{dcases}$,
+        \item $F_N = F \union \{q_N\}$.
+    \end{itemize}
+\end{proof}
+
+\begin{defn}
+    The \emph{regular operations} are union, intersection, complement, concatenation, and star, under which we have shown the set of regular languages is closed.
 \end{defn}
 
 \begin{defn}
