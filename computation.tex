@@ -55,7 +55,7 @@
 \end{defn}
 
 \begin{defn}
-    A (determinstic) \emph{finite automaton} is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
+    A (deterministic) \emph{finite automaton} is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
     \begin{itemize}
         \item $Q$ is a finite set of \emph{states},
         \item $\Sigma$ is an alphabet,
@@ -139,7 +139,7 @@
 \end{proof}
 
 \begin{defn}
-    A \emph{non-determinstic} finite automaton is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
+    A \emph{non-deterministic} finite automaton is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
     \begin{itemize}
         \item $Q$ is a finite set of \emph{states},
         \item $\Sigma$ is an alphabet,
@@ -147,11 +147,11 @@
         \item $q_0 \in Q$ is the \emph{start state},
         \item $F \subseteq Q$ are the \emph{accept states}.
     \end{itemize}
-    A non-determinstic finite automaton $M$ accepts an input $w$ over $\Sigma$ when there exists $w_{\emptystring}$ that causes $M$ to end in an accept state, where $w_{\emptystring}$ is constructed by inserting any finite number of $\emptystring$ into $w$.
+    A non-deterministic finite automaton $M$ accepts an input $w$ over $\Sigma$ when there exists $w_{\emptystring}$ that causes $M$ to end in an accept state, where $w_{\emptystring}$ is constructed by inserting any finite number of $\emptystring$ into $w$.
 \end{defn}
 
 \begin{rmk}
-    Standard determinstic finite automata may be referred to as DFAs, while non-determinstic finite automata may be referred to as NFAs.
+    Standard deterministic finite automata may be referred to as DFAs, while non-deterministic finite automata may be referred to as NFAs.
 \end{rmk}
 
 \begin{rmk}
@@ -196,11 +196,11 @@
 \end{proof}
 
 \begin{thm}\label{dfa-nfa-equivalence}
-    Let $N$ be a non-determinstic finite automaton, and $L$ be the language it accepts. Then $L$ is a regular language. Equivalently, there is an equivalent determinstic finite automaton for every non-determinstic finite automaton.
+    Let $N$ be a non-deterministic finite automaton, and $L$ be the language it accepts. Then $L$ is a regular language. Equivalently, there is an equivalent deterministic finite automaton for every non-deterministic finite automaton.
 \end{thm}
 
 \begin{proof}
-    Let $V = \left(Q, \Sigma, \delta, q_0, F\right)$ be a non-determinstic finite automaton. We will construct an equivalent determinstic finite automaton $M$. Let $M = \left(Q', \Sigma, \delta', q_0', F'\right)$, where
+    Let $V = \left(Q, \Sigma, \delta, q_0, F\right)$ be a non-deterministic finite automaton. We will construct an equivalent deterministic finite automaton $M$. Let $M = \left(Q', \Sigma, \delta', q_0', F'\right)$, where
     \begin{itemize}
         \item $Q' = 2^Q$,
         \item For all $R \in Q'$, define $\delta'(R, a) = E\left(\bigunion_{r \in R}\delta(r, a)\right)$,
@@ -220,7 +220,7 @@
 \end{proof}
 
 \begin{rmk}
-    In addition to a proof of the equivalence of determinstic and non-determinstic finite automata, this is an explicit method to construct a determinstic finite automaton from a non-determinstic one.
+    In addition to a proof of the equivalence of deterministic and non-deterministic finite automata, this is an explicit method to construct a deterministic finite automaton from a non-deterministic one.
 \end{rmk}
 
 \begin{thm}\label{regular-language-concatenation}
@@ -228,7 +228,7 @@
 \end{thm}
 
 \begin{proof}
-    Let $A = (Q_A, \Sigma, \delta_A, q_A, F_A)$ and $B = (Q_B, \Sigma, \delta_B, q_B, F_B)$ be determinstic finite automata recognizing language $A$ and $B$ respectively. We now construct a non-determinstic finite automaton which recognizes $A \concat B$. Consider $M = \left(Q, \Sigma, \delta, q_0, F\right)$, where
+    Let $A = (Q_A, \Sigma, \delta_A, q_A, F_A)$ and $B = (Q_B, \Sigma, \delta_B, q_B, F_B)$ be deterministic finite automata recognizing language $A$ and $B$ respectively. We now construct a non-deterministic finite automaton which recognizes $A \concat B$. Consider $M = \left(Q, \Sigma, \delta, q_0, F\right)$, where
     \begin{itemize}
         \item $Q = Q_A \union Q_B$,
         \item For $a \in \Sigma$, define $\delta(q, a) = \begin{dcases}
@@ -251,7 +251,7 @@
 \end{thm}
 
 \begin{proof}
-    Given a deterministic finite automaton $M = (Q, \Sigma, \delta, q_0, F)$, we make a number of small modifications in order to produce a non-determinstic finite automaton $N$ recognizing $A^{*}$ and thus proving it is regular. Specifically, we add $\emptystring$-transitions from every accept state of $M$ back to $q_0$ --- this allows $N$ to recognize any string you can form by concatenating strings from $A$. We also introduce a new start state with a single $\emptystring$-transition to the original start state, and make this new start state an accept state, thus allowing $N$ to also recognize $\emptystring$.
+    Given a deterministic finite automaton $M = (Q, \Sigma, \delta, q_0, F)$, we make a number of small modifications in order to produce a non-deterministic finite automaton $N$ recognizing $A^{*}$ and thus proving it is regular. Specifically, we add $\emptystring$-transitions from every accept state of $M$ back to $q_0$ --- this allows $N$ to recognize any string you can form by concatenating strings from $A$. We also introduce a new start state with a single $\emptystring$-transition to the original start state, and make this new start state an accept state, thus allowing $N$ to also recognize $\emptystring$.
 
     Formally, we define $N = (Q_N, \Sigma, \delta_N, q_N, F_N)$ where
     \begin{itemize}
@@ -496,7 +496,7 @@
 \end{exmp}
 
 \begin{defn}
-    A \emph{generalized non-deterministic finite automaton} (GNFA) is a variant of the non-determinstic finite automaton which consumes multiple symbols of the input at a time, by non-deterministically matching the input against regular expressions. We will only consider GNFAs in a \emph{standard form}, which has exactly one start state, one accept state, as well as outgoing transitions from the start state, ingoing transitions from every state to the accept state, and transitions between every other state. Formally, it is a $5$-tuple $(Q, \Sigma, \delta, q_{\textrm{start}}, q_{\textrm{accept}})$, where
+    A \emph{generalized non-deterministic finite automaton} (GNFA) is a variant of the non-deterministic finite automaton which consumes multiple symbols of the input at a time, by non-deterministically matching the input against regular expressions. We will only consider GNFAs in a \emph{standard form}, which has exactly one start state, one accept state, as well as outgoing transitions from the start state, ingoing transitions from every state to the accept state, and transitions between every other state. Formally, it is a $5$-tuple $(Q, \Sigma, \delta, q_{\textrm{start}}, q_{\textrm{accept}})$, where
     \begin{itemize}
         \item $Q$ is a finite set of \emph{states},
         \item $\Sigma$ is an alphabet,
@@ -565,7 +565,7 @@
 \end{lemma}
 
 \begin{proof}
-    Let $M = (Q, \Sigma, \delta, q_s, F)$ be a determinstic finite automaton recognizing $A$. Let $p = \abs{Q}$. Then for any $s = s_1s_2 \cdots s_n \in A$, where $n \geq p$, let $r_1, r_2, \ldots, r_n, r_{n+1}$ be the sequence of states that $M$ visits in input $s$. Since $n+1 \geq p + 1 > p$, by the pigeonhole principle \ref{pigeonhole}, it follows that at least one state must be visited twice within the first $p+1$ states --- that is, that there must be $i > j$ such that $r_i = r_j$ and $i \leq p + 1$.
+    Let $M = (Q, \Sigma, \delta, q_s, F)$ be a deterministic finite automaton recognizing $A$. Let $p = \abs{Q}$. Then for any $s = s_1s_2 \cdots s_n \in A$, where $n \geq p$, let $r_1, r_2, \ldots, r_n, r_{n+1}$ be the sequence of states that $M$ visits in input $s$. Since $n+1 \geq p + 1 > p$, by the pigeonhole principle \ref{pigeonhole}, it follows that at least one state must be visited twice within the first $p+1$ states --- that is, that there must be $i > j$ such that $r_i = r_j$ and $i \leq p + 1$.
 
     Then, take $x = s_1s_2 \cdots s_{i-1}$, $y = s_{i}s_{i+1} \cdots s_{j-1}$, and $z = s_{j}s_{j+1}\cdots s_n$. Notice that since $i > j$, $j-1 \geq i$, and so $\abs{y} > 0$. Furthermore, $\abs{xy} = j-1$ and since $j < i \leq p + 1$, it follows that $j-1 < i-1 \leq p$, and so $\abs{xy} \leq p$. Finally, since $r_{i}r_{i+1}\cdots r_{j}$ is a cycle that occurs on input $y$, we clearly have $xy^{i}z \in A$ for all $i \geq 0$.
 \end{proof}
