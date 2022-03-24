@@ -291,8 +291,267 @@
 \end{defn}
 
 \begin{exmp}
-    The regular expression $1^{*}(0\union 1^{+})^{*}$ is the language of consisting of binary strings where every $0$ is followed by at least one $1$.
+    The regular expression $\{1\}^{*}(\{0\} \concat \{1\}^{+})^{*}$, also written in a more condensed form as $1^{*}(01^{+})^{*}$, is the language of consisting of binary strings where every $0$ is followed by at least one $1$.
 \end{exmp}
+
+\begin{lemma}\label{regex-to-regular-language}
+    The language described by any regular expression is a regular language.
+\end{lemma}
+
+\begin{proof}
+    Let $R$ be a regular expression that describes a language $L$ over an alphabet $\Sigma$. We recursively construct a non-deterministic finite automata that recognizes $L$ in order to prove that $L$ must be regular. First, any regular expression by definition must have one of the six forms listed in our definition.
+
+    If $R = a$, then $L = \{a\}$ by definition, which is recognized by the non-deterministic finite automata:
+    \begin{figure}[ht!]
+        \centering
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=2 cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20}
+        ]
+            \node[initial, state]   (S)              {$q_1$};
+            \node[state, accepting] (A) [right of=S] {$q_2$};
+    
+            \path[->] (S) edge [above] node [align=center] {a} (A);
+        \end{tikzpicture}
+    \end{figure}
+
+    If $R = \emptystring$, it can be recognized by the non-deterministic finite automata:
+    \begin{figure}[ht!]
+        \centering
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=2 cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20}
+        ]
+            \node[initial, state, accepting] (S) {};
+        \end{tikzpicture}
+    \end{figure}
+
+    If $R = \emptyset$, it can be recognized by the non-deterministic finite automata:
+    \begin{figure}[ht!]
+        \centering
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=2 cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20}
+        ]
+            \node[initial, state] (S) {};
+        \end{tikzpicture}
+    \end{figure}
+
+    Formally, these finite automata are
+    \begin{itemize}
+        \item $(\{q_0, q_1\}, \Sigma, \delta, q_0, \{q_1\})$ where $\delta(q_0, a) = \{q_1\}$ and $\delta(q, r) = \emptyset$ otherwise,
+        \item $(\{q_0\}, \Sigma, \delta, q_0, \{q_0\})$ where $\delta(q, r) = \emptyset$,
+        \item $(\{q_0\}, \Sigma, \delta, q_0, \emptyset)$ where $\delta(q, r) = \emptyset$.
+    \end{itemize}
+
+    From here, we proceed by induction. In the base case, $R$ is one of the above expressions and has been shown to be regular. Now assuming that $R_1$ and $R_2$ are regular, it follows that
+    \begin{itemize}
+        \item $R_1 \union R_2$ is regular by Theorem \ref{regular-language-union-intersection},
+        \item $R_1 \concat R_2$ is regular by Theorem \ref{regular-language-concatenation},
+        \item and $R_1^{*}$ is regular by Theorem \ref{regular-language-kleene-star}.
+    \end{itemize}
+    Since any regular expression $R$ must be recursively composed of these six forms, it follows that any regular expression describes a regular language.
+\end{proof}
+
+\begin{rmk}
+    We can explicitly convert any regular expression into a non-deterministic finite automata.
+\end{rmk}
+
+\begin{exmp}
+    Consider the regular expression $(0 \union 1)^{*}010$. We can construct, piece by piece, an NFA to recognize the language described by this regular expression as demonstrated in Figure \ref{fig:regex-nfa-construction-example}.
+    \begin{figure}[ht!]
+        \centering
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=1.5 cm,
+            every state/.style={draw=RoyalBlue!50,very thick,fill=RoyalBlue!20}
+        ]
+            \node[initial, state]   (S)              {};
+            \node[state, accepting] (0) [right of=S] {};
+
+            \path[->] (S) edge [above] node [align=center] {$0$} (0);
+        \end{tikzpicture}
+
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=1.5 cm,
+            every state/.style={draw=red!50,very thick,fill=red!20}
+        ]
+            \node[initial, state]   (S)              {};
+            \node[state, accepting] (1) [right of=S] {};
+
+            \path[->] (S) edge [above] node [align=center] {$1$} (1);
+        \end{tikzpicture}
+
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=1.5 cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20},
+            rednode/.style={draw=red!50,very thick,fill=red!20},
+            bluenode/.style={draw=RoyalBlue!50,very thick,fill=RoyalBlue!20},
+            purplenode/.style={draw=Fuchsia!50,very thick,fill=Fuchsia!20},
+        ]
+            \node[initial, state, purplenode] (S)                     {};
+            \node[state, bluenode]            (E0) [above right of=S] {};
+            \node[state, rednode]             (E1) [below right of=S] {};
+            \node[state, accepting, bluenode] (A0) [right of=E0]      {};
+            \node[state, accepting, rednode]  (A1) [right of=E1]      {};
+
+            \path[->] (S)  edge [below] node [align=center] {$\emptystring$} (E0)
+                           edge [above] node [align=center] {$\emptystring$} (E1)
+                      (E0) edge [above] node [align=center] {$0$} (A0)
+                      (E1) edge [above] node [align=center] {$1$} (A1);
+        \end{tikzpicture}
+
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=1.5 cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20},
+            rednode/.style={draw=red!50,very thick,fill=red!20},
+            bluenode/.style={draw=RoyalBlue!50,very thick,fill=RoyalBlue!20},
+            purplenode/.style={draw=Fuchsia!50,very thick,fill=Fuchsia!20},
+            yellownode/.style={draw=BurntOrange!50,very thick,fill=BurntOrange!20},
+        ]
+            \node[initial, state, accepting, yellownode] (0)                     {};
+            \node[state, purplenode]                     (S)  [right of=0]       {};
+            \node[state, bluenode]                       (E0) [above right of=S] {};
+            \node[state, rednode]                        (E1) [below right of=S] {};
+            \node[state, accepting, bluenode]            (A0) [right of=E0]      {};
+            \node[state, accepting, rednode]             (A1) [right of=E1]      {};
+
+            \path[->] (0)  edge [above]             node [align=center] {$\emptystring$} (S)
+                      (S)  edge [below]             node [align=center] {$\emptystring$} (E0)
+                           edge [above]             node [align=center] {$\emptystring$} (E1)
+                      (E0) edge [above]             node [align=center] {$0$} (A0)
+                      (E1) edge [above]             node [align=center] {$1$} (A1)
+                      (A0) edge [above, out=125, in=90] node [align=center] {$\emptystring$} (S)
+                      (A1) edge [below, out=-125, in=-90]  node [align=center] {$\emptystring$} (S);
+        \end{tikzpicture}
+
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=1.5 cm,
+            every state/.style={draw=ForestGreen!50,very thick,fill=ForestGreen!20},
+        ]
+            \node[initial, state]    (S)                {};
+            \node[state]             (A)  [right of=S]  {};
+            \node[state]             (AE) [right of=A]  {};
+            \node[state]             (B)  [right of=AE] {};
+            \node[state]             (BE) [right of=B]  {};
+            \node[state, accepting]  (A2) [right of=BE] {};
+
+            \path[->] (S)  edge [above] node [align=center] {$a$}           (A)
+                      (A)  edge [above] node [align=center] {$\emptystring$} (AE)
+                      (AE) edge [above] node [align=center] {$b$}           (B)
+                      (B)  edge [above] node [align=center] {$\emptystring$} (BE)
+                      (BE) edge [above] node [align=center] {$a$}           (A2);
+        \end{tikzpicture}
+
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=1.5 cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20},
+            rednode/.style={draw=red!50,very thick,fill=red!20},
+            bluenode/.style={draw=RoyalBlue!50,very thick,fill=RoyalBlue!20},
+            purplenode/.style={draw=Fuchsia!50,very thick,fill=Fuchsia!20},
+            yellownode/.style={draw=BurntOrange!50,very thick,fill=BurntOrange!20},
+            greennode/.style={draw=ForestGreen!50,very thick,fill=ForestGreen!20},
+        ]
+            \node[initial, state, yellownode]  (0)                     {};
+            \node[state, purplenode]           (S)  [right of=0]       {};
+            \node[state, bluenode]             (E0) [above right of=S] {};
+            \node[state, rednode]              (E1) [below right of=S] {};
+            \node[state, bluenode]             (A0) [right of=E0]      {};
+            \node[state, rednode]              (A1) [right of=E1]      {};
+            \node[state, greennode]            (2S)  [below of=A1]     {};
+            \node[state, greennode]            (2A)  [right of=2S]     {};
+            \node[state, greennode]            (2AE) [right of=2A]     {};
+            \node[state, greennode]            (2B)  [right of=2AE]    {};
+            \node[state, greennode]            (2BE) [right of=2B]     {};
+            \node[state, accepting, greennode] (2A2) [right of=2BE]    {};
+
+            \path[->] (0)   edge [above]                   node [align=center] {$\emptystring$} (S)
+                      (S)   edge [below]                   node [align=center] {$\emptystring$} (E0)
+                            edge [above]                   node [align=center] {$\emptystring$} (E1)
+                      (E0)  edge [above]                   node [align=center] {$0$}           (A0)
+                      (E1)  edge [above]                   node [align=center] {$1$}           (A1)
+                      (A0)  edge [above, out=135, in=90]   node [align=center] {$\emptystring$} (S)
+                      (A1)  edge [below, out=-135, in=-90] node [align=center] {$\emptystring$} (S)
+                      (2S)  edge [above]                   node [align=center] {$a$}           (2A)
+                      (2A)  edge [above]                   node [align=center] {$\emptystring$} (2AE)
+                      (2AE) edge [above]                   node [align=center] {$b$}           (2B)
+                      (2B)  edge [above]                   node [align=center] {$\emptystring$} (2BE)
+                      (2BE) edge [above]                   node [align=center] {$a$}           (2A2)
+                      (0)   edge [below, bend right]       node [align=center] {$\emptystring$} (2S)
+                      (A0)  edge [right, bend left]        node [align=center] {$\emptystring$} (2S)
+                      (A1)  edge [right]                   node [align=center] {$\emptystring$} (2S);
+        \end{tikzpicture}
+
+        \caption{Step-by-step construction of an NFA to recognize $(0 \union 1)^{*}010$}
+        \label{fig:regex-nfa-construction-example}
+    \end{figure}
+\end{exmp}
+
+\begin{defn}
+    A \emph{generalized non-deterministic finite automata} (GNFA) is a variant of the non-determinstic finite automata which consumes multiple symbols of the input at a time, by non-deterministically matching the input against regular expressions. We will only consider GNFAs in a \emph{standard form}, which has exactly one start state, one accept state, as well as outgoing transitions from the start state, ingoing transitions from every state to the accept state, and transitions between every other state. Formally, it is a $5$-tuple $(Q, \Sigma, \delta, q_{\textrm{start}}, q_{\textrm{accept}})$, where
+    \begin{itemize}
+        \item $Q$ is a finite set of \emph{states},
+        \item $\Sigma$ is an alphabet,
+        \item $\delta: (Q - q_{\textrm{accept}}) \times \left(Q - q_{\textrm{start}}\right) \to \mathcal{R}(\Sigma)$, where $\mathcal{R}(\Sigma)$ is the set of all regular expressions over $\Sigma$.
+        \item $q_{\textrm{start}} \in Q$ is the \emph{start state},
+        \item $q_{\textrm{accept}} \in Q$ is the \emph{accept state}.
+    \end{itemize}
+
+    A GNFA accepts $w \in \Sigma^{*}$ if $w = w_1w_2\cdots w_k$ where $w_i \in \Sigma^{*}$ and there exists $q_0, q_1, \ldots, q_k$ such that:
+    \begin{itemize}
+        \item $q_0 = q_{\textrm{start}}$,
+        \item $q_k = q_{\textrm{accept}}$,
+        \item $w_i \in L(R_i)$ where $R_i = \delta\left(q_{i-1}, q_i\right)$.
+    \end{itemize}
+\end{defn}
+
+\begin{lemma}\label{dfa-to-gnfa}
+    Any regular language can be converted into a generalized non-deterministic finite automata.
+\end{lemma}
+
+\begin{proof}
+    Consider a regular language $L$ that is recognized by a deterministic finite automata $M = (Q_0, \Sigma, \delta_0, q_{s}, F)$. From this, we construct an equivalent GNFA $G = (Q, \Sigma, \delta, q_{\textrm{start}}, q_{\textrm{accept}})$, where $Q = Q_0 \union \{q_{\textrm{start}}, q_{\textrm{accept}}\}$. We add $\emptystring$-transitions from every state in $F$ to $q_{\textrm{accept}}$, and a $\emptystring$-transition from $q_{\textrm{start}}$ to $q_{s}$. Every transtions from state $q_0$ to state $q_1$ is replaced with a regular expression describing their union, and for states without transitions we use the regular expression $\emptyset$. Formally, let
+    \begin{align*}
+        s_{\alpha\beta} &= \left\{s \in \Sigma : \delta_0\left(\alpha, s\right) = b\right\}, \\
+        \delta(\alpha, \beta) &= \begin{dcases}
+            \varepsilon, &\alpha \in F, \beta = q_{\textrm{accept}} \\
+            \varepsilon, &\alpha = q_{\textrm{start}}, \beta = q_{s} \\
+            s_{\alpha\beta}, &\textrm{otherwise}
+        \end{dcases}.
+    \end{align*}
+
+    This GNFA recognizes an equivalent language since a transition between $q_i$ and $q_{i+1}$ for symbol $s \in \Sigma$ exists precisely when $\delta(q_i, q_{i+1})$ is a union containing $s$.
+\end{proof}
+
+\begin{lemma}\label{gnfa-to-regex}
+    The language recognized by any generalized non-deterministic finite automata can be described by a regular expression.
+\end{lemma}
+
+\begin{proof}
+    $G = (Q, \Sigma, \delta, q_{\textrm{start}}, q_{\textrm{accept}})$ be a GNFA. We know that $\abs{Q} \geq 2$ since it must contain at least the start and accept states. If $\abs{Q} = 2$, then $\delta(q_{\textrm{start}}, q_{\textrm{accept}})$ is a regular expression that describes the language recognized by $G$. In the case that $\abs{Q} > 2$, we will show how to produce an equivalent GNFA $G'$ with exactly one less state. Since $\abs{Q} > 2$, there must exist some $q \in Q$ such that $q \neq q_{\textrm{start}}$ and $q \neq q_{\textrm{accept}}$. Let $Q' = Q \setminus \{q\}$, and let
+    \begin{align*}
+        \delta'(\alpha, \beta) = \delta(\alpha, \beta) \union \left[\delta(\alpha, q) \concat \delta(q, q)^{*} \concat \delta(q, \beta)\right].
+    \end{align*}
+    Consider any $w$ accepted by $G$, so by definition there exists $w_1w_2\cdots w_k$ and $q_0, q_1, \ldots, q_k$ such that $w_i \in \delta(q_{i-1}, q_i)$. Construct $r_0, r_1, \ldots, r_m$ from $q_0, q_1, \ldots, q_k$ by removing any $q$'s, and then construct $w = v_1v_2\cdots v_m$ by concatenating the appropriate $w_i$'s. If no $q$'s were removed between $r_{i-1}$ and $r_i$ then trivially $v_i = w_{\ell} \in \delta(q_{\ell-1}, q_{\ell}) \subseteq \delta'(r_{i-1}, r_i)$. If any $q$'s were removed, then $\delta'(r_{i-1}, r_i)$ contains the concatenation of the relevant regular expressions, and so $v_i \in \delta'(r_{i-1}, r_i)$, so $w$ is also accepted by $G'$.
+
+    If $w = w_1w_2\cdots w_l$ is accepted by $G'$, then anytime of the transitions added via union is used, we can simply insert $q$'s back into the state sequence and break $w_i$ into the necessary pieces, so $w$ must be accepted by $G$.
+\end{proof}
+
+\begin{thm}
+    A language can be described by a regular expression if and only if it is a regular language.
+\end{thm}
+
+\begin{proof}
+    If a language can be described by a regular expression, then by Lemma \ref{regex-to-regular-language} it must be regular. If a language is regular, by Lemma \ref{dfa-to-gnfa} a generalized non-deterministic finite automata can be constructed to recognize it, and then by Lemma \ref{gnfa-to-regex} the automata can be converted into an equivalent regular expression.
+\end{proof}
 
 \section{Non-Regular Languages}
 
