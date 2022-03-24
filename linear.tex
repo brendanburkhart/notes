@@ -2327,7 +2327,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{defn}
 
 \begin{thm}\label{inner-product-properties}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$. Then for all $x, y, z \in V$ and $r \in F$, the following hold:
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$. Then for all $x, y, z \in V$ and $r \in F$, the following hold:
     \begin{enumerate}[label=(\arabic*)]
         \item $\langle x, y+z \rangle = \langle x, y \rangle + \langle x, z \rangle$,
         \item $\langle x, ry \rangle = \overline{r}\langle x, y \rangle$,
@@ -2354,7 +2354,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{proof}
 
 \begin{defn}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$. Let $x \in V$. The \emph{norm} or \emph{length} of $x$ is
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$. Let $x \in V$. The \emph{norm} or \emph{length} of $x$ is
     \[\norm{x} = \sqrt{\langle x, x \rangle} \in \R_{\geq 0}.\]
 \end{defn}
 
@@ -2368,7 +2368,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{rmk}
 
 \begin{thm}Pythagorean Theorem\label{pythagorean-thm}\proofbreak
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$. If $x, y \in V$ are orthogonal, then
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$. If $x, y \in V$ are orthogonal, then
     \[\norm{x}^2 + \norm{y}^2 = \norm{x + y}^2.\]
 \end{thm}
 
@@ -2386,12 +2386,12 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{rmk}
 
 \begin{defn}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$. Let $x, y \in V$ such that $y \neq \vec{0}$. The \emph{component of $x$ along $y$} is the scalar
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$. Let $x, y \in V$ such that $y \neq \vec{0}$. The \emph{component of $x$ along $y$} is the scalar
     \[c = \frac{\langle x, y \rangle}{\norm{y}^2}.\] The \emph{orthogonal projection of $x$ along $y$} is the vector $cy$.
 \end{defn}
 
 \begin{lemma}\label{orthogonal-construction}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$. Let $x, y \in V$ such that $y \neq \vec{0}$ and let $c$ be the component of $x$ along $y$. Then $x - cy$ is orthogonal to $y$.
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$. Let $x, y \in V$ such that $y \neq \vec{0}$ and let $c$ be the component of $x$ along $y$. Then $x - cy$ is orthogonal to $y$.
 \end{lemma}
 
 \begin{proof}
@@ -2399,7 +2399,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{proof}
 
 \begin{thm}\label{cauchy-schwarz-triangle}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$. Then for all $x, y \in V$ and $c \in F$, the following hold:
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$. Then for all $x, y \in V$ and $c \in F$, the following hold:
     \begin{enumerate}[label=(\arabic*)]
         \item $\norm{cx} = \abs{c}\norm{x}$,
         \item $\norm{x} = 0$ if and only if $x = \vec{0}$,
@@ -2466,12 +2466,12 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{rmk}
 
 \begin{defn}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $x, y \in V$ be non-zero vectors. We define the \emph{angle} between $x$ and $y$ as
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$, and let $x, y \in V$ be non-zero vectors. We define the \emph{angle} between $x$ and $y$ as
     \[\theta = \arccos\left(\frac{\langle x, y \rangle}{\norm{x}\norm{y}}\right).\]
 \end{defn}
 
 \begin{defn}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$. A subset $S \subseteq V$ is
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$. A subset $S \subseteq V$ is
     \begin{itemize}
         \item \emph{orthogonal} if $x$ and $y$ are orthogonal for every $x, y \in S$ where $x \neq y$,
         \item \emph{normal} if $\norm{x} = 1$ for all $x \in S$,
@@ -2485,7 +2485,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{rmk}
 
 \begin{prop}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $S \subseteq V$ be orthogonal. If all $x \in S$ are non-zero then $S$ is linearly independent.
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$, and let $S \subseteq V$ be orthogonal. If all $x \in S$ are non-zero then $S$ is linearly independent.
 \end{prop}
 
 \begin{proof}
@@ -2505,7 +2505,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{exmp}
 
 \begin{thm}\label{orthogonal-decomposition}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $S = \{v_1, \ldots, v_k\}$ be an orthogonal set of non-zero vectors. Given any $y \in \spanset{S}$, then $y$ is the sum of the orthogonal components of $y$ along each $v_i$:
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$, and let $S = \{v_1, \ldots, v_k\}$ be an orthogonal set of non-zero vectors. Given any $y \in \spanset{S}$, then $y$ is the sum of the orthogonal components of $y$ along each $v_i$:
     \[y = \sum_{i=1}^{k}\frac{\langle y, v_i\rangle}{\norm{v_i}^2}v_i.\]
 \end{thm}
 
@@ -2519,7 +2519,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{cor}
 
 \begin{thm}{Gram-Schmidt Process}\label{gram-schmidt-process}\proofbreak
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and let $S =\{w_1, \ldots, w_n\}$ be a linearly independent set. Define $S' = \{v_1, \ldots, v_n\}$ by $v_1 = w_1$, and for $k > 1$ by
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$, and let $S =\{w_1, \ldots, w_n\}$ be a linearly independent set. Define $S' = \{v_1, \ldots, v_n\}$ by $v_1 = w_1$, and for $k > 1$ by
     \[v_k = w_k - \sum_{i=1}^{k-1}\frac{\langle w_k, v_i\rangle}{\norm{v_i}^2}v_i.\]
     Then $S'$ is an orthogonal set of non-zero vectors, and has the same span as $S$.
 \end{thm}
@@ -2543,7 +2543,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{proof}
 
 \begin{cor}
-    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$. Then $V$ has an orthonormal basis.
+    Let $(V, \langle\cdot,\cdot\rangle)$ be a finite dimensional inner product space over $F$. Then $V$ has an orthonormal basis.
 \end{cor}
 
 \begin{proof}
@@ -2562,12 +2562,12 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{exmp}
 
 \begin{defn}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and $S \subseteq V$ an arbitrary non-empty set. The \emph{orthogonal complement} of $S$ is the set
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$, and $S \subseteq V$ an arbitrary non-empty set. The \emph{orthogonal complement} of $S$ is the set
     \[S^{\perp} = \left\{x \in V \compbar \langle x, y \rangle = 0 \,\forall y \in S \right\}.\]
 \end{defn}
 
 \begin{lemma}\label{orthogonal-complement-is-subspace}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and $S \subseteq V$ an arbitrary non-empty set. Then $S^{\perp}$ is a vector subspace of $V$.
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$, and $S \subseteq V$ an arbitrary non-empty set. Then $S^{\perp}$ is a vector subspace of $V$.
 \end{lemma}
 
 \begin{proof}
@@ -2585,7 +2585,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{exmp}
 
 \begin{lemma}\label{orthogonal-complement-of-orthogonal-complement}
-    Let $(V, \langle,\rangle)$ be an inner product space over $F$, and $S \subseteq V$ an arbitrary non-empty set. Then $S \subseteq \left(S^{\perp}\right)^{\perp}$.
+    Let $(V, \langle\cdot,\cdot\rangle)$ be an inner product space over $F$, and $S \subseteq V$ an arbitrary non-empty set. Then $S \subseteq \left(S^{\perp}\right)^{\perp}$.
 \end{lemma}
 
 \begin{proof}
@@ -2593,7 +2593,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{proof}
 
 \begin{thm}
-    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace.
+    Let $(V, \langle\cdot,\cdot\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace.
     \begin{enumerate}
         \item $W \intersection W^{\perp} = \{\vec{0}\}$.
         \item Any $x \in V$ can be uniquely expressed as $x = w + u$ where $w \in W$ and $u \in W^{\perp}$.
@@ -2620,7 +2620,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{defn}
 
 \begin{exmp}
-    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace. Then $V = W \directsum W^{\perp}$.
+    Let $(V, \langle\cdot,\cdot\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace. Then $V = W \directsum W^{\perp}$.
 \end{exmp}
 
 \begin{exmp}
@@ -2628,7 +2628,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{exmp}
 
 \begin{defn}
-    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace. For $x = w + u \in V$ where $w \in W$ and $u \in W^{\perp}$, we say that $w$ is the \emph{orthogonal projection} of $x$ onto $W$.
+    Let $(V, \langle\cdot,\cdot\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace. For $x = w + u \in V$ where $w \in W$ and $u \in W^{\perp}$, we say that $w$ is the \emph{orthogonal projection} of $x$ onto $W$.
 \end{defn}
 
 \begin{rmk}
@@ -2637,7 +2637,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{rmk}
 
 \begin{prop}\label{ortho-proj-closest}
-    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace. The orthogonal projection $w$ of $x$ is the unique vector in $W$ that is closest to $x$ --- that is, $\norm{x - w} \leq \norm{x - y}$ for all $y \in W$, with equality if and only if $y = w$.
+    Let $(V, \langle\cdot,\cdot\rangle)$ be a finite dimensional inner product space over $F$ and $W \subseteq V$ a subspace. The orthogonal projection $w$ of $x$ is the unique vector in $W$ that is closest to $x$ --- that is, $\norm{x - w} \leq \norm{x - y}$ for all $y \in W$, with equality if and only if $y = w$.
 \end{prop}
 
 \begin{proof}
@@ -2648,11 +2648,11 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \section{Adjoints}
 
 \begin{defn}
-    Let $(V, \langle, \rangle_V)$ and $(W, \langle, \rangle_W)$ be inner product spaces over $F$. Given a linear transformation $T: V \to W$, the \emph{adjoint} of $T$ is the linear transformation $T^{*}: W \to V$ satisfying \[\langle T(V), W\rangle_W = \langle V, T^{*}(W)\rangle_V.\]
+    Let $(V, \langle\cdot,\cdot\rangle_V)$ and $(W, \langle\cdot,\cdot\rangle_W)$ be inner product spaces over $F$. Given a linear transformation $T: V \to W$, the \emph{adjoint} of $T$ is the linear transformation $T^{*}: W \to V$ satisfying \[\langle T(V), W\rangle_W = \langle V, T^{*}(W)\rangle_V.\]
 \end{defn}
 
 \begin{lemma}Representation Theorem\label{adjoint-representation-theorem}\proofbreak
-    Let $(V, \langle,\rangle)$ be a finite dimensional inner product space over $F$, and let $\ell: V \to F$ be a linear function. There exists unique $w \in V$ such that $\ell(v) = \langle v, w \rangle$ for all $v \in V$.
+    Let $(V, \langle\cdot,\cdot\rangle)$ be a finite dimensional inner product space over $F$, and let $\ell: V \to F$ be a linear function. There exists unique $w \in V$ such that $\ell(v) = \langle v, w \rangle$ for all $v \in V$.
 \end{lemma}
 
 \begin{proof}
@@ -2664,11 +2664,11 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{proof}
 
 \begin{thm}\label{adjoint-existence-uniqueness}
-    Let $(V, \langle, \rangle)$ and $(W, \langle, \rangle)$ be inner product spaces over $F$, and $T: V \to W$ be a linear transformation. The adjoint $T^*$ of $T$ exists and is unique.
+    Let $(V, \langle\cdot,\cdot\rangle)$ and $(W, \langle\cdot,\cdot\rangle)$ be inner product spaces over $F$, and $T: V \to W$ be a linear transformation. The adjoint $T^*$ of $T$ exists and is unique.
 \end{thm}
 
 \begin{proof}
-    For given $w \in W$, consider $\ell: V \to F$ defined by $v \mapsto \langle T(v), w \rangle$. Since $T$ is linear in $v$ and $\langle,\rangle$ is linear in the first argument, $\ell$ is linear in $v$. By Lemma \ref{adjoint-representation-theorem}, there exists unique $y \in V$ such that $\langle T(v), w \rangle = \ell(v) = \langle v, y \rangle$. Define $T^*(w) = y$ to obtain a function $T^*: W \to V$.
+    For given $w \in W$, consider $\ell: V \to F$ defined by $v \mapsto \langle T(v), w \rangle$. Since $T$ is linear in $v$ and $\langle\cdot,\cdot\rangle$ is linear in the first argument, $\ell$ is linear in $v$. By Lemma \ref{adjoint-representation-theorem}, there exists unique $y \in V$ such that $\langle T(v), w \rangle = \ell(v) = \langle v, y \rangle$. Define $T^*(w) = y$ to obtain a function $T^*: W \to V$.
 
     All that remains is for us to show that $T^*$ is indeed a linear function. Note that
     \begin{align*}
@@ -2679,7 +2679,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{proof}
 
 \begin{prop}\label{adjoint-is-involution}
-    Let $(V, \langle, \rangle)$ and $(W, \langle, \rangle)$ be inner product spaces over $F$, and $T: V \to W$ be a linear transformation. Then
+    Let $(V, \langle\cdot,\cdot\rangle)$ and $(W, \langle\cdot,\cdot\rangle)$ be inner product spaces over $F$, and $T: V \to W$ be a linear transformation. Then
     \[(T^*)^* = T.\]
 \end{prop}
 
@@ -2688,7 +2688,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{proof}
 
 \begin{lemma}\label{standard-inner-product-adjoint}
-    Let $A \in M_{m \times n}(F)$, $x \in F^n$, and $y \in F^m$. Then $\langle Ax, y \rangle_m = \langle x, A^{*}y \rangle_n$, where $\langle,\rangle_k$ denotes the standard dot product with in $F^k$.
+    Let $A \in M_{m \times n}(F)$, $x \in F^n$, and $y \in F^m$. Then $\langle Ax, y \rangle_m = \langle x, A^{*}y \rangle_n$, where $\langle\cdot,\cdot\rangle_k$ denotes the standard dot product with in $F^k$.
 \end{lemma}
 
 \begin{proof}
@@ -2705,7 +2705,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{prop}
 
 \begin{proof}
-    Let $\lambda$ be an eigenvalue of $A$ with associated \emph{non-zero} eigenvector $v$. Let $\langle,\rangle$ be the standard inner product over $F^n$, then we know that for any $w \in F^n$
+    Let $\lambda$ be an eigenvalue of $A$ with associated \emph{non-zero} eigenvector $v$. Let $\langle\cdot,\cdot\rangle$ be the standard inner product over $F^n$, then we know that for any $w \in F^n$
     \begin{align*}
         \langle Av, w\rangle = \langle \lambda v, w\rangle = \langle v, \overline{\lambda}w\rangle.
     \end{align*}
@@ -2879,7 +2879,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \end{defn}
 
 \begin{prop}
-    Let $V, \langle \cdot \rangle$ be an inner product space over $\R$ or $\C$, then $v \to \sqrt{\langle v, v, \rangle}$ defines a norm on $V$.
+    Let $V, \langle\cdot,\cdot\rangle \rangle$ be an inner product space over $\R$ or $\C$, then $v \to \sqrt{\langle v, v, \rangle}$ defines a norm on $V$.
 \end{prop}
 
 \begin{proof}
