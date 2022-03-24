@@ -545,13 +545,77 @@
     If $w = w_1w_2\cdots w_l$ is accepted by $G'$, then anytime of the transitions added via union is used, we can simply insert $q$'s back into the state sequence and break $w_i$ into the necessary pieces, so $w$ must be accepted by $G$.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{regex-regular-language-equivalence}
     A language can be described by a regular expression if and only if it is a regular language.
 \end{thm}
 
 \begin{proof}
     If a language can be described by a regular expression, then by Lemma \ref{regex-to-regular-language} it must be regular. If a language is regular, by Lemma \ref{dfa-to-gnfa} a generalized non-deterministic finite automaton can be constructed to recognize it, and then by Lemma \ref{gnfa-to-regex} the automaton can be converted into an equivalent regular expression.
 \end{proof}
+
+\begin{exmp}
+    We can use the procedure described in the proof of Theorem \ref{regex-regular-language-equivalence} to convert a DFA into a regular expression. Figure \ref{fig:dfa-to-regex-construction-example} demonstrates how to construct a regular expression that describes the same language as a two-state DFA. This is done by first converting it to a GNFA, and then one by one removing states until only the start and accept states are left, yielding the regular expression $a^{*}b(a \union b)^{*}$.
+    \begin{figure}[ht!]
+        \centering
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=2cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20}
+        ]
+            \node[initial, state]   (0)              {0};
+            \node[state, accepting] (1) [right of=0] {1};
+
+            \path[->] (0) edge [loop above] node [align=center] {$a$}    (0)
+                          edge [above]      node [align=center] {$b$}    (1)
+                      (1) edge [loop above] node [align=center] {$a, b$} (1);
+        \end{tikzpicture}
+
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=2cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20}
+        ]
+            \node[initial, state]   (S)              {s};
+            \node[state]            (0) [right of=S] {0};
+            \node[state]            (1) [right of=0] {1};
+            \node[state, accepting] (A) [right of=1] {a};
+
+            \path[->] (S) edge [above]      node [align=center] {$\emptystring$} (0)
+                      (0) edge [loop above] node [align=center] {$a$}            (0)
+                          edge [above]      node [align=center] {$b$}            (1)
+                      (1) edge [loop above] node [align=center] {$a, b$}         (1)
+                          edge [above]      node [align=center] {$\emptystring$} (A);
+        \end{tikzpicture}
+
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=2cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20}
+        ]
+            \node[initial, state]   (S)              {s};
+            \node[state]            (0) [right of=S] {0};
+            \node[state, accepting] (A) [right of=0] {a};
+
+            \path[->] (S) edge [above]      node [align=center] {$\emptystring$}      (0)
+                      (0) edge [loop above] node [align=center] {$a$}                 (0)
+                          edge [above]      node [align=center] {$b(a \union b)^{*}$} (A);
+        \end{tikzpicture}
+
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=2cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20}
+        ]
+            \node[initial, state]   (S)              {s};
+            \node[state, accepting] (A) [right of=S] {a};
+
+            \path[->] (S) edge [above] node [align=center] {$a^{*}b(a \union b)^{*}$} (A);
+        \end{tikzpicture}
+
+        \caption{Step-by-step construction of a regular expression from a DFA}
+        \label{fig:dfa-to-regex-construction-example}
+    \end{figure}
+\end{exmp}
 
 \section{Non-Regular Languages}
 
@@ -580,12 +644,30 @@
 
 \section{Grammar}
 
-\begin{defn}
-    grammar, variables (can be changed), terminals
-\end{defn}
+Consider the following set of rules:
+\begin{itemize}
+    \item $A \to 0A1$,
+    \item $A \to \varepsilon$,
+\end{itemize}
+where we start with a single $A$ and expand it using one of the two rules. By varying how many times we apply the first rule before ending with the second (at which point there are no further $A$'s to expand) we can \emph{derive} any string of the form $0^{n}1^{n}$, and no other strings. Therefore, the lnaguage of this \emph{grammar} (set of symbols and rules for expanding this) is $\{0^{n}1^{n}: n \in \N\}$. Note we showed in an above example that this language is not regular.
 
 \begin{defn}
-    Context-free grammar
+    A \emph{context-free grammar} is a $4$-tuple $(V, \Sigma, R, s)$, where
+    \begin{itemize}
+        \item $V$ is a finite set of symbols called \emph{variables},
+        \item $\Sigma$ is a finite set, disjoint from $V$, of symbols called \emph{terminals},
+        \item $R$ is a finite set of \emph{rules} of the form $(v, w)$, where $v \in V$ and $w \in (V \union \Sigma)^{*}$,
+        \item $s \in V$ is the \emph{start symbol}.
+    \end{itemize}
+    Let $G = (V, \Sigma, R, s)$ be a CFG (context-free grammar) and let $u, v, w \in (V \union \Sigma)^{*}$. Consider some rule $A \to w$ where $A \in V$, then we say $uAv$ \emph{yields} $uwv$, written $uAv \yields uwv$. We say that $u$ \emph{derives} $v$, written $u \derives v$, if there exists a (possibly empty) sequence $u_1, u_2, \ldots, u_k$ such that
+    \begin{align*}
+        u \yields u_1 \yields u_2 \yields \cdots \yields u_k  \yields v.
+    \end{align*}
+    
+    Finally, the \emph{language of the grammar}, denoted by $L(G)$, is the language
+    \begin{align*}
+        \{w \in \Sigma^{*} | s \derives w\}.
+    \end{align*}
 \end{defn}
 
 \begin{thm}
