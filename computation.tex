@@ -55,7 +55,7 @@
 \end{defn}
 
 \begin{defn}
-    A (determinstic) \emph{finite automata} is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
+    A (determinstic) \emph{finite automaton} is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
     \begin{itemize}
         \item $Q$ is a finite set of \emph{states},
         \item $\Sigma$ is an alphabet,
@@ -63,15 +63,15 @@
         \item $q_0 \in Q$ is the \emph{start state},
         \item $F \subseteq Q$ are the \emph{accept states}.
     \end{itemize}
-    An automata starts in state $q_0$, and is given an input consisting over a string over $\Sigma$. For each symbol $s$ in the input, the automata moves from state $q$ to state $\delta(q, s)$. Once the end of the input is reached, if the state $q$ of the automata is an accept state --- that is, $q \in F$, then the automata is said to have \emph{accepted} the input.
+    An automaton starts in state $q_0$, and is given an input consisting over a string over $\Sigma$. For each symbol $s$ in the input, the automaton moves from state $q$ to state $\delta(q, s)$. Once the end of the input is reached, if the state $q$ of the automaton is an accept state --- that is, $q \in F$, then the automaton is said to have \emph{accepted} the input.
 \end{defn}
 
 \begin{defn}
-    The \emph{language accepted by} a finite automata $M$ is a language $A$ consisting of all strings over $\Sigma$ that are accepted by the finite automata. We denote this by $L(M) = A$. A \emph{regular language} is any language accepted by some finite automata.
+    The \emph{language accepted by} a finite automaton $M$ is a language $A$ consisting of all strings over $\Sigma$ that are accepted by the finite automaton. We denote this by $L(M) = A$. A \emph{regular language} is any language accepted by some finite automaton.
 \end{defn}
 
 \begin{rmk}
-    Finite automata can be represented as a graph, where states are represented as nodes, and transitions are edges between states, labelled by the symbol that triggers the transition. When graphically representing a finite automata as a graph, accept states may be represented as double-circled nodes.
+    Finite automata can be represented as a graph, where states are represented as nodes, and transitions are edges between states, labelled by the symbol that triggers the transition. When graphically representing a finite automaton as a graph, accept states may be represented as double-circled nodes.
 \end{rmk}
 
 \begin{exmp}
@@ -96,11 +96,11 @@
                       (001) edge [below, bend left]     node [align=center] {0} (0)
                             edge [above, bend right=60] node [align=center] {1} (S);
         \end{tikzpicture}
-        \caption{Example finite automata}
-        \label{fig:example-finite-automata}
+        \caption{Example finite automaton}
+        \label{fig:example-finite-automaton}
     \end{figure}
 
-    In the finite automata shown in Figure \ref{fig:example-finite-automata}, $Q = \left\{q_0, q_1, q_2, q_3\right\}$, $\Sigma = \left\{0, 1\right\}$, $F = \{q_3\}$, and $\delta$ is
+    In the finite automaton shown in Figure \ref{fig:example-finite-automaton}, $Q = \left\{q_0, q_1, q_2, q_3\right\}$, $\Sigma = \left\{0, 1\right\}$, $F = \{q_3\}$, and $\delta$ is
     \begin{center}
         \begin{tabular}{|c||c|c|}
             \hline
@@ -117,7 +117,7 @@
         \end{tabular}.
     \end{center}
 
-    This language accepted by this finite automata is the set of all binary strings which end with \texttt{001}. We can use an inductive proof on the length of the longest input to prove this.
+    This language accepted by this finite automaton is the set of all binary strings which end with \texttt{001}. We can use an inductive proof on the length of the longest input to prove this.
 \end{exmp}
 
 \begin{prop}\label{regular-language-complement}
@@ -125,7 +125,7 @@
 \end{prop}
 
 \begin{proof}
-    Let $M = (Q, \Sigma, \delta, s_0, F)$ be a finite automata that recognizes $A$, and define $M' = (Q, \Sigma, \delta, s_0, Q \setminus F)$. For any $w \in \Sigma^{*}$, we can see that $M$ and $M'$ reach the same final state, let this be $s_f$. Since $s_f \in F$ if and only if $s_f \in Q \setminus F$, it follows that $M'$ accepts $w$ if and only if $M$ \emph{does not}, therefore the regular language that $M'$ recognizes is precisely $\complementof{A}$.
+    Let $M = (Q, \Sigma, \delta, s_0, F)$ be a finite automaton that recognizes $A$, and define $M' = (Q, \Sigma, \delta, s_0, Q \setminus F)$. For any $w \in \Sigma^{*}$, we can see that $M$ and $M'$ reach the same final state, let this be $s_f$. Since $s_f \in F$ if and only if $s_f \in Q \setminus F$, it follows that $M'$ accepts $w$ if and only if $M$ \emph{does not}, therefore the regular language that $M'$ recognizes is precisely $\complementof{A}$.
 \end{proof}
 
 \begin{thm}\label{regular-language-union-intersection}
@@ -133,13 +133,13 @@
 \end{thm}
 
 \begin{proof}
-    Let $\Sigma$ be the union of the alphabets of $A$ and $B$. Since $A$ and $B$ are regular, we know that there exists finite automata $M_A = \left(Q_1, \Sigma, \delta_1, s_1, F_1\right)$ and $M_B = \left(Q_2, \Sigma, \delta_2, s_2, F_2\right)$. Now we construct a new finite automata that runs $M_A$ and $M_B$ in parallel. To do this, consider the finite automata $M = \left(Q, \Sigma, \delta, s, F\right)$, where $Q = Q_1 \times Q_2$, $s = (s_1, s_2)$, and  $\delta: (Q_1 \times Q_2) \times \Sigma \to Q_1 \times Q_2$ is defined by $\delta\left((p_1, p_2), a\right) = \left(\delta_1\left(p_1, a\right), \delta_2\left(p_2, a\right)\right)$.
+    Let $\Sigma$ be the union of the alphabets of $A$ and $B$. Since $A$ and $B$ are regular, we know that there exists finite automata $M_A = \left(Q_1, \Sigma, \delta_1, s_1, F_1\right)$ and $M_B = \left(Q_2, \Sigma, \delta_2, s_2, F_2\right)$. Now we construct a new finite automaton that runs $M_A$ and $M_B$ in parallel. To do this, consider the finite automaton $M = \left(Q, \Sigma, \delta, s, F\right)$, where $Q = Q_1 \times Q_2$, $s = (s_1, s_2)$, and  $\delta: (Q_1 \times Q_2) \times \Sigma \to Q_1 \times Q_2$ is defined by $\delta\left((p_1, p_2), a\right) = \left(\delta_1\left(p_1, a\right), \delta_2\left(p_2, a\right)\right)$.
     
     If $F = F_1 \times F_2$, then $M$ accepts precisely the strings accepted by both $M_A$ and $M_B$ --- that is, $L(M) = A \intersection B$. If instead $F = \left(F_1 \times Q_2\right) \union \left(Q_1 \times F_2\right)$, then $M$ accepts the strings accepted by at least one of $M_A$ and $M_B$ --- that is, $L(M) = A \union B$.
 \end{proof}
 
 \begin{defn}
-    A \emph{non-determinstic} finite automata is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
+    A \emph{non-determinstic} finite automaton is a $5$-tuple $(Q, \Sigma, \delta, q_0, F)$, where
     \begin{itemize}
         \item $Q$ is a finite set of \emph{states},
         \item $\Sigma$ is an alphabet,
@@ -147,7 +147,7 @@
         \item $q_0 \in Q$ is the \emph{start state},
         \item $F \subseteq Q$ are the \emph{accept states}.
     \end{itemize}
-    A non-determinstic finite automata $M$ accepts an input $w$ over $\Sigma$ when there exists $w_{\emptystring}$ that causes $M$ to end in an accept state, where $w_{\emptystring}$ is constructed by inserting any finite number of $\emptystring$ into $w$.
+    A non-determinstic finite automaton $M$ accepts an input $w$ over $\Sigma$ when there exists $w_{\emptystring}$ that causes $M$ to end in an accept state, where $w_{\emptystring}$ is constructed by inserting any finite number of $\emptystring$ into $w$.
 \end{defn}
 
 \begin{rmk}
@@ -196,11 +196,11 @@
 \end{proof}
 
 \begin{thm}\label{dfa-nfa-equivalence}
-    Let $N$ be a non-determinstic finite automata, and $L$ be the language it accepts. Then $L$ is a regular language. Equivalently, there is an equivalent determinstic finite automata for every non-determinstic finite automata.
+    Let $N$ be a non-determinstic finite automaton, and $L$ be the language it accepts. Then $L$ is a regular language. Equivalently, there is an equivalent determinstic finite automaton for every non-determinstic finite automaton.
 \end{thm}
 
 \begin{proof}
-    Let $V = \left(Q, \Sigma, \delta, q_0, F\right)$ be a non-determinstic finite automata. We will construct an equivalent determinstic finite automata $M$. Let $M = \left(Q', \Sigma, \delta', q_0', F'\right)$, where
+    Let $V = \left(Q, \Sigma, \delta, q_0, F\right)$ be a non-determinstic finite automaton. We will construct an equivalent determinstic finite automaton $M$. Let $M = \left(Q', \Sigma, \delta', q_0', F'\right)$, where
     \begin{itemize}
         \item $Q' = 2^Q$,
         \item For all $R \in Q'$, define $\delta'(R, a) = E\left(\bigunion_{r \in R}\delta(r, a)\right)$,
@@ -220,7 +220,7 @@
 \end{proof}
 
 \begin{rmk}
-    In addition to a proof of the equivalence of determinstic and non-determinstic finite automata, this is an explicit method to construct a determinstic finite automata from a non-determinstic one.
+    In addition to a proof of the equivalence of determinstic and non-determinstic finite automata, this is an explicit method to construct a determinstic finite automaton from a non-determinstic one.
 \end{rmk}
 
 \begin{thm}\label{regular-language-concatenation}
@@ -228,7 +228,7 @@
 \end{thm}
 
 \begin{proof}
-    Let $A = (Q_A, \Sigma, \delta_A, q_A, F_A)$ and $B = (Q_B, \Sigma, \delta_B, q_B, F_B)$ be determinstic finite automata recognizing language $A$ and $B$ respectively. We now construct a non-determinstic finite automata which recognizes $A \concat B$. Consider $M = \left(Q, \Sigma, \delta, q_0, F\right)$, where
+    Let $A = (Q_A, \Sigma, \delta_A, q_A, F_A)$ and $B = (Q_B, \Sigma, \delta_B, q_B, F_B)$ be determinstic finite automata recognizing language $A$ and $B$ respectively. We now construct a non-determinstic finite automaton which recognizes $A \concat B$. Consider $M = \left(Q, \Sigma, \delta, q_0, F\right)$, where
     \begin{itemize}
         \item $Q = Q_A \union Q_B$,
         \item For $a \in \Sigma$, define $\delta(q, a) = \begin{dcases}
@@ -251,7 +251,7 @@
 \end{thm}
 
 \begin{proof}
-    Given a deterministic finite automata $M = (Q, \Sigma, \delta, q_0, F)$, we make a number of small modifications in order to produce a non-determinstic finite automata $N$ recognizing $A^{*}$ and thus proving it is regular. Specifically, we add $\emptystring$-transitions from every accept state of $M$ back to $q_0$ --- this allows $N$ to recognize any string you can form by concatenating strings from $A$. We also introduce a new start state with a single $\emptystring$-transition to the original start state, and make this new start state an accept state, thus allowing $N$ to also recognize $\emptystring$.
+    Given a deterministic finite automaton $M = (Q, \Sigma, \delta, q_0, F)$, we make a number of small modifications in order to produce a non-determinstic finite automaton $N$ recognizing $A^{*}$ and thus proving it is regular. Specifically, we add $\emptystring$-transitions from every accept state of $M$ back to $q_0$ --- this allows $N$ to recognize any string you can form by concatenating strings from $A$. We also introduce a new start state with a single $\emptystring$-transition to the original start state, and make this new start state an accept state, thus allowing $N$ to also recognize $\emptystring$.
 
     Formally, we define $N = (Q_N, \Sigma, \delta_N, q_N, F_N)$ where
     \begin{itemize}
@@ -299,9 +299,9 @@
 \end{lemma}
 
 \begin{proof}
-    Let $R$ be a regular expression that describes a language $L$ over an alphabet $\Sigma$. We recursively construct a non-deterministic finite automata that recognizes $L$ in order to prove that $L$ must be regular. First, any regular expression by definition must have one of the six forms listed in our definition.
+    Let $R$ be a regular expression that describes a language $L$ over an alphabet $\Sigma$. We recursively construct a non-deterministic finite automaton that recognizes $L$ in order to prove that $L$ must be regular. First, any regular expression by definition must have one of the six forms listed in our definition.
 
-    If $R = a$, then $L = \{a\}$ by definition, which is recognized by the non-deterministic finite automata:
+    If $R = a$, then $L = \{a\}$ by definition, which is recognized by the non-deterministic finite automaton:
     \begin{figure}[ht!]
         \centering
         \begin{tikzpicture}[
@@ -316,7 +316,7 @@
         \end{tikzpicture}
     \end{figure}
 
-    If $R = \emptystring$, it can be recognized by the non-deterministic finite automata:
+    If $R = \emptystring$, it can be recognized by the non-deterministic finite automaton:
     \begin{figure}[ht!]
         \centering
         \begin{tikzpicture}[
@@ -328,7 +328,7 @@
         \end{tikzpicture}
     \end{figure}
 
-    If $R = \emptyset$, it can be recognized by the non-deterministic finite automata:
+    If $R = \emptyset$, it can be recognized by the non-deterministic finite automaton:
     \begin{figure}[ht!]
         \centering
         \begin{tikzpicture}[
@@ -357,7 +357,7 @@
 \end{proof}
 
 \begin{rmk}
-    We can explicitly convert any regular expression into a non-deterministic finite automata.
+    We can explicitly convert any regular expression into a non-deterministic finite automaton.
 \end{rmk}
 
 \begin{exmp}
@@ -496,7 +496,7 @@
 \end{exmp}
 
 \begin{defn}
-    A \emph{generalized non-deterministic finite automata} (GNFA) is a variant of the non-determinstic finite automata which consumes multiple symbols of the input at a time, by non-deterministically matching the input against regular expressions. We will only consider GNFAs in a \emph{standard form}, which has exactly one start state, one accept state, as well as outgoing transitions from the start state, ingoing transitions from every state to the accept state, and transitions between every other state. Formally, it is a $5$-tuple $(Q, \Sigma, \delta, q_{\textrm{start}}, q_{\textrm{accept}})$, where
+    A \emph{generalized non-deterministic finite automaton} (GNFA) is a variant of the non-determinstic finite automaton which consumes multiple symbols of the input at a time, by non-deterministically matching the input against regular expressions. We will only consider GNFAs in a \emph{standard form}, which has exactly one start state, one accept state, as well as outgoing transitions from the start state, ingoing transitions from every state to the accept state, and transitions between every other state. Formally, it is a $5$-tuple $(Q, \Sigma, \delta, q_{\textrm{start}}, q_{\textrm{accept}})$, where
     \begin{itemize}
         \item $Q$ is a finite set of \emph{states},
         \item $\Sigma$ is an alphabet,
@@ -514,11 +514,11 @@
 \end{defn}
 
 \begin{lemma}\label{dfa-to-gnfa}
-    Any regular language can be converted into a generalized non-deterministic finite automata.
+    Any regular language can be converted into a generalized non-deterministic finite automaton.
 \end{lemma}
 
 \begin{proof}
-    Consider a regular language $L$ that is recognized by a deterministic finite automata $M = (Q_0, \Sigma, \delta_0, q_{s}, F)$. From this, we construct an equivalent GNFA $G = (Q, \Sigma, \delta, q_{\textrm{start}}, q_{\textrm{accept}})$, where $Q = Q_0 \union \{q_{\textrm{start}}, q_{\textrm{accept}}\}$. We add $\emptystring$-transitions from every state in $F$ to $q_{\textrm{accept}}$, and a $\emptystring$-transition from $q_{\textrm{start}}$ to $q_{s}$. Every transtions from state $q_0$ to state $q_1$ is replaced with a regular expression describing their union, and for states without transitions we use the regular expression $\emptyset$. Formally, let
+    Consider a regular language $L$ that is recognized by a deterministic finite automaton $M = (Q_0, \Sigma, \delta_0, q_{s}, F)$. From this, we construct an equivalent GNFA $G = (Q, \Sigma, \delta, q_{\textrm{start}}, q_{\textrm{accept}})$, where $Q = Q_0 \union \{q_{\textrm{start}}, q_{\textrm{accept}}\}$. We add $\emptystring$-transitions from every state in $F$ to $q_{\textrm{accept}}$, and a $\emptystring$-transition from $q_{\textrm{start}}$ to $q_{s}$. Every transtions from state $q_0$ to state $q_1$ is replaced with a regular expression describing their union, and for states without transitions we use the regular expression $\emptyset$. Formally, let
     \begin{align*}
         s_{\alpha\beta} &= \left\{s \in \Sigma : \delta_0\left(\alpha, s\right) = b\right\}, \\
         \delta(\alpha, \beta) &= \begin{dcases}
@@ -532,7 +532,7 @@
 \end{proof}
 
 \begin{lemma}\label{gnfa-to-regex}
-    The language recognized by any generalized non-deterministic finite automata can be described by a regular expression.
+    The language recognized by any generalized non-deterministic finite automaton can be described by a regular expression.
 \end{lemma}
 
 \begin{proof}
@@ -550,7 +550,7 @@
 \end{thm}
 
 \begin{proof}
-    If a language can be described by a regular expression, then by Lemma \ref{regex-to-regular-language} it must be regular. If a language is regular, by Lemma \ref{dfa-to-gnfa} a generalized non-deterministic finite automata can be constructed to recognize it, and then by Lemma \ref{gnfa-to-regex} the automata can be converted into an equivalent regular expression.
+    If a language can be described by a regular expression, then by Lemma \ref{regex-to-regular-language} it must be regular. If a language is regular, by Lemma \ref{dfa-to-gnfa} a generalized non-deterministic finite automaton can be constructed to recognize it, and then by Lemma \ref{gnfa-to-regex} the automaton can be converted into an equivalent regular expression.
 \end{proof}
 
 \section{Non-Regular Languages}
@@ -565,7 +565,7 @@
 \end{lemma}
 
 \begin{proof}
-    Let $M = (Q, \Sigma, \delta, q_s, F)$ be a determinstic finite automata recognizing $A$. Let $p = \abs{Q}$. Then for any $s = s_1s_2 \cdots s_n \in A$, where $n \geq p$, let $r_1, r_2, \ldots, r_n, r_{n+1}$ be the sequence of states that $M$ visits in input $s$. Since $n+1 \geq p + 1 > p$, by the pigeonhole principle \ref{pigeonhole}, it follows that at least one state must be visited twice within the first $p+1$ states --- that is, that there must be $i > j$ such that $r_i = r_j$ and $i \leq p + 1$.
+    Let $M = (Q, \Sigma, \delta, q_s, F)$ be a determinstic finite automaton recognizing $A$. Let $p = \abs{Q}$. Then for any $s = s_1s_2 \cdots s_n \in A$, where $n \geq p$, let $r_1, r_2, \ldots, r_n, r_{n+1}$ be the sequence of states that $M$ visits in input $s$. Since $n+1 \geq p + 1 > p$, by the pigeonhole principle \ref{pigeonhole}, it follows that at least one state must be visited twice within the first $p+1$ states --- that is, that there must be $i > j$ such that $r_i = r_j$ and $i \leq p + 1$.
 
     Then, take $x = s_1s_2 \cdots s_{i-1}$, $y = s_{i}s_{i+1} \cdots s_{j-1}$, and $z = s_{j}s_{j+1}\cdots s_n$. Notice that since $i > j$, $j-1 \geq i$, and so $\abs{y} > 0$. Furthermore, $\abs{xy} = j-1$ and since $j < i \leq p + 1$, it follows that $j-1 < i-1 \leq p$, and so $\abs{xy} \leq p$. Finally, since $r_{i}r_{i+1}\cdots r_{j}$ is a cycle that occurs on input $y$, we clearly have $xy^{i}z \in A$ for all $i \geq 0$.
 \end{proof}
