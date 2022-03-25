@@ -522,8 +522,8 @@
     \begin{align*}
         s_{\alpha\beta} &= \left\{s \in \Sigma : \delta_0\left(\alpha, s\right) = b\right\}, \\
         \delta(\alpha, \beta) &= \begin{dcases}
-            \varepsilon, &\alpha \in F, \beta = q_{\textrm{accept}} \\
-            \varepsilon, &\alpha = q_{\textrm{start}}, \beta = q_{s} \\
+            \emptystring, &\alpha \in F, \beta = q_{\textrm{accept}} \\
+            \emptystring, &\alpha = q_{\textrm{start}}, \beta = q_{s} \\
             s_{\alpha\beta}, &\textrm{otherwise}
         \end{dcases}.
     \end{align*}
@@ -592,13 +592,13 @@
             node distance=2cm,
             every state/.style={draw=blue!50,very thick,fill=blue!20}
         ]
-            \node[initial, state]   (S)              {s};
-            \node[state]            (0) [right of=S] {0};
-            \node[state, accepting] (A) [right of=0] {a};
+            \node[initial, state]   (S)                          {s};
+            \node[state]            (0) [right of=S]             {0};
+            \node[state, accepting] (A) [right of=0, xshift=7mm] {a};
 
-            \path[->] (S) edge [above]      node [align=center] {$\emptystring$}      (0)
-                      (0) edge [loop above] node [align=center] {$a$}                 (0)
-                          edge [above]      node [align=center] {$b(a \union b)^{*}$} (A);
+            \path[->] (S) edge [above]      node [align=center]              {$\emptystring$}      (0)
+                      (0) edge [loop above] node [align=center]              {$a$}                 (0)
+                          edge [above]      node [align=center, yshift=-1mm] {$b(a \union b)^{*}$} (A);
         \end{tikzpicture}
 
         \begin{tikzpicture}[
@@ -606,10 +606,10 @@
             node distance=2cm,
             every state/.style={draw=blue!50,very thick,fill=blue!20}
         ]
-            \node[initial, state]   (S)              {s};
-            \node[state, accepting] (A) [right of=S] {a};
+            \node[initial, state]   (S)                           {s};
+            \node[state, accepting] (A) [right of=S, xshift=10mm] {a};
 
-            \path[->] (S) edge [above] node [align=center] {$a^{*}b(a \union b)^{*}$} (A);
+            \path[->] (S) edge [above] node [align=center, yshift=-1mm] {$a^{*}b(a \union b)^{*}$} (A);
         \end{tikzpicture}
 
         \caption{Step-by-step construction of a regular expression from a DFA}
@@ -617,9 +617,9 @@
     \end{figure}
 \end{exmp}
 
-\section{Non-Regular Languages}
+\section{Pumping Lemma}
 
-\begin{lemma}{Pumping Lemma}{\label{pumping-lemma}}\proofbreak
+\begin{lemma}{Pumping lemma}{\label{regular-pumping-lemma}}\proofbreak
     Let $A$ be a regular language. There exists $p \in \N$, the \emph{pumping length}, such that if $s \in A$ has length at least $p$, then we can divide $s$ into three pieces $s = xyz$ satisfying
     \begin{itemize}
         \item $\abs{y} > 0$,
@@ -635,21 +635,21 @@
 \end{proof}
 
 \begin{exmp}
-    Consider the language $A = \{0^n1^n | n \geq 0\}$. Assume, for the sake of contradiction, that $A$ is regular and so by the pumping lemma \ref{pumping-lemma} there must exist a pumping length $p$. We consider $s = 0^{p}1^{p} \in A$, and by the pumping lemma are guaranteed $xyz = 0^{p}1^{p}$ since $\abs{s} = 2p \geq p$. In particular, we have $\abs{xy} \leq p$, and so $xy = 0^{t}$ for some $t \leq p$. It follows that $y = 0^{s}$ for some $0 < s \leq p$, and so by the pumping lemma we must have $xy^{i}z = 0^{p+(i-1)s}1^{p} \in A$. However, this is false by the definition of $A$ whenever $i \neq 1$, and so we have a contradiction. It follows that $A$ cannot be a regular language.
+    Consider the language $A = \{0^n1^n | n \geq 0\}$. Assume, for the sake of contradiction, that $A$ is regular and so by the pumping lemma \ref{regular-pumping-lemma} there must exist a pumping length $p$. We consider $s = 0^{p}1^{p} \in A$, and by the pumping lemma are guaranteed $xyz = 0^{p}1^{p}$ since $\abs{s} = 2p \geq p$. In particular, we have $\abs{xy} \leq p$, and so $xy = 0^{t}$ for some $t \leq p$. It follows that $y = 0^{s}$ for some $0 < s \leq p$, and so by the pumping lemma we must have $xy^{i}z = 0^{p+(i-1)s}1^{p} \in A$. However, this is false by the definition of $A$ whenever $i \neq 1$, and so we have a contradiction. It follows that $A$ cannot be a regular language.
 \end{exmp}
 
 \begin{exmp}
     Consider the language $C$ consisting of all binary strings containing an equal number of $0$s and $1$s. Notice that $A = C \intersection 0^{*}1^{*}$ --- that is, $A$ is precisely the subset of $0^{*}1^{*}$ where the number of $0$s and $1$s are equal. If $C$ was regular, then $A$ would be regular since regular languages are closed under intersection. Therefore, $C$ cannot be a regular language.
 \end{exmp}
 
-\section{Grammar}
+\section{Context-Free Grammars}
 
 Consider the following set of rules:
 \begin{itemize}
     \item $A \to 0A1$,
-    \item $A \to \varepsilon$,
+    \item $A \to \emptystring$,
 \end{itemize}
-where we start with a single $A$ and expand it using one of the two rules. By varying how many times we apply the first rule before ending with the second (at which point there are no further $A$'s to expand) we can \emph{derive} any string of the form $0^{n}1^{n}$, and no other strings. Therefore, the lnaguage of this \emph{grammar} (set of symbols and rules for expanding this) is $\{0^{n}1^{n}: n \in \N\}$. Note we showed in an above example that this language is not regular.
+where we start with a single $A$ and expand it using one of the two rules. By varying how many times we apply the first rule before ending with the second (at which point there are no further $A$'s to expand) we can \emph{derive} any string of the form $0^{n}1^{n}$, and no other strings. Therefore, the language of this \emph{grammar} (set of symbols and rules for expanding this) is $\{0^{n}1^{n}: n \in \N\}$. Note we showed in an above example that this language is not regular.
 
 \begin{defn}
     A \emph{context-free grammar} is a $4$-tuple $(V, \Sigma, R, s)$, where
@@ -664,16 +664,118 @@ where we start with a single $A$ and expand it using one of the two rules. By va
         u \yields u_1 \yields u_2 \yields \cdots \yields u_k  \yields v.
     \end{align*}
     
-    Finally, the \emph{language of the grammar}, denoted by $L(G)$, is the language
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a context-free grammar. The \emph{language of the grammar}, denoted by $L(G)$, is the language
     \begin{align*}
         \{w \in \Sigma^{*} | s \derives w\}.
     \end{align*}
+    Any language of some context-free grammar is a \emph{context-free language}.
 \end{defn}
 
 \begin{thm}
-    Convert DFA into a grammar
+    If $A$ and $B$ are context-free languages, then is are $A \union B$.
 \end{thm}
 
+\begin{proof}
+    Let $G_1 = (V_1, \Sigma, R_1, s_1)$ and $G_2 = (V_2, \Sigma, R_2, s_2)$ be context-free grammars such that $L(G_1) = A$ and $L(G_2) = B$. Consider $(V_1 \union V_2 \union s_0, \Sigma, R_1 \union R_2 \union \{(s_0, s_1), (s_0, s_2)\}, s_0))$.
+\end{proof}
+
+\begin{thm}\label{dfa-to-cfg}
+    Any deterministic finite automaton can be converted into an equivalent context-free grammar.
+\end{thm}
+
+\begin{proof}
+    Let $M = (Q, \Sigma, \delta, q_0, F)$ be a deterministic finite automaton. Construct the context-free grammar $G = (Q, \Sigma, R, q_0)$, where $R$ contains the following rules:
+    \begin{itemize}
+        \item for any $a, b \in Q$ and $s \in \Sigma$ such that $\delta(a, s) = b$, $a \to sb$,
+        \item for any $q \in F$, we have the rule $q \to \emptystring$. 
+    \end{itemize}
+
+    If a string $w$ is accepted by $M$, we know there exists $q_0, q_1, \ldots, q_k$ such that $\delta(q_{i-1}, w_i) = q_{i}$, and $q_k \in F$. Therefore, using $G$ we can expand $q_0$ to $w_1q_1$, and $q_{i-1}$ to $w_iq_i$, and then $q_k$ to $\emptystring$, and so we see that $w \in L(G)$.
+
+    For any $w \in L(G)$, we know there exists $q_0 \yields u_1 \yields u_2 \yields \cdots \yields u_k \yields w$, and furthermore that $u_i = v_iq_{i}$ such that $u_{i+1} = v_iw_{i+1}q_{i+1}$ where $\delta(q_i, w_{i+1}) = q_{i+1}$. Therefore, $q_0, q_1, \ldots, q_k$ is a sequence of states of $M$ such that $\delta(q_{i-1}, w_i) = q_i$ and $q_k \in F$ (since $G$ must contain a rule $q_{k} \to \emptystring$), and so $w$ is accepted by $M$.
+\end{proof}
+
+\begin{rmk}
+    Since we have seen examples of context-free but irregular languages, by Theorem \ref{dfa-to-cfg} we know that context-free languages are a strict superset of regular languages.
+\end{rmk}
+
 \begin{exmp}
-    Convert DFA into a grammar
+    Consider the deterministic finite automata which recognizes the language of binary strings containing at least a single zero, depicted in Figure \ref{fig:dfa-at-least-one-zero}. We convert this into an equivalent context-free grammar $G = (Q, \Sigma, R, q_0)$, where $Q = \{q_0, q_1\}$, $\Sigma = \{0, 1\}$, and $R$ contains the following rules
+    \begin{align*}
+        q_0 &\to 0q_0 | 1q_1, \\
+        q_1 &\to 0q_1 | 1q_1 | \emptystring.
+    \end{align*}
+
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}[
+            shorten >=1pt,>={Stealth[round]},
+            node distance=2cm,
+            every state/.style={draw=blue!50,very thick,fill=blue!20}
+        ]
+            \node[initial, state]   (0)              {0};
+            \node[state, accepting] (1) [right of=0] {1};
+
+            \path[->] (0) edge [loop above] node [align=center] {$a$}    (0)
+                          edge [above]      node [align=center] {$b$}    (1)
+                      (1) edge [loop above] node [align=center] {$a, b$} (1);
+        \end{tikzpicture}
+        \caption{DFA recognizing strings with one or more zeros}
+        \label{fig:dfa-at-least-one-zero}
+    \end{figure}
+\end{exmp}
+
+\begin{defn}
+    \emph{Pushdown automata} (PDA) are a variant of non-deterministic finite automata, which additionally have a memory stack they can utilize. A pushdown automaton is defined as a $6$-tuple $(Q, \Sigma, \Gamma, \delta, q_0, F)$. where
+    \begin{itemize}
+        \item $Q$ are the states,
+        \item $\Sigma$ is the input alphabet and $\Sigma_{\emptystring}$ denotes $\Sigma \union \{\emptystring\}$,
+        \item $\Gamma$ is the stack alphabet and $\Gamma_{\emptystring}$ denotes $\Gamma \union \{\emptystring\}$,
+        \item $\delta: Q \times \Sigma_{\emptystring} \times \Gamma_{\emptystring} \to 2^{Q \times \Gamma_{\emptystring}}$ is the transition function,
+        \item $q_0$ is the start state,
+        \item $F$ are the accept states.
+    \end{itemize}
+
+    A pushdown automaton accepts an input $w \in \Sigma^{*}$ there exist $w_i \in \Sigma_{\emptystring}^{*}$ such that $w = w_1w_2\ldots w_m$, a sequence of states $\gamma_0, \gamma_1, \ldots, \gamma_m \in Q$, and strings $s_0, s_1, \ldots, s_m \in \Gamma^{*}$ such that the following hold for all $i$:
+    \begin{itemize}
+        \item $\gamma_0 = q_0$, $\gamma_m \in F$, and $s_0 = \emptystring$,
+        \item $\left(\gamma_{i+1}, \beta\right) \in \delta(\gamma_{i}, w_{i+1}, \alpha)$ where $s_i = \alpha t$ and $s_{i+1} = \beta t$ for some $t \in \Gamma^{*}$ and $\alpha, \beta \in \Gamma_{\varepsilon}$.
+    \end{itemize}
+    These conditions essentially say that the pushdown automaton starts in the start state with an empty stack, and at every transition it changes the top element of the stack if neither $w_{i+1}$ or $\beta$ are $\emptystring$, pushes $\beta$ onto the stack if only $w_{i+1}$ is $\emptystring$, pops $\alpha$ from the stack if only $\beta$ is $\emptystring$, and does not change the stack if both $w_{i+1}$ or $\beta$ are $\emptystring$.
+\end{defn}
+
+\begin{thm}
+    A language can be recognized by a pushdown automaton if and only if it is a context-free language.
+\end{thm}
+
+\begin{rmk}
+    We won't formally prove this, but this can be intuitively understood. Recall that stacks are very useful for implementing depth-first search over a graph structure. We know that for any string $w$ in a context-free language, it can be represented as a \emph{parse-tree} in a corresponding context-free grammar. Using their non-deterministic nature, a pushdown automaton essentially explores every possible parse-tree of the input $w$ via a depth-first search.
+\end{rmk}
+
+\begin{lemma}{Pumping lemma (for context-free languages)}{\label{cf-pumping-lemma}}\proofbreak
+    Let $A$ be a context-free language. There exists $p \in \N$, the \emph{pumping length}, such that if $s \in A$ has length at least $p$, then we can divide $s$ into five pieces $s = uvxyz$ such that the following:
+    \begin{itemize}
+        \item $\abs{vy} > 0$,
+        \item $\abs{vxy} \leq p$,
+        \item $uv^{i}xy^{i}z \in A$ for all $i \geq 0$.
+    \end{itemize}
+\end{lemma}
+
+\begin{proof}
+    Let $G = (V, \Sigma, R, s)$ be a context-free grammar recognizing $A$. We will first prove that for sufficiently long input strings there must exist some variable $\beta \in V$ such that $\beta \derives v\beta y$, for non-trivial $v, y$. We will then use this to prove the above properties.
+    
+    Let $b$ be the maximum number of variables and terminals appearing on the right hand side of any rule. Then, after $k$ successive applications of any rule to the start symbol, there are at most $b^k$ terminals. Let $k = \abs{V} + 1$, then it follows that for any input of length at least $p = b^{k}$ at least $\abs{Q} + 1$ rule applications must be used. Note that the last rule applied must have a right-hand side consisting solely of terminals. Then by the pigeonhole principle \ref{pigeonhole} it follows that there exists a variable $\beta$ and a non-empty sequence of at most $\abs{Q}$ rule applications that will derive a string $v\beta y$ from $\beta$ for some $v, y \in \Sigma_{\emptystring}^{*}$. By the well-ordering principle there is a smallest number of rule applications that derive the input string from $s$. It follows that $v$ and $y$ cannot both be empty, or else the sequence of rule applications would necessarily contain $\beta \derives \beta$, which could be removed to yield a smaller but equivalent sequence of rule applications.
+
+    Next, we prove that $\beta \derives x$ such that $\abs{vxy} \leq p$. Clearly a rule sequence $\beta \derives x$ such that $x \in \Sigma_{\emptystring}$ consists solely of terminals must exist. Since we can choose $\beta$ to be the variable lowest on the parse tree that occurs twice within $\abs{Q}$ rule applications, it follows that the full derivation $\beta \derives vxy$ must be possible in at most $\abs{Q} + 1$ rule applications. Then by the bound found previously we know that $\abs{vxy} \leq b^{\abs{Q}+1} = p$.
+    
+    We have shown that we can recursively derive $v^{i}\beta y^{i}$ from $\beta$, such that $\abs{vy} > 0$. We have also shown that $s \derives u\beta z$ for some $u, z \in \Sigma_{\emptystring}^{*}$, and $\beta \derives x$ such that $w = uvxyz$. Therefore, $uv^{i}xy^{i}z \in A$ for any $i \geq 0$.
+\end{proof}
+
+\begin{exmp}
+    Consider the language $A = \{a^{n}b^{n}c^{n} : n \geq 0\}$. We can use the pumping lemma for context-free languages \ref{cf-pumping-lemma} to prove that this language cannot be context-free (therefore by Theorem \ref{dfa-to-cfg} also not a regular language).
+
+    For the sake of contradiction, assume that $A$ is a context-free language, and so by the pumping lemma has a pumping length $p$. Then consider $a^{p}b^{p}c^{p} \in A$. By the pumping lemma, $a^{p}b^{p}c^{p} = uvxyz$ such that $\abs{vxy} \leq p$, and therefore $vxy$ contains at most two of $a, b, c$. If we then pump the string to obtain $uv^{2}xy^{2}z \in A$, it follows that $uv^{2}xy^{2}z$ contains more of one or two of $a, b, c$ than the other symbol(s). Such a string cannot be in the language $A$, so $A$ does not satisfy the pumping lemma and therefore cannot be a context-free language.
 \end{exmp}
