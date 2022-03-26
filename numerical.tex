@@ -105,7 +105,7 @@ Then the total error is
     \begin{align*}
         \kappa(A) = \sup_{c \neq 0,\delta b \neq 0}\frac{\norm{A^{-1}\delta b}}{\norm{c}}\frac{\norm{Ac}}{\norm{\delta b}} = \left[\sup_{c \neq 0}\frac{\norm{Ac}}{\norm{c}}\right]\left[\sup_{\delta b \neq 0}\frac{\norm{A^{-1}\delta b}}{\norm{\delta b}}\right].
     \end{align*}
-    Then {\color{red}add theorem to cite here} we have
+    Then by Theorem \ref{induced-norm} we have
     \begin{align*}
         \kappa(A) = \norm{A}\norm{A^{-1}}.
     \end{align*}
@@ -273,18 +273,20 @@ Then the total error is
 \end{proof}
 
 \begin{thm}
-    The condition number of a matrix $A$ is
+    The condition number of a matrix $A$ can be characterized by
     \begin{align*}
         \frac{1}{\kappa(A)} = \min\left\{\frac{\norm{A - B}}{\norm{A}}: \det(B) = 0\right\}.
     \end{align*}
 \end{thm}
 
 \begin{proof}
-    Let $A$ be a non-singular matrix, and $B$ be any singular matrix. Then by Lemma \ref{singular-non-difference-inequality}
+    Let $A$ be a non-singular matrix, and $B$ be any singular matrix, and $\norm{\cdot}$ an induced norm. Then by Lemma \ref{singular-non-difference-inequality}
     \begin{align*}
         \frac{\norm{A - B}}{\norm{A}} \geq \frac{1}{\norm{A}\norm{A^{-1}}}.
     \end{align*}
     and since $\norm{A}\norm{A^{-1}} = \kappa(A)$ by Theorem \ref{matrix-condition-number} we find that $1/\kappa(A)$ is at most the infimum of the set.
+
+    Proving that this minimum is actually attained requires further tools from functional analysis, see ``Numerical Linear Algebra'' by W. Kahan for the proof.
 \end{proof}
 
 \begin{defn}
@@ -355,6 +357,8 @@ Then the total error is
     \begin{align*}
         I_n + A^{-1}\delta A)
     \end{align*}
+
+    {\large\color{red}Finish proof}
 \end{proof}
 
 \begin{defn}
@@ -366,8 +370,6 @@ Then the total error is
 \end{defn}
 
 \begin{thm}
-    Bounds/control on error for Gaussian elimination.
-
     Consider the linear system $Ax = b$, where $A$ is an $n \times n$ invertible matrix, and its $LU$ decomposition obtained via Gaussian elimination. Assume presence of numerical error, so
     \begin{align*}
         LU = A + E
@@ -386,7 +388,7 @@ Then the total error is
     \end{align*}
 \end{rmk}
 
-\section{Solving Linear Systems Efficiently}
+\section{Fixed-Point Methods}
 
 We will attempt to transform the linear system $Ax = b$ into the form $x = Tx + c$, the so-called ``fixed-point'' form of $x$, since the solutions are the fixed-points of the affine transformation.
 
@@ -401,11 +403,11 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
     \begin{align*}
         B\left(x^{(k+1)} - x^{(k)}\right) = b - Ax^{(k)}.
     \end{align*}
-    We call the expression on the right hand side the \emph{residual}. Various \emph{stoppping criterion} for termination of this algorithm are possible, such as when the relatively  (or absolute) error falls beneath a chosen threshold.
+    We call the expression on the right hand side the \emph{residual}. Various \emph{stoppping criterion} for termination of this algorithm are possible, such as when the relative (or absolute) residual falls beneath a chosen threshold.
 \end{defn}
 
-\begin{defn}{Jacobi method}
-    Let
+\begin{defn}{Jacobi method}\proofbreak
+    Consider the decomposition
     \begin{align*}
         A = -L + D - U,
     \end{align*}
@@ -418,3 +420,40 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
         x^{(k + 1)}_{i} = \frac{-\sum_{j\neq i}A_{ij}x^{(k_j)} + b_i}{A_{ii}}.
     \end{align*}
 \end{defn}
+
+\begin{defn}{Gauss-Seidel method}\proofbreak
+    Consider the decomposition
+    \begin{align*}
+        A = -L + D - U,
+    \end{align*}
+    where $-L$, $D$, $-U$ are lower triangular, diagonal, and upper triangular matrices respectively. In the \emph{Gauss-Seidel method}, we choose $B = D - L$, and so
+    \begin{align*}
+        T_{G} = I - \left(D - L\right)^{-1}\left(D - L - U\right) = I - I - \left(D - L\right)^{1}\left(-U\right) = \left(D-L\right)^{-1}U.
+    \end{align*}
+    Notice that we then have
+    \begin{align*}
+        x^{(k + 1)}_{i} = \frac{-\sum_{j=1}^{i-1}A_{ij}x^{(k_j+1)} - \sum_{j= i+1}^{n}A_{ij}x^{(k_j)} + b_i}{A_{ii}}.
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    In general, the Gauss-Seidel method tends to perform better than the Jacobi method.
+\end{rmk}
+
+\begin{thm}\label{fixed-point-convergence}
+    Let $T \in M_{n \times n}(\R)$ be invertible, and let $x_0 \in \R^n$. The sequence $x^{(k+1)} = Tx^{(k)} + c$ will converge to a solution for \emph{any} choice of $x_0$ if and only if $\rho(T) < 1$. This solution is unique.
+\end{thm}
+
+\begin{proof}
+    (proper norm used)
+
+    First, we will see that a unique fixed-point always exists and is unique. Since $\rho(T) < 1$, then $I - T$ is invertible and so $(I - T)x = c$ has a unique solution.
+
+    ($\implies$) Let $x$ be a solution, and consider the largest eigenvalue in absolute value $\rho(A)$ with associated eigenvector $u$. Then let $x_0 = x - u$, and so $x - x^{(k)} = \rho(A)^{(k)}u$, so $x{(k)}$ converges only if $\rho(A) < 1$.
+
+    Show that $x - x^{(k)} = T^{k}(x - x_0)$, then $\norm{T^{k}(x - x_0)} \leq \norm{T^k}\norm{x-x_0}$, which we know converges to zero as $k$ goes to infinity, and so $x$ converges to $x^{(k)}$.
+\end{proof}
+
+\begin{prop}
+    Let $\norm{\cdot}$ be a induced norm such that $\norm{T} < 1$ then $x^{(k)}$ converges and $\norm{x - x^{k}} \leq \norm{T}^{k}\norm{x - x_0}$ and $\norm{x - x^{k}} \leq \frac{\norm{T}^{k}}{1 - \norm{T}}\norm{x^{(1)} - x^{0}}$.
+\end{prop}
