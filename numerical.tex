@@ -184,7 +184,14 @@ Then the total error is
 \end{defn}
 
 \begin{defn}
-    Diagonally dominant
+    An $n \times n$ matrix $A$ is said to be \emph{diagonally dominant} if, for all $1 \leq i \leq n$,
+    \begin{align*}
+        \abs{A_{ii}} \geq \sum_{j\neq i}\abs{A_{ij}}.
+    \end{align*}
+    $A$ is furthermore \emph{strictly} diagonally dominant if, for all $1 \leq i \leq n$,
+    \begin{align*}
+        \abs{A_{ii}} > \sum_{j\neq i}\abs{A_{ij}}.
+    \end{align*}
 \end{defn}
 
 \begin{thm}
@@ -441,13 +448,11 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \end{rmk}
 
 \begin{thm}\label{fixed-point-convergence}
-    Let $T \in M_{n \times n}(\R)$ be invertible, and let $x_0 \in \R^n$. The sequence $x^{(k+1)} = Tx^{(k)} + c$ will converge to a solution for \emph{any} choice of $x_0$ if and only if $\rho(T) < 1$. This solution is unique.
+    Let $T \in M_{n \times n}(\R)$ be invertible, and let $x_0 \in \R^n$. The sequence $x^{(k+1)} = Tx^{(k)} + c$ will converge to a solution for \emph{any} choice of $x_0$ if and only if $\rho(T) < 1$. This solution is unique and does not depend on choice of initial $x^{(0)}$.
 \end{thm}
 
 \begin{proof}
-    (proper norm used)
-
-    First, we will see that a unique fixed-point always exists and is unique. Since $\rho(T) < 1$, then $I - T$ is invertible and so $(I - T)x = c$ has a unique solution.
+    Let $\norm{\cdot}$ be a proper norm. First, we will see that a unique fixed-point always exists and is unique. Since $\rho(T) < 1$, then $I - T$ is invertible and so $(I - T)x = c$ has a unique solution. Now let us turn to convergence.
 
     ($\implies$) Let $x$ be a solution, and consider the largest eigenvalue in absolute value $\rho(A)$ with associated eigenvector $u$. Then let $x_0 = x - u$, and so $x - x^{(k)} = \rho(A)^{(k)}u$, so $x{(k)}$ converges only if $\rho(A) < 1$.
 
@@ -457,3 +462,44 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \begin{prop}
     Let $\norm{\cdot}$ be a induced norm such that $\norm{T} < 1$ then $x^{(k)}$ converges and $\norm{x - x^{k}} \leq \norm{T}^{k}\norm{x - x_0}$ and $\norm{x - x^{k}} \leq \frac{\norm{T}^{k}}{1 - \norm{T}}\norm{x^{(1)} - x^{0}}$.
 \end{prop}
+
+\begin{thm}
+    Let $A$ be an $n \times n$ matrix. If $A$ is strictly diagonally dominant, then the Jacobi and Gauss-Seidel methods converges for all $x^{(0)} \in \R^n$, and furthermore
+    \begin{align*}
+        \norm{T_{G}}_{\infty} \leq \norm{T_{J}}_{\infty} < 1.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Recall $T_{J}$ is defined to be $D^{-1}(L + U)$, so
+    \begin{align*}
+        \norm{T_{J}}_{\infty} = \max_{1\leq i \leq n}\frac{1}{D_{ii}}\sum_{j=1}^{n}(L + U)_{ji} = \max_{1\leq i \leq n}\frac{1}{A_{ii}}\sum_{j \neq i}A_{ji}.
+    \end{align*}
+    Since $A$ is strictly diagonally dominant, $A_{ii}$ is strictly greater than the sum for all $i$, and so
+    \begin{align*}
+        \norm{T_{J}}_{\infty} < 1.
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    Let $A$ be an $n \times n$ matrix. We say that $A$ is \emph{irreducible} when there \emph{does not} exist a permutation matrix $P$ such that $\transposeof{P}AP$ is a block matrix
+    \begin{align*}
+        \left[\begin{array}{c|c}
+            \tilde{A}_{11} & \tilde{A}_{12} \\
+            \hline
+            \raisebox{0pt}[12pt][0pt]{\scalebox{1.5}{$0$}} & \tilde{A}_{22}
+        \end{array}\right]
+    \end{align*}
+    such that
+\end{defn}
+
+\begin{lemma}
+    An $n \times n$ matrix $A$ is irreducible if and only if the directed graph of which $A$ is the adjacency matrix $G(A)$ is connected.
+\end{lemma}
+
+\begin{defn}
+    An $n \times n$ matrix is \emph{irreducibly diagonally dominant} when it is irreducible, diagonally dominant, and additionally there exists $i$ such that
+    \begin{align*}
+        \abs{A_{ii}} > \sum_{j\neq i}\abs{A_{ij}}.
+    \end{align*}
+\end{defn}
