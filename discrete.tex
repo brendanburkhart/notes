@@ -1443,7 +1443,7 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
     We know that $m \in \Z_{pq}$ is a square root of $c$ mod $\Z_{pq}$ if and only if $pq | m^2 - c$, which occurs if and only if $p | m^2 - c$ \emph{and} $q | m^2 - c$ by Lemma \ref{prime-division-one}. In turn, this occurs if and only if $m = \pm c^{\frac{p+1}{4}} \bmod p$ and $m = \pm c^{\frac{q+1}{4}} \bmod q$ by Proposition \ref{modular-square-roots}.
 \end{proof}
 
-\begin{thm}{Rabin Cryptosystem Security}
+\begin{thm}{Rabin Cryptosystem Security}\proofbreak
     Let $p$ and $q$ be unknown distinct primes, and let $n = pq$ be known. Then an \emph{efficient} (polynomial time complexity) method for finding $4$ distinct square roots of $c$ mod $pq$ provides an efficient factorization of $n = pq$.
 \end{thm}
 
@@ -1454,3 +1454,9 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
     \end{align*}
     so $pq | (m_1 - m_2)(m_1 + m_2)$. However, by assumption $pq \not| m_1 + m_2$, and $pq \not| m_1 - m_2$. It follows that $p$ divides one factor and $q$ divides the other. We can efficiently compute $\gcdof{m_1 - m_2}{n}$ using the Euclidean algorithm. Since $n$ has only $p$ and $q$ as factors, and $m_1 - m_2$ has precisely one of $p$ or $q$ as factors, this greatest common divisor must be one of $p$ or $q$, and then the other can be found by dividing $n$ by the first.
 \end{proof}
+
+\begin{defn}
+    Let $p$ be a prime, and for some $r \in \Z_{p}^{*}$ consider the function $f: \Z/(p-2)\Z \to \Z_p^{*}$ where $f(a) = r^{a}$. Then $r$ is an \emph{primitive root} mod $p$ when $f$ is a bijection.
+
+    The \emph{discrete logarithm} in base $b$ mod $p$, where $b$ is a primitive root mod $p$, is $f^{-1}$.
+\end{defn}
