@@ -779,3 +779,60 @@ where we start with a single $A$ and expand it using one of the two rules. By va
 
     For the sake of contradiction, assume that $A$ is a context-free language, and so by the pumping lemma has a pumping length $p$. Then consider $a^{p}b^{p}c^{p} \in A$. By the pumping lemma, $a^{p}b^{p}c^{p} = uvxyz$ such that $\abs{vxy} \leq p$, and therefore $vxy$ contains at most two of $a, b, c$. If we then pump the string to obtain $uv^{2}xy^{2}z \in A$, it follows that $uv^{2}xy^{2}z$ contains more of one or two of $a, b, c$ than the other symbol(s). Such a string cannot be in the language $A$, so $A$ does not satisfy the pumping lemma and therefore cannot be a context-free language.
 \end{exmp}
+
+\section{Turing Machines}
+
+\begin{defn}
+    A \emph{$k$-tape Turing Machine} is a $7$-tuple $(Q, \Sigma, \Gamma, \delta, q_0, q_{\textrm{accept}}, q_{\textrm{reject}})$, when
+    \begin{itemize}
+        \item $Q$ is the set of states,
+        \item $\Sigma$ is the input alphabet, where $\tapeblank \not\in \Sigma$,
+        \item $\Gamma$ is the \emph{tape} alphabet, where $\Sigma \subseteq \Gamma$ and $\tapeblank \in \Sigma$, 
+        \item $\delta: Q \times \Gamma^{k} \to Q \times \Gamma^{k} \times \{L, S, R\}^{k}$ is the transition function,
+        \item $q_0$ is the start state,
+        \item $q_{\textrm{accept}}$ is the accept state,
+        \item $q_{\textrm{reject}}$ is the reject state.
+    \end{itemize}
+
+    A $k$-tape Turing machine $M$ has $k$ \emph{tapes} --- arrays extending infinitely to the right, with each array element being a symbol from the tape alphabet. Each tape is initially filled with $\tapeblank$'s, except for the first tape which first has the entire input. The Turing machine also has a \emph{control} automaton which starts in state $q_0$, and let $q$ be the current state of this automaton. At a given step, $M$ has a \emph{head position} for each step, where $t_i$ will denote the symbol at the head position for the $k$th tape. At each step of a computation, the Turing machine transitions according to $\delta(q, (t_1, t_2, \ldots, t_k)) = (q', (t_1', t_2', \ldots, t_k'), (s_1, s_2, \ldots, s_k))$. The state of the control automaton moves from $q$ to $q'$, the symbol at the head position of each tape is changed from $t_i$ to $t_i'$, and then the head position for the $i$th tape is moved to the left if $s_i = L$ (and the head position isn't already at the start), doesn't change if $s_i = S$, and moves to the right if $s_i = R$. This process is repeated until either $q = q_{\textrm{accept}}$ or $q = q_{\textrm{reject}}$, in which case computation halts and the input is either accepted or rejected accordingly. Note that unlike the earlier automata we examined, the number of steps a Turing machine uses in a computation is not necessarily equal to the length of the input, and furthermore there is no guarantee a Turing machine will ever reach the accept or reject states.
+\end{defn}
+
+\begin{defn}
+    A language $L$ is \emph{Turing-recognizable} if there exists a Turing machine $M$ that accepts a string $w$ if and only if $w \in L$. Note that $M$ is not required to reject strings not in $L$, it simply can't accept them.
+\end{defn}
+
+\begin{defn}
+    A \emph{decider} Turing machine is one which halts on every possible input. A language is \emph{Turing-decidable} if there exists a decider Turing machine that recognizes the language.
+\end{defn}
+
+\begin{defn}
+    Let $M$ be a decider Turing machine. The \emph{running time} or \emph{time-complexity} of $M$ is a function $f: \N \to \N$ such that $f(n)$ is the maximum number of steps $M$ needs to decide any string $w$ of length $n$.
+\end{defn}
+
+\begin{exmp}
+    We will construct a $1$-tape Turing machine that decides the language
+    \begin{align*}
+        L = \{w\#w | w \in \{0, 1\}^{*}\}.
+    \end{align*}
+    Take $\Sigma = \{0, 1, \#\}$, $\Gamma = \{0, 1, \#, \tapeblank\}$. We will only give an informal, high-level description of the machine's operation. The machine will move look at the first symbol, cross it out, move forward until it sees the first non-crossed out symbol after the separator \#. If no such character exists or its different than the first character, it will move to the reject state. Otherwise it moves back until it sees the first crossed-out character before the \#, and repeats this. Eventually, the first character directly before the \# will be crossed out, at this point the machine will move to the last crossed-out symbol. If the next symbol is blank, i.e. the machine has reached the end of the input and the strings matched in length, then it moves to the accept state, otherwise it will reject.
+
+    Since this Turing machine moves left $n$ steps and then right $n$ steps plus some extra constant number of steps, for each symbol in the input, it has time complexity $O(n^2)$. Note that it is a decider since it always halts. Furthermore, we have seen almost exactly this language as an example of non-context free language, so Turing decidable/recognizable languages are not necessarily context-free languages.
+\end{exmp}
+
+\begin{thm}
+    Let $M = (Q, \Sigma, \Gamma, \delta, q_0, q_{\textrm{accept}}, q_{\textrm{reject}})$ be a $k$-tape Turing machine that runs in $f(n)$ time. Then $M$ can be simulated using another $k$-tapee Turing Machine in $O(\log_2\abs{\Sigma}f(n))$ time using the alphabet $\Sigma_{01} = \{0, 1\}$.
+\end{thm}
+
+\begin{proof}
+    Given the finite alphabet $\Sigma$, assign an index to every element, and then encode each symbol $s \in \Sigma$ as the binary representation of its index, zero-padded to $\log_2\abs{\Sigma}$. The let $\tilde{M}$ be the $k$-tape Turing machine which uses $\log_2\abs{\Sigma}$ steps to read a symbol, decodes the fixed-length symbol using its state machine, and then applies the transition function from $M$. Therefore, $\tilde{M}$ takes $\log_2\abs{\Sigma}$ steps to exactly simulate a single step of $M$. 
+\end{proof}
+
+\begin{thm}
+    Let $M = (Q, \Sigma, \Gamma, \delta, q_0, q_{\textrm{accept}}, q_{\textrm{reject}})$ be a $k$-tape Turing machine that runs in $f(n)$ time. Then $M$ can be simulated using a $1$-tape Turing Machine in $O(kT(n)^2)$ time.
+\end{thm}
+
+\begin{proof}
+    We will simulate $k$-tapes on a single tape by interleaving the symbols from the tapes --- that is, if a symbol would have been stored in the $i$th position on the $j$th tape, on the single tape it will be stored at position $ki + j$, where both $i$ and $j$ are zero-indexed. In order to keep track of the $k$ ``head positions'' of our $1$-tape machine, we introduce a new symbol $\hat{s}$ for every $s \in \Gamma$, which essentially means that one of the $k$ simulated heads is at that position, and the simulated symbol is $s$ (we can figure out \emph{which} head it is from the interleaving pattern).
+
+    For each simulated step, the simulating machine scans the entire tape to determine what symbol each simulated head is currently reading. Once it reaches a $\tapeblank$ and is at the end of the tape, it goes back, updating the symbols and the simulated positions according to the transition function of the simulated machine as it goes by. Since the original machine uses at most $f(n)$ length of tape on each tape ``track'', it follows that this simulated update takes at most $2f(n) + ck$, where $c$ is the number of steps required to perform the update for each simulated head. Therefore, the simulating machine runs in $(2f(n) +ck)f(n)$ time, and so has runtime of order $f(n)^2$.
+\end{proof}
