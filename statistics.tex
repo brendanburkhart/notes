@@ -477,3 +477,101 @@ Consider the joint density $f(x_1,\ldots,x_n|\theta)$ of $X_1, \ldots, X_n$. If 
 \end{exmp}
 
 \subsection{Fisher Information}
+
+\begin{prop}
+    Let $X \distributed f(x|\theta)$ be a random variable from a distribution with parameter $\theta \in \R^k$, and let
+    \begin{align*}
+        Y = \frac{\partial}{\partial \theta}\ln\left(f(X|\theta)\right).
+    \end{align*}
+    Under sufficient regularity conditions, $\expectationof{Y} = 0$.
+\end{prop}
+
+\begin{proof}
+    Since $f(x|\theta)$ is a probability density, we know that
+    \begin{align*}
+        \int_{\Omega}f(x|\theta)d\theta = 1.
+    \end{align*}
+    It follows that
+    \begin{align*}
+        \frac{\partial}{\partial \theta}\left[\int_{\Omega}f(x|\theta)d\theta\right] = 0.
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Cram\'er-Rao bound
+\end{thm}
+
+\begin{thm}
+    Let $X_1, \ldots, X_n$ be independent and identically distributed random variables with common density $f(X|\theta)$, and let $\hat{\theta}$ be the maximum likelihood estimator for $\theta$. Then
+    \begin{align*}
+        \sqrt{nI(\theta)}\left[\hat{\theta} - \theta\right]
+    \end{align*}
+    converges in distribution to the standard normal distribution $N(0, 1)$.
+\end{thm}
+
+\begin{defn}
+    Suppose we want to compare two estimators, $\hat{\theta}_1$ and $\hat{\theta}_2$. One possible metric is the mean squared error of each estimator. We call the ratio
+    \begin{align*}
+        \frac{\meansqerrof{\hat{\theta}_1}}{\meansqerrof{\hat{\theta}_2}}
+    \end{align*}
+    the \emph{relative efficiency} of $\hat{\theta_1}$ and $\hat{\theta}_2$. In the case that both estimators are unbiased, then since $\textrm{MSE}(\hat{\theta}) = \varianceof{\hat{\theta}} + \textrm{bias}(\hat{\theta})^2$ it follows that their relative efficiency is simply
+    \begin{align*}
+        \frac{\varianceof{\hat{\theta}_1}}{\varianceof{\hat{\theta}_2}}.
+    \end{align*}
+\end{defn}
+
+\begin{thm}\label{sufficiency-characterization}
+    Let $X_1, \ldots, X_n$ be independent and identically distributed random variables with common density $f(X|\theta)$ and let $T$ be an estimator. Then $T$ is sufficient for $\theta$ if and only if there exists $h(x_1, \ldots, x_n)$ such that
+    \begin{align*}
+        f(x_1, \ldots, x_n|\theta) = g(T, \theta)h(x_1, \ldots, x_n).
+    \end{align*}
+\end{thm}
+
+\begin{exmp}
+    Suppose we want to show that $T = \sum X_i$ is a sufficient statistics for $\lambda$ if $X_i \distributed \textrm{exp}(\lambda)$ are independent and identically distributed. We know that
+    \begin{align*}
+        f(x_1, \ldots, x_n|\theta) = \lambda^n\exp\left(-\lambda\sum_{i=1}^{n}x_i\right) = \lambda^n\exp\left(-\lambda T\right).
+    \end{align*}
+    Let
+    \begin{align*}
+        g(T,\lambda) = \lambda^n\exp\left(-\lambda T\right),
+    \end{align*}
+    by then Theorem \ref{sufficiency-characterization} we know that $T$ is sufficient for $\lambda$.
+\end{exmp}
+
+\begin{defn}
+    Minimally sufficient statistic.
+\end{defn}
+
+\section{Bayesian Inference}
+
+\begin{rmk}
+    In the frequentist paradigm we consider a parametric model with parameter $\theta$, and attempt to estimate the true and fixed value of $\theta$ from our data.
+
+    In the Bayesian paradigm, we instead view $\theta$ itself as a random variable, rather than as a fixed but unknown value. We view $\theta$ as having a \emph{prior} distributio (typically known), which may have been constructed to include information about the experimental process. If the prior distribution has (typically known) parameters, these are called \emph{hyperparameters}. We start from the prior distribution $f_{\theta}(\theta)$ and a likelihood function $f(x|\theta)$, and from this we compute a \emph{posterior distribution} $f_{\theta|X}(\theta|X)$.
+\end{rmk}
+
+\begin{defn}{Bayes' Rule}\proofbreak
+    \begin{align*}
+        P\left(\theta = \theta_0|X\right) = \frac{P\left(X|\theta_0\right)P(\theta_0)}{P\left(X|\theta_0\right)P(\theta_0) + P\left(X|\theta_1\right)P(\theta_1)}
+    \end{align*}
+\end{defn}
+
+\begin{exmp}
+    Suppose we wish to understand some independent and identically distributed Bernoulli($\theta$) data, where $0 \leq \theta \leq 1$. Suppose $\theta$ has the following \emph{discrete prior}
+    \begin{align*}
+        P\left(\theta = \frac{3}{4}\right) &= \frac{1}{3}, \\
+        P\left(\theta = \frac{1}{4}\right) &= \frac{2}{3}.
+    \end{align*}
+    Next, suppose we observe data $X_1 = 1$, $X_2 = 1$, $X_3 = 0$, $X_4 = 1$, $X_5 = 1$. Then by Bayes' rule we have
+    \begin{align*}
+        P\left(\theta = 3/4|X\right) &= \frac{P(X|\theta=3/4)P(\theta=3/4)}{P(X|\theta=1/4)P(\theta=1/4) + P(X|\theta=3/4)P(\theta=3/4)} \\
+        &= \frac{\left(3/4\right)^{4}(1-3/4)^{1}(1/3)}{\left(3/4\right)^{4}(1-3/4)^{1}(1/3) + \left(1/4\right)^{4}(1-1/4)^{1}(2/3)} \\
+        &= \frac{3^3/4^5}{3^3/4^5 + 2/4^5} = \frac{27}{29}.
+    \end{align*}
+    It follows that $P(\theta = 1/4|X) = 1-P(\theta=3/4|X) = \frac{2}{29}$.
+\end{exmp}
+
+\begin{exmp}
+    Suppose $X_1, \ldots, X_n$ are independent and identically distributed normal $N(\mu, \sigma^2)$ random variables, where $\mu$ is unknown while $\sigma^2$ is known.
+\end{exmp}
