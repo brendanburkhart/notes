@@ -456,7 +456,15 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 
     ($\implies$) Let $x$ be a solution, and consider the largest eigenvalue in absolute value $\rho(A)$ with associated eigenvector $u$. Then let $x_0 = x - u$, and so $x - x^{(k)} = \rho(A)^{(k)}u$, so $x{(k)}$ converges only if $\rho(A) < 1$.
 
-    Show that $x - x^{(k)} = T^{k}(x - x_0)$, then $\norm{T^{k}(x - x_0)} \leq \norm{T^k}\norm{x-x_0}$, which we know converges to zero as $k$ goes to infinity, and so $x$ converges to $x^{(k)}$.
+    ($\impliedby$) First, we will prove that $x - x^{(k)} = T^{k}(x - x_0)$ by induction. In the base case, this is trivially true since $T^0 = I$. Then, assuming $x - x^{(k)} = T^{k}(x - x_0)$, we then have
+    \[T\left[x - x^{(k)}\right] = T\left[T^{k}(x - x_0)\right],\]
+    and so
+    \[Tx + c - Tx^{(k)} - c = T^{k+1}(x - x_0).\]
+    Since $x$ is by construction a fixed point of $f(v) = Tv + c$, it follows that $Tx + c = x$, and by definition $Tx^{(k)} + c = x^{(k+1)}$, so we have
+    \begin{align*}
+        x - x^{(k+1)} = T^{k+1}(x - x_0).
+    \end{align*}
+    Now that we have shown that $x - x^{(k)} = T^{k}(x - x_0)$ for $k \geq 0$, it follows since the norm is proper that $\norm{T^{k}(x - x_0)} \leq \norm{T^k}\norm{x-x_0}$. We know this converges to zero as $k$ goes to infinity since $\rho(T) < 1$, and so $x^{(k)}$ converges to $x$.
 \end{proof}
 
 \begin{prop}
@@ -482,7 +490,7 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \end{proof}
 
 \begin{defn}
-    Let $A$ be an $n \times n$ matrix. We say that $A$ is \emph{irreducible} when there \emph{does not} exist a permutation matrix $P$ such that $\transposeof{P}AP$ is a block matrix
+    Let $A$ be an $n \times n$ matrix. We say that $A$ is \emph{irreducible} when there \emph{does not} exist a permutation matrix $P$ such that $\transposeof{P}AP$ is a block upper triangular matrix
     \begin{align*}
         \left[\begin{array}{c|c}
             \tilde{A}_{11} & \tilde{A}_{12} \\
@@ -490,16 +498,64 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
             \raisebox{0pt}[12pt][0pt]{\scalebox{1.5}{$0$}} & \tilde{A}_{22}
         \end{array}\right]
     \end{align*}
-    such that
+    such that $\tilde{A}_{11} \in M_{p\times p}$ and $\tilde{A}_{22} \in M_{q \times q}$ where $p + q = n$, and $n > p, q \geq 1$. Note that $\tilde{A}_{ij}$ may be anything -- in particular they may contain zero entries.
 \end{defn}
 
-\begin{lemma}
-    An $n \times n$ matrix $A$ is irreducible if and only if the directed graph of which $A$ is the adjacency matrix $G(A)$ is connected.
-\end{lemma}
+\begin{prop}
+    An $n \times n$ matrix $A$ is irreducible if and only if the directed graph $G(A)$, of which $A$ is the adjacency matrix, is strongly connected.
+\end{prop}
+
+\begin{proof}
+    First, note that $G(\transposeof{P}AP)$ is isomorphic to $G(A)$ --- that is, the two matrices are the adjacency matrices of the same graphs, up to order of vertices. To see this, let $\sigma$ be the permutation induced by $P$ --- that is, $P_{ij} = \delta_{i\sigma(j)}$. Then
+    \begin{align*}
+        AP_{\sigma_{i}j} &= \sum_{k=1}^{n}A_{\sigma(i)k}P(kj) = A_{\sigma(i)\sigma(j)}, \\
+        \transposeof{P}AP_{ij} &= \sum_{k=1}^{n}\transposeof{P}_{ik}AP_{kj} = AP_{\sigma(i)j}.
+    \end{align*}
+    Therefore, $\transposeof{P}AP_{ij} = A_{\sigma(i)\sigma(j)}$, so $G(A)$ and $G(\transposeof{P}AP)$ are isomorphic since permutations are bijections. We know that if $A$ is isomorphic to $B$, then $A$ is strongly connected if and only if $B$ is strongly connected.
+
+    To construct the adjacency matrix, we must have an index on the vertices $V_i$. Then we may consider a path from $V_i$ to $V_j$. Such a path must correspond to a sequence $a_1, a_2, \ldots, a_k$ such that $a_1 = n$, $a_k = 1$, and $\transposeof{P}AP_{a_{\ell}a_{\ell+1}} = 1$ for all $\ell \in \{1, \ldots, k-1\}$. Since $\transposeof{P}AP_{a_{\ell}a_{\ell+1}} = 0$ if $a_{\ell} > p$ and $a_{\ell+1} \leq n-q = p$, it follows that $a_{\ell+1} > p$ whenever $a_{\ell} > p$. Since $a_1 = n > p$ it would then follow that $a_k > p$. Therefore, no such path may exist if $\transposeof{P}AP$ is block upper triangular, and so if \emph{any} permutation matrix $P$ makes $\transposeof{P}AP$ block upper triangular then $G(A)$ cannot be strongly connected.
+
+    Assume that $G(A)$ is not strongly connected, so there exists vertices $\alpha$ and $\beta$ such that there is no path from $\alpha$ to $\beta$. Let $V_{\alpha}$ be the set of all vertices $v$ such that there is a path from $\alpha$ to $v$, and let $V_{\beta}$ be the set of all vertices $v$ such that there is a path from $v$ to $\beta$. Note that $V_{\alpha}$ and $V_{\beta}$ must be disjoint by assumption. Let $p = \abs{V_{\beta}}$, and consider a permutation $\sigma$ which sends $V_{\beta}$ to $\{1, \ldots, p\}$ and $V_{\alpha}$ to $\{p+1, \ldots, n\}$. Notice that ${\transposeof{P_{\sigma}}AP_{\sigma}}_{ij} = 0$ whenever $p+1 \leq i \leq n$ and $1 \leq j \leq p$. Therefore, there exists $\sigma$ such that $\transposeof{P_{\sigma}}AP_{\sigma}$ is block upper triangular whenever $G(A)$ is not strongly connected.
+\end{proof}
 
 \begin{defn}
-    An $n \times n$ matrix is \emph{irreducibly diagonally dominant} when it is irreducible, diagonally dominant, and additionally there exists $i$ such that
+    An $n \times n$ matrix is \emph{irreducibly diagonally dominant} when it is irreducible, (weakly) diagonally dominant, and additionally there exists $i$ such that
     \begin{align*}
         \abs{A_{ii}} > \sum_{j\neq i}\abs{A_{ij}}.
     \end{align*}
 \end{defn}
+
+\begin{prop}
+    Let $A$ be an $n \times n$ matrix. If $A$ is irreducibly diagonally dominant, then the Jacobi method converges for all $x^{(0)} \in \R^n$.
+\end{prop}
+
+\begin{defn}{SOR method}\proofbreak
+    Consider the decomposition
+    \begin{align*}
+        A = -L + D - U,
+    \end{align*}
+    where $-L$, $D$, $-U$ are lower triangular, diagonal, and upper triangular matrices respectively. In the \emph{SOR method} (successive over-relaxtion), we choose
+    \begin{align*}
+        B(\omega) = \frac{1}{\omega}\left(D - \omega L\right).
+    \end{align*}
+    \begin{align*}
+        T(\omega) = I - \left(\frac{1}{\omega}\left(D - \omega L\right)\right)^{-1}\left(D - L - U\right) = \left(D - \omega L\right)^{-1}\left[(1-\omega)D + \omega U\right].
+    \end{align*}
+\end{defn}
+
+\begin{thm}{Kahan's Theorem}\label{kahans-theorem}\proofbreak
+    If $\det D \neq 0$, then
+    \begin{align*}
+        \rho\left(T(\omega)\right) \geq \abs{\omega - 1}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        \det\left(T(\omega)\right) = \frac{\det\left((1-\omega)D + \omega U\right)}{\det\left(D - \omega L\right)} = \frac{\left(1-\omega\right)^{n}\det\left(D\right)}{\det\left(D\right)} = \left(1 - \omega\right)^{n}.
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    If $A$ is positive definite and $0 < \omega < 2$, then $p(T(\omega)) < 1$.
+\end{thm}
