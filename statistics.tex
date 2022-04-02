@@ -520,12 +520,29 @@ Consider the joint density $f(x_1,\ldots,x_n|\theta)$ of $X_1, \ldots, X_n$. If 
     \end{align*}
 \end{defn}
 
-\begin{thm}\label{sufficiency-characterization}
-    Let $X_1, \ldots, X_n$ be independent and identically distributed random variables with common density $f(X|\theta)$ and let $T$ be an estimator. Then $T$ is sufficient for $\theta$ if and only if there exists $h(x_1, \ldots, x_n)$ such that
+\begin{defn}
+    Let $f(X|\theta)$ be a parametric distribution. Then a statistic $T(X_1, \ldots, X_n)$ is \emph{sufficient} for $\theta$ when $X_1, \ldots, X_n$ given $T$ is independent of $\theta$ --- that is, $f(x_1, \ldots, x_n|T)$ does not depend on $T$.
+\end{defn}
+
+\begin{exmp}
+    Consider independent and identically distributed random variables $X_1, X_2, X_3 \distributed \textrm{Bernoulli}(p)$, and the statistic $T(X_1, X_2, X_3) = X_1 + X_2 + X_3$. Notice that $P(X_1=x_1, X_2=x_2, X_3=x_3|T=t)$ is zero if $T \neq x_1 + x_2 + x_3$, and otherwise
+    \begin{align*}
+        P(X_1=x_1, X_2=x_2, X_3=x_3|T=t) &= \frac{P(X_1=x_1, X_2=x_2, X_3=x_3,T=t)}{P(T=t)} \\
+        &= \frac{p^{t}(1-p)^{3-t}}{\binom{3}{t}p^{t}(1-p)^{3-t}} = \binom{3}{t}^{-1}.
+    \end{align*}
+    Since this does not depend on $p$, it follows that $T$ is sufficient for $p$.
+\end{exmp}
+
+\begin{thm}{Fisher-Neyman Factorization Criterion}\label{sufficiency-factorization-fisher}\proofbreak
+    Let $X_1, \ldots, X_n$ be independent and identically distributed random variables with common density $f(X|\theta)$ and let $T$ be an estimator. Then $T$ is sufficient for $\theta$ if and only if there exists \emph{non-negative} $h(x_1, \ldots, x_n)$ and $g(T, \theta)$ such that
     \begin{align*}
         f(x_1, \ldots, x_n|\theta) = g(T, \theta)h(x_1, \ldots, x_n).
     \end{align*}
 \end{thm}
+
+\begin{rmk}
+    Consider two possibly distinct samples $X_1, \ldots, X_n$ and $Y_1, \ldots, Y_n$ such that $T(X_1, \ldots, X_n) = T(Y_1, \ldots, Y_n)$. When considering the maximum likelihood estimator for $\theta$, $h(x_1, \ldots, x_n)$ can be treated as a constant, and so maximizing the likelihood is equivalent to maximizing $g(T, \theta)$. Since the statistic $T$ is the same for both samples, the maximum likelihood estimator will be as well.
+\end{rmk}
 
 \begin{exmp}
     Suppose we want to show that $T = \sum X_i$ is a sufficient statistics for $\lambda$ if $X_i \distributed \textrm{exp}(\lambda)$ are independent and identically distributed. We know that
@@ -534,13 +551,14 @@ Consider the joint density $f(x_1,\ldots,x_n|\theta)$ of $X_1, \ldots, X_n$. If 
     \end{align*}
     Let
     \begin{align*}
-        g(T,\lambda) = \lambda^n\exp\left(-\lambda T\right),
+        g(T,\lambda) &= \lambda^n\exp\left(-\lambda T\right), \\
+        h(x_1, \ldots, x_n) &= 1.
     \end{align*}
-    by then Theorem \ref{sufficiency-characterization} we know that $T$ is sufficient for $\lambda$.
+    Since these functions are non-negative, by Theorem \ref{sufficiency-factorization-fisher} we know that $T$ is sufficient for $\lambda$.
 \end{exmp}
 
 \begin{defn}
-    Minimally sufficient statistic.
+    Let $W$ be the set of all sufficient statistics for a parameter $\theta$. Then $T \in W$ is a \emph{minimally sufficient statistic} when for any $S \in W$ there exists a function $\ell$ such that $T = \ell(S)$.
 \end{defn}
 
 \section{Bayesian Inference}
