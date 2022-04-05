@@ -559,3 +559,71 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \begin{thm}{Ostrowski-Reich}\label{ostrowski-reich}\proofbreak
     If $A$ is positive definite and $0 < \omega < 2$, then $p(T(\omega)) < 1$.
 \end{thm}
+
+\section{Matrix Normal Forms}
+
+\begin{thm}{Schur Normal Form}\proofbreak
+    Let $A$ be an $n \times n$ matrix over $\C$. There exists a unitary $n \times n$ matrix $Q$ such that $Q^{*}AQ$ is upper triangular.
+\end{thm}
+
+\begin{proof}
+    We proceed by induction on $n$. In the base case, $A$ is trivially upper triangular so we may take $Q = [1]$. Now assume this holds for some $n-1$, and consider $A$ an $n \times n$ matrix. Since $A$ is over $\C$, it must have an eigenvalue $\lambda_1$ with eigenvector $v_1$ such that $\norm{v_1}_2 = 1$. Complete $v_1$ to an orthonormal basis $\{v_1, \ldots, v_n\}$ for $\C^n$. Then take $U$ to be the matrix whose $i$th column is $v_i$, and so $U$ is a unitary matrix such that
+    \begin{align*}
+        U^{*}AU = \left[\begin{array}{c|c}
+            \lambda_1 & \transposeof{\vec{a}} \\
+            \hline
+            \raisebox{-5pt}[0pt][0pt]{$\vec{0}$} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{$A_1$}}
+        \end{array}\right].
+    \end{align*}
+    By assumption, there exists unitary $U_1$ such that $U_1^{*}A_1U_1$ is upper triangular. Let
+    \begin{align*}
+        Q = U\left[\begin{array}{c|c}
+            1 & \transposeof{\vec{0}} \\
+            \hline
+            \raisebox{-5pt}[0pt][0pt]{$\vec{0}$} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{$U_1$}}
+        \end{array}\right].
+    \end{align*}
+    Note that
+    \begin{align*}
+        Q^{*}Q = \left[\begin{array}{c|c}
+            1 & \transposeof{\vec{0}} \\
+            \hline
+            \raisebox{-5pt}[0pt][0pt]{$\vec{0}$} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{$U_1$}}
+        \end{array}\right]^{*}U^{*}U\left[\begin{array}{c|c}
+            1 & \transposeof{\vec{0}} \\
+            \hline
+            \raisebox{-5pt}[0pt][0pt]{$\vec{0}$} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{$U_1$}}
+        \end{array}\right] = \left[\begin{array}{c|c}
+            1 & \transposeof{\vec{0}} \\
+            \hline
+            \raisebox{-5pt}[0pt][0pt]{$\vec{0}$} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{$U_1^{*}$}}
+        \end{array}\right]\left[\begin{array}{c|c}
+            1 & \transposeof{\vec{0}} \\
+            \hline
+            \raisebox{-5pt}[0pt][0pt]{$\vec{0}$} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{$U_1$}}
+        \end{array}\right] = I_n,
+    \end{align*}
+    and so $Q$ is unitary. Furthermore,
+    \begin{align*}
+        Q^{*}AQ = \left[\begin{array}{c|c}
+            1 & \transposeof{\vec{0}} \\
+            \hline
+            \raisebox{-5pt}[0pt][0pt]{$\vec{0}$} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{$U_1$}}
+        \end{array}\right]^{*}
+        \left[\begin{array}{c|c}
+            \lambda_1 & \transposeof{\vec{a}} \\
+            \hline
+            \raisebox{-5pt}[0pt][0pt]{$\vec{0}$} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{$A_1$}}
+        \end{array}\right]
+        \left[\begin{array}{c|c}
+            1 & \transposeof{\vec{0}} \\
+            \hline
+            \raisebox{-5pt}[0pt][0pt]{$\vec{0}$} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{$U_1$}}
+        \end{array}\right] = \left[\begin{array}{c|c}
+            \lambda_1 & \transposeof{\vec{b}} \\
+            \hline
+            \raisebox{-5pt}[0pt][0pt]{$\vec{0}$} & \raisebox{-5pt}[0pt][8pt]{\scalebox{1.5}{$R_1$}}
+        \end{array}\right] = R,
+    \end{align*}
+    which must be upper triangular since $R_1$ is upper triangular by assumption.
+\end{proof}
