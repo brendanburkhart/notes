@@ -216,6 +216,32 @@ Then the total error is
     \]
 \end{proof}
 
+\begin{thm}{Gershgorin circle theorem}\label{gershgorin}\proofbreak
+    Let $A$ be an $n \times n$ matrix. Any eigenvalue $\lambda$ of $A$ must be in at least one of the discs
+    \begin{align*}
+        D_i = \left\{r \in \C : \abs{r - A_{ii}} \leq \sum_{j\neq i}\abs{A_{ij}}\right\} \subseteq \C.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Let $\lambda$ be an eigenvalue of $A$, so there exists non-zero $x$ such that $Ax = \lambda x$. Therefore,
+    \begin{align*}
+        \left(\lambda - A_{ii}\right)x_i = \sum_{j \neq i}A_{ij}x_j,
+    \end{align*}
+    for all $1 \leq i \leq n$. Let
+    \begin{align*}
+        k = \argmax_{1 \leq \ell \leq n}\abs{x_{\ell}},
+    \end{align*}
+    so by the triangle inequality \ref{cauchy-schwarz-triangle}
+    \begin{align*}
+        \abs{\lambda - A_{kk}}\abs{x_k} = \sum_{j \neq k}\abs{A_{kj}}\abs{x_j} \leq \sum_{j \neq k}\abs{A_{kj}}\abs{x_k}.
+    \end{align*}
+    Since $x$ is non-zero and $x_k$ is the largest component, $x_k \neq 0$ so we may divide and obtain
+    \begin{align*}
+        \abs{\lambda - A_{kk}} \leq \sum_{j \neq k}\abs{A_{kj}}.
+    \end{align*}
+\end{proof}
+
 \begin{defn}
     A \emph{band matrix} is a particular type of sparse matrix in which the non-zero entries occur only within $p$ diagonals above the major diagonal, and $q$ diagonals above. Formally, $A \in M_{n \times n}$ is a \emph{band matrix} if there exists \emph{unique} $p, q \in \{1, \ldots, n\}$ such that $A_{ij}$ is zero whenever $j - i \geq p$ or $i - j \geq q$.
 \end{defn}
@@ -562,6 +588,27 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 
 \section{Matrix Normal Forms}
 
+\begin{thm}
+    Let $A$ be an invertible $n \times n$ matrix over $\C$. There exista a unitary $n \times n$ matrix $Q$ and an upper triangular $n \times n$ matrix $R$ such that $A = QR$.
+\end{thm}
+
+\begin{proof}
+    Since $A$ is invertible, its columns are linearly independent by Theorem \ref{row-column-rank-equivalence}. Let $\langle x_1, \ldots, x_n \rangle$ be the basis formed by these columns, and apply the Gram-Schimdt process to produce an orthonormal basis $\langle e_1, \ldots, e_n \rangle $ where $e_i$ is computed as a linearly combination of $x_j$'s for $j \leq i$. Therefore, there exists an upper triangular matrix $U$ such that
+    \begin{align*}
+        AU = 
+        \begin{bmatrix}
+            \vdots & \vdots & \cdots & \vdots \\
+            x_1 & x_2 & \cdots & x_n \\
+            \vdots & \vdots & \cdots & \vdots
+        \end{bmatrix}U = \begin{bmatrix}
+            \vdots & \vdots & \cdots & \vdots \\
+            e_1 & e_2 & \cdots & e_n \\
+            \vdots & \vdots & \cdots & \vdots
+        \end{bmatrix} = Q.
+    \end{align*}
+    Notice that $U_{ii}$ must be non-zero, or else $e_i$ would be linearly dependent on $e_j$'s for $j < i$, and so $U$ is invertible with inverse $R$ that must also be upper triangular. Since $Q$ must be unitary since its columns form an orthonormal basis, it follows that $A = QR$.
+\end{proof}
+
 \begin{thm}{Schur Normal Form}\proofbreak
     Let $A$ be an $n \times n$ matrix over $\C$. There exists a unitary $n \times n$ matrix $Q$ such that $Q^{*}AQ$ is upper triangular.
 \end{thm}
@@ -627,3 +674,16 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
     \end{align*}
     which must be upper triangular since $R_1$ is upper triangular by assumption.
 \end{proof}
+
+\begin{thm}{Power method}\proofbreak
+    Consider a diagonalizable matrix $A$. Choose vector $b_0$, and define
+    \begin{align*}
+        b_{k+1} &= \frac{Ab_k}{\norm{Ab_k}} \\
+        \mu_k &= \frac{\langle x_k, Ax_k \rangle}{\langle x_k, x_k\rangle}.
+    \end{align*}
+    Then $\mu_k$ tends to $\lambda_n$, the \emph{largest} eigenvalue of $A$ in absolute value, as long as $b_0$ is not orthogonal to $\lambda_n$ and $\lambda_n$ is \emph{strictly} greater in absolute value.
+\end{thm}
+
+\begin{thm}{Inverse power method}\proofbreak
+    Consider a diagonalizable matrix $A$, and $q \in \C$. Note that $A - qI$ has eigenvalues equal to those of $A$ plus $q$, and $(A - qI)^{-1}$ has eigenvalues equal to $1/(\lambda + q)$ for all eigenvalues $\lambda$ of $A$. Applying the power method to $(A-qI)^{-1}$ then produces the eigenvalue closest to $q$.
+\end{thm}
