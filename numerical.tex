@@ -196,7 +196,9 @@ Then the total error is
 
 \begin{thm}
     Positive definite $\iff$ $\forall k A_k$ is positive definite.
+
     Positive definite $\iff$ $\forall k \det A_k > 0$ \emph{and} $A$ is Hermitian.
+    
     Positive definite $\iff$ $A$ is Hermitian and Gaussian elimination can be performed without permutations.
 \end{thm}
 
@@ -609,6 +611,14 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
     Notice that $U_{ii}$ must be non-zero, or else $e_i$ would be linearly dependent on $e_j$'s for $j < i$, and so $U$ is invertible with inverse $R$ that must also be upper triangular. Since $Q$ must be unitary since its columns form an orthonormal basis, it follows that $A = QR$.
 \end{proof}
 
+\begin{rmk}
+    Let $A$ be a full-rank $n \times m$ matrix with $n \geq m$, then the $QR$ decomposition still exists. In this case, the Gram-Schimdt process produces a basis for a \emph{linear subspace} of $\C^n$ with dimension $m$.
+\end{rmk}
+
+\begin{rmk}
+    The $QR$ decomposition of $A$ produces the Cholesky factorization of $A^{*}A$, since $A^{*}A = (QR)^{*}QR = R^{*}Q^{*}QR = R^{*}R$.
+\end{rmk}
+
 \begin{thm}{Schur Normal Form}\proofbreak
     Let $A$ be an $n \times n$ matrix over $\C$. There exists a unitary $n \times n$ matrix $Q$ such that $Q^{*}AQ$ is upper triangular.
 \end{thm}
@@ -687,3 +697,39 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \begin{thm}{Inverse power method}\proofbreak
     Consider a diagonalizable matrix $A$, and $q \in \C$. Note that $A - qI$ has eigenvalues equal to those of $A$ plus $q$, and $(A - qI)^{-1}$ has eigenvalues equal to $1/(\lambda + q)$ for all eigenvalues $\lambda$ of $A$. Applying the power method to $(A-qI)^{-1}$ then produces the eigenvalue closest to $q$.
 \end{thm}
+
+\begin{thm}\label{eigen-deflation}
+    Let $A$ be a matrix with eigenvalue $\lambda_1$ with associated eigenvector $v_1$, and $x \in \C^n$ be any vector such that $\langle x, v_1 \rangle = 1$. The eigenvalues of the matrix
+    \begin{align*}
+        A - \lambda_1v_1x
+    \end{align*}
+    are $0, \lambda_2 - \lambda_1, \lambda_3 - \lambda_1, \ldots$, such that the associated eigenvectors satisfy
+    \begin{align*}
+        v_{i\geq 2} = (\lambda_i - \lambda_2)w_i + \lambda_1\langle x, w_i \rangle v_i.
+    \end{align*}
+\end{thm}
+
+\begin{defn}{Weilandt Deflation}\proofbreak
+    \begin{align*}
+        x = \frac{1}{\lambda_1v_1}\transposeof{\begin{bmatrix}
+            A_{i1} & A_{i2} & \cdots & A_{in}
+        \end{bmatrix}}.
+    \end{align*}
+    Since $\langle x, v_1 \rangle = 1$, we can use this $x$ for Theorem \ref{eigen-deflation}. In particular, this $x$ makes one column of $B$ into $\vec{0}$, and so $B$ can be ``deflated'' into an $(n-1) \times (n-1)$ matrix that is equivalent for the purposees of finding the remaining eigenvalues.
+\end{defn}
+
+\begin{defn}
+    Let $w \in \C^n$ such that $\norm{w}_2 = 1$. We define the \emph{Householder transformation} $H_w = I - 2ww^{*}$.
+\end{defn}
+
+\begin{thm}{Householder Method}\proofbreak
+    For all $w \in \C^n$ with $\norm{w}_2 = 1$, we have $H_w$ is both Hermitian and unitary (a \emph{reflection} matrix), so $H_w^2 = I$.
+\end{thm}
+
+\begin{proof}
+    First, notice that $H_w^{*} = I^* - 2(ww^{*})^{*} = I - 2ww^{*}$. Furthermore, $H_wH_w^{*} = (I - 2ww^{*})(I - 2ww^{*}) = I - 4ww^{*} + 4ww^*ww^{*}$. Notice that $w(w^{*}w)w^{*} = ww^{*}$, so $4ww^{*}ww^{*} - 4ww^{*} = 0$, and so $H_w^{-1} = H_w^{*}$.
+\end{proof}
+
+\begin{rmk}
+    Since $\norm{w}_2 = 1$, notice that $ww^{*}x$ gives the projection of $x$ onto $w$. Then $H_wx = x - 2ww^{*}x$ is the reflection of $x$ across the hyperplane $w^{\perp}$ (which has unit normal $w$)
+\end{rmk}
