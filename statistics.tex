@@ -338,7 +338,7 @@ Note that
     \end{align}
 \end{defn}
 
-\section{Paramnetric Estimation}
+\section{Parametric Estimation}
 
 \subsection{Method of Moments}
 
@@ -591,5 +591,61 @@ Consider the joint density $f(x_1,\ldots,x_n|\theta)$ of $X_1, \ldots, X_n$. If 
 \end{exmp}
 
 \begin{exmp}
-    Suppose $X_1, \ldots, X_n$ are independent and identically distributed normal $N(\mu, \sigma^2)$ random variables, where $\mu$ is unknown while $\sigma^2$ is known.
+    Suppose $X_1, \ldots, X_n$ are independent and identically distributed normal $N(\mu, \sigma^2)$ random variables, where $\mu$ is unknown while $\sigma^2$ is known. Furthermore, suppose the prior distribution of $\mu$ is $N(\mu_{pr}, \sigma_{pr}^2)$, where $\mu_{pr},\sigma_{pr}^{2}$ are known hyperparameters. Then the posterior distribution has PDF
+    \begin{align*}
+        f_{\mu|X}(\mu, X) = \frac{f(X|\mu,\sigma^2)f(\mu|\mu_{pr},\sigma_{pr}^2)}{\int f(X|\mu,\sigma^2)f(\mu|\mu_{pr},\sigma_{pr}^2)d\mu}.
+    \end{align*}
+    Note that
+    \begin{align*}
+        f_{\mu|X}(\mu|X) = \alpha(X)f(X|\mu,\sigma^2)f(\mu|\mu_{pr},\sigma_{pr}^2)
+    \end{align*}
+\end{exmp}
+
+\section{Hypothesis Testing}
+
+Let $X_1, \ldots, X_n$ be independent and identically distributed $f(x|\theta)$ random variables, where $\theta \in \R^k$, where $f(x|\theta)$ is known (up to the parameter). Suppose we want to evaluate two competing conjectures about this parameter.
+
+\begin{exmp}
+    Let $X_1, \ldots, X_n \distributed \textrm{exp}(\lambda)$ be independent and identically distributed random variables. Consider the conjectures $\lambda = \lambda_{0}$, and $\lambda > \lambda_{0}$.
+\end{exmp}
+
+Conjectures about the parameter of the distribution are known as \emph{parametric hypotheses}.
+
+We often wish to compare competing hypotheses or conjectures, which we call the \emph{null hypothesis} $H_0$ and alternative hypothesis $H_a$ or $H_1$, where $H_0$ is $\theta \in \Theta_0$ and $H_a$ is $\theta \in \Theta_a$ such that $\Theta_0 \intersection \Theta_a = \emptyset$.
+
+We say a hypothesis is \emph{simple} if it completely specificies the distribution. If a hypothesis is not simple, we say it is \emph{composite}.
+
+\begin{defn}
+    A \emph{decision rule} is a function $d: X \to \{0, 1\}$, where $d(X_1, \ldots, X_n) = 1$ indicates we should \emph{reject} the null hypothesis, and $d(X_1, \ldots, X_n)$ indicates we \emph{fail to reject} the null hypothesis.
+\end{defn}
+
+\begin{defn}
+    Consider a decision rule $d$, which can fail in two distinct ways.
+    \begin{itemize}
+        \item A \emph{Type I error} is rejecting $H_0$ when it is true.
+        \item A \emph{Type II error} is failing to reject $H_0$ when it is false.
+    \end{itemize}
+\end{defn}
+
+\begin{exmp}
+    Consider $H_0: \theta \in \Theta_0$ and $H_a: \theta \in \Theta_A$ where $\Theta_0 \intersection \Theta_a = \emptyset$ and $\Theta_0 \union \Theta_a = \Theta$. The probability of a type I error for a decision rule $d$ given data $X_1, \ldots, X_n$ is
+    \begin{align*}
+        P\left[d(X_1, \ldots, X_n) = 1 | \Theta_0\right].
+    \end{align*}
+    Since $\Theta_0$ and $\Theta_a$ are mutually exclusive and exhaustive, the probability of a type II error is
+    \begin{align*}
+        P\left[d(X_1, \ldots, X_n) = 0|H_a\right].
+    \end{align*}
+\end{exmp}
+
+\begin{defn}
+    Consider a decision rule $d$. The \emph{power} is the probability of rejecting $H_0$ given that $H_0$ is indeed false. If $d$ satisfies $P\left[d(X_1, \ldots, X_n)=1|H_0\right] \leq \alpha$ --- that is, the probability of a type I error is at most $\alpha$, we say $d$ is an \emph{at-most level $\alpha$} decision rule.
+\end{defn}
+
+\begin{exmp}
+    Consider $H_0: \theta \in \Theta_0$, where $H_a: \theta \in \Theta_a$, and $\Theta_0 \union T_a = \Theta$ are both \emph{simple} hypotheses. Consider the \emph{likelihood ratio}
+    \begin{align*}
+        \frac{f(x_1, \ldots, x_n|H_0)}{f(x_1, \ldots, x_n|H_a)},
+    \end{align*}
+    and a chosen constant $c$.
 \end{exmp}
