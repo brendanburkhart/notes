@@ -1460,3 +1460,31 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
 
     The \emph{discrete logarithm} in base $b$ mod $p$, where $b$ is a primitive root mod $p$, is $f^{-1}$.
 \end{defn}
+
+\begin{thm}
+    Let $p$ and $q$ be prime numbers such that $q = 2p + 1$, and $a \in \Z_q$ is one of $0, 1, -1$ mod $q$. Then $a$ is a primitive root mod $q$ if and only if $a^{p} = 1 \bmod q$.
+\end{thm}
+
+\begin{proof}
+    Note that $\varphi(q) = 2p$, and so by Lagrange's theorem the order of $a$ is one of $1$, $2$, $p$, or $2p$. If the order of $a$ was $1$, then we would have $a = 1 \bmod q$. If the order of $a$ was two, $a$ would be a square root of $1$ mod $q$, which can only of $\pm 1$ so $a = -1 \bmod q$. If the order of $a$ was $p$, we would have $a^{p} = -1 \neq 1 \bmod q$. Therefore, the order of $a$ is $2p$, and so $a$ is a primitive root mod $q$.
+
+    If $a$ is a primitive root mod $q$, then since $a^{2p} = 1 \bmod q$, it follows that $a^{p} = \pm 1$, but $a^{p} \neq 1 \bmod q$ since the order of $a$ is not $p$. Therefore, $a^{p} = -1 \bmod q$.
+\end{proof}
+
+\begin{defn}
+    An odd positive composite integer $n$ is a \emph{Carmichael number} when $a^{n-1} = 1 \bmod n$ for all $a \in \Z_{n^*}$.
+\end{defn}
+
+\begin{thm}{Miller-Rabin theorem}\proofbreak
+    Let $p$ be a prime number, and let $s$ and $b$ such that $p - 1 = 2^{s}b$ where $b$ is odd. For any $a \in \Z_{p^*}$, consider $\mu_0 = a^{b} \bmod p$ and $\mu_i = \mu_{i-1}^{s}$ for $1 \leq i \leq s$. Exactly one of the following are true: $\mu_0 = 1 \bmod p$ or $\mu_i = -1 \bmod p$ for some $0 \leq i \leq s-1$.
+\end{thm}
+
+\begin{defn}
+    If $n \geq 3$ is an odd composite integer, any $a \in \{1, \ldots, n-1\}$ chosen uniformly at random has probability at most $1/4$ of fooling the Miller-Rabin test.
+\end{defn}
+
+\begin{defn}{Exponent Factorization}\proofbreak
+    Consider odd $n$, $a \in \Z_n$, and $k > 0$ such that $a^{k} = 1 \bmod n$. Then express $k$ as $2^{s}b$ by successively dividing $k$ by $2$, which takes on the order of $\log(k)$ oeprations. Now let $\mu_0 = a^{b} \mod n$, and successively compute $\mu_{i+1} = \mu_i^2 \bmod n$. We know that $\mu_s = a^{k} = 1 \bmod n$.
+
+    Let $i$ be the smallest index such that $\mu_i = 1 \bmod n$. If $i > 0$, and $\mu_{i-1} \neq -1 \bmod n$, then $\gcdof{\mu_{i-1}-1}{n}$ must be a non-trivial factor of $n$, which we have found efficiently.
+\end{defn}
