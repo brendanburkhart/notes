@@ -649,3 +649,53 @@ We say a hypothesis is \emph{simple} if it completely specificies the distributi
     \end{align*}
     and a chosen constant $c$.
 \end{exmp}
+
+\begin{lemma}{Neyman-Pearson}\label{neyman-pearson}\proofbreak
+    Let $X_1, \ldots, X_N \distributed f(x|\theta)$ be independent and identically distributed random variables, and let $H_0$ and $H_A$ be simply hypotheses. If $d$ is an $\alpha$-level likelihood ratio test, and $d^{*}$ is \emph{any other} decision rule with significant at most $\alpha$, then the power of $d$ is at least the power of $d^{*}$. That is, $d$ is the most powerful $\alpha$-level decision rule.
+\end{lemma}
+
+\begin{proof}
+    First, $d(x_1, \ldots, x_n) = 0$ if and only if
+    \begin{align*}
+        \frac{f(x_1, \ldots, x_n|H_0)}{f(x_1, \ldots, x_n|H_A)} \geq c,
+    \end{align*}
+    so $d(x_1, \ldots, x_n) = 0$ if and only if
+    \begin{align*}
+        Q(x_1, \ldots, x_n) = cf(x_1, \ldots, x_n|H_A) - f(x_1, \ldots, x_n|H_0) \leq 0.
+    \end{align*}
+
+    We will use this to prove that for any $x_1, \ldots, x_n$ and any decision rule $d^{*}$ (not necessarily with significance at most $\alpha$):
+    \begin{equation}\tag{$\star$}\label{neyman-pearson-inequality}
+        d^{*}(x_1, \ldots, x_n)Q(x_1, \ldots, x_n) \leq d^{*}(x_1, \ldots, x_n)Q(x_1, \ldots, x_n).
+    \end{equation}
+
+    Consider this by cases. In the case that $d*(x_1, \ldots, x_n) = 0$ and $d(x_1, \ldots, x_n) = 0$, the inequality is trivially true. In the case that $d*(x_1, \ldots, x_n) = 1$ and $d(x_1, \ldots, x_n) = 0$, we have $Q(x_1, \ldots, x_n) \leq 0$ by the above, and so
+    \begin{align*}
+        d^{*}(x_1, \ldots, x_n)Q(x_1, \ldots, x_n) &= Q(x_1, \ldots, x_n) \leq 0 = d(x_1, \ldots, x_n)d^{*}(x_1, \ldots, x_n)Q(x_1, \ldots, x_n).
+    \end{align*}
+
+    In the case that $d(x_1, \ldots, x_n) = 1$, we know $Q(x_1, \ldots, x_n|H_0) > 0$. Therefore, if $d^{*}(x_1, \ldots, x_n) = 0$ is once again trivial. If $d^{*}(x_1, \ldots, x_n) = 1$, then we have equality, which does satisfy our non-strict inequality.
+
+    We can now integrate the inequality \ref{neyman-pearson-inequality}, so
+    \begin{align*}
+        \int d^{*}(x_1, \ldots, x_n)dx_1\cdots dx_n \leq \int d(x_1, \ldots, x_n)dx_1\cdots dx_n,
+    \end{align*}
+    and so
+    \begin{align*}
+        &\int d^{*}(x_1, \ldots, x_n)cf(x_1, \ldots, x_n|H_A)d_1\cdots dx_n - \int d^{*}(x_1, \ldots, x_n)f(x_1, \ldots, x_n|H_0)d_1\cdots dx_n \\
+        &= \int d(x_1, \ldots, x_n)cf(x_1, \ldots, x_n|H_A)d_1\cdots dx_n - \int d(x_1, \ldots, x_n)f(x_1, \ldots, x_n|H_0)d_1\cdots dx_n.
+    \end{align*}
+    Notice this is equivalent to
+    \begin{align*}
+        \expectationof{cd^{*}|H_A} - \expectationof{d^{*}|H_0} \leq \expectationof{cd|H_A} - \expectationof{d|H_0},
+    \end{align*}
+    which in turn is
+    \begin{align*}
+        \expectationof{d|H_0}  - \expectationof{d^{*}|H_0} \leq c\expectationof{cd|H_A} - c\expectationof{d^{*}|H_A}.
+    \end{align*}
+    Let $\alpha$ be the significant of $d$ and $\alpha^{*}$ be the significance of $d^{*}$, and similarly for the powers $1 - \beta$ and $1 - \beta^{*}$. Then our inequality of expectatations state that
+    \begin{align*}
+        \alpha - \alpha^{*} \leq c(1 - \beta) - c(1 - \beta^{*}).
+    \end{align*}
+    Finally, we conclude that since $c > 0$, as long as we have $\alpha^{*} \leq \alpha$, we must also have $1 - \beta^{*} \leq 1 - \beta$.
+\end{proof}
