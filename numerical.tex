@@ -695,7 +695,7 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \end{thm}
 
 \begin{thm}{Inverse power method}\proofbreak
-    Consider a diagonalizable matrix $A$, and $q \in \C$. Note that $A - qI$ has eigenvalues equal to those of $A$ plus $q$, and $(A - qI)^{-1}$ has eigenvalues equal to $1/(\lambda + q)$ for all eigenvalues $\lambda$ of $A$. Applying the power method to $(A-qI)^{-1}$ then produces the eigenvalue closest to $q$.
+    Consider a diagonalizable matrix $A$, and $q \in \C$. Note that $A - qI$ has eigenvalues equal to those of $A$ plus $q$, and $(A - qI)^{-1}$ has eigenvalues equal to $1/(\lambda - q)$ for all eigenvalues $\lambda$ of $A$. Applying the power method to $(A-qI)^{-1}$ then produces $\mu$ such that $1/\mu + q$ is the eigenvalue of $A$ closest to $q$.
 \end{thm}
 
 \begin{thm}\label{eigen-deflation}
@@ -722,9 +722,9 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
     Let $w \in \C^n$ such that $\norm{w}_2 = 1$. We define the \emph{Householder transformation} $H_w = I - 2ww^{*}$.
 \end{defn}
 
-\begin{thm}{Householder Method}\proofbreak
+\begin{lemma}\label{householder-transformation}\proofbreak
     For all $w \in \C^n$ with $\norm{w}_2 = 1$, we have $H_w$ is both Hermitian and unitary (a \emph{reflection} matrix), so $H_w^2 = I$.
-\end{thm}
+\end{lemma}
 
 \begin{proof}
     First, notice that $H_w^{*} = I^* - 2(ww^{*})^{*} = I - 2ww^{*}$. Furthermore, $H_wH_w^{*} = (I - 2ww^{*})(I - 2ww^{*}) = I - 4ww^{*} + 4ww^*ww^{*}$. Notice that $w(w^{*}w)w^{*} = ww^{*}$, so $4ww^{*}ww^{*} - 4ww^{*} = 0$, and so $H_w^{-1} = H_w^{*}$.
@@ -733,3 +733,25 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \begin{rmk}
     Since $\norm{w}_2 = 1$, notice that $ww^{*}x$ gives the projection of $x$ onto $w$. Then $H_wx = x - 2ww^{*}x$ is the reflection of $x$ across the hyperplane $w^{\perp}$ (which has unit normal $w$)
 \end{rmk}
+
+\begin{lemma}
+    Let $x \in \C^n$. Therefore exists $v \in \C^n$ such that $\norm{v} = 1$
+    \begin{align*}
+        H_vx = \begin{matrix}
+            \alpha \\ 0 \\ \vdots \\ 0
+        \end{matrix}
+    \end{align*}
+    for some $\alpha \in \R$.
+\end{lemma}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{thm}{Householder Method}\proofbreak
+    Define sequence of Householder transformations $H_i = I_n - 2w_iw_i^{*}$, then
+    \begin{align*}
+        H_nH_{n-1}\cdots H_1A = R.
+    \end{align*}
+    Since $H_i$ is unitary by Lemma \ref{householder-transformation}, it follows that $Q = H_nH_{n-1}\cdots H_1$ is unitary, and so $A = Q^{*}R$ is the $QR$ decomposition of $A$.
+\end{thm}

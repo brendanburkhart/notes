@@ -1476,7 +1476,7 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
 \end{defn}
 
 \begin{thm}{Miller-Rabin theorem}\proofbreak
-    Let $p$ be a prime number, and let $s$ and $b$ such that $p - 1 = 2^{s}b$ where $b$ is odd. For any $a \in \Z_{p^*}$, consider $\mu_0 = a^{b} \bmod p$ and $\mu_i = \mu_{i-1}^{s}$ for $1 \leq i \leq s$. Exactly one of the following are true: $\mu_0 = 1 \bmod p$ or $\mu_i = -1 \bmod p$ for some $0 \leq i \leq s-1$.
+    Let $p$ be a prime number, and let $s$ and $b$ such that $p - 1 = 2^{s}b$ where $b$ is odd. For any $a \in \Z_{p^*}$, consider $\mu_0 = a^{b} \bmod p$ and $\mu_i = \mu_{i-1}^{2}$ for $1 \leq i \leq s$. Exactly one of the following are true: $\mu_0 = 1 \bmod p$ or $\mu_i = -1 \bmod p$ for some $0 \leq i \leq s-1$.
 \end{thm}
 
 \begin{defn}
