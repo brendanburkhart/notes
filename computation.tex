@@ -125,7 +125,11 @@
 \end{prop}
 
 \begin{proof}
-    Let $M = (Q, \Sigma, \delta, s_0, F)$ be a finite automaton that recognizes $A$, and define $M' = (Q, \Sigma, \delta, s_0, Q \setminus F)$. For any $w \in \Sigma^{*}$, we can see that $M$ and $M'$ reach the same final state, let this be $s_f$. Since $s_f \in F$ if and only if $s_f \in Q \setminus F$, it follows that $M'$ accepts $w$ if and only if $M$ \emph{does not}, therefore the regular language that $M'$ recognizes is precisely $\complementof{A}$.
+    Let $M = (Q, \Sigma, \delta, s_0, F)$ be a finite automaton that recognizes $A$, and define
+    \begin{align*}
+        M' = (Q, \Sigma, \delta, s_0, Q \setminus F).
+    \end{align*}
+    For any $w \in \Sigma^{*}$, we can see that $M$ and $M'$ reach the same final state, let this be $s_f$. Since $s_f \in F$ if and only if $s_f \in Q \setminus F$, it follows that $M'$ accepts $w$ if and only if $M$ \emph{does not}, therefore the regular language that $M'$ recognizes is precisely $\complementof{A}$.
 \end{proof}
 
 \begin{thm}\label{regular-language-union-intersection}
@@ -794,7 +798,7 @@ where we start with a single $A$ and expand it using one of the two rules. By va
         \item $q_{\textrm{reject}}$ is the reject state.
     \end{itemize}
 
-    A $k$-tape Turing machine $M$ has $k$ \emph{tapes} --- arrays extending infinitely to the right, with each array element being a symbol from the tape alphabet. Each tape is initially filled with $\tapeblank$'s, except for the first tape which first has the entire input. The Turing machine also has a \emph{control} automaton which starts in state $q_0$, and let $q$ be the current state of this automaton. At a given step, $M$ has a \emph{head position} for each step, where $t_i$ will denote the symbol at the head position for the $k$th tape. At each step of a computation, the Turing machine transitions according to $\delta(q, (t_1, t_2, \ldots, t_k)) = (q', (t_1', t_2', \ldots, t_k'), (s_1, s_2, \ldots, s_k))$. The state of the control automaton moves from $q$ to $q'$, the symbol at the head position of each tape is changed from $t_i$ to $t_i'$, and then the head position for the $i$th tape is moved to the left if $s_i = L$ (and the head position isn't already at the start), doesn't change if $s_i = S$, and moves to the right if $s_i = R$. This process is repeated until either $q = q_{\textrm{accept}}$ or $q = q_{\textrm{reject}}$, in which case computation halts and the input is either accepted or rejected accordingly. Note that unlike the earlier automata we examined, the number of steps a Turing machine uses in a computation is not necessarily equal to the length of the input, and furthermore there is no guarantee a Turing machine will ever reach the accept or reject states.
+    A $k$-tape Turing machine $M$ has $k$ \emph{tapes} --- arrays extending infinitely to the right, with each array element being a symbol from the tape alphabet. Each tape is initially filled with \tapeblank's, except for the first tape which first has the entire input. The Turing machine also has a \emph{control} automaton which starts in state $q_0$, and let $q$ be the current state of this automaton. At a given step, $M$ has a \emph{head position} for each step, where $t_i$ will denote the symbol at the head position for the $k$th tape. At each step of a computation, the Turing machine transitions according to $\delta(q, (t_1, t_2, \ldots, t_k)) = (q', (t_1', t_2', \ldots, t_k'), (s_1, s_2, \ldots, s_k))$. The state of the control automaton moves from $q$ to $q'$, the symbol at the head position of each tape is changed from $t_i$ to $t_i'$, and then the head position for the $i$th tape is moved to the left if $s_i = L$ (and the head position isn't already at the start), doesn't change if $s_i = S$, and moves to the right if $s_i = R$. This process is repeated until either $q = q_{\textrm{accept}}$ or $q = q_{\textrm{reject}}$, in which case computation halts and the input is either accepted or rejected accordingly. Note that unlike the earlier automata we examined, the number of steps a Turing machine uses in a computation is not necessarily equal to the length of the input, and furthermore there is no guarantee a Turing machine will ever reach the accept or reject states.
 \end{defn}
 
 \begin{defn}
@@ -834,5 +838,70 @@ where we start with a single $A$ and expand it using one of the two rules. By va
 \begin{proof}
     We will simulate $k$-tapes on a single tape by interleaving the symbols from the tapes --- that is, if a symbol would have been stored in the $i$th position on the $j$th tape, on the single tape it will be stored at position $ki + j$, where both $i$ and $j$ are zero-indexed. In order to keep track of the $k$ ``head positions'' of our $1$-tape machine, we introduce a new symbol $\hat{s}$ for every $s \in \Gamma$, which essentially means that one of the $k$ simulated heads is at that position, and the simulated symbol is $s$ (we can figure out \emph{which} head it is from the interleaving pattern).
 
-    For each simulated step, the simulating machine scans the entire tape to determine what symbol each simulated head is currently reading. Once it reaches a $\tapeblank$ and is at the end of the tape, it goes back, updating the symbols and the simulated positions according to the transition function of the simulated machine as it goes by. Since the original machine uses at most $f(n)$ length of tape on each tape ``track'', it follows that this simulated update takes at most $2f(n) + ck$, where $c$ is the number of steps required to perform the update for each simulated head. Therefore, the simulating machine runs in $(2f(n) +ck)f(n)$ time, and so has runtime of order $f(n)^2$.
+    For each simulated step, the simulating machine scans the entire tape to determine what symbol each simulated head is currently reading. Once it reaches a \tapeblank and is at the end of the tape, it goes back, updating the symbols and the simulated positions according to the transition function of the simulated machine as it goes by. Since the original machine uses at most $f(n)$ length of tape on each tape ``track'', it follows that this simulated update takes at most $2f(n) + ck$, where $c$ is the number of steps required to perform the update for each simulated head. Therefore, the simulating machine runs in $(2f(n) +ck)f(n)$ time, and so has runtime of order $f(n)^2$.
 \end{proof}
+
+\begin{thm}
+    There exists a universal Turing machine $U$ such that foor all $x, \alpha \in \{0, 1\}^{*}$, $U(x, \alpha) = M_{\alpha}(x)$, where $\alpha$ is a binary representation of the Turing machine $M_{\alpha}$. Furthermore, if $M_{\alpha}$ halts on input $x$ within $T$ steps, then $U(x, \alpha)$ halts within $C_{\alpha}T^2$ steps for some $C_{\alpha} \in \N$.
+\end{thm}
+
+\begin{proof}
+    This will only be a sketch of a proof, to avoid specifying the exact encoding used and all the related minutiae. Let $M_{\alpha}$ be a $k$-tape Turing machine, and consider $U$, the $5$-tape machine depicted in Figure \ref{fig:universal-turing-machine}. To simulate one of $M_{\alpha}$, we perform the following:
+    \begin{itemize}
+        \item Get the current symbol and state of $M_{\alpha}$,
+        \item Scan the representation of $M_{\alpha}$ to get corresponding transition rule,
+        \item Apply the transition rule,
+        \item Update symbol head poistions.
+    \end{itemize}
+
+    \begin{figure}[ht!]
+        \centering
+        \begin{tikzpicture}
+            \node[rectangle, draw, minimum width=8cm, minimum height=0.5 cm] (t1) at (0, 3.2) {Input tape};
+            \node[rectangle, draw, minimum width=8cm, minimum height=0.5 cm] (t2) at (0, 2.4) {Simulation working tape};
+            \node[rectangle, draw, minimum width=8cm, minimum height=0.5 cm] (t3) at (0, 1.6) {Rpresentation of $M_{\alpha}$};
+            \node[rectangle, draw, minimum width=8cm, minimum height=0.5 cm] (t4) at (0, 0.8) {Current state of $M_{\alpha}$};
+            \node[rectangle, draw, minimum width=8cm, minimum height=0.5 cm] (t5) at (0, 0.0) {Output tape};
+
+            \draw[decorate, decoration={brace, raise=5pt, amplitude=8pt}] (-4, 0.55) -- (-4, 2.65) node[pos=0.5, left=16pt] {Working tapes};
+        \end{tikzpicture}
+        \caption{Universal Turing Machine}
+        \label{fig:universal-turing-machine}
+    \end{figure}
+\end{proof}
+
+\begin{rmk}
+    In fact, the time bound can be improved using a more complicated encoding $\alpha$, such that if $M_{\alpha}$ halts on input $x$ within $T$ steps, then $U(x, \alpha)$ halts within $C_{\alpha}T\ln(T)$ steps for some $C_{\alpha} \in \N$.
+\end{rmk}
+
+\begin{thm}
+    There exists a language that is not Turing recognizable.
+\end{thm}
+
+\begin{proof}
+    Let $A$ be the set of all Turing machines, and let $L$ be the set of all languages. Since we can encode any Turing machine as a finite binary string, we can construct a bijection between the countably infinite set of finite binary strings, and $A$. Therefore $A$ is countable.
+
+    Now, we prove that $L$ is uncountable. Consider the set $F$ of all functions from $\{0, 1\}^{*} \to \{0, 1\}$. We know that there is a bijection between $F$ and $L$, since any language can be uniquely represented as $f \in F$ such that for any finite binary string $w$, $f(w) = 1$ if and only if $w \in L$. Additionally, there is a bijection between $F$ and $[0, 1] \subset \R$. This is given by $f \in F \mapsto 0.f(w_0)f(w_1)\cdots f(w_n)\cdots \in [0, 1]$, where $w_0 = \emptystring$, $w_1 = 0$, $w_2 = 1$, $w_3 = 00$, etcetera. If $f_1 \mapsto r$ and $f_2 \mapsto r$, then $f_1(w) = f_2(w)$ for all finite binary strings $w$, and so $f_1 = f_2$. Furthermore, for any number $r \in [0, 1]$ we can explicitly construct $f$ from $r$. The necessary bijection between $[0, 1]$ and the set $T$ of all infinite binary strings, as well as the uncountability of $[0, 1]$ follows from Cantor's Diagonal Argument \ref{reals-uncountable}. We can then compose the bijections between $L$ and $F$, $F$ and $T$, and $T$ and $[0, 1]$ to obtain a bijection between $L$ and $[0, 1]$. Since $[0, 1]$ is uncountable, it follows that $L$ is as well.
+
+    For any Turing machine $M \in A$, consider the language of all strings it recognizes. Since $A$ is countable but $L$ is not, this mapping cannot be surjective and so there exists a language that is not recognized by any Turing machine.
+\end{proof}
+
+\begin{defn}
+    Consider languages $A$ and $B$. A \emph{mapping reduction} from $A$ to $B$ is a computable function $f: \Sigma^{*} \to \Sigma^{*}$ such that for any $w \in \Sigma^{*}$, $w \in A \iff f(w) \in B$. If a mapping reduction exists, we write $A \leq_{m} B$ and say that $A$ is \emph{reducible} to $B$.
+\end{defn}
+
+\begin{thm}
+    Consider languages $A$ and $B$ such that $A \leq_m B$.
+    \begin{itemize}
+        \item If $A$ is undecidable, then $B$ is undecidable.
+        \item $A$ is decidable if and only if $A$ and $\overline{A}$ are both Turing-recognizable.
+    \end{itemize}
+\end{thm}
+
+\begin{exmp}
+    Consider
+    \begin{align*}
+        A_{\textrm{TM}} &= \left\{\langle M, \alpha \rangle : \alpha \in L(M)\right\}, \\
+        E_{\textrm{TM}} &= \left\{\langle M \rangle : M \textrm{ is a Turing machine, and } L(M) = \emptyset\right\}.
+    \end{align*}
+\end{exmp}

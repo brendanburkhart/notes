@@ -3,4 +3,8 @@
 \newcommand{\yields}{\Rightarrow}
 \newcommand{\derives}{\Rightarrow^{*}}
 
-\newcommand{\tapeblank}{\textvisiblespace}
+\newcommand{\tapeblank}{%
+    \mbox{\kern.1em\vrule height.5ex}%
+    \vbox{\hrule width.5em}%
+    \hbox{\vrule height.5ex}
+}
