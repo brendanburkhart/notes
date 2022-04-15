@@ -337,9 +337,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     \end{itemize}
 \end{prop}
 
-\begin{thm}
-    Cantor's Theorem
-
+\begin{thm}{Cantor's Theorem}\label{cantors-theorem}
     Let $A$ be a set, and let $f: A \to 2^A$. Then $f$ cannot be onto.
 \end{thm}
 
@@ -347,6 +345,45 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
     Let $B = \left\{x \in A \compbar x \notin f(x) \right\} \in 2^A$. For the sake of contradiction, assume that $f$ is onto, and so there must exist some $a \in A$ such that $f(a) = B$. We also know that either $a \in B$ or $a \notin B$.
 
     If $a \in B$, then by the construction of $B$ we have $a \notin f(a)$. However, $f(a) = B$, so this is a contradiction. Similarly, $a \notin B$ must imply $a \in f(a)$.
+\end{proof}
+
+\begin{defn}
+    We say that a set $S$ is \emph{countable} if there exists a bijection between $S$ and some $A$ where either $A = \N$ or $A = \{0, 1, 2, 3, 4, \ldots, N\} \subseteq \N$ for some $N \in \N$. In the first case, we say that $S$ is \emph{countably infinite}, otherwise we say that $S$ is \emph{finite}. If no such bijection exists, then we say that $S$ is \emph{uncountable} or \emph{uncountably infinite}.
+\end{defn}
+
+\begin{thm}{Countability of $\Q$}\label{rationals-countable}\proofbreak
+    The rational numbers $\Q$ are countable infinite.
+\end{thm}
+
+\begin{proof}
+    We know that we can represent every $q \in Q$ as $q = a/b$ such that $a \in \Z$ and $b \in \N^{+}$, and $a$ and $b$ have no factors in common. Consider the following function $f: \Q^{\geq 0} \to \N$:
+    \begin{itemize}
+        \item $f(0/1) = 0$,
+        \item $f(1/1) = 1$,
+        \item $f(1/2) = 2$,
+        \item $f(1/3) = 3$,
+        \item $f(2/3) = 4$,
+        \item $...$
+        \item $f(a/b) = f((a-1)/b) + 1$ if $a > 1$, otherwise $f(a/b) = f((b-2)/(b-1)) + 1$.
+    \end{itemize}
+
+    Since $a-1 < a$ and $b-1 < b$, it follows we have a prodecure for computing $f(a/b)$ based solvely on $f(c/d)$ such that $d < b$ or $d = b$ and $a < c$, so this function is well-defined. Since we can invert the above function, it is a bijection from the non-negative rationals onto $\N$. Now consider $g: \Q \to \N$ where $g(q) = 2f(q)$ if $q \geq 0$ else $g(q) = 2(q) - 1$, which is a bijection between $Q$ and $\N$.
+\end{proof}
+
+\begin{lemma}\label{diagonal-construction}\proofbreak
+    Let $T$ be the set of all binary strings. For any enumeration $s_1, \ldots, s_n, \ldots \in T$, there exists a binary string in $T$ that is not in $s_i$.
+\end{lemma}
+
+\begin{proof}
+    Consider the infinite binary string $w$ defined by $w_i = 1 - (s_i)_i$ --- that is, it differs at the $i$th index from the same position of the $i$th string $s_i$. Therefore, for any $s_i$ we know that $w \neq s_i$ and so $w$ is not contained in the enumeration.
+\end{proof}
+
+\begin{thm}{Uncountability of $\R$, Cantor's Diagonal Argument}\label{reals-uncountable}\proofbreak
+    The real numbers $\R$ are uncountable.
+\end{thm}
+
+\begin{proof}
+    We can construct a bijection $b$ between $\R$ and the set of all infinite binary strings. Assume, for the sake of contradiction, that $\R$ is countable, so there exists a bijection $f$ between $\R$ and $\N$. Consider the enumerator of binary strings given by $s_{i} = b(f^{-1}(i))$, where $b(f^{-1}(i))$ is the binary string representing the real number that is in bijection with $i$. By Lemma \ref{diagonal-construction}, we know there exists a binary string $w$ such that $w \neq s_i$ for all $i$. However $f(b^{-1}(w)) = i$ for some $i \in \N$, and so $s_i = w$. This is a contradiction, and so no bijection between $\R$ and $\N$ exists. Furthermore, no \emph{injection} exists since $\Q \subsetneq \R$, and so no bijection between $\R$ and any subset of $\N$ exists. Therefore, the real numbers must be \emph{uncountably} infinite.
 \end{proof}
 
 \section{Graph Theory}
