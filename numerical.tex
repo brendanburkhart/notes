@@ -339,7 +339,7 @@ Then the total error is
 \end{prop}
 
 \begin{prop}
-    The relative error in an approximate solution $\tilde{x}$ can be founded by
+    The relative error in an approximate solution $\tilde{x}$ can be bounded by
     \begin{align*}
         \frac{\norm{e}}{\norm{x_0}} \leq \kappa(A)\frac{\norm{r}}{\norm{b}}.
     \end{align*}
@@ -353,13 +353,13 @@ Then the total error is
 \end{proof}
 
 \begin{defn}
-    Consider a matrix $A$. The \emph{singular values} of $A$, denoted by $\sigma(A)$, are the eigenvalues of $A^{*}A$.
+    Consider a matrix $A$. The \emph{singular values} of $A$, denoted by $\sigma(A)$, are the square roots of the positive eigenvalues of $A^{*}A$.
 \end{defn}
 
 \begin{rmk}
     We know that $\norm{A}_2 = \sqrt{\rho(A^{*}A)}$, in which case $\kappa(A)$ is
     \begin{align*}
-        \frac{\max_{\lambda \in \sigma(A)}\abs{\lambda}}{\min_{\lambda \in \sigma(A)}\abs{\lambda}}.
+        \frac{\max_{s \in \sigma(A)}s}{\min_{s \in \sigma(A)}s}.
     \end{align*}
 \end{rmk}
 
@@ -591,7 +591,7 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \section{Matrix Normal Forms}
 
 \begin{thm}
-    Let $A$ be an invertible $n \times n$ matrix over $\C$. There exista a unitary $n \times n$ matrix $Q$ and an upper triangular $n \times n$ matrix $R$ such that $A = QR$.
+    Let $A$ be an invertible $n \times n$ matrix over $\C$. There exists a unitary $n \times n$ matrix $Q$ and an upper triangular $n \times n$ matrix $R$ such that $A = QR$.
 \end{thm}
 
 \begin{proof}
@@ -701,7 +701,7 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \begin{thm}\label{eigen-deflation}
     Let $A$ be a matrix with eigenvalue $\lambda_1$ with associated eigenvector $v_1$, and $x \in \C^n$ be any vector such that $\langle x, v_1 \rangle = 1$. The eigenvalues of the matrix
     \begin{align*}
-        A - \lambda_1v_1x
+        A - \lambda_1v_1x^{*}
     \end{align*}
     are $0, \lambda_2 - \lambda_1, \lambda_3 - \lambda_1, \ldots$, such that the associated eigenvectors satisfy
     \begin{align*}
@@ -709,13 +709,13 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
     \end{align*}
 \end{thm}
 
-\begin{defn}{Weilandt Deflation}\proofbreak
+\begin{defn}{Wielandt Deflation}\proofbreak
     \begin{align*}
-        x = \frac{1}{\lambda_1v_1}\transposeof{\begin{bmatrix}
+        x = \frac{1}{\lambda_1(v_1)_{i}}\transposeof{\begin{bmatrix}
             A_{i1} & A_{i2} & \cdots & A_{in}
         \end{bmatrix}}.
     \end{align*}
-    Since $\langle x, v_1 \rangle = 1$, we can use this $x$ for Theorem \ref{eigen-deflation}. In particular, this $x$ makes one column of $B$ into $\vec{0}$, and so $B$ can be ``deflated'' into an $(n-1) \times (n-1)$ matrix that is equivalent for the purposees of finding the remaining eigenvalues.
+    Since $\langle x, v_1 \rangle = 1$, we can use this $x$ for Theorem \ref{eigen-deflation}. In particular, this $x$ makes the $i$th column of $B$ into $\vec{0}$, and so $B$ can be ``deflated'' into an $(n-1) \times (n-1)$ matrix that is equivalent for the purposees of finding the remaining eigenvalues.
 \end{defn}
 
 \begin{defn}
@@ -731,27 +731,170 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \end{proof}
 
 \begin{rmk}
-    Since $\norm{w}_2 = 1$, notice that $ww^{*}x$ gives the projection of $x$ onto $w$. Then $H_wx = x - 2ww^{*}x$ is the reflection of $x$ across the hyperplane $w^{\perp}$ (which has unit normal $w$)
+    Since $\norm{w}_2 = 1$, notice that $ww^{*}x$ gives the projection of $x$ onto $w$. Then $H_wx = x - 2ww^{*}x$ is the reflection of $x$ across the hyperplane $w^{\perp}$ (which has unit normal $w$).
 \end{rmk}
 
-\begin{lemma}
-    Let $x \in \C^n$. Therefore exists $v \in \C^n$ such that $\norm{v} = 1$
+\begin{lemma}\label{householder-elimination}
+    Let $x \in \C^n$. There exists $v \in \C^n$ such that $\norm{v}_2 = 1$ and
     \begin{align*}
-        H_vx = \begin{matrix}
+        H_vx = \begin{pmatrix}
             \alpha \\ 0 \\ \vdots \\ 0
-        \end{matrix}
+        \end{pmatrix}
     \end{align*}
-    for some $\alpha \in \R$.
+    for some $\alpha \in \C$.
 \end{lemma}
 
 \begin{proof}
-    
+    Since $H_v$ must be unitary, we necessarily have $\abs{\alpha} = \norm{x}_2$. Let $p = \langle v, x \rangle$, then it follows that
+    \begin{align*}
+        H_vx = x - 2pv = \alpha\transposeof{(1, 0, \ldots, 0)}.
+    \end{align*}
+    Since $\norm{v}_2 = 1$, taking the standard complex inner product by $v$ on the left we obtain
+    \begin{align*}
+        p - 2p = \alpha\overline{v_1},
+    \end{align*}
+    and so we necessarily have $p = -\alpha\overline{v_1}$.
+
+    Since $x_1 - 2pv_1 = \alpha$, we have $v_1 = \frac{x_1 - \alpha}{2p}$. Then $x_1\alpha - 2pv_1\alpha$ is $x_1\alpha + 2\alpha\overline{v_1}v_1\alpha = x_1\alpha + 2\abs{p}^2$, which must equal $\alpha^2$, and so $\alpha^2 - \alpha x_1 = 2\abs{p}^2$. Therefore,
+    \begin{align*}
+        \abs{p} &= \sqrt{\frac{\alpha^2 - \alpha x_1}{2}}.
+    \end{align*}
+
+    Finally, $x_i - 2pv_i = 0$ implies that $v_i = \frac{x_i}{2p}$ for all $i > 1$.
 \end{proof}
 
 \begin{thm}{Householder Method}\proofbreak
-    Define sequence of Householder transformations $H_i = I_n - 2w_iw_i^{*}$, then
+    Define sequence of Householder transformations $H_i = I_n - 2w_iw_i^{*}$, where $w_i$ is given by the constructive proof in Lemma \ref{householder-elimination} to reduce the first column of $H_{i-1}\cdots H_1A$, then
     \begin{align*}
         H_nH_{n-1}\cdots H_1A = R.
     \end{align*}
     Since $H_i$ is unitary by Lemma \ref{householder-transformation}, it follows that $Q = H_nH_{n-1}\cdots H_1$ is unitary, and so $A = Q^{*}R$ is the $QR$ decomposition of $A$.
 \end{thm}
+
+\begin{rmk}
+    The Householder method or Gram-Schimdt based method for finding the QR decomposition of a $n \times n$ matrix have time complexity $O(n^3)$. Solving a linear system once you have its QR decomposition has time complexity $O(n^2)$.
+\end{rmk}
+
+\begin{defn}
+    A $n \times n$ matrix is a \emph{Hessenberg matrix} if $A_{ij} = 0$ whenever $i - j > 1$ --- that is, a Hessenberg matrix is almost upper triangular, but may have non-zero entries on the first subdiagonal below the major diagonal. This form may also be called \emph{upper Hessenberg}, in which case \emph{lower Hessenberg} analogously refers to having zeros \emph{above} the first subdiagonal above the diagonal.
+\end{defn}
+
+\begin{defn}
+    A \emph{Given's rotation matrix} $G_{ij}(\theta)$ is almost an identity matrix, except the $i$ and $j$ entries form a clockwise $\theta$ 2D rotation matrix. That is,
+    \begin{align*}
+        \begin{pmatrix}
+            G_{ii} & G_{ij} \\ G_{ji} & G_{jj}
+        \end{pmatrix} &= \begin{pmatrix}
+            \cos(\theta) & \sin(\theta) \\ -\sin(\theta) & \cos(\theta)
+        \end{pmatrix}.
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    Note that $\transposeof{G_{ij}(\theta)} = G_{ij}(-\theta)$. A Given's matrix $G_{ij}(\theta)$ performs a clockwise rotation by $\theta$ in the $i,j$ coordinate plane.
+\end{rmk}
+
+\begin{thm}{Hessenberg QR Method}\proofbreak
+    Any Hessenberg matrix $A$ can be decomposed into $QR$ by Given's rotations. In particular, we take
+    \begin{align*}
+        \transposeof{G_{n-1}}\transposeof{G_{n-2}}\cdots \transposeof{G_{2}}\transposeof{G_{1}}A &= R,
+    \end{align*}
+    where $R$ is upper triangular, and
+    \begin{align*}
+        x^{(j)} &= \transposeof{G_{j-1}}\cdots\transposeof{G_{1}}A_{j} \\
+        \theta_j &= \arcsin\left(\frac{-x{(j)}_{j+1}}{x{(j)}_{j}^2+x{(j)}_{j+1}^2}\right)\\
+        G_{j} &= G_{j,j-1}(\theta_j).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Since $x$ is the first column of $\transposeof{G_{j-1}}\cdots\transposeof{G_{1}}A_{1}$, when we take $\theta_j$ as defined above, it follows that
+    \begin{align*}
+        \left(\transposeof{G_{j}}x\right)_k &= \begin{dcases}
+            \cos(\theta)x_j - \sin(\theta)x_{j+1}, &k=j \\
+            \sin(\theta)x_j + \cos(\theta)x_{j+1}, &k=j+1 \\
+            x_k, &k\neq j,j+1.
+        \end{dcases}
+    \end{align*}
+    By construction of $\theta_j$, $\sin(\theta)x_j + \cos(\theta)x_{j+1} = 0$, and so left-multiplying by $\transposeof{G_{j}}$ zeros out the $j+1$ entry of the $j$th column of $\transposeof{G_{j-1}}\cdots\transposeof{G_1}A$. Since only the $j$ and $j+1$ entries of any columns are changed, and these entries are already zeroed out for columns to the left, each Given's rotation matrix eliminates a single entry on the subdiagonal. In the end, the entire subdiagonal is zeroed out while leaving the rest of the lower triangle unchanged, and so $R$ is upper-triangular. Furthermore, since every Given's rotation matrix is Hermitian, we have unitary $Q = G_1G_2\cdots G_{n-1}$.
+\end{proof}
+
+\begin{thm}
+    Any square matix $A$ can be reduced to a Hessenberg matrix $A_H$ using Householder transformations. Let $H_i$ be the Householder reflection of $w_i = \transposeof{(\underbrace{0, \ldots, 0}_{i}, \tilde{w}_i)}$, and then
+    \begin{align*}
+        A_H = \left(H_1 \cdots H_n\right)^{*}A H_1 \cdots H_n = H_n \cdots H_1 A H_1 \cdots H_n.
+    \end{align*}
+\end{thm}
+
+\begin{defn}{The QR Method}\proofbreak
+    A numerically stable but computational somewhat more expensive approach to obtaining the $QR$ decomposition of a matrix $A$ is to first reduce $A$ to an upper triangular matrix $H_0$ via Householder reduction, and then iteratively compute $H_i = R_{i-1}Q_{i-1}$ where $Q_{i-1}R_{i-1}$ is the Hessenberg $QR$ decomposition of $H_{i-1}$.
+
+    Note that
+    \begin{align*}
+        H_k &= R_{k-1}Q_{k-1} = Q_{k-1}^{*}Q_{k-1}R_{k-1}Q_{k-1} = Q_{k-1}^{*}H_{k-1}Q_{k-1} \\
+        &= Q_{k-1}^{*}Q_{k-2}^{*}\cdots Q_{1}^{*}H_0Q_1 \cdots Q_{k-2}Q_{k-1}.
+    \end{align*}
+
+    $H_k$ will converge to a Schur normal form of $A$, in particular $H_k$ will be an upper triangular matrix with the eigenvalues on the diagonal.
+\end{defn}
+
+\begin{prop}\label{hessenberg-qr-swap}
+    Let $M = QR$, where $M$ is a Hessenberg matrix, $Q$ is unitary, and $R$ is upper triangular. Then $RQ$ si also Hessenberg.
+\end{prop}
+
+\begin{defn}
+    The shifted QR method is a variant of the above QR method with faster convergence. It starts with choosing a scalar $\mu_k$ close to a known eigenvalue of $A$, and taking $A_{k} - \mu_kI = Q_{k}R_{k}$, $A_{k+1} = \mu_kI + R_{k}Q_{k}$
+\end{defn}
+
+\section{Krylov subspace methods}
+
+\begin{defn}
+    For a $n \times n$ matrix $A$, the $m$th \emph{Krylov subspace} of $A$ at $x \neq \vec{0}$ is
+    \begin{align*}
+        K_m(A, x) = \spn\left\{x, Ax, A^2x, \ldots, A^{m-1}x\right\}.
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    Note that the dimension of $K_m(A, x)$ is at least $1$, and at most $\min(n, m, 1 + \rank A)$.
+\end{rmk}
+
+\begin{rmk}
+    For sparse matrices $A$, $A^{k}x$ may be computed relatively efficiently.
+\end{rmk}
+
+\begin{lemma}
+    Let $E_i$ for $i \in \N$ be a family of vector subspaces of $F^n$ where there exsts an $n \times n$ matrix $A$ such that $E_{i+1} = \spn\left(E_i \union \left(AE_i\right)\right)$. There exists $1 \leq p \neq n$ such that $E_{p'} = E_p$ for all $p' \geq p$.
+\end{lemma}
+
+\begin{proof}
+    Note that $E_i$ is necessarily a subspace of $E_{i+1}$. If $E_{i+1} = E_i$ for any $i$, we are done. Since the dimension of $E_{i+1}$ is at least the dimension of $E_i$, it follows that $E_{n+1} = E_n$ since $E_i \subseteq \C^n$. Therefore, the set of $k \in \N$ such that $E_{k+1} = E_k$ is non-empty, and so by the well-ordering principle we can take $p = \min\left\{k \in \N : E_{k+1} = E_k\right\}$.
+\end{proof}
+
+\begin{defn}{Arnoldi method}\proofbreak
+    The \emph{Arnoldi method} is an way to find eigenvalues that is particularly efficient for sparse matrices. We begin by finding an orthonormal basis $Q_n$ for the Krylov subspace $K_n(A, x)$ for unit vector $x$, perhaps via the Gram-Schimdt process. We then form the Hessenberg matrix $H_n = Q_n^{*}AQ_n$, the eigenvalues of which will generally approximate the largest eigenvalues of $A$.
+\end{defn}
+
+\section{Singular Value Decomposition}
+
+\begin{defn}
+    Let $A$ be an $m \times n$ matrix. A \emph{singular value decomposition} (SVD) of $A$ is a factorization $A = U\Sigma V^{*}$, where $U$ is an $m \times m$ unitary matrix, $\Sigma$ is an $m \times n$ diagonal matrix, and $V$ is a $n \times n$ unitary matrix.
+\end{defn}
+
+\begin{thm}
+    All matrices possess a singular value decomposition.
+\end{thm}
+
+\begin{proof}
+    {\color{red}Fill in}
+\end{proof}
+
+\begin{prop}
+    Consider an $m \times n$ matrix $A$ with singular value decomposition $U\Sigma V^{*}$. $\Sigma$ is unique up to ordering, and its diagonal elements are the singular values of $A$.
+\end{prop}
+
+\begin{proof}
+    Notice that $A^{*}A = V(\Sigma^{*}\Sigma)V^{*}$. Since $A^{*}A$ is necessarily positive definite and Hermitian, it must have $n$ real eigenvalues. Let $\Lambda$ be a diagonal matrix of all the eigenvalues of $A^{*}A$. Since $V(\Sigma^{*}\Sigma)V^{*}$ is a Schur normal form, it follows that $\Lambda = \Sigma^{*}\Sigma$, and since the Cholesky decomposition is unique by Theorem \ref{cholesky-factorization}, it follows that $\Sigma$ is unique, up to the order of eigenvalues chosen in $\Lambda$.
+
+    Furthermore, since the square roots of the eigenvalues of $A^{*}A$ are the \emph{singular values} of $A$ by definition, it follows that the diagonal entries of $\Sigma$ are precisely the singular values of $A$.
+\end{proof}
