@@ -1499,7 +1499,7 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
 \end{defn}
 
 \begin{thm}
-    Let $p$ and $q$ be prime numbers such that $q = 2p + 1$, and $a \in \Z_q$ is one of $0, 1, -1$ mod $q$. Then $a$ is a primitive root mod $q$ if and only if $a^{p} = 1 \bmod q$.
+    Let $p$ and $q$ be prime numbers such that $q = 2p + 1$, and $a \in \Z_q$ is not one of $0, 1, -1$ mod $q$. Then $a$ is a primitive root mod $q$ if and only if $a^{p} \neq 1 \bmod q$.
 \end{thm}
 
 \begin{proof}
@@ -1511,6 +1511,21 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
 \begin{defn}
     An odd positive composite integer $n$ is a \emph{Carmichael number} when $a^{n-1} = 1 \bmod n$ for all $a \in \Z_{n^*}$.
 \end{defn}
+
+\begin{thm}
+    Consider $n \in \N$ with prime factorization $p_1p_2\cdots p_m$. Then $n$ is a Carmichael number if and only if $p_i$ are all distinct and $p_{i}-1$ divides $n-1$ for all $i = 1, \ldots, m$.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) Let $n$ be a Carmichael number. For any prime $p$ let $n = p^{k}q$ for $q, k \in \N$ and $p$ does not divide $q$. By the Chinese Remainder theorem \ref{chinese-remainder-theorem}, there exists $a \in \N$ such that $a = 1 + p \bmod p^{k}$ and $a = 1 \bmod n$. Therefore $a$ and $n$ are relatively prime, and so $a^{n-1} = 1 \bmod n$ since $n$ is a Carmichael number.
+
+    Assume, for the sake of contradiction, that $k > 1$, so $(1 + p)^{n-1} = 1 \bmod p^{2}$. By the binomial theorem \ref{binomial-theorem} it follows that $(1 + p)^{n-1} = 1 + (n-1)p \bmod p^2$. Additionally, $p | n$ and so $1 + (n-1)p = 1 - p \bmod p^2$. However, we then have $1 - p = 1 \bmod p^2$, so it must be that $k = 1$, and so all $p_i$ are unique.
+
+    Next, we show that $p_i - 1$ divides $n-1$. Note that $n$ and $n/p$ must be relatively prime by the above. Let $b \in \N$ such that $b$ is a primitive root
+
+    ($\impliedby$)
+    Since $p_i - 1$ divides $n-1$, let $c_j(p_i - 1) = n-1$. Then for any $a \in 1, \ldots, n$ that is relatively prime to $n$, we have $a^{n-1} = a^{c_i(p_i - 1)} = \left(a^{p_i}\right)^c_i$. Note that $a^{n_i-1} \bmod p_i = 1$, so $a^{n - 1} = q_ip_i + 1$ for some integer $q_i$. Therefore, $p_i$ divides $a^{n-1} - 1$ for all $i$. Since $p_i$ are all distinct and prime, it follows that $n | a^{n-1} - 1$ and so $a^{n-1} \bmod n = 1$.
+\end{proof}
 
 \begin{thm}{Miller-Rabin theorem}\proofbreak
     Let $p$ be a prime number, and let $s$ and $b$ such that $p - 1 = 2^{s}b$ where $b$ is odd. For any $a \in \Z_{p^*}$, consider $\mu_0 = a^{b} \bmod p$ and $\mu_i = \mu_{i-1}^{2}$ for $1 \leq i \leq s$. Exactly one of the following are true: $\mu_0 = 1 \bmod p$ or $\mu_i = -1 \bmod p$ for some $0 \leq i \leq s-1$.
@@ -1525,3 +1540,91 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
 
     Let $i$ be the smallest index such that $\mu_i = 1 \bmod n$. If $i > 0$, and $\mu_{i-1} \neq -1 \bmod n$, then $\gcdof{\mu_{i-1}-1}{n}$ must be a non-trivial factor of $n$, which we have found efficiently.
 \end{defn}
+
+\begin{prop}\label{totient-product}
+    Let $n, m \in \N$ such that $n$ amd $m$ are relatively prime, then $\phi(nm) = \phi(n)\phi(m)$.
+\end{prop}
+
+\begin{prop}\label{totient-power}
+    Let $p$ be any prime, then $\phi(p^{k}) = (p-1)(p^{k-1})$.
+\end{prop}
+
+\begin{proof}
+    There are $p^{k}-1$ numbers $i$ such that $1 \leq i < p^{k}$. The only numbers in this set not relatively prime to $p^{k}$ are $p, 2p, \ldots, (p^{k-1}-1)p$. In total, there are then $p^{k-1}-1$ of these numbers, so $\phi(p^{k}) = \left(p^{k}-1\right) - \left(p^{k-1}-1\right) = p^{k} - p^{k-1} = (p - 1)p^{k-1}$.
+\end{proof}
+
+\begin{thm}\label{totient-prime-factorization}
+    For any positive integer $n$ with prime factorization
+    \begin{align*}
+        n = \prod_{i=1}^{r}p_i^{a_i}
+    \end{align*}
+    where $p_i$ are distinct, we have
+    \begin{align*}
+        \frac{\phi(n)}{n} = \prod_{i=1}^{r}\left(1 - \frac{1}{p_i}\right).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    First, by definition we have
+    \begin{align*}
+        \frac{\phi(n)}{n} &= \phi\left(\prod_{i=1}^{r}p_i^{a_i}\right)\frac{1}{\prod_{i=1}^{r}p_i^{a_i}},
+    \end{align*}
+    and since $p_i$ are all relatively prime to each other, by Proposition \ref{totient-product} and Porposition \ref{totient-power} we have
+    \begin{align*}
+        \frac{\phi(n)}{n} &= \prod_{i=1}^{r}\phi\left(p_i^{a_i}\right)\frac{1}{\prod_{i=1}^{r}p_i^{a_i}} \\
+        &= \prod_{i=1}^{r}(p_i^{a_i}-p_i^{a_i-1})\frac{1}{\prod_{i=1}^{r}p_i^{a_i}} = \prod_{i=1}^{r}\frac{p_i^{a_i} - p_i^{a_i-1}}{p_i^{a_i}} \\
+        &= \prod_{i=1}^{r}\left(1 - \frac{1}{p_i}\right).
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    For all $n > 2$, $\phi(n)$ is even.
+\end{prop}
+
+\begin{proof}
+    Consider the prime factorization of $n$,
+    \begin{align*}
+        n = \prod_{i=1}^{r}p_i^{a_i}.
+    \end{align*}
+    By Theorem \ref{totient-prime-factorization}, it follows that
+    \begin{align*}
+        \phi(n) = n\prod_{i=1}^{r}\left(1 - \frac{1}{p_i}\right) = \prod_{i=1}^{r}\left(1 - \frac{1}{p_i}\right)p_i^{a_i} = \prod_{i=1}^{r}\left(p_i - 1\right)p_i^{a_i-1}.
+    \end{align*}
+    Therefore, $\phi(n)$ must be even if its prime decomposition contains an odd prime. If the only prime factor is two so $n = 2^{k}$, then clearly $\phi(n)$ contains the factor $2^{k-1}$. If $k > 1$, it follows $\phi(n)$ is even and if not, $0 \leq n \leq 2$.
+\end{proof}
+
+\begin{defn}{Riemann Zeta function}\proofbreak
+    For real $s > 1$,
+    \begin{align*}
+        \zeta(s) &= \sum_{n=1}^{\infty}\frac{1}{n^s}.
+    \end{align*}
+\end{defn}
+
+\begin{lemma}\label{zeta_product}
+    For all real $s > 1$,
+    \begin{align*}
+        \zeta(s) = \left[\prod_{i=1}^{r}\left(1 - \frac{1}{p_i^s}\right)\right]^{-1}.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        \zeta(s) &= \sum_{n=1}^{\infty}\frac{1}{n^s}
+    \end{align*}
+\end{proof}
+
+\begin{thm}\label{zeta-2}
+    Let $\rho_m$ be the probability that two discrete uniform random integers between $1$ and $M$ (inclusive) are relatively prime. Then
+    \begin{align*}
+        \lim_{m\to\infty}\rho_{m} = \frac{6}{\pi^2}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    For large $m$, the probability two discrete uniform random integers between $1$ and $M$ do not have a prime dividor $p$ in common is approximately $1 - 1/p^2$. Therefore,
+    \begin{align*}
+        \rho_m = \prod_{i=1}^{\pi(m)}\left(1 - \frac{1}{p_i^2}\right).
+    \end{align*}
+
+    Note that $\zeta(2) = \pi^2/6$, and so by Lemma \ref{zeta_product} we are done. By Lemma \ref{zeta_product}, we then $rho_m  = \rho_\alpha$.
+\end{proof}
