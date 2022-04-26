@@ -746,7 +746,7 @@ where we start with a single $A$ and expand it using one of the two rules. By va
     A pushdown automaton accepts an input $w \in \Sigma^{*}$ there exist $w_i \in \Sigma_{\emptystring}^{*}$ such that $w = w_1w_2\ldots w_m$, a sequence of states $\gamma_0, \gamma_1, \ldots, \gamma_m \in Q$, and strings $s_0, s_1, \ldots, s_m \in \Gamma^{*}$ such that the following hold for all $i$:
     \begin{itemize}
         \item $\gamma_0 = q_0$, $\gamma_m \in F$, and $s_0 = \emptystring$,
-        \item $\left(\gamma_{i+1}, \beta\right) \in \delta(\gamma_{i}, w_{i+1}, \alpha)$ where $s_i = \alpha t$ and $s_{i+1} = \beta t$ for some $t \in \Gamma^{*}$ and $\alpha, \beta \in \Gamma_{\varepsilon}$.
+        \item $\left(\gamma_{i+1}, \beta\right) \in \delta(\gamma_{i}, w_{i+1}, \alpha)$ where $s_i = \alpha t$ and $s_{i+1} = \beta t$ for some $t \in \Gamma^{*}$ and $\alpha, \beta \in \Gamma_{\emptystring}$.
     \end{itemize}
     These conditions essentially say that the pushdown automaton starts in the start state with an empty stack, and at every transition it changes the top element of the stack if neither $w_{i+1}$ or $\beta$ are $\emptystring$, pushes $\beta$ onto the stack if only $w_{i+1}$ is $\emptystring$, pops $\alpha$ from the stack if only $\beta$ is $\emptystring$, and does not change the stack if both $w_{i+1}$ or $\beta$ are $\emptystring$.
 \end{defn}
@@ -886,22 +886,190 @@ where we start with a single $A$ and expand it using one of the two rules. By va
     For any Turing machine $M \in A$, consider the language of all strings it recognizes. Since $A$ is countable but $L$ is not, this mapping cannot be surjective and so there exists a language that is not recognized by any Turing machine.
 \end{proof}
 
+\begin{lemma}\label{halting-lemma}
+    For any $\alpha \in \{0, 1\}^{*}$, let $M_{\alpha}$ be the Turing machine encoded by $\alpha$. Define a Boolean function $UC$ such that $UC(\alpha) = 0$ if $M_{\alpha}$ accpts input $\alpha$, and $UC(\alpha) = 1$ otherwise (rejects or never halts). Let $L(UC)$ be the language of all strings $w$ such that $UC(w) = 1$.
+
+    Then $L(UC)$ is not Turing recognizable.
+\end{lemma}
+
+\begin{proof}
+    Assume, for the sake of contradiction, that $L(UC)$ is recognized by a Turing machine $M$ with encoding $\alpha$. Then $UC(\alpha) = 1$ if and only if $M$ accepts $\alpha$. However, $UC(\alpha)$ is defined to be $0$ if $M$ accepts. Therefore, $M$ can neither accept nor reject nor not halt on $\alpha$, and so no such $M$ exists.
+\end{proof}
+
+\begin{thm}\label{halting-problem}
+    Let \verb|HALT| be the language consisting of all $\langle \alpha, x \rangle$ such that $M_{\alpha}$ halts on input $x$. Here, $\langle \alpha, x \rangle$ uses an encoding $\alpha$ for $M_{\alpha}$ such that a Turing machine can easily check if the input string begins with a valid encoding.
+
+    Then \verb|HALT| is not Turing decidable.
+\end{thm}
+
+\begin{proof}
+    Assume, for the sake of contradiction, that \verb|HALT| is Turing decidable by a Turing machine $M$ with encoding $\alpha$. Then construct the function $UC$ as follows: for given $\alpha$, use $M$ to determine if $M_{\alpha}$ will halt on input $\alpha$. If not, define $UC(\alpha) = 1$. If it does halt, simulate $\alpha$ until it halts, and define $UC(\alpha) = 0$ if it accepts and $UC(\alpha) = 1$ otherwise. Since we can simulate $\alpha$ using a Turing machine, this would allow use to construct a Turing machine that recognizes $L(UC)$ (in fact, decides it). However, this is a contradiction by Lemma \ref{halting-lemma}, and so \verb|HALT| cannot be decidable.
+\end{proof}
+
+\begin{rmk}
+    This theorem essentially states no computable algorithm exists which can determine whether a Turing machine will halt on a given input, for all possible inputs and Turing machines. Such an algorithm may exist for some Turing machines and some inputs, but no such algorithm is universal.
+\end{rmk}
+
+\begin{prop}
+    Let $A_{TM}$ be the language consisting of all $\langle M, \alpha \rangle$ such $M$ accepts $\alpha$. Then $A_{TM}$ is not decidable.
+\end{prop}
+
+\begin{proof}
+    Assume, for the sake of contradiction, that there exists a Turing machine $M$ that decides $A_{TM}$. Define $UC(\alpha)$ to be $0$ if $M_{\alpha}$ accepts $\alpha$ and $1$ otherwise. We could then trivially compute this using $M$, which contradicts Lemma \ref{halting-lemma}.
+\end{proof}
+
 \begin{defn}
-    Consider languages $A$ and $B$. A \emph{mapping reduction} from $A$ to $B$ is a computable function $f: \Sigma^{*} \to \Sigma^{*}$ such that for any $w \in \Sigma^{*}$, $w \in A \iff f(w) \in B$. If a mapping reduction exists, we write $A \leq_{m} B$ and say that $A$ is \emph{reducible} to $B$.
+    A function $f$ $\Sigma^{*} \to \Sigma^{*}$ is \emph{computable} when there exists a Turing machine $M$ such that for any $w \in \Sigma^{*}$, $M$ will halt with its tape containing $f(w)$.
+\end{defn}
+
+\begin{defn}
+    Consider languages $A$ and $B$. A \emph{mapping reduction} from $A$ to $B$ is a computable function $f: \Sigma^{*} \to \Sigma^{*}$ such that for any $w \in \Sigma^{*}$, $w \in A \iff f(w) \in B$. If a mapping reduction exists, we write $A \leq_{m} B$ and say that $A$ is \emph{mapping reducible} to $B$.
+\end{defn}
+
+\begin{thm}\label{mapping-reduction-decidability}
+    Consider languages $A$ and $B$ such that $A \leq_m B$. If $B$ is decidable, then $A$ is decidable.
+\end{thm}
+
+\begin{proof}
+    Let $M_1$ be a Turing machine which computes the reduction from $A$ to $B$. If $B$ is decided by a Turing machine $M_2$, then $M_2 \odot M_1$ is a Turing machine which decides $A$, so $A$ is decidable.
+\end{proof}
+
+\begin{thm}
+    $A$ is decidable if and only if $A$ and $\complementof{A}$ are both Turing recognizable.
+\end{thm}
+
+\begin{proof}
+    If $A$ and $\complementof{A}$ are recognized by Turing machines $M_1$ and $M_2$, we can construct a Turing machine $M$ which alternates running steps of $M_1$ and $M_2$ on separate tapes. If $w \in A$, then $M_1$ will accept, so $M$ accepts. If $w \not\in A$, then $w \in \complementof{A}$ so $M_2$ accepts and $M$ rejects. Therefore, $M$ decides $A$.
+
+    If $A$ is decided by a Turing machine $M$, then $A$ is trivially recognizable. Let $M'$ reject when $M$ accepts and accept when $M$ rejects, and be identical otherwise. Then $M'$ decides $\complementof{A}$.
+\end{proof}
+
+\begin{exmp}
+    Consider $E_{\textrm{TM}} = \left\{\langle M \rangle : L(M) = \emptyset\right\}$. Notice that the mapping $\langle M, \alpha \rangle \mapsto \langle M \rangle$ is \emph{almost} a mapping reduction from $A_{\textrm{TM}}$ to $\complementof{E_{\textrm{TM}}}$. We just neeed to tweak it slightly so that if $M$ does not accept $\alpha$ then $L(M) = \emptyset$. So define $f(\langle M, \alpha \rangle)$ to be the Turing machine that accepts $\alpha$ if and only if $M$ accepts $\alpha$, and rejects all other inputs. Then clearly $f(\langle M, \alpha \rangle) \in \complementof{E_{\textrm{TM}}}$ if and only if $\langle  M, \alpha \rangle \in A_{\textrm{TM}}$, so $f$ is a mapping reduction from $A_{\textrm{TM}}$ to $\complementof{E_{\textrm{TM}}}$.
+
+    Since $A_{\textrm{TM}}$ is undecidable it follows that $\complementof{E_{\textrm{TM}}}$ is undecidable by Theorem \ref{mapping-reduction-decidability}, and therefore $E_{\textrm{TM}}$ is undecidable.
+\end{exmp}
+
+\begin{exmp}
+    Consider $R_{\textrm{TM}} = \left\{\langle M \rangle : L(M) \textrm{ is a regular language}\right\}$. Consider $f(\langle M, \alpha \rangle) = M'$, where on input $\beta$, $M'$ runs $M$ on $\alpha$. If $M$ accepts $\alpha$, $M'$ accepts $\beta$ if it is a palindrome, and rejects otherwise. If $M$ rejects $\alpha$, $M'$ rejects all inputs. Therefore, if $\alpha \not\in L(M)$ then $L(M') = \emptyset$ (even if $M$ nevers halts since then neither does $M'$), and if $\alpha \in L(M)$ then $L(M')$ is the non-regular language of palindromes. It follows that $L(M')$ is regular if and only if $\alpha \not\in L(M)$. Therefore, we have a mapping reduction from $A_{\textrm{TM}}$ to the complement of $R_{\textrm{TM}}$, and so $R_{\textrm{TM}}$ is indeed undecidable.
+\end{exmp}
+
+\begin{defn}
+    A \emph{non-deterministic} Turing machine uses a non-deterministic finite automaton as the control automaton. A non-deterministic Turing machine accepts an input if there exists a sequence of valid transitions for that machine that ends with the accept state, and rejects if all possible such sequences end with the reject state.
+\end{defn}
+
+\begin{defn}
+    Let $N$ be a non-deterministic Turing machine. We say $N$ runs in time $f(n)$ if every valid sequence of transitions for any input of length $n$ has at most $f(n)$ transitions.
+\end{defn}
+
+\section{Complexity theory}
+
+\begin{defn}
+    \verb|DTIME|
+\end{defn}
+
+\begin{defn}
+    Class P
+\end{defn}
+
+\begin{defn}
+    Class NP
+\end{defn}
+
+\begin{exmp}
+    Consider the language of strings $\langle G, k \rangle$ such that $G$ is an (encoding of) a graph with an independent set of size $k$. This language is in $NP$, since a list of $k$ vertices forming an independent set can be easily verified in polynomial time.
+\end{exmp}
+
+\begin{thm}
+    \begin{align*}
+        P \subseteq &NP \subseteq EXP \\
+        P \subsetneq &EXP
+    \end{align*}
+\end{thm}
+
+\begin{defn}
+    $NP_2$ using non-deterministic Turing machines.
 \end{defn}
 
 \begin{thm}
-    Consider languages $A$ and $B$ such that $A \leq_m B$.
+    $NP = NP_2$
+\end{thm}
+
+\begin{defn}
+    A language $A$ is \emph{polynomial-time reducible} to a language $B$ is there exists a mapping reduction of $A$ to $B$ using a function which is computable in polynomial time, written $A \leq_{p} B$.
+\end{defn}
+
+\begin{prop}
+    If $L$ is polynomial-time reducible to $L'$, and $L' \leq_{p} L''$, then $L \leq_{p} L''$.
+\end{prop}
+
+\begin{defn}
+    NP-hard is the class of languages $L$ such that any language in NP is polynomial-time reducible to $L$.
+\end{defn}
+
+\begin{defn}
+    A language is NP-complete if it is both NP-hard and in NP.
+\end{defn}
+
+\begin{thm}\proofbreak
     \begin{itemize}
-        \item If $A$ is undecidable, then $B$ is undecidable.
-        \item $A$ is decidable if and only if $A$ and $\overline{A}$ are both Turing-recognizable.
+        \item If $L$ is in NP-hard and in P, then $P = NP$.
+        \item If $L$ is NP-complete, then $L \in P$ if and only if $P = NP$.
     \end{itemize}
 \end{thm}
 
-\begin{exmp}
-    Consider
+\begin{defn}
+    A Boolean formula with literals (Boolean variables) $x_1, \ldots, x_n $ is \emph{satisfied} by an \emph{assignment} of truth values $z_1, \ldots, z_n$ to its literals if it evaluates to \textsc{true}. A Boolean formula is \emph{satisfiable} if there exists an assignment which satisfies it.
+\end{defn}
+
+\begin{defn}
+    A Boolean formula is in \emph{conjunctive normal form} (CNF) if it is a conjunction of one or more disjunctions of one or more literals or negation of literals. In other words, it is an \verb|AND| of \verb|OR|s.
+
+    A Boolean formula is in \emph{disjunctive normal form} (DNF) if it is a disjunction of one or more conjunctions of one or more literals or negation of literals. In other words, it is an \verb|OR| of \verb|AND|s.
+
+    The size of a formula is the sum of the length of clauses, where the length of a clause is the number of literals.
+\end{defn}
+
+\begin{lemma}\label{function-to-cnf}
+    We can express any Boolean function $f: \{0, 1\}^{\ell} \to \{0, 1\}$ as a $\ell$ variable formula in CNF with at most $\ell 2^{\ell}$ clauses.
+\end{lemma}
+
+\begin{proof}
+    Let $f: \{0, 1\}^{\ell} \to \{0, 1\}$. We will express this as a CNF formula with literals $x_1, \ldots, x_{\ell}$, where the string $x_1x_2\cdots x_{\ell}$ is the input to $f$. Let $A$ be the set of all strings $\omega$ such that $f(\omega) = 0$.
+
+    For any $\omega = \omega_1\ldots \omega_{\ell} \in A$, let $a_i = x_i$ if $\omega_i = 0$ and $a_i = \neq x_i$ if $\omega_i = 1$. Consider the clause $a_1 \lor a_2 \lor \cdots \lor a_{\ell}$. If this clause is true, then $x_1\ldots x_{\ell}$ must differ from $\omega$ in at least one position. Since $|A| \leq 2^{\ell}$, we can enumerate all such clauses as $c_1, \ldots, c_{k}$ where $k \leq 2^{\ell}$. Then the CNF formula
     \begin{align*}
-        A_{\textrm{TM}} &= \left\{\langle M, \alpha \rangle : \alpha \in L(M)\right\}, \\
-        E_{\textrm{TM}} &= \left\{\langle M \rangle : M \textrm{ is a Turing machine, and } L(M) = \emptyset\right\}.
+        c_1 \land c_2 \land \cdots \land c_{k}
     \end{align*}
-\end{exmp}
+    is equivalent to $f(\omega)$, since it is true precisely when $\omega \not\in A$.
+
+    Note that every clause contains exactly $\ell$ literals, and there are $k \leq 2^{\ell}$ clauses. Therefore, the overall formula has size at most $\ell 2^{\ell}$.
+\end{proof}
+
+\begin{defn}
+    SAT is the language of all satisfiable CNF Boolean formulas. 3-SAT is the language of all satisfiable CNF Boolean formulas, where each clause has length at most three.
+\end{defn}
+
+\begin{lemma}\label{CNF-to-3-CNF}
+    Let $X$ be a CNF formula with size $n$, then there exists a 3-CNF formula which is satisfiable if and only if $X$ is satisfiable, and whose size is polynomial in $n$.
+\end{lemma}
+
+\begin{proof}
+    Consider any clause $x_1 \lor x_2 \lor x_3 \lor \cdots \lor x_n$. Notice that this is equivalent to $(x_1 \lor x_2 \lor y) \land (\neq y \lor x_3 \lor \cdots \lor x_n)$, which has two clauses of size three and $n-1$. Therefore, we can recursively reduce $X$ to a 3-CNF formula by breaking apart every clause with length longer than three. Every clause of length $k > 3$ is reduced to a 3-CNF formula of size $3(k-3) + 3 = 3(k-2)$. Therefore, a CNF formula $X$ of size $n$ can be reduced to a formula of size at most $3(n-2)$, since the worst case occurs when $X$ contains a single clause of length $n$.
+\end{proof}
+
+\begin{thm}{Cook-Levin theorem}\proofbreak
+    Both SAT and 3-SAT are NP-complete.
+\end{thm}
+
+\begin{proof}
+    SAT and 3-SAT are in NP, because a certificate consisting of an assignment of the variables can be easily verified in polynomial time.
+
+    For any language $L$ in NP, by definition there exists a polynomial function $p: \N \to \N$ and polynomial time Turing machine $M$ such that $x \in \{0, 1\}^{*}$ is in $L$ if and only if there exists $u$ of length at most $p(\abs{x})$ such that $M(x, u) = 1$. Note that for fixed $x$, $M(x, u)$ is equivalent to $M'(u)$ for some $M'$, and is therefore equivalent to $\phi(u)$ for some binary function $\phi$. By Lemma \ref{function-to-cnf}, $\phi$ can be expressed as a CNF formula, however this is not necessarily computable in polynomial time since the formula can have size $|x|2^{|x|}$.
+
+    Consider the following polynomial-time computable construction of a CNF formula from the Turing machine $M$. We know that $M(x, u) = 1$ if and only if there exists a sequence of configurations $C_0, \ldots, C_t$ such that $C_0$ is the start configurtion, $C_T$ is an accept configuration, and $C_i \to C_{i+1}$ obeys the transition function. Note that $T$ is bounded by the running time of $M$, which is polynomial. For all $C_i$, let $z_i$ be a set of Boolean variables describing the $C_i$, including head positions, control automaton state, and tape states, and let $u_1, \ldots, u_k$ such that $u = u_1\cdots u_k$ is the certificate. Since the tapes of $C_i$ and $C_{i+1}$ can only differ in a single window of length three around the head position, we can verify a transition by checking that all but one window remains the same, and the window which changes obeys the transition function.
+
+    The full details are exceedingly complex, see the Cook-Levin Theorem in Chapter 7 of Sipser's ``Introduction to the Theory of Computation'', 3rd edition, for some of these details. Essentially, a CNF formula can be constructed in polynomial time that states whether a series of configurations is equivalent to the computation of $M(x, u)$, where $M(x, u)$ accepts. Therefore, the satisfiability of this CNF problem is equivalent to deciding $x$, and since it is done with a polynomial-time reduction, SAT is NP-hard by definition, and therefore NP-complete.
+
+    Finally, we show that SAT is polynomial-time reducible to 3-SAT. By Lemma \ref{CNF-to-3-CNF}, we can compute in polynomial-time a reduction of any CNF formula to a 3-CNF formula, and so $SAT \leq_{p} 3-SAT$, so $3-SAT$ is NP-hard.
+\end{proof}
