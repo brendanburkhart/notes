@@ -452,7 +452,7 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
     \end{align*}
     Notice that we then have
     \begin{align*}
-        x^{(k + 1)}_{i} = \frac{-\sum_{j\neq i}A_{ij}x^{(k_j)} + b_i}{A_{ii}}.
+        x^{(k + 1)}_{i} = \frac{-\sum_{j\neq i}A_{ij}x^{(k)}_j + b_i}{A_{ii}}.
     \end{align*}
 \end{defn}
 
@@ -878,7 +878,7 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \section{Singular Value Decomposition}
 
 \begin{defn}
-    Let $A$ be an $m \times n$ matrix. A \emph{singular value decomposition} (SVD) of $A$ is a factorization $A = U\Sigma V^{*}$, where $U$ is an $m \times m$ unitary matrix, $\Sigma$ is an $m \times n$ diagonal matrix, and $V$ is a $n \times n$ unitary matrix.
+    Let $A$ be an $m \times n$ matrix. A \emph{singular value decomposition} (SVD) of $A$ is a factorization $A = U\Sigma V^{*}$, where $U$ is an $m \times m$ unitary matrix, $\Sigma$ is an $m \times n$ diagonal matrix of non-negative real numbers, and $V$ is a $n \times n$ unitary matrix.
 \end{defn}
 
 \begin{thm}
@@ -886,7 +886,41 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \end{thm}
 
 \begin{proof}
-    {\color{red}Fill in}
+    Let $A$ be an $m \times n$ matrix. Notice that $A^{*}A$ is positive semi-definite, and so it has non-negative real eigenvalues. Let $v_1, \ldots, v_n$ be a set of orthonormal eigenvectors of $A^{*}A$ with eigenvalues $\lambda_1 = \sigma_1^2, \ldots, \lambda_n = \sigma_n^2$. Then $A^{*}Av_i = \sigma_i^2v_i$, and since $\langle v_i, v_i \rangle = 1$ we have
+    \begin{align*}
+        \sigma_i^2 = \langle v_i, A^{*}Av_i \rangle = \langle Av_i, Av_i \rangle,
+    \end{align*}
+    and so $\norm{Av_i}_2^2 = \sigma_i^2$. Let $r$ be the rank of $A^{*}A$, which is also the rank of $A$ by Lemma \ref{aastar-rank}, and order $\lambda_i$ such that $\lambda_1, \ldots, \lambda_r \neq 0$ and $\lambda_{r+1}, \ldots, \lambda_{n} = 0$.
+
+    Next, for $1 \leq i \leq r$ we define
+    \begin{align*}
+        u_i = \frac{Av_i}{\sigma_i}.
+    \end{align*}
+    Note that
+    \begin{align*}
+        \langle u_i, u_j \langle &= \left\langle \frac{Av_i}{\sigma_i}, \frac{Av_j}{\sigma_j} \right\rangle \\
+        &= \frac{1}{\sigma_i\sigma_j}\left\langle v_i, A^{*}Av_j \right\rangle \\
+        &= \frac{1}{\sigma_i\sigma_j}\left\langle v_i, \sigma_j^2v_j \right\rangle \\
+        &= \frac{\sigma_j}{\sigma_i}\left\langle v_i, v_j \right\rangle,
+    \end{align*}
+    which is equal to $\sigma_j/\sigma_i$ if $i = j$ and zero otherwise. For $1 \leq i, j \leq r$,
+    \begin{align*}
+        u_i^{*}Av_j &= \sigma_ju_i^{*}v_j = \sigma_j\delta_{ij}.
+    \end{align*}
+    Construct $U_r$ such that $u_i$ is the $i$th column of $U_r$ and $v_j$ is the $j$th column of $V_r$, and then
+    \begin{align*}
+        (U_r^{*}AV_r)_{ij} &= \sigma_j\delta_{ij},
+    \end{align*}
+    so
+    \begin{align*}
+        U_r^{*}AV_r = \Sigma_r,
+    \end{align*}
+    where $\Sigma_r$ is a $r \times r$ diagonal matrix whose first $r$ entries are $\sigma_1, \ldots, \sigma_r$.
+
+    Complete $u_i$ and $v_j$ to orthonormal bases for $\C^m$ and $\C^n$ respectively. Note that $u_i^{*}Av_j$ is necessarily zero for $j > r$, since the rank of $A$ is $r$. Let $U$ and $V$ be the respective completed versions of $U_r$ and $V_r$, and let $\Sigma$ be $U^{*}AV$. Note that $U$ and $V$ are both unitary since their columns are orthonormal bases. It follows that a (non-unique) singular value decomposition of $A$ is
+    \begin{align*}
+        U\Sigma V^{*}.
+    \end{align*}
 \end{proof}
 
 \begin{prop}
@@ -894,7 +928,22 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \end{prop}
 
 \begin{proof}
-    Notice that $A^{*}A = V(\Sigma^{*}\Sigma)V^{*}$. Since $A^{*}A$ is necessarily positive definite and Hermitian, it must have $n$ real eigenvalues. Let $\Lambda$ be a diagonal matrix of all the eigenvalues of $A^{*}A$. Since $V(\Sigma^{*}\Sigma)V^{*}$ is a Schur normal form, it follows that $\Lambda = \Sigma^{*}\Sigma$, and since the Cholesky decomposition is unique by Theorem \ref{cholesky-factorization}, it follows that $\Sigma$ is unique, up to the order of eigenvalues chosen in $\Lambda$.
+    Notice that $A^{*}A = V(\Sigma^{*}\Sigma)V^{*}$, and so it is necessarily positive semi-definite and Hermitian. Therefore, $A^{*}A$ must have $n$ real eigenvalues. Let $\Lambda$ be a diagonal matrix of all the eigenvalues of $A^{*}A$. Since $V(\Sigma^{*}\Sigma)V^{*}$ is a Schur normal form, it follows that $\Lambda = \Sigma^{*}\Sigma$, and since the Cholesky decomposition is unique by Theorem \ref{cholesky-factorization}, it follows that $\Sigma$ is unique, up to the order of eigenvalues chosen in $\Lambda$.
 
     Furthermore, since the square roots of the eigenvalues of $A^{*}A$ are the \emph{singular values} of $A$ by definition, it follows that the diagonal entries of $\Sigma$ are precisely the singular values of $A$.
 \end{proof}
+
+\begin{exmp}
+    The SVD of a matrix can be used to compute the Frobenius norm, since given $A = U\Sigma V^{*}$ has Frobenius norm
+    \begin{align*}
+        \norm{A}_F = \sqrt{\trace A^{*}A} = \sqrt{\trace V\Sigma^2V^{*}}.
+    \end{align*}
+    Since $\trace AB = \trace BA$, it follows that if $B$ is similar to $C$ where $B = SCS^{-1}$, we have
+    \begin{align*}
+        \trace B = \trace \left(SC\right)S^{-1} = \trace S^{-1}SC = \trace C,
+    \end{align*}
+    and so similar matrices have the same trace. Therefore,
+    \begin{align*}
+        \norm{A}_F = \sqrt{\trace \Sigma^2}.
+    \end{align*}
+\end{exmp}
