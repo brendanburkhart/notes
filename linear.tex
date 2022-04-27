@@ -2748,6 +2748,16 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     Note that since $A^*A$ is an $n \times n$ matrix, it is invertible precisely when the rank of $A$ is $n$.
 \end{rmk}
 
+\begin{prop}\label{adjoint-nullspace-image}
+    The null space of $A^{*}$ is the orthogonal complement of the image of $A$.
+\end{prop}
+
+\begin{proof}
+    Consider $x$ in the null space of $A^{*}$, then $A^{*}x = \vec{0}$ and so for every $y$ we have $0 = \langle y, A^{*}x \rangle = \langle Ay, x \rangle$, and so $x$ is in the orthogonal complement of the image of $A$.
+
+    Consider $x$ in the orthogonal complement of the image of $A$, so $\langle Ay, x \rangle = 0$ for all $y$, and therefore $\langle y, A^{*}x \rangle = 0$. Since this holds \emph{for all $y$}, it follows it holds for $y = A^{*}x$, and so $\langle A^{*}x, A^{*}x \rangle = 0$. This implies $A^{*}x = 0$ by the positive definiteness of the inner product, and so $x$ is in the null space of $A^{*}$.
+\end{proof}
+
 \begin{thm}
     Let $A \in M_{m \times n}(F)$ and $y \in F^n$. Then there exists $x_0 \in F^n$ such that
     \[\norm{y - Ax_0} \leq \norm{y - Ax}.\]

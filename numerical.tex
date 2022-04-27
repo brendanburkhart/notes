@@ -881,6 +881,42 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
     Let $A$ be an $m \times n$ matrix. A \emph{singular value decomposition} (SVD) of $A$ is a factorization $A = U\Sigma V^{*}$, where $U$ is an $m \times m$ unitary matrix, $\Sigma$ is an $m \times n$ diagonal matrix of non-negative real numbers, and $V$ is a $n \times n$ unitary matrix.
 \end{defn}
 
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw[thick] (0, 0) ellipse (1cm and 1cm);
+        \draw[->, thick, -{Stealth[]}, red] (0, 0) -- (0, 1);
+        \draw[->, thick, -{Stealth[]}, blue] (0, 0) -- (1, 0);
+
+        \draw[thick, rotate around={35:(0,4)}] (0, 4) ellipse (1cm and 1cm);
+        \draw[->, thick, -{Stealth[]}, red, rotate around={35:(0,4)}] (0, 4) -- +(0, 1);
+        \draw[->, thick, -{Stealth[]}, blue, rotate around={35:(0,4)}] (0, 4) -- +(1, 0);
+
+        \draw[thick, rotate around={35:(4,4)}] (4, 4) ellipse (2cm and 1cm);
+        \draw[->, thick, -{Stealth[]}, red, rotate around={35:(4,4)}] (4, 4) -- +(0, 1);
+        \draw[->, thick, -{Stealth[]}, blue, rotate around={35:(4,4)}] (4, 4) -- +(2, 0);
+
+        \draw[thick, rotate around={290:(4,0)}] (4, 0) ellipse (2cm and 1cm);
+        \draw[->, thick, -{Stealth[]}, red, rotate around={290:(4,0)}] (4, 0) -- +(0, 1);
+        \draw[->, thick, -{Stealth[]}, blue, rotate around={290:(4,0)}] (4, 0) -- +(2, 0);
+
+        \draw[->, thick, -{Stealth[]}] (-1, 1) to [out=120,in=240] node [left] {$V^{*}$} (-1, 3);
+        \draw[->, thick, -{Stealth[]}] (1, 5) to [out=30,in=150] node [above] {$\Sigma$} (3, 5);
+        \draw[->, thick, -{Stealth[]}] (5, 3) to [out=300,in=60] node [right] {$U$} (5, 1);
+        \draw[->, thick, -{Stealth[]}] (1, -1) to [out=330,in=210] node [below] {$A$} (3, -1);
+    \end{tikzpicture}
+    \caption{Geometrical interpretation of the singular value decomposition}
+    \label{fig:svd-geometry}
+\end{figure}
+
+\begin{prop}
+    Let $A$ be an $m \times n$ matrix with singular value decomposition $U\Sigma V^{*}$, with non-zero singular values $\sigma_1, \ldots, \sigma_r$ where $A$ is the rank of $A$. Then $u_1, \ldots, u_r$ is an orthonormal basis for the image of $A$ and $v_{r+1}, \ldots, v_n$ is an orthonormal basis for the null space of $A$.
+\end{prop}
+
+\begin{proof}
+    Notice that, if we order $\Sigma$ so the non-zero singular values come first, $\{e_1, \ldots, e_r\}$ form an orthonormal basis for the image of $\Sigma$ and $\{e_{r+1}, \ldots, e_n\}$ an orthonormal basis for the null space of $\Sigma$. Since $U$ and $V$ are unitary, and therefore non-singular, they preserve the dimension of linear subspaaces. Therefore the image $A$ is simply the image $U\Sigma$ and the null space of $A$ is image $V\Sigma$ by Proposition \ref{adjoint-nullspace-image}, so the image of $A$ has orthonormal basis $\{Ue_1, \ldots, Ue_{r}\}$ and the null space $\{Ve_{r+1}, \ldots, Ve_{n}\}$.
+\end{proof}
+
 \begin{thm}
     All matrices possess a singular value decomposition.
 \end{thm}
@@ -947,3 +983,7 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
         \norm{A}_F = \sqrt{\trace \Sigma^2}.
     \end{align*}
 \end{exmp}
+
+\begin{rmk}
+    A \emph{reduced} singular value decomposition of $A$ (as opposed to the full SVD decscribed above) is one where any columns of $U$, $\Sigma$, and $V$ corresponding to zero singular values have been removed, leaving $\hat{U}$ and $\hat{V}$ to be \emph{semi-unitary} and $\hat{\Sigma}$ square diagonal, such that $U^{*}U = V^{*}V = I_r$, where $r$ is the rank of $A$.
+\end{rmk}
