@@ -1073,3 +1073,35 @@ where we start with a single $A$ and expand it using one of the two rules. By va
 
     Finally, we show that SAT is polynomial-time reducible to 3-SAT. By Lemma \ref{CNF-to-3-CNF}, we can compute in polynomial-time a reduction of any CNF formula to a 3-CNF formula, and so $SAT \leq_{p} 3-SAT$, so $3-SAT$ is NP-hard.
 \end{proof}
+
+\begin{thm}\label{dhampath-np-complete}
+    The language of graphs which contain Hamiltonian paths, \verb|dHAMPATH|, is NP-complete.
+\end{thm}
+
+\begin{thm}\label{dhamcycle-np-complete}
+    The language of graphs which contain Hamiltonian cycles, \verb|dHAMCYCLE|, is NP-complete.
+\end{thm}
+
+\begin{proof}
+    Given a graph $G$, construct $G'$ with a two new vertices $v_{start}$ and $v_{end}$ such that every vertex has an edge to $v_{end}$, $v_{end}$ has an edge to $v_{start}$, and $v_{start}$ has an edge to every other vertex. If $G$ has a Hamiltonian path, prefixing $v_{start}$ and suffixing $v_{end}$ to this path produces a Hamiltonian cycle in $G'$. If $G'$ has a Hamiltonian cycle, then it must use the edge from $v_{end}$ to $v_{start}$, and so shifting the cycle to make $v_{end}$ the final vertex, and then removing $v_{end}$ and $v_{start}$ produces a Hamiltonian path in $G$. Therefore $G$ has a Hamiltonian path if and only if $G'$ has a Hamiltonian cycle. Since we can easily construct $G'$ from $G$ in polynomial time, \verb|dHAMPATH| is then polynomial-time reducible to \verb|dHAMCYCLE| and so \verb|dHAMCYCLE| is NP-hard by Theorem \ref{dhampath-np-complete}. Finally, we can easily verify Hamiltonian cycles in polynomial time, and so \verb|dHAMCYCLE| is NP-complete.
+\end{proof}
+
+\begin{thm}{Traveling salesman problem}\proofbreak
+    Given a weighted, directed, complete graph $G$ on $n$ vertices, the problem of deciding whether $G$ contains a Hamiltonian cycle of length at most $k$ is NP-complete.
+\end{thm}
+
+\begin{proof}
+    A certificate consiting of a Hamiltonian cycle of length at most $k$ can be easily verified in polynomial time.
+
+    Let $G$ be a directed graph. Construct $G'$ to be a weighted, directed, complete graph where an edge has weight $1$ if it was not in $G$ and $0$ otherwise, and take $k = 0$. Then a Hamiltonian cycle in $G$ is a Hamiltonian cycle in $G'$ of length at most $k$, and a Hamiltonian cycle in $G'$ of length at most $k=0$ clearly cannot use edges not in $G$, and so is also a Hamiltonian cycle in $G$. Since constructing this graph can in done in polynomial time, \verb|dHAMCYCLE| is polynomial-time reducible to the traveling salesman problem, and so by Theorem \ref{dhamcycle-np-complete} the traveling salesman problem must be NP-complete.
+\end{proof}
+
+\begin{thm}
+    If there exists an algorithm which decides SAT, then there exists an algorithm which for CNF $\phi$ in SAT can \emph{find} an assignment that satisfies $\phi$.
+\end{thm}
+
+\begin{proof}
+    Let $A$ be an algorithm which decides SAT. Then the following algorithm can find satisfying assignments.
+
+    Let $\phi$ be a CNF formula with $n$ variables $x_1, \ldots, x_n$. Determine whether $\phi$ is in SAT using $A$. If not, halt. Otherwise, assign $0$ to $x_1$ and determine whether the reduced formula is in SAT. If not, since a satisfying assignment exists, assign $1$ to $x_1$. We have, by running $A$ once, reduced $\phi$ to having $n-1$ variables. We then simply repeat this procedure $n-1$ more times to determine a satisfying assignment, which takes $n+1$ total calls to $A$. Assuming $A$ runs in time $T(n)$, the algorithm runs in $O(nT(n))$, which is polynomial if $T(n)$ is.
+\end{proof}
