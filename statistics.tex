@@ -307,7 +307,7 @@ Note that
 \end{defn}
 
 \begin{defn}
-    Let $X_n$ be a sequence of random variables, not necessarily defined on the same probability same. Let $X$ be a random variable with cumulative distribution function $F$. We say that $X_n$ converges to $X$ \emph{in distribution} if for every continuity point $t$ of $F$, the limit of $F_n(t)$ as $n \to \infty$ is $F(t)$.
+    Let $X_n$ be a sequence of random variables, not necessarily defined on the same probability space. Let $X$ be a random variable with cumulative distribution function $F$. We say that $X_n$ converges to $X$ \emph{in distribution} if for every continuity point $t$ of $F$, the limit of $F_n(t)$ as $n \to \infty$ is $F(t)$.
 \end{defn}
 
 \begin{exmp}
@@ -319,7 +319,7 @@ Note that
 \end{exmp}
 
 \begin{thm}{Slutsky's Theorem}\label{slutsky}\proofbreak
-    Let $X_n$ and $Y_n$ be sequences of random variables such that $X_n$ converges in distribution to a random variable $X$ and $Y_n$ converges in probability to a real constant $c$. Suppose $X_n$ and $y_n$ are defined on the same probability space, so that $X_n + Y_n$ and $X_n \cdot Y_n$ are well-defined. Then we have
+    Let $X_n$ and $Y_n$ be sequences of random variables such that $X_n$ converges in distribution to a random variable $X$ and $Y_n$ converges in probability to a real constant $c$. Suppose $X_n$ and $Y_n$ are defined on the same probability space, so that $X_n + Y_n$ and $X_n \cdot Y_n$ are well-defined. Then we have
     \begin{itemize}
         \item $X_n + Y_n$ converges in distribution to $X + c$,
         \item $X_nY_n$ converges in distribution to $X \cdot c$,
@@ -566,7 +566,7 @@ Consider the joint density $f(x_1,\ldots,x_n|\theta)$ of $X_1, \ldots, X_n$. If 
 \begin{rmk}
     In the frequentist paradigm we consider a parametric model with parameter $\theta$, and attempt to estimate the true and fixed value of $\theta$ from our data.
 
-    In the Bayesian paradigm, we instead view $\theta$ itself as a random variable, rather than as a fixed but unknown value. We view $\theta$ as having a \emph{prior} distributio (typically known), which may have been constructed to include information about the experimental process. If the prior distribution has (typically known) parameters, these are called \emph{hyperparameters}. We start from the prior distribution $f_{\theta}(\theta)$ and a likelihood function $f(x|\theta)$, and from this we compute a \emph{posterior distribution} $f_{\theta|X}(\theta|X)$.
+    In the Bayesian paradigm, we instead view $\theta$ itself as a random variable, rather than as a fixed but unknown value. We view $\theta$ as having a \emph{prior} distribution (typically known), which may have been constructed to include information about the experimental process. If the prior distribution has (typically known) parameters, these are called \emph{hyperparameters}. We start from the prior distribution $f_{\theta}(\theta)$ and a likelihood function $f(x|\theta)$, and from this we compute a \emph{posterior distribution} $f_{\theta|X}(\theta|X)$.
 \end{rmk}
 
 \begin{defn}{Bayes' Rule}\proofbreak
@@ -699,3 +699,67 @@ We say a hypothesis is \emph{simple} if it completely specificies the distributi
     \end{align*}
     Finally, we conclude that since $c > 0$, as long as we have $\alpha^{*} \leq \alpha$, we must also have $1 - \beta^{*} \leq 1 - \beta$.
 \end{proof}
+
+\begin{exmp}
+    Suppose $\overline{X} = T_{\textrm{obs}}$. Under $H_0$, we know that
+    \begin{align*}
+        \frac{\overline{X}-\mu_0}{\sigma/\sqrt{n}} \distributed N(0, 1).
+    \end{align*}
+\end{exmp}
+
+\section{ANOVA (Analysis of Variance)}
+
+Suppose we have random variables $Y_{ij}$ for $1 \leq j \leq n_j$, $1 \leq i \leq I$, which are independent, normally distributed data samples from populations $i = 1, \ldots, I$. Suppose further that every population has the same variance $\sigma^2$ and potentially different means $\mu_i$.
+
+Consider the \emph{non-random} constant
+\begin{align*}
+    \mu = \frac{1}{I}\sum_{i=1}^{I}\mu_i,
+\end{align*}
+and let $\alpha_i = \mu_i - \mu$. Note that
+\begin{align*}
+    \sum_{i=1}^{n}\alpha_i = \sum_{i=1}^{n}\mu_i - \sum_{i=1}^{n}\mu_i = 0.
+\end{align*}
+Therefore, $Y_{ij}$ are independent and normal with distribution $N\left(\mu + \alpha_i, \sigma^2\right)$, or $Y_{ij} = \mu + \alpha_i + \varepsilon_{ij}$, where $\varepsilon_{ij} \distributed N(0, \sigma^2)$ are independent across all $i$ and $j$.
+
+Suppose we wish to test the hypothesis that at least two $a_i$, $a_j$ are different, against the null hypothesis that all $I$ populations have the same mean. In the case that $I = 2$, the generalized likelihood ratio test is equivalent to rejecting the null hypothesis for large values of an F distributed random variable.
+
+Let $\overline{Y}_{\cdot\cdot}$ be the \emph{grand mean} --- that is, the mean of all $Y_{ij}$. Let $s_i^2$ be the sample variance of the $i$th population (provided it has at least two samples). Consider the restricted case where every population contains the same number of samples.
+
+For convienence, let $TSS$ be the total squared deivation from the grand mean:
+\begin{align*}
+    TSS = \sum_{i}\sum_{j}\left(Y_{ij} - \overline{Y}_{\cdot\cdot}\right)^2.
+\end{align*}
+Let $SSw$ be the sum of the variability within a single sample:
+\begin{align*}
+    SSw = \sum_{i}\sum_{j}\left(Y_{ij} - \overline{Y}_{i\cdot}\right)^2.
+\end{align*}
+Finally, let $SSb$ be the variability of the population sample means:
+\begin{align*}
+    SSb = \sum_{i}n_{i}\left(\overline{Y}_{i\cdot} - \overline{Y}_{\cdot\cdot}\right)^2.
+\end{align*}
+Next, notice that
+\begin{align*}
+    TSS &= \sum_{i}\sum_{j}\left[\left(Y_{ij} - \overline{Y}_{i\cdot}\right)^2  + 2\left(Y_{ij} - \overline{Y}_{i\cdot}\right)\left(\overline{Y}_{i\cdot} - \overline{Y}_{\cdot\cdot}\right) + \left(\overline{Y}_{i\cdot} - \overline{Y}_{\cdot\cdot}\right)^2\right] \\
+    &= SSw + 0 + SSb.
+\end{align*}
+Under the null hypothesis, $SSb/\sigma^2$ follows a $\chi^2$ distribution with $I - 1$ degrees of freedom. UNder all hypotheses, $SSw/\sigma^2$ follows a $\chi^2$ distribution with
+\begin{align*}
+    \sum_{i}(n_i - 1)
+\end{align*}
+degrees of freedom. If all $n_i = J$, then it has $I(J - 1)$ degrees of freedom. Note that $SSb$ and $SSw$ are in fact independent. Let
+\begin{align*}
+    T = \frac{\frac{SSb}{\sigma^2(I-1)}}{\frac{SSw}{\sigma^2I(J-1)}}.
+\end{align*}
+Therefore, under the null hypothesis and assuming $n_i = J$, $T$ must follow an $F(I-1, I(J-1))$ distribution.
+
+\subsection{Tukey's test}
+
+Consider the random variable $W$, defined to be the maximum across all distinct pairs $i_1, i_2$ from $1, \ldots, I$, of
+\begin{align*}
+    \frac{\left(\overline{Y}_{i_1\cdot} - \mu_{i_1}\right) - \left(\overline{Y_{i_2}} - \mu_{i_2}\right)}{\sqrt{Sp^2/J}},
+\end{align*}
+where
+\begin{align*}
+    Sp^2 = \frac{(J-1)S_1^2 + (J-1)S_2^2 + \cdots + (J-1)S_I^2}{1}.
+\end{align*}
+If the ANOVA $F$-test indicates the populations means are \emph{not} all identical, then Tukey's test can help identify which pair of means shows that largest difference.
