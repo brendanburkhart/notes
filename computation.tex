@@ -1055,7 +1055,11 @@ where we start with a single $A$ and expand it using one of the two rules. By va
 \end{lemma}
 
 \begin{proof}
-    Consider any clause $x_1 \lor x_2 \lor x_3 \lor \cdots \lor x_n$. Notice that this is equivalent to $(x_1 \lor x_2 \lor y) \land (\neq y \lor x_3 \lor \cdots \lor x_n)$, which has two clauses of size three and $n-1$. Therefore, we can recursively reduce $X$ to a 3-CNF formula by breaking apart every clause with length longer than three. Every clause of length $k > 3$ is reduced to a 3-CNF formula of size $3(k-3) + 3 = 3(k-2)$. Therefore, a CNF formula $X$ of size $n$ can be reduced to a formula of size at most $3(n-2)$, since the worst case occurs when $X$ contains a single clause of length $n$.
+    Consider any clause $x_1 \lor x_2 \lor x_3 \lor \cdots \lor x_n$. Notice that this is equivalent to
+    \begin{align*}
+        (x_1 \lor x_2 \lor y) \land (\neg y \lor x_3 \lor \cdots \lor x_n),
+    \end{align*}
+    which has two clauses of size three and $n-1$. Therefore, we can recursively reduce $X$ to a 3-CNF formula by breaking apart every clause with length longer than three. Every clause of length $k > 3$ is reduced to a 3-CNF formula of size $3(k-3) + 3 = 3(k-2)$. Therefore, a CNF formula $X$ of size $n$ can be reduced to a formula of size at most $3(n-2)$, since the worst case occurs when $X$ contains a single clause of length $n$.
 \end{proof}
 
 \begin{thm}{Cook-Levin theorem}\proofbreak
@@ -1071,7 +1075,7 @@ where we start with a single $A$ and expand it using one of the two rules. By va
 
     The full details are exceedingly complex, see the Cook-Levin Theorem in Chapter 7 of Sipser's ``Introduction to the Theory of Computation'', 3rd edition, for some of these details. Essentially, a CNF formula can be constructed in polynomial time that states whether a series of configurations is equivalent to the computation of $M(x, u)$, where $M(x, u)$ accepts. Therefore, the satisfiability of this CNF problem is equivalent to deciding $x$, and since it is done with a polynomial-time reduction, SAT is NP-hard by definition, and therefore NP-complete.
 
-    Finally, we show that SAT is polynomial-time reducible to 3-SAT. By Lemma \ref{CNF-to-3-CNF}, we can compute in polynomial-time a reduction of any CNF formula to a 3-CNF formula, and so $SAT \leq_{p} 3-SAT$, so $3-SAT$ is NP-hard.
+    Finally, we show that SAT is polynomial-time reducible to 3-SAT. By Lemma \ref{CNF-to-3-CNF}, we can compute in polynomial-time a reduction of any CNF formula to a 3-CNF formula, and so $\textrm{SAT} \leq_{p} \textrm{3-SAT}$, so 3-SAT is NP-hard.
 \end{proof}
 
 \begin{thm}\label{dhampath-np-complete}
