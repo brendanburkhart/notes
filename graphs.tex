@@ -1,0 +1,811 @@
+\setchaptergraphic{
+    % Petersen graph
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (a1) at ({3*cos(90)}, {3*sin(90)}) {};
+            \node (a2) at ({1.5*cos(90)}, {1.5*sin(90)}) {};
+            \node (b1) at ({3*cos(162)}, {3*sin(162)}) {};
+            \node (b2) at ({1.5*cos(162)}, {1.5*sin(162)}) {};
+            \node (c1) at ({3*cos(234)}, {3*sin(234)}) {};
+            \node (c2) at ({1.5*cos(234)}, {1.5*sin(234)}) {};
+            \node (d1) at ({3*cos(306)}, {3*sin(306)}) {};
+            \node (d2) at ({1.5*cos(306)}, {1.5*sin(306)}) {};
+            \node (e1) at ({3*cos(18)}, {3*sin(18)}) {};
+            \node (e2) at ({1.5*cos(18)}, {1.5*sin(18)}) {};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (a1) edge (a2);
+            \path [-] (b1) edge (b2);
+            \path [-] (c1) edge (c2);
+            \path [-] (d1) edge (d2);
+            \path [-] (e1) edge (e2);
+
+            \path [-] (a1) edge (b1);
+            \path [-] (b1) edge (c1);
+            \path [-] (c1) edge (d1);
+            \path [-] (d1) edge (e1);
+            \path [-] (e1) edge (a1);
+
+            \path [-] (a2) edge (c2);
+            \path [-] (c2) edge (e2);
+            \path [-] (e2) edge (b2);
+            \path [-] (b2) edge (d2);
+            \path [-] (d2) edge (a2);
+        \end{scope}
+    \end{tikzpicture}
+}
+
+\chapter{Graph Theory}
+\label{ch:graph}
+
+\section{Graphs}
+
+\begin{defn}
+    A \emph{simple graph} is a $2$-tuple $G = (V, E)$, where $V$ is a non-empty finite set of vertices, and $E$ is a set of unordered pairs (two-sets) of vertices, called edges.
+\end{defn}
+
+\begin{rmk}
+    We may also write $V$ as $V(G)$, and $E$ as $E(G)$.
+\end{rmk}
+
+\begin{exmp} Let $G = \left(\left\{a, b, c, d\right\}, \left\{\{a, b\}, \{a, c\}, \{b, d\}\right\}\right)$. This graph is depicted in Figure \ref{fig:example-simple-graph}.
+\end{exmp}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (a) at (0,0) {a};
+            \node (b) at (3,1.5) {b};
+            \node (c) at (3,-1.5) {c};
+            \node (d) at (6,0) {d};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [->] (a) edge (b);
+            \path [->] (a) edge (c);
+            \path [->] (b) edge (d);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Example simple graph}
+\label{fig:example-simple-graph}
+\end{figure}
+
+\begin{defn}
+    Let $G = (V, E)$ be a graph. If $u, v \in V$, then we say $u$ is \emph{adjacent to} $v$ when $\{u, v\} \in E$. We denote this by $u \sim v$, and say that $u$ and $v$ are the endpoints of the edge $\{u, v\}$. We further say that $u$ or $b$ is \emph{incident on} or \emph{incident with} $\{u, v\}$.
+\end{defn}
+
+\begin{defn}
+    Let $G = (V, E)$ be a graph. If $u, v \in V$ are adjacent, then we say $u$ and $v$ are \emph{neighbors}. The set of all neighbors of $v$ is the \emph{neighborhood} of $v$:
+    \[N(v) = \left\{u \in V \compbar u \sim v \right\}.\]
+\end{defn}
+
+\begin{defn}
+    The \emph{adjacency matrix} $\bm{A}$ of a graph $G = (V, E)$ is a square $|V| \times |V|$ matrix where $\bm{A}_{i, j}$ is $1$ if there is an edge from $V_i$ to $V_j$, and $0$ otherwise.
+\end{defn}
+
+\begin{exmp}
+    Let $V = \{1, 2, 3, 4\}$, let $E = \{\{1, 2\}, \{2, 3\}, \{3, 4\}, \{4, 1\}\}$. The adjacency matrix of $G = (V, E)$ is
+    \[\bm{A} = \begin{bmatrix}
+        0 & 1 & 0 & 1 \\
+        1 & 0 & 1 & 0 \\
+        0 & 1 & 0 & 1 \\
+        1 & 0 & 1 & 0
+    \end{bmatrix}.\]
+\end{exmp}
+
+\begin{rmk}
+    The adjacency matrix of a graph clearly must be symmetric and have only zeroes on the major diagonal.
+\end{rmk}
+
+\begin{defn}
+    Let $G$ be a graph. The \emph{degree} of a vertex $v \in V$, denoted by $d_G(v)$, is the number of edges with which $v$ is incident. In a simple graph, it is the number of neighbors of $v$. \[d_G(v) = |N(v)|.\]
+\end{defn}
+
+\begin{prop}\label{adjacency-sum}
+    Let $G = (V, E)$ be a graph, and $\bm{A}$ its adjacency matrix. The sum of all entries of $\bm{A}$ is the sum of the degrees of all vertices in $G$.
+\end{prop}
+
+\begin{proof}
+    The sum of entries in the $i$th row of $\bm{A}$ is the degree of $V_i$, since there is a single $1$ for every vertex $V_i$ is adjacent to. Therefore, the sum of the sum of each row gives the sum of degrees of vertices in $G$.
+\end{proof}
+
+\begin{thm}\label{sum-degrees-is-twice-edges}
+    Let $G = (V, E)$ be a graph. The sum of the degrees of all vertices in $G$ is twice the number of edges:
+    \[\sum_{v\in V}d_G(v) = 2|E|.\]
+\end{thm}
+
+\begin{proof}
+    By Proposition \ref{adjacency-sum}, we know that this sum is equal to the sum of the adjacency matrix of $G$. Since the adjacency matrix is symmetric, and has all zero entries on the major diagonal, its sum must be an even number equal to twice the sum of entries above the major diagonal (the upper triangular region).
+
+    We must then show that the sum of entries above the major diagonal is equal to the number of edges in $G$. Every edge can of course be represented uniquely as $(V_i, V_j)$, where $j > i$, which is precisely the sum of entries above the major diagonal in the adjacency matrix.
+\end{proof}
+
+\begin{cor}\label{sum-degrees-is-even}
+    The sum of degrees is always an even integer.
+\end{cor}
+
+\begin{proof}
+    Since $|E| \in \N$, and the sum of degrees is equal to $2|E|$, $2|E|$ must be an even integer.
+\end{proof}
+
+\begin{cor}\label{n-of-odd-vertices-is-even}
+    The number of vertices with odd degree is even.
+\end{cor}
+
+\begin{proof}
+    For the sake of contradiction, assume that a graph $G$ has an odd number of vertices with odd degree. Then, the sum of degrees of vertices with even degree must itself be even, and the sum of degrees of vertices with odd degree must be odd, so the sum of the degrees of all vertices in $G$ is odd. By Corollary \ref{sum-degrees-is-even}, this is a contradiction.
+\end{proof}
+
+\begin{defn}
+    An \emph{Eulerian trail} is a trail through a graph that visits every edge exactly once.
+\end{defn}
+
+\begin{defn}
+    An \emph{Eulerian circuit} is an Eulerian trail that starts and ends on the same vertex.
+\end{defn}
+
+\begin{defn}
+    A \emph{Hamiltonian path} is a path through a graph that visits every vertex exactly once.
+\end{defn}
+
+\begin{defn}
+    A \emph{Hamiltonian cycle} is a Hamiltonian path that starts and ends with the same vertex.
+\end{defn}
+
+\begin{defn}
+    Let $G = (V, E)$ be a graph. Then
+    \[\Delta G = \max_{v \in V}d_G(v),\]
+    \[\delta G = \min_{v \in V}d_G(v)\] are the maximum and minimum of all degrees of the vertices in $G$ respectively.
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph. Then the \emph{order} of $G$ is $|V(G)|$, and the \emph{size} of $G$ is $|E(G)|$.
+\end{defn}
+
+\begin{defn}
+    A \emph{regular} graph is a simple graph is which every vertex has the same degree, so for every regular graph $G$, we have $\Delta G = \delta G$. If every vertex has degree $n$, it is an $n$-regular graph.
+\end{defn}
+
+\begin{defn}
+    A \emph{complete} graph is one where every pair of vertices are adjacent. The unique complete graph with order $n$ is denoted by $K_n$.
+\end{defn}
+
+\begin{rmk}
+    The graph $K_n$ has size $\binom{n}{2}$.
+\end{rmk}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (a) at ({4*cos(0)}, {4*sin(0)}) {};
+            \node (b) at ({4*cos(60)}, {4*sin(60)}) {};
+            \node (c) at ({4*cos(120)}, {4*sin(120)}) {};
+            \node (d) at ({4*cos(180)}, {4*sin(180)}) {};
+            \node (e) at ({4*cos(240)}, {4*sin(240)}) {};
+            \node (f) at ({4*cos(300)}, {4*sin(300)}) {};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (a) edge (b);
+            \path [-] (a) edge (c);
+            \path [-] (a) edge (d);
+            \path [-] (a) edge (e);
+            \path [-] (a) edge (f);
+
+            \path [-] (b) edge (c);
+            \path [-] (b) edge (d);
+            \path [-] (b) edge (e);
+            \path [-] (b) edge (f);
+
+            \path [-] (c) edge (d);
+            \path [-] (c) edge (e);
+            \path [-] (c) edge (f);
+
+            \path [-] (d) edge (e);
+            \path [-] (d) edge (f);
+
+            \path [-] (e) edge (f);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Depiction of $K_6$}
+\label{fig:k-six}
+\end{figure}
+
+\begin{prop}
+    Every complete graph is a regular graph.
+\end{prop}
+
+\begin{proof}
+    Every vertex in $K_n$ is adjacent to exactly $n-1$ other vertices.
+\end{proof}
+
+\begin{defn}
+    Let $H$ be a graph. We call a graph $G$ a \emph{subgraph} of $H$ provided that
+    \begin{itemize}
+        \item $V(G) \subseteq V(H)$,
+        \item and $E(G) \subseteq E(H)$.
+    \end{itemize}
+\end{defn}
+
+\begin{rmk}
+    Every graph $G$ is a subgraph of itself.
+\end{rmk}
+
+\begin{defn}
+    Let $H$ be a graph, and let $G$ be a subgraph of $H$. $G$ is a \emph{spanning} subgraph of $H$ provided that
+    \begin{itemize}
+        \item $V(G) = V(H)$,
+        \item and $E(G) \subseteq E(H)$.
+    \end{itemize}
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph, and let $e \in E(G)$. Then we denote by $G - e$ the spanning subgraph of $G$ given by \[G - e = (V(G), E(G) - \{e\}).\]
+\end{defn}
+
+\begin{defn}
+    Let $H$ be a graph, and let $A \subseteq V(H)$. The subgraph of $H$ \emph{induced on} $A$ is the graph $H[A]$ with
+    \begin{itemize}
+        \item $V(H[A]) = A$,
+        \item and $E(H[A]) = \left\{\{a, b\} \in E(H) \compbar a \in A \land b \in A\right\}$.
+    \end{itemize}
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph, and let $v \in V(G)$. Then we denote by $G - v$ the subgraph of $G$ induced by $V(G) - v$, given by \[G - v = G[V(G) - \{v\}].\]
+\end{defn}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (1) at ({2*cos(180)}, {2*sin(180)}) {1};
+            \node (2) at (0, 0) {2};
+            \node (3) at ({3*cos(60)}, {2*sin(60)}) {3};
+            \node (4) at ({3*cos(300)}, {2*sin(300)}) {4};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (1) edge (2);
+            \path [-] (2) edge (3);
+            \path [-] (2) edge (4);
+            \path [-] (3) edge (4);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Example graph}
+\label{fig:clique-examples}
+\end{figure}
+
+\begin{defn}
+    Let $G$ be a graph, and $S \subseteq V(G)$. If $u \sim v$ for all distinct $u, v \in S$, then we say that $S$ is a \emph{clique} in $G$.
+\end{defn}
+
+\begin{exmp}
+    The following are all cliques in the graph depicted in Figure \ref{fig:clique-examples}:
+    \begin{multicols}{2}
+        \begin{itemize}
+            \item $\emptyset$,
+            \item $\{1\}$,
+            \item $\{2\}$,
+            \item $\{3\}$,
+            \item $\{4\}$,
+        \end{itemize}
+        \columnbreak
+        \begin{itemize}
+            \item $\{1, 2\}$,
+            \item $\{2, 3\}$,
+            \item $\{2, 4\}$,
+            \item $\{3, 4\}$,
+            \item $\{2, 3, 4\}$.
+        \end{itemize}
+    \end{multicols}
+\end{exmp}
+
+\begin{defn}
+    Let $G$ be a graph. The clique number of $G$, denoted by $\omega(G)$, is the maximum cardinality of all cliques in $G$.
+\end{defn}
+
+\begin{exmp}
+    In the graph depicted in Figure \ref{fig:clique-examples}, the clique with maximum cardinality is $\{2, 3, 4\}$, so $\omega(G) = 3$.
+\end{exmp}
+
+\begin{defn}
+    Let $G$ be a graph, and let $S$ be a clique in $G$.
+    \begin{itemize}
+        \item We say $S$ is \emph{maximum} if $|S| = \omega(G)$.
+        \item We say $S$ is \emph{maximal} if it cannot be made larger by adding vertices to it.
+    \end{itemize}
+\end{defn}
+
+\begin{exmp}
+    In the graph depicted in Figure \ref{fig:clique-examples}, the only maximum clique is $\{2, 3, 4\}$, but both $\{1, 2\}$ and $\{2, 3, 4\}$ are maximal cliques.
+\end{exmp}
+
+\begin{defn}
+    Let $G$ be a graph, and $S \subseteq V(G)$. If $u \not\sim v$ for all $u, v \in S$, then we say that $S$ is an \emph{independent set} in $G$.
+\end{defn}
+
+\begin{exmp}
+    The following are all independent sets in the graph depicted in Figure \ref{fig:clique-examples}: $\emptyset$, $\{1\}$, $\{2\}$, $\{3\}$, $\{4\}$, $\{1, 3\}$, and $\{1, 4\}$.
+\end{exmp}
+
+\begin{defn}
+    Let $G$ be a graph. The independence number of $G$, denoted by $\alpha(G)$, is the maximum cardinality of all independent sets in $G$.
+\end{defn}
+
+\begin{exmp}
+    In the graph depicted in Figure \ref{fig:clique-examples}, an independent set with maximum cardinality is $\{1, 3\}$, so $\alpha(G) = 2$.
+\end{exmp}
+
+\begin{defn}Complement Graph\proofbreak
+    Let $G$ be a graph. The \emph{complement graph} of $G$, denoted by $\bar{G}$, is defined by
+    \[V(\bar{G}) = V(G),\] and
+    \[E(\bar{G}) = \left\{\{a, b\} \compbar a, b \in V(G), a \neq b, \{a, b\} \notin E(G) \right\}.\]
+\end{defn}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (1) at ({2*cos(180)}, {2*sin(180)}) {1};
+            \node (2) at (0, 0) {2};
+            \node (3) at ({3*cos(60)}, {2*sin(60)}) {3};
+            \node (4) at ({3*cos(300)}, {2*sin(300)}) {4};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (1) edge (4);
+            \path [-] (1) edge (3);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Complement graph of Figure \ref{fig:clique-examples}}
+\label{fig:complement-example}
+\end{figure}
+
+\begin{prop}
+    Let $G$ be a graph, and $H = \bar{G}$ its complement graph. Then $\bar{H} = G$.
+\end{prop}
+
+\begin{proof}
+    Since $V(H) = V(G)$, $V(\bar{H}) = V(G)$. Furthermore,
+    \[E(H) = \left\{\{a, b\} \compbar a, b \in V(G), a \neq b, \{a, b\} \notin E(G) \right\},\] \[E(\bar{H}) = \left\{\{a, b\} \compbar a, b \in V(G), a \neq b, \{a, b\} \notin E(H) \right\},\] so \[E(\bar{H}) = \left\{\{a, b\} \compbar a, b \in V(G), a \neq b, \{a, b\} \in E(G) \right\}.\] Therefore, $\bar{H} = G$.
+\end{proof}
+
+\begin{lemma}\label{clique-independent-complement}
+    Let $G$ be a graph. $S \subseteq V(G)$ is a clique in $G$ if and only if $S$ is an independent set in $\bar{G}$.
+\end{lemma}
+
+\begin{proof}\proofbreak
+    ($\implies$) If $S$ is a clique in $G$, then for every $u, v \in S$ we know $\{u, v\} \in E(G)$. Therefore, $\{u, v\} \notin E(\bar{G})$ and so $S$ is an independent set in $\bar{G}$.
+
+    ($\impliedby$) If $S$ is an independent set in $\bar{G}$, then for every $u, v \in S$ we know $\{u, v\} \notin E(\bar{G})$. Therefore, $\{u, v\} \in E(G)$ and so $S$ is a clique in $G$.
+\end{proof}
+
+\begin{thm}
+    Let $G$ be a graph, and $\bar{G}$ the complement graph of $G$. Then $\omega(G) = \alpha(\bar{G})$ and $\alpha(G) = \omega(\bar{G})$.
+\end{thm}
+
+\begin{proof}
+    Let $S$ be a maximum clique in $G$, so $\omega(G) = |S|$. By Lemma \ref{clique-independent-complement}, $S$ is an independent set in $\bar{G}$, and must furthermore be a maximum independent set in $\bar{G}$, so $\alpha(\bar{G}) = |S| = \omega(G)$. Since $G$ is in turn the complement of $\bar{G}$, it also follows that $\alpha(G) = \omega(\bar{G})$.
+\end{proof}
+
+\begin{thm}
+    Let $G$ be a graph with $|V(G)| \geq 6$. Then either $\omega(G) \geq 3$ or $\alpha(G) \geq 3$.
+\end{thm}
+
+\begin{proof}
+    Let $v \in V(G)$ be any vertex of $G$. Then either $d_G(v) \geq 3$ or $d_G(v) < 3$.
+
+    In the case that $d_G(v) \geq 3$, there are at least three vertices adjacent to $v$. Choose any three of these vertices to be $x, y, z$. If any of $x \sim y$, $y \sim z$, or $x \sim z$ then together with $v$ they form a clique with cardinality three, so $\omega(G) \geq 3$. If not, then $\{x, y, z\}$ must be an independent set, and so $\alpha(G) \geq 3$.
+
+    In the case that $d_G(v) < 3$, then $d_G(v) \leq 2$ so there are at least $6 - (1 + 2) = 3$ vertices not adjacent to $v$ in $G$ since $|V(G)| \geq 6$. Choose any three of these vertices $x, y, z$. If they are all adjacent to each other, then $\{x, y, z\}$ is a clique and so $\omega(G) \geq 3$. If not, then at least two are not adjacent to each other. Without loss of generality, let these be $x$ and $y$. Therefore, $\{x, y, v\}$ is an independent set, and so $\alpha(G) \geq 3$.
+\end{proof}
+
+\section{Graph Walks}
+
+\begin{defn}
+    Let $G$ be a graph. A \emph{walk} in $G$ is a list of vertices with each vector in the list adjacent to the next, i.e. \[W = (u_0, u_1, u_2, \ldots, u_l)\] where \[u_0 \sim u_1 \sim u_2 \sim \cdots \sim u_l.\] The \emph{length} of a walk $W$ is denoted by $|W|$, and is the number of edges in the walk, or equivalently the number of vertices in the walk minus one. A walk is said the \emph{traverse} its edges. A walk from vertex $u$ to vertex $w$ is called a $(u, v)$-walk.
+\end{defn}
+
+\begin{defn}
+    A walk that begin and ends at the same vertex is \emph{closed}.
+\end{defn}
+
+\begin{defn}
+    A \emph{path} in a graph is a walk without repeated vertices.
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph, and $W = w_0 \sim \cdots \sim w_l$, $V = v_0 \sim \cdots \sim v_k$ be walks in $G$, where $w_l = v_0$. Then their concatenation, denoted by $W + V$, is the walk \[w_0 \sim \cdots \sim (w_l = v_0) \sim \cdots \sim v_k.\]
+\end{defn}
+
+\begin{prop}
+    Let $P$ be a path in a graph $G$. $P$ does not traverse any edge in $G$ more than once.
+\end{prop}
+
+\begin{proof}
+    Assume for the sake of contradiction that $P$ traverses some edge $\{u, v\} \in E(G)$ of $G$ at least twice.
+
+    Then without loss of generality, either \[P = \cdots \sim u \sim v \cdots \sim u \sim v \sim \cdots\] or \[P = \cdots \sim u \sim v \cdots \sim v \sim u \sim \cdots.\]
+
+    In the first case, $P$ clearly repeats vertices $u$ and $v$, and so is not a path. In the second case, $P$ must visit $u$ at least twice, and so is not a path.
+\end{proof}
+
+\begin{defn}
+    Let $G$ be a graph, and let $u, v \in G$. We say $u$ is \emph{connected} to $v$ (or $u$ and $v$ are \emph{connected}) if there exists a path from $u$ to $v$ in $G$.
+\end{defn}
+
+\begin{lemma}\label{walk-implies-path}
+    Let $G$ be a graph, and let $u, v \in V(G)$. If there is a $(u, v)$-walk in $G$, then there is a $(u, v)$-path in $G$.
+\end{lemma}
+
+\begin{proof}
+    Consider the set \[L = \left\{|W| \compbar W \textrm{ is a walk in } G\right\} \subseteq \N.\] By the well-ordering principle, there is some smallest length $l \in L$. Let $P$ be any $(u,v)$-walk in $G$ of length $l$. Assume, for the sake of contradiction, that $P$ is \emph{not} a path in $G$. Then there is some repeated vertex $w$ in $P$: \[P = u \sim \cdots \sim w \sim \cdots \sim w \sim \cdots \sim v.\] However, \[P' = u \sim \cdots \sim w \sim \cdots \sim v\] is also a $(u, v)$-walk in $G$, and is shorter than $P$ by at least one edge, which contradicts our assumption. Therefore, $P$ is a path in $G$.
+\end{proof}
+
+\begin{prop}
+    Let $G$ be a graph. Then \emph{is connected to} is an equivalence relation on $V(G)$.
+\end{prop}
+
+\begin{proof}\proofbreak
+    \begin{itemize}
+        \item $x \in V(G)$ is connected to $x$ since $(x)$ is a path starting and ending at $x$, so this relation is reflexive.
+        \item If $x_0 \in V(G)$ to connected to $x_n \in V(G)$ by a path $x_0 \sim x_1 \sim \cdots \sim x_{n-1} \sim x_n$, then $v$ is connected to $u$ by the reverse path $x_n \sim x_{n-1} \sim \cdots x_1 \sim x_0$. Therefore, this relation is reflexive.
+        \item Let $x, y, z \in V(G)$ such that $x$ is connected to $y$ by a path $W_1$, and $y$ is connected to $z$ by a path $W_2$, then $x$ is connected to $z$ by the walk $W_1 + W_2$. By Lemma \ref{walk-implies-path} there must then be a $(x, z)$-path in $G$, and so this relation is transitive.
+    \end{itemize}
+\end{proof}
+
+\begin{rmk}
+    This implies that the \emph{is connected to} relation partitions $G$ into equivalence classes.
+\end{rmk}
+
+\begin{defn}
+    Let $G$ be a graph. A subgraph of $G$ induced by an equivalence class under the \emph{is connected to} relation is called a \emph{connected component} of $G$.
+\end{defn}
+
+\begin{defn}
+    A graph with only one connected component is \emph{connected}. If a graph is not connected, it is \emph{disconnected}.
+\end{defn}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (1) at (-2, 0.5) {1};
+            \node (2) at (1, 0.75) {2};
+            \node (3) at (2.5, 1.5) {3};
+            \node (4) at (4, 0.75) {4};
+            \node (5) at (3.5, -0.5) {5};
+            \node (6) at (0, 2) {6};
+            \node (7) at (-1, -1) {7};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (1) edge (7);
+            \path [-] (7) edge (2);
+            \path [-] (7) edge (6);
+            \path [-] (2) edge (6);
+
+            \path [-] (3) edge (4);
+            \path [-] (3) edge (5);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Example graph with two partitions}
+\label{fig:partition-graph-example}
+\end{figure}
+
+\begin{exmp}
+    The graph
+    \[G = (\{1, 2, 3, 4, 5, 6, 7\}, \left\{\{1, 7\}, \{7, 2\}, \{7, 6\}, \{2, 6\}, \{3, 4\}, \{3, 5\}\right\})\]
+    is partitioned into
+    \[[1] = \{1, 2, 6, 7\},\]
+    \[[3] = \{3, 4, 5\}\] under the relation \emph{is connected to}, as shown in Figure \ref{fig:partition-graph-example}.
+\end{exmp}
+
+\begin{defn}
+    Let $G$ be a graph, let $v \in V(G)$ and let $e \in E(G)$.
+
+    If $G - v$ has more connected components than $G$, we say $v$ is a \emph{cut vertex}. If $G - e$ has more connected components than $G$, we say $e$ is a \emph{cut edge}.
+\end{defn}
+
+\begin{thm}
+    Let $G$ be a connected graph. If $e \in E(G)$ is a cut edge, then $G - e$ has exactly two connected components.
+\end{thm}
+
+\section{Trees}
+
+\begin{defn}
+    A \emph{cycle} is a walk in a graph of length at least three, where the first and last vertices are the same, but no other vertices are repeated.
+\end{defn}
+
+\begin{rmk}
+    The subgraph induced by a cycle with length $n$ may also be referred to as a cycle, and is denoted by $C_n$.
+\end{rmk}
+
+\begin{defn}
+    A graph with no cycles is called \emph{acyclic}, or a \emph{forest}.
+\end{defn}
+
+\begin{defn}
+    A \emph{tree} is a connected acyclic graph.
+\end{defn}
+
+\begin{rmk}
+    The following are equivalent ways of defining a tree.
+\end{rmk}
+
+\begin{thm}\label{tree-unique-path}
+    A connected graph $T$ is a tree if and only if for any two vertices $u, v \in V(T)$, there is a unique $(u, v)$-path in $T$.
+\end{thm}
+
+\begin{thm}\label{tree-cute-edges}
+    A connected graph $T$ is a tree if and only if every edge $e \in E(T)$ is a cut edge.
+\end{thm}
+
+\begin{defn}
+    In a graph, a vertex with degree $1$ is a \emph{leaf}.
+\end{defn}
+
+\begin{thm}\label{tree-has-leaf}
+    Every tree with at least two vertices has a leaf.
+\end{thm}
+
+\begin{proof}
+    Let $T$ be a tree with at least two vertices, and let $P$ be a longest path in $T$. Since $T$ is connected and has at least two vertices, the longest path has at least two vertices:
+    \[P: u_0 \sim u_1 \sim \cdots \sim u_{\ell}\] where $\ell \geq 1$. We can show that $u_0$ is a leaf in $T$. Assume, for the sake of contradiction, that $u_0$ is not a leaf. Then $u_0$ must be adjacent to at least one neighbor $x$ other than $u_1$. If $x \in P$, then
+    \[x \sim u_0 \sim u_1 \sim \cdots \sim x\] would be a cycle, and since $T$ is acyclic, it follows that $x \notin P$. Therefore, the path
+    \[Q: x \sim u_0 \sim u_1 \sim \cdots \sim u_{\ell}\] is a longer path than $P$, which is a contradiction. It follows that $u_0$ (and $u_{\ell}$ by the same argument) must be a leaf.
+\end{proof}
+
+\begin{rmk}
+    Since both $u_0$ and $u_{\ell}$ are leaves, every tree with at least two vertices must have at least two leaves.
+\end{rmk}
+
+\begin{prop}\label{tree-minus-leaf}
+    Let $T$ be a tree, and $u \in V(T)$. If $u$ is a leaf, then $T - u$ is a tree.
+\end{prop}
+
+\begin{proof}
+    Since $T$ is acyclic, $T - u$ is acyclic. Let $x, y \in V(T - u)$. Take the unique $(x, y)$-path in $T$. This path must not contain $u$, or else
+    \[x \sim \cdots \sim u \sim \cdots \sim y\] would require $u$ have degree greater than one, which would be a contradiction. Therefore, this path is also a unique $(x, y)$-path in $T - u$, and so $T - u$ is a tree.
+\end{proof}
+
+\begin{prop}\label{tree-edges-n-minus-one}
+    Let $T$ be a tree. If $|V(T)| = n$ and $n \geq 1$, then $|E(T)| = n-1$.
+\end{prop}
+
+\begin{proof}
+    We will prove this by induction on $n$. In the base case $n=1$, it must be that $|E(T)| = 0$, and $n-1 = 0$.
+
+    Assume that for some $n \geq 1$, all trees with $n$ vertices have $n-1$ edges. Let $T$ be a tree with $n+1$ vertices. Then by Theorem \ref{tree-has-leaf}, $T$ must have a leaf $u$. Since $T - u$ is a tree by Proposition \ref{tree-minus-leaf}, and has $n$ vertices, it must have $n-1$ edges. As $u$ is a leaf, it is only adjacent to one neighbor, and so $E(T) = E(T - u) + 1 = n$, which completes the induction.
+\end{proof}
+
+\begin{defn}
+    Let $G$ be a graph. If a spanning subgraph of $G$ is a tree, it is a \emph{spanning tree}.
+\end{defn}
+
+\begin{thm}\label{spanning-trees-in-connected-graphs}
+    Let $G$ be a graph. $G$ has a spanning tree if and only if $G$ is connected.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) Suppose $G$ has a spanning tree $T$. Let $u, v \in V(G)$, so $u, v \in V(T)$. Therefore, by Theorem \ref{tree-unique-path}, there is a $(u,v)$-path in $T$, and since $E(T) \subseteq E(G)$ it must also be a $(u,v)$-path in $G$ and so $G$ is connected.
+
+    ($\impliedby$) Since $G$ is connected, we can form a connected spanning subgraph of $G$ with the fewest possible edges. Every edge in this subgraph is a cut edge, or else it could have been removed to create a subgraph with fewer edges. This subgraph is then a spanning tree by Theorem \ref{tree-cute-edges}.
+\end{proof}
+
+\begin{thm}\label{tree-edges-iff}
+    Let $G$ be a connected graph on $n \geq 1$ vertices. $G$ is a tree if and only if $|E(G)| = n-1$.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) If $G$ is a tree, then $|E(G)| = n-1$ by Proposition \ref{tree-edges-n-minus-one}.
+
+    ($\impliedby$) If $|E(G)| = n-1$, then let $T$ be a spanning tree in $G$, which must exist by Theorem \ref{spanning-trees-in-connected-graphs}. Since $V(T) = V(G) = n$, $E(T) \subseteq E(G)$, and furthermore $|E(T)| = n-1$, we have $E(T) = E(G)$. Therefore, $G = T$, and so $G$ is a tree.
+\end{proof}
+
+\section{Graph Coloring}
+
+\begin{defn}
+    Let $G$ be a graph. For a positive integer $k$, a \emph{k-coloring} of $G$ is a function
+    \[f: V(G) \to \{1, \ldots, k\}.\] For $u \in V(G)$, if $f(u) = n$ we say that $f$ \emph{assigns} color $n$ to vertex $u$.
+\end{defn}
+
+\begin{defn}
+    A $k$-coloring $f$ is \emph{proper} provided
+    \[\{x, y\} \in E(G) \implies f(x) \neq f(y).\]
+    That is, $f$ assigns different colors to adjacent vertices.
+\end{defn}
+
+\begin{defn}
+    Let $G$ be a graph. If $G$ has a proper $k$-coloring, it is \emph{k-colorable}.
+\end{defn}
+
+\begin{defn}
+    The smallest $k$ such that $G$ is $k$-colorable is the \emph{chromatic number} of $G$, and is denoted by $\chi(G)$.
+\end{defn}
+
+\begin{prop}
+    The chromatic number of $K_n$, the complete graph on $n \in \N$ vertices, is $n$.
+\end{prop}
+
+\begin{proof}
+    The coloring
+    \[f: V(K_n) \to \{1, 2, \ldots, n\}\]
+    \[f: v_i \mapsto i\]
+    is clearly a proper $n$-coloring of $K_n$. So $K_n$ is $n$-colorable, and $\chi(K_n) \leq n$.
+
+    Since every vertex is adjacent to $n-1$ other vertices, at least $n$ colors are needed for a proper $n$-coloring. Therefore, $\chi(K_n) \geq n$, and so we have $\chi(K_n) = n$.
+\end{proof}
+
+\begin{prop}\label{subgraph-chromatic-number}
+    Let $G$ be a subgraph of a graph $H$. Then $\chi(G) \leq \chi(H)$.
+\end{prop}
+
+\begin{proof}
+    Let $f$ be a proper $\chi(H)$-coloring of $H$. Then since $V(G) \subseteq V(H)$, we can restrict $f$ to $V(G)$ to obtain a $\chi(H)$-coloring of $G$, so $\chi(G) \leq \chi(H)$.
+\end{proof}
+
+\begin{prop}\label{chromatic-number-graph-degree}
+    Let $G$ be a graph with maximum degree $\Delta G$. Then $\chi(G) \leq \Delta G + 1$.
+\end{prop}
+
+\begin{proof}
+    Let $n = |V(G)|$. Enumerate the vertices of $G$ as $v_1, v_2, \ldots, v_n$. Perform the following greedy coloring on $G$ with $\Delta G + 1$ colors: For $i = 1, \ldots, n$, color vertex $v_i$ with any color in $\{1, \ldots, \Delta G+1\}$ that is not already used on an adjacent vertex. Since the maximum degree any vertex is $\Delta G$, at most $\Delta G$ colors have already been used on adjacent vertices, so this is always possible. When this is done, every vertex is colored, and no vertex has the same color as an adjacent vertex, so this is a proper coloring with $\Delta G + 1$ colors. Therefore, $\chi(G) \leq \Delta G + 1$.
+\end{proof}
+
+\begin{prop}\label{cycle-chromatic-parity}
+    Let $C_n$ be a cycle on $n$ vertices. Then
+    \[\chi(C_n) = \left\{
+        \begin{array}{lr}
+            2 & : 2 \mid n \\
+            3 & : 2 \centernot\mid n
+        \end{array}\right.\]
+\end{prop}
+
+\begin{proof}
+    Regardless of $n$, we know that $\Delta C_n = 2$ since every vertex in a walk is adjacent to at most two neighbors, so by Proposition \ref{chromatic-number-graph-degree} $\chi(C_n) \leq 3$. Number the vertices of $C_n$ such that we have $v_1, \ldots, v_n$. Then the coloring
+    \[f(v_i) \mapsto \left\{
+        \begin{array}{lr}
+            1 & : 2 \mid i \\
+            2 & : 2 \centernot\mid i
+        \end{array}\right.\] provides a proper $2$-coloring of $C_n$ if $2 \mid n$, and proves that there is no proper $2$-coloring of $C_n$ if $2 \centernot\mid n$.
+\end{proof}
+
+\begin{prop}\label{chromatic-cliques-independent-sets}
+    Let $G$ be a graph on $n$ vertices, then
+    \[\chi(G) \geq \omega(G).\]
+\end{prop}
+
+\begin{proof}
+    We know that $K_{\omega(G)}$ is a subgraph of $G$. Since $\chi(K_n) = n$, it follows that $\chi(G) \geq \omega(G)$ by Proposition \ref{subgraph-chromatic-number}.
+\end{proof}
+
+\begin{lemma}\label{coloring-implies-partition}
+    Let $G$ be a graph, and let $f$ be a proper $k$-coloring of $G$, where $f$ is surjective. Let $u, v \in V(G)$ be related when $f(u) = f(v)$. This relation partitions $V(G)$ into independent sets.
+\end{lemma}
+
+\begin{proof}\proofbreak
+    Let $P_i = \{v \in V(G) \mid f(v) = i\}$, and $P = \{P_1, \ldots, P_k\}$.
+
+    Since $f$ is surjective, for $i \in \{1, \ldots, k\}$ there is some $v \in V(G)$ such that $f(v) = i$, and so $P_i \neq \emptyset$. Therefore, $\emptyset \notin P$.
+
+    For every $v \in V(G)$, since $f(v) = i$ for some $i \in \{1, \ldots, k\}$, we know that $v \in P_i$, and so
+    \[V(G) = \bigcup_{P_i\in P}P_i.\]
+
+    Since $f$ is a function, for any $v \in V(G)$, we know that $f(v) = i$ and $f(v) = j$ implies that $i = j$. Therefore, for every $P_i, P_j \in P$, since $v \in (P_i \intersection P_j)$ implies that $f(v) = i$ and $f(v) = j$, we have $i = j$ and so $P_i \intersection P_j = \emptyset$ when $i \neq j$.
+
+    Therefore, $P$ is a partition of $V(G)$. For any $u, v \in P_i$, we know that $f(u) = f(v)$, and so $u$ is not adjacent to $v$ because $f$ is a proper coloring. Therefore, $P$ is a set of independent sets in $G$.
+\end{proof}
+
+\begin{prop}
+    Let $G$ be a graph on $n$ vertices, then
+    \[\chi(G) \geq \frac{n}{\alpha(G)}.\]
+\end{prop}
+
+\begin{proof}
+    Assume that $\chi(G) < \frac{n}{\alpha(G)}$, so there exists a proper $k$-coloring of $G$ where $k < \frac{n}{\alpha(G)}$. Therefore, by Lemma \ref{coloring-implies-partition}, there is a partition of $G$ into fewer than $\frac{n}{\alpha(G)}$ independent sets. However, this is a contradiction since $\alpha(G)$ is the largest independent set in $G$, and so there must be at least $\frac{n}{\alpha(G)}$ independent sets in any such partition.
+\end{proof}
+
+\begin{prop}\label{single-maximum-degree}
+    Let $G$ be a graph. If $\Delta G \geq 1$, and $d_G(v) = \Delta G$ for only one $v \in V(G)$, then $\chi(G) \leq \Delta G$.
+\end{prop}
+
+\begin{proof}
+    Let $v$ be the unique vertex with $d_G(v) = \Delta G$, $f$ be a $\Delta G$-coloring such that $f(v) = 1$, and $U$ be the set of vertices that neighbor $v$. Since $\Delta U < \Delta G$, we know that $G[U] - v$ is a subgraph with degree at most $\Delta U - 1$, and so by Proposition \ref{chromatic-number-graph-degree} can be colored with the $\Delta U = \Delta G - 1$ remaining colors. Since no remaining uncolored vertex is adjacent to $v$, the remainder of $G$ has degree $\Delta G - 1$, and can be colored using the procedure from the proof to Proposition \ref{chromatic-number-graph-degree} using all $\Delta G$ colors.
+\end{proof}
+
+\begin{prop}\label{induced-subgraphs-minimum-degree}
+    Let $G$ be a graph. If $\delta H \leq d$ for every induced subgraph $H$ of $G$, and some $d \in \N$, then $\chi(G) \leq d+1$.
+\end{prop}
+
+\begin{proof}
+    We will prove this by induction on $k$, the number of vertices in $G$. In the base case $k=1$, the minimum (and only) degree is zero, and the graph can indeed be colored with a single color.
+
+    Assume that the proposition holds for all graphs on $n$ vertices, where $0 < n \leq k$. Then let $G$ be a graph on $k+1$ vertices. Choose some $v \in V(G)$, and consider $G - v$. If $\delta J \leq c$ for every induced subgraph $J$ of $G - v$, then $\delta H \leq c +1 = d$ for every induced subgraph $H$ of $G$. By the induction hypothesis, we know that $\chi(G - v) \leq d$, and so $\chi(G) \leq d+1$.
+\end{proof}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (1) at ({2*cos(90)}, {2*sin(90)}) {1};
+            \node (2) at ({2*cos(162)}, {2*sin(162)}) {2};
+            \node (3) at ({2*cos(234)}, {2*sin(234)}) {3};
+            \node (4) at ({2*cos(306)}, {2*sin(306)}) {4};
+            \node (5) at ({2*cos(18)}, {2*sin(18)}) {5};
+            \node (6) at (0, 0) {6};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (1) edge (2);
+            \path [-] (2) edge (3);
+            \path [-] (3) edge (4);
+            \path [-] (4) edge (5);
+            \path [-] (5) edge (1);
+
+            \path [-] (1) edge (6);
+            \path [-] (2) edge (6);
+            \path [-] (3) edge (6);
+            \path [-] (4) edge (6);
+            \path [-] (5) edge (6);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Chromatic number example graph}
+\label{fig:chromatic-graph-example}
+\end{figure}
+
+\begin{exmp}
+    Let $G$ be the graph on $n$ vertices shown in Figure \ref{fig:chromatic-graph-example}. By Proposition \ref{single-maximum-degree}, we know that $\chi(G) < 5$. Since $A = \{1, 2, 3, 4, 5, 1\}$ is $C_5$ and $2 \centernot\mid 5$, we know that $\chi(G[A]) = 3$ by Proposition \ref{cycle-chromatic-parity}. Since $6$ is adjacent to very vertex in $A$, it follows that $\chi(G) \geq \chi(G[A]) + 1$, and so $\chi(G) \geq 4$. Therefore, $\chi(G) = 4$.
+\end{exmp}
+
+\begin{prop}
+    Let $G$ be a graph. $G$ is $1$-colorable if and only if it is \emph{edgeless}, that is, $E(G) = \emptyset$.
+\end{prop}
+
+\begin{defn}
+    Graphs that are $2$-colorable are called \emph{bipartite}.
+\end{defn}
+
+\begin{prop}
+    Trees are bipartite.
+\end{prop}
+
+\begin{proof}
+    We will prove this by induction on the number of vertices $n$. In the base case $n=1$, a tree on $n$ vertices is bipartite since it is $1$-colorable, and so it is $2$-colorable.
+
+    Now assume that any tree on $n \geq 1$ vertices is bipartite, and let $T$ be a tree on $n+1$ vertices. Since $n \geq 2$, by Theorem \ref{tree-has-leaf}, $T$ must have a leaf $u$. By Proposition \ref{tree-minus-leaf}, $T - u$ is a tree on $n$ vertices, and so it is bipartite by the induction hypothesis. It follows that is has a proper $2$-coloring $f$. Since $u$ is a leaf, it is only adjacent to one vertex, which we will denote $v$. Extend $f$ to $u$ by letting $f(u) = 1$ if $f(v) = 2$, and $f(u) = 2$ if $f(v) = 1$. Then this extension of $f$ must be a proper $2$-coloring of $T$, and so $T$ is bipartite.
+\end{proof}
+
+\begin{defn}Complete bipartite graph\proofbreak
+    The \emph{complete bipartite} graph $K_{m,n}$ where $m,n \in \N$ and $m,n \geq 1$ is composed of two disjoint set of vertices $X$ and $Y$ (the \emph{bipartitions} of $K_{m,n}$) where \item $|X| = m$, and $|Y| = n$. $K_{m,n} = (V, E)$, where
+    \[V = X \union Y,\]
+    \[E = \left\{x, y\} \compbar x \in X, y \in Y \right\}.\]
+\end{defn}
+
+\begin{thm}
+    Let $G$ be a graph. $G$ is bipartite if and only if it contains no odd cycles.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) Assume, for the sake of contradiction, that $G$ has at least one odd cycle $C$. By Proposition \ref{cycle-chromatic-parity}, $\chi(C) = 3$ and so by Proposition \ref{subgraph-chromatic-number}, $3 = \chi(C) \leq \chi(G)$. However, $G$ is bipartite and so $\chi(G) \leq 2$, so this is a contradiction, and $G$ must contain no odd cycles.
+
+    ($\impliedby$) Let $H$ be a connected component of $G$ that contains no odd cycles. Then choose some $v_0 \in V(H)$, and for every $v \in V(H)$, let $p(v)$ be a shortest $(u,v)$-path in $H$ (which must exist since $H$ is connected), and let $l(v)$ be the length of $p(v)$. If $2 \mid l(v)$, color $v$ with $1$, and color it $2$ otherwise. If $u, v \in V(H)$ are adjacent, and colored with the same color, then $l(u) + l(v)$ is even, and so $p(u) + \{u, v\} + p(v)$ is an odd cycle starting and ending at $v_0$. However, we assumed $H$ contains no odd cycles, and so any adjacent $u,v$ must have different colors. Therefore, $H$ is bipartite, and so if $G$ contains no odd cycles, we can use this procedure to show that every connected component of $G$ is bipartite, and it follows that $G$ must be bipartite.
+\end{proof}

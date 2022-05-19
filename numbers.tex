@@ -1,0 +1,482 @@
+\chapter{Number Theory}
+\label{ch:numbers}
+
+\begin{thm}\label{integer-remainder-thm}
+    Let $x, n \in \Z$ with $n \geq 1$. Then there exists unique $q, r \in \Z$ such that
+    \[x = qn + r,\] and
+    \[0 \leq r < n.\]
+\end{thm}
+
+\begin{exmp}
+    Let $x = 59$, and $n = 7$. Then since $x = 8(7) + 3$, we have $q = 8$ and $r = 3$.
+\end{exmp}
+
+\begin{rmk}
+    We may denote the unique remainder $r$ by $x \bmod n$.
+\end{rmk}
+
+\begin{defn}
+    Let $x, y, n \in \Z$ with $n \geq 1$. We say that $x$ and $y$ are equivalent mod $n$, denoted by \[x \equiv y \pmod n\] when $(x - y) \bmod n = 0$.
+\end{defn}
+
+\begin{prop}\label{equiv-modular-remainder}
+    Let $x, y, n \in \Z$ with $n \geq 1$. Then
+    \[x \equiv y \pmod n \iff x \bmod n = y \bmod n.\]
+\end{prop}
+
+\begin{proof}\proofbreak
+    ($\implies$) Since $x \equiv y \pmod n$, we know that $(x - y) \bmod n = 0$, so $(x - y) = qn$ for some $q \in \Z$. By Theorem \ref{integer-remainder-thm}, there exists $q_1, q_2, r_1, r_2 \in \Z$ such that $x = q_1n + r_1$, $y = q_2n + r_2$, and $0 \leq x n$, $0 \leq y < n$. It follows that $(q_1n + r_1) - (q_2n + r_2) = qn$, so $r_1 - r_2 = (q - q_1 + q_2)n$. Since $0 \leq r_1 \leq r_2 < n$, it follows that $\abs{r_1 - r_2} < n$, and so $\abs{q - q_1 + q_2} = 0$. Therefore, $r_1 = r_2$ and so $x \bmod n = y \bmod n$ by definition.
+
+    ($\impliedby$) By Theorem \ref{integer-remainder-thm}, there exists $q_1, q_2, r_1, r_2 \in \Z$ such that $x = q_1n + r_1$, $y = q_2n + r_2$. Since $x \bmod n = y \bmod n$ implies $r_1 = r_2$ by definition, we know that $(x - y) = (q_1 - q_2)n$. Therefore, $(x - y) \bmod n = 0$ and so $x \equiv y \pmod n$ by definition.
+\end{proof}
+
+\begin{defn}
+    Let $a, b \in \Z$. An integer $d$ is called a \emph{common divisor} of $a$ and $b$ provided that $d \mid a$ and $d \mid b$.
+\end{defn}
+
+\begin{exmp}
+    The common divisors of $18$ and $12$ are: \[1, -1, 2, -2, 3, -3, 6, -6.\]
+\end{exmp}
+
+\begin{defn}
+    Let $a, b \in \Z$. An integer $d$ is called the \emph{greatest common divisor} of $a$ and $b$ provided that
+    \begin{itemize}
+        \item $d$ is a common divisor of $a$ and $b$,
+        \item if $e$ is a common divisor of $a$ and $b$, then $e \leq d$.
+    \end{itemize}
+    The greatest common divisor of $a$ and $b$ may be denoted by $\gcdof{a}{b}$.
+\end{defn}
+
+\begin{exmp}
+    From the previous example, we can see that $\gcdof{a}{b} = 6$.
+\end{exmp}
+
+\begin{rmk}\proofbreak
+    \begin{itemize}
+        \item If $\gcdof{a}{b}$ exists it is unique, otherwise $a = b = 0$.
+        \item If $a \neq 0$, then $\gcdof{a}{0} = |a|$.
+        \item $\gcdof{a}{b} = \gcdof{-a}{b} = \gcdof{a}{-b} = \gcdof{-a}{-b}$.
+        \item $\gcdof{a}{b} = \gcdof{b}{a}$.
+    \end{itemize}
+\end{rmk}
+
+\begin{prop}\label{euclidean-division-property}
+    Let $a, b \in \Z^+$. Then \[\gcdof{a}{b} = \gcdof{b}{a \bmod b}.\]
+\end{prop}
+
+\begin{exmp}
+    $\gcdof{18}{12} = \gcdof{12}{6} = \gcdof{6}{6} = 6$.
+\end{exmp}
+
+\begin{proof}
+    Let $d = \gcdof{a}{b}$ and $e = \gcdof{b}{a \bmod b}$. By Theorem \ref{integer-remainder-thm}, we know that \[a \bmod b = a - q_1b\] for some $q \in \Z$. Since $d \mid a$ and $d \mid b$, it follows that $d \mid (a - q_1b)$. Therefore, $d$ is \emph{a} common divisor of $b$ and $a \bmod b$, and so $d \leq e$.
+
+    Similarly, since $e \mid b$ and $e \mid (a \bmod b)$, and $a = (a \bmod b) + q_1b$, we know that $e \mid a$. Therefore, $e$ is \emph{a} common divisor of $a$ and $b$, and so $e \leq d$. Since we also have $d \leq e$, we then know that $d = e$.
+\end{proof}
+
+\begin{thm}\label{gcd-characterization}
+    Let $a, b \in \Z$, not both zero. Then $\gcdof{a}{b}$ is the smallest positive integer of the form $ax + by$ where $x, y \in \Z$.
+\end{thm}
+
+\begin{proof}
+    Since $a, b$ are not both zero, when $x = a$ and $y = b$ gives $ax + by = a^2 + b^2 > 0$, so the set \[\mathcal{D} = \left\{ax+by \compbar ax + by > 0, x, y \in \Z \right\}\] is a non-empty subset of the positive integers, and so by the well-ordering principle $\mathcal{D}$ must have a smallest element. Denote this element by $d = ax_0 + by_0$.
+
+    Assume, for the sake of contradiction, that $d \centernot\mid a$. Then $a = qd + r$ with $0 < r < d$, and so $r = a - qd = (1-qx_0)a + (-qy_0)b$. Since $r > 0$, we know that $r \in \mathcal{D}$. However, $r < d$, but $d$ is the smallest element of $\mathcal{D}$, and so our assumption was false and $d \mid a$. Similarly, $d \mid b$.
+
+    Let $e \in \Z$ such that $e \mid a$ and $e \mid b$. For any $x, y \in \Z$, it follows that $e \mid (ax + by)$, and so $e \leq d$. Therefore, $d = \gcdof{a}{b}$.
+\end{proof}
+
+\begin{defn}
+    Let $a, b \in \Z$. If $\gcdof{a}{b} = 1$, we say that $a$ and $b$ are \emph{relatively prime}.
+\end{defn}
+
+\begin{rmk}
+    For any $a, b \in \Z$ not both zero, if $ax + by = 1$ for $x, y \in \Z$, then $1 \in \mathcal{D}$, and so $\gcdof{a}{b} \leq 1$. Since $\gcdof{a}{b}$ must be at least $1$, it follows that $\gcdof{a}{b} = 1$.
+\end{rmk}
+
+\begin{cor}\label{relatively-prime-linear-combination}
+    Let $a, b \in \Z$. Then $a$ and $b$ are relatively prime if and only if there exists $x, y \in \Z$ such that $ax + by = 1$.
+\end{cor}
+
+\begin{lemma}\label{modular-product-identification}
+    Let $a, b \in \Z$, $n > 1$, and let $c = b \mod n$. Then $ab \equiv ac \pmod n$.
+\end{lemma}
+
+\begin{proof}
+    By Theorem \ref{integer-remainder-thm}, we know that $ab = q_1n + r_1$ and $b = q_2n + r_2$ for some $q_1, q_2, r_1, r_2 \in \Z$ such that $0 \leq r_1 < n$ and $0 \leq r_2 < n$. Therefore, $ab = a(q_2n + r_2 = q_1n + r_1)$, and so $ar_2 = (aq_2 + q_1)n + r_1$. Since $r_2 = b \bmod n = c$, by Proposition \ref{equiv-modular-remainder} it follows that $ab \equiv ac \pmod n$.
+\end{proof}
+
+\begin{thm}{Invertible Elements Theorem}\label{invertible-elements}\proofbreak
+    Let $a \in \Z_n$. Then the multiplicative inverse of $a$, $a^{-1}$, exists if and only if $\gcdof{a}{n} = 1$.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) Let $b \in \Z_n$ such that $a \odot_n b = 1$, so $(ab) \bmod n = 1$. Then by Theorem \ref{integer-remainder-thm}, for some $q \in \Z$ we have $ab = qn + 1$, and so $1 = ab - qn$. By Corollary \ref{relatively-prime-linear-combination}, it follows so $\gcdof{a}{n} = 1$.
+
+    ($\impliedby$) Since $\gcdof{a}{n} = 1$, there exist $x, y \in \Z$ such that $ax + ny = 1$ by Corollary \ref{relatively-prime-linear-combination}, and so $ax = (-y)n + 1$. Since $0 \leq 1 < n$, it follows that $(ax) \bmod n = 1$.
+\end{proof}
+
+\begin{cor}
+    Let $x, y \in \Z$ such that $ax + ny = 1$, and let $b = x \bmod n$. Then $a^{-1} = b$ in $\Z_n$.
+\end{cor}
+
+\begin{proof}
+    We know $(ax) \bmod n = 1$ as $ax = -yn + 1$. Since $ax \equiv ab \pmod n$ by Lemma \ref{modular-product-identification}, by Proposition \ref{equiv-modular-remainder} we have $(ab) \bmod n = 1$. Therefore, $a \odot_n b = 1$, and so $b = a^{-1}$.
+\end{proof}
+
+\begin{lemma}\label{prime-division-one}
+    Let $a, b, p \in \Z$ with $p$ a prime number. If $p \mid ab$, then at least one of $p \mid a$ and $p \mid b$ must be true.
+\end{lemma}
+
+\begin{proof}
+    Assume, for the sake of contradiction, that $p \centernot\mid a$ and $p \centernot\mid b$. Since $p \centernot\mid a$, it must be that $\gcdof{a}{p} = 1$, and so by Corollary \ref{relatively-prime-linear-combination}, there exists $x_1, y_1 \in \Z$ such that $ax_1 + py_1 = 1$. Similarly, for some $x_2, y_2 \in \Z$, $bx_2 + py_2 = 1$. Therefore, $1 = (ax_1 + py_1)(bx_2 + py_2) = abx_1x_2 + apx_1y_2 + bpx_2y_1 + p^2y_1y_2$. Since $p$ divides all four terms of this expression (the first term by the assumption that $p \mid ab$), it must be that $p \mid 1$, which is a contradiction since $p$ is prime.
+\end{proof}
+
+\begin{lemma}\label{prime-division-two}
+    Suppose $p, q_1, q_2, \ldots, q_m$ are prime numbers. If $p \mid q_1q_2\cdots q_m$, then $p = q_i$ for some $1 \leq i \leq m$.
+\end{lemma}
+
+\begin{proof}
+    We will proceed by induction on $m$. In the base case $m = 1$, if $p\mid q_1$ it must be that $q_1 = p$, and so the base case is true.
+
+    Let $q_1q_2\cdots q_m = a$, and let $a_{m+1} = b$. Assume, for some $m \geq 1$, that if $p \mid a$ that $p = q_i$ for some $1 \leq i \leq m$. If $p \mid ab$, then by Lemma \ref{prime-division-one}, either $p \mid a$ in which case $p = q_i$ for some $1 \leq i \leq m$ by assumption, or  $p \mid b$ in which case $p = q_{m+1}$. Therefore, if $p \mid q_1q_2\cdots q_mq_{m+1}$ we have $p = q_i$ for some $1 \leq i \leq m+1$, and the induction is complete.
+\end{proof}
+
+\begin{thm}\label{fundmental-theorem-arithmetic}Fundamental Theorem of Arithmetic\proofbreak
+    Let $n \in \Z$, where $n > 0$. Then there exists a unique factoring of $n$ into a product of primes, up to the ordering of the primes.
+\end{thm}
+
+\begin{proof}\proofbreak
+\textbf{Existence} We will proceed by induction on $n$. In the base case $n=1$, the empty product is equal to $1$ and is vacuously a product of primes.
+
+Assume for some $n \geq 1$, all $m \in \Z$ such that $1 \leq m \leq n$ can be factored into a product of primes. There are two possible cases for $n+1$: either it is prime or it is composite. If $n+1$ is prime, then $(n+1)$ is a product of primes, and a factoring of $(n+1)$. If it is composite, there exists some $a, b \in \Z$ such that $n+1 = ab$ and $1 < a < n+1$ and $1 < b < n+1$. Therefore, $a$ and $b$ can be factored into a product of primes by assumption, and so $ab$ can be factored into a product of primes, and the induction is complete.
+
+\textbf{Uniqueness} Assume, for that sake of contradiction that there are some positive integers that can be factored into a product of primes in at least two distinct ways. Let $Y$ be the set of all such positive integers. By the well-ordering principle, there exists some smallest element $y \in Y$.
+
+Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime which are factorization of $y$, and are not simply permutations of each other. It follows that these products have no prime factors in common. If they did have at least one factor $r$ in common, then $y/r$ would be a smaller element of $y$, but $y$ is the smallest element of $Y$. Then since $p_1 \mid y = q_1q_2\cdots q_m$, we know that $p_1 = q_i$ for some $1 \leq i \leq m$ by Lemma \ref{prime-division-two}, which is a contradiction, and so $Y = \emptyset$.
+\end{proof}
+
+\begin{defn}
+    The function $\pi : \R \to \N$ is the \emph{prime-counting theorem}, where $\pi(x)$ is the number of primes less than or equal to $x$.
+\end{defn}
+
+\begin{exmp}
+    $\pi(10) = 4$, since the only prime numbers less than or equal to $10$ are $2$, $3$, $5$, and $7$.
+\end{exmp}
+
+\begin{thm}\label{prime-number-theorem}Prime Number Theorem\proofbreak
+    \[\pi(x) \sim \frac{x}{\ln(x)},\] which is to say,
+    \[\lim_{x \to \infty}\frac{\pi(x)}{\frac{x}{ln(x)}} = 1.\]
+\end{thm}
+
+\begin{defn}
+    For $n \in \Z_{\geq 1}$, we define
+    \[\Z_n^* = \left\{a \in \Z_n \compbar \gcdof{a}{n} = 1 \right\}.\]
+\end{defn}
+
+\begin{exmp}
+    $\Z_{3} = \{0, 1, 2\}$, so $\Z_{3}^* = \{1, 2\}$.
+\end{exmp}
+
+\begin{exmp}
+    $\Z_{10} = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}$, so $\Z_{10}^* = \{1, 3, 7, 9\}$.
+\end{exmp}
+
+\begin{defn}
+    Let $n \in \Z$ such that $n \geq 1$. Then \emph{Euler's totient} is a function $\phi: \Z^+ \to \Z$ which counts of number of integers $k$ such that $1 \leq k \leq n$ where $\gcdof{k}{n} = 1$.
+\end{defn}
+
+\begin{exmp}
+    $\phi(1) = 1$, $\phi(2) = 1$, $\phi(3) = 2$, and $\phi(10) = 4$.
+\end{exmp}
+
+\begin{prop}
+    For $n \geq 2$,
+    \[\phi(n) = \abs{\Z_n^*}.\]
+\end{prop}
+
+\begin{prop}
+    If $p, q$ are distinct primes, then
+    \begin{itemize}
+        \item $\phi(p) = p - 1$,
+        \item $\phi(p^2) = p(p-1)$, and
+        \item $\phi(pq) = (p-1)(q-1)$.
+    \end{itemize}
+\end{prop}
+
+\begin{thm}\label{eulers-theorem}Euler's theorem\proofbreak
+    Let $n \in \Z^+$. For every $a \in \Z_n$ such that $\gcdof{a}{n} = 1$, then
+    \[a^{\phi(n)} \equiv 1 \pmod n.\]
+\end{thm}
+
+\begin{lemma}\label{divisor-bijection}
+    Let $n \in \Z^+$, and let $d_1, d_2, \ldots, d_k$ be the positive divisors of $n$ in ascending order. Let
+    \begin{align*}
+        A_{d_i} &= \left\{a\in \Z\compbar 1 \leq a \leq n, \gcdof{a}{n} = d_i\right\}.
+    \end{align*}
+    Then $\abs{A_{d_i}} = \varphi(d_{k-(i-1)})$.
+\end{lemma}
+
+\begin{proof}
+    Recall that if $a|n$, then $n = qa$ and so $q|n$. Therefore, we can uniquely pair-off the divisors of $n$. Furthermore, if $aq = n$ and $br = n$, and $a<b$, then
+    \begin{align}
+        q = \frac{n}{a} > \frac{n}{b} = r.
+    \end{align}
+    Since there are exactly $i-1$ divisors of $n$ less than $d_{i}$ and exactly $i-1$ divisors of $n$ greater than $d_{k-(i-1)}$, it follows that $d_{i}$ is paired-off with $d_{k-(i-1)}$.
+
+    Let $B_{d_i} = \left\{b\in \Z\compbar 1 \leq b \leq \frac{n}{d_i}, \gcdof{b}{\frac{n}{d_i}} = 1\right\}$. Note that we just proved that $n/d_i = d_{k-(i-1)}$, so $\abs{B_{d_i}} = \varphi(d_{k-(i-1)})$.
+    
+    It just remains for us to show that $\abs{B_{d_i}} = \abs{A_{d_i}}$. Consider $f: B_{d_i} \to A_{d_i}$ defined by $b \mapsto d_ib$. I claim this is a bijection between $B_{d_i}$ and $A_{d_i}$. First, we prove that $d_ib$ is actually in $A_{d_i}$. Since $1 \leq b \leq \frac{n}{d_i}$, we have $d_i \leq bd_i \leq n$. We know by Corollary \ref{relatively-prime-linear-combination} that there exists integers $x$ and $y$ such that $bx + \frac{n}{d_i}y = 1$, so $d_{i}bx + ny = d_i$. Since $d_ibx + ny = g$ implies $bx + \frac{n}{d_i}y = \frac{g}{d_i}$, and we know that $1$ is the minimum positive value of $bx + \frac{n}{d_i}y$ by Theorem \ref{gcd-characterization}, it follows that if $g > 1$ then $\frac{g}{d_i} = 1$ and so $g = d_i$. Therefore, by the same theorem we have $\gcdof{d_{i}b}{n} = d_i$, and so $d_{i}b \in A_{d_i}$.
+
+    Now that we have proved $f$ is a function, we must show it is injective and surjective. Consider $a \in A_{d_i}$, so $\gcdof{a}{n} = d_i$ and then by Theorem \ref{gcd-characterization} there exists integers $x$ and $y$ such that $ax + ny = d_i$. Therefore, $\frac{a}{d_i}x + \frac{n}{d_i}y = 1$, and so $\gcdof{\frac{a}{d_i}}{\frac{n}{d_i}} = 1$. Since $1 \leq a \leq n$, and $\frac{a}{d_i}$ must clearly be an integer, it follows that $1 \leq \frac{a}{d_i} \leq \frac{n}{d_i}$, and so we have $\frac{a}{d_i} \in B_{d_i}$. Finally, if $b_1d_i = b_2d_i$, then $b_1 = b_2$. Therefore, $f$ is a bijection and so $\abs{B_{d_i}} = \abs{A_{d_i}}$.
+\end{proof}
+
+\begin{lemma}\label{gcd-partition}
+    The set $\{1, \ldots, n\}$ is the disjoint union of $A_{d_i}$ for all positive divisors $d_i$ of $n$.
+\end{lemma}
+
+\begin{thm}
+    Let $n \in \Z^+$, and let $d_1, d_2, \ldots, d_k$ be the positive divisors of $n$. Then
+    \begin{align*}
+        n = \sum_{i=1}^{k}\varphi(d_i).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Notice that
+    \begin{align*}
+        n = \abs{\left\{a \in \Z | 1 \leq a \leq n\right\}},
+    \end{align*}
+    and so by Lemma \ref{gcd-partition} we know that
+    \begin{align*}
+        n = \sum_{i=1}^{k}\abs{A_{d_i}}.
+    \end{align*}
+    Therefore by Lemma \ref{divisor-bijection} we have
+    \begin{align*}
+        n = \sum_{i=1}^{k}\abs{A_{d_i}} = \sum_{i=1}^{k}\varphi(d_{k-(i-1)}) = \sum_{i=1}^{k}\varphi(d_i).
+    \end{align*}
+\end{proof}
+
+\begin{thm}{Chinese Remainder Theorem}\label{chinese-remainder-theorem}\proofbreak
+    Let $n_1, \ldots, n_k \in \Z^+$ such that $\gcdof{n_i}{n_j} = 1$ for all $i \neq j$, and consider $b_1, \ldots, b_k \in \Z$. Let
+    \begin{align*}
+        n = \prod_{i=1}^{k}n_i.
+    \end{align*}
+    Then there exists unique $x \in \Z$ such that $0 \leq x < n$ and
+    \begin{align*}
+        x &\equiv b_1 \bmod n_1 \\
+        x &\equiv b_2 \bmod n_2 \\
+        &\,\,\vdots \\
+        x &\equiv b_k \bmod n_k.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    For all $1 \leq i \leq k$, let
+    \begin{align*}
+        N_{i} = \prod_{j \neq i}n_j.
+    \end{align*}
+    Note that $N_i$ is invertible mod $n_i$ by the Invertible Elements Theorem \ref{invertible-elements}, so we can let $\overline{N_i} = N_i^{-1} \bmod n_i$. Also note that we can efficiently compute $\overline{N_i}$ using the Euclidean algorithm.
+
+    Take $y = b_1N_1\overline{N_1} + b_2N_2\overline{N_2} + \cdots + b_kN_k\overline{N_k}$. Then $y \bmod n_i = b_i$ since $b_jN_j\overline{N_j} \bmod n_i = 0$ for $i \neq j$ and $b_iN_i\overline{N_i} \bmod n_i = b_i$. Therefore, such a solution exists, and moreover if we take $x = y \bmod n$ then $0 \leq x \leq n$. To verify uniqueness, suppose we have $x$ and $x'$ that both satisfy the conditions. Then clearly $x \equiv x' \bmod n_i$ for all $1 \leq i \leq k$, and so every $n_i$ divides $\abs{x - x'}$. Since the $n_i$'s are relatively prime, $n$ divides $\abs{x - x'}$. Since $0 \leq x, x' < n$, we know that $\abs{x - x'} < n$, and so we must have $\abs{x - x'} = 0$ which implies $x = x'$.
+\end{proof}
+
+\begin{exmp}
+    Suppose we want to find $x$ such that $x \equiv 4 \bmod 33$, $x \equiv 5 \bmod 35$, and $x \equiv 6 \bmod 31$. Since $33$, $35$, and $31$ are pair-wise relatively prime, the Chinese Remainder Theorem \ref{chinese-remainder-theorem} guarantees us a unique solution $0 \leq x < 31(33)(35)$. We then have
+    \begin{align*}
+        x = 4(35 \cdot 31)\overline{(35 \cdot 31)} + 5(33 \cdot 31)\overline{(33 \cdot 31)} + 6(35 \cdot 33)\overline{(35 \cdot 33)}.
+    \end{align*}
+\end{exmp}
+
+\begin{prop}
+    Let $p$ be prime, and consider $c \in \Z_{p}$ that has a square root $m$ mod $p$. Then $\pm m$ are the \emph{only} square roots of $c$ mod $p$.
+\end{prop}
+
+\begin{proof}
+    Consider a square root $a$ of $c$ mod $p$. Then $a^2 = c \bmod p$, and $m^2 = c \bmod p$, therefore $a^2 - m^2 = qp$ for some $q \in \Z$ by definition. Therefore,
+    \begin{align*}
+        p | (m - a)(m + a).
+    \end{align*}
+    Since $p$ is prime, by Lemma \ref{prime-division-one} we must have $p | m - a$ or $p | a - (-m)$. Therefore, $a = m \bmod p$ or $a = -m \bmod p$.
+\end{proof}
+
+\begin{prop}\label{modular-square-roots}
+    Let $p$ be a prime such that $p = 3 \bmod 4$. If there exists $c \in \Z_p$ with square root $m$ mod $p$, then
+    \begin{align*}
+        m = \pm c^{\frac{p+1}{4}} \bmod p.
+    \end{align*}
+\end{prop}
+
+\begin{proof} Since $m^2 = c$ mod $p$, we have
+    \begin{align*}
+        \left(c^{\frac{p+1}{4}}\right)^2 = \left[\left(m^2\right)^{\frac{p+1}{4}}\right]^{2} = m^{p+1} = m^{p-1}m^2 = m^2 = c \bmod p.
+    \end{align*}
+    Note that we have $m^{p-1} = 1 \bmod p$ by Fermat's Little theorem \ref{fermat-little-corallary}.
+\end{proof}
+
+\begin{prop}
+    Let $p, q$ be distinct primes such that $p = q = 3 \bmod 4$. If $c \in \Z_{pq}$ has a square root mod $pq$, then all squares roots of $c$ mod $pq$ are $m_1$, $m_2$, $m_3$, $m_4$ (not necessarily all distinct) such that
+    \begin{align*}
+        m_1 &= c^{\frac{p+1}{4}} \bmod p = c^{\frac{q+1}{4}} \bmod q \\
+        m_2 &= c^{\frac{p+1}{4}} \bmod p = -c^{\frac{q+1}{4}} \bmod q \\
+        m_3 &= -c^{\frac{p+1}{4}} \bmod p = c^{\frac{q+1}{4}} \bmod q \\
+        m_4 &= -c^{\frac{p+1}{4}} \bmod p = -c^{\frac{q+1}{4}} \bmod q.
+    \end{align*}
+\end{prop}
+
+\begin{rmk}
+    We can find such $m_1, \ldots, m_2$ efficiently given $c$, $p$, and $q$ via the Chinese Remainder Theorem \ref{chinese-remainder-theorem}.
+\end{rmk}
+
+\begin{proof}
+    We know that $m \in \Z_{pq}$ is a square root of $c$ mod $\Z_{pq}$ if and only if $pq | m^2 - c$, which occurs if and only if $p | m^2 - c$ \emph{and} $q | m^2 - c$ by Lemma \ref{prime-division-one}. In turn, this occurs if and only if $m = \pm c^{\frac{p+1}{4}} \bmod p$ and $m = \pm c^{\frac{q+1}{4}} \bmod q$ by Proposition \ref{modular-square-roots}.
+\end{proof}
+
+\begin{thm}{Rabin Cryptosystem Security}\proofbreak
+    Let $p$ and $q$ be unknown distinct primes, and let $n = pq$ be known. Then an \emph{efficient} (polynomial time complexity) method for finding $4$ distinct square roots of $c$ mod $pq$ provides an efficient factorization of $n = pq$.
+\end{thm}
+
+\begin{proof}
+    Suppose we have a method to efficiently find $m_1, \ldots, m_2$ mod $pq$, where $m_1 \neq \pm m_2$ mod $pq$. Then we know that
+    \begin{align*}
+        pq | m_{1}^2 - m_{2}^2
+    \end{align*}
+    so $pq | (m_1 - m_2)(m_1 + m_2)$. However, by assumption $pq \not| m_1 + m_2$, and $pq \not| m_1 - m_2$. It follows that $p$ divides one factor and $q$ divides the other. We can efficiently compute $\gcdof{m_1 - m_2}{n}$ using the Euclidean algorithm. Since $n$ has only $p$ and $q$ as factors, and $m_1 - m_2$ has precisely one of $p$ or $q$ as factors, this greatest common divisor must be one of $p$ or $q$, and then the other can be found by dividing $n$ by the first.
+\end{proof}
+
+\begin{defn}
+    Let $p$ be a prime, and for some $r \in \Z_{p}^{*}$ consider the function $f: \Z/(p-2)\Z \to \Z_p^{*}$ where $f(a) = r^{a}$. Then $r$ is an \emph{primitive root} mod $p$ when $f$ is a bijection.
+
+    The \emph{discrete logarithm} in base $b$ mod $p$, where $b$ is a primitive root mod $p$, is $f^{-1}$.
+\end{defn}
+
+\begin{thm}
+    Let $p$ and $q$ be prime numbers such that $q = 2p + 1$, and $a \in \Z_q$ is not one of $0, 1, -1$ mod $q$. Then $a$ is a primitive root mod $q$ if and only if $a^{p} \neq 1 \bmod q$.
+\end{thm}
+
+\begin{proof}
+    Note that $\varphi(q) = 2p$, and so by Lagrange's theorem the order of $a$ is one of $1$, $2$, $p$, or $2p$. If the order of $a$ was $1$, then we would have $a = 1 \bmod q$. If the order of $a$ was two, $a$ would be a square root of $1$ mod $q$, which can only of $\pm 1$ so $a = -1 \bmod q$. If the order of $a$ was $p$, we would have $a^{p} = -1 \neq 1 \bmod q$. Therefore, the order of $a$ is $2p$, and so $a$ is a primitive root mod $q$.
+
+    If $a$ is a primitive root mod $q$, then since $a^{2p} = 1 \bmod q$, it follows that $a^{p} = \pm 1$, but $a^{p} \neq 1 \bmod q$ since the order of $a$ is not $p$. Therefore, $a^{p} = -1 \bmod q$.
+\end{proof}
+
+\begin{defn}
+    An odd positive composite integer $n$ is a \emph{Carmichael number} when $a^{n-1} = 1 \bmod n$ for all $a \in \Z_{n^*}$.
+\end{defn}
+
+\begin{thm}
+    Consider $n \in \N$ with prime factorization $p_1p_2\cdots p_m$. Then $n$ is a Carmichael number if and only if $p_i$ are all distinct and $p_{i}-1$ divides $n-1$ for all $i = 1, \ldots, m$.
+\end{thm}
+
+\begin{proof}\proofbreak
+    ($\implies$) Let $n$ be a Carmichael number. For any prime $p$ let $n = p^{k}q$ for $q, k \in \N$ and $p$ does not divide $q$. By the Chinese Remainder theorem \ref{chinese-remainder-theorem}, there exists $a \in \N$ such that $a = 1 + p \bmod p^{k}$ and $a = 1 \bmod n$. Therefore $a$ and $n$ are relatively prime, and so $a^{n-1} = 1 \bmod n$ since $n$ is a Carmichael number.
+
+    Assume, for the sake of contradiction, that $k > 1$, so $(1 + p)^{n-1} = 1 \bmod p^{2}$. By the binomial theorem \ref{binomial-theorem} it follows that $(1 + p)^{n-1} = 1 + (n-1)p \bmod p^2$. Additionally, $p | n$ and so $1 + (n-1)p = 1 - p \bmod p^2$. However, we then have $1 - p = 1 \bmod p^2$, so it must be that $k = 1$, and so all $p_i$ are unique.
+
+    Next, we show that $p_i - 1$ divides $n-1$. Note that $n$ and $n/p$ must be relatively prime by the above. Let $b \in \N$ such that $b$ is a primitive root
+
+    ($\impliedby$)
+    Since $p_i - 1$ divides $n-1$, let $c_j(p_i - 1) = n-1$. Then for any $a \in 1, \ldots, n$ that is relatively prime to $n$, we have $a^{n-1} = a^{c_i(p_i - 1)} = \left(a^{p_i}\right)^c_i$. Note that $a^{n_i-1} \bmod p_i = 1$, so $a^{n - 1} = q_ip_i + 1$ for some integer $q_i$. Therefore, $p_i$ divides $a^{n-1} - 1$ for all $i$. Since $p_i$ are all distinct and prime, it follows that $n | a^{n-1} - 1$ and so $a^{n-1} \bmod n = 1$.
+\end{proof}
+
+\begin{thm}{Miller-Rabin theorem}\proofbreak
+    Let $p$ be a prime number, and let $s$ and $b$ such that $p - 1 = 2^{s}b$ where $b$ is odd. For any $a \in \Z_{p^*}$, consider $\mu_0 = a^{b} \bmod p$ and $\mu_i = \mu_{i-1}^{2}$ for $1 \leq i \leq s$. Exactly one of the following are true: $\mu_0 = 1 \bmod p$ or $\mu_i = -1 \bmod p$ for some $0 \leq i \leq s-1$.
+\end{thm}
+
+\begin{defn}
+    If $n \geq 3$ is an odd composite integer, any $a \in \{1, \ldots, n-1\}$ chosen uniformly at random has probability at most $1/4$ of fooling the Miller-Rabin test.
+\end{defn}
+
+\begin{defn}{Exponent Factorization}\proofbreak
+    Consider odd $n$, $a \in \Z_n$, and $k > 0$ such that $a^{k} = 1 \bmod n$. Then express $k$ as $2^{s}b$ by successively dividing $k$ by $2$, which takes on the order of $\log(k)$ oeprations. Now let $\mu_0 = a^{b} \mod n$, and successively compute $\mu_{i+1} = \mu_i^2 \bmod n$. We know that $\mu_s = a^{k} = 1 \bmod n$.
+
+    Let $i$ be the smallest index such that $\mu_i = 1 \bmod n$. If $i > 0$, and $\mu_{i-1} \neq -1 \bmod n$, then $\gcdof{\mu_{i-1}-1}{n}$ must be a non-trivial factor of $n$, which we have found efficiently.
+\end{defn}
+
+\begin{prop}\label{totient-product}
+    Let $n, m \in \N$ such that $n$ amd $m$ are relatively prime, then $\phi(nm) = \phi(n)\phi(m)$.
+\end{prop}
+
+\begin{prop}\label{totient-power}
+    Let $p$ be any prime, then $\phi(p^{k}) = (p-1)(p^{k-1})$.
+\end{prop}
+
+\begin{proof}
+    There are $p^{k}-1$ numbers $i$ such that $1 \leq i < p^{k}$. The only numbers in this set not relatively prime to $p^{k}$ are $p, 2p, \ldots, (p^{k-1}-1)p$. In total, there are then $p^{k-1}-1$ of these numbers, so $\phi(p^{k}) = \left(p^{k}-1\right) - \left(p^{k-1}-1\right) = p^{k} - p^{k-1} = (p - 1)p^{k-1}$.
+\end{proof}
+
+\begin{thm}\label{totient-prime-factorization}
+    For any positive integer $n$ with prime factorization
+    \begin{align*}
+        n = \prod_{i=1}^{r}p_i^{a_i}
+    \end{align*}
+    where $p_i$ are distinct, we have
+    \begin{align*}
+        \frac{\phi(n)}{n} = \prod_{i=1}^{r}\left(1 - \frac{1}{p_i}\right).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    First, by definition we have
+    \begin{align*}
+        \frac{\phi(n)}{n} &= \phi\left(\prod_{i=1}^{r}p_i^{a_i}\right)\frac{1}{\prod_{i=1}^{r}p_i^{a_i}},
+    \end{align*}
+    and since $p_i$ are all relatively prime to each other, by Proposition \ref{totient-product} and Porposition \ref{totient-power} we have
+    \begin{align*}
+        \frac{\phi(n)}{n} &= \prod_{i=1}^{r}\phi\left(p_i^{a_i}\right)\frac{1}{\prod_{i=1}^{r}p_i^{a_i}} \\
+        &= \prod_{i=1}^{r}(p_i^{a_i}-p_i^{a_i-1})\frac{1}{\prod_{i=1}^{r}p_i^{a_i}} = \prod_{i=1}^{r}\frac{p_i^{a_i} - p_i^{a_i-1}}{p_i^{a_i}} \\
+        &= \prod_{i=1}^{r}\left(1 - \frac{1}{p_i}\right).
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    For all $n > 2$, $\phi(n)$ is even.
+\end{prop}
+
+\begin{proof}
+    Consider the prime factorization of $n$,
+    \begin{align*}
+        n = \prod_{i=1}^{r}p_i^{a_i}.
+    \end{align*}
+    By Theorem \ref{totient-prime-factorization}, it follows that
+    \begin{align*}
+        \phi(n) = n\prod_{i=1}^{r}\left(1 - \frac{1}{p_i}\right) = \prod_{i=1}^{r}\left(1 - \frac{1}{p_i}\right)p_i^{a_i} = \prod_{i=1}^{r}\left(p_i - 1\right)p_i^{a_i-1}.
+    \end{align*}
+    Therefore, $\phi(n)$ must be even if its prime decomposition contains an odd prime. If the only prime factor is two so $n = 2^{k}$, then clearly $\phi(n)$ contains the factor $2^{k-1}$. If $k > 1$, it follows $\phi(n)$ is even and if not, $0 \leq n \leq 2$.
+\end{proof}
+
+\begin{defn}{Riemann Zeta function}\proofbreak
+    For real $s > 1$,
+    \begin{align*}
+        \zeta(s) &= \sum_{n=1}^{\infty}\frac{1}{n^s}.
+    \end{align*}
+\end{defn}
+
+\begin{lemma}\label{zeta_product}
+    For all real $s > 1$,
+    \begin{align*}
+        \zeta(s) = \left[\prod_{i=1}^{r}\left(1 - \frac{1}{p_i^s}\right)\right]^{-1}.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        \zeta(s) &= \sum_{n=1}^{\infty}\frac{1}{n^s}
+    \end{align*}
+\end{proof}
+
+\begin{thm}\label{zeta-2}
+    Let $\rho_m$ be the probability that two discrete uniform random integers between $1$ and $M$ (inclusive) are relatively prime. Then
+    \begin{align*}
+        \lim_{m\to\infty}\rho_{m} = \frac{6}{\pi^2}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    For large $m$, the probability two discrete uniform random integers between $1$ and $M$ do not have a prime dividor $p$ in common is approximately $1 - 1/p^2$. Therefore,
+    \begin{align*}
+        \rho_m = \prod_{i=1}^{\pi(m)}\left(1 - \frac{1}{p_i^2}\right).
+    \end{align*}
+
+    Note that $\zeta(2) = \pi^2/6$, and so by Lemma \ref{zeta_product} we are done. By Lemma \ref{zeta_product}, we then $rho_m  = \rho_\alpha$.
+\end{proof}
