@@ -1,6 +1,8 @@
 *.txt
 !ltex.dictionary.*.txt
 
+*.png
+
 *.aux
 *.fls
 *.log
