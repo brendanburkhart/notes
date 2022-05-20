@@ -1,17 +1,19 @@
 \setchaptergraphic{
     % Petersen graph
+    \newcommand*{\radius}{3.0}
+    \pgfmathsetmacro{\inner}{\radius*0.5*(sqrt(5)-1)}
     \begin{tikzpicture}
         \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
-            \node (a1) at ({3*cos(90)}, {3*sin(90)}) {};
-            \node (a2) at ({1.5*cos(90)}, {1.5*sin(90)}) {};
-            \node (b1) at ({3*cos(162)}, {3*sin(162)}) {};
-            \node (b2) at ({1.5*cos(162)}, {1.5*sin(162)}) {};
-            \node (c1) at ({3*cos(234)}, {3*sin(234)}) {};
-            \node (c2) at ({1.5*cos(234)}, {1.5*sin(234)}) {};
-            \node (d1) at ({3*cos(306)}, {3*sin(306)}) {};
-            \node (d2) at ({1.5*cos(306)}, {1.5*sin(306)}) {};
-            \node (e1) at ({3*cos(18)}, {3*sin(18)}) {};
-            \node (e2) at ({1.5*cos(18)}, {1.5*sin(18)}) {};
+            \node (a1) at ({\radius*cos(90)}, {\radius*sin(90)}) {};
+            \node (a2) at ({\inner*cos(90+90)}, {\inner*sin(90+90)}) {};
+            \node (b1) at ({\radius*cos(162)}, {\radius*sin(162)}) {};
+            \node (b2) at ({\inner*cos(162+90)}, {\inner*sin(162+90)}) {};
+            \node (c1) at ({\radius*cos(234)}, {\radius*sin(234)}) {};
+            \node (c2) at ({\inner*cos(234+90)}, {\inner*sin(234+90)}) {};
+            \node (d1) at ({\radius*cos(306)}, {\radius*sin(306)}) {};
+            \node (d2) at ({\inner*cos(306+90)}, {\inner*sin(306+90)}) {};
+            \node (e1) at ({\radius*cos(18)}, {\radius*sin(18)}) {};
+            \node (e2) at ({\inner*cos(18+90)}, {\inner*sin(18+90)}) {};
         \end{scope}
 
         \begin{scope}[>={Stealth[black]},
