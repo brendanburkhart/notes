@@ -444,19 +444,19 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{defn}
 
 \begin{rmk}
-    Notice that $\binom{n}{0} = \binom{n}{n} = 1$, since there is only one set with cardinality $0$ (the empty set), and the only subset with cardinality $n$ of a set $X$ itself with cardinality $n$ is $X$. Alternatively, since $\binom{n}{0} = 1$, by Proposition \ref{binomial-complement} it follows that $\binom{n}{0} = \binom{n}{n}$ and so $\binom{n}{n} = 1$.
+    Notice that $\binom{n}{0} = \binom{n}{n} = 1$, since there is only one subset with cardinality $0$ (the empty set), and the only subset of a set $X$ with cardinality $|X|$ is $X$. Alternatively, since $\binom{n}{0} = 1$, by Proposition \ref{binomial-complement} it follows that $\binom{n}{0} = \binom{n}{n}$ and so $\binom{n}{n} = 1$.
 \end{rmk}
 
 \begin{rmk}
     Note that each entry in Pascal's Triangle is the sum of the two elements immediately above it.
 \end{rmk}
 
-\begin{prop}{Pascal's Identity}\label{pascals-identity}
+\begin{prop}{Pascal's Identity}\label{pascals-identity}\proofbreak
     Let $n \in \N$ with $0 < k < n$. Then $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
 \end{prop}
 
 \begin{proof}
-    Let $X$ be a set with $|X| = n$. By Definition \ref{binomial-coefficient}, $\binom{n}{k}$ is the number of subsets with $k$ elements of $X$. Fix some $x \in X$. Then there are $\binom{n-1}{k}$ subsets of $X$ that do not include $x$, and $\binom{n-1}{k-1}$ which do, so $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
+    Let $X$ be a set with $|X| = n$. By definition $\binom{n}{k}$ is the number of subsets with $k$ elements of $X$. Fix some $x \in X$. Then there are $\binom{n-1}{k}$ subsets of $X$ that have cardinality $k$ and do not include $x$, and $\binom{n-1}{k-1}$ which have cardinality $k$ and do include $x$. Therefore, $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
 \end{proof}
 
 \begin{thm}{Binomial theorem}\label{binomial-theorem}\proofbreak
@@ -464,7 +464,7 @@ Let $n, k \in \N$. The \emph{binomial coefficient} $\binom{n}{k}$ is the number 
 \end{thm}
 
 \begin{proof}
-    We will prove this by induction. Our base case is when $n = 1$, so $(x + y)^n = x + y$. Then \[\sum_k=0^1x^ky^{1-k}\binom{1}{k} = x^0y^1\binom{1}{0} + x^1y^0\binom{1}{1} = x + y,\] so the base case is true.
+    We will prove this by induction. Our base case is when $n = 1$, so $(x + y)^n = x + y$. Then \[\sum_{k=0}^{1}x^ky^{1-k}\binom{1}{k} = x^0y^1\binom{1}{0} + x^1y^0\binom{1}{1} = x + y,\] so the base case is true.
     Now assume that for some $x, y \in F$ and $n \geq 1$ we have \[\left(x + y\right)^n = \sum_{k=0}^n x^ky^{n-k}\binom{n}{k}.\] Then since $(x + y)^{n+1} = (x+y)(x+y)^n$, we have $(x = y)^{n+1} = x(x+y)^n + y(x+y)^n$.
     Therefore, \[\left(x + y\right)^{n+1} = x\left(\sum_{k=0}^n x^ky^{n-k}\binom{n}{k}\right) + y\left(\sum_{k=0}^n x^ky^{n-k}\binom{n}{k}\right),\] so it follows that \[\left(x + y\right)^{n+1} = \left(\sum_{k=0}^n x^{k+1}y^{n-k}\binom{n}{k}\right) + \left(\sum_{k=0}^n x^ky^{n-k+1}\binom{n}{k}\right).\]
     We can now re-index the left sum to make the form of the terms match up better: \[\left(x + y\right)^{n+1} = \left(\sum_{k=1}^{n+1} x^{k}y^{n-k+1}\binom{n}{k-1}\right) + \left(\sum_{k=0}^n x^ky^{n-k+1}\binom{n}{k}\right).\]
