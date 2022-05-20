@@ -5,23 +5,87 @@
 \chapter{Number Theory}
 \label{ch:numbers}
 
+\section{Modular Arithmetic}
+
+\begin{defn}\label{divisible}
+    Let $a, b$ be integers. Then we say $b$ is \emph{divisible} by $a$ (written $a \mid b$) when $b = an$ for some integer $n$.
+\end{defn}
+
+\begin{exmp} $-3 \mid 21$ since $21 = -3(-7)$, and $0 \mid 0$ since $0 = 0(0)$, but $4 \centernot\mid 6$ since there is no $n \in Z$ such that $6 = 4n$.
+\end{exmp}
+
+\begin{defn}\label{modular-congruence}
+    Let $a, b$ be integers, and $m > 1$ be an integer called the \emph{modulus}. Then $a$ and $b$ are said to be \emph{congruent modulo $m$}, written $a \equiv b \pmod m$, when $m\mid(a - b)$.
+\end{defn}
+
+\begin{thm}\label{modular-congruence-equivalence}
+    Congruence modulo $m$ is an equivalence relation on the integers.
+\end{thm}
+
+\begin{proof} Let $a, b, c$ be integers, and $m > 1$ be an integer.
+
+    Since $(a-a) = 0$ and $0 = 0m$, we have $m|(a-a)$, so $a \equiv a \pmod m$.
+
+    By definition, $a \equiv b \pmod m$ implies that $m\mid(a - b)$, so there exists some integer $n$ such that $a - b = nm$. Since $b - a = -nm$, we know $m\mid(b-a)$. This implies that $a \equiv b \pmod m \iff b \equiv a \pmod m$.
+
+    If $a \equiv b \pmod m$, and $b \equiv c \pmod m$, there exists integers $n_1, n_2$ such that $a-b = n_1m$ and $b-c = n_2m$. Since $a-c = (a-b) + (b-c)$, we know $a-c = (n_1 + n_2)m$, and so $a \equiv c \pmod m$.
+
+    Since congruence modulo $m$ is reflexive, symmetric, and transitive, it is an equivalence relation on the integers.
+\end{proof}
+
 \begin{thm}\label{integer-remainder-thm}
     Let $x, n \in \Z$ with $n \geq 1$. Then there exists unique $q, r \in \Z$ such that
     \[x = qn + r,\] and
     \[0 \leq r < n.\]
 \end{thm}
 
-\begin{exmp}
-    Let $x = 59$, and $n = 7$. Then since $x = 8(7) + 3$, we have $q = 8$ and $r = 3$.
-\end{exmp}
-
-\begin{rmk}
-    We may denote the unique remainder $r$ by $x \bmod n$.
-\end{rmk}
+\begin{proof}
+    Let $q = \left\lfloor \frac{x}{n} \right\rfloor$, and $r = x - qn$. By definition, $0 \leq x/n - q < 1$, so $0 \leq r < n$, so such $q, r \in \Z$ must exist. If $q_0n + r_0 = q_1n + r_1$, then $(q_0 - q_1)n = r_1 - r_0$. Since $0 \leq r_0, r_1 < n$ we know that $\abs{r_1 - r_0} < n$. If $q_0 \neq q_1$ then $\abs{(q_0 - q_1)n} \geq n$, and so we must have $q_0 = q_1$ and $r_0 = r_1$. Therefore, $q$ and $r$ must be unique.
+\end{proof}
 
 \begin{defn}
-    Let $x, y, n \in \Z$ with $n \geq 1$. We say that $x$ and $y$ are equivalent mod $n$, denoted by \[x \equiv y \pmod n\] when $(x - y) \bmod n = 0$.
+    $x \bmod m$ denotes the unique integer $0 \leq r < n$ such that $x = qn + r$ for some $q \in \Z$.
 \end{defn}
+
+\begin{rmk}
+    Together, the last two theorems tell us that we can do arithmetic operations on \emph{equivalence classes} of the integers modulo $m$, and that furthermore $x \mod m$ is a unique representative of the equivalence class of $x$.
+\end{rmk}
+
+\section{Fermat's Little Theorem}
+
+\begin{defn}
+    A number $p \in \N$ is \emph{prime} if $p > 1$ and if $x \in \N$ such that $x | p$ then $x = 1$ or $x = p$.
+\end{defn}
+
+\begin{lemma}\label{prime-divisible-combination}
+    Let $p$ be a prime number. Then $p$ divides $\binom{p}{k}$ for $0 < k < p$.
+\end{lemma}
+
+\begin{proof}
+    Since $p$ is prime, it has no positive divisors other than $1$ and $p$. Since $0 < k < p$, neither $k!$ nor $(p-k)!$ has $p$ as a factor. Therefore, $\binom{p}{k} = p\frac{(p-1)!}{k!(p-k)!}$, so $\binom{p}{k}$ must be divisible by $p$.
+\end{proof}
+
+\begin{thm}{Fermat's little theorem}\label{fermat-little-theorem}\proofbreak
+    Let $p$ be a prime number. Then $n^p \equiv n \pmod p$ for any $n \in \N$.
+\end{thm}
+
+\begin{proof}
+    If $n = 1$, then $n^p = 1^p = 1$, so $1^p \equiv 1 \pmod p$.
+
+    Assume $n^p \equiv n \pmod p$ for some $n > 0$. By the binomial theorem \ref{binomial-theorem}, $(n+1)^p = \sum_{k=0}^pn^k\binom{p}{k}$. By Lemma \ref{prime-divisible-combination}, we then know that $(n+1)^p = pw + n^p\binom{p}{p} + n^0\binom{p}{0} = pw + n^p + 1$ for some $w \in \Z$. Since $(pw + n^p + 1) - (n + 1) = pw + (n^p - n)$ and by definition $n^p \equiv n \pmod p$ implies that $p \mid (n^p - n)$, it follows that $p \mid \left[(pw + n^p + 1) - (n + 1)\right]$. Therefore, $(n+1)^p \equiv (n+1) \pmod p$.
+
+    By induction, it follows that $n^p \equiv n \pmod p$ for all $n \in \N$.
+\end{proof}
+
+\begin{cor}\label{fermat-little-corallary}
+    $n^{p-1} \equiv 1 \pmod p$ if and only if $p \centernot\mid n$.
+\end{cor}
+
+\begin{proof}
+    If $p \mid n$, then we clearly have $n^{p-1} \bmod p = 0$. Note that $n^{k} \bmod p \neq 0$ otherwise for all $k \in \N$. Therefore, we can divide $n^{p} - n$ by $n$ to obtain $n^{p-1} - 1$, which must be equivalent to zero modulo $p$ since $n^{p} - n$ is equivalent to zero modulo $p$ by Fermat's little theorem \ref{fermat-little-theorem}. Therefore $n^{p-1} \equiv 1 \pmod p$.
+\end{proof}
+
+\section{Greatest Common Divisor}
 
 \begin{prop}\label{equiv-modular-remainder}
     Let $x, y, n \in \Z$ with $n \geq 1$. Then
@@ -29,7 +93,7 @@
 \end{prop}
 
 \begin{proof}\proofbreak
-    ($\implies$) Since $x \equiv y \pmod n$, we know that $(x - y) \bmod n = 0$, so $(x - y) = qn$ for some $q \in \Z$. By Theorem \ref{integer-remainder-thm}, there exists $q_1, q_2, r_1, r_2 \in \Z$ such that $x = q_1n + r_1$, $y = q_2n + r_2$, and $0 \leq x n$, $0 \leq y < n$. It follows that $(q_1n + r_1) - (q_2n + r_2) = qn$, so $r_1 - r_2 = (q - q_1 + q_2)n$. Since $0 \leq r_1 \leq r_2 < n$, it follows that $\abs{r_1 - r_2} < n$, and so $\abs{q - q_1 + q_2} = 0$. Therefore, $r_1 = r_2$ and so $x \bmod n = y \bmod n$ by definition.
+    ($\implies$) Since $x \equiv y \pmod n$, we know that $(x - y) \bmod n = 0$, so $(x - y) = qn$ for some $q \in \Z$. By Theorem \ref{integer-remainder-thm}, there exists $q_1, q_2, r_1, r_2 \in \Z$ such that $x = q_1n + r_1$, $y = q_2n + r_2$. It follows that $(q_1n + r_1) - (q_2n + r_2) = qn$, so $r_1 - r_2 = (q - q_1 + q_2)n$. Since $0 \leq r_1 \leq r_2 < n$ by Theorem \ref{integer-remainder-thm}, it follows that $\abs{r_1 - r_2} < n$, and so $\abs{q - q_1 + q_2} = 0$. Therefore, $r_1 = r_2$ and so $x \bmod n = y \bmod n$ by definition.
 
     ($\impliedby$) By Theorem \ref{integer-remainder-thm}, there exists $q_1, q_2, r_1, r_2 \in \Z$ such that $x = q_1n + r_1$, $y = q_2n + r_2$. Since $x \bmod n = y \bmod n$ implies $r_1 = r_2$ by definition, we know that $(x - y) = (q_1 - q_2)n$. Therefore, $(x - y) \bmod n = 0$ and so $x \equiv y \pmod n$ by definition.
 \end{proof}
@@ -39,7 +103,7 @@
 \end{defn}
 
 \begin{exmp}
-    The common divisors of $18$ and $12$ are: \[1, -1, 2, -2, 3, -3, 6, -6.\]
+    The common divisors of $18$ and $12$ are: \[\pm 1, \pm 2, \pm 3, \pm 6.\]
 \end{exmp}
 
 \begin{defn}
@@ -128,6 +192,8 @@
     We know $(ax) \bmod n = 1$ as $ax = -yn + 1$. Since $ax \equiv ab \pmod n$ by Lemma \ref{modular-product-identification}, by Proposition \ref{equiv-modular-remainder} we have $(ab) \bmod n = 1$. Therefore, $a \odot_n b = 1$, and so $b = a^{-1}$.
 \end{proof}
 
+\section{Prime Numbers}
+
 \begin{lemma}\label{prime-division-one}
     Let $a, b, p \in \Z$ with $p$ a prime number. If $p \mid ab$, then at least one of $p \mid a$ and $p \mid b$ must be true.
 \end{lemma}
@@ -146,7 +212,7 @@
     Let $q_1q_2\cdots q_m = a$, and let $a_{m+1} = b$. Assume, for some $m \geq 1$, that if $p \mid a$ that $p = q_i$ for some $1 \leq i \leq m$. If $p \mid ab$, then by Lemma \ref{prime-division-one}, either $p \mid a$ in which case $p = q_i$ for some $1 \leq i \leq m$ by assumption, or  $p \mid b$ in which case $p = q_{m+1}$. Therefore, if $p \mid q_1q_2\cdots q_mq_{m+1}$ we have $p = q_i$ for some $1 \leq i \leq m+1$, and the induction is complete.
 \end{proof}
 
-\begin{thm}\label{fundmental-theorem-arithmetic}Fundamental Theorem of Arithmetic\proofbreak
+\begin{thm}\label{fundamental-theorem-arithmetic}Fundamental theorem of arithmetic\proofbreak
     Let $n \in \Z$, where $n > 0$. Then there exists a unique factoring of $n$ into a product of primes, up to the ordering of the primes.
 \end{thm}
 
@@ -212,6 +278,10 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
     Let $n \in \Z^+$. For every $a \in \Z_n$ such that $\gcdof{a}{n} = 1$, then
     \[a^{\phi(n)} \equiv 1 \pmod n.\]
 \end{thm}
+
+\begin{proof}
+    See Corallary \ref{group-order-power} to Lagrange's theorem \ref{lagrange-thm}.
+\end{proof}
 
 \begin{lemma}\label{divisor-bijection}
     Let $n \in \Z^+$, and let $d_1, d_2, \ldots, d_k$ be the positive divisors of $n$ in ascending order. Let
@@ -457,17 +527,11 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
 \end{defn}
 
 \begin{lemma}\label{zeta_product}
-    For all real $s > 1$,
+    Let $p_i$ denote the sequence of primes. Then for real $s > 1$,
     \begin{align*}
-        \zeta(s) = \left[\prod_{i=1}^{r}\left(1 - \frac{1}{p_i^s}\right)\right]^{-1}.
+        \zeta(s) = \prod_{i=1}^{\infty}\frac{p_i^s}{p_i^s - 1}.
     \end{align*}
 \end{lemma}
-
-\begin{proof}
-    \begin{align*}
-        \zeta(s) &= \sum_{n=1}^{\infty}\frac{1}{n^s}
-    \end{align*}
-\end{proof}
 
 \begin{thm}\label{zeta-2}
     Let $\rho_m$ be the probability that two discrete uniform random integers between $1$ and $M$ (inclusive) are relatively prime. Then
@@ -482,5 +546,5 @@ Let $p_1p_2\cdots p_n$ and $q_1q_2\cdots q_m$ be two distinct products of prime 
         \rho_m = \prod_{i=1}^{\pi(m)}\left(1 - \frac{1}{p_i^2}\right).
     \end{align*}
 
-    Note that $\zeta(2) = \pi^2/6$, and so by Lemma \ref{zeta_product} we are done. By Lemma \ref{zeta_product}, we then $rho_m  = \rho_\alpha$.
+    Since $\lim_{m\to\infty}\pi(m) = \infty$, by Lemma \ref{zeta_product} we can see that $\lim_{m\to\infty}\rho_m = 1/\zeta(2)$. Finally, $\zeta(2) = \pi^2/6$ by Lemma \ref{zeta_product}.
 \end{proof}
