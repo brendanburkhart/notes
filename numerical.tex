@@ -364,36 +364,19 @@ Then the total error is
 \end{rmk}
 
 \begin{thm}
-    Consider a linear system $Ax = b$ with a induced matrix norm and $A$ non-singular. For perturbations $\delta A$ and $\delta b$ such that
+    Consider a linear system $Ax = b$ with a induced matrix norm where $A$ is non-singular. If $A$ is perturbed by $\delta A$ such that
     \begin{align*}
         \norm{\delta A} < \frac{1}{\norm{A^{-1}}},
     \end{align*}
-    the following hold:
-    \begin{itemize}
-        \item $A + \delta A$ is non-singular,
-        \item $(A + \delta A)(x + \delta x) = (b + \delta b)$,
-    \end{itemize}
-    and
-    \begin{align*}
-        \frac{\norm{\delta x}}{\norm{x}} \leq \frac{\kappa(A)}{1 - \kappa(A)\frac{\norm{\delta A}}{\norm{A}}}\left(\frac{\norm{\delta A}}{\norm{A}} + \frac{\norm{\delta b}}{\norm{b}}\right).
-    \end{align*}
+    then $A + \delta A$ is non-singular.
 \end{thm}
 
 \begin{proof}
-    Notice that
+    Let $B = A + \delta A$, so by assumption $\norm{B - A}\norm{A^{-1}} < 1$. It follows that $\norm{(B-A)A^{-1}} < 1$, and $(B-A)A^{-1} = I-BA^{-1}$. We therefore have $\norm{I-BA^{-1}} \leq 1$, and so $BA^{-1}$ must be invertible. Notice that
     \begin{align*}
-        \norm{\delta A} \leq \frac{1}{\norm{A^{-1}}} \implies \norm{A^{-1}\delta A} \leq \norm{A^{-1}}\norm{\delta A} < 1,
+        A^{-1}\left(BA^{-1}\right)^{-1} = B^{-1},
     \end{align*}
-    and
-    \begin{align*}
-        A + \delta A = A\left(I_n + A^{-1}\delta A\right)
-    \end{align*}
-    Let $M = -A^{-2}\delta A$, so $\norm{A} < 1$, and then
-    \begin{align*}
-        I_n + A^{-1}\delta A)
-    \end{align*}
-
-    {\large\color{red}Finish proof}
+    and since we have shown that $A^{-1}$ and $BA^{-1}$ are both invertible, it follows that $B = A + \delta A$ is invertible.
 \end{proof}
 
 \begin{defn}
@@ -846,7 +829,7 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
     The shifted QR method is a variant of the above QR method with faster convergence. It starts with choosing a scalar $\mu_k$ close to a known eigenvalue of $A$, and taking $A_{k} - \mu_kI = Q_{k}R_{k}$, $A_{k+1} = \mu_kI + R_{k}Q_{k}$
 \end{defn}
 
-\section{Krylov subspace methods}
+\section{Krylov Subspaces}
 
 \begin{defn}
     For a $n \times n$ matrix $A$, the $m$th \emph{Krylov subspace} of $A$ at $x \neq \vec{0}$ is
