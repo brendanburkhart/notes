@@ -16,7 +16,7 @@ jobs:
           pip install numpy Pillow
       - name: Generate Sacks spiral image
         run: |
-          python .\sacks_spiral.py
+          python ./sacks_spiral.py
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
