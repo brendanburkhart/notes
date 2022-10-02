@@ -621,6 +621,25 @@
     ($\impliedby$) If $|E(G)| = n-1$, then let $T$ be a spanning tree in $G$, which must exist by Theorem \ref{spanning-trees-in-connected-graphs}. Since $V(T) = V(G) = n$, $E(T) \subseteq E(G)$, and furthermore $|E(T)| = n-1$, we have $E(T) = E(G)$. Therefore, $G = T$, and so $G$ is a tree.
 \end{proof}
 
+\begin{prop}
+    Let $G = (V, E)$ be a graph, and $H = (V, T)$ be a spanning tree of $G$. Then
+    \begin{itemize}
+        \item For all $e \in E \setminus T$, $T \union \{e\}$ contains a unique cycle $C$.
+        \item For all $f \in C$, $(V, T \union \{e\} \setminus \{f\})$ is a spanning tree.
+        \item If the edge weight associated with $e$ is less than the edge weight of $f$, then $H$ cannot be a minimum spanning tree.
+    \end{itemize}
+\end{prop}
+
+\begin{prop}
+    Let $G = (V, E)$ be a graph, and $H = (V, T)$ be a spanning tree of $G$. Then
+    \begin{itemize}
+        \item For all $e \in T$, $T \setminus \{e\}$ has two connected components.
+        \item Let $D$ be the cutset corresponding to this cut.
+        \item For all $d \in D$, $(V, T \union \{d\} \setminus \{e\})$ is a spanning tree.
+        \item If the edge weight associated with $d$ is less than the edge weight of $e$, then $H$ cannot be a minimum spanning tree.
+    \end{itemize}
+\end{prop}
+
 \section{Graph Coloring}
 
 \begin{defn}
