@@ -24,7 +24,7 @@
 \end{defn}
 
 \begin{defn}\label{kolmogorov-probability-axioms}
-    A \emph{probability space} is a sample space $\Omega$ together with a function $P: \mathcal{P}(\Omega) \to \R$ that satisfies the following axioms:
+    A \emph{probability space} is a sample space $\Omega$ together with a function $P: 2^{\Omega} \to \R$ that satisfies the following axioms:
     \begin{itemize}
         \item Non-negativity: for any event $A \subseteq \Omega$, $P(A) \geq 0$.
         \item Normalization: $P(\Omega) = 1$.
@@ -117,7 +117,7 @@
 \end{proof}
 
 \begin{exmp}{Finite, equally-likely probability law}\proofbreak
-    Let $(\Omega, P)$ be a sample space together with a function $P: \mathcal{P}(\Omega) \to \R$, where $\abs{\Omega} \in \Z^{+}$ and for all $A \in \mathcal{\Omega}$, \[P(A) = \frac{\abs{A}}{\abs{\Omega}}.\]
+    Let $(\Omega, P)$ be a sample space together with a function $P: 2^{\Omega} \to \R$, where $\abs{\Omega} \in \Z^{+}$ and for all $A \in \mathcal{\Omega}$, \[P(A) = \frac{\abs{A}}{\abs{\Omega}}.\]
 
     Since $\abs{A} \geq 0$ and $\abs{\Omega} > 0$, $P(A) \geq 0$ and so this model satifies the non-negativity axiom. Since $P(\Omega) = \frac{\abs{\Omega}}{\abs{\Omega}} = 1$, this model satisfies the normalization axiom.
     
@@ -131,7 +131,7 @@
 \begin{exmp}{Discrete probability law}\proofbreak
     Let $\Omega$ be a sample space such that $\abs{\Omega}$ is countable, and let $M: \Omega \to R$ be a mass-function: $M(\omega) \geq 0$ for all $\omega \in \Omega$, and $\sum_{\omega \in \Omega}M(\omega) = 1$.
 
-    Now consider $P: \mathcal{P}(\Omega) \to \R$ defined by
+    Now consider $P: 2^{\Omega} \to \R$ defined by
     \[P(A) = \sum_{\omega \in A}M(\omega).\]
 
     Since $M(\omega) \geq 0$, $P(A) \geq$ and so $P$ satisfies the axiom of non-negativity. Since \[P(\Omega) = \sum_{\omega \in \Omega}M(\omega) = 1\] by the definition of $M$, $P$ satisfies the axiom of normalization. Finally, for $A = A_1 \disjointunion A_2 \disjointunion \cdots$,
@@ -142,7 +142,7 @@
 \end{exmp}
 
 \begin{exmp}{Geometric probability law}\proofbreak
-    Let $\Omega = \{\omega_1, \omega_2, \ldots\}$ be a sample space such that $\abs{\Omega} = \abs{\Z}$, and define $P: \mathcal{P}(\Omega) \to \R$ by
+    Let $\Omega = \{\omega_1, \omega_2, \ldots\}$ be a sample space such that $\abs{\Omega} = \abs{\Z}$, and define $P: 2^{\Omega} \to \R$ by
     \[P(A) = \sum_{\omega_i \in A}\left(\frac{1}{2}\right)^{i}.\]
     
     Since $\left(\frac{1}{2}\right)^i \geq 0$, $P(A) \geq 0$ and so $P$ satisfies the axiom of non-negativity. Since
@@ -548,7 +548,7 @@
 \end{defn}
 
 \begin{rmk}
-    Not all continuous random variables possess a PDF, since the limit may not exist. Every continuous CDF can be decomposed into a linear combination of two functions: a \emph{absolutely continuous} part and a \emph{singlular continuous} part. The Cantor function is an example of a CDF whose absolutely continuous part is zero.
+    Not all continuous random variables possess a PDF, since the limit may not exist. Every continuous CDF can be decomposed into a linear combination of two functions: a \emph{absolutely continuous} part and a \emph{singularly continuous} part. The Cantor function is an example of a CDF whose absolutely continuous part is zero.
 \end{rmk}
 
 \begin{thm}
