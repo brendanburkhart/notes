@@ -17,7 +17,7 @@
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
 
-% Swap starred and non-starred versions of \absval and \norm
+% Swap starred and non-starred versions of \abs and \norm
 \makeatletter
 \let\oldabs\abs
 \def\abs{\@ifstar{\oldabs}{\oldabs*}}
