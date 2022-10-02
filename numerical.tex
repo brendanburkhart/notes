@@ -5,14 +5,14 @@
 
 \section{Floating Point Approximations}
 
-Given $x \in \R$, and a floating point representation $\hat{x}$, we define the relative error to be $r = \frac{\abs{\hat{x}-x}}{x}$. We then define the \emph{significant figures} of $\hat{x}$ to be maximum $m \in \N$ such that $10^{m}r \leq 5$.
+Given $x \in \R$, and a floating point representation $\hat{x}$, we define the \emph{relative error} to be $r = \frac{\abs{\hat{x}-x}}{x}$. We then define the \emph{significant figures} of $\hat{x}$ to be the maximum $m \in \N$ such that $10^{m}r \leq 5$.
 
-Consider a method to calculate from value. Let
+Consider a method to calculate some value. Let
 \begin{itemize}
     \item $x$ be the input,
     \item $\hat{x}$ be the approximated input,
     \item $f(x)$ be the correct value of the output,
-    \item $\hat{f}$ approximate of $f$.
+    \item $\hat{f}$ be the approximated output.
 \end{itemize}
 Then the total error is
 \begin{align*}
@@ -20,7 +20,7 @@ Then the total error is
 \end{align*}
 
 \begin{exmp}
-    Consider a $\mathbb{C}^2$ function $f: \R \to \R$. Using a small value for $h$, we can approximate the derivative of $f$ as
+    Consider a $C^2$ (twice-continuously differentiable) function $f: \R \to \R$. Using a small value for $h$, we can approximate the derivative of $f$ as
     \begin{align*}
         D_{h}f(x) = \frac{f(x + h) - f(x)}{h}.
     \end{align*}
@@ -56,14 +56,15 @@ Then the total error is
 \end{defn}
 
 \begin{defn}
-    Given a function $f$, the \emph{condition number}, or \emph{conditioning number}, is the supremum of ratio of the relative change in output to the relative change in input.
+    Given a function $f$, the \emph{condition number}, or \emph{conditioning number}, is the supremum of the ratio of the relative change in output to the relative change in input.
 \end{defn}
 
 \begin{exmp}
     Let $f: \R \to \R$ be a continuous function. Then the condition number, denoted by $K_f(x)$, is
     \begin{align*}
-        K_f(x) = \lim_{x' \to x}\abs{\frac{\left[f(x') - f(x)\right]/f(x)}{\left(x'-x\right)/x}} = \abs{\frac{x}{f(x)}f'(x)}.
+        K_f(x) = \lim_{\varepsilon\to 0}\sup_{\abs{\delta_x} \leq \varepsilon}\abs{\frac{\left[f(x') - f(x)\right]/f(x)}{\left(x'-x\right)/x}} = \lim_{x' \to x}\abs{\frac{\left[f(x') - f(x)\right]/f(x)}{\left(x'-x\right)/x}} = \abs{\frac{x}{f(x)}f'(x)}.
     \end{align*}
+    Note that changing the limit of the supremum to just a limit is only possible because $f$ is continuous.
 \end{exmp}
 
 \begin{defn}
@@ -897,7 +898,7 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \end{prop}
 
 \begin{proof}
-    Notice that, if we order $\Sigma$ so the non-zero singular values come first, $\{e_1, \ldots, e_r\}$ form an orthonormal basis for the image of $\Sigma$ and $\{e_{r+1}, \ldots, e_n\}$ an orthonormal basis for the null space of $\Sigma$. Since $U$ and $V$ are unitary, and therefore non-singular, they preserve the dimension of linear subspaaces. Therefore the image $A$ is simply the image $U\Sigma$ and the null space of $A$ is image $V\Sigma$ by Proposition \ref{adjoint-nullspace-image}, so the image of $A$ has orthonormal basis $\{Ue_1, \ldots, Ue_{r}\}$ and the null space $\{Ve_{r+1}, \ldots, Ve_{n}\}$.
+    Notice that, if we order $\Sigma$ so the non-zero singular values come first, $\{e_1, \ldots, e_r\}$ form an orthonormal basis for the image of $\Sigma$ and $\{e_{r+1}, \ldots, e_n\}$ an orthonormal basis for the null space of $\Sigma$. Since $U$ and $V$ are unitary, and therefore non-singular, they preserve the dimension of linear subspaces. Therefore the image $A$ is simply the image $U\Sigma$ and the null space of $A$ is image $V\Sigma$ by Proposition \ref{adjoint-nullspace-image}, so the image of $A$ has orthonormal basis $\{Ue_1, \ldots, Ue_{r}\}$ and the null space $\{Ve_{r+1}, \ldots, Ve_{n}\}$.
 \end{proof}
 
 \begin{thm}
