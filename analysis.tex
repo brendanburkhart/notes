@@ -695,3 +695,56 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
 
     Therefore, a finite subcover must exist for any open cover, and so $X$ must be compact.
 \end{proof}
+
+\section{Sequences}
+
+\begin{defn}
+    Let $\{x_n\}$ be a sequence in a metric space $(X, d)$. We say that $\{x_n\}$ converges to $x \in X$ when for all $\varepsilon > 0$, there exists $N_{\varepsilon} \in \N$ such that $d(x, x_n) < \varepsilon$ for all $n > N_{\varepsilon}$.
+\end{defn}
+
+\begin{prop}
+    If a sequence converges, it does so to a unique point.
+\end{prop}
+
+\begin{proof}
+    Suppose that $\{x_n\}$ converges to both $x, y \in X$. For any $\varepsilon > 0$, there exists $N_x, N_y \in \N$ such that $n > \max(N_x, N_y)$ implies that $d(x, x_n) < \varepsilon/2$ and $d(y, x_n) < \varepsilon/2$. By the triangle inequality, this implies that $d(x, y) < \varepsilon$. By the Archimedean principle, it follows that $d(x, y) = 0$ and so we must have $x = y$.
+\end{proof}
+
+\begin{defn}
+    If there is no $x \in X$ such that a sequence $\{x_n\}$ converges to $x$, we say that $\{x_n\}$ diverges.
+\end{defn}
+
+\begin{prop}
+    Can show convergence as $< g(\varepsilon)$ for strictly monotonically decreasing $g(\varepsilon)$.
+\end{prop}
+
+\begin{prop}
+    Let $x_n \to x$ and $y_n \to y$ be convergent sequences in $\R$.
+    \begin{itemize}
+        \item $\{x_n + y_n\} \to x + y$,
+        \item $\{x_n \cdot y_n\} \to xy$,
+    \end{itemize}
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        \abs{\frac{1}{x_n} - \frac{1}{x}} = \abs{\frac{x_n -x}{x_nx}}.
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    let $\{x_n\}$ in $\R$ converge to $x$ and $\{y_n\}$ in $\R$ such that $x_n - y_n$ converge to zero.
+\end{exmp}
+
+\begin{thm}{Squuze Theorem}\label{thm:squeeze}\proofbreak
+    Let $\{x_n\}$ and $\{z_n\}$ be convergent sequences in a metric space $X$, such that both sequences converge to some $y \in X$. If $\{y_n\}$ is a sequence such that $x_n \leq y_n \leq z_n$ for all $n$, then $\{y_n\}$ also converges to $y$.
+\end{thm}
+
+\begin{proof}
+    For any $\varepsilon > 0$, we know there exists $N_x, N_y \in \N$ such that
+    \begin{align*}
+        \forall n>N_x&\left[\abs{x_n - y} < \frac{\varepsilon}{2}\right]\\
+        \forall n>N_y&\left[\abs{z_n - y} < \frac{\varepsilon}{2}\right]
+    \end{align*}
+    It follows that for $n > \max(N_x, N_y)$, we have $-\varepsilon/2 - y < x_n < \varepsilon/2 + 2$ and $-\varepsilon/2 - y < z_n < \varepsilon/2 + y$. Since $y_n \leq z_n$ we then have $y_n < \varepsilon/2 + y$, and since $x_n \leq y_n$ we have $-\varepsilon/2 - y < y_n$. Therefore, $\abs{y_n - y} < \varepsilon$, and so $\{y_n\}$ converges to $y$.
+\end{proof}
