@@ -601,18 +601,6 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
     \end{align*}
 \end{proof}
 
-\begin{thm}{Weierstrass}\label{thm:weierstrass}\proofbreak
-    If $E \subseteq \R^{k}$ is a bounded infinite subset, then $E$ must have a limit point.
-\end{thm}
-
-\begin{proof}
-    
-\end{proof}
-
-\begin{thm}{Bolzano-Weierstrass}\proofbreak
-    Every bounded sequence in $\R^{k}$ has a convergent subsequence.
-\end{thm}
-
 \begin{defn}
     A metric space $X$ is \emph{separable} when $X$ has a countable dense subset.
 \end{defn}
@@ -696,6 +684,14 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
     Therefore, a finite subcover must exist for any open cover, and so $X$ must be compact.
 \end{proof}
 
+\begin{thm}\label{thm:infinite-compact-limit}
+    Let $E$ be an infinite subset of a compact metric space $K$. Then $E$ has a limit point in $K$.
+\end{thm}
+
+\begin{proof}
+    Suppose no such limit point existed, so there exists $\varepsilon > 0$ such that for all $q \in K$, if $x \in \N_{\varepsilon}(q) \intersection E$ then $x = q$. These neighborhoods then form an open cover of $K$ where no finite subset can cover all of $E \subseteq K$. This is impossible since $K$ is compact, and so $E$ must have a limit point in $K$.
+\end{proof}
+
 \section{Sequences}
 
 \begin{defn}
@@ -714,8 +710,8 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
     If there is no $x \in X$ such that a sequence $\{x_n\}$ converges to $x$, we say that $\{x_n\}$ diverges.
 \end{defn}
 
-\begin{prop}
-    Can show convergence as $< g(\varepsilon)$ for strictly monotonically decreasing $g(\varepsilon)$.
+\begin{prop}\label{prop:convergence-criteria}
+    Let $g: \R \to \R$ be a function with the property that for all $\varepsilon > 0$, there exists $\omega > 0$ such that $g(\omega) < \varepsilon$.
 \end{prop}
 
 \begin{prop}
@@ -736,7 +732,7 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
     let $\{x_n\}$ in $\R$ converge to $x$ and $\{y_n\}$ in $\R$ such that $x_n - y_n$ converge to zero.
 \end{exmp}
 
-\begin{thm}{Squuze Theorem}\label{thm:squeeze}\proofbreak
+\begin{thm}{Squeeze Theorem}\label{thm:squeeze}\proofbreak
     Let $\{x_n\}$ and $\{z_n\}$ be convergent sequences in a metric space $X$, such that both sequences converge to some $y \in X$. If $\{y_n\}$ is a sequence such that $x_n \leq y_n \leq z_n$ for all $n$, then $\{y_n\}$ also converges to $y$.
 \end{thm}
 
@@ -747,4 +743,108 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
         \forall n>N_y&\left[\abs{z_n - y} < \frac{\varepsilon}{2}\right]
     \end{align*}
     It follows that for $n > \max(N_x, N_y)$, we have $-\varepsilon/2 - y < x_n < \varepsilon/2 + 2$ and $-\varepsilon/2 - y < z_n < \varepsilon/2 + y$. Since $y_n \leq z_n$ we then have $y_n < \varepsilon/2 + y$, and since $x_n \leq y_n$ we have $-\varepsilon/2 - y < y_n$. Therefore, $\abs{y_n - y} < \varepsilon$, and so $\{y_n\}$ converges to $y$.
+\end{proof}
+
+\begin{thm}
+    Let $\{x_n\}$ converge in $x$ and $\{y_n\}$ converge to $y$ in a metric space $X$. Then $\{x_ny_n\}$ converges to $xy$.
+\end{thm}
+
+\begin{proof}
+    Observe that
+    \begin{align*}
+        x_ny_n - xy = \left(x_n-x\right)\left(y_n-y\right) + x\left(y_n-y\right) + y\left(x_n-x\right),
+    \end{align*}
+    and so
+    \begin{align*}
+        \abs{x_ny_n - xy} \leq \abs{x_n-x}\abs{y_n-y} + \abs{x}\abs{y_n-y} + \abs{y}\abs{x_n-x}.
+    \end{align*}
+    Therefore, for any $\varepsilon > 0$ there exists $N \in \N$ such that
+    \begin{align*}
+        \abs{x_ny_n - xy} \leq \varepsilon^2 + \abs{x}\varepsilon + \abs{y}\varepsilon,
+    \end{align*}
+    and so $x_ny_n$ converges to $xy$ by Proposition \ref{prop:convergence-criteria}.
+\end{proof}
+
+\begin{prop}
+    All convergent sequences are bounded.
+\end{prop}
+
+\begin{proof}
+    If $\{x_n\}$ converges to some $x$, there exists some $N \in \N$ such that $d(x_n,x)< 1$ for all $n > N$. Since the sequence where $n \leq N$ is finite, it is bounded such that $d(x_n,x) < M$ for all $n \leq N$. It follows that $d(x_n, x) < \max(M, 1)$ for all $n$.
+\end{proof}
+
+\begin{thm}\label{thm:bounded-monotonic-convergence}
+    Any non-decreasing and bounded sequence $\{x_n\}$ converges in $\R$.
+\end{thm}
+
+\begin{proof}
+    Let $x$ be the least upper bound of $\{x_n\}$, and consider any $\varepsilon > 0$. Note that $x - \varepsilon < x_N$ for some $N \in \N$ or else $x - \varepsilon$ would be the least upper bound. Since $\{x_n\}$ is non-decreasing, for all $n > N$ it follows that $\abs{x_n - x} \leq \abs{x_N - x} < \varepsilon$ and so $\{x_n\}$ converges to $x$.
+\end{proof}
+
+\begin{cor}
+    Any non-increasing and bounded sequence $\{x_n\}$ converges in $\R$.
+\end{cor}
+
+\begin{defn}
+    Let $\{x_n\}$ be a sequence in a set $X$, and consider some increasing function $\varphi: \N \to \N$. The sequence $\{x_{\varphi(n)}\}$ is a \emph{subsequence} of $\{x_n\}$.
+\end{defn}
+
+\begin{lemma}
+    If $\varphi: \N \to \N$ is increasing, then $\varphi(n) \geq n$.
+\end{lemma}
+
+\begin{proof}
+    We will prove this by induction. Trivially, we have $\varphi(0) \geq 0$. If $\varphi(n) \geq n$, then $\varphi(n+1) > \varphi(n)$ since $\varphi$ is increasing, which implies that $\varphi(n+1) \geq \varphi(n)+1$. Therefore, $\varphi(n+1) \geq n+1$.
+\end{proof}
+
+\begin{thm}\label{thm:compact-convergent-subsequences}
+    Let $K$ be a \emph{compact} metric space, and $\{x_n\}$ be a sequence in $K$. There exists a subsequence of $\{x_n\}$ which converges to a point in $K$.
+\end{thm}
+
+\begin{proof}
+    Suppose the set of all values of $\{x_n\}$ was finite, so it must become a constant value $x \in K$ after some $N$, and therefore converges to $x \in K$.
+
+    If the range of $\{x_n\}$ is not finite, then by Theorem \ref{thm:infinite-compact-limit} it must have a limit point $x$ in $K$. Therefore, for all $k \in \N$, there exists $n_k$ such that $d(x, x_{n_k}) < 1/k$. Furthermore, we can always choose $n_{k+1}$ to be greater than $n_k$ since all neighborhoods of $x$ contain infinitely many points of $\{x_n\}$ by Theorem \ref{thm:neighborhood-limit-points}. It follows that $\{x_{n_k}\}$ is a convergent subsequence of $\{x_n\}$.
+\end{proof}
+
+\begin{thm}{Bolzano-Weierstrass}\proofbreak
+    Every bounded sequence in $\R^{k}$ has a convergent subsequence.
+\end{thm}
+
+\begin{proof}
+    Let $E$ be the range of some bounded sequence $\{x_n\}$ in $\R^k$. Then by Theorem \ref{thm:heine-borel}, $\overline{E}$ is compact, and so by Theorem \ref{thm:compact-convergent-subsequences} we know that $\{x_n\}$ has a subsequence which converges in $\overline{E} \subseteq \R^k$.
+\end{proof}
+
+\begin{thm}
+    Let $X$ be a metric space, $\{x_n\}$ be a sequence, and $S$ be the set of all subsequential limits of $\{x_n\}$. Then $S$ must be closed.
+\end{thm}
+
+\begin{proof}
+    Consider $q$ a limit point of $S$. Choose some $p_1$ such that $x_{p_1} \neq q$. If no such $x_{p_1}$ exists, then $S$ contains a single point and so we are done.
+
+    Let $\delta = \frac{1}{2}d(x_{p_1}, q)$. Once $p_1, \ldots, p_k$ are chosen, we choose $p_{k+1}$ as follows. There must exist $w \in S$ such that $d(q, w) < \frac{1}{2^{k+1}}\delta$. Since $w \in S$, there must exist a subsequence $\{x_{\varphi(n)}\}$ such that $n > N$ implies $d(w, x_{\varphi(n)}) < \frac{1}{2^{k+1}}\delta$ for some $N \in \N$. Therefore, by the triangle inequality we know that $d(q, x_{\varphi(n)}) < \frac{1}{2^{k}}\delta$ for all $n > N$. Choose $p_{k+1} = \varphi(n)$ for any $n > N$ and $\varphi(n) > p_k$.
+
+    This construction yields the subsequence $\{x_{p_k}\}$ such that $d(q, x_{p_k}) < \frac{1}{2^{k}}\delta$, which must converge to $q$. Therefore, $q \in S$.
+\end{proof}
+
+\section{Cauchy Sequences}
+
+\begin{defn}
+    $diam(S) = \sup \{d(a, b) : a, b \in S\}$.
+\end{defn}
+
+\begin{thm}
+    Let $K_n$ be a sequence of compact sets such that $K_{n+1} \subseteq K_n$, and where
+    \begin{align*}
+        \lim_{n\to\infty}diam(K_n) = 0.
+    \end{align*}
+    Then
+    \begin{align*}
+        K = \intersection_{n\geq 1}K_n = \{x\}
+    \end{align*}
+    for some $x$.
+\end{thm}
+
+\begin{proof}
+    Suppose $x, y \in K$. Then $diam(K) \geq d(x, y)$ and $0 \leq diam(K) \leq diam(K_n)$. Since the limit of the diameter of $K_n$ is zero, and $diam(K)$ is constant, we know that $diam(K) = 0$ so $x = y$.
 \end{proof}
