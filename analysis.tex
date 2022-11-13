@@ -167,7 +167,10 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
 \end{defn}
 
 \begin{defn}
-    An upper bound $\beta$ of $E$ in $S$ is a \emph{least upper bound} when $\alpha < \beta$ implies $\alpha$ is not an upper bound for $E$, for all $\alpha \in S$.
+    An upper bound $\beta$ of $E$ in $S$ is a \emph{least upper bound} when $\alpha < \beta$ implies $\alpha$ is not an upper bound for $E$, for all $\alpha \in S$. We then write
+    \begin{align*}
+        \sup E = \beta.
+    \end{align*}
 \end{defn}
 
 \begin{defn}
@@ -187,7 +190,7 @@ If $(F, F^+)$ is an ordered field and $x \in F$, we say $x$ is positive (or $x >
 \end{proof}
 
 \begin{prop}
-    If $A \leq B$ then $\sup A \leq \sup B$.
+    If $A \subseteq B$ then $\sup A \leq \sup B$.
 \end{prop}
 
 \begin{proof}
@@ -490,21 +493,17 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
     A subset $E$ of a metric space $X$ is \emph{dense} in $X$ if every point $x \in X$ is either a limit point of $E$, or a point of $E$.
 \end{defn}
 
-\begin{prop}
-    $E$ is dense if and only if $x \in X$ implies $e \in E$ and $r > 0$ such that $x \in N_r(e)$.
-\end{prop}
-
 \begin{thm}\label{thm:neighborhood-limit-points}
     Let $x \in E \subseteq X$ be a limit point of $E$. Any neighborhood of $x$ contains infinitely many points of $E$.
 \end{thm}
 
-\begin{defn}
+\begin{proof}
     Let $N_{r}(x)$ be a neighborhood of $x$, and consider any finite $S \subseteq E \intersection N_{r}(x)$ where $x \not\in S$. Let
     \begin{align*}
         \delta = \min_{s \in S}d(s, x).
     \end{align*}
     Since $S$ is finite, this minimum exists, and since $x$ is a limit point of $E$ we know that the neighborhood $N_{\delta/2}(x)$ must contain some $p \in E$ where $p \neq x$. Since $\delta/2 < r$, $p \in N_{r}(x)$, and by construction $p \not\in S$. Therefore, we can always find a point in $N_{r}(x)$ that is not in $S$.
-\end{defn}
+\end{proof}
 
 \begin{thm}\label{thm:closed-open-complements}
     Let $E \subseteq X$. $E$ is closed if and only if its complement is open.
@@ -827,7 +826,7 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
     This construction yields the subsequence $\{x_{p_k}\}$ such that $d(q, x_{p_k}) < \frac{1}{2^{k}}\delta$, which must converge to $q$. Therefore, $q \in S$.
 \end{proof}
 
-\section{Cauchy Sequences}
+\subsection{Cauchy Sequences}
 
 \begin{defn}
     $diam(S) = \sup \{d(a, b) : a, b \in S\}$.
@@ -848,3 +847,385 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
 \begin{proof}
     Suppose $x, y \in K$. Then $diam(K) \geq d(x, y)$ and $0 \leq diam(K) \leq diam(K_n)$. Since the limit of the diameter of $K_n$ is zero, and $diam(K)$ is constant, we know that $diam(K) = 0$ so $x = y$.
 \end{proof}
+
+\subsection{Riemann Series}
+\begin{defn}
+    \begin{align*}
+        \sum_{n=0}^{1}\frac{1}{n^{\alpha}}
+    \end{align*}
+\end{defn}
+
+\subsection{Bertrand Series}
+\begin{defn}
+    \begin{align*}
+        \sum_{n=0}^{1}\frac{1}{n^{\alpha}\left(\ln n\right)^{\beta}}
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    When $\alpha=1$, the Bertrand series converges if and only if $\beta > 1$.
+\end{prop}
+
+\begin{proof}
+    Let $b_k$ = $2^{k}a_{2^k}$,
+    \begin{align*}
+        b_k = 2^{k}\frac{1}{2^{k}(\ln 2^k)^{\beta}} = \frac{1}{k^{\beta}(\ln 2)^{\beta}},
+    \end{align*}
+    and so the this is a Riemann series multiplied by the constant $1/\ln(2)^{\beta}$.
+\end{proof}
+
+\begin{prop}
+    The Bertrand series converges if and only if...
+\end{prop}
+
+\begin{proof}
+    Let $b_k$ = $2^{k}a_{2^k}$, so
+    \begin{align*}
+        b_k = 2^{k}\frac{1}{2^{k\alpha}(\ln 2^k)^{\beta}} = 2^{(1-\alpha)k}\frac{1}{k^{\beta}(\ln 2)^{\beta}}.
+    \end{align*}
+    and it converges when $\alpha > 1$ and diverges when $\alpha < 1$.
+\end{proof}
+
+\begin{defn}
+    Let $\{x_n\}$ be a sequence in $\R$, and let $E$ be the set of all subsequential limits of $\{x_n\}$. Then
+    \begin{align*}
+        \limsup_{n\to\infty} x_n &= \sup E, \\
+        \liminf_{n\to\infty} x_n &= \inf E.
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    \begin{align*}
+        e = \sum_{n=0}^{\infty}\frac{1}{n!}
+    \end{align*}
+\end{defn}
+
+\begin{thm}
+    \begin{align*}
+        e = \lim_{n\to\infty}\left(1 + \frac{1}{n}\right)^{n}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    By the binomial theorem,
+    \begin{align*}
+        \left(1 + \frac{1}{n}\right)^{n} &= \sum_{k=0}^{n}\binom{n}{k}\frac{1}{n^k} = \sum_{k=0}^{n}\left(\frac{n!}{k!(n-k)!}\right)\frac{1}{n^k} \\
+        &= \sum_{k=0}^{n}\frac{1}{k!}\left(\frac{n!}{(n-k)!}\right)\frac{1}{n^k} \leq \sum_{k=0}^{n}\frac{1}{k!}.
+    \end{align*}
+    Therefore, $\limsup_{n\to\infty}\left(1 + \frac{1}{n}\right)^{n} \leq e$.
+    
+    Noting that
+    \begin{align*}
+        \left(\frac{n!}{(n-m)!}\right)\frac{1}{n^m} = \prod_{k=0}^{m-1}\left(\frac{n-k}{n}\right),
+    \end{align*}
+    it follows that for all $n \geq m > 0$ we have
+    \begin{align*}
+        \left(1 + \frac{1}{n}\right)^{n} &= \sum_{k=0}^{n}\binom{n}{k}\frac{1}{n^k} \geq \sum_{k=0}^{m}\frac{1}{k!}\left(\frac{n!}{(n-k)!}\right)\frac{1}{n^k} = \sum_{k=0}^{m}\frac{1}{k!}\prod_{j=0}^{k-1}\left(\frac{n-j}{n}\right).
+    \end{align*}
+    It follows that for fixed $m$, the limit of this expression as $n \to \infty$ is simply the $m$th partial sum of $\sum \frac{1}{n!}$. Therefore, letting $m \to \infty$ we have
+    \begin{align*}
+        e \leq \liminf_{n\to\infty}\left(1 + \frac{1}{n}\right)^{n}.
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    $e$ is irrational.
+\end{thm}
+
+\begin{proof}
+    Let $\{s_n\}$ be the partial sums of $\sum 1/k!$.
+    Notice that
+    \begin{align*}
+        e - s_n &= \sum_{k=1}^{\infty}\frac{1}{k!} - \sum_{k=1}^{n}\frac{1}{k!} < \frac{1}{(n+1)!}\sum_{k=0}^{\infty}\left(\frac{1}{n+1}\right)^{k} \\
+        &= \frac{1}{(n+1)!}\frac{n+1}{n} = \frac{1}{n!n}.
+    \end{align*}
+    Assume, for the sake of contradiction, that $e = p/q$ for some $p, q \in \N$. It follows by the above that $0 < e - s_q < 1/(q!q)$ and so $0 < q!(e - s_q) < 1/q$.
+
+    Clearly $q!e$ must be an integer, since $qe = p$. Furthermore,
+    \begin{align*}
+        q!s_q = q!\sum_{k=0}{q}\frac{1}{k!}
+    \end{align*}
+    must be an integer, and so $q!(e - s_q)$ is an integer. Since there are no integers between zero and one by definition, $0 < q!(e-s_q) < 1/q$ is a contradiction, and therefore $e$ must be irrational.
+\end{proof}
+
+\begin{defn}
+    Let $\{c_n\}$ be a sequence in $\C$. Then for any $z \in \C$, the series
+    \begin{align*}
+        \sup_{n\geq 0}c_nz^{n}
+    \end{align*}
+    is a \emph{power series} with coefficients $\{c_n\}$.
+\end{defn}
+
+\begin{thm}
+    Let
+    \begin{align*}
+        \alpha &= \limsup_{n\to\infty}\abs{c_n}^{1/n}, \\
+        R = \frac{1}{\alpha},
+    \end{align*}
+    where $R$ is taken to be zero if $\alpha = \infty$ and $R = \infty$ if $\alpha = 0$. Then the power series with coefficients $c_n$ converges if $\abs{z} < R$ and diverges if $\abs{z} > R$.
+\end{thm}
+
+\begin{proof}
+    This result follows immediately from the root test.
+\end{proof}
+
+\begin{lemma}\label{lm:summation-by-parts}{Summation by parts}\proofbreak
+    Let $\{a_n\}, \{b_n\}$ be sequences, and let
+    \begin{align*}
+        A_n = \begin{dcases}
+            \sum_{k=0}^{n}a_n, & n \geq 0, \\
+            0, & n = -1
+        \end{dcases}.
+    \end{align*}
+    For integers $0 \leq p \leq q$, then
+    \begin{align*}
+        \sum_{n=p}^{q}a_nb_n = A_qb_q - A_{p-1}b_p + \sum_{n=p}^{q-1}A_n(b_n-b_{n+1})
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        \sum_{n=p}^{q}a_nb_n &= \sum_{n=p}^{q}\left(A_n-A_{n-1}\right)b_n = \sum_{n=p}^{q}A_nb_n - \sum_{n=p}^{q}A_{n-1}b_n \\
+        &= \sum_{n=p}^{q}A_nb_n - \sum_{n=p-1}^{q-1}A_{n}b_{n-1} \\
+        &= \sum_{n=p}^{q-1}A_n(b_n-b_{n+1}) + A_qb_q - A_{p-1}b_p.
+    \end{align*}
+\end{proof}
+
+\begin{cor}\label{cor:product-series}
+    Suppose that
+    \begin{itemize}
+        \item $A_n$ is bounded,
+        \item $b_0 \geq b_1 \geq \cdots$,
+        \item and $\lim_{n\to\infty}b_n = 0$.
+    \end{itemize}
+    Then $\sum_{n=0}^{\infty}a_nb_n$ converges.
+\end{cor}
+
+\begin{proof}
+    Let $M$ be a bound on $A_n$, so $\abs{A_n} \leq M$ for all $n$. By Lemma \ref{lm:summation-by-parts}, it follows that since $b_n - b_{n+1} > 0$ we have
+    \begin{align*}
+        \abs{\sum_{n=p}^{q}a_nb_n} &= \abs{A_qb_q - A_{p-1}b_p + \sum_{n=p}^{q-1}A_n(b_n-b_{n+1})} \\
+        &\leq M\abs{b_q - b_p + \sum_{n=p}^{q-1}(b_n-b_{n+1})}.
+    \end{align*}
+    Since $b_n$ converges to zero, we know that for any $\varepsilon > 0$ there exists $N$ such that $n > N$ implies $0 \leq b_n \leq \varepsilon/2M$. Therefore, for $N \leq p \leq q$ we have
+    \begin{align*}
+        \abs{\sum_{n=p}^{q}a_nb_n} &\leq 2Mb_p \leq 2Mb_n < \varepsilon,
+    \end{align*}
+    and so the series converges by the Cauchy criterion.
+\end{proof}
+
+\begin{cor}\label{cor:alternating-series}
+    Suppose $c_n$ is a sequence such that $\abs{c_1} \geq \abs{c_n} \geq \cdots$, $c_{2m-1} \geq 0$, $c_m \leq 0$, and $\lim c_n = 0$. Then $\sum c_n$ converges.
+\end{cor}
+
+\begin{proof}
+    Let $a_n = (-1)^{n+1}$ and $b_n = \abs{c_n}$. Then the partial sums of $a_n$ are bounded by $1$ and so by Corolllary \ref{cor:product-series} we know that $\sum c_n = \sum a_nb_n$ must converge.
+\end{proof}
+
+\begin{exmp}
+    \begin{align*}
+        \sum \frac{(-1)^{n+1}}{n}.
+    \end{align*}
+\end{exmp}
+
+\begin{defn}
+    A series $\sum a_n$ is said to \emph{converge absolutely} if $\sum \abs{a_n}$.
+\end{defn}
+
+\begin{thm}\label{thm:absolute-convergence}{Absolute convergence}\proofbreak
+    If a series $\sum a_n$ converges absolutely, then it converges.
+\end{thm}
+
+\begin{proof}
+    By the Cauchy criterion, for any $\varepsilon > 0$ there must exist $N$ such that $n \geq m > M$ implies $\sum_{m}^{n}\abs{a_n} < \varepsilon$. By the triangle inequality \ref{cauchy-schwarz-triangle}, it follows that
+    \begin{align*}
+        \abs{\sum_{m}^{n}a_n} \leq \sum_{m}^{n}\abs{a_n} < \varepsilon,
+    \end{align*}
+    and so $\sum a_n$ converges by the Cauchy criterion.
+\end{proof}
+
+\begin{thm}
+    Convergent sequences are closed under linear operations.
+\end{thm}
+
+\begin{defn}
+    Let $\sum a_n$ and $\sum b_n$ be series. Their \emph{Cauchy product} is $\sum c_n$ where
+    \begin{align*}
+        c_n = \sum_{k=0}^{n}a_kb_{n-k}.
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    Consider power series $\sum a_nz^n$ and $\sum b_nz^n$. Then
+    \begin{align*}
+        \left(\sum a_nz^n\right)\left(\sum b_nz^n\right) = \sum c_nz^n.
+    \end{align*}
+\end{rmk}
+
+\begin{thm}\label{thm:power-series-product-merten}{Merten's theorem}\proofbreak
+    Suppose $A = \sum a_n$ converges absolutely and $B = \sum b_n$ converges. The Cauchy product of $a_n$ and $b_n$ converges and is equal to $AB$.
+\end{thm}
+
+\begin{proof}
+    Let $A_n, B_n, C_n$ denote the partial sums of $a_n, b_n, c_n$ respectively, and let $\beta_n = B_n - B$. Note that
+    \begin{align*}
+        C_n &= a_0b_0 + (a_0b_1 + a_1b_0) + \cdots + (a_0b_n + \cdots + a_nb_0) \\
+        &= a_0 B_n + a_1 B_{n-1} + \cdots + a_nB_0 \\
+        &= a_0(B+\beta_n + a_1(B + \beta_{n-1}) + \cdots + a_n(B+\beta_0) \\
+        &= A_nB + a_0\beta_n + a_1\beta_{n-1} + \cdots + a\beta_0.
+    \end{align*}
+    Consider $\varepsilon > 0$ and
+    \begin{align*}
+        \alpha = \sum \abs{a_n}.
+    \end{align*}
+    Then there exists $N_{\varepsilon}$ such that $\abs{\beta_n} < \varepsilon$ for all $n > N_{\varepsilon}$, and so for all $n > N_{\varepsilon}$ we know that
+    \begin{align*}
+        \abs{a_0\beta_n + a_1\beta_{n-1} + \cdots + a\beta_0} \leq \abs{a_n\beta_0 + a_{n-1}\beta_{1} + \cdots + a_{n-N}\beta_{n}} + \varepsilon\alpha.
+    \end{align*}
+    For fixed $N_{\varepsilon}$, this then converges to less than $\varepsilon\alpha$, and since $A_nB$ converges to $AB$ it follows that $C_n$ converges to $AB$.
+\end{proof}
+
+\begin{rmk}
+    Absolute convergence of at least one of the series is necessary for convergence. For example, consider the series
+    \begin{align*}
+        \sum (-1)^{n}/\sqrt{n+1},
+    \end{align*}
+    which converges by Corolllary \ref{cor:alternating-series}. The Cauchy product of this series with itself will diverge.
+\end{rmk}
+
+\section{Continuity}
+
+\begin{defn}
+    Let $X, Y$ be metric spaces, and consider some $f: X \to Y$. We say that $\beta \in Y$ is a \emph{limit point} of $f$ if there exists $\alpha \in X$ that is a limit point of $X$, such that
+    \begin{align*}
+        lim_{x\to\alpha} f(x) = \beta.
+    \end{align*}
+    That is, for all $\varepsilon > 0$ there exists $\delta > 0$ such that $d_X(x, \alpha) < \delta$ implies $d_Y(f(x), \beta) < \varepsilon$.
+\end{defn}
+
+\begin{defn}
+    Let $X, Y$ be metric spaces, and consider some $f: X \to Y$. We say that $f$ is \emph{continuous} at some limit point $p \in X$ when
+    \begin{align*}
+        \lim_{x\to p}f(x) = f(p).
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    Let $X, Y, Z$ be metric spaces, and consider functions $f: X \to Y$ and $g: Y \to Z$. If $f$ is continuous at $p \in X$ and $g$ is continuous at $f(p) \in Y$, then $g \circ f$ is continuous at $p$.
+\end{prop}
+
+\begin{thm}
+    $\lim_{x\to p}f(x) = q$ if and only if $\lim_{n\to \infty}f(x_n) = q$ for all sequences $\{x_n\}$ which converge to $p$.
+\end{thm}
+
+\begin{proof}
+    Suppose $\lim_{x\to p}f(x) = q$. Then for any sequence $\{x_n\} \to p$, we can find $N$ such that $n > N$ implies $d(x_n, p) < \delta$. We can choose $\delta$ then such that $d\left(f(x_n), q\right) < \varepsilon$ for any $\varepsilon > 0$, and therefore $\lim_{n\to \infty}f(x_n) = q$.
+
+    Suppose that $\lim_{x\to p}f(x) \neq q$. It follows that for some $\varepsilon > 0$, for any $\delta > 0$ we can find $x \in X$ such that $d(x, p) < \delta$ yet $d(f(x), q) \geq \varepsilon$. Therefore, we can find $\{x_n\}$ such that $d(x_n, p) < 1/n$, and so $\{x_n\} \to p$, yet $d(f(x_n), q) \geq \varepsilon$ for some $\varepsilon > 0$, and so $\lim_{n\to \infty}f(x_n) \neq q$.
+\end{proof}
+
+\begin{thm}\label{thm:open-preimage-iff-continuity}
+    Let $X, Y$ be metric spaces, and consider some $f: X \to Y$. Then $f$ is continuous at all $p \in X$ if and only if $f^{-1}(O) \subseteq X$ is open for all open $O \subseteq Y$.
+\end{thm}
+
+\begin{proof}
+    Suppose $f$ is continuous and $O \subseteq Y$ is open. For any $p \in f^{-1}(O)$, $f(p)$ is an interior point of $O$, so $N_{\varepsilon}(f(p)) \subseteq O$ for some $\varepsilon > 0$. By continuity of $f$, there exists $\delta > 0$ such that $q \in N_{\delta}(p)$ implies $f(q) \in N_{\varepsilon}(f(p)) \subseteq O$. It follows that $N_{\delta}(p) \subseteq f^{-1}(O)$, and so $p$ is an interior point, and so $f^{-1}(O)$ is open.
+
+    Now instead suppose that $f^{-1}(O)$ is open for every open $O \subseteq Y$. For any $p \in X$ and $\varepsilon > 0$, the ball $N_{\varepsilon}(f(p))$ is open, and therefore $f^{-1}(N_{\varepsilon}(f(p)))$ is also open. Since this set contains $p$, $p$ must be an interior point. By definition, there then exists $N_{\delta}(p)$ such that $x \in N_{\delta}(p)$ implies $f(x) \in N_{\varepsilon}(f(p))$. Therefore, $f$ must be continuous.
+\end{proof}
+
+\begin{cor}\label{cor:closed-preimage-iff-continuityd}
+    It follows that $f$ is continuous if and only if for all closed $C \in Y$, then $f^{-1}(C)$ is closed.
+\end{cor}
+
+\begin{proof}
+    Let $O = \complementof{C}$, which must be closed. Note that $x \not\in f^{-1}(O)$ implies $f(x) \not\in C$ so $f^{-1}(O)$ is exactly the complement in $X$ of $f^{-1}(C)$. Therefore, this result follows immediately from the previous result Theorem \ref{thm:open-preimage-iff-continuity}.
+\end{proof}
+
+\begin{cor}\label{cor:equal-subset-closed}
+    For $f, g$ continuous maps from $X$ to $Y$, the set
+    \begin{align}
+        S = \left\{x \in X: f(x) = g(x)\right\}
+    \end{align}
+    is closed.
+\end{cor}
+
+\begin{proof}
+    We instead show that $\complementof{S}$ is open. Consider any $p \not\in S$, so that $f(p) \neq g(p)$. Let $A$ and $B$ be open balls around $f(p)$ and $g(p)$ respectively, with radius $d(f(p), g(p))/4$, so that $A$ and $B$ must be disjoint by the triangle inequality \ref{cauchy-schwarz-triangle}. By Theorem \ref{thm:open-preimage-iff-continuity}, we know that $f^{-1}(A)$ and $g^{-1}(B)$ be must open sets. Since $p \in f^{-1}(A)$ and $p \in g^{-1}(B)$, it follows that $p$ is an interior point of the open set $f^{-1}(A) \intersection g^{-1}(B) \subseteq \complementof{S}$, and so $S$ must be closed.
+\end{proof}
+
+\begin{cor}\label{cor:equal-dense-equal-everywhere}
+    For $f, g$ continuous maps from $X$ to $Y$, if $f(p) = g(p)$ for all $p$ in some dense subset $S$ of $X$, then $f = g$ on all of $X$.
+\end{cor}
+
+\begin{proof}
+    Note that the set $R = \left\{x \in X : f(x) = g(x)\right\}$ is closed by Corolllary \ref{cor:equal-subset-closed}. Since $S \subseteq R$, we know that $X = \overline{S} \subseteq R$, and so $f = g$ on $X$.
+
+    Alternatively, since $S$ is dense in $X$ we know for any $x \in X$ there exists a sequence $\{x_n\}$ in $S$ that converges to $x$. By continuity of $f$ and $g$,
+    \begin{align*}
+        \lim_{n\to\infty}f(x_n) &= f(x), \\
+        \lim_{n\to\infty}g(x_n) &= g(x).
+    \end{align*}
+    Since $f(x_n) = g(x_n)$, it follows that
+    \begin{align*}
+        f(x) = \lim_{n\to\infty}f(x_n) = \lim_{n\to\infty}g(x_n) = g(x).
+    \end{align*}
+\end{proof}
+
+\begin{thm}\label{thm:continuous-compact-image}
+    Let $X, Y$ be metric spaces, and let $f: X \to Y$ be continuous. If $X$ is compact, then $f(X) \subseteq Y$ is compact.
+\end{thm}
+
+\begin{proof}
+    Let $\{V_{\alpha}\}$ be any open cover of $f(X)$. Note that $\left\{f^{-1}(V_{\alpha})\right\}$ is an open cover of $X$. Since $X$ is compact, we can find a finite subcover $\{f^{-1}(V_{\alpha_k})\}$. It follows that
+    \begin{align*}
+        f(X) &= f\left(\union_{k=1}^{n}f^{-1}(V_{\alpha_k})\right) \\
+        &= f\left(f^{-1}\left(\union_{k=1}^{n}V_{\alpha_k}\right)\right) \\
+        &\subseteq \union_{k=1}^{n}V_{\alpha_k},
+    \end{align*}
+    and so $\left\{V_{\alpha_k}\right\}$ is a finite subcover of $f(X)$.
+\end{proof}
+
+\begin{thm}
+    If $f: X \to Y$ is continuous, a bijection, and $X$ is compact, then $f^{-1}: Y \to X$ is continuous.
+\end{thm}
+
+\begin{exmp}
+    To see how $f^{-1}$ can fail to be continuous when $X$ is not compact, consider
+    \begin{align*}
+        f&: [0, 2\pi) \to S^{1} \\
+        f&: \theta \mapsto e^{i\theta}.
+    \end{align*}
+    We can see that $f$ is a continuous bijection, however $f^{-1}$ is not continuous at $1$, since $\lim_{x \to 1}f^{-1}(x)$ does not converge.
+\end{exmp}
+
+\begin{proof}
+    Applying Theorem \ref{thm:open-preimage-iff-continuity}, we see to prove $f^{-1}$ is continuous, it sufficies to show that $f(V)$ is open for all $V$ open in $X$.
+
+    Consider any $V$ open in $X$, so $\complementof{V}$ is closed and therefore is compact in $X$ by Theorem \ref{thm:closed-subsets-are-compact}. Since $f$ is a bijection, it follows that $f(\complementof{V}) = \complementof{f(V)}$. Furthermore, since $f(\complementof{V})$ is compact by Theorem \ref{thm:continuous-compact-image}, and so is closed in $Y$, it follows that $f(V)$ must be open in $Y$.
+\end{proof}
+
+\begin{defn}
+    Let $X, Y$ be metric spaces, and consider some $f: X \to Y$. We say that $f$ is \emph{uniformly continuous} on $X$ when, for any $\varepsilon > 0$ there exists $\delta > 0$ such that
+    \begin{align*}
+        d_{X}(p, q) < \delta \implies d_{Y}(f(p), f(q)) < \varepsilon,
+    \end{align*}
+    for all $p, q \in X$.
+\end{defn}
+
+\begin{thm}
+    If $f: X \to Y$ is continuous and $X$ is compact, then $f$ is uniformly continuous.
+\end{thm}
+
+\begin{proof}
+    For any $\varepsilon > 0$, produce a covering of $X$ of balls of radius $\varepsilon$. Since $X$ is compact, we can produce a finite subcovering.
+\end{proof}
+
+\begin{thm}
+    Suppose $E \subseteq \R$ is \emph{not} compact. Then
+    \begin{itemize}
+        \item there exists unbounded continuous $f: E \to \R$,
+        \item there exists bounded continuous $f: E \to \R$,
+        \item there exists continuous function $f: E \to \R$ which is not uniformly continuous.
+    \end{itemize}
+\end{thm}
