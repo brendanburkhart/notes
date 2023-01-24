@@ -407,7 +407,7 @@ Since the sequence is a binary search sequence, $(b_k-a_k) = \frac{1}{2^k}(b_0 -
     For any cut $\alpha$, if $p \in \alpha+0$ then $p = \alpha + \zeta$ where $\zeta < 0$, so $p < \alpha$, and so $p \in \alpha$. Furthermore, if $p \in \alpha$, then since there exists $r > p \in \alpha$, we can take $r + (p - r) = p$, and since $p - r < 0$ we have $p \in \alpha + 0$. Therefore, $\alpha = \alpha + 0$.
 \end{proof}
 
-We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We can easily define an order by $R$ as $\alpha < \beta$ when $\alpha \subseteq \beta$.
+We now define $\R \subset \Q$ to be the set of all cuts of $\Q$. We can easily define an order by $R$ as $\alpha < \beta$ when $\alpha \subseteq \beta$.
 
 \begin{thm}
     This construction of $\R$ has the \emph{least-upper bound property}.
@@ -1114,7 +1114,7 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
     Let $X, Y, Z$ be metric spaces, and consider functions $f: X \to Y$ and $g: Y \to Z$. If $f$ is continuous at $p \in X$ and $g$ is continuous at $f(p) \in Y$, then $g \circ f$ is continuous at $p$.
 \end{prop}
 
-\begin{thm}
+\begin{thm}\label{thm:all-sequences-limit}
     $\lim_{x\to p}f(x) = q$ if and only if $\lim_{n\to \infty}f(x_n) = q$ for all sequences $\{x_n\}$ which converge to $p$.
 \end{thm}
 
@@ -1213,19 +1213,273 @@ We now define $\R \subset \mathcal{\Q}$ to be the set of all cuts of $\Q$. We ca
     for all $p, q \in X$.
 \end{defn}
 
-\begin{thm}
+\begin{thm}\label{thm:compact-uniform-continuity}
     If $f: X \to Y$ is continuous and $X$ is compact, then $f$ is uniformly continuous.
 \end{thm}
 
 \begin{proof}
-    For any $\varepsilon > 0$, produce a covering of $X$ of balls of radius $\varepsilon$. Since $X$ is compact, we can produce a finite subcovering.
+    Fix any $\varepsilon > 0$, and we will exhibit $\delta > 0$ such that for all $p, q \in X$, if $d_{X}(p, q) < \delta$ then $d_{Y}(f(p), f(p)) < \varepsilon$.
+
+    By continuity of $f$, for any $p \in X$ there exists $\varphi(p) > 0$ such that $d_{X}(p, q) < \varphi(p)$ implies
+    \begin{align*}
+        d_{Y}(f(p), f(p)) < \frac{1}{2}\varepsilon.
+    \end{align*}
+    Consider the open cover of $X$ given by
+    \begin{align*}
+        \left\{x \in X: d_{X}(x, p) < \frac{1}{2}\varphi(p)\right\}
+    \end{align*}
+    for all $p \in X$. Since $X$ is compact, there exists a finite subcover corresponding to neighborhoods of some $p_1, \ldots, p_n \in X$. Let
+    \begin{align*}
+        \delta = \frac{1}{2}\min_{1 \leq i \leq n}\varphi\left(p_i\right).
+    \end{align*}
+
+    Since $\varphi(p) > 0$, we know that $\delta > 0$. Furthermore, for any $p, q$ which satisfy $d_{X}(p, q) < \delta$, there exists $p_i$ such that $d_{X}(p, p_i) < \frac{1}{2}\varphi(p_i)$ by our finite subcover. It follows by the triangle inequality that
+    \begin{align*}
+        d_{X}(q, p_i) \leq d_{X}(q, p) + d_{X}(p, p_i) \leq \delta + \frac{1}{2}\varphi(p_i) \leq \varphi(p_i).
+    \end{align*}
+    It follows from the definition of $\varphi(p)$ that $d_{Y}(f(p_i), p) < \frac{1}{2}\varepsilon$ and $d_{Y}(f(p_i), q) < \frac{1}{2}\varepsilon$, and so
+    \begin{align*}
+        d_{Y}(f(p), f(q)) < \varepsilon.
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    A continuous function $f$ is \emph{Lipschitz continuous} when
+    \begin{align*}
+        d_Y\left(f(p), f(q)\right) \leq Kd_X\left(p, q\right)
+    \end{align*}
+    for some real constant $K \geq 0$, where $K$ is the smallest such constant.
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item $f(x) = \alpha x$,
+        \item $f(x) = \abs{x}$,
+        \item $f(x) = \frac{1}{1+\abs{x}}$,
+        \item $f(x) = \sin(x)$.
+    \end{itemize}
+\end{exmp}
+
+\section{Derivatives}
+
+\begin{defn}
+    Let $f: \R \to \R$ be a function. Then, where it exists, the \emph{derivative} of $f$ is defined to be
+    \begin{align*}
+        f'(x) = \lim_{h\to 0}\frac{f(x+h)-f(x)}{(x+h)-x}.
+    \end{align*}
+    A function is said to be \emph{differentiable} when its derivative exists everywhere on its domain.
+\end{defn}
+
+\begin{prop}
+    Let $f, g: \R \to \R$ be functions. Then wherever $f(x)$, $g(x)$, etc. are defined, the following derivatives are defined;
+    \begin{align*}
+        \left(f+g\right)'(x) &= f'(x) + g'(x) \\
+        \left(f \cdot g\right)'(x) &= f'(x)g(x) + f(x)g'(x) \\
+        \left(g \circ g\right)'(x) &= (g' \circ f)(x)f'(x).
+    \end{align*}
+\end{prop}
+
+\begin{thm}
+    Let $f: [a, b] \to \R$ be a function such that there exists a local maximum: $x \in (a, b)$ and $f'(x)$ exists. Then $f'(x)$ must be zero. 
+\end{thm}
+
+\begin{proof}
+    Since $x$ is a local maximum, there exists $\delta > 0$ such that $f(x+h) \leq f(x)$ for all $\abs{h} < \delta$. Therefore, for every $0 < h < \delta$, we know that $\frac{f(x+h)-f(x)}{h} < 0$, and for every $-\delta < h < 0$, we know that $\frac{f(x+h)-f(x)}{h} > 0$. Therefore, the subsequence $h_n = \delta/n$ and $g_n = -\delta/n$ give us subsequences converging to a limit less than zero and greater than zero respectively. Since $f'(x)$ exists, by Theorem \ref{thm:all-sequences-limit} we know that it must be zero.
 \end{proof}
 
 \begin{thm}
-    Suppose $E \subseteq \R$ is \emph{not} compact. Then
-    \begin{itemize}
-        \item there exists unbounded continuous $f: E \to \R$,
-        \item there exists bounded continuous $f: E \to \R$,
-        \item there exists continuous function $f: E \to \R$ which is not uniformly continuous.
-    \end{itemize}
+    Let $f, g: [a, b] \to \R$ be continuous and differentiable on $(a, b)$. Then there exists $x \in (a, b)$ such that $\left[f(b) - f(a)\right]g'(x) = \left[g(b) - g(a)\right]f'(x)$.
 \end{thm}
+
+\begin{proof}
+    Define
+    \begin{align*}
+        h(x) = \left[f(b) - f(a)\right]g(x) - \left[g(b) - g(a)\right]f(x),
+    \end{align*}
+    and so
+    \begin{align*}
+        h(a) &= f(b)g(a) - g(b)f(a) \\
+        h(b) &= f(b)g(a) - g(b)f(a),
+    \end{align*}
+    and so $h(a) = h(b)$. Since $[a, b]$ is compact, $h([a, b])$ must be compact, and so has a maximum and a minimum. If the maximum \emph{and} the minimum are equal to $h(a) = h(b)$, then $h(x)$ must be the constant function $h(x) = h(a)$, and so $h'(x) = 0$. Otherwise, $h(x)$ has a local maximum or minimum in $(a, b)$ and so there exists a point $x \in (a, b)$ such that $h'(x) = 0$.
+
+    Now, notice that
+    \begin{align*}
+        h'(x) = \left[f(b) - f(a)\right]g'(x) - \left[g(b) - g(a)\right]f'(x),
+    \end{align*}
+    and so we are done.
+\end{proof}
+
+\begin{cor}{Mean Value Theorem}\label{thm:mvt}\proofbreak
+    There exists $x$ such that
+    \begin{align*}
+        f'(x) = \frac{f(b) - f(a)}{b-a}.
+    \end{align*}
+\end{cor}
+
+\section{Functions of Bounded Variation}
+
+\begin{rmk}
+    Given a function $f: [a, b] \to \R$, we may want to know the length of $f$ as a curve in $\R^2$. In order to approximate this length, fix some $n \in \N$, and define $\Delta x = \frac{\abs{b-a}}{n}$ and $\Delta y_{i} = f(a + i\Delta X) - f(a + (i-1)\Delta X)$. Then we can approximate this length of $f$ by
+    \begin{align*}
+        \sum_{i=1}^{n}\norm{\Delta x^2 + \Delta y_{i}^2}.
+    \end{align*}
+
+    We could go farther and take the limit of this approximation as $n$ grows to infinity, allowing us to find the exact length. We naturally arrive at the question of when this limit will exist. In order to determine this, we introduce the concept of the \emph{variation} of the length - it's effective length only in the dependent dimension.
+\end{rmk}
+
+\begin{defn}
+    Consider an interval $[a, b] \subseteq \R$, and a monotonically increasing function $\alpha$ on $[a, b]$. For any interval $[a, b]$, a \emph{partition} $P$ of $[a, b]$ is a finite sequence $x_i$ such that $a = x_0 \leq x_1 \leq \cdots \leq x_{n-1} \leq x_n = b$. We define $\Delta\alpha_i = \alpha(x_i) - \alpha(x_{i-1})$ for all $1 \leq i \leq n$.
+\end{defn}
+
+\begin{defn}
+    Given a function $f: [a, b] \to \R$ and a partition $P$ of $[a, b]$, the \emph{variation} of $f$ is
+    \begin{align*}
+        V(f, P) = \sum_{k=0}^{n}\abs{f(P_{k+1})-f(P_{k})}.
+    \end{align*}
+
+    The \emph{total variation} of $f$ on $[a, b]$ is then simply the supremum of $V(f, P)$ over all partitions of $[a, b]$. This is denoted by $V_{a}^{b}(f)$.
+
+    We say that $f$ has \emph{bounded variation} when $V_{a}^{b}(f) < \infty$.
+\end{defn}
+
+\section{Riemann-Stieltjes Integral}
+
+\begin{defn}
+    For a function $f: [a, b] \to \R$ which is bounded, and a partition $P$, let
+    \begin{align*}
+        M_i &= \sup_{x\in[x_{i-1}, x_i]} f(x), \\
+        m_i &= \inf_{x\in[x_{i-1}, x_i]} f(x),
+    \end{align*}
+    for $1 \leq i \leq n$. Then define
+    \begin{align*}
+        U(f, P) &= \sum_{i=1}^{n}M_i\Delta \alpha_i \\
+        L(f, P) &= \sum_{i=1}^{n}m_i\Delta \alpha_i.
+    \end{align*}
+    Finally, we define
+    \begin{align*}
+        \lowerint_{a}^{b}f\,d\alpha &= \inf_{P}U(f, p) \\
+        \upperint_{a}^{b}f\,d\alpha &= \sup_{P}L(f, p) \\
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    Since $f$ is bounded on $[a, b]$ it follows that there exists $m$ and $M$ such that
+    \begin{align*}
+        m(\alpha(b) - \alpha(a)) \leq L(f, P) \leq U(f, P) \leq M(\alpha(b) - \alpha(a))
+    \end{align*}
+    for all partitions $P$.
+\end{rmk}
+
+\begin{defn}
+    When these upper and lower integrals coincide --- that is, when
+    \begin{align*}
+        \upperint_{a}^{b}f\,d\alpha = \lowerint_{a}^{b}f\,d\alpha,
+    \end{align*}
+    we say that $f$ is \emph{Riemann-integrable} (on $[a, b]$), denoted by $f \in \riemann{\alpha}$, and define the Riemann-Stieltjes integral of $f$ with respect to $\alpha$ on $[a, b]$ to be this common value. 
+    \begin{align*}
+        \int_{a}^{b}f\,d\alpha = \upperint_{a}^{b}f\,d\alpha = \lowerint_{a}^{b}f\,d\alpha.
+    \end{align*}
+\end{defn}
+
+\begin{thm}
+    \begin{align*}
+        \lowerint_{a}^{b}f\,d\alpha \leq \upperint_{a}^{b}f\,d\alpha
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    For any two partitions $P_1, P_2$ we can define their \emph{common refinement} $P^{*}$ to be $P_1 \union P_2$. Then clearly
+    \begin{align*}
+        L(f, P_1) \leq L(f, P^{*}) \leq U(f, P^{*}) \leq U(f, P_2),
+    \end{align*}
+    and so
+    \begin{align*}
+        L(f, P_1) \leq U(f, P_2).
+    \end{align*}
+    Let $P_1$ be fixed, and take the infimum of $U(f, P_2)$ over all partitions, to obtain
+    \begin{align*}
+        L(f, P_1) \leq \upperint_{a}^{b}f\,d\alpha.
+    \end{align*}
+    Finally, taking the supremum of $L(f, P_1)$ over all partitions, we obtain
+    \begin{align*}
+        \lowerint_{a}^{b}f\,d\alpha \leq \upperint_{a}^{b}f\,d\alpha.   
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    $f$ is Riemann-Stieltjes integrable with respect to $\alpha$ on $[a, b]$ if and only if for any $\varepsilon > 0$ there exists a partition $P$ such that
+    \begin{align*}
+        U(f, P) - L(f, P) < \varepsilon.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Suppose we can find a partition such that $U(f, P) - L(f, P) < \varepsilon$ for any $\varepsilon > 0$. Then since
+    \begin{align*}
+        L(f, P) \leq \lowerint_{a}^{b}f\,d\alpha \leq \upperint_{a}^{b}f\,d\alpha \leq U(f, P),
+    \end{align*}
+    it follows that
+    \begin{align*}
+        0 \leq \upperint_{a}^{b}f\,d\alpha - \lowerint_{a}^{b}f\,d\alpha \leq \varepsilon.
+    \end{align*}
+    Since this holds for all $\varepsilon > 0$, it follows that the lower and upper integrals must coincide.
+
+    Conversely, suppose that the upper and lower integrals do coincide. It follows that for any $\varepsilon > 0$ there must exist partitions $P_1, P_2$ such that
+    \begin{align*}
+        \lowerint_{a}^{b}f\,d\alpha &\leq L(f, P_1) + \frac{\varepsilon}{2} \\
+        \upperint_{a}^{b}f\,d\alpha &\geq U(f, P_2) - \frac{\varepsilon}{2}.
+    \end{align*}
+    Therefore, $U(f, P_1) - L(f, P_2) \leq \varepsilon$, and so taking $P^{*} = P_1 \union P_2$ we find that
+    \begin{align*}
+        U(f, P_1) - L(f, P_2) \leq \varepsilon.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}
+    If $U(f, P) - L(f, P) < \varepsilon$ for some partition $P$, and $s_i, t_i$ are sequences of points such that $s_i, t_i \in [x_{i-1}, x_i]$, then
+    \begin{align*}
+        \sum_{i=1}^{n}\abs{f(s_i) - f(t_i)}\Delta\alpha_i \leq \varepsilon.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    Since $m_i \leq f(s_i), f(t_i) \leq M_i$, it follows that
+    \begin{align*}
+        \sum_{i=1}^{n}\abs{f(s_i) - f(t_i)}\Delta\alpha_i \leq \sum_{i=1}^{n}\left(M_i - m_i\right)\Delta\alpha_i = U(f, P) - L(f, P) \leq \varepsilon.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}
+    If $f \in \riemann{\alpha}$, $U(f, P) - L(f, P) < \varepsilon$ for some partition $P$, and $s_i$ is a sequence of points such that $s_i \in [x_{i-1}, x_i]$, then
+    \begin{align*}
+        \abs{\sum_{i=1}^{n}f(s_i)\Delta\alpha_i - \int_{a}^{b}f\,d\alpha} \leq \varepsilon.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    This follows immediately from the facts that
+    \begin{align*}
+        L(f, P) &\leq \sum_{i=1}^{n}f(s_i)\Delta\alpha_i \leq U(f, P), \\
+        L(f, P) &\leq \int_{a}^{b}f\,d\alpha \leq U(f, P).
+    \end{align*}
+\end{proof}
+
+\begin{thm}\label{thm:continuous-riemann-integrable}
+    If $f$ is continuous on $[a, b]$, then $f \in \riemann{\alpha}$.
+\end{thm}
+
+\begin{proof}
+    We know that $f$ must be uniformly continuous on $[a, b]$ by Theorem \ref{thm:compact-uniform-continuity}. Therefore, there exists $\delta > 0$ such that $\Delta x_i < \delta$ implies $\abs{f(x_i) - f(x_{i-1})} \leq \frac{\varepsilon}{\alpha(b) - \alpha(a)}$. Therefore, for any partition $P$ such that $\forall i\Delta x_i < \delta$ we have
+    \begin{align*}
+        U(f, P) - L(f, P) = \sum_{i=1}^{n}\left(M_i - m_i\right)\Delta\alpha_i \leq \sum_{i=1}^{n}\frac{\varepsilon}{\left[\alpha(b) - \alpha(a)\right]}\Delta\alpha_i = \varepsilon.
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    If $f$ is monotonic on $[a, b]$ and $\alpha$ is continuous, then $f \in \riemann{\alpha}$.
+\end{thm}
+
+\begin{proof}
+    
+\end{proof}
