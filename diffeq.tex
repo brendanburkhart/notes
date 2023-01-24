@@ -113,7 +113,7 @@ We of course need to also be able to find such a $\mu(t)$. Note that since $\mu'
 \begin{exmp}
     Using an integrating factor to solve $ty' + 2y = 4t^2$ with the initial condition $y(1) = 2$.
 
-    First, we need the differential equation in the standard form $y' + p(t)y = g(t)$. Doing this, we obtain $y' + \frac{2}{t}y = 4t$, provided that $t \neq 0$. Then we have $\ln(\mu(t)) = \int \frac{2}{t}dt = 2\ln(t) = \ln(t^2)$, so $\mu(t) = t^2$. We know have $\frac{\mathrm{d}}{\mathrm{d}t}\mu(t)y = 4t^3$, which we may integrate to obtain $t^2y = t^4 + c$, and so $y = t^2 + \frac{c}{t^2}$. Applying the initial condition $y(1) = 2$, we have $2 = 1 + c$, so $c = 1$ and our final particular solution is \[y = t^2 + \frac{1}{t^2}, t > 0.\]
+    First, we need the differential equation in the standard form $y' + p(t)y = g(t)$. Doing this, we obtain $y' + \frac{2}{t}y = 4t$, provided that $t \neq 0$. Then we have $\ln(\mu(t)) = \int \frac{2}{t}dt = 2\ln(t) = \ln(t^2)$, so $\mu(t) = t^2$. We now have $\frac{\mathrm{d}}{\mathrm{d}t}\mu(t)y = 4t^3$, which we may integrate to obtain $t^2y = t^4 + c$, and so $y = t^2 + \frac{c}{t^2}$. Applying the initial condition $y(1) = 2$, we have $2 = 1 + c$, so $c = 1$ and our final particular solution is \[y = t^2 + \frac{1}{t^2}, t > 0.\]
 \end{exmp}
 
 \subsection{Separable equations}
@@ -594,7 +594,7 @@ For $\phi$ to be a solution, it must satisfy $a\phi'' + b\phi' + c\phi = 0$. Sin
         &= u_1(y_1'' + p(t)y_1' + q(t)y_1) + u_2(y_2'' + p(t)y_2' + q(t)y_2) + u_1'y_1' + u_2'y_2'.
     \end{align*}
     Since $y_1, y_2$ are solutions to the homogeneous equation, we know that $y_1'' + p(t)y_1' + q(t)y_1$ and $y_2'' + p(t)y_2' + q(t)y_2$ are both equal to zero.
-    Together with the constraint we added, we know have
+    Together with the constraint we added, we now have
     \begin{align*}
         u_1'y_1' + u_2'y_2' &= g(t) \\
         u_1'y_1 + u_2'y_2 &= 0.
@@ -711,7 +711,7 @@ Many of the results and techniques we have seen for first and second order linea
     \[y(x) = c_1x^{-6} + c_2\ln(x)x^{-6} + \frac{x^7}{169}.\]
 \end{exmp}
 
-\section{Systems of First Order Linear Differential Equations}
+\section{Systems of First Order Differential Equations}
 
 \subsection{First Order Linear Systems}
 
@@ -746,7 +746,7 @@ Now consider the system
 \begin{equation}\label{linear-nth-order-system}
 \begin{aligned}
     x_1' &= p_{11}(t)x_1 + \ldots + p_{1n}(t)x_n + g_1(t) \\
-    x_n' &= p_{21}(t)x_1 + \ldots + p_{2n}(t)x_n + g_2(t) \\
+    x_2' &= p_{21}(t)x_1 + \ldots + p_{2n}(t)x_n + g_2(t) \\
     &\quad\quad\vdots \\
     x_n' &= p_{n1}(t)x_1 + \ldots + p_{nn}(t)x_n + g_n(t) \\
 \end{aligned}
