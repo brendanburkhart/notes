@@ -46,7 +46,7 @@
 \section{Graphs}
 
 \begin{defn}
-    A \emph{simple graph} is a $2$-tuple $G = (V, E)$, where $V$ is a non-empty finite set of vertices, and $E$ is a set of unordered pairs (two-sets) of vertices, called edges.
+    A \emph{simple graph} is a $2$-tuple $G = (V, E)$, where $V$ is a non-empty finite set of vertices, and $E$ is a set of unordered pairs (two-sets) of distinct vertices, called edges.
 \end{defn}
 
 \begin{rmk}
@@ -88,22 +88,86 @@
 \end{defn}
 
 \begin{defn}
-    The \emph{adjacency matrix} $\bm{A}$ of a graph $G = (V, E)$ is a square $|V| \times |V|$ matrix where $\bm{A}_{i, j}$ is $1$ if there is an edge from $V_i$ to $V_j$, and $0$ otherwise.
+    A \emph{graph isomorphism} between graphs $G$ and $H$ is a pair of bijections $(\theta, \varphi)$ where $\theta: V(G) \to V(H)$ and $\varphi: E(G) \to E(H)$ such that vertex $v$ is indicent with edge $e$ in $G$ \emph{if and only if} vertex $\theta(v)$ is incident with edge $\varphi(e)$ in $H$.
+\end{defn}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw,fill=cyan}]
+            \node (1) at ({2*cos(180)}, {2*sin(180)}) {1};
+            \node (2) at (0, 0) {2};
+            \node (3) at ({3*cos(60)}, {2*sin(60)}) {3};
+            \node (4) at ({3*cos(300)}, {2*sin(300)}) {4};
+        \end{scope}
+
+        \begin{scope}[>={Stealth[black]},
+                    every node/.style={fill=white,circle},
+                    every edge/.style={draw=black,very thick}]
+            \path [-] (1) edge["1"] (2);
+            \path [-] (1) edge["2"] (3);
+            \path [-] (2) edge["3"] (3);
+            \path [-] (2) edge["4"] (4);
+            \path [-] (3) edge["5"] (4);
+        \end{scope}
+    \end{tikzpicture}
+\caption{Example graph}
+\label{fig:adjacency-example}
+\end{figure}
+
+\begin{defn}
+    The \emph{adjacency matrix} $A(G)$ of a graph $G = (V, E)$ is a square $|V| \times |V|$ matrix where $A(G)_{i, j}$ is $1$ if there is an edge from $V_i$ to $V_j$, and $0$ otherwise.
 \end{defn}
 
 \begin{exmp}
-    Let $V = \{1, 2, 3, 4\}$, let $E = \{\{1, 2\}, \{2, 3\}, \{3, 4\}, \{4, 1\}\}$. The adjacency matrix of $G = (V, E)$ is
-    \[\bm{A} = \begin{bmatrix}
-        0 & 1 & 0 & 1 \\
+    The adjacency matrix of the graph shown in Figure \ref{fig:adjacency-example} is
+    \[A = \begin{bmatrix}
+        0 & 1 & 1 & 1 \\
         1 & 0 & 1 & 0 \\
-        0 & 1 & 0 & 1 \\
+        1 & 1 & 0 & 1 \\
         1 & 0 & 1 & 0
     \end{bmatrix}.\]
 \end{exmp}
 
 \begin{rmk}
-    The adjacency matrix of a graph clearly must be symmetric and have only zeroes on the major diagonal.
+    The adjacency matrix of a simple graph clearly must be symmetric and have only zeroes on the major diagonal (since simple graphs do not have loop edges).
 \end{rmk}
+
+\begin{defn}
+    Let $G = (V, E)$ be a graph, and $\textrm{lex}: E \to \Z_n$ be an order of edges. The \emph{incidence matrix} $B(G)$ of a graph $G = (V, E)$ is a $\abs{V(G)}$ by $\abs{E(G)}$ rectangular matrix, such that
+    \begin{align*}
+        B_{v, \textrm{lex}(e)} = \begin{dcases}
+            1, &e \textrm{ is incident to v}, \\
+            0, &\textrm{otherwise}
+        \end{dcases}.
+    \end{align*}
+\end{defn}
+
+\begin{exmp}
+    The incidence matrix of the graph shown in Figure \ref{fig:adjacency-example}, using $\textrm{lex}(e_i) = i$, is
+    \begin{align*}
+        B = \begin{bmatrix}
+            1 & 1 & 0 & 0 & 0 \\
+            1 & 0 & 1 & 1 & 0 \\
+            0 & 1 & 1 & 0 & 1 \\
+            0 & 0 & 0 & 1 & 1 \\
+        \end{bmatrix}.
+    \end{align*}
+\end{exmp}
+
+\begin{defn}
+    Let $G = (V, E)$ be a graph. The \emph{Sylvester adjacency polynomial} of $G$ is the polynomial in variables $x_i$ given by
+    \begin{align*}
+        \prod_{\substack{i < j \\ i \textrm{ adjacent to } j}}\left(x_j-x_i\right).
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    Edge list monomial
+    \begin{align*}
+        \prod_{i \textrm{ adjacent to } j}y_{i, j}
+    \end{align*}
+\end{defn}
 
 \begin{defn}
     Let $G$ be a graph. The \emph{degree} of a vertex $v \in V$, denoted by $d_G(v)$, is the number of edges with which $v$ is incident. In a simple graph, it is the number of neighbors of $v$. \[d_G(v) = |N(v)|.\]
@@ -117,7 +181,7 @@
     The sum of entries in the $i$th row of $\bm{A}$ is the degree of $V_i$, since there is a single $1$ for every vertex $V_i$ is adjacent to. Therefore, the sum of the sum of each row gives the sum of degrees of vertices in $G$.
 \end{proof}
 
-\begin{thm}\label{sum-degrees-is-twice-edges}
+\begin{thm}{Handshake Lemma}\label{sum-degrees-is-twice-edges}\proofbreak
     Let $G = (V, E)$ be a graph. The sum of the degrees of all vertices in $G$ is twice the number of edges:
     \[\sum_{v\in V}d_G(v) = 2|E|.\]
 \end{thm}
@@ -128,20 +192,29 @@
     We must then show that the sum of entries above the major diagonal is equal to the number of edges in $G$. Every edge can of course be represented uniquely as $(V_i, V_j)$, where $j > i$, which is precisely the sum of entries above the major diagonal in the adjacency matrix.
 \end{proof}
 
-\begin{cor}\label{sum-degrees-is-even}
-    The sum of degrees is always an even integer.
-\end{cor}
-
-\begin{proof}
-    Since $|E| \in \N$, and the sum of degrees is equal to $2|E|$, $2|E|$ must be an even integer.
-\end{proof}
-
 \begin{cor}\label{n-of-odd-vertices-is-even}
     The number of vertices with odd degree is even.
 \end{cor}
 
 \begin{proof}
-    For the sake of contradiction, assume that a graph $G$ has an odd number of vertices with odd degree. Then, the sum of degrees of vertices with even degree must itself be even, and the sum of degrees of vertices with odd degree must be odd, so the sum of the degrees of all vertices in $G$ is odd. By Corollary \ref{sum-degrees-is-even}, this is a contradiction.
+    For the sake of contradiction, assume that a graph $G$ has an odd number of vertices with odd degree. Then, the sum of degrees of vertices with even degree must itself be even, and the sum of degrees of vertices with odd degree must be odd, so the sum of the degrees of all vertices in $G$ is odd. By Corollary \ref{sum-degrees-is-twice-edges}, this is a contradiction.
+\end{proof}
+
+\begin{thm}
+    Let $G, H$ be graphs such that $V(G) = V(H)$, and let $n = \abs{V(G)}$. Then $G$ are $H$ are isomorphic if and only if there exists a solution $P \in \C^{n\times n}$ to the system
+    \begin{align*}
+        PA(G)P^{*} &= A(H), \\
+        PP^{*} &= I, \\
+        P \circ P &= P,
+    \end{align*}
+    where $\circ$ is the Hadamard product.
+\end{thm}
+
+\begin{proof}
+    Suppose we have solved a relaxed version of this problem, by finding $R \in C^{n \times n}$ such that $RA(G)R^{*} = A(H)$ and $RR^{*} = I$. Then $A(G)$ and $A(H)$ must have the same eigenvalues. Let $D$ be a diagonal matrix of these eigenvalues. Since $A(G)$ and $A(H)$ are real symmetric matrices, by the Spectral Theorem \ref{spectral-theorem}, there exists eigendecompositions $A(G) = UD\transposeof{U}$ and $A(H) = VD\transposeof{V}$. Then $A_G = \left(U\transposeof{V}\right)A_H\transposeof{\left(U\transposeof{V}\right)}$.
+
+    For $k \in \left\{0, 1\right\}$
+    $\left(PA(G)^{k}P^{*}\right) \circ A(H)^{\circ^k} = A(H)^{k}$
 \end{proof}
 
 \begin{defn}
@@ -350,6 +423,20 @@
     In the graph depicted in Figure \ref{fig:clique-examples}, an independent set with maximum cardinality is $\{1, 3\}$, so $\alpha(G) = 2$.
 \end{exmp}
 
+\begin{defn}
+    A subset $S \subseteq V(G)$ is a \emph{vertex cover} of $G$ when every edge in $E(G)$ is adjacent to at least one vertex in $S$.
+\end{defn}
+
+\begin{prop}
+    A subset $S \subseteq V(G)$ is an independent set if and only if $V(G)\setminus S$ is a vertex cover.
+\end{prop}
+
+\begin{proof}
+    If $S$ is independent, then at most one of $u, v$ are in $S$ whenever $(u, v) \in E(G)$. Therefore, at least one of $u, v$ are in $V(G) \setminus S$.
+
+    If $V(G)\setminus S$ is a vertex cover, then for every edge $(u, v) \in E(G)$, at least one of $u, v$ is in $V(G)\setminus S$. Therefore, at most one of $u, v$ is in $S$, and so $S$ must be an independent set.
+\end{proof}
+
 \begin{defn}Complement Graph\proofbreak
     Let $G$ be a graph. The \emph{complement graph} of $G$, denoted by $\bar{G}$, is defined by
     \[V(\bar{G}) = V(G),\] and
@@ -385,6 +472,10 @@
     Since $V(H) = V(G)$, $V(\bar{H}) = V(G)$. Furthermore,
     \[E(H) = \left\{\{a, b\} \compbar a, b \in V(G), a \neq b, \{a, b\} \notin E(G) \right\},\] \[E(\bar{H}) = \left\{\{a, b\} \compbar a, b \in V(G), a \neq b, \{a, b\} \notin E(H) \right\},\] so \[E(\bar{H}) = \left\{\{a, b\} \compbar a, b \in V(G), a \neq b, \{a, b\} \in E(G) \right\}.\] Therefore, $\bar{H} = G$.
 \end{proof}
+
+\begin{defn}
+    A \emph{graph decomposition} of a graph $G$ is a set of subgraphs that partition the edges of $G$.
+\end{defn}
 
 \begin{lemma}\label{clique-independent-complement}
     Let $G$ be a graph. $S \subseteq V(G)$ is a clique in $G$ if and only if $S$ is an independent set in $\bar{G}$.
@@ -427,6 +518,10 @@
 \end{defn}
 
 \begin{defn}
+    A \emph{trail} is a graph walk without repeated edges.
+\end{defn}
+
+\begin{defn}
     A \emph{path} in a graph is a walk without repeated vertices.
 \end{defn}
 
@@ -455,7 +550,7 @@
 \end{lemma}
 
 \begin{proof}
-    Consider the set \[L = \left\{|W| \compbar W \textrm{ is a walk in } G\right\} \subseteq \N.\] By the well-ordering principle, there is some smallest length $l \in L$. Let $P$ be any $(u,v)$-walk in $G$ of length $l$. Assume, for the sake of contradiction, that $P$ is \emph{not} a path in $G$. Then there is some repeated vertex $w$ in $P$: \[P = u \sim \cdots \sim w \sim \cdots \sim w \sim \cdots \sim v.\] However, \[P' = u \sim \cdots \sim w \sim \cdots \sim v\] is also a $(u, v)$-walk in $G$, and is shorter than $P$ by at least one edge, which contradicts our assumption. Therefore, $P$ is a path in $G$.
+    Consider the set \[L = \left\{|W| \compbar W \textrm{ is a $(u, v)$-walk in } G\right\} \subseteq \N.\] By the well-ordering principle, there is some smallest length $l \in L$. Let $P$ be any $(u,v)$-walk in $G$ of length $l$. Assume, for the sake of contradiction, that $P$ is \emph{not} a path in $G$. Then there is some repeated vertex $w$ in $P$: \[P = u \sim \cdots \sim w \sim \cdots \sim w \sim \cdots \sim v.\] However, \[P' = u \sim \cdots \sim w \sim \cdots \sim v\] is also a $(u, v)$-walk in $G$, and is shorter than $P$ by at least one edge, which contradicts our assumption. Therefore, $P$ is a path in $G$.
 \end{proof}
 
 \begin{prop}
@@ -525,9 +620,49 @@
     If $G - v$ has more connected components than $G$, we say $v$ is a \emph{cut vertex}. If $G - e$ has more connected components than $G$, we say $e$ is a \emph{cut edge}.
 \end{defn}
 
-\begin{thm}
+\begin{thm}\label{thm:cut-edge}
     Let $G$ be a connected graph. If $e \in E(G)$ is a cut edge, then $G - e$ has exactly two connected components.
 \end{thm}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{thm}
+    Let $G$ be a graph with an edge $e = (u, v)$. Then $e$ is a cut edge if and only if there is \emph{no} cycle $C \subset G$ that contains $e$.
+\end{thm}
+
+\begin{proof}
+    Let $H$ be the connected component of $G$ which contains $e = (u, v)$.
+
+    Suppose $H - e$ is connected. Then $H - e$ has a path $x \sim p_1 \sim \cdots \sim p_n \sim y$, and so $(H - e) + e$ has a cycle since $x \sim y$.
+
+    Suppose that $e \in E(C)$, where $C$ is a cycle in $H$. Since $H$ is connected, for any vertices $x$ and $y$ there is a path $x \sim p_1 \sim \cdots \sim p_n \sim y$. If this path does not contain the edge $e = (u, v)$, then there is still a path between $x$ and $y$ in $H - e$. If it does contain $e$, we can replace $u \sim v$ in the path with $C - e$ to obtain a walk from $u$ to $v$. By Lemma \ref{walk-implies-path} there is therefore a path from $u$ to $v$, and so $H - e$ is still connected.
+\end{proof}
+
+\begin{defn}
+    Let $G$ be a graph, and let $A$ be the matrix
+    \begin{align*}
+        A_{uv} = \begin{dcases}
+            a_{uv}, &(u, v) \in E(G) \\
+            0, &\textrm{otherwise}
+        \end{dcases}.
+    \end{align*}
+\end{defn}
+
+\begin{thm}
+    Let $G$ be a directed graph on vertices $v_1, \ldots, v_n$, which may have loop edges, and let $A$ be the adjacency matrix of $G$. The number of distinct walks between $v_i$ and $v_j$ of length $\ell$ is $(A^{\ell})_{ij}$.
+\end{thm}
+
+\begin{proof}
+Let $p(i, j, \ell)$ denote the number of distinct walks of length $\ell$ between $v_i$ and $v_j$. For any vertices $v_i, v_j, v_k$, let $a_k = p(k, j, 1)$ and $b_k = p(i, k, \ell-1)$. Then $p(i, j, \ell)$ is the sum of $a_kb_k$ for all $v_k$, since each $a_kb_k$ has a unique edge $v_k$ to $v_j$. Therefore, for all $i, j \in \left\{1, \ldots, n\right\}$ and $\ell \in \Z_{\geq 1}$, we know \[p(i, j, \ell) = \sum_{k=1}^n p(i,k,\ell-1)p(k,j,1).\]
+
+We now proceed by induction. When $\ell = 0$, we know that $p(i, j, 0)$ is $1$ when $v_i = v_j$, and zero otherwise. Therefore, $p(i, j, 0) = (A^0)_{ij}$ for all $i, j = 1,\ldots,n$.
+
+Assume for all $i, j = 1,\ldots,n$ that $p(i, j, \ell) = (A^\ell)_{ij}$ for some $l \geq 0$. Then by we know $p(i, j, \ell + 1) = \sum_{k=1}^n p(i, k, \ell)p(k, j, 1) = \sum_{k=1}^n (A^\ell)_{ik}A_{kj}$. By definition, $(A^\ell A)_{ij} = \sum_{k=1}^n (A^\ell)_{ik}A_{kj} = (A^{\ell+1})_{ij}$, so the number of walks of length $\ell+1$ from $v_i$ to $v_j$ is $(A^{\ell+1})_{ij}$.
+
+Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell})_{ij}$ for $\ell \in \Z_{\geq 0}$.
+\end{proof}
 
 \section{Trees}
 
@@ -817,8 +952,10 @@
 
 \begin{defn}Complete bipartite graph\proofbreak
     The \emph{complete bipartite} graph $K_{m,n}$ where $m,n \in \N$ and $m,n \geq 1$ is composed of two disjoint set of vertices $X$ and $Y$ (the \emph{bipartitions} of $K_{m,n}$) where \item $|X| = m$, and $|Y| = n$. $K_{m,n} = (V, E)$, where
-    \[V = X \union Y,\]
-    \[E = \left\{x, y\} \compbar x \in X, y \in Y \right\}.\]
+    \begin{align*}
+        V &= X \union Y, \\
+        E &= \left\{\{x, y\} \compbar x \in X, y \in Y \right\}.
+    \end{align*}
 \end{defn}
 
 \begin{thm}
@@ -829,4 +966,302 @@
     ($\implies$) Assume, for the sake of contradiction, that $G$ has at least one odd cycle $C$. By Proposition \ref{cycle-chromatic-parity}, $\chi(C) = 3$ and so by Proposition \ref{subgraph-chromatic-number}, $3 = \chi(C) \leq \chi(G)$. However, $G$ is bipartite and so $\chi(G) \leq 2$, so this is a contradiction, and $G$ must contain no odd cycles.
 
     ($\impliedby$) Let $H$ be a connected component of $G$ that contains no odd cycles. Then choose some $v_0 \in V(H)$, and for every $v \in V(H)$, let $p(v)$ be a shortest $(u,v)$-path in $H$ (which must exist since $H$ is connected), and let $l(v)$ be the length of $p(v)$. If $2 \mid l(v)$, color $v$ with $1$, and color it $2$ otherwise. If $u, v \in V(H)$ are adjacent, and colored with the same color, then $l(u) + l(v)$ is even, and so $p(u) + \{u, v\} + p(v)$ is an odd cycle starting and ending at $v_0$. However, we assumed $H$ contains no odd cycles, and so any adjacent $u,v$ must have different colors. Therefore, $H$ is bipartite, and so if $G$ contains no odd cycles, we can use this procedure to show that every connected component of $G$ is bipartite, and it follows that $G$ must be bipartite.
+\end{proof}
+
+\begin{prop}
+    If $G$ contains an odd closed walk, it contains an odd cycle.
+\end{prop}
+
+\begin{proof}
+    Let $G$ contain a closed walk $W = v_0 \sim v_1 \sim \cdots \sim v_n$ where $n$ is even (and so the walk has odd length once we include edge $(v_n, v_0)$). If $W$ is a cycle, we are done. Otherwise, there is a repeated vertex $v_k$. Therefore, $W$ must have the form $v_0 \sim \cdots \sim v_k \sim w_1 \sim \cdots \sim w_j \sim v_{k+1} \sim \cdots \sim v_n$, and so both $v_0 \sim \cdots \sim v_k \sim v_{k+1} \sim \cdots \sim v_n$ and $w_1 \sim \cdots \sim w_j$ are closed walks. Since the length of $W$ is odd, exactly one of these closed walks must have odd length. Since both have length strictly less than $W$, by the well-ordering principle, there must be a minimal subwalk of $W$ of odd length, which is therefore a cycle.
+\end{proof}
+
+\begin{prop}\proofbreak
+    \begin{itemize}
+        \item If $\delta(G) \geq 2$, then $G$ contains a cycle.
+        \item If $\delta(G) \geq 3$, then $G$ contains an odd cycle.
+    \end{itemize}
+\end{prop}
+
+\begin{proof}
+    Suppose $\delta(G) \geq 2$. Suppose $P = v_0 \sim v_1 \sim \cdots \sim v_{n-1} \sim v_n$ is a path of maximal length in $G$. Since $v_n$ has degree at least two, there is an edge $(v_n, w)$ where $w \neq v_{n-1}$. Since $P$ is maximal, it must be that $w$ is in $P$ (or else we could append it can create a strictly longer path), and so $w = v_k$ for some $0 \leq k < n-1$. Therefore, $v_k \sim v_{k+1} \sim \cdots \sim v_n$ in $G$ is a closed walk, and therefore contains a cycle.
+
+    Suppose $\delta(G) \geq 3$. Suppose again that $P = v_0 \sim \cdots \sim v_n$ is a maximal path. By the above argument, there must be $0 \leq k, j < n-1$ such that $v_k \sim \cdots \sim v_n$ and $v_j \sim \cdots \sim v_n$ are closed walks.
+\end{proof}
+
+\section{Eulerian Graph}
+
+\begin{defn}
+    In a graph $G$, a \emph{circuit} is a closed trail.
+\end{defn}
+
+\begin{defn}
+    A simple graph $G$ is \emph{Eulerian} if it has a a circuit containing all edges.
+\end{defn}
+
+\begin{thm}
+    A simple graph $G$ is Eulerian if and only if $G$ is both connected and every vertex has even degree.
+\end{thm}
+
+\begin{proof}
+    Suppose $G$ contains a Eulerian circuit. Fix any vertex $v$ in the circuit, and for each incoming edge $(u, v)$ in the circuit, there must be an outgoing edge $(v, w)$. Since each edge is distinct, and $G$ is simple, each vertex adjacent to $v$ is used at most once. The degree of $v$ must be at least twice the number of times the circuit visits $v$. However, the circuit is Eulerian and so uses each edge \emph{exactly} twice, and so the degree of $v$ is even.
+
+    Now, instead suppose that every vertex in $G$ has even degree, and $G$ is connected. We proceed by induction on $\abs{E(G)}$. Suppose $\abs{E(G)} = 3$, then we must have $K_3$ as a subgraph of $G$ and so provides an Eulerian circuit. Suppose now that such a circuit exists of $\abs{E(G)} \leq n-1$, and that we have a graph with $\abs{E(G)} = n$. Since $G$ is connected, there are no vertices of degree zero. Therefore, $\delta G \geq 2$, and so $G$ must contain a cycle $C$. Consider $E(G) \setminus E(C)$. Then each connected component of the resulting graph must still have vertices of even degree, and so by the induction hypothesis, each remaining component has an Eulerian cycle.
+\end{proof}
+
+\section{Extremal Graphs}
+
+\begin{lemma}\label{lemma:listing}
+    Let $G$ be an acyclic simple graph with $k$ connected components. Then $\abs{E(G)} - \abs{V(G)} + k = 0$.
+\end{lemma}
+
+\begin{proof}
+    Each connected component $c_i$ with $n_i$ vertices must have $n_i-1$ edges. Therefore,
+    \begin{align*}
+        0 &= \sum_{i=1}^{k}\left(n_i - 1 - n_i + 1\right) = \sum_{i=1}^{k}\left(n_i-1\right) - \sum_{i=1}^{k}n_i + \sum_{i=1}^{k}1 \\
+        &= \abs{E(G)} - \abs{V(G)} + k.
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    Every tree $T$ with at least two vertices must contain at least two vertices of degree equal to one. By Lemma \ref{lemma:listing}, $\abs{E(T)} = \abs{V(T)} - 1$. So $2\abs{E(T)} = 2\abs{V(T)} - 2$, and so $\sum_{v \in V(G)}deg(v) = 2\abs{V(T)} - 2$.
+\end{prop}
+
+\begin{thm}
+    If $\abs{E(G)} > \left(\frac{\abs{V(G)}}{2}\right)^2$, then $K_3$ is a subgraph of $G$.
+\end{thm}
+
+\begin{proof}
+    Suppose that $K_3$ is \emph{not} a subgraph of $G$. Notice that (for any simple graph) we have
+    \begin{align*}
+        \sum_{(u, v) \in E(G)}\left[deg(u) + deg(v)\right] = \sum_{v\in V(G)}deg(v)^2.
+    \end{align*}
+    Since $K_3$ is not a subgraph, any adjacent vertices $u$ and $v$ cannot have another adjacent vertex in common. By the pigeonhole principle, we must therefore have $deg(u) + deg(v) \leq \abs{V(G)}$, and so
+    \begin{align*}
+        \sum_{v\in V(G)}deg(v)^2 \leq \abs{V(G)}\abs{E(G)}.
+    \end{align*}
+    By Cauchy-Schwarz \ref{cauchy-schwarz-triangle} applied to a vector of vertex degrees and the vector $\vec{1}$, we also must have
+    \begin{align*}
+        \frac{\left(\sum_{u \in V(G)}deg(u)\right)^2}{\abs{V(G)}} \leq \sum_{u \in V(G)}deg(u)^2.
+    \end{align*}
+    Therefore, by Lemma \ref{sum-degrees-is-twice-edges}, it follows that
+    \begin{align*}
+        \frac{\left(2\abs{E(G)}\right)^2}{\abs{V(G)}} \leq \sum_{u \in V(G)}deg(u)^2 \leq \abs{V(G)}\abs{E(G)},
+    \end{align*}
+    and so we obtain
+    \begin{align*}
+        \abs{E(G)} \leq \left(\frac{\abs{V(G)}}{2}\right)^2.
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    The \emph{degree sequence} of a graph is an sequence containing the degree of each vertex in $G$ exactly once.
+\end{defn}
+
+\begin{thm}{Havel-Hakimi}\label{thm:degree-sequence}\proofbreak
+    Let $d_i \in \N$ such that $d_0 \geq d_1 \geq \cdots \geq d_{n-1}$. This sequence can be realized as the degree sequence of some graph if and only if the (unsorted) sequence $d_{1}-1, d_{2}-1, \cdots, d_{d_0}-1, d_{d_0+1}, \cdots, d_{n-1}$ can also be realized.
+\end{thm}
+
+\begin{proof}
+    Suppose this new sequence can be realized in a graph $G$. Then we can add a new vertex $v_0$ with edges to $v_1, \ldots, v_{d_0}$, and we have realized this degree sequence.
+
+    Suppose instead that the original degree sequence can be realized in graphs $G_0,\ldots, G_k$. Choose $G$ which maximizes
+    \begin{align*}
+        \sum_{v \in N_G(v_0)}deg(v).
+    \end{align*}
+    If $v_0$, which has degree $d_0$, is not adjacent to the next $d_0$ largest vertices, there must be some vertices $s$ and $r$ such that $v_0$ is adjacent to $r$, \emph{not} adjacent to $s$, and $deg(s) > deg(r)$. Since $deg(s) > deg(r)$, there exists a vertex $l$ such that $s$ to adjacent to $l$ and not to $r$. Replace edges $(s, l)$ and $(v_0, r)$ with $(v_0, s)$ and $(l, r)$. This preserves the degree sequence, but now the sum of degrees of vertices adjacent o $v_0$ is strictly larger, because $deg(s) > deg(r)$. Since this sum has a maximum possible value, we can repeat this process only a finite number of times. Now $v_0$ is adjacent to all and only the $d_0$ with next largest degrees, and so removing $v_0$ and its edges necessarily produces a graph with degree sequence $d_{1}-1, d_{2}-1, \cdots, d_{d_0}-1, d_{d_0+1}, \cdots, d_{n-1}$.
+\end{proof}
+
+\section{Directed Graphs}
+
+\begin{defn}
+    In a directed graph (or \emph{digraph}), edges consist of an ordered pair of vertices $(u, v)$, such we have an edge from $u$ to $v$, but not necessarily the reverse. Additionally, we allow loop edges. We may have distinct edges $(u, v)$ and $(v, u)$, but still do not allow multiple edges in the same direction between the same vertex.
+\end{defn}
+
+\begin{defn}
+    The adjacency matrix is $A(G)$ such that $A[u, v] = 1$ only when $(u, v) \in E(G)$, and zero otherwise.
+\end{defn}
+
+\begin{defn}
+    We define the \emph{in-degree} and \emph{out-degree} of vertices to be the number of incoming directed edges, and outgoing directed edges respectively.
+\end{defn}
+
+\begin{defn}
+    The \emph{complete digraph} on $n$ vertices has edges $(u, v), (v, u)$ for each pair of vertices $u$ and $v$, as well as all possible loop edges.
+\end{defn}
+
+\begin{defn}
+    A \emph{functional graph} is a digraph where there exists a function $f: \Z_n \to \Z_n$ such that every edge has the form $(i, f(i))$. Given a function $f: \Z_n \to \Z_n$, we define $G_f$ to be the functional graph induced by this function.
+\end{defn}
+
+\begin{prop}
+    Let $G_f$ be a functional digraph. If $f(\Z_n) = \Z_n$, then $G_f$ is a union of disjoint directed cycles. Alternatively, if $\abs{f^(n-1)(\Z_n)} = 1$ then the undirected form of $G_f$ is a tree.
+\end{prop}
+
+\begin{proof}
+    Suppose $f(\Z_n) = \Z_n$, which implies $f$ is surjective and since $\abs{\Z_n} = \abs{\Z_n}$, we find that $f$ must be a bijection. Therefore, every vertex has exactly one incoming edge and one outgoing edge, and therefore must be the union of disjoint cycles.
+
+    Suppose that $f^(n-1)(\Z_n) = \{r\}$. Therefore, in the undirected form of $G_f$, there is a path from $u$ to $r$, and $v$ to $r$ for any $u, v \in V(G_f)$, and so there is a path $u \sim \cdots \sim r \sim \cdots \sim v$, and so the graph is connected. Since there cannot be loop edges other than $f(r) = r$ (or else the vertex with the loop would be in $f^(n-1)(\Z_n)$), there are $n-1$ edges in the unidrected form of $G_f$. Since $G_f$ is connected and has $n-1$ edges, it is a tree by Theorem \ref{tree-edges-iff}.
+\end{proof}
+
+\begin{prop}
+    The set of all functional graphs describing spanning unions of directed cycles in a graph $G$ is $\det(A_G)$, where $A_G$ is the symbolic adjacency matrix.
+\end{prop}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{rmk}
+    We can list of possible subgraphs of a directed graph $G$ as
+    \begin{align*}
+        \prod_{(u, v) \in E(G)}\left(a_{u,v}^{0} + a_{u,v}^{1}\right).
+    \end{align*}
+\end{rmk}
+
+\begin{prop}
+    The number of functional forests wih vertex set $\Z_n$ is at least $2(n!)-1$.
+\end{prop}
+
+\begin{proof}
+    Given $f: \Z_n \to \Z_n$, if there exists a non-trivial cycle then there is some $i$, $j$, and $k$ such that $f(i) = j$, $f^(k)(j) =i$, and $i \neq j$. Therefore, if $f(i) \leq i$ for all $i \in \Z_n$ then all cycles are loop edges, and so $f$ describes a forest of functional trees.
+
+    Consider the symbolic listing of such $f$. This is
+    \begin{align}
+        \sum_{f\in S_n,\forall i[f(i)\leq i]}\prod_{i \in \Z_i}a_{i,f(i)} = \prod_{i\in\Z_n}\left(\sum_{0\leq j \leq i}a_[ij]\right),
+    \end{align}
+    which is a polynomial with $n!$ terms.
+
+    Similarly, $f$ such that $f(i) \geq i$ gives $n!$ functional forests. Since only the identity permutation is in both sets, the total size of this subset of functional forests is $2(n!) - 1$.
+\end{proof}
+
+\begin{defn}{Gantmacher Notation}\proofbreak
+    Let $M$ be an $N\times n$ matrix and let $\{i_k\}, \{j_k\}$ be two subsequences of $0, 1, \ldots, n-1$ of the same length $l$. In Gantmacher notation,
+    \begin{align*}
+        M\begin{bmatrix}
+            i_0, &i_1, &\ldots, &i_{l-1} \\
+            j_0, &j_1, &\ldots, &j_{l-1} \\
+        \end{bmatrix}
+    \end{align*}
+    is the $l\times l$ matrix obtained by \emph{retaining} only rows indexed by $i_k$ and columns indexed by $j_k$.
+\end{defn}
+
+\begin{exmp}
+    Let $M$ be a generic $4 \times 4$ matrix with entries $M_{ij}$. Then
+    \begin{align*}
+        M\begin{bmatrix}
+            0, &2, &3 \\ 1, &2, &3
+        \end{bmatrix} = \begin{bmatrix}
+            M_{01} & M_{02} & M_{03} \\
+            M_{21} & M_{22} & M_{23} \\
+            M_{31} & M_{32} & M_{33}
+        \end{bmatrix}.
+    \end{align*}
+\end{exmp}
+
+\begin{thm}{Sylvester's Identity or the generalized Cauchy-Binet formula}\proofbreak
+    Let $A$ be a $p \times q$ and $B$ a $q \times p$ matrix. Let $[n]$ denote the set $\{1, \ldots, n\}$ and $\binom{[n]}{k}$ denote the set of all $\binom{n}{k}$ possible subsets of $[n]$ with $k$ elements. For some $k \leq p$, let $I, J \in \binom{[q]}{k}$, and then:
+    \begin{align*}
+        \det\left((AB)\begin{bmatrix}
+            I \\ J
+        \end{bmatrix}\right) = \sum_{K\in \binom{[q]}{k}}\det\left(A\begin{bmatrix}I \\ K\end{bmatrix}\right)\det\left(B\begin{bmatrix}K \\ J\end{bmatrix}\right),
+    \end{align*}
+    where $\binom{[q]}{k}$ is all possible subsets of $\{1, \ldots, q\}$ with $k$ elements.
+\end{thm}
+
+\begin{rmk}
+    When $k = 1$, this reduces to the standard formula for matrix multiplication:
+    \begin{align*}
+        (AB)_{ij} = \sum_{1\leq k \leq q}A_{ik}B_{kj}.
+    \end{align*}
+    When $k = q$, this is the Cauchy-Binet formula, which states that
+    \begin{align*}
+        \det(AB) = \sum_{K\in \binom{[q]}{p}}\det\left(A\begin{bmatrix}[p] \\ K\end{bmatrix}\right)\det\left(B\begin{bmatrix}K \\ [p]\end{bmatrix}\right).
+    \end{align*}
+\end{rmk}
+
+\begin{lemma}{Determinant-Sum}\label{lemma:determinant-sum}\proofbreak
+    \begin{align*}
+        \det(A + diag(\vec{x})) = \sum_{0 \leq k \leq n}\sum_{0 \leq i_0 < i_1 < \cdots < i_{k-1} < n}\det\left(A\begin{bmatrix}
+            i_0, &\cdots, &i_{k-1} \\ i_0, &\cdots, &i_{k-1}
+        \end{bmatrix}\right)\prod_{j \in \Z_n \setminus \{i_0, \ldots, i_{k-1}\}}x_j.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    Taking $M = A + diag(\vec{x})$, then by Leibniz's formula we have
+    \begin{align*}
+        \det(M) = \sum_{\sigma\in S_n}sgn(\sigma)\left[\prod_{\substack{i \in \Z_n \\ \sigma(i) \neq i}}M_{i,\sigma_i}\right]\left[\prod_{\substack{i \in \Z_n \\ \sigma(i) = i}}M_{i,\sigma_i}\right].
+    \end{align*}
+    Since $M_{i,\sigma(i)} = A_{ii} + x_i$ when $\sigma(i) = i$ and $M_{i,\sigma(i)} = A_{i,\sigma(i)}$ otherwise, we have
+    \begin{align*}
+        \det(M) = \sum_{\sigma\in S_n}sgn(\sigma)\left[\prod_{\substack{i \in \Z_n \\ \sigma(i) \neq i}}A_{i,\sigma(i)}\right]\left[\prod_{\substack{i \in \Z_n \\ \sigma(i) = i}}\left(A_{ii}+x_i\right)\right].
+    \end{align*}
+    Next, note that
+    \begin{align*}
+        \prod_{\substack{i \in \Z_n \\ \sigma(i) = i}}\left(A_{ii}+x_i\right) = \prod_{\substack{i \in \Z_n \\ \sigma(i) = i}}A_{ii} + \sum_{s\in S}\prod_{\substack{i \in \Z_n \\ \sigma(i) = i}}A_{ii}^{s_i}x_i^{1-s_i},
+    \end{align*}
+    where $S$ be the set of all binary sequences with one entry for each $i \in \Z_n$ such that $\sigma(i) = i$, and where at least one element of the sequence is zero.
+    Therefore,
+    \begin{align*}
+        \det(M) &= \sum_{\sigma\in S_n}sgn(\sigma)\left[\prod_{\substack{i \in \Z_n \\ \sigma(i) \neq i}}A_{i,\sigma(i)}\right]\left[\prod_{\substack{i \in \Z_n \\ \sigma(i) = i}}A_{ii} + \sum_{s\in S}\prod_{\substack{i \in \Z_n \\ \sigma(i) = i}}A_{ii}^{s_i}x_i^{1-s_i}\right] \\
+        &= \sum_{\sigma\in S_n}sgn(\sigma)\left[\prod_{i \in \Z_n}A_{i,\sigma(i)} + \prod_{\substack{i \in \Z_n \\ \sigma(i) \neq i}}A_{i,\sigma(i)}\sum_{s\in S}\prod_{\substack{i \in \Z_n \\ \sigma(i) = i}}A_{ii}^{s_i}x_i^{1-s_i}\right] \\
+        &= \sum_{\sigma\in S_n}sgn(\sigma)\left[\prod_{i \in \Z_n}A_{i,\sigma(i)} + \prod_{\substack{i \in \Z_n \\ \sigma(i) \neq i}}A_{i,\sigma(i)}\sum_{s\in S}\prod_{\substack{i \in \Z_n \\ \sigma(i) = i}}A_{ii}^{s_i}x_i^{1-s_i}\right].
+    \end{align*}
+\end{proof}
+
+\begin{thm}{Tutte's Directed Matrix Tree Theorem}
+    Let $G$ is a directed graph, potentially with loop edges. A symbolic listing of trees is given by
+    \begin{align*}
+        \sum_{\substack{f: \Z_n \to \Z_n \\ \abs{f^{n-1}(\Z_n) = 1}}}\prod_{i\in\Z_n}A_{i,f(i)},
+    \end{align*}
+    which is equal to
+    \begin{align*}
+        \sum_{i\in\Z_n}A_{ii}\det\left(\left(diag(A_G\vec{1})-A_G\right)\begin{bmatrix}
+            0, &\ldots, &i-1, &i+1, &\ldots, &n-1 \\
+            0, &\ldots, &i-1, &i+1, &\ldots, &n-1.
+        \end{bmatrix}\right),
+    \end{align*}
+    where each term in the sum lists all tree rooted at vertex $i$.
+\end{thm}
+
+\begin{proof}
+    Consider $A_{\mathit{IK}_{n+1}}$, where $\mathit{IK}_{n+1}$ is the complete directed graph. The listing of all functional trees on $n+1$ vertices, rooted at $n$, is
+    \begin{align*}
+        \sum_{\substack{f \in \Z_{n+1}\to\Z_{n+1} \\
+        f^{(n)}(\Z_n) = \{n\}}}\prod_{i\in\Z_n}A_{i,f(i)} = A_{n,n}\det\left(-A_{\mathit{IK}_n} + diag(\vec{t})\right),
+    \end{align*}
+    where $\vec{t} \in \Z^{n}$ is defined by $t[u] = \sum_{v \in \Z_{n+1}}A_{u,v}$. By the Determinant-Sum Lemma, this is equal to
+    \begin{align*}
+        A_{n,n}\sum_{k\in\Z_n}\sum_{0 \leq i_0 < \cdots < i_{k-1}<n}\left(-1\right)^{k}\det\left(A_{\mathit{IK}_n}\begin{bmatrix}
+            i_0, &\ldots, &i_{k-1} \\
+            i_0, &\ldots, &i_{k-1}
+        \end{bmatrix}\right)\prod_{u\in\Z_n\setminus \{i_0, \ldots, i_{k-1}\}}\vec{t}[u].
+    \end{align*}
+    Leibniz's formula gives us
+    \begin{align*}
+        \left(-1\right)^{k}\det\left(A_{\mathit{IK}_n}\begin{bmatrix}
+            i_0, &\ldots, &i_{k-1} \\
+            i_0, &\ldots, &i_{k-1}
+        \end{bmatrix}\right) = \left(-1\right)^{k}\sum_{\sigma\in S_k}\left(-1\right)^{k-cycles(\sigma)}\prod_{j\in\Z_k}A_{i,\sigma(i)}.
+    \end{align*}
+    Since $(-1)^{k}(-1)^{k-cycles(\sigma)} = (-1)^{cycles(\sigma)}$, we have
+    \begin{align*}
+        \sum_{\sigma\in S_k}\left(-1\right)^{cycles(\sigma)}\prod_{j\in\Z_k}A_{i,\sigma(i)}.
+    \end{align*}
+    Applying product-sum exchange, we also have
+    \begin{align*}
+        \prod_{u\in\Z_n\setminus \{i_0, \ldots, i_{k-1}\}}\vec{t}[u] &= \prod_{u\in\Z_n\setminus \{i_0, \ldots, i_{k-1}\}}\sum_{v \in \Z_{n+1}}A_{u,v} = \sum_{f:\Z_n\to\Z_{n}\setminus\{i_0, \ldots, i_{k-1}\}}\prod_{u\in\Z_n\setminus\{i_0, \ldots, i_{k-1}\}}A_{u,f(u)}.
+    \end{align*}
+    Therefore, assembling these pieces produces
+    \begin{align*}
+        A_{n,n}\sum_{k\in\Z_n}\sum_{0 \leq i_0 < \cdots < i_{k-1}<n}\sum_{\sigma\in S_k}\left(-1\right)^{cycles(\sigma)}\prod_{j\in\Z_k}A_{i,\sigma(i)}\sum_{f:\Z_n\to\Z_{n}\setminus\{i_0, \ldots, i_{k-1}\}}\prod_{u\in\Z_n\setminus\{i_0, \ldots, i_{k-1}\}}A_{u,f(u)}.
+    \end{align*}
+    Rearranging, we therefore obtain
+    \begin{align*}
+        \sum_{k\in\Z_n}\sum_{0 \leq i_0 < \cdots < i_{k-1}<n}\sum_{f:\Z_n\to\Z_{n}\setminus\{i_0, \ldots, i_{k-1}\}}\sum_{\sigma\in S_k}\left(-1\right)^{cycles(\sigma)}A_{n,n}\prod_{j\in\Z_k}A_{i,\sigma(i)}\prod_{u\in\Z_n\setminus\{i_0, \ldots, i_{k-1}\}}A_{u,f(u)}.
+    \end{align*}
+    Since product of $A_{n,n}$ and the two products produces a symbolic functional graph on $n+1$ vertices, with a loop edge at $n$, a spanning union of disjoint cycles on $\{i_0, \ldots, i_{k-1}\}$, and an arbitrary functional component on the remaining vertices.
+
+    Next, we utilize Zeilberger pairing. We want to bijections between these functional graphs that prove graphs with cycles will cancel out. Among all possible cycles in the graph, if any cycles exist let $v_0$ be the smallest vertex appearing in any cycle. We then pair the graph with a \emph{conjugate graph} with the same vertex and edge set, but now we color the cycle contain $v_0$ oppositely --- that is, we move it between the two products while leaving the graph itself unchanged. Since this changes the number of cycles in $\sigma$ by one, the sign of $(-1)^{cycles(\sigma)}$ flips, and so all graphs with any cycles cancel out with their pair.
 \end{proof}

@@ -2219,20 +2219,6 @@ Let $f: V \to V$ be a linear transformation. Define $f^m = f \circ f^{m-1}$ for 
 
 We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$. Note that $(A^{-1})^mA^m = (A^{-1})^{m-1}(A^{-1}A)A^{m-1} = (A^{-1})^{m-1}A^{m-1} = I$, so $(A^{-1})^m = (A^m)^{-1}$.
 
-\begin{thm}
-    Consider a graph $G$ with vertices $v_1, \ldots, v_n$, and let $A$ be the adjacency matrix of $G$. The number of distinct graph walks between $v_i$ and $v_j$ of length $\ell$ is $(A^{\ell})_{ij}$.
-\end{thm}
-
-\begin{proof}
-Let $p(i, j, \ell)$ denote the number of distinct walks of length $\ell$ between $v_i$ and $v_j$. For any vertices $v_i, v_j, v_k$, let $a_k = p(k, j, 1)$ and $b_k = p(i, k, \ell-1)$. Then $p(i, j, \ell)$ is the sum of $a_kb_k$ for all $v_k$, since each $a_kb_k$ has a unique edge $v_k$ to $v_j$. Therefore, for all $i, j \in \left\{1, \ldots, n\right\}$ and $\ell \in \Z_{\geq 1}$, we know \[p(i, j, \ell) = \sum_{k=1}^n p(i,k,\ell-1)p(k,j,1).\]
-
-We now proceed by induction. When $\ell = 0$, we know that $p(i, j, 0)$ is $1$ when $v_i = v_j$, and zero otherwise. Therefore, $p(i, j, 0) = (A^0)_{ij}$ for all $i, j = 1,\ldots,n$.
-
-Assume for all $i, j = 1,\ldots,n$ that $p(i, j, \ell) = (A^\ell)_{ij}$ for some $l \geq 0$. Then by we know $p(i, j, \ell + 1) = \sum_{k=1}^n p(i, k, \ell)p(k, j, 1) = \sum_{k=1}^n (A^\ell)_{ik}A_{kj}$. By definition, $(A^\ell A)_{ij} = \sum_{k=1}^n (A^\ell)_{ik}A_{kj} = (A^{\ell+1})_{ij}$, so the number of walks of length $\ell+1$ from $v_i$ to $v_j$ is $(A^{\ell+1})_{ij}$.
-
-Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell})_{ij}$ for $\ell \in \Z_{\geq 0}$.
-\end{proof}
-
 \section{Inner Products}
 
 \begin{defn}
