@@ -1343,6 +1343,150 @@ We now define $\R \subset \Q$ to be the set of all cuts of $\Q$. We can easily d
     We say that $f$ has \emph{bounded variation} when $V_{a}^{b}(f) < \infty$.
 \end{defn}
 
+\begin{defn}
+    For an interval $[a, b]$, $BV[a, b]$ is the set of all functions of bounded variation on $[a, b]$.
+\end{defn}
+
+\begin{thm}
+    For any $[a, b]$, $BV[a, b]$ is a vector space.
+\end{thm}
+
+\begin{rmk}
+    The variation of functions is \emph{almost} a norm on $BV[a, b]$, but not quite since $V_{a}^{b}\left(f - g\right) = 0$ implies only that $f - g$ is constant, not that $f$ and $g$ are equal.
+\end{rmk}
+
+\begin{prop}
+    We can use the variation of functions to construct a norm on $BV[a, b]$, given by \begin{align*}
+        \norm{f}_{BV} = \abs{f(a)} + V_{a}^{b}f.
+    \end{align*}
+\end{prop}
+
+\begin{thm}\label{thm:variation-is-monotone}
+    Let $f \in BV[a, b]$, and define $v(x) = V_{a}^{x}f$, taking $v(a)$ to be zero. Both $v$ and $v - f$ are increasing functions.
+\end{thm}
+
+\begin{proof}
+    For $a \leq x < y \leq b$, then
+    \begin{align*}
+        v(y) - v(x) = V_{a}^{y}f - V_{a}^{x}f = V_{x}^{y}f \geq \abs{f(y) - f(x)} \geq 0.
+    \end{align*}
+    Furthermore, since $v(y) - v(x) \geq \abs{f(y) - f(x)} \geq f(y) - f(x)$, we also have $v(y) - f(y) \geq v(x) - f(x)$.
+\end{proof}
+
+\begin{cor}{Jordan's Theorem}\label{thm:bv-monotone-difference}\proofbreak
+    A function $f: [a, b] \to \R$ is in $BV[a, b]$ if and only if $f$ is the difference of two increasing functions.
+\end{cor}
+
+\begin{proof}
+    By Theorem \ref{thm:variation-is-monotone}, if $f \in BV[a, b]$ then $f = v - (v - f)$ is the difference of two increasing functions. On the other hand, increasing functions have bounded variation, and since $BV[a, b]$ is a vector space, so does any difference of increasing functions.
+\end{proof}
+
+\begin{cor}
+    If $f \in BV[a, b]$, then $f$ is quasicontinuous.
+\end{cor}
+
+\begin{cor}
+    Let $S[a, b]$ be the space of step functions $f: [a, b] \to \R$. Then
+    \begin{align*}
+        S[a, b] \subseteq BV[a, b] \subseteq \overline{S[a, b]},
+    \end{align*}
+    where the closure is with respect to $\norm{f}_{\infty}$.
+\end{cor}
+
+\begin{rmk}
+    Jordan's Theorem \ref{thm:bv-monotone-difference} gives us a decomposition of any function of bounded variation, but not a unique decomposition.
+\end{rmk}
+
+\begin{thm}
+    For $f \in BV[a, b]$ and $v(x)$ defined as above, let
+    \begin{align*}
+        p(x) &= \frac{1}{2}\left[v(x) + f(x) - f(a)\right] \\
+        n(x) &= \frac{1}{2}\left[v(x) - f(x) + f(a)\right].
+    \end{align*}
+    Then $f(x) = p(x) - n(x)$, and above all such decompositions $p, n$ have minimum variation. That is,
+    \begin{itemize}
+        \item $0 \leq p(x) \leq v(x)$ and $0 \leq n(x) \leq v(x)$,
+        \item Both $p$ and $n$ are increasing on $[a, b]$,
+        \item If $g, h$ are increasing functions on $[a, b]$ such that $f = g - h$, then $V_{x}^{y}p \leq V_{x}^{y}g$ and $V_{x}^{y}n \leq V_{x}^{y}h$ for all $x < y$ in $[a, b]$.
+    \end{itemize}
+\end{thm}
+
+\begin{proof}
+    First, note that
+    \begin{align*}
+        v(x) = V_{a}^{x}f \geq \abs{f(x) - f(a)} \geq \pm\left[f(x) - f(a)\right],
+    \end{align*}
+    and so $p(x) \geq 0$ and $n(x) \geq 0$. Because $p(x) + n(x) = v(x)$, it follows that $p(x) \leq v(x)$ and $n(x) \leq v(x)$.
+
+    For $a \leq x < y \leq b$, we have
+    \begin{align*}
+        p(y) - p(x) &= \frac{1}{2}\left[v(y) + f(y) - f(a) - v(x) - f(x) + f(a)\right] \\
+        &= \frac{1}{2}\left[v(y) - v(x) + f(y) - f(x)\right] \\
+        &= \frac{1}{2}V_{x}^{y}f + \frac{1}{2}\left[f(y) - f(x)\right] \\
+        &\geq \frac{1}{2}\abs{f(y) - f(x)} - \frac{1}{2}\left(f(y) - f(x)\right) \geq 0.
+    \end{align*}
+    Therefore, $p(x)$ is increasing, and $n(x)$ can be similarly shown to be increasing.
+
+    If $f = g - h$, then
+    \begin{align*}
+        V_{x}^{y}f \leq V_{x}^{y}g + V_{x}^{y}h = g(y) - g(x) + h(y) - h(x).
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        V_{x}^{y}p &= \frac{1}{2}\left[V_{x}^{y}f + f(y) - f(x)\right] \\
+        &\leq \frac{1}{2}\left[\left(g(y) - g(x) + h(y) - h(x)\right) + \left(g(y) - g(x) - h(y) + h(x)\right)\right] \\
+        &= g(y) - g(x) = V_{x}^{y}g.
+    \end{align*}
+    Similarly, we can show that $V_{x}^{y}n \leq V_{x}^{y}h$.
+\end{proof}
+
+\begin{prop}
+    For $f, g \in BV[a, b]$, we have $\norm{fg}_{BV} \leq \norm{f}_{BV}\norm{g}_{BV}$.
+\end{prop}
+
+\begin{lemma}{Helly's Selection Principle}\label{thm:helly-selection}\proofbreak
+    Let $\{f_n\}$ be a uniformly bounded (for some $K$, $\norm{f}_{\infty} \leq K$ for all $n$)sequence of functions from some set $X$ to $\R$. Let $D$ be a \emph{countable} subset of $X$. Then there is a subsequence of $\{f_n\}$ which converges pointwise on $D$ to some $f: D \to \R$.
+\end{lemma}
+
+\begin{lemma}\label{lemma:countable-monotone-extension}
+    Let $D \subseteq [a, b]$ such that $a \in D$ and $b = \sup D$. If $f: D \to \R$ is an increasing function, then $f$ can be extended to an increasing function on $[a, b]$.
+\end{lemma}
+
+\begin{proof}
+    For any $x \in [a, b]$, we define $g(x) = \sup\left\{f(t) \compbar a \leq t \leq x, t \in D\right\}$. Clearly $g(x)$ is increasing, and for all $x \in D$ we have $g(x) = f(x)$.
+\end{proof}
+
+\begin{lemma}\label{lemma:increasing-subsequence}
+    Suppose $\{f_n\} \subseteq B[a, b]$ is a sequence of increasing functions such that $\norm{f_n}_{\infty} \leq K$ for all $n$. Then there exists a subsequence $\{f_{n_k}\}$ converging pointwise on $[a, b]$ to an increasing function $f \in B[a, b]$, and furthermore $\norm{f}_{\infty} \leq K$/
+\end{lemma}
+
+\begin{proof}
+    Let $D = \left([a, b] \intersection \Q\right) \union \{a\}$, so that $D$ is countable. By Helly's Selection Principle \ref{thm:helly-selection}, there exists a subsequence $\{f_{n_k}\}$ that converges pointwise on $D$ to some $\varphi: D \to \R$.
+    
+    $\varphi$ must be increasing, because for $x > y$, $f_{n_k}(x) > f_{n_k}(y)$ and so $\varphi(x) > \varphi(y)$. Then by Lemma \ref{lemma:countable-monotone-extension}, we can extend $\varphi$ to all of $[a, b]$.
+    
+    By construction, we know that $\{f_{n_k}\}$ converges pointwise to $\varphi$ on $D$, we must now show pointwise convergence on all of $[a, b]$. Suppose $\varphi(x)$ is continuous at some $x \in [a, b]$. Then for any $\varepsilon > 0$, there exists $p, q \in D$ such that $p < x < q$ and $\varphi(q) - \varphi(p) < \frac{\varepsilon}{2}$. Then since $\{f_{n_k}\}$ converges to $\varphi$ at $p$ and $q$, we know there exists $k_0 \in \N$ such that $k > k_0$ implies that
+    \begin{align*}
+        f_{n_k}(x) &\leq  f_{n_k}(q) \leq \varphi(q) + \frac{\varepsilon}{2}, \\
+        f_{n_k}(x) &\geq  f_{n_k}(p) \geq \varphi(p) - \frac{\varepsilon}{2}.
+    \end{align*}
+    Therefore, $\{f_{n_k}\}(x) \to \varphi(x)$ wherever $\varphi(x)$ is continuous.
+
+    Now instead suppose that $\varphi$ is discontinuous at $x$. Since $\varphi$ is increasing, the set of all points where $\varphi$ is discontinuous must be countable. Therefore, by Helly's Selection Principle \ref{thm:helly-selection}, {\color{red}TODO}.
+\end{proof}
+
+\begin{thm}{Helly's First Theorem}\label{thm:helly-first}\proofbreak
+    Let $\{f_n\}$ be a uniformly bounded sequence in $BV[a, b]$, then there is some subsequence converging to some $f \in BV[a, b]$. Furthermore, if $\norm{f_n}_{BV} \leq K$, then we also have $\norm{f}_{BV} \leq K$.
+\end{thm}
+
+\begin{proof}
+    Recall that $\norm{f}_{\infty} \leq \norm{f}_{BV}$. Since $f_n \in BV[a, b]$, by Jordan's Theorem we can decompose each $f_n$ into the difference of increasing functions $v_n$ and $v_n - f_n$. Note that $\norm{v_n}_{\infty} \leq V_{a}^{b}f \leq K$ and $\norm{v_n-f_n}_{\infty} \leq \norm{v_n}_{\infty} + \norm{f_n}_{\infty} \leq 2K$.
+
+    By Lemma \ref{lemma:increasing-subsequence}, there exists $g$ and $h$. By Jordan's Theorem, $f = g - h$ is of bounded variation, and pointwise limit.
+
+    Finally, $\norm{f}_{BV} = \abs{f(a)} + V_{a}^{b}f = \lim_{k\to\infty}f_{n_k}(a) + \lim_{k\to\infty}V_{a}^{b}f_{n_k} = \lim_{k\to\infty}\norm{f_{n_k}}_{BV} \leq K$ (see HW 1 exercise 11).
+\end{proof}
+
 \section{Riemann-Stieltjes Integral}
 
 \begin{defn}
@@ -1479,6 +1623,117 @@ We now define $\R \subset \Q$ to be the set of all cuts of $\Q$. We can easily d
 \begin{thm}
     If $f$ is monotonic on $[a, b]$ and $\alpha$ is continuous, then $f \in \riemann{\alpha}$.
 \end{thm}
+
+\begin{thm}
+    If $f \in \mathcal{R}_{\alpha}[a, b]$, then $\alpha \in \mathcal{R}_{f}[a, b]$, and
+    \begin{align*}
+        \int_{a}^{b}fd\alpha + \int_{a}^{b}\alpha df = f(b)\alpha(b) - f(a)\alpha(a).
+    \end{align*}
+\end{thm}
+
+\begin{cor}
+    If $\alpha \in BV[a, b]$, then $C[a, b] \subseteq \mathcal{R}_{\alpha}[a, b]$. If $\alpha \in C[a, b]$, then $BV[a, b] \subseteq \mathcal{R}_{\alpha}[a, b]$.
+\end{cor}
+
+\begin{cor}
+    Let $I(f, \alpha) = \int_{a}^{b}fd\alpha$. The $I$ is bilinear --- lineear in both $f$ and $\alpha$.
+\end{cor}
+
+\begin{thm}
+    Let $\alpha \in BV[a, b]$ and $\beta(x) = V_{a}^{x}\alpha$. For $f \in \mathcal{R}_{\alpha}[a, b]$, we have
+    \begin{align*}
+        adasjdhkashd
+    \end{align*}
+\end{thm}
+
+\begin{thm}{Riesz Representation Theorem}\label{thm:riesz-representation}\proofbreak
+    Suppose $\{\alpha_n\} \to \alpha$ such that $\norm{\alpha_n}_{BV}$ is bounded by some $M$ for all $n$.
+\end{thm}
+
+\begin{proof}
+    Without loss of generality, take $a = 0$ and $b=1$. Otherwise, we can make a change of variables $\varphi(t) = a + t(b- a)$ for $t \in [0, 1]$. Since $\varphi$ is strictly increasing, we have $\beta \circ \varphi \in BV$. Then, $Lf = \int_{a}^{b}fd\beta = \int_{0}^{1}f(\varphi(t))d\beta(\varphi)$.
+\end{proof}
+
+\section{Lebesgue Measure}
+
+We define the \emph{Lebesgue outer measure} of a set $A \subseteq \R$ to be
+\begin{align*}
+    m^{*}(A) = \inf_{I}\sum_{n=1}^{\infty}\ell(I).
+\end{align*}
+
+\begin{prop}
+    The Lebesgue outer measure is countably subadditive. That is, if $E_n$ is a countable sequence of sets, then
+    \begin{align*}
+        m^{*}\left(\bigunion_{n=1}^{\infty}E_n\right) \leq \sum_{n=1}^{\infty}m^{*}(E_n).
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    If $m^{*}(E_n) = \infty$ for some $n$, then... {\color{red}TODO}
+
+    Now suppose that $m^{*}(E_n) < \infty$ for every $n$. For each $n$, there exists a cover $I_{n,k}$ such that $E_n \subseteq \bigunion_{k}I_{n, k}$ and $m^{*}(E_n) \geq \sum_{k=1}^{n}\left[\ell(I_{n,k})\right] - \frac{\varepsilon}{2^{-n}}$. Therefore,
+    \begin{align*}
+        m^{*}\left(\bigunion_{n}E_n\right) \leq \sum_{n=1}^{\infty}\sum_{k=1}^{\infty}\ell(I_{n,k}) \leq \sum_{n=1}^{\infty}\left[m^{*}(E_n) + \frac{\varepsilon}{2^{n}}\right] = \sum_{n=1}^{\infty}m^{*}(E_n) + \varepsilon.
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    If $m^{*}(E_n) = 0$ for all $n$, then $m^{*}(\bigunion E_n) = 0$.
+\end{cor}
+
+\begin{cor}
+    For any $E \subseteq \R$ and $\varepsilon > 0$, there exists an open set $G \subseteq \R$ such that $E \subseteq G$ and $m^{*}(E) \geq m^{*}(G) - \varepsilon$.
+\end{cor}
+
+\begin{defn}
+    A \emph{$\sigma$-algebra} is a set $X$ of sets such that $X$ contains $\emptyset$, and $X$ is closed under complements and countable unions.
+\end{defn}
+
+\begin{defn}
+    The \emph{Borel $\sigma$-algebra} is the $\sigma$-algebra consisting of the closure of all opens subsets of $\R$.
+\end{defn}
+
+\section{Vitali Covering Theorem}
+
+\begin{defn}
+    A collection $C$ is closed non-trivial intervals of $\R$ is a \emph{Vitali cover} of $E$ if, for all $x \in E$ and any $\varepsilon > 0$, there exists an interval $I \in C$ such that $x \in I$ and $m(I) < \varepsilon$.
+\end{defn}
+
+Construction of a non-measurable set. Axiom of Choice.
+
+\begin{thm}{Vitali Covering Theorem}\label{thm:vitali-covering}\proofbreak
+    Let $E \subseteq \R$ such that $m^{*}(E) < \infty$, and let $C$ be any Vitali cover of $E$. Then there exists \emph{countably many} pairwise disjoint intervals $\{I_n\} \subseteq C$ such that $m\left(E\setminus \bigunion_{n=1}^{\infty}I_n\right) = 0$.
+\end{thm}
+
+\begin{cor}
+    For any $\varepsilon > 0$, there exists $N \in \N$ such that $m^{*}\left(E\setminus \bigunion_{k=1}^{n}I_k\right) < \varepsilon$ for all $n \geq N$.
+\end{cor}
+
+\section{Measurable functions}
+
+\begin{defn}
+    Consider a function $f: D \to \R$, where $D \subseteq \R$ is Lebesgue measurable. We say that $f$ is a (Lebesgue) measurable function if $f^{-1}((\alpha, \infty))$ is measurable for every $\alpha \in \R$.
+\end{defn}
+
+\begin{exmp}
+    If $m(D) = 0$, then $f$ is always measurable.
+
+    If $f$ is measurable, then $f^{-1}(\R)$ is measurable.
+
+    If $f$ is measurable, then $f^{-1}([\alpha, \infty))$ is measurable.
+\end{exmp}
+
+\begin{exmp}
+    Let $f$ be the indicator of the Vitali non-measurable set $N \subseteq (0, 1)$. Then $f$ is not measurable, since $f^{-1}(0, \infty) = N$.
+\end{exmp}
+
+\begin{thm}
+    A function is measurable if and only if $f^{-1}(U)$ is measurable for all open sets $U \subseteq \R$.
+\end{thm}
+
+\begin{prop}
+    ALl Riemann integrable functions (including of course continuous functions) are measurable.
+\end{prop}
 
 \begin{proof}
     
