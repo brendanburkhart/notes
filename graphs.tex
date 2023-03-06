@@ -1210,22 +1210,22 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
     \end{align*}
 \end{proof}
 
-\begin{thm}{Tutte's Directed Matrix Tree Theorem}
-    Let $G$ is a directed graph, potentially with loop edges. A symbolic listing of trees is given by
-    \begin{align*}
-        \sum_{\substack{f: \Z_n \to \Z_n \\ \abs{f^{n-1}(\Z_n) = 1}}}\prod_{i\in\Z_n}A_{i,f(i)},
-    \end{align*}
-    which is equal to
+\begin{thm}{Tutte's Directed Matrix Tree Theorem}\label{thm:directed-matrix-tree}
+    Let $G$ is a directed graph, potentially with loop edges. A symbolic listing of all spanning subtrees is
     \begin{align*}
         \sum_{i\in\Z_n}A_{ii}\det\left(\left(diag(A_G\vec{1})-A_G\right)\begin{bmatrix}
             0, &\ldots, &i-1, &i+1, &\ldots, &n-1 \\
             0, &\ldots, &i-1, &i+1, &\ldots, &n-1.
         \end{bmatrix}\right),
     \end{align*}
-    where each term in the sum lists all tree rooted at vertex $i$.
+    where each term in the sum lists all spanning subtrees rooted at vertex $i$.
 \end{thm}
 
 \begin{proof}
+    A symbolic listing of spanning subtrees is given by
+    \begin{align*}
+        \sum_{\substack{f: \Z_n \to \Z_n \\ \abs{f^{n-1}(\Z_n)} = 1}}\prod_{i\in\Z_n}A_{i,f(i)}.
+    \end{align*}
     Consider $A_{\mathit{IK}_{n+1}}$, where $\mathit{IK}_{n+1}$ is the complete directed graph. The listing of all functional trees on $n+1$ vertices, rooted at $n$, is
     \begin{align*}
         \sum_{\substack{f \in \Z_{n+1}\to\Z_{n+1} \\
@@ -1265,3 +1265,43 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 
     Next, we utilize Zeilberger pairing. We want to bijections between these functional graphs that prove graphs with cycles will cancel out. Among all possible cycles in the graph, if any cycles exist let $v_0$ be the smallest vertex appearing in any cycle. We then pair the graph with a \emph{conjugate graph} with the same vertex and edge set, but now we color the cycle contain $v_0$ oppositely --- that is, we move it between the two products while leaving the graph itself unchanged. Since this changes the number of cycles in $\sigma$ by one, the sign of $(-1)^{cycles(\sigma)}$ flips, and so all graphs with any cycles cancel out with their pair.
 \end{proof}
+
+\begin{cor}{Cayley's formula}\label{cor:cayley-formula}\proofbreak
+    There are $n^{n-1}$ directed functional spanning subtrees of $K_{n}$.
+\end{cor}
+
+\begin{proof}
+    By Tutte's Directed Matrix-Three Theorem, the number of such trees is
+    \begin{align*}
+        \sum_{i\in\Z_n}K_{ii}\det\left(diag(K_n\vec{1}) - K_n\right)\begin{bmatrix}
+            0, &\ldots, &i-1, &i+1, &\ldots, &n-1 \\
+            0, &\ldots, &i-1, &i+1, &\ldots, &n-1.
+        \end{bmatrix}
+    \end{align*}
+    Since all terms of this sum are the same, we have that the number of such trees is
+    \begin{align*}
+        n\det(nI_{n-1}-K_{n-1}).
+    \end{align*}
+    Since $nI_{n-1} - K_{n-1}$ is a polynomial of $K_{n-1}$, its eigenvalues are $1$ with multiplicity one, and $n$ with multiplicity $(n-1)-1$. Therefore, the count of trees is $n\cdot 1 \cdot n^{n-2} = n^{n-1}$.
+\end{proof}
+
+\begin{cor}
+    Let $d_0, \ldots, d_{n-1}$ be a \emph{in-degree} sequence. The number of spanning subtrees of the complete directed graph on $n$ vertices, such that the subtrees have this in-degree sequence, is given by
+    \begin{align*}
+        \binom{n}{d_0, \ldots, d_{i-1}, d_{i}-2, d_{i+1}, \ldots, d_{n-1}},
+    \end{align*}
+    where $i$ is the root of the directed tree.
+\end{cor}
+
+\begin{cor}
+    Let $A$ be an adjacency matrix, where we instantiate $A[i,j]$ with the product of the in-degree and out-degree of vertices $i$ and $j$ respectively. Therefore $A = xy^{\transpose}$, where $x_i$ the the in-degree of vertex $i$ and $y_j$ is the out-degree of vertex $j$.
+
+    By Tutte's Theorem \ref{thm:directed-matrix-tree}, the number of directed spanning subtrees rooted at vertex $i$ is listed by
+    \begin{align*}
+        A_{ii}\det\left(diag(A\vec{1}) - A\right)\begin{bmatrix}
+            0, &\ldots, &i-1, &i+1, &\ldots, &n-1 \\
+            0, &\ldots, &i-1, &i+1, &\ldots, &n-1.
+        \end{bmatrix} = x_iy_i\det\left[diag(x)\left(\left[\sum_{0\leq < n}y_i\right]I_{n-1} - \vec{1}y^{\transpose}\right)\right]
+    \end{align*}
+    Since $A_{ij}$.
+\end{cor}
