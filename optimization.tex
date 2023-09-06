@@ -21,7 +21,7 @@
     \begin{itemize}
         \item a \emph{constraint} is a condition that needs to be satisfied,
         \item the \emph{feasible region} $S \subseteq \R^n$ is the region that satisfies all constraints,
-        \item and the objective function is a function $f: S \to \R$ that is to be minimized or maximized.
+        \item and the \emph{objective function} is a function $f: S \to \R$ that is to be minimized or maximized.
     \end{itemize}
 \end{defn}
 
@@ -661,7 +661,9 @@ The first condition, that $Ax = b$ is necessarily satisfied by any basic tableau
 
 To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, and pick a column to row-reduce on. Since we need to maintain a non-positive top row $-r$, we want to pick the column $k$ by \[\argmin_{k}\frac{r_k}{A_{jk}} \mathrm{ where } A_{jk} < 0.\]
 
-\section{Non-Linear Programming}
+\section{Nonlinear}
+
+\subsection{Convexity}
 
 \begin{defn}
     Let $S \subseteq \R^n$ be a non-empty convex set, and let $f: S \to \R$. We say that $f$ is \emph{convex} when
@@ -773,6 +775,20 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
 \end{proof}
 
+\subsection{Optimality Conditions}
+
+\begin{thm}
+    Assume that $f: \R^n \to \R$ is differentiable. If $x^{*}$ is a local minimizer, then $\nabla f(x^{*}) = 0$.
+\end{thm}
+
+\begin{proof}
+    Assume, for the sake of contradiction, that $\nabla f(x^{*}) \neq 0$. Let $u = -\nabla f(x^{*})$, and define $\varphi(t) = f(x^{*} + tu)$. Then by the chain rule
+    \begin{align*}
+        \frac{d\varphi}{dt} = \nabla f(x^{*})^{\transpose}u = -\norm{\nabla f(x^*)}_2^2.
+    \end{align*}
+    Therefore, $\frac{d\varphi}{dt} < 0$, and so there exists $\abs{\varepsilon} < 0$ such that $\varphi(\varepsilon) < \varphi(0)$.
+\end{proof}
+
 \begin{prop}
     Let $S \in \R^n$ be an open convex set, and let $f: S \to \R$ be a continuously differentiable convex function. Then for any $\bar{x} \in S$, the following are equivalent:
     \begin{itemize}
@@ -785,7 +801,36 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{proof}
     If $\bar{x}$ is a global minimum, then $\bar{x}$ is a local minimum. If $\bar{x}$ is a local minimum, then $\bar{x}$ is a stationary point. Therefore, we only need to show that stationary points are global minimums, and the result will follow.
 
-    By convexity of $f$, for all $x \in S$ we know that $f(x) \geq f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x})$ by Theorem \ref{convex-function-tangent-hyperplane}. If $\bar{x}$ is a stationary point, then $\nabla f(\bar{x})$ by definition, and so $f(x) \geq f(\bar{x})$. Then $\bar{x}$ is a global minimum by definition.
+    By convexity of $f$, for all $x \in S$ we know that $f(x) \geq f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x})$ by Theorem \ref{convex-function-tangent-hyperplane}. If $\bar{x}$ is a stationary point, then $\nabla f(\bar{x}) = 0$ by definition, and so $f(x) \geq f(\bar{x})$. Then $\bar{x}$ is a global minimum by definition.
+\end{proof}
+
+\begin{thm}
+    Let $f: \R^n \to \R$ be twice-continuously differentiable, and suppose $x^{*}$ is a local minimizer. Then $\nabla^2f(x^{*})$ must be positive semi-definite.
+\end{thm}
+
+\begin{proof}
+    Assume, for the sake of contradiction, that there exists non-zero $s \in \R^n$ such that $s^{\transpose}\nabla^2f(x)^{\transpose}s < 0$. Let $\varphi(t) = f(x^{*} + ts)$. Since $x^{*}$ is a local minimizer we know $\varphi'(t) = 0$, and so {\large\color{red}CHECK}
+    \begin{align*}
+        0 > \frac{1}{2}\varphi''(0) &= \lim_{t\to 0}\frac{\varphi(t)-\varphi(0)}{t^2}.
+    \end{align*}
+    Therefore, there exists $\varepsilon > 0$ such that $0 < t < \varepsilon$ implies that {\color{red}FILL IN} $f(x^{*} + ts) < f(x^{*})$.
+\end{proof}
+
+\begin{thm}
+    Suppose that $f: \R^n \to \R$ is twice-continuously differentiable. If $\nabla f(x^{*}) = \vec{0}$ and $\nabla^2f(x^{*})$ is positive definite, then $x^{*}$ is a local minimizer.
+\end{thm}
+
+\begin{proof}
+    Let $u \in \R^n$ such that $\abs{u} = 1$, and $\varphi(t) = f(x^{*} + tu)$. By twice application of the Fundamental Theorem of Calculus,
+    \begin{align*}
+        \varphi(t) - \varphi(0) &= \int_{0}^{t}\varphi'(\alpha)d\alpha = \int_{0}^{t}\left(\varphi'(0) + \int_{0}^{\alpha}\varphi''(\beta)d\beta\right)d\alpha \\
+        &= t\varphi'(0) + \int_{0}^{t}\int_{0}^{\alpha}\varphi''(\beta)d\beta d\alpha.
+    \end{align*}
+    Since $\nabla^2 f^{x}$ is continuous and positive definite at $x^{*}$, there exists some $\varepsilon, \lambda > 0$ such that the smallest eigenvalue of $\nabla^2 f(y)$ is greater than $\lambda$ for all $\norm{x^{*} - y} < \varepsilon$. Therefore, $u^{\transpose}\nabla^2f(x^{*})u \geq \lambda$, and so
+    \begin{align*}
+        \varphi(t) \geq \varphi(0) + t\varphi'(0) + \lambda\frac{1}{2}t^2.
+    \end{align*}
+    As $\varphi'(0) = 0$, we have $\varphi(t) \geq \varphi(0) + \frac{1}{2}\lambda t^2$.
 \end{proof}
 
 \begin{defn}{Newton's Method}\label{newtons-method}\proofbreak
