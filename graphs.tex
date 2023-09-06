@@ -53,7 +53,8 @@
     We may also write $V$ as $V(G)$, and $E$ as $E(G)$.
 \end{rmk}
 
-\begin{exmp} Let $G = \left(\left\{a, b, c, d\right\}, \left\{\{a, b\}, \{a, c\}, \{b, d\}\right\}\right)$. This graph is depicted in Figure \ref{fig:example-simple-graph}.
+\begin{exmp}
+    Let $G = \left(\left\{a, b, c, d\right\}, \left\{\{a, b\}, \{a, c\}, \{b, d\}\right\}\right)$. This graph is depicted in Figure \ref{fig:example-simple-graph}.
 \end{exmp}
 
 \begin{figure}[ht!]
@@ -979,15 +980,124 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \begin{prop}\proofbreak
     \begin{itemize}
         \item If $\delta(G) \geq 2$, then $G$ contains a cycle.
-        \item If $\delta(G) \geq 3$, then $G$ contains an odd cycle.
+        \item If $\delta(G) \geq 3$, then $G$ contains an even cycle.
     \end{itemize}
 \end{prop}
 
 \begin{proof}
-    Suppose $\delta(G) \geq 2$. Suppose $P = v_0 \sim v_1 \sim \cdots \sim v_{n-1} \sim v_n$ is a path of maximal length in $G$. Since $v_n$ has degree at least two, there is an edge $(v_n, w)$ where $w \neq v_{n-1}$. Since $P$ is maximal, it must be that $w$ is in $P$ (or else we could append it can create a strictly longer path), and so $w = v_k$ for some $0 \leq k < n-1$. Therefore, $v_k \sim v_{k+1} \sim \cdots \sim v_n$ in $G$ is a closed walk, and therefore contains a cycle.
+    Suppose $\delta(G) \geq 2$. Suppose $P = v_0 \sim v_1 \sim \cdots \sim v_{n-1} \sim v_n$ is a path of maximal length in $G$. Since $v_n$ has degree at least two, there is an edge $(v_n, w)$ where $w \neq v_{n-1}$. Since $P$ is maximal, it must be that $w$ is in $P$ (or else we could append it can create a strictly longer path), and so $w = v_k$ for some $0 \leq k < n-1$. Therefore, $v_k \sim v_{k+1} \sim \cdots \sim v_n$ in $G$ is a cycle.
 
-    Suppose $\delta(G) \geq 3$. Suppose again that $P = v_0 \sim \cdots \sim v_n$ is a maximal path. By the above argument, there must be $0 \leq k, j < n-1$ such that $v_k \sim \cdots \sim v_n$ and $v_j \sim \cdots \sim v_n$ are closed walks.
+    Suppose $\delta(G) \geq 3$. Suppose again that $P = v_0 \sim \cdots \sim v_n$ is a maximal path. By the above argument, there must be $0 \leq k, j < n-1$ such that $v_k \sim \cdots \sim v_n$ and $v_j \sim \cdots \sim v_n$ are cycles.
 \end{proof}
+
+\begin{thm}{Brook's Theorem}\label{thm:brooks-coloring}\proofbreak
+    If $G$ be a connected graph that is not $K_n$ or $C_{2n+1}$, then $\chi(G) \leq \Delta(G)$.
+\end{thm}
+
+\begin{proof}
+    We first consider separately the case where $G$ is not regular, so $\delta(G) < \Delta(G)$. Let $x$ be a vertex with which attains the minimum degree $\delta(G)$. From $x$, construct a depth-first search tree $T$, and begin coloring the leaf nodes, removing each vertex as it is colored. For every leaf node $v \neq x$ that we want to color, it's parent in the tree is uncolored, and therefore it can only be adjacent to at most $\Delta(G)-1$ distinct colors. Therefore, we can always find an available color for it. When we reach the root $v$, it has degree less than $\Delta(G)$ and so can also be colored.
+
+    Now we instead consider the case where $G$ is $r$-regular. If every depth first search tree is a directed path rooted at one of the endpoints, then we claim {\color{red}TODO: prove} that $G$ is
+    \begin{itemize}
+        \item a cycle,
+        \item $K_n$,
+        \item or $K_{m,m}$.
+    \end{itemize}
+    If it is a cycle or $K_n$, it is not covered by Brook's Theorem. If it is a complete regular bipartite graph $K_{m,m}$, then $\chi(G) = 2$.
+
+    Suppose that $G$ is \emph{not} biconnected, so there is a vertex $x$ whose removal disconnects $G$ into two components $G_0$ and $G_1$. Then $G_0$ and $G_1$ cannot also be regular, so they admit vertex colorings with at most $\Delta G$ colors. We can permute the coloring to that $x$ is colored then same in both colorings, and then merge them to create a coloring for all of $G$ using at most $\Delta G$ distinct colors.
+
+    Finally, we consider the case of an $r$-regular, biconnected graph. We must have $r \geq 3$, since a connected $\{0, 1, 2\}$-regular graph is $K_{r+1}$. Then there must exist {\color{red}TODO: pull proof from homework} a depth-first search branching $T$ that is not a path rooted at the an endpoint. Using biconnectivity, we can prove that there is a spanning tree $T'$, where the root $v$ has two non-adjacent neighbors $u$ and $w$ which are leaves. Then $G \setminus \{u, w\}$ is connected but not regular and so can be colored by the first half of the proof. Then $u$ and $w$ can be colored with the same color, and since $r \geq 3$ there is at least one color free, yielding a coloring of $G$ using at most $\Delta G$ colors.
+\end{proof}
+
+\begin{defn}
+    Let $G$ be a graph, $k \geq 1$ some constant, and $L: V(G) \to \mathscr{P}(\Z_k)$ a function listing the admissible colors for each vertex. A proper coloring of $G$ is a proper $L$-coloring (a list coloring) of $G$ when the color assigned to each vertex is admissible.
+\end{defn}
+
+\begin{defn}
+    A graph $G$ is $k$-list colorable if $G$ has an $L$-coloring for \emph{every} $L$ such that every vertex is assigned $k$ possible colors.
+\end{defn}
+
+\begin{thm}{Combinatorial Nullstellensatz}\label{thm:nullstellensatz-combinatorial}\proofbreak
+    Let $P$ be a given polynomial in variables $x_0, x_1, \ldots, x_{n-1}$ with total degree $d$ where coefficients of the monomial
+    \begin{align*}
+        \prod_{i\in\Z_n}(x_i)^{d_i}
+    \end{align*}
+    are non-zero.
+
+    Consider distinct $L_0, L_1, \ldots, L_{n-1}$ subsets of $\Q$ such that $\abs{L_i} \geq d_i + 1$. Then there exists
+    \begin{align*}
+        (t_0, t_1, \ldots, t_{n-1}) \in L_0 \times L_1 \times \cdots \times L_{n-1}
+    \end{align*}
+    for which $P(t_0, t_1, \ldots, t_{n-1}) \neq 0$.
+\end{thm}
+
+\begin{proof}
+    We know $P$ is a linear combination of monomials with total degree at most the total degree of the polynomial. Consider a change of basis, to the Lagrange basis polynomials
+    \begin{align*}
+        \mathcal{L}_{(t_0, \ldots, t_{n-1})}^{(x_0, \ldots, x_{n-1})} = \prod_{i\in\Z_n}\left(\prod_{s_i\in L_i\setminus \{t_i\}}\left(\frac{x_i-s_i}{t_i-s_i}\right)\right).
+    \end{align*}
+    In the Lagrange basis $P$ is simply
+    \begin{align*}
+        \sum_{(t_0, \ldots, t_{n-1})}P(t_0, \ldots, t_{n-1})\mathcal{L}_{(t_0, \ldots, t_{n-1})}^{(x_0, \ldots, x_{n-1})},
+    \end{align*}
+    and so because $P$ is non-zero, at least one of $P(t_0, \ldots, t_{n-1})$ must be non-zero.
+\end{proof}
+
+\begin{rmk}
+    In Sylvester's adjacency polynomial, every term corresponds to an orientation of the graph, where the sign of the term is $(-1)^{t}$ where $t$ is the number of decreasing oriented edges.
+\end{rmk}
+
+\begin{cor}
+    Let $G$ be a simple undirected graph which admits an orientation. If that orientation is free of odd cycles, then the in-degree sequence $(d_0, d_1, \ldots, d_{n-1})$ of the orientation yields a list coloring for \emph{any} choice of $L$, as long as $\abs{L_i} > d_i$.
+\end{cor}
+
+\begin{proof}
+    We consider Sylvester's adjacency polynomial
+    \begin{align*}
+        P_G = \prod_{0\leq i<j<n}(x_j-x_i)
+    \end{align*}
+    When $P_G$ is fully expanded, every term corresponds to an edge orientation of $G$. If an orientation contains no odd cycles, then every term with the same in-degree sequence will have the same sign. {\color{red}TODO: pull proof from homework}
+    Therefore, the coefficient of this term is non-zero and so by the Combinatorial Nullstellensatz \ref{thm:nullstellensatz-combinatorial} there exists a proper edge coloring.
+\end{proof}
+
+\begin{cor}
+    If $G$ has an odd number of orientations which realize a given in-degree sequence, then $G$ admits a proper listing color for any $L$ such that $\abs{L_i} > d_i$.
+\end{cor}
+
+\begin{proof}
+    If there is an odd number of orientations with the given degree sequence, then regardless of their signs they cannot cancel out.
+\end{proof}
+
+\begin{exmp}
+    Let $T$ be an $n$-vertex tree, and use the Combinatorial Nullstellensatz to describe conditions on the cardinality of $L_i$ for a listing coloring to be guaranteed to exist. Once a root is picked, the corresponding functional tree is unique, and so the corresponding branching is as well. But branchings and in-degee sequence are the same, and so {\color{red}TODO}.
+\end{exmp}
+
+\begin{exmp}
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \begin{scope}[every node/.style={circle, draw=Cerulean}]
+                \node (0) at (0, 2) {$0$};
+                \node (1) at (2, 2) {$1$};
+                \node (2) at (4, 2) {$2$};
+                \node (3) at (0, 0) {$3$};
+                \node (4) at (2, 0) {$4$};
+                \node (5) at (4, 0) {$5$};
+            \end{scope}
+
+            \begin{scope}[every edge/.style={thick, draw=black}]
+                \draw (0) edge[->] (3);
+                \draw (3) edge[->] (4);
+                \draw (4) edge[->] (5);
+                \draw (5) edge[->] (2);
+                \draw (2) edge[->] (1);
+                \draw (4) edge[->] (1);
+                \draw (1) edge[->] (0);
+            \end{scope}
+        \end{tikzpicture}
+    \end{figure}
+\end{exmp}
 
 \section{Eulerian Graph}
 
@@ -1288,7 +1398,7 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
 \begin{cor}
     Let $d_0, \ldots, d_{n-1}$ be a \emph{in-degree} sequence. The number of spanning subtrees of the complete directed graph on $n$ vertices, such that the subtrees have this in-degree sequence, is given by
     \begin{align*}
-        \binom{n}{d_0, \ldots, d_{i-1}, d_{i}-2, d_{i+1}, \ldots, d_{n-1}},
+        \binom{n-2}{d_0, \ldots, d_{i-1}, d_{i}-2, d_{i+1}, \ldots, d_{n-1}},
     \end{align*}
     where $i$ is the root of the directed tree.
 \end{cor}
@@ -1303,5 +1413,171 @@ Therefore, the number of walks of length $\ell$ from $v_i$ to $v_j$ is $(A^{\ell
             0, &\ldots, &i-1, &i+1, &\ldots, &n-1.
         \end{bmatrix} = x_iy_i\det\left[diag(x)\left(\left[\sum_{0\leq < n}y_i\right]I_{n-1} - \vec{1}y^{\transpose}\right)\right]
     \end{align*}
-    Since $A_{ij}$.
+    Given the structure of $A$, we obtain the following listing of trees rooted at $i$:
+    \begin{align*}
+        \left(\prod_{j\in\Z_n}x_j\right)y_i^2\left(\sum_{j\in\Z_n}y_i\right)^{n-2}.
+    \end{align*}
+    Therefore, the count we are looking for is the number of terms in the expanded form of $\left(\sum_{j\in\Z_n}y_i\right)^{n-2}$ which are $y_0^{d_0} + y_1^{d_1} + \cdots + y_i^{d_i-2} + \cdots + y_n^{d_n}$, where the $d_i-2$ comes from the fact we have $y_i^2$ on the outside. The number of such terms, and therefore our count, is given by the multinomial coefficient
+    \begin{align*}
+        \binom{n-2}{d_0, \ldots, d_{i-1}, d_{i}-2, d_{i+1}, \ldots, d_{n-1}}.
+    \end{align*}
+\end{cor}
+
+\begin{defn}
+    An \emph{orientation graph} $G$ is a subgraph of $\mathbb{K}_n$ such that precisely one of $(i, j)$ or $(j, i)$ is included in $V(G)$ for all $0 \leq i, j < n$.
+\end{defn}
+
+\begin{defn}
+    Consider a graph $G$, where each vertices corresponds to a position on the unit circle in $\C$ such that vertex $u$ will be placed at $\exp\left(2\pi i\frac{u}{n}\right)$. For any subgraph $G_0$, define $G_k$ for $0 \leq k < \frac{n}{\abs{V(G_0)}}$ by
+    \begin{align*}
+        V(G_k) = \left\{\exp\left(2\pi i\frac{k}{n}\right)v \compbar v \in V(G_0)\right\}.
+    \end{align*}
+    We say that this is a \emph{cyclic decomposition} if $G$ is an orientation of $\mathbb{K}_n$ and the $G_k$ give a decomposition of $G$.
+\end{defn}
+
+\begin{defn}
+    A graph $G_f$ is gracefully labeled if $\left\{\abs{f(i) - i} : i \in \Z_n\right\} = \Z_n$. A graph is graceful if it admits a graceful labeling --- that is, there exists $\sigma \in S_n$ such that $i \mapsto \sigma(i)$ and $f(i) \mapsto \sigma(f(i))$ gives a graceful labeling.
+\end{defn}
+
+\begin{thm}{Rosa's Theorem}\label{thm:rosas}\proofbreak
+    An orientation of $\mathbb{K}_{2n-1}$ admits a cyclic decomposition generated by a functional graph $G_f$ if and only if $G_f$ is graceful.
+\end{thm}
+
+\begin{proof}
+    Suppose that $G_f$ is gracefully labeled, then
+    \begin{align*}
+        \bigunion_{k\in\Z_{n-1}}\omega^{k}G_f
+    \end{align*}
+    yields such a decomposition.
+
+    Suppose that $G_f$ is not graceful, so for all $\sigma\in S_n$, the graphs $\omega^{k}G_{\sigma f \sigma^{-1}}$ will not be edge disjoint for all $\omega$.
+\end{proof}
+
+\begin{thm}{Kotzig-Ringel Rosa Conjecture}\label{thm:graceful-labeling}
+    If $G_f$ is an $n$-vertex functional tree, then an orientation of $\mathbb{K}_{2n-1}$ admits a cycle decomposition into $2n-1$ subgraphs cyclically generated by $G_f$.
+\end{thm}
+
+\section{Matching}
+
+\begin{defn}
+    Given an undirected simple graph $G$, a \emph{matching} $M$ of $G$ is a non-empty subset $S \subseteq E(G)$ such that no edges in $S$ have a common endpoint.
+\end{defn}
+
+\begin{defn}
+    A matching $M$ is perfect when $\abs{M} = \abs{V(G)}/2$.
+\end{defn}
+
+\begin{prop}
+    There are $\frac{(2n)!}{2^{n}n!}$ perfect matching in $K_{2n}$.
+\end{prop}
+
+\begin{defn}
+    Let $G$ be a graph, and let Tutte's Skew Symmetric Matrix $T_G$ be the matrix where
+    \begin{align*}
+        T_g[u, v] &= \begin{dcases}
+            0, &\{u, v\} \not\in E(G), \\
+            a_{u,v}, &\{u, v\} \in E(G) \land u < v, \\
+            -a_{v, u}, &\{u, v\} \in E(G) \land u > v
+        \end{dcases}.
+    \end{align*}
+\end{defn}
+
+\begin{lemma}\label{lemma:tutte-odd-cycle-cancellation}
+    Let $O \subseteq S_n$ be all permutations $f$ such that $G_f$ contains at least one odd cycle. For any graph $G$, the polynomial
+    \begin{align*}
+        \sum_{\sigma\in O}sgn(\sigma)\prod_{i\in\Z_n}T_G\left[i,\sigma(i)\right]
+    \end{align*}
+    is identically zero.
+\end{lemma}
+
+\begin{proof}
+    If $\sigma \in O$ contains a fixed point $i = \sigma(i)$, then the corresponding term in the polynomial is a product containing the term $T_G[i,i] = 0$, and so those terms vanish.
+
+    We now pair the remaining permutations and show each pair cancels with each other. For each odd cycle, let $i$ be the smallest vertex and label the cycle $i\sigma(i)\sigma^(2)(i)\cdots$ with the string of it's vertices in the order they appear in the cycle. Let $C_{\sigma}$ be the largest odd-cycle in $G_{\sigma}$, taking the one containing the smallest vertex if there are multiple equally large odd-cycles.
+
+    We pair the permutation $\sigma$ with $\sigma^{*}$, where $\sigma$ and $\sigma^{*}$ are the same except the largest cycle has been reversed. Since $C_{\sigma}$ is odd, $C_{\sigma^{*}}$ is odd, so $\sigma^{*} \in O$. Therefore, this is indeed a pairing.
+
+    Furthermore, $sgn(\sigma) = sgn(\sigma^{*})$, and also
+    \begin{align*}
+        \prod_{i\in\Z_n}T_{G}\left[i,\sigma(i)\right] = -\prod_{i\in\Z_n}T_{G}\left[i,\sigma^{*}(i)\right],
+    \end{align*}
+    since the products are identical except for the sign of the edge variables corresponding to $C_{\sigma}$ and $C_{\sigma^{*}}$. Since these cycles are odd, the products differ by a sign, and so the corresponding terms in the polynomial must indeed cancel each other.
+\end{proof}
+
+\begin{thm}{Tutte's Matching Theorem}\label{thm:tutte-matching}\proofbreak
+    A simple undirected graph $G$ contains a perfect matching if and only if the determinant of $T_G$ is not the zero polynomial.
+\end{thm}
+
+\begin{proof}
+    We know that
+    \begin{align*}
+        \det(T_G) &= \sum_{\sigma\in S_n}sgn(\sigma)\prod_{i\in\Z_n}T_G[i,\sigma(i)] \\
+        &= \sum_{\sigma\in O}sgn(\sigma)\prod_{i\in\Z_n}T_G[i,\sigma(i)] + \sum_{\sigma\in S_n\setminus O}sgn(\sigma)\prod_{i\in\Z_n}T_G[i,\sigma(i)] \\
+        &= 0 + \sum_{\sigma\in S_n\setminus O}sgn(\sigma)\prod_{i\in\Z_n}T_G[i,\sigma(i)]
+    \end{align*}
+    by the Leibniz formula and Lemma \ref{lemma:tutte-odd-cycle-cancellation}.
+
+    Note that $S_n\setminus O$ is the set of permutations containing only even cycles. Therefore, if $\det(T_G)$ is non-zero then there must exist at least one $\sigma \in S_n\setminus O$ which is a spanning union of even cycles. Any even cycle is a matching on its vertices, so then $G$ would have a perfect matching.
+
+    Suppose that $G$ has a perfect matching
+    \begin{align*}
+        M = \left\{(u_1, v_1), (u_2, v_2), \ldots, (u_{\frac{n}{n}}, v_{\frac{n}{n}})\right\}.
+    \end{align*}
+    For the sake of simplicity, assume we have listed the matching such that $u_i < v_i$.
+
+    Therefore, there is $\gamma \in S_n\setminus O$ which describes this matching as a spanning union of two-cycles, such that every edge $(u_i, v_i)$ in the matching corresponds to the two-cycle $u_i \sim v_i \sim u_i$. Therefore, the Leibniz formula of $\det(T_G)$ must contain the term
+    \begin{align*}
+        sgn(\gamma)\prod_{1\leq i\leq\frac{n}{2}}\left(A_{u_i,v_i}\right)\left(-A_{u_i,v_i}\right) = sgn(\gamma)\left(-1\right)^{\frac{n}{2}}\prod_{1\leq i\leq\frac{n}{2}}\left(A_{u_i,v_i}\right)^2.
+    \end{align*}
+    Any other term in the Leibniz formula of $T_G$ with the exact same edges must have the same sign, since changing the orientation of edges in a two-cycle does not change it's sign. Therefore, no terms can cancel with the term corresponding to $\gamma$, and so $\det(T_G)$ cannot be zero.
+\end{proof}
+
+\begin{defn}
+    Given a graph $G$ and a matching $M$, a vertex $v \in V(G)$ is \emph{$M$-unsaturated} if no edge in $M$ is incident to $v$.
+\end{defn}
+
+\begin{defn}
+    Given a graph $G$ and a matching $M$, a path $P$ is an \emph{$M$-alternating} path if edges of $P$ successively alternate between $M$ and $E(G) \setminus M$.
+\end{defn}
+
+\begin{defn}
+    Given a graph $G$ and a matching $M$, a path $P$ in $G$ is an \emph{augmenting} path if it is $M$-alternating and the endpoints are both $M$-unsaturated.
+\end{defn}
+
+\begin{lemma}\label{lemma:matching-symmetric-difference}
+    Let $M$ and $M'$ both be matchings in a graph $G$ and consider their symmetric difference $M \triangle M'$. The non-trivial connected components of $M \triangle M'$ are paths and even cycles.
+\end{lemma}
+
+\begin{proof}
+    Let $H = M \triangle M'$, and notice that every $v \in H$ is adjacent to at most two edges. This is because $M$ cannot contain two edges incident to $v$, and neither can $M'$, so $H$ contains at most one edge from each that is adjacent to $v$.
+\end{proof}
+
+\begin{thm}{Berge's Theorem}\label{thm:berge-matching}\proofbreak
+    Given a graph $G$, a matching $M$ is maximum if and only if $G$ has no $M$-augmenting path.
+\end{thm}
+
+\begin{proof}
+    If $G$ has an $M$-augmenting path $P$, then we could increase the size of $M$ by swapping every edge in $P$ in or out of $M$, and so $M$ could not be maximum.
+
+    If $M$ is not maximum, there exists some larger matching $M'$, and so by Lemma \ref{lemma:matching-symmetric-difference} we know the connected components of $M \triangle M'$ are even cycles or paths. Since an even cycle in $M \triangle M'$ contains an equal number of edges of $M$ and $M'$, there must be a path $P$ in $M \triangle M'$. However, such a path is necessarily an augmenting path in $M$.
+\end{proof}
+
+\begin{thm}{Hall's Theorem}
+    Let $G$ be a bipartite graph with parts $U$ and $W$. THere exists a matching $M$ which saturates $U$ if and only if, for every $S \subseteq U$, we have $\abs{S} \leq \abs{N(S)}$.
+\end{thm}
+
+\begin{proof}
+    If $\abs{N(S)} < \abs{S}$ for some $S \subseteq U$, we clearly cannot saturate $S$ with any matching $M$.
+
+    Suppose for the sake of contradiction that Hall's condition holds yet no matching saturates $U$. Then take $M$ to be any maximum matching. Since $M$ does not saturate $U$, there exist some vertex $u \in U$ not saturated by $M$. Let $P$ be any $M$-alternating with endpoint $u$ (at least one trivially exists by taking a single edge to be the path), and let $S$ be the set of all vertices in the path. Since $M$ is assumed to be maximum, by Berge's theorem \ref{thm:berge-matching} $u$ is the only unsaturated vertex in $S$. Now define $U' = U \intersection S$ and $W' = W \intersection S$, so $W'$ and $U' \setminus \{u\}$ are both saturated. Since $G$ is bipartite, it must be that $\abs{W'} = \abs{U'} - 1$. Therefore, $W' \subseteq N(U')$.
+
+    Now we show by contradiction that for any $w \in N(U')$, there is a $u,w$ $M$-alternating path.
+\end{proof}
+
+\begin{cor}
+    Every regular bipartite graph with parts $U$ and $V$ must have $\abs{U} = \abs{V}$ and has a perfect matching.
+\end{cor}
+
+\begin{cor}
+    For $A \in \R_{\geq 0}^{n\times n}$, then $\perm(A) = 0$ if and only if $PAP^{\transpose}$ does not contain an $r \times c$ zero block, where $c + r \geq n$ and $P$ is a permutation matrix.
 \end{cor}
