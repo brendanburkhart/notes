@@ -1,0 +1,220 @@
+\setchaptergraphic{}
+
+\chapter{Differential Geometry}
+\label{ch:diffgeo}
+
+\section{Curves}
+
+\begin{defn}
+    Let $U \subseteq \R^n$ be an open set, and $f: U \to \R^m$ a function on $U$. If each component function $f^i$ has partial derivatives of all orders, we say $f$ is \emph{smooth}.
+\end{defn}
+
+\begin{defn}
+    Let $U \subseteq \R^n$ and $V \subseteq \R^m$ be open sets. If $f: U \to V$ is smooth, bijective, and has a smooth inverse, then we say $f$ is a \emph{diffeomorphism}.
+\end{defn}
+
+\begin{prop}
+    Given a diffeomorphism $f: U \to V$ and a point $x \in U$, the differential $df_x$ at $x$ is a linear isomorphism between $\R^n$ and $\R^m$.
+\end{prop}
+
+\begin{proof}
+    We know that
+    \begin{align*}
+        \frac{\partial}{\partial x_i}\left(f \circ f^{-1}\right) = \left(\frac{\partial}{\partial x_i}f\right) \circ f^{-1} + f \circ \left(\frac{\partial}{\partial x_i}f^{-1}\right).
+    \end{align*}
+    Of course, $f \circ f^{-1}$ is the identity function, so this derivative is zero. Therefore,
+    \begin{align*}
+        \left(\frac{\partial}{\partial x_i}f\right) \circ f^{-1} = -f \circ \left(\frac{\partial}{\partial x_i}f^{-1}\right).
+    \end{align*}
+    Similarly, expanding $f^{-1} \circ f$ we get
+    \begin{align*}
+        \left(\frac{\partial}{\partial x_i}f^{-1}\right) \circ f = -f^{-1} \circ \left(\frac{\partial}{\partial x_i}f\right).
+    \end{align*}
+\end{proof}
+
+\begin{thm}{Inverse Function Theorem}\label{thm:inverse-function}\proofbreak
+    Let $S \subseteq \R^n$ be an open set, and $f: S \to \R^n$. If $df_x$ is a linear isomorphism at $x \in S$, then there exists a neighborhood $U$ of $x$ and $V$ of $f(x)$ such that $f(U) \subseteq V$ and $f: U \to V$ is a diffeomorphism.
+\end{thm}
+
+\begin{defn}
+    A \emph{parameterized curve} in $\R^n$ is a map $\alpha: I \to \R^n$, where $I$ is a convex subset (interval) of $\R$.
+
+    We say the curve is \emph{smooth} when $\alpha$ is smooth on the interior of $I$.
+\end{defn}
+
+\begin{defn}
+    The \emph{trace} of a curve $\alpha: I \to \R^n$ is the image $\alpha(I)$.
+\end{defn}
+
+\begin{defn}
+    A \emph{regular} curve is a smooth parameterized curve whose differential is non-zero everywhere. If $\alpha'(t) = \vec{0}$, then we say $t$ is a \emph{singular point} of the curve.
+\end{defn}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+        \begin{axis}[
+            axis x line=middle,
+            axis y line=middle,
+            ymin=-5,ymax=5,ylabel=$y$,
+            xmin=-5,xmax=5,xlabel=$x$
+            ]
+        \addplot[domain=-6:6, black, ultra thick, samples=100, variable=\t] ({t^3}, {t^2});
+    \end{axis}
+    \end{tikzpicture}
+\caption{Smooth curve with a singular point at $t = 0$, given by $\alpha(t) = (t^3, t^2)$}
+\label{fig:non-regular-curve}
+\end{figure}
+
+\begin{defn}
+    A curve $\alpha: I \to \R^n$ is piecewise smooth if it is continuous, and there exist a finite number of points $t_1 < t_2 < \cdots < t_k$ such that $\alpha$ is smooth when restricted to each of $(t_1, t_2), (t_2, t_3), \ldots, (t_{k-1}, t_k)$.
+\end{defn}
+
+\begin{defn}
+    The \emph{arclength} of a piecewise smooth curve $\alpha: I \to \R^n$ is
+    \begin{align*}
+        \ell(\alpha) = \int_{I}\norm{\alpha'(s)}ds.
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    Let $\alpha: I \to \R^n$ and $\beta: J \to \R^n$ both be smoothed parameterized curves. We say $\beta$ is a re-parameterization of $\alpha$ if there exists a diffeomorphism $\varphi: J \to I$ such that $\beta = \alpha \circ \varphi$. Note that we then have $\alpha = \beta \circ \varphi^{-1}$, so $\alpha$ is equivalently a re-parameterization of $\beta$.
+\end{defn}
+
+\begin{prop}
+    Suppose that $\alpha: (a, b) \to \R^n$ is a regular curve. Then $\psi: (a, b) \to (0, \ell(\alpha))$ given by
+    \begin{align*}
+        \psi(t) \mapsto \int_{a}^{t}\norm{\alpha'(s)}ds
+    \end{align*}
+    is a diffeomorphism.
+\end{prop}
+
+\begin{proof}
+    Since $\alpha$ is regular, $\psi$ is strictly increasing and smooth, and so has a smooth inverse.
+\end{proof}
+
+\begin{defn}
+    Given a regular curve $\alpha: I \to \R^n$, the map $\beta: (0, \ell(\alpha)) \to \R^n$ given by $\beta = \alpha \circ \psi^{-1}$ (where $\psi$ is as defined above) is the \emph{arclength} parameterization of $\alpha$.
+\end{defn}
+
+\begin{defn}
+    A curve $\alpha: I \to \R^n$ has \emph{unit speed} if $\norm{\alpha'(t)} = 1$ for all $t \in I$.
+\end{defn}
+
+\begin{prop}
+    The arclength parameterization always has unit speed.
+\end{prop}
+
+\begin{proof}
+    Let $\alpha: I \to \R^n$ be a regular curve, and let $\beta: (0, \ell(\alpha)) \to \R^n$ be its arclength parameterization, where $\beta = \alpha \circ \psi^{_1}$. Then
+    \begin{align*}
+        \beta'(s) &= \frac{\alpha'(s)}{\psi'(s)} \\
+        \norm{\beta'(s)} &= \frac{\norm{\alpha'(s)}}{\abs{\psi'(s)}} = \frac{\norm{\alpha'(s)}}{\norm{\alpha'(s)}} = 1.
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    The \emph{curvature} of a unit speed curve $\alpha: I \to \R^3$ is given by $\kappa(t) = \norm{\alpha''(s)}$, and the \emph{radius of curvature} is $R(s) = 1/\kappa(s)$.
+\end{defn}
+
+\begin{prop}
+    The curvature of a regular curve $\alpha: I \to \R^3$ is given by
+    \begin{align*}
+        \kappa(s) = \frac{\norm{\alpha_{tt} \times \alpha_{t}}}{\norm{\alpha_{t}}^3}.
+    \end{align*}
+\end{prop}
+
+\begin{lemma}
+    Suppose $\alpha: I \to \R^n$ is a unit speed curve. Then $\alpha'': I \to \R^n$ is everywhere orthogonal to $\alpha': I \to \R^n$.
+\end{lemma}
+
+\begin{proof}
+    Notice that since $\norm{\alpha'(t)} = 1$, we can differentiate to obtain
+    \begin{align*}
+        0 &= \alpha'(s) \cdot \alpha''(s) + \alpha''(s) \cdot \alpha'(s) = 2\alpha'(s) \cdot \alpha''(s).
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    If $\alpha: I \to \R^3$ is a unit speed curve with non-zero curvature at a point $s$, define $n(s)$ to be the unit vector in the direction of $\alpha''(s)$.
+\end{defn}
+
+\begin{rmk}
+    Note that the tangent vector $t(s)$ has derivative $t'(s) = \alpha''(s) = \kappa(s)n(s)$.
+\end{rmk}
+
+\begin{defn}
+    Let $\alpha: I \to \R^3$ be a unit speed curve whose curvature is nowhere zero. Given the tangent and normal vectors $t(s)$, $n(s)$, the plane containing the point $\alpha(s)$ and spanned by $t(s)$ and $n(s)$ is the \emph{osculating plane} at $s$.
+    
+    We then define the \emph{binormal} vector $b(s) = t(s) \times n(s)$. Note that all three of $t(s), n(s), b(s)$ are non-zero everywhere, and in fact form an orthonormal basis for $\R^3$.
+\end{defn}
+
+\begin{lemma}\label{lemma:binormal-derivative}
+    Let $\alpha: I \to \R^3$ be a unit speed curve whose curvature is nowhere zero. Then $b'(s)$ is parallel to $n(s)$.
+\end{lemma}
+
+\begin{proof}
+    Since $b(s) = t(s) \times n(s)$, we know
+    \begin{align*}
+        b'(s) = t'(s) \times n(s) + t(s) \times n'(s).
+    \end{align*}
+    Since $t'(s) = \kappa(s)n(s)$, it follows that $t'(s) \times n(s) = 0$, and so $b'(s)$ is normal to $t(s)$. Furthermore, $1 = b(s)^{\transpose}b(s)$, and so taking the derivative with respect to $s$ we find $b'(s)^{\transpose}b(s) = 0$. Therefore, $b'(s)$ is orthogonal to both $t(s)$ and $b(s)$, and is therefore a scalar multiple of $n(s)$.
+\end{proof}
+
+\begin{defn}
+    The \emph{torsion} of a curve is $\tau: I \to \R$, such that $b'(s) = \tau(s)n(s)$.
+\end{defn}
+
+\begin{thm}{Frenet-Serret Formulas}\label{thm:frenet-serret}\proofbreak
+    Let $\alpha: I \to \R^3$ be a unit speed curve whose curvature is nowhere zero. Then
+    \begin{align*}
+        t'(s) &= \kappa(s)n(s), \\
+        n'(s) &= -\tau(s)b(s) - \kappa(s)t(s), \\
+        b'(s) &= \tau(s)n(s). \\
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    The formula for $t'(s)$ comes directly from the definition of $n(s)$ and $\kappa(s)$, and the formula for $b'(s)$ come from Lemma \ref{lemma:binormal-derivative}. Finally,
+    \begin{align*}
+        n'(s) &= b'(s) \times t(s) + b(s) \times t'(s) \\
+        &= \tau(s)n(s) \times t(s) + b(s) \times \kappa(s)n(s) \\
+        &= -\tau(s)b(s) - \kappa(s)t(s).
+    \end{align*}
+\end{proof}
+
+\begin{thm}{Fundamental Theorem of The Local Theory of Curves}\label{thm:local-theory-curves}\proofbreak
+    Given functions $\kappa: I \to (0, \infty)$ and $\tau: I \to \R$, there exists a unit speed curve $\alpha: I \to \R^3$ such that $\kappa(s)$ and $\tau(s)$ are the curvature and torsion of $\alpha$ for all $s \in I$.
+
+    Furthermore, given any two curves $\alpha: I \to \R^3$ and $\tilde{\alpha}: I \to \R^3$ with the same curvature and torsion, there exists a rigid motion such that $\tilde{\alpha}(s) = R\alpha(s) + t$ for a rotation matrix $R$ and translation $t \in \R^3$.
+\end{thm}
+
+\begin{proof}
+    For existence, fix an arbitrary initial point and orthonormal basis $\langle t, n, b\rangle$, such as $\vec{0}$ and the standard basis. By the Cauchy-Lipschitz Theorem {\large\color{red}TODO} a unique solution exists.
+
+    Given any two choices of initial conditions, there is clearly a rigid motion between. That is, if we fix a point $s_0 \in I$ then given two such curves $\alpha, \tilde{\alpha}$, let $t = \tilde{\alpha}(s_0) - \alpha(s_0)$, and let
+    \begin{align*}
+        R = \begin{bmatrix}
+            | & | & | \\
+            \tilde{t}(s_0) & \tilde{n}(s_0) & \tilde{b}(s_0) \\
+            | & | & |
+        \end{bmatrix}\begin{bmatrix}
+            | & | & | \\
+            t(s_0) & n(s_0) & b(s_0) \\
+            | & | & |
+        \end{bmatrix}^{-1}.
+    \end{align*}
+    Furthermore,
+    \begin{align*}
+        \frac{1}{2}\frac{d}{ds}\left(\norm{t-\tilde{t}}^2 + \norm{n-\tilde{n}}^2 + \norm{n-\tilde{n}}^2\right) &= \langle t-\tilde{t}, t' - \tilde{t'} \rangle + \langle n-\tilde{n}, n' - \tilde{n'} \rangle + \langle b-\tilde{b}, b' - \tilde{b'} \rangle \\
+        &= \langle t-\tilde{t}, \kappa n - \kappa n' \rangle + \langle n-\tilde{n}, -\tau b - \kappa t - \tau \tilde{b} - \kappa \tilde{t} \rangle + \langle b-\tilde{b},\tau n - n \tilde{n} \rangle \\
+        &= \kappa \langle t-\tilde{t}, n-\tilde{n}\rangle - \kappa \langle n-\tilde{n}, t-\tilde{t}\rangle - \tau\langle n-\tilde{n},b-\tilde{b}\rangle + \tau\langle b-\tilde{b}, n-\tilde{n} \rangle \\
+        &= 0.
+    \end{align*}
+    Therefore, $t = \tilde{t}$, and so $\tilde{\alpha}(s) + t = \tilde{\alpha}$.
+    {\large\color{red}TODO}
+\end{proof}
+
+\begin{defn}
+    Consider a unit speed planar curve $\alpha: I \to \R^2$. The \emph{signed unit normal} $\tilde{n}$ is obtained from $t(s)$ via rotation counter-clockwise by $\pi/2$. Then the \emph{signed curvature} is $\kappa$ such that $\alpha''(s) = \kappa(s)\tilde{n}(s)$.
+\end{defn}
