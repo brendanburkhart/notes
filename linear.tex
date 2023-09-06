@@ -1891,6 +1891,36 @@ Throughout this section, we will show that a function satisfying all of these pr
     Let $B = (v_1, \ldots, v_n)$, so $\vol(P) = \abs{\det(B)}$. Then $\vol(L_A(P)) = \abs{\det(AB)} = \abs{\det(A)}\abs{\det(B)} = \abs{\det(A)}\vol(P)$.
 \end{proof}
 
+\begin{defn}
+    A matrix is \emph{quasi-upper triangular} when it can be expressed as the sum of an upper-triangular matrix, and a matrix with zeroes everywhere, except for a diagonal of all ones on the primary subdiagonal.
+\end{defn}
+
+\begin{rmk}
+    Every polynomial can be expressed as the determinant of a matrix. Given a polynomial $P$ over variables $v_1, \ldots, v_n$ with degree $d$, we can write $P$ as a sum of products of linear combinations of variables and a constant term. For example, the monomial $zy^3$ can be written as the product $(1z + 0y + 0)(0z + 1y + 0)^3$. The polynomial $-3x + 2$ would be written as $(-3x + 0) + (0x + 2)$.
+\end{rmk}
+
+\begin{thm}{Valiant}\label{thm:valiant-determinant}\proofbreak
+    If $P$ and $Q$ are quasi-upper triangular matrices encoding polynomials, so
+    \begin{align*}
+        \det(P) &= F(x_0, \ldots, x_{k-1}),\\
+        \det(Q) &= G(x_0, \ldots, x_{k-1}),
+    \end{align*}
+    then we can construct a quasi-upper triangular matrix $M$ whose determinant is the product $FG$. $M$ will be $(s+r)$ by $(s+r)$, where $P$ and $Q$ are $s$ by $s$ and $r$ by $r$ matrices respectively.
+\end{thm}
+
+\begin{proof}
+    Let $M$ be the following block matrix, where the off-diagonal blocks are filled with zeros and ones have been added to the subdiagonal to ensure quasi-upper triangular.
+    \begin{align*}
+        \left[\begin{array}{cccc}
+            \largeblock{2}{-0.7}{P} & \largeblock{2}{-0.7}{0} \\
+            & & & \\
+            0& 1& & \\
+            0 & 0& \largeblock{2}{0.7}{Q} \\
+        \end{array}\right]
+    \end{align*}
+    Then $\det(M) = \det(P)\det(Q) - 0$.
+\end{proof}
+
 \section{Eigenvalues and Eigenvectors}
 
 \begin{exmp}
