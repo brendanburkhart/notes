@@ -1732,9 +1732,285 @@ Construction of a non-measurable set. Axiom of Choice.
 \end{thm}
 
 \begin{prop}
-    ALl Riemann integrable functions (including of course continuous functions) are measurable.
+    All Riemann integrable functions (including of course continuous functions) are measurable.
 \end{prop}
 
 \begin{proof}
     
 \end{proof}
+
+\begin{defn}
+    Given a simple function $\varphi = \sum_{i=1}^{n}a_i\chi_{E_i}$, where the sets $E_i$ are measurable and disjoint, the \emph{Lebesgue integral} of $\varphi$ is
+    \begin{align*}
+        \int\varphi dx = \sum_{i=1}^{n}a_i m\left(\varphi=a_i\right).
+    \end{align*}
+    It is \emph{Lebesgue integrable} when $\left\{\varphi \neq 0\right\}$ has finite measure.
+\end{defn}
+
+\begin{lemma}
+    The Lebesgue integral of a simple function is independent of sets $E_i$ chosen for the representation.
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        a m\left(\varphi=a\right) = am
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    Linearity, ordered
+\end{defn}
+
+\begin{cor}
+    For \emph{non-disjoint} $E_i$, by linearity we still have
+    \begin{align*}
+        \int\left(\sum_{i=1}^{n}a_i\chi_{E_i}\right)dx = \sum_{i=1}^{n}a_i m\left(E_i\right).
+    \end{align*}
+\end{cor}
+
+\begin{defn}
+    Let $f$ be a non-negative function, then
+    \begin{align*}
+        \int fdx = \sup\left\{\int\varphi dx \compbar 0 \leq \varphi \leq f, \varphi \textrm{ is simple}\right\}.
+    \end{align*}
+    If $\int fdx < \infty$, we say $f$ is Lebesgue integrable on $\R$, and write $f \in L^{1}\left(\R, \R^{\geq 0}\right)$.
+\end{defn}
+
+\begin{defn}
+    $\int_{E}fdx = \int\left(f\chi_{E}\right)dx$.
+\end{defn}
+
+\begin{lemma}
+    If $E \subseteq F$, then $\int_{E}fdx \leq \int_{F}fdx$.
+\end{lemma}
+
+\begin{lemma}
+    If $0 \leq f \leq K$ on $E$, then $\int_{E}f \leq Km(E)$.
+\end{lemma}
+
+\begin{lemma}
+    Chebyshev's inequality states for a non-negative measurable function $f$, for all $\alpha \geq 0$ we have:
+    \begin{align*}
+        \int f \geq \alpha m\left\{f \geq \alpha\right\}
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    We know that $f \geq \alpha\chi_{\{f \geq \alpha\}}$. Therefore, $\int f \geq \int\alpha\chi_{\{f \geq \alpha\}}$. If $m(f \geq \alpha)$ is finite, then $\int f \geq \alpha m\left(\{f \geq \alpha\}\right)$. Otherwise, $\int fdx$ is infinite and so this still holds.
+\end{proof}
+
+\begin{cor}
+    If $f$ is non-negative and integrable, then $f$ is finite almost everywhere.
+\end{cor}
+
+\begin{proof}
+    Since $f$ is integrable, $\int fx = K$ is finite by definition. Therefore, by Chebyshev's inequalty we know that $m(f \geq \alpha) \leq \frac{K}{\alpha}$. We then know that $m(f = \infty)$ is
+    \begin{align*}
+        m\left(\intersection_{n=1}^{\infty}\left\{f \geq n\right\}\right) \leq \lim_{n\to\infty}\frac{K}{n} = 0.
+    \end{align*}
+\end{proof}
+
+\begin{exmp}
+    Consider $\int_{1}^{\infty}\frac{1}{x}dx$. Take $\varphi_n = \sum_{k=1}^{n}\frac{1}{k+1}\chi_{[k, k+1)}$, so $\varphi_n \leq \frac{1}{x}$, and $\int\varphi_n dx = \sum_{k=1}^{n}\frac{1}{k+1}$. This is the harmonic series, which is bounded, and so $\int_{1}^{\infty}\frac{1}{x}dx$ must be infinite.
+\end{exmp}
+
+\begin{prop}
+    Let $\varphi$ be an integrable simple function, and let $E_1 \subset E_2 \subset \cdots$ be an increasing sequence of \emph{measurable} sets. Let $E = \bigunion E_k$, and then
+    \begin{align*}
+        \int_{E}\varphi = \lim_{n\to\infty}\int_{E_n}\varphi.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Since $\varphi$ is a simple function, there exists disjoint measurable sets $A_i$, each with finite measure, such that
+    \begin{align*}
+        \varphi = \sum_{i=1}^{k}\alpha_i\chi_{A_i}.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \int_{E}\varphi &= \int\varphi \cdot \chi_{E} = \sum_{i=1}^{k}\alpha_{i}m\left(A_i \intersection E\right) \\
+        &= \sum_{i=1}^{k}\alpha_{i}\lim_{n\to\infty}m\left(A_i \intersection E_n\right) \\
+        &= \lim_{n\to\infty}\sum_{i=1}^{k}\alpha_{i}m\left(A_i \intersection E_n\right) \\
+        &= \lim_{n\to\infty}\int_{E_n}\varphi,
+    \end{align*}
+    where introducing the limit is done via {\color{red}TODO}.
+\end{proof}
+
+\begin{thm}{Monotone Convergence Theorem}{thm:monotone-convergence}\proofbreak
+    If $0 \leq f_1 \leq f_2 \leq \cdots$ is a pointwise increasing sequence of non-negative measurable functions, then
+    \begin{align*}
+        \int\left(\lim_{n\to\infty}f_n\right) &= \lim_{n\to\infty}\int f_n.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Since the $f_n$ increase, the function $f(x) = \lim_{n\to\infty}f_n(x)$ exists in the extended reals, and is non-negative and measurable.
+\end{proof}
+
+\begin{cor}
+    Consider a non-negative measurable function $f$. There exists a pointwise-increasing sequence of measurable functions $\{f_n\}$ such that $0 \leq f_n \leq f$ and
+    \begin{align*}
+        f &= \lim_{n\to\infty}f_n, \\
+        \int f &= \lim_{n\to\infty}\int f_n.
+    \end{align*}
+\end{cor}
+
+\begin{thm}
+    Dominated Convergence Theorem
+\end{thm}
+
+\begin{cor}
+    Continuity of $F(x) = \int_{-\infty}^{x}f$.
+\end{cor}
+
+\begin{thm}
+    $L_1$ is complete.
+\end{thm}
+
+\begin{thm}
+    For $f \in L_1(\R)$ and $\varepsilon > 0$:
+    \begin{enumerate}
+        \item there exists an integrable simple function $\varphi$ such that $\norm{f-\varphi} < \varepsilon$,
+        \item there exists an integrable continuous function $g$ such that $\norm{f - g} < \varepsilon$,
+        \item there exsits an integrable step function $h$ such that $\norm{f - h} < \varepsilon$.
+    \end{enumerate}
+\end{thm}
+
+\begin{cor}
+    By Borel's theorem, we can approximate continuous $g$ via a polynomial with rational coefficients, so we have a countable dense subset of $L_1$, which proves that $L_1$ is separable.
+\end{cor}
+
+\begin{defn}
+    We say that $\{f_n\}: D \to \R$ converges in measure to $f$ if, for any $\varepsilon > 0$, $m\left\{\abs{f_n-f}\geq \varepsilon\right\}$ goes to zero as $n$ goes to zero.
+\end{defn}
+
+\begin{prop}
+    If $f_n$ converges to $f$ almost uniformly, then it converges uniformly on some set $E \subseteq D$ such that $m(D/\setminus E) < \varepsilon$. Therefore, for any {\color{red}finish}
+\end{prop}
+
+\begin{lemma}
+    Suppose that $\{f_n\}$ is Cauchy in measure, and $f_{n_k}$ converges in measure to a function $f$. Then the entire sequence $f_n$ converges to $f$ in measure.
+\end{lemma}
+
+\begin{proof}
+    Since $f_n$ is Cauchy, there exists some $N_1$ such that $\rho(f_n, f_m) < \varepsilon$ for all $n, m \geq N_1$. Since $f_{n_k}$ converges to $f$ in measure, there exists some $N_2$ such that $\rho(f_{n_k}, f) < \varepsilon$ for all $k > N_2$. Therefore, by the triangle inequality we have for any $n > N_1$, we can find $n_k > \max(N_1, N_2)$, so
+    \begin{align}
+        \rho(f_n, f) \leq \rho(f_n, f_{n_k}) + \rho(f_{n_k}, f) < 2\varepsilon,
+    \end{align}
+    and so $f_n$ converges in measure.
+\end{proof}
+
+\begin{thm}{Riesz Theorem}\proofbreak
+    If $\{f_n\}$ is Cauchy in measure, then there exists
+    \begin{itemize}
+        \item a function $f$ such that $f_n$ converges to $f$ in measure,
+        \item a subsequence $f_{n_k}$ such that $f_n$ converges to $f$ almost everywhere.
+    \end{itemize}
+\end{thm}
+
+\section{Lp spaces}
+
+\begin{defn}
+    Fix some measurable $E \subseteq \R$. Then the associated $L_p$ space, for integer $p \geq 1$, is the set of all functions $f: E \to \R$, such that
+    \begin{align*}
+        \int_{E}\abs{f}^{p} < \infty.
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    We define a canonical $L_p$ norm by
+    \begin{align*}
+        \norm{f}_p = \left(\int_{E}\abs{f}^{p}\right)^{1/p}.
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    Suppose that $f, g \in L_p$. Then, almost everywhere we have
+    \begin{align*}
+        \abs{f + g}^{p} \leq \left(\abs{f} + \abs{g}\right)^{p} \leq 2^{p}\left(\abs{f}^{p} + \abs{g}^{p}\right),
+    \end{align*}
+    and so any linear combination of $f$ and $g$ is also in $L_p$. Therefore, $L_p$ spaces are vector spaces over $\R$.
+\end{prop}
+
+\begin{defn}
+    If $f, g \in L_p$, then $\max(f, g)$ and $\min(f, g)$ are both in $L_p$, and are clearly the unique supremum/infimum respectively under a pointwise partial order. Therefore, $L_p$ spaces are lattices.
+\end{defn}
+
+\begin{thm}{H\"older's inequality}\label{holders-inequality}\proofbreak
+    Suppose that $1 < p, q < \infty$ such that $1/p + 1/q = 1$, then given $f \in L_P$ and $g \in L_q$, we have $fg \in L_1$ and furthermore
+    \begin{align*}
+        \norm{fg}_1 \leq \norm{f}_p\norm{g}_q.
+    \end{align*}
+
+    If $\norm{f}_p\norm{g}_q = 0$, then at least one of $f$ or $g$ is zero almost everywhere, and so $\norm{fg}_1 = 0$. Next, assume $\norm{f}_p\norm{g}_q > 0$. Then
+    \begin{align*}
+        \norm{fg}_1 = \int\frac{\abs{f}\abs{g}}{\norm{f}_{p}\norm{g}_q} = \int\left(\frac{\abs{f}}{\norm{f}_{p}}\right)\left(\frac{\abs{g}}{\norm{g}_q}\right).
+    \end{align*}
+    By Young's inequality {\color{red}PROVE} we have, almost everywhere, that
+    \begin{align*}
+        \frac{\abs{f}}{\norm{f}_{p}}\cdot \frac{\abs{g}}{\norm{g}_q} \leq \frac{1}{p}\frac{\abs{f}^{p}}{\norm{f}_p^{p}} + \frac{1}{q}\frac{\abs{g}^{q}}{\norm{g}_q^{q}},
+    \end{align*}
+    and so
+    \begin{align*}
+        \norm{fg}_1 \leq \frac{1}{p}\int_{E}\frac{\abs{f}^{p}}{\norm{f}_p^{p}} + \frac{1}{q}\int_{E}\frac{\abs{g}^{q}}{\norm{g}_q^{q}} = \frac{1}{p} + \frac{1}{q} = 1.
+    \end{align*}
+\end{thm}
+
+\begin{cor}
+    Taking $p = q = 2$, H\"older's inequality yields
+    \begin{align*}
+        \int\abs{fg} \leq \int\abs{f}^2 + \int\abs{g}^2,
+    \end{align*}
+    which is a form of the Cauchy-Schwarz inequality.
+\end{cor}
+
+\begin{cor}
+    {\color{red}Corolllary?} Prove if $f \in L_p$, then $f\in L_q$ for $1 \leq q < p$.
+\end{cor}
+
+\begin{thm}{Minkowski inequality}\label{minkowski-inequality}\proofbreak
+    If $1 < p < \infty$ and $f, g \in L_p$. Then $\norm{f+g}_p \leq \norm{f}_p + \norm{g}_p$.
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        \norm{f + g}_p^{p} &= \int_{E}\abs{f+g}^{p} = \int_{E}\abs{f+g}\abs{f+g}^{p-1} {\color{red}TODO: finish}
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    For $1 \leq p < \infty$, $L_p$ is complete.
+\end{thm}
+
+\begin{thm}
+    {\color{red}Chebyshev's inequality}
+\end{thm}
+
+\begin{proof}
+    Let $\{f_n\}$ be Cauchy in the $L_p$ norm, so by Chebyshev's inequality $f_n$ is Cauchy in measure, and therefore by applying the Riesz Theorem we find that there exists a subsequence such that $\abs{f_{n_k}}^{p}$ converges to $\abs{f}^{p}$ almost everywhere. Then apply Fatou's lemma.
+\end{proof}
+
+\begin{rmk}
+    We would like to extend our definition of an $L_p$ space to include $L_{\infty}$, as is possible for the $\ell_p$ norms on finite dimensional vector spaces. To do so, we introduce the \emph{essential supremum} of a function $f: E \to \R$, given by
+    \begin{align*}
+        \inf\left\{C \geq 0 \compbar m\left\{\abs{f} > C\right\} = 0\right\}.
+    \end{align*}
+    This is well-defined on equivalences classes of functions equivalent almost everywhere, since functions differing only on a null-set will have the same essential supremum.
+
+    Then for a measurable function $f: [0, 1] \to \overline{\R}$ which is \emph{essentially bounded}, i.e. it has a finite essential supremum, then
+    \begin{align*}
+        \int_{0}^{1}\abs{f} = 
+    \end{align*}
+
+    {\color{red}TODO prove }
+\end{rmk}
+
+{\color{red}PROVE L-infinity is not separable}
+
+\begin{lemma}
+    19.11
+\end{lemma}
+
+\begin{thm}
+    19.12
+\end{thm}
