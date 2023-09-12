@@ -145,7 +145,7 @@
 
 \begin{defn}
     Let $\alpha: I \to \R^3$ be a unit speed curve whose curvature is nowhere zero. Given the tangent and normal vectors $t(s)$, $n(s)$, the plane containing the point $\alpha(s)$ and spanned by $t(s)$ and $n(s)$ is the \emph{osculating plane} at $s$.
-    
+
     We then define the \emph{binormal} vector $b(s) = t(s) \times n(s)$. Note that all three of $t(s), n(s), b(s)$ are non-zero everywhere, and in fact form an orthonormal basis for $\R^3$.
 \end{defn}
 
@@ -217,4 +217,198 @@
 
 \begin{defn}
     Consider a unit speed planar curve $\alpha: I \to \R^2$. The \emph{signed unit normal} $\tilde{n}$ is obtained from $t(s)$ via rotation counter-clockwise by $\pi/2$. Then the \emph{signed curvature} is $\kappa$ such that $\alpha''(s) = \kappa(s)\tilde{n}(s)$.
+\end{defn}
+
+\begin{defn}
+    Let $\alpha: I \to \R^2$ be a planar unit speed curve. The \emph{signed curvature} $\kappa^{s}$ of $\alpha$ is such that $t'(s) = \kappa^{s}\tilde{n}(s)$.
+\end{defn}
+
+\begin{rmk}
+    Letting $\theta(s)$ be the angle measured from the $x$-axis to $t(s)$, it follows that $t'(s) = \theta'(s)\tilde{n}(s)$.
+\end{rmk}
+
+\begin{defn}
+    Given $\alpha: I \to \R^2$, where $I = (a, b)$, we can define the \emph{turning angle} $\varphi: I \to \R$ as
+    \begin{align*}
+        \varphi(s) = \int_{a}^{s}\kappa^{s}(\tau)d\tau.
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    While $\theta(s)$ and $\varphi(s)$ are conceptually similar, they are not identical. Unlike $\theta(s)$, which may have discontinuities near the endpoints of $[0, 2\pi)$, the turning angle is continuous. Additionally, they have different initial conditions: $\varphi(0)$ is zero, while $\theta(0)$ is not generally zero.
+\end{rmk}
+
+\begin{defn}
+    Let $\alpha: \R \to \R^2$ be a smooth parameterized curve. If there exists some $T > 0$ such that $\alpha(t + T) = \alpha(t$) for all $t \in \R$, we say $\alpha$ is a \emph{closed} curve. The minimum such $T$ is the \emph{period} of the curve.
+
+    We then write $\alpha: [0, T] \to \R^2$, where $\alpha(0) = \alpha(T)$.
+\end{defn}
+
+\begin{defn}
+    A \emph{Jordan curve} (or \emph{simple curve}) is a closed curve without self-intersections, i.e. if $\abs{t - s} < T$ then $\alpha(t) \neq \alpha(s)$.
+\end{defn}
+
+\begin{thm}{Sniith Schoerflies Theorem}
+    Let $\alpha: [0, T] \to \R^2$ be a Jordan curve. Then there exists a diffeomorphism $f: \R^2 \to \R^2$ such that $f(S^1)$ coincides with the image of $\alpha$.
+\end{thm}
+
+\begin{rmk}
+    Therefore, Jordan curves has an interior and exterior.
+\end{rmk}
+
+\begin{defn}
+    Let $\alpha: [0, T] \to \R^2$ be a smooth closed curve. The \emph{turning number} of $\alpha$ is
+    \begin{align*}
+        I = \frac{1}{2\pi}\int_{0}^{T}\kappa^{s}ds.
+    \end{align*}
+\end{defn}
+
+\begin{thm}
+    Closed (but possible self-intersecting) curves always have integer turning number $I$.
+\end{thm}
+
+\begin{thm}
+    Jordan curves always have turning number $I = \pm 1$.
+\end{thm}
+
+\begin{defn}
+    A \emph{vertex} of a unit speed plane curve $\alpha: I \to \R^2$ is a stationary point of $\kappa^{s}$.
+\end{defn}
+
+\begin{thm}{Four Vertex Theorem}\label{thm:four-vertex-theorem}\proofbreak
+    Every Jordan curve has \emph{at least} four vertices.
+\end{thm}
+
+\begin{defn}
+    A Jordan curve is \emph{positively oriented} if the interior of the curve is on the left as the parameter increases.
+\end{defn}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+        \begin{axis}[
+            axis x line=middle,
+            axis y line=middle,
+            axis equal,
+            ymin=-5,ymax=5,ylabel=$y$,
+            xmin=-5,xmax=5,xlabel=$x$
+            ]
+        \draw[ultra thick] (-0.625, -2.5) circle (1.375);
+        \draw[ultra thick] (-2, -5) -- (-2, 5);
+        \draw[ultra thick] (0.75, -5) -- (0.75, 5);
+
+        \addplot[domain=0.25:0.75, black, ultra thick, samples=100, variable=\t] ({cos(deg(2*pi*t))}, {sin(deg(2*pi*t))+2});
+        \addplot[domain=0.25:0.75, black, ultra thick, samples=100, variable=\t] ({2*cos(deg(2*pi*t))}, {2*sin(deg(2*pi*t))+2.5});
+        \addplot[domain=-0.25:0.25, black, ultra thick, samples=100, variable=\t] ({0.75*cos(deg(2*pi*t))}, {0.75*sin(deg(2*pi*t))+3.75});
+        \addplot[domain=-0.25:0.25, black, ultra thick, samples=100, variable=\t] ({0.25*cos(deg(2*pi*t))}, {0.25*sin(deg(2*pi*t))+0.75});
+    \end{axis}
+    \end{tikzpicture}
+\caption{Isoperimetric inequality construction}
+\label{fig:isoperimetric-construction}
+\end{figure}
+
+\begin{thm}{Isoperimetric inequality}\label{thm:isoperimetric-inequality}\proofbreak
+    Among all Jordan curves $\alpha: [0, T] \to \R^2$ with the same length $T$, the circle is the unique curve attaining the maximum enclosed area.
+
+    In particular, let $C$ be the trace of a Jordan curve with length $L$ and enclosed area $A$. Then $4\pi A \leq L^2$, with equality if and only if $C$ is a circle.
+\end{thm}
+
+\begin{proof}
+    Let $v$ be an arbitary unit vector. Let $L_1$ and $L_2$ be two parallel lines, both perpendicular to $v$, and given by
+    \begin{align*}
+        L_1: x &= \min_{(x, y) \in C}\langle (x, y), v\rangle, \\
+        L_2: x &= \max_{(x, y) \in C}\langle (x, y), v\rangle.
+    \end{align*}
+    Note that these maximums/minimums exist since $C$ is the continuous image of a compact set, and so is compact.
+
+    Let $S^1$ be a circle that is tangent to both lines, and does not intersect $C$. Let $r$ be the radius of the circle, and define a coordinate system centered at $S^1$ with $y$-axis parallel to $L_1, L_2$. In this coordinate system, let $\alpha(s) = (x(s), y(s))$ be an arc-length (unit-speed) parameterization of $C$. Next, define $\tilde{y}(s) = \sqrt{r^2 - x(s)^2}$. We then define a parameterization of the circle $\tilde{\alpha}(s) = (x(s), \tilde{y}(s))$.
+
+    Let $\tilde{A} = \pi r^2$ be the area of the circle. Using Green's Theorem, we have
+    \begin{align*}
+        A &= \int_{0}^{L}x(s)y'(s)ds, \\
+        \tilde{A} &= -\int_{0}^{L}x'(s)\tilde{y}(s)ds.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        A + \pi r^2 &= \int_{0}^{L}xy' - x'\tilde{y}.
+    \end{align*}
+    By the Cauchy-Schwarz inequality,
+    \begin{equation*}\tag{$\star$}\label{isoperimetric:dot-ineq}
+        \abs{xy' - x'\tilde{y}} \leq \norm{\tilde{\alpha}}\norm{(y', -x')},
+    \end{equation*}
+    but $\norm{(y', -x')} = \norm{\alpha'} = 1$, and so
+    \begin{align*}
+        A + \pi r^2 \leq \int_{0}^{L}\norm{\tilde{\alpha}(t)}dt = \int_{0}^{L}rdt = rL.
+    \end{align*}
+    Recall that for positive $a, b$ we always have $\sqrt{ab} \leq (a + b)/2$ with equality if and only if $a = b$. Therefore,
+    \begin{equation*}\tag{$\dagger$}\label{isoperimetric:area-ineq}
+        \sqrt{A\pi r^2} \leq (A + \pi r^2)/2 \leq rL/2,
+    \end{equation*}
+    and so $A \leq L^2/(4\pi)$.
+
+    Clearly, equality holds if $C$ is indeed a circle. It only remains to show that if equality holds, then $C$ must be a circle. For equality to hold we must have $A = \pi r^2$ in (\ref{isoperimetric:area-ineq}). Therefore, $A = L^2/(4\pi)$ gives us $L^2 = 4\pi(\pi r^2)$, and so $L = 2\pi r$. Since we could have oriented our original parallel gives $L_1, L_2$ arbitrarily by varying $v$, it must be that $C$ has constant width in all directions.
+
+    However, just because $C$ has constant width does not mean it is a circle! For example, consider the Reuleaux triangle. However, for the equality to hold it must additionally be true that equality is attained in (\ref{isoperimetric:dot-ineq}), and so by the Cauchy-Schwarz inequality \ref{cauchy-schwarz-triangle} it follows that for all $s \in [0, L]$, there must be some $\lambda \in \R$ such that
+    \begin{align*}
+        \begin{pmatrix}
+            x(s) \\ \tilde{y}(s)
+        \end{pmatrix} &= \lambda\begin{pmatrix}
+            y'(s) \\ x'(s)
+        \end{pmatrix}.
+    \end{align*}
+    Then,
+    \begin{align*}
+        \lambda(s)^2 = \frac{x(s)^2 + \tilde{y}(s)^2}{x'(s)^2 + y'(s)^2} = \frac{r^2}{1}.
+    \end{align*}
+    In particular, $x(s) = \pm r y'(s)$. However, the parameterization of $C$ and $r$ are both independent of rotation (since $C$ is constant width), so by rotating $v$ by $pi/2$ we also have $y(s) = \pm r x'(s)$. Therefore, the curve $C$ satisfies $x^2 + y^2 = r^2y'(s)^2 + r^2x'(s)^2 = r^2$, and so is in fact a circle.
+\end{proof}
+
+\section{Surfaces}
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}[b]{0.3\linewidth}
+        \begin{tikzpicture}
+            \draw (-2,0) arc (180:360:2cm and 1cm);
+            \draw[dashed] (-2,0) arc (180:0:2cm and 1cm);
+            \draw (0,2) arc (90:270:1cm and 2cm);
+            \draw[dashed] (0,2) arc (90:-90:1cm and 2cm);
+            \draw (0,0) circle (2cm);
+            \shade[ball color=blue!60!white,opacity=0.20] (0,0) circle (2cm);
+        \end{tikzpicture}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\linewidth}
+        \begin{tikzpicture}
+            \draw (-1.5,0) arc (180:360:1.5cm and 0.45cm) -- (0,3) -- cycle;
+            \draw[dashed] (-1.5,0) arc (180:0:1.5cm and 0.45cm);
+            \shade[left color=blue!5!white,right color=blue!60!white,opacity=0.3] (-1.5,0) arc (180:360:1.5cm and 0.45cm) -- (0,3) -- cycle;
+        \end{tikzpicture}
+    \end{minipage}
+    \caption{Examples of surfaces (note the cone must exclude the bottom and tip)}
+    \label{fig:diffgeom-surface-examples}
+\end{figure}
+
+\begin{defn}
+    A subset $S \subseteq \R^3$ is a \emph{regular surface} if for all $p \in S$ there exists a neighborhood $W$ of $p$ (within $\R^3$), an open set $U \subseteq \R^2$, and a map $m: U \to W \intersect S$ such that
+    \begin{enumerate}[label=(\roman*)]
+        \item $m(u, v) = (x(u, v), y(u, v), z(u, v))$ is a smooth function,
+        \item $m$ is a homeomorphism,
+        \item the cross-product vector
+        \begin{align*}
+            \frac{\partial m}{\partial u} \times \frac{\partial m}{\partial v}
+        \end{align*}
+        is nowhere zero on $U$.
+    \end{enumerate}
+\end{defn}
+
+\begin{rmk}
+    \begin{enumerate}[label=(\roman*)]
+        \item allows us to do calculus on surfaces,
+        \item prevents self-intersection, and ensures certain properties of $S$ are independent of $W$, $U$, and $m$,
+        \item ensures there is a well-defined normal vector to construct a tangent plane.
+    \end{enumerate}
+\end{rmk}
+
+\begin{defn}
+    A mapping $m: U \to W \intersect S$ as defined above is a \emph{local parameterization} of $S$, or a \emph{chart} for $S$. A collection of charts, such that every $p \in S$ is contained in at least one chart, is an \emph{atlas} for $S$.
 \end{defn}
