@@ -2232,6 +2232,67 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
     If $Av = \lambda v$, then $A^{-1}Av = A^{-1}\lambda v$, so $v/\lambda = A^{-1}v$.
 \end{proof}
 
+\begin{thm}
+    Let $A, B \in M_{n}$ be diagonalizable matrices. Then $A$ and $B$ commute if and only if $A$ and $B$ are simultaneously diagonalizable. That is, $AB = BA$ if and only if there exists invertible $S$ such that $S^{-1}AS$ and $S^{-1}BS$ are diagonal matrices.
+\end{thm}
+
+\begin{proof}
+    Suppose that $A$ and $B$ are simultaneously diagonalizable. Then since diagonal matrices always commute, we have
+    \begin{align*}
+        S^{-1}ASS^{-1}BS &= S^{-1}BSS^{-1}AS
+    \end{align*}
+    and so $S^{-1}ABS = S^{-1}BAS$. Multiplying on the left by $S$ and on the right by $S^{-1}$, we find $AB = BA$.
+
+    Now instead suppose that $A$ and $B$ commute, and that we have chosen a basis such that $A$ is diagonal, and repeated eigenvalues are grouped together. That is, suppose
+    \begin{align*}
+        A = \begin{pmatrix}
+            \lambda_2 I_{\alpha_1} & 0 & \cdots & 0 \\
+            0 & \lambda_2 I_{\alpha_2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \lambda_k I_{\alpha_k}
+        \end{pmatrix},
+    \end{align*}
+    where $\alpha_1 + \alpha_2 + \cdots + \alpha_k = n$. Let $B_{ij}$ be the corresponding blocks in $A$. Then the off-diagonal blocks $B_{ij}$ must be zero, since $AB = BA$ implies that $\lambda_{i}B_{ij} = B_{ij}\lambda_{j}$, so if $\lambda_i \neq \lambda_j$ we must have $B_{ij} = 0$. Use a matrix $S_i$ to diagonalize each non-zero block $B_{ii}$ into $D_{i}$, so
+    \begin{align*}
+        B = \begin{pmatrix}
+            S_{1} & 0 & \cdots & 0 \\
+            0 & S_{2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & S_{k}
+        \end{pmatrix}\begin{pmatrix}
+            D_{1} & 0 & \cdots & 0 \\
+            0 & D_{2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & D_{k}
+        \end{pmatrix}\begin{pmatrix}
+            S_{1} & 0 & \cdots & 0 \\
+            0 & S_{2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & S_{k}
+        \end{pmatrix}^{-1}.
+    \end{align*}
+    Since $S_i\lambda_i I_{\alpha_i}S_i^{-1} = \lambda_i S_iS_i^{-1} = \lambda_i I_{\alpha_k}$, it follows that
+    \begin{align*}
+        A = \begin{pmatrix}
+            S_{1} & 0 & \cdots & 0 \\
+            0 & S_{2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & S_{k}
+        \end{pmatrix}\begin{pmatrix}
+            \lambda_2 I_{\alpha_1} & 0 & \cdots & 0 \\
+            0 & \lambda_2 I_{\alpha_2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \lambda_k I_{\alpha_k}
+        \end{pmatrix}\begin{pmatrix}
+            S_{1} & 0 & \cdots & 0 \\
+            0 & S_{2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & S_{k}
+        \end{pmatrix}^{-1}.
+    \end{align*}
+    Therefore, $A$ and $B$ are simultaneously diagonalizable.
+\end{proof}
+
 \section{Powers of a Matrix}
 
 Let $f: V \to V$ be a linear transformation. Define $f^m = f \circ f^{m-1}$ for $m > 1$. For any eigenvector $v$ with corresponding eigenvalue $\lambda$, we have $f^m(v) = \lambda^{m}v$. Now consider a diagonalizable matrix $A = PDP^{-1}$. Note that $A^2 = (PDP^{-1})(PDP^{-1}) = PD(P^{-1}P)DP^{-1} = PD^2P^{-1}$. In general, \[A^m = AA^{m-1} = (PDP^{-1})(PD^{m-1}P^{-1}) = PD(P^{-1}P)D^{m-1}P^{-1}) = PD^mP^{-1}.\] Now consider $D^m$. For every eigenvector $v$ with corresponding eigenvalue $\lambda$, we have $D^mv = \lambda^mv$, so
