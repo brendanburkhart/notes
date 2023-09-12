@@ -666,6 +666,34 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \subsection{Convexity}
 
 \begin{defn}
+    A set $S \subseteq \R^n$ is said to be \emph{convex} if $x, y \in S$ implies $tx + (1-t)y \in S$ for all $t \in [0, 1]$.
+\end{defn}
+
+\begin{lemma}\label{lemma:convex-sets}
+    Let $A, B, C \subseteq \R^n$ be convex sets. The following are also convex:
+    \begin{itemize}
+        \item $\R^{+}A = \left\{\lambda x : \lambda \geq 0, x \in A\right\}$,
+        \item $A + B = \left\{x + y : x \in A, y \in B\right\}$,
+        \item $A \intersect B$,
+        \item $T(A)$ and $T^{-1}(A)$, where $T: \R^n \to \R^n$ is a linear map (even if $T$ is not invertible).
+    \end{itemize}
+\end{lemma}
+
+\begin{proof}\proofbreak
+    \begin{itemize}
+        \item If $x, y \in \R^{+}A$, then $x = \lambda_1s_1, y = \lambda_2s_2$ for some $\lambda_1, \lambda_2 \in \R^+$ and $s_1, s_2 \in A$. Therefore,
+        \begin{align*}
+            tx + (1-t)y &= \frac{t\lambda_1}{t_1\lambda_1 + (1-t)\lambda_2}s_1 = \frac{(1-t)\lambda_2}{t_1\lambda_1 + (1-t)\lambda_2}s_2 \\
+            us_1 + (1-u)s_2,
+        \end{align*}
+        where $u \in [0, 1]$.
+        \item If $x = a_1 + b_1$ and $y = a_2 + b_2$, then $tx + (1-t)y = (ta_1 + (1-t)a_2) + (tb_1 + (1-t)b_2) \in A + B$.
+        \item If $x \in A \intersect B$ and $y \in A \intersect B$, then of course $tx + (1-t)y \in A$ and $tx + (1-t)y \in B$ by convexity of $A$ and $B$, so $tx + (1-t)y \in A \intersect B$.
+        \item Follows immediately from linearity of $T$ and the fact convex combinations are linear combinations.
+    \end{itemize}
+\end{proof}
+
+\begin{defn}
     Let $S \subseteq \R^n$ be a non-empty convex set, and let $f: S \to \R$. We say that $f$ is \emph{convex} when
     \begin{align*}
         f\left(\lambda x + (1 - \lambda)y\right) \leq \lambda f(x) + (1 - \lambda)f(y)
@@ -739,17 +767,72 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     by the definition of $\epigraphof{f}$, and so $f$ is a convex function.
 \end{proof}
 
+\begin{lemma}
+    Let $f_i: S \to \R$ be convex functions, for $i = 1, \ldots, n$. Then the following are also convex functions:
+    \begin{itemize}
+        \item $\max_{i}f_i$,
+    \end{itemize}
+\end{lemma}
+
+\begin{proof}\proofbreak
+    \begin{itemize}
+        \item The epigraph of $\max_{i}f_i$ is simply $\intersect_{i}\epigraphof{f_i}$, which is convex by Lemma \ref{lemma:convex-sets}.
+    \end{itemize}
+\end{proof}
+
 \begin{thm}{Support Theorem}\label{support-theorem}\proofbreak
     Let $S \subseteq \R^n$ be a convex set, and let $\bar{x}$ be a boundary point of $S$. There exists a hyperplane containing $\bar{x}$ such that $S$ is contained in an associated closed half-space.
 \end{thm}
 
 \begin{thm}\label{convex-function-tangent-hyperplane}
-    Let $S \subseteq \R^n$ be an open convex set, and let $f: S \to \R$ be continuously differentiable. Then $f$ is a convex function if and only if
-    \begin{align*}
-        f(x) \geq f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x})
-    \end{align*}
-    for all $x, \bar{x} \in S$. 
+    Let $S \subseteq \R^n$ be an open convex set, and let $f: S \to \R$ be continuously differentiable. Then the following are equivalent:
+    \begin{itemize}
+        \item $f$ is a convex function,
+        \item $f(x) \geq f(\bar{x}) + \langle \nabla f(\bar{x}), x - \bar{x}\rangle$ for all $x, \bar{x} \in S$,
+        \item $\langle  \nabla f(x) - \nabla f(y), x - y \rangle \geq 0$.
+    \end{itemize}
 \end{thm}
+
+\begin{proof}
+    Suppose that (1) holds, so $f(\bar{x} + t(x - \bar{x})) \leq tf(\bar{x}) + (1 - t)f(x)$ by definition of a convex function. Therefore,
+    \begin{align*}
+        \frac{f(\bar{x} + t(x - \bar{x})) - f(\bar{x})}{t} \leq f(x) - f(\bar{x}).
+    \end{align*}
+    Taking the limit as $t \to 0$, we obtain (2): $\langle \nabla f(\bar{x}), x - \bar{x} \rangle \leq f(x) - f(\bar{x})$.
+
+    Now instead let $x, y \in \R^n$ and define $z_t = ty + (1-t)x$. Suppose that (2) holds, so for all $t \in [0, 1]$ we have
+    \begin{align*}
+        f(x) \geq f(z_t) + \langle \nabla f(z_t), x - z_t\rangle, \\
+        f(y) \geq f(z_t) + \langle \nabla f(z_t), y - z_t\rangle.
+    \end{align*}
+    Since $t geq 0$ and $1-t \geq 0$, it follows that we may take a convex combination of the inequalities in order to obtain
+    \begin{align*}
+        (1-t)f(x) + tf(y) \geq \langle \nabla f(z_t), (1-t)x + ty \rangle,
+    \end{align*}
+    and so $f$ is a convex function. Therefore, condition (1) holds if and only if (2) holds.
+
+    Suppose that (2) holds, so
+    \begin{align*}
+        f(x) \geq f(y) + \langle \nabla f(y), x - y\rangle, \\
+        f(y) \geq f(x) + \langle \nabla f(x), y - x\rangle.
+    \end{align*}
+    Adding these inequalities, we obtain
+    \begin{align*}
+        f(x) + f(y) \geq f(x) + f(y) + \langle \nabla f(y) - \nabla f(x), x - y \rangle,
+    \end{align*}
+    and so (3) holds: $\langle \nabla f(x) - \nabla f(y), x - y \rangle \geq 0$.
+
+    Finally, suppose (3) holds, and we will show (2) holds. Define $\varphi(t) = f(x + t(y - x))$. Then by applying the Fundamental Theorem of Calculus we obtain
+    \begin{align*}
+        \varphi(1) &= \varphi(0) + \int_{0}^{1}\varphi'(t)dt \\
+        \varphi(1) &= \varphi(0) + \varphi'(0) - \int_{0}^{1} \varphi'(0)dt + \int_{0}^{1}\varphi'(t)dt \\
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        f(y) &= f(x) + \langle \nabla f(x), y - x \rangle - \int_{0}^{1}\left(\langle \nabla \varphi(0), y - x \rangle - \langle \nabla \varphi(t), y - x \rangle\right) dt \\
+        &= f(x) + \langle \nabla f(x), y - x \rangle - \int_{0}^{1}t\langle \nabla f(y) - f(x), y - x \rangle dt.
+    \end{align*}
+\end{proof}
 
 \begin{thm}
     Let $S \subseteq \R^n$ be an open convex set, and let $f: S \to \R$ be \emph{twice} continuously differentiable. Then $f$ is convex if and only if $\nabla^2f(\bar{x})$ is positive semi-definite for all $\bar{x} \in S$.
@@ -831,6 +914,108 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
         \varphi(t) \geq \varphi(0) + t\varphi'(0) + \lambda\frac{1}{2}t^2.
     \end{align*}
     As $\varphi'(0) = 0$, we have $\varphi(t) \geq \varphi(0) + \frac{1}{2}\lambda t^2$.
+\end{proof}
+
+\begin{defn}
+    Let $f: \R^n \to \R$ be a convex function. The \emph{subdifferential set} of $f$ at $x$ is
+    \begin{align*}
+        \partial f(x) = \left\{ v \in \R^n : \forall y f(y) \geq f(x) + \langle v, y - x\rangle \right\}.
+    \end{align*}
+\end{defn}
+
+\begin{exmp}
+    Consider $f(x) = \abs{x}$. At $x < 0$ we have $\partial f(x) = \{ -1 \}$, and at $x > 0$ we have $\partial f(x) = \{ 1 \}$. However, $\partial f(0) = [-1, 1]$.
+\end{exmp}
+
+\begin{prop}
+    Suppose that $f, h$ are convex functions $\R^d \to \R$. Then the following hold:
+    \begin{enumerate}
+        \item $\partial (f + h)(x) = \partial f(x) + \partial h(x)$
+        \item If $A: \R^n \to \R^d$ is linear, then $\partial (f \circ A)(x) = A^{\transpose}\partial f(Ax)$.
+        \item $\partial (\alpha f)(x) = \alpha \partial f(x)$.
+        \item Let $f_1, \ldots, f_k: \R^d \to \R$ be convex functions. Let $\mu(x) = \left\{ i : f_i(x) = \max_{i}f_i(x) \right\}$, and note that $\mu(x)$ is not necessarily a singleton set. Then
+        \begin{align*}
+            \partial \max_{i}f_i = \mathrm{convexhull}\left\{v \in \partial f_{i} | i \in \mu(x)\right\}.
+        \end{align*}
+    \end{enumerate}
+\end{prop}
+
+\begin{exmp}
+    Note that $\abs{x} = \max\left\{-x, x\right\}$. Then $\partial \abs{x}$ at $x = 0$ is the convex hull of $\{-1, 1\}$ which is $[-1, 1]$.
+\end{exmp}
+
+\subsection{First-order memthods}
+
+\begin{defn}
+    Bregman divergence
+\end{defn}
+
+\begin{defn}
+    Mirror descent
+\end{defn}
+
+\begin{defn}
+    Subgradient descent
+\end{defn}
+
+\begin{lemma}{Descent lemma}\label{lemma:descent}\proofbreak
+    Let $f: \R^d \to \R$ be a differentiable function with $L$-Lipschitz gradient. Let $x_0$ be given and recursively define $x_{k+1} = x_k - \alpha_k\nabla f(x_k)$ by gradient descent.
+    
+    Then for any $k \geq 0$,
+    \begin{align*}
+        f(x_{k+1}) \leq f(x_k) - \left(\alpha_k - \frac{L\alpha_k^2}{2}\right)\norm{\nabla f(x_k)}^2.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    We know that
+    \begin{align*}
+        \abs{f(x_{k+1}) - \left(f(x_k) + \alpha_k\langle \nabla f(x_k), \nabla f(x_k)\rangle\right)} \leq \frac{L}{2}\alpha_k^2\norm{\nabla f(x_k)}_2^2.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        f(x_{k+1}) \leq f(x_k) - \left(\alpha_k - \frac{L}{2}\alpha_k^2\right)\norm{\nabla f(x_k)}_2^2.
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    Gradient descent is therefore guaranteed to yield improvement when $0 < \alpha_k < 2/L$, and gives maximum guaranteed improvement when $\alpha_k = 1/L$. This choice of $\alpha_k$ would yield improvement of
+    \begin{align*}
+        -\frac{1}{2L}\norm{\nabla f(x_k)}_2^2
+    \end{align*}
+    per step.
+\end{rmk}
+
+\begin{rmk}
+    How should we select the step size $\alpha_k$? One approach would be to simply choose $\alpha = -1/L$, but this is often impractical as determing the Lipschitz constant can be difficult.
+
+    Another approach is so-called \emph{steepest descent} or \emph{exact linesearch}, where $\alpha_k$ is chosen to be
+    \begin{align*}
+        \alpha_k = \argmin_{\alpha}f(x_k - \alpha \nabla f(x_k)),
+    \end{align*}
+    however this can be extremely computationally intensive, unless a simple way to solve this new optimization problem is readily available.
+
+    Yet another approach is \emph{backtracking linesearch}, where several step sizes are tried, each smaller than the last, until $\alpha_k$ is found such that $f(x_{k+1})$ is sufficiently smaller than $f(x_k)$. In particular, this is done by trying $\alpha_k =\alpha \tau^n$ for some hyperparameters $\alpha > 0$ and $0 < \tau < 1$, starting from $n = 0$, and increasing $n$ until the \emph{Armijo} condition is satisfied:
+    \begin{align*}
+        f(x_{k+1}) \leq f(x_k) - \eta\alpha\norm{\nabla f(x_k)}^2,
+    \end{align*}
+    where $0 < \eta < 1$ is another hyperparameter.
+\end{rmk}
+
+\begin{lemma}
+    The Armijo condition holds for any $0 < \alpha < 2(1-\eta)/L$.
+\end{lemma}
+
+\begin{proof}
+    By the Descent Lemma \ref{lemma:descent}, we have
+    \begin{align*}
+        f(x_{k+1}) \leq f(x_k) - \left(\alpha - L\alpha^2/2\right)\norm{\nabla f(x_k)}_2^2.
+    \end{align*}
+    Therefore, the Armijo conditions holds if and only if
+    \begin{align*}
+        -\left(\alpha - \frac{L\alpha^2}{2}\right) \leq -\eta\alpha,
+    \end{align*}
+    or equivalently if and only if $\alpha > 0$ and $2(1 - \eta)/L\geq \alpha$.
 \end{proof}
 
 \begin{defn}{Newton's Method}\label{newtons-method}\proofbreak
