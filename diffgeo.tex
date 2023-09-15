@@ -374,7 +374,7 @@
             \draw (0,2) arc (90:270:1cm and 2cm);
             \draw[dashed] (0,2) arc (90:-90:1cm and 2cm);
             \draw (0,0) circle (2cm);
-            \shade[ball color=blue!60!white,opacity=0.5] (0,0) circle (2cm);
+            \shade[ball color=Fuchsia,opacity=0.5] (0,0) circle (2cm);
         \end{tikzpicture}
     \end{minipage}
     \begin{minipage}[b]{0.3\linewidth}
@@ -382,7 +382,7 @@
             \fill[color=blue, opacity=0.1] (-1.5,0) arc (180:0:1.5cm and 0.4cm) -- (0,3) -- cycle;
             \begin{scope}
                 \path[clip] (-1.5,0) arc (180:360:1.5cm and 0.4cm) -- (0,3) -- cycle;
-                \shade[left color=blue!70!white,right color=blue!100!white,middle color=blue!5!white,shading angle=105,opacity=0.5] (-1.5, -1) rectangle (2.5, 3);
+                \shade[left color=MidnightBlue,right color=MidnightBlue,middle color=MidnightBlue!15!white,shading angle=105,opacity=0.8] (-1.5, -1) rectangle (2.5, 3);
             \end{scope}
             \draw (-1.5,0) arc (180:360:1.5cm and 0.4cm) -- (0,3) -- cycle;
             \draw[dashed] (-1.5,0) arc (180:0:1.5cm and 0.4cm);
@@ -402,11 +402,11 @@
             \end{scope}
             \begin{scope}
                 \path[clip] plot[domain=-1:-0.1] ({u(\x)}, {v(\x)}) -- plot[domain=-0.1:-1] ({u(\x)+3}, {v(\x)+1}) -- cycle;
-                \shade[top color=blue!60!white,bottom color=blue!60!white,middle color=blue!10!white,shading angle=18,opacity=0.6] (0,-2) rectangle (4,1);
+                \shade[top color=red!60!blue,bottom color=blue,shading angle=18,opacity=0.6] (0,-2) rectangle (4,1);
             \end{scope}
             \begin{scope}
                 \path[clip] plot[domain=-1:-2] ({u(\x)}, {v(\x)}) -- plot[domain=-2:-1] ({u(\x)+3}, {v(\x)+1}) -- cycle;
-                \shade[left color=blue!5!white,right color=blue!60!white,opacity=0.6] (-2,-2) rectangle (3,3);
+                \shade[bottom color=red!30!blue,top color=red,shading angle=18,opacity=0.6] ({u(-2)},0) rectangle (3,{v(-2)+1});
             \end{scope}
             \begin{scope}
                 \path[clip] plot[domain=1:2] ({u(\x)}, {v(\x)}) -- plot[domain=2:1] ({u(\x)+3}, {v(\x)+1}) -- cycle;
