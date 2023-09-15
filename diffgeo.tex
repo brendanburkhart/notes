@@ -374,17 +374,60 @@
             \draw (0,2) arc (90:270:1cm and 2cm);
             \draw[dashed] (0,2) arc (90:-90:1cm and 2cm);
             \draw (0,0) circle (2cm);
-            \shade[ball color=blue!60!white,opacity=0.20] (0,0) circle (2cm);
+            \shade[ball color=blue!60!white,opacity=0.5] (0,0) circle (2cm);
         \end{tikzpicture}
     \end{minipage}
     \begin{minipage}[b]{0.3\linewidth}
         \begin{tikzpicture}
-            \draw (-1.5,0) arc (180:360:1.5cm and 0.45cm) -- (0,3) -- cycle;
-            \draw[dashed] (-1.5,0) arc (180:0:1.5cm and 0.45cm);
-            \shade[left color=blue!5!white,right color=blue!60!white,opacity=0.3] (-1.5,0) arc (180:360:1.5cm and 0.45cm) -- (0,3) -- cycle;
+            \fill[color=blue, opacity=0.1] (-1.5,0) arc (180:0:1.5cm and 0.4cm) -- (0,3) -- cycle;
+            \begin{scope}
+                \path[clip] (-1.5,0) arc (180:360:1.5cm and 0.4cm) -- (0,3) -- cycle;
+                \shade[left color=blue!70!white,right color=blue!100!white,middle color=blue!5!white,shading angle=105,opacity=0.5] (-1.5, -1) rectangle (2.5, 3);
+            \end{scope}
+            \draw (-1.5,0) arc (180:360:1.5cm and 0.4cm) -- (0,3) -- cycle;
+            \draw[dashed] (-1.5,0) arc (180:0:1.5cm and 0.4cm);
         \end{tikzpicture}
     \end{minipage}
-    \caption{Examples of surfaces (note the cone must exclude the bottom and tip)}
+    \hspace{-0.6cm}
+    \begin{minipage}[b]{0.3\linewidth}
+        \begin{tikzpicture}[
+            declare function  = {
+                u(\t) = 3*\t*((\t)^2-1)/(((\t)^2+1)^2);
+                v(\t) = 2*((\t)^2-1) / ((\t)^2 + 1);
+            }
+        ]
+            \begin{scope}
+                \path[clip]  plot[domain=-0.1:1] ({u(\x)}, {v(\x)}) -- plot[domain=1:-0.1] ({u(\x)+3}, {v(\x)+1}) -- cycle;
+                \shade[top color=white, bottom color=white, middle color=black!60!white, shading angle=18, opacity=0.4] (-2,-2) rectangle (4,1);
+            \end{scope}
+            \begin{scope}
+                \path[clip] plot[domain=-1:-0.1] ({u(\x)}, {v(\x)}) -- plot[domain=-0.1:-1] ({u(\x)+3}, {v(\x)+1}) -- cycle;
+                \shade[top color=blue!60!white,bottom color=blue!60!white,middle color=blue!10!white,shading angle=18,opacity=0.6] (0,-2) rectangle (4,1);
+            \end{scope}
+            \begin{scope}
+                \path[clip] plot[domain=-1:-2] ({u(\x)}, {v(\x)}) -- plot[domain=-2:-1] ({u(\x)+3}, {v(\x)+1}) -- cycle;
+                \shade[left color=blue!5!white,right color=blue!60!white,opacity=0.6] (-2,-2) rectangle (3,3);
+            \end{scope}
+            \begin{scope}
+                \path[clip] plot[domain=1:2] ({u(\x)}, {v(\x)}) -- plot[domain=2:1] ({u(\x)+3}, {v(\x)+1}) -- cycle;
+                \shade[left color=black!5!white,right color=black!60!white,opacity=0.6] (0,-2) rectangle (4,3);
+            \end{scope}
+
+            \draw[black] plot[domain=-2:2, samples=60] ({u(\x)+0}, {v(\x)+0});
+
+            \draw[black] plot[domain=-2:-1.5, samples=60] ({u(\x)+3}, {v(\x)+1});
+            \draw[black, dashed] plot[domain=-1.5:-1, samples=60] ({u(\x)+3}, {v(\x)+1});
+            \draw[black] plot[domain=-1:-0.1, samples=60] ({u(\x)+3}, {v(\x)+1});
+            \draw[black, dashed] plot[domain=-0.1:1, samples=60] ({u(\x)+3}, {v(\x)+1});
+            \draw[black] plot[domain=1:2, samples=60] ({u(\x)+3}, {v(\x)+1});
+
+            \draw[black] ({u(-2)}, {v(-2)}) -- ({u(-2)+3}, {v(-2)+1});
+            \draw[black] ({u(2)}, {v(2)}) -- ({u(2)+3}, {v(2)+1});
+            \draw[black] ({u(1)}, {v(1)}) -- ({u(1)+3}, {v(1)+1});
+            \draw[black] ({u(-0.1)}, {v(-0.1)}) -- ({u(-0.1)+3}, {v(-0.1)+1});
+        \end{tikzpicture}
+    \end{minipage}
+    \caption{The sphere ball and the cone (with vertex and base removed) are examples of regular surfaces, while the self-intersecting sheet is not regular surface.}
     \label{fig:diffgeom-surface-examples}
 \end{figure}
 
@@ -401,7 +444,7 @@
     \end{enumerate}
 \end{defn}
 
-\begin{rmk}
+\begin{rmk}\proofbreak
     \begin{enumerate}[label=(\roman*)]
         \item allows us to do calculus on surfaces,
         \item prevents self-intersection, and ensures certain properties of $S$ are independent of $W$, $U$, and $m$,
@@ -412,3 +455,73 @@
 \begin{defn}
     A mapping $m: U \to W \intersect S$ as defined above is a \emph{local parameterization} of $S$, or a \emph{chart} for $S$. A collection of charts, such that every $p \in S$ is contained in at least one chart, is an \emph{atlas} for $S$.
 \end{defn}
+
+\begin{prop}
+    The sphere $\S^2$ is a regular surface. We will consider $S^2$ as a subset of $\R^3$ given by $\{p \in \R^3 : \norm{p}_2 = 1\}$.
+
+    We will prove a chart exists for all $p \in S^2$. Consider $p \in S^2$ with positive $z$-coordinate. Take $U$ to be the open unit disc $\{u \in \R^2 : \norm{u}_2 < 1\}$, and $W$ the upper half-space $\{(x, y, z) \in \R^3 : z > 0\}$. Define the first chart $m^{(1)}: U \to W \intersect S^2$ by
+    \begin{align*}
+        m^{(1)}(u, v) &= \left(u, v, \sqrt{1 - (u^2 + v^2)}\right).
+    \end{align*}
+    This is clearly smooth since $u^2 + v^2 < 1$, and it is a homeomorphism since the inverse of $m^{(1)}$ is $(u, v, w) \mapsto (u, v)$, which is certainly continuous. Finally,
+    \begin{align*}
+        \frac{\partial m^{(1)}}{\partial u} \times \frac{\partial m^{(1)}}{\partial v} = \begin{pmatrix}
+            1, 0, \frac{-u}{\sqrt{1 - (u^2+v^2)}}
+        \end{pmatrix} \times \begin{pmatrix}
+            0, 1, \frac{-v}{\sqrt{1 - (u^2+v^2)}}
+        \end{pmatrix},
+    \end{align*}
+    which is clearly non-zero since they are linearly independent.
+
+    We can analogously define charts for the bottom, front, top, left, right of the sphere, and so cover the entire sphere with an atlas.
+\end{prop}
+
+\begin{exmp}
+    The following are examples of atlases for regular surfaces.
+    \begin{itemize}
+        \item A plane $\{x \in \R^3 : \langle n, x\rangle = c\}$, which can be parameterized with a single chart $m(u, v) = cn/\langle n, n \rangle + us + vt$, where $s, t$ are linearly independent vectors both perpendicular to $n$.
+        \item A cut cylinder can be parameterized with the chart $m(u, v) = (a\cos(u), a\sin(u), v)$, where $U = (0, 2\pi) \times (0, 1)$.
+        \item An infinite cone (without a vertex) can be parameterized with the chart
+        \begin{align*}
+            m(u, v) = (av\cos(u), av\sin(u), v),
+        \end{align*}
+        with $U = (0, 2\pi) \times (0, \infty)$.
+        \item A helicoid can be parameterized by the chart $m(u, v) = (av\cos(u), av\sin(u), u)$, where $(u, v) \in (0, 2\pi) \times \R$.
+        \item The sphere with a point removed can be parameterized by
+        \begin{align*}
+            m(u, v) = (\cos(v)\cos(u), \sin(v)\cos(u), \sin(u))
+        \end{align*}
+        where $(u, v) \in (-\pi/2, \pi/2) \times (0, 2\pi)$.
+    \end{itemize}
+\end{exmp}
+
+\begin{prop}
+    Consider a smooth function $f: U \to \R$, where $U \subseteq \R^2$ is open. The graph of $f$ is a regular surface.
+\end{prop}
+
+\begin{proof}
+    Define $m(u, v) = (u, v, f(u, v))$. Then we will show $m: U \to S$ is a chart for the graph of $f$.
+
+    Smoothness of $m$ follows from the smoothness of $f$. The inverse of $m$ is simply the projection of $\R^3$ onto the $(u, v)$ plane. Finally,
+    \begin{align*}
+        \frac{\partial m}{\partial u} &= (1, 0, \frac{\partial f}{\partial u}), \\
+        \frac{\partial m}{\partial v} &= (0, 1, \frac{\partial f}{\partial v}),
+    \end{align*}
+    which are trivially linearly independent.
+\end{proof}
+
+\begin{defn}
+    Suppose $U \subseteq \R^n$ is open, and $F: U \to \R^m$ is smooth. We say that $p \in U$ is a \emph{critical point} of $F$ if $dF_p: \R^n \to \R^m$ fails to be surjective. If $p \in U$ is a critical point, then $F(p) \in \R^m$ is a \emph{critical value} of $F$. A point in $\R^m$ which is \emph{not} a critical value of $F$ is a \emph{regular value} of $F$.
+\end{defn}
+
+\begin{thm}
+    If $f: U \to \R^3 \to \R$ is smooth, $U$ is open, and $\alpha \in f(U)$ is a regular value, then $f^{-1}(\{\alpha\})$ is a regular surface in $\R^3$.
+\end{thm}
+
+\begin{proof}
+    {\color{red}\Large TODO}
+\end{proof}
+
+\begin{cor}
+    Taking $f(p) = \norm{p}_2$, we have that $S^2$ is a regular surface.
+\end{cor}
