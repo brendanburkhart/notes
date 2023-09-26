@@ -1,4 +1,4 @@
-\setchaptergraphic{}
+f\setchaptergraphic{}
 
 \chapter{Numerical Analysis}
 \label{ch:numerical}
@@ -179,6 +179,143 @@ Then the total error is
 \end{rmk}
 
 \section{Matrix Factorization}
+
+\begin{thm}
+    For any $n \times n$ matrix $A$ and any $\varepsilon > 0$, there exists an invertible matrix $S$ and diagonal matrix $D$, and arbitrary matrix $E$ such that $\norm{E}_{F} < \varepsilon$, and
+    \begin{align*}
+        A = S\left(D + E\right)S^{-1}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Let $A = UTU^{*}$ be a Schur decomposition of $A$. For any $\delta > 0$, notice that
+    \begin{align*}
+        \left[\begin{pmatrix}
+            \delta^{-1} & 0 & \cdots & 0 \\
+            0 & \delta^{-2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \delta^{-n}
+        \end{pmatrix}T\begin{pmatrix}
+            \delta^{1} & 0 & \cdots & 0 \\
+            0 & \delta^{2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \delta^{n}
+        \end{pmatrix}\right]_{ij} = \delta_{j-i}T_{ij}.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        A = U\begin{pmatrix}
+            \delta^{1} & 0 & \cdots & 0 \\
+            0 & \delta^{2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \delta^{n}
+        \end{pmatrix}\begin{pmatrix}
+            \delta^{-1} & 0 & \cdots & 0 \\
+            0 & \delta^{-2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \delta^{-n}
+        \end{pmatrix}T\begin{pmatrix}
+            \delta^{1} & 0 & \cdots & 0 \\
+            0 & \delta^{2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \delta^{n}
+        \end{pmatrix}\begin{pmatrix}
+            \delta^{-1} & 0 & \cdots & 0 \\
+            0 & \delta^{-2} & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \delta^{-n}
+        \end{pmatrix}U^{*}.
+    \end{align*}
+    By choosing $\delta$ small enough, the super-diagonal entries are multiplied by a factor of at least $\delta$, and so can be made arbitrarily small.
+\end{proof}
+
+\begin{thm}
+    For any matrix $A$ and $\varepsilon > 0$, there exists $E$ such that $\norm{E}_{F} < \varepsilon$ and $A + E$ is diagonalizable.
+\end{thm}
+
+\begin{proof}
+    Let $UTU^{*}$ be a Schur decomposition of $A$, and consider a diagonal perturbation $D$ such that $T + D$ has distinct eigenvalues, and $\norm{D}_{F} < \varepsilon$. Take $A + UDU^{*}$, which is necessarily diagonalizable since it has distinct eigenvalues. Then $\norm{UDU^{*}}_{F} = \norm{D}_F < \varepsilon$.
+\end{proof}
+
+\begin{lemma}\label{lemma:normal-triangular}
+    If $T$ is an upper-triangular matrix, then $T$ is normal if and only if $T$ is diagonal.
+\end{lemma}
+
+\begin{proof}
+    Suppose that $T$ is normal. Then $(TT^{*})_{ij} = (T^*T)_{ij}$, and so
+    \begin{align*}
+        \sum_{k=1}^{n}T_{ik}\bar{T}_{jk} = \sum_{k=1}^{n}\bar{T}_{ki}T_{kj}.
+    \end{align*}
+    Since $T$ is upper triangular, we have
+    \begin{align*}
+        \sum_{k=\max(i, j)}^{n}T_{ik}\bar{T}_{jk} = \sum_{k=1}^{\min(i, j)}\bar{T}_{ki}T_{kj}.
+    \end{align*}
+    In particular, if
+\end{proof}
+
+\begin{lemma}\label{lemma:normality-unitary-similarity}
+    Matrix normality is preserved by unitary similarity.
+\end{lemma}
+
+\begin{thm}\label{thm:spectral-normal}
+    Consider a matrix $A$. The following are equivalent:
+    \begin{itemize}
+        \item $A$ is normal,
+        \item $A$ is unitarily diagonalizable,
+        \item $\norm{A}_F^2 = \sum_{\lambda \in \sigma(A)}\abs{\lambda}^2$.
+    \end{itemize}
+\end{thm}
+
+\begin{proof}
+    Suppose that $A$ is unitarily diagonalizable, so $A = UDU^{*}$. Since diagonal matrices commute, we know $D$ is normal, and so by Lemma \ref{lemma:normality-unitary-similarity} it follows $A$ is normal. Furthermore,
+    \begin{align*}
+        \norm{A}_F^2 = \norm{UDU^{*}}_F^{2} = \norm{D}_F^2 = \sum_{i=1}^{n}\abs{\lambda_i}^2.
+    \end{align*}
+
+    Next, instead suppose that $A$ is normal, and consider a Schur decomposition $A = UTU^{*}$. Since $A$ is normal, $T$ is normal, and so must be diagonal by Lemma \ref{lemma:normal-triangular}. Therefore, $A$ is unitarily diagonalizable.
+
+    Finally, suppose $A$ satisfies $\norm{A}_F^2 = \sum_{\lambda}\abs{\lambda}^2$. Let $A = UTU^{*}$ be a Schur decomposition. Then $\norm{A}_F^2 = \norm{T}_F^2$. It follows that $T_{ij} = 0$ for $i < j$ or else we would have $\norm{T}_F^2 > \sum_{\lambda}\abs{\lambda}^2$. Therefore, $T$ is diagonal, and so $A$ is unitarily diagonalizable.
+\end{proof}
+
+\begin{cor}\label{thm:spectral-hermitian}
+    A matrix $A$ is Hermitian if and only if $A$ is unitarily diagonalizable and $\sigma(A) \subseteq \R$.
+\end{cor}
+
+\begin{proof}
+    Since $A$ is Hermitian, $AA^{*} = A^2 = A^{*}A$ so it is normal. Therefore, by the Spectral Theorem for normal matrices \ref{thm:spectral-normal} it is unitarily diagonalizable as $A = UDU^{*}$. Since $A$ is Hermitian, we must have $D = D^{*}$ and so $D$ has only real entries.
+
+    If $A$ is unitarily diagonalizable, it is normal by the Spectral Theorem \ref{thm:spectral-normal}. If it furthermore has real eigenvalues, then $D = D^{*}$ and so $A$ is Hermitian.
+\end{proof}
+
+\begin{cor}
+    A real matrix $A$ is symmetric if and only if it is orthogonally diagonalizable.
+\end{cor}
+
+\begin{proof}
+    If it is orthogonally diagonalizable, it must be symmetric.
+
+    If it is symmetric, it is Hermitian and therefore by Corollary \ref{thm:spectral-hermitian} has real eigenvalues. Therefore $A$ has a real Schur decomposition $A = QTQ^{\transpose}$. But then $A$ is normal so $T$ is normal, and so by Lemma \ref{lemma:normal-triangular} we know $T$ is diagonal. It follows $QTQ^{\transpose}$ is an orthogonal diagonalization of $A$.
+\end{proof}
+
+\begin{cor}
+    A matrix $B$ is skew-Hermitian if and only if the eigenvalues of $B$ are purely imaginary.
+\end{cor}
+
+\begin{proof}
+    Suppose $B$ is skew-Hermitian, so $BB^{*} = -B^2 = B^*B$, and so by the Spectral Theorem \ref{thm:spectral-normal} we find that $B = UDU^{*}$. Therefore, $D$ is also skew-Hermitian, and so $B$ must have purely imaginary eigenvalues.
+
+    Conversely, if $B$ has purely imaginary eigenvalues then its Schur decomposition $B = QTQ^{*}$ must have $T = Q^{*}BQ$ so $T^{*} = Q^{*}(-B)Q = -T$ is skew-Hermitian and therefore purely imaginary
+\end{proof}
+
+\begin{thm}
+    A matrix $A$ is unitary if and only if there exists a skew-Hermitian matrix $B$ such that $A = e^{B}$.
+\end{thm}
+
+\begin{proof}
+    If $B$ is skew-Hermitian we know it is normal, and therefore unitarily diagonalizable as $B = UDU^{*}$. Therefore, $A = \exp(B) = U\exp(D)U^{*}$, where $D_{kk} = \theta_k i$ for some real $\theta_k$. Therefore, $\exp(D)$ is unitary, and so $A$ is as well.
+
+    Suppose instead $A$ is unitary, so $A$ is normal and therefore unitarily diagonalizable as $A = UDU^{*}$. It follows that $D$ must be unitary, and so $\abs{D_{kk}} = 1$. Therefore, $D_{kk} = \exp(\theta_k i)$ for real $\theta_k \in \R$. It follows that $A = U\exp(B)U^{*}$, where $B$ is diagonal and $B_{kk} = \theta_k i$. Therefore, $A = \exp(UBU^{*})$, and $UBU^{*}$ is skew-Hermitian.
+\end{proof}
 
 \begin{defn}
     LU composition
@@ -667,6 +804,54 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
         \end{array}\right] = R,
     \end{align*}
     which must be upper triangular since $R_1$ is upper triangular by assumption.
+\end{proof}
+
+\begin{cor}
+    Given a set $\mathscr{F}$ of pairwise commuting matrices, then there exists unitary $U$ which simultaneously upper triangularizes $\mathscr{F}$.
+\end{cor}
+
+\begin{cor}
+    If $A, B$ commute, there there exists a permutation $\pi \in S_{n}$ such that
+    \begin{align*}
+        \sigma(A + B) &= \left\{\lambda_{i}(A) + \lambda_{\pi(i)}(B) : i \in 1, \ldots, n\right\} \\
+        \sigma(AB) &= \left\{\lambda_{i}(A)\lambda_{\pi(i)}(B) : i \in 1, \ldots, n\right\}.
+    \end{align*}
+\end{cor}
+
+\begin{thm}{Cayley-Hamilton}\label{thm:cayley-hamilton}\proofbreak
+    For any matrix $A$ with characteristic polynomial $p_A(\cdot)$, we have $p_A(A) = 0$.
+\end{thm}
+
+\begin{proof}
+    Consider the Schur decomposition $A = UTU^{*}$. Then
+    \begin{align*}
+        p_{A}(A) &= Up_{A}(T)U^{*} = U\left[\prod_{\lambda \in \sigma(A)}(T-\lambda I)\right]U^{*}.
+    \end{align*}
+
+    {\color{red}\Large TODO}
+\end{proof}
+
+\begin{cor}
+    If $A$ is an invertible matrix, then there exists a polynomial $q(t)$ of degree less than $n$ such that $A^{-1} = q(A)$.
+\end{cor}
+
+\begin{proof}
+    Consider the characteristic polynomial
+    \begin{align*}
+        p_A(t) = t^n + a_{n-1}t^{n-1} + \cdots + a_1t + a_0.
+    \end{align*}
+    By Cayley-Hamilton,
+    \begin{align*}
+        A\left(A^{n-1} + a_{n-1}A^{n-2} + \cdots + a_1I\right) = -a_0I.
+    \end{align*}
+    Since $a_0 = \pm\det(A)$ and $A$ is invertible we know $a_0 \neq 0$. Therefore,
+    \begin{align*}
+        q(t) &= \frac{1}{-a_0}\left(t^{n-1} + a_{n-1}t^{n-2} + \cdots + a_1\right).
+    \end{align*}
+\end{proof}
+
+\begin{proof}
+    Let $U$ be unitary such that $A = UT_{A}U^{*}$ and $B = UT_{B}U^{*}$. Then $A + B = U\left(T_A + T_B\right)U^{*}$ and $AB = UT_{A}U^{*}UT_BU^{*} = UT_AT_BU^{*}$.
 \end{proof}
 
 \begin{thm}{Power method}\proofbreak

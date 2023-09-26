@@ -3213,3 +3213,31 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
         \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}} \leq \norm{A}_{\infty} \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}}.
     \end{align*}
 \end{proof}
+
+\section{Jordan Canonical Form}
+
+\begin{defn}
+    A \emph{Jordan block} $J_k(\lambda)$ is a $k \times k$ matrix which has $\lambda$ on the diagonal, ones on the super-diagonal, and zeros everywhere else.
+\end{defn}
+
+\begin{defn}
+    A \emph{Jordan matrix} $J$ is the direct sum of Jordan blocks $J_{n_1}(\lambda_1) \oplus J_{n_2}(\lambda_2) \oplus \cdots \oplus J_{n_5}(\lambda_5)$, where
+    \begin{align*}
+        A \oplus B = \begin{pmatrix}
+            A & 0 \\ 0 & B
+        \end{pmatrix}.
+    \end{align*}
+    Matrix direct sums are commutative up to matrix similarity since we can trivially permute the basis vectors to re-order the blocks.
+\end{defn}
+
+\begin{lemma}
+    Let $A$ be an matrix such that $\sigma(A) = \{0\}$, and $A = SJS^{-1}$ a Jordan decomposition. Since the rank of each $J_k(0)^l = \max(k-l, 0)$, we have that the rank of $A^l = \sum_{i=1}^{n}\max(k_i-k, 0)$.
+\end{lemma}
+
+\begin{lemma}
+    Let $J$ be a Jordan matrix, and $A = SJS^{-1}$ any matrix similar to $J$.
+\end{lemma}
+
+\begin{thm}
+    Every square matrix is similar to a Jordan matrix, which is unique up to ordering of the Jordan blocks.
+\end{thm}
