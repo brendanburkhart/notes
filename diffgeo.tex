@@ -457,7 +457,7 @@
 \end{defn}
 
 \begin{prop}
-    The sphere $\S^2$ is a regular surface. We will consider $S^2$ as a subset of $\R^3$ given by $\{p \in \R^3 : \norm{p}_2 = 1\}$.
+    The sphere $S^2$ is a regular surface. We will consider $S^2$ as a subset of $\R^3$ given by $\{p \in \R^3 : \norm{p}_2 = 1\}$.
 
     We will prove a chart exists for all $p \in S^2$. Consider $p \in S^2$ with positive $z$-coordinate. Take $U$ to be the open unit disc $\{u \in \R^2 : \norm{u}_2 < 1\}$, and $W$ the upper half-space $\{(x, y, z) \in \R^3 : z > 0\}$. Define the first chart $m^{(1)}: U \to W \intersect S^2$ by
     \begin{align*}
@@ -495,14 +495,14 @@
     \end{itemize}
 \end{exmp}
 
-\begin{prop}
+\begin{prop}\label{prop:graph-is-regular-surface}
     Consider a smooth function $f: U \to \R$, where $U \subseteq \R^2$ is open. The graph of $f$ is a regular surface.
 \end{prop}
 
 \begin{proof}
     Define $m(u, v) = (u, v, f(u, v))$. Then we will show $m: U \to S$ is a chart for the graph of $f$.
 
-    Smoothness of $m$ follows from the smoothness of $f$. The inverse of $m$ is simply the projection of $\R^3$ onto the $(u, v)$ plane. Finally,
+    Smoothness of $m$ follows from the smoothness of $f$. The inverse of $m$ is simply the projection of $\R^3$ onto the $(u, v)$ plane, which is continuous. Finally,
     \begin{align*}
         \frac{\partial m}{\partial u} &= (1, 0, \frac{\partial f}{\partial u}), \\
         \frac{\partial m}{\partial v} &= (0, 1, \frac{\partial f}{\partial v}),
@@ -519,9 +519,164 @@
 \end{thm}
 
 \begin{proof}
-    {\color{red}\Large TODO}
+    Suppose that $p = (x_0, y_0, z_0) \in f^{-1}(\{a\})$. Since $\alpha$ is a regular value of $f$, we know $\nabla f(p) \neq \vec{0}$. Without loss of generality, we will suppose that $\frac{\partial f}{\partial z}(p) \neq 0$. Define $F: U \to \R^3$ by $(x, y, z) \mapsto (x, y, f(x, y, z))$. Then
+    \begin{align*}
+        dF_{p} = \begin{pmatrix}
+            1 & 0 & 0 \\
+            0 & 1 & 0 \\
+            \frac{\partial f}{\partial x}(p) & \frac{\partial f}{\partial y}(p) & \frac{\partial f}{\partial z}(p)
+        \end{pmatrix}.
+    \end{align*}
+    Since $\frac{\partial f}{\partial z}(p) \neq 0$ by assumption, $dF_p$ must be invertible. By the Inverse Function Theorem, there exists a neighborhood $V$ of $p$ and $W$ of $F(p)$ such that $F: V \to W$ has smooth inverse $F^{-1}: W \to V$, which necessarily has the form $F^{-1}(u, v, w) = (u, v, g(u, v, w))$ for some smooth $g: W \to \R$. Next, we can define $h: \tilde{W} \to V$ by $h(u, v) = g(u, v, \alpha)$, where $\tilde{W}$ is the projection of $W$ on to the $UV$ plane.
+    
+    Notice that the graph of $h$ is $f^{-1}(\{\alpha\}) \intersect V$. By Proposition \ref{prop:graph-is-regular-surface}, $h$ is a chart for $p$, and so $f^{-1}(\{\alpha\})$ must be a regular surface.
 \end{proof}
 
 \begin{cor}
-    Taking $f(p) = \norm{p}_2$, we have that $S^2$ is a regular surface.
+    Taking $f(p) = \norm{p}_2$, we have that $S^2$ is a regular surface since $S^2 = f^{-1}(\{1\})$ and $S^2$ doesn't include $0$, which is the only critical value of $f$.
 \end{cor}
+
+\begin{thm}
+    Given $S \subseteq \R^3$ be a regular surface. For any $p \in S$, there exists a neighborhood $V$ of $p$ such that $V$ is the graph of a smooth function whose form is either $z = f(x, y)$, $y = g(x, z)$, or $x = h(y, z)$.
+\end{thm}
+
+\begin{lemma}\label{lemma:change-of-chart}
+    Suppose that $S$ is a regular surface and $p \in S$. Suppose that $x: U \to S$ and $y: V \to S$ are two charts of $p$. Take $\Omega = x(U) \intersect y(V)$. Then
+    \begin{align*}
+        h&: y^{-1}(\Omega) \to x^{-1}(\Omega), \\
+        h&: (u, v) \mapsto x^{-1}(y(u, v))
+    \end{align*}
+    is a diffeomorphism.
+\end{lemma}
+
+\begin{proof}
+    Since $x$ and $y$ are homeomorphisms by the definition of a chart, so is $h = x^{-1} \circ y$. Now fix arbitrary $r \in y^{-1}(\Omega)$, and let $q = h(r) \in x^{-1}(\Omega)$. Since $dx(q)$ and $dy(r)$ must both be injective by the third condition of the definition of a chart, it follows there is a unit vector $w$ in the orthogonal complement of the image of $dx(q)$.
+
+    Define $F: U \times R \to \R^3$ by $F(u, v, t) = x(u, v) + tw$. Since $x$ is smooth, so is $F$. Furthermore,
+    \begin{align*}
+        dF(q, t) = dx(q) + tw
+    \end{align*}
+    must be full-rank, since $dx(q)$ is injective and $w$ is orthogonal to it's image. Therefore, we can apply the inverse function theorem \ref{thm:inverse-function} to find that $F$ is a diffeomorphism in some neighborhood $M$ of $(q, 0)$. Therefore, $h = \pi \circ F^{-1} \circ y$ (where $\pi$ is the projection on to the $uv$ plane) is smooth in a neighborhood of $r$.
+
+    Since the roles of $x$ and $y$ are symmetric, interchanging them yields smoothness of $y^{-1} \circ x = h^{-1}$.
+\end{proof}
+
+\begin{defn}
+    Let $S$ be a regular surface, and let $f: S \to \R$. Given a point $p \in S$, let $m(u, v): U \to S$ be a chart at $p$. Then $f$ is smooth at $p$ when $f \circ m$ is smooth at $m^{-1}(p)$. We say $f$ is smooth if it is smooth at all $p \in S$.
+\end{defn}
+
+\begin{lemma}
+    A function $f: S \to \R$ is smooth at a point $p$, independent of the choice of chart used. That is, if it is smooth with respect to one chart then it is smooth with respect to every chart, and conversely if it is not smooth with respect to one chart then it is not smooth with repsect to any chart.
+\end{lemma}
+
+\begin{proof}
+    Suppose $f: S \to \R$ is smooth at $p \in S$ with respect to a chart $x: U \to \R$, and consider another chart $y: V \to \R$, such that $p \in U \intersect V = \Omega$. But then $f \circ y = (f \circ x) \circ (x^{-1} \circ y)$. Since $f \circ x$ and $x^{-1} \circ y$ are both diffeomorphisms by assumption and by Lemma \ref{lemma:change-of-chart} respectively, $f \circ y$ must be smooth.
+\end{proof}
+
+\begin{rmk}
+    We have defined the notion of a smooth function from $S \to \R$, however we can just as easily define the smoothness of a function between regular surfaces.
+\end{rmk}
+
+\begin{defn}
+    Let $S_1$ and $S_2$ be regular surfaces, and consider a \emph{continuous} function $f: S_1 \to S_2$. Consider a point $p \in S_1$ and parameterizations $x: U_1 \subseteq \R^2 \to S_1$ and $y: U_2 \subseteq \R^2 \to S_2$ such that $p \in x(U_1)$ and $f(x(U_1)) \subseteq y(U_2)$. We say $f$ is smooth at $p$ if $y^{-1} \circ f \circ x: U_1 \to U_2$ is smooth at $x^{-1}(p)$.
+\end{defn}
+
+\begin{prop}
+    Lemma \ref{lemma:change-of-chart} again tells us this definition is independent of the particular atlas/charts used to prove smoothness of $f$.
+\end{prop}
+
+\begin{defn}
+    We say two regular surfaces $S_1$ and $S_2$ are \emph{diffeomorphic} if there exists a smooth function $f: S_1 \to S_2$ with smooth inverse.
+\end{defn}
+
+\begin{prop}
+    Let $x: U \subseteq \R^2 \to S$ be a mapping satisfying the first and third conditions of the definition of a local parameterization. If $x$ is injective, then $f$ has a continuous inverse and so is a local parameterization.
+\end{prop}
+
+\begin{proof}
+    {\Large\color{red}TODO: find in do Carmo}
+\end{proof}
+
+\section{Tangent planes and differentials}
+
+\begin{defn}
+    Let $S \subseteq \R^3$ be a regular surface. A vector $v$ is a \emph{tangent vector} to $p \in S$ if there exists a smooth curve $\alpha: (-\varepsilon, \varepsilon) \to S$ such that $\alpha(0) = p$ and $\alpha'(0) = v$.
+\end{defn}
+
+\begin{defn}
+    Let $S \subseteq \R^3$ be a regular surface, and $p \in S$. The \emph{tangent plane} of $S$ at $p$ is the set of tangent vectors to $S$ passing through $p$, and is denoted by $T_pS$.
+\end{defn}
+
+\begin{prop}
+    Let $x: U \to S$ be a local parameterization of a regular surface $S$, and let $q \in U$. Then $dx_q$ is a linear isomorphism between vectors in $\R^2$ and the tangent plane at $p$.
+\end{prop}
+
+\begin{proof}
+    Let $w$ be a tangent vector to $S$ at $x(q)$, so $w = \alpha'(0)$ for some smooth curve $\alpha: (-\varepsilon, \varepsilon) \to S$, with $\alpha(0) = x(q)$. In particular, for $\varepsilon$ small enough, $x$ is a local parameterization for all points in the trace of $\alpha$. Therefore, we consider the curve $\beta = x^{-1} \circ \alpha$. Therefore, $dx_q(\beta'(0)) = \alpha'(0)$ by definition of $dx_q$.
+
+    Conversely, consider any $w = dx_q(v)$ for $v \in \R^2$. Then consider the curve $\beta(t) = q + tv$, and define $\alpha = x \circ \beta$. Then $\alpha(0) = x(q)$, and $\alpha'(0) = dx_q(\beta'(0)) = dx_q(v) = w$. Therefore $w$ is a tangent vector at $x(q)$.
+
+    It follows that the range of $dx_q$ is the set of tangent vectors of $S$ at $x(q)$. Since $dx_q$ is injective by definition of a chart, it follows that $dx_q$ is a bijection between $\R^2$ and the set of tangent vectors.
+\end{proof}
+
+\begin{cor}
+    Therefore, the tangent plane is a vector space over $\R$.
+\end{cor}
+
+\begin{defn}
+    Let $S_1$ and $S_2$ be regular surfaces, and suppose $\varphi: V \subseteq S_1 \to S_2$ is smooth, where $V$ is open. Let $p \in V$ and define $d\varphi_p: T_pS_1 \to T_{\varphi(p)}S_2$ by $d\varphi_p(w) = \beta'(0)$, where $\beta = \varphi \cdot \alpha$, and $\alpha: (-\varepsilon, \varepsilon) \to S_1$ is such that $w = \alpha'(0)$ (in the relevant basis) and $\alpha(0) = p$. The map $d\varphi_p$ is the \emph{differential} of $\varphi$ at $p$.
+\end{defn}
+
+\begin{prop}
+    Despite the apparent dependence of the above definition on exactly which $\alpha$ is chosen to represent the tangent vector $\alpha'(0)$, the definition is well-defined and independent of this choice.
+\end{prop}
+
+\begin{proof}
+    Let $g: \R^2 \to S_1$ be a local parameterization at $p$, and let $h: \R^2 \to S_2$ be a local parameterization at $\varphi(p)$. Therefore, we can express $\varphi: \R^2 \to \R^2$ with respect to these parameterizations as
+    \begin{align*}
+        \varphi(u, v) = (\varphi_1(u, v), \varphi_2(u, v)),
+    \end{align*}
+    and $\alpha(t) = (u(t), v(t))$ for $t \in (-\varepsilon, \varepsilon)$. Therefore,
+    \begin{align*}
+        \beta(t) &= \varphi(\alpha(t)) = \varphi(u(t), v(t)) = \left(\varphi_1(u(t), v(t)), \varphi_2(u(t), v(t))\right).
+    \end{align*}
+    Therefore, in the basis defined at $\varphi(p)$ by $dh(p)$, we have
+    \begin{align*}
+        \beta'(0) &= \left(\frac{\partial \varphi_1}{\partial u}\frac{\partial u}{\partial t}(0) + \frac{\partial \varphi_1}{\partial v}\frac{\partial v}{\partial t}(0), \frac{\partial \varphi_2}{\partial u}\frac{\partial u}{\partial t}(0) + \frac{\partial \varphi_2}{\partial v}\frac{\partial v}{\partial t}(0)\right).
+    \end{align*}
+    Since the partial derivatives of $\varphi_1, \varphi_2$ with respect to $u, v$ are dependent only on $\varphi$ itself, and the derivatives $u'(0)$ and $v'(0)$ depend only on $w$, not on $\alpha$, it follows that $d\varphi_p$ is well-defined.
+\end{proof}
+
+\begin{rmk}
+    With respect to the bases imposed by $h$ and $g$, it follows that
+    \begin{align*}
+        d\varphi_p = \begin{bmatrix}
+            \dfrac{\partial \varphi_1}{\partial u} & \dfrac{\partial \varphi_1}{\partial v} \\
+            \dfrac{\partial \varphi_2}{\partial u} & \dfrac{\partial \varphi_2}{\partial v}
+        \end{bmatrix}.
+    \end{align*}
+\end{rmk}
+
+\section{First Fundamental Form}
+
+\begin{defn}
+    Let $S \subseteq \R^3$ be a regular surface, and let $p \in S$. The \emph{first fundamental form} of $S$ at $p$ is the map $I_p: T_pS \to \R$ defined by $I_p(w) = \norm{w}^2$.
+\end{defn}
+
+\begin{prop}
+    Consider a local parameterization $m: \R^2 \to S$, and $w \in T_pS$, $\alpha: (-\varepsilon, \varepsilon) \to S$ such that $\alpha(t) = (u(t), v(t))$ and $w = \alpha'(0)$. Then there exist $E, F, G \in \R$ such that
+    \begin{align*}
+        I_p(w) &= Eu'(0)^2 + Fu'(0)v'(0) + Gv'(0)^2.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    The first fundamental form is given by $I_p(w) = I_p(\alpha'(0))$, so
+    \begin{align*}
+        I_p(w) &= \left\langle \frac{\partial m}{\partial u}u'(0) + \frac{\partial m}{\partial v}v'(0), \frac{\partial m}{\partial u}(p)u'(0) + \frac{\partial m}{\partial v}(p)v'(0) \right\rangle \\
+        &= u'(0)^2\left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial u}(p) \right\rangle + v'(0)^2\left\langle \frac{\partial m}{\partial v}(p), \frac{\partial m}{\partial v}(p) \right\rangle + u'(0)v'(0)\left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial v}(p) \right\rangle \\
+        &= Eu'(0)^2 + 2Fu'(0)v'(0) + Gv'(0)^2.
+    \end{align*}
+\end{proof}
+
+
