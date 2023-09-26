@@ -663,7 +663,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 
 \section{Nonlinear}
 
-\subsection{Convexity}
+\subsection{Convex and Lipschitz smooth functions}
 
 \begin{defn}
     A set $S \subseteq \R^n$ is said to be \emph{convex} if $x, y \in S$ implies $tx + (1-t)y \in S$ for all $t \in [0, 1]$.
@@ -789,7 +789,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \begin{itemize}
         \item $f$ is a convex function,
         \item $f(x) \geq f(\bar{x}) + \langle \nabla f(\bar{x}), x - \bar{x}\rangle$ for all $x, \bar{x} \in S$,
-        \item $\langle  \nabla f(x) - \nabla f(y), x - y \rangle \geq 0$.
+        \item $\langle \nabla f(x) - \nabla f(y), x - y \rangle \geq 0$.
     \end{itemize}
 \end{thm}
 
@@ -856,6 +856,102 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \begin{align*}
         f(x) < f(\bar{x}) + \transposeof{\nabla f(\bar{x})}(x - \bar{x}).
     \end{align*}
+\end{proof}
+
+\begin{defn}
+    A function $f: \R^n \to \R$ is $L$-Lipschitz smooth if it's gradient is an $L$-Lipschitz continuous function.
+\end{defn}
+
+\begin{lemma}\label{lemma:lipschitz-taylor-bound}
+    If $f: \R^n \to \R$ is $L$-Lipschitz smooth, then for any $x, y \in \R^n$ we have
+    \begin{align*}
+        \abs{f(y) - \Bigl(f(x) + \langle \nabla f(x), y - x \rangle\Bigr)} \leq \frac{L}{2}\norm{y-x}^2.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    Consider $s = y - s$ and $\theta(t) = f(x + ts)$. Then $f(x) = \theta(0)$, $f(y) = \theta(1)$, and $\theta'(0) = \langle \nabla f(x), s \rangle$. Therefore,
+    \begin{equation*}\tag{$\star$}\label{eq:lipschitz-taylor-bound}
+        \abs{f(y) - \Bigl(f(x) + \langle \nabla f(x), y - x \rangle\Bigr)} = \abs{\theta(1) - \theta(0) - \theta'(0)}.
+    \end{equation*}
+    By the Fundamental Theoem of Calculus,
+    \begin{equation*}\tag{$\dagger$}\label{eq:lipschitz-taylor-integral}
+        \theta(1) - \theta(0) - \theta(0) = \int_{0}^{1}\theta'(t)dt - \theta(0) = \int_0^1\Bigl[\theta'(t) - \theta'(0)\Bigr]dt.
+    \end{equation*}
+    By the Cauchy-Schwarz inequality,
+    \begin{align*}
+        \abs{\theta'(t) - \theta'(0)} = \abs{\langle \nabla f(x + ts) - \nabla f(x), s \rangle} \leq \norm{\nabla f(x - ts) - \nabla f(x)}\norm{s}.
+    \end{align*}
+    Since $f$ has an $L$-Lipschitz gradient, we know $\norm{\nabla f(x - ts) - \nabla f(x)} \leq L\norm{ts} = L\abs{t}\norm{s}$, so it follows that
+    \begin{align*}
+        \abs{\theta'(t) - \theta'(0)} \leq L\abs{t}\norm{s}^2.
+    \end{align*}
+    Therefore, we can bound the integral from (\ref{eq:lipschitz-taylor-integral}) above as follows:
+    \begin{align*}
+        \abs{\int_0^1\Bigl[\theta'(t) - \theta'(0)\Bigr]dt} \leq \int_0^{1}\abs{\theta'(t) - \theta'(0)}dt \leq L\norm{s}^2\int_0^1\abs{t}dt = \frac{L}{2}\norm{s}^2.
+    \end{align*}
+    Finally, by combining this with (\ref{eq:lipschitz-taylor-bound}) and expanding $s = y-x$ we have obtained
+    \begin{align*}
+        \abs{f(y) - \Bigl(f(x) + \langle \nabla f(x), y - x \rangle\Bigr)} \leq \frac{L}{2}\norm{y-x}^2.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}\label{lemma:lipschitz-convexity}
+    Let $f: \R^n \to \R$ is a differentiable convex function. Then the following are all equivalent:
+    \begin{enumerate}[label=(\arabic*)]
+        \item $f$ is $L$-Lipschitz smooth,
+        \item $\frac{L}{2}\norm{x}_2^2 - f(x)$ is convex,
+        \item $f(y) \leq f(x) + \langle \nabla f(x), y - x \rangle + \frac{L}{2}\norm{x-y}_2^2$,
+        \item $\langle \nabla f(y) - \nabla f(x), y - x\rangle \geq \frac{1}{L}\norm{\nabla f(x) - \nabla f(y)}_2^2$.
+    \end{enumerate}
+    If $f$ is twice differentiable, then the following are \emph{also} all equivalent to the above
+    \begin{enumerate}[label=(\arabic*)]
+        \setcounter{enumi}{4}
+        \item $\nabla^2 f(x) \preceq LI$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    Suppose (2) holds, then by Lemma \ref{convex-function-tangent-hyperplane} we have
+    \begin{align*}
+        \frac{L}{2}\norm{y}^2 - f(y) \geq \frac{L}{2}\norm{x}^2 - f(x) + \langle Lx - \nabla f(x), y - x\rangle
+    \end{align*}
+    and so
+    \begin{align*}
+        f(y) \leq f(x) + \frac{L}{2}\norm{y}^2 - \frac{L}{2}\norm{x}^2 - L\langle x, y - x\rangle + L\langle \nabla f(x), y - x\rangle.
+    \end{align*}
+
+    {\color{red}\Large Prove: $2 \iff 3 \iff 5$}
+
+    Suppose that (4) holds, and we will show (1) holds. By Cauchy-Schwarz,
+    \begin{align*}
+        \frac{1}{L}\norm{\nabla f(x) - \nabla f(y)}_2^2 \leq \norm{\nabla f(x) - \nabla f(y)}_2\norm{x - y},
+    \end{align*}
+    and so $\norm{\nabla f(x) - \nabla f(y)}_2 \leq L\norm{x - y}_2$.
+
+    (1) implies (3)follows from homework 1.
+
+    Finally, assume (3) holds, and we will prove (4) holds. Define $g(x) = f(x) - \langle \nabla f(x), x\rangle$. Note that $g(x)$ will also satisfy (3), and that
+    \begin{align*}
+        \nabla g(y) = \nabla f(y) - \nabla f(y) = 0.
+    \end{align*}
+    Since $f$, and therefore $g$, is convex, it follows that $y$ is a minimizer of $y$. Define $z = x - \frac{1}{L}\nabla g(x)$, and so by (3) we have
+    \begin{align*}
+        g(x) + \langle \nabla g(x), z - x \rangle + \frac{L}{2}\norm{z - x}_2^2 \geq g(z) \geq g(y).
+    \end{align*}
+    By the construction of $z$ we then have
+    \begin{align*}
+        g(x) - \frac{1}{2L}\norm{\nabla g(x)}_2^2 \geq g(y).
+    \end{align*}
+    Rewriting in terms of $f$, we find
+    \begin{align*}
+        f(x) - \langle \nabla f(y), x - y \rangle - \frac{1}{2L}\norm{\nabla f(x) - f(y)}_2^2 \geq f(y) - \langle \nabla f(y), x \rangle.
+    \end{align*}
+    Repeating the above, but interchanging the roles of $x$ and $y$ we obtain
+    \begin{align*}
+        f(y) - \langle \nabla f(x), y - x \rangle - \frac{1}{2L}\norm{\nabla f(y) - f(x)}_2^2 \geq f(x) - \langle \nabla f(x), y \rangle.
+    \end{align*}
+    Adding these inequalities, we obtain (4).
 \end{proof}
 
 \subsection{Optimality Conditions}
@@ -968,9 +1064,9 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{lemma}
 
 \begin{proof}
-    We know that
+    Since $x_{k+1}-x_k = -\alpha_k\nabla f(x_k)$, it follows from Lemma \ref{lemma:lipschitz-taylor-bound} that
     \begin{align*}
-        \abs{f(x_{k+1}) - \left(f(x_k) + \alpha_k\langle \nabla f(x_k), \nabla f(x_k)\rangle\right)} \leq \frac{L}{2}\alpha_k^2\norm{\nabla f(x_k)}_2^2.
+        \abs{f(x_{k+1}) - \Bigl(f(x_k) + \langle \nabla f(x_k), -\alpha_k\nabla f(x_k)\rangle\Bigr)} \leq \frac{L}{2}\alpha_k^2\norm{\nabla f(x_k)}_2^2.
     \end{align*}
     Therefore,
     \begin{align*}
@@ -979,7 +1075,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{proof}
 
 \begin{rmk}
-    Gradient descent is therefore guaranteed to yield improvement when $0 < \alpha_k < 2/L$, and gives maximum guaranteed improvement when $\alpha_k = 1/L$. This choice of $\alpha_k$ would yield improvement of
+    Gradient descent is therefore guaranteed to yield improvement when $0 < \alpha_k < 2/L$, and gives the largest guaranteed minimum improvement when $\alpha_k = 1/L$. This choice of $\alpha_k$ would yield improvement of at least
     \begin{align*}
         -\frac{1}{2L}\norm{\nabla f(x_k)}_2^2
     \end{align*}
@@ -997,26 +1093,279 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 
     Yet another approach is \emph{backtracking linesearch}, where several step sizes are tried, each smaller than the last, until $\alpha_k$ is found such that $f(x_{k+1})$ is sufficiently smaller than $f(x_k)$. In particular, this is done by trying $\alpha_k =\alpha \tau^n$ for some hyperparameters $\alpha > 0$ and $0 < \tau < 1$, starting from $n = 0$, and increasing $n$ until the \emph{Armijo} condition is satisfied:
     \begin{align*}
-        f(x_{k+1}) \leq f(x_k) - \eta\alpha\norm{\nabla f(x_k)}^2,
+        f(x_{k+1}) \leq f(x_k) - \eta\alpha_k\norm{\nabla f(x_k)}^2,
     \end{align*}
     where $0 < \eta < 1$ is another hyperparameter.
 \end{rmk}
 
-\begin{lemma}
-    The Armijo condition holds for any $0 < \alpha < 2(1-\eta)/L$.
+\begin{lemma}\label{lemma:armijo-eventual-satisfaction}
+    The Armijo condition will be satisfied for large enough $n$. In particular, it holds for any $0 < \alpha_k < 2(1-\eta)/L$.
 \end{lemma}
 
 \begin{proof}
     By the Descent Lemma \ref{lemma:descent}, we have
     \begin{align*}
-        f(x_{k+1}) \leq f(x_k) - \left(\alpha - L\alpha^2/2\right)\norm{\nabla f(x_k)}_2^2.
+        f(x_{k+1}) \leq f(x_k) - \left(\alpha_k - L\alpha_k^2/2\right)\norm{\nabla f(x_k)}_2^2.
     \end{align*}
-    Therefore, the Armijo conditions holds if and only if
+    Therefore, the Armijo conditions holds if
     \begin{align*}
-        -\left(\alpha - \frac{L\alpha^2}{2}\right) \leq -\eta\alpha,
+        -\left(\alpha_k - \frac{L\alpha_k^2}{2}\right) \leq -\eta\alpha_k,
     \end{align*}
-    or equivalently if and only if $\alpha > 0$ and $2(1 - \eta)/L\geq \alpha$.
+    or equivalently if $0 < \alpha_k < 2(1-\eta)/L$.
 \end{proof}
+
+\begin{thm}\label{thm:general-gd-guarantee}
+    Consider an $L$-Lipschitz smooth function $f: \R^n \to \R$, and gradient descent $x_{k+1} = x_k - \alpha_k\nabla f(x_k)$. If $\alpha_k = 1/L$, then for $T \geq 0$ we have
+    \begin{align*}
+        \min_{k \leq T-1}\norm{\nabla f(x_k)}_2^2 \leq \frac{1}{T}\sum_{k=0}^{T-1}\norm{\nabla f(x_k)}_2^{2} \leq \frac{2L\left(f(x_0) - \min f\right)}{T}.
+    \end{align*}
+    If $\alpha_k$ is chosen using Armijo backtracking, then
+    \begin{align*}
+        \min_{k \leq T-1}\norm{\nabla f(x_k)}_2^2 \leq  \frac{1}{T}\sum_{k=0}^{T-1}\norm{\nabla f(x_k)}_2^{2} \leq \max\left(\frac{1}{\eta\alpha}, \frac{L}{2\tau\eta(1-\eta)}\right)\frac{\left(f(x_0) - \min f\right)}{T}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    By the Descent Lemma \ref{lemma:descent} with $\alpha_k = 1/L$, we know
+    \begin{align*}
+        f(x_{k+1})-f(x_k) \leq -\frac{1}{2L}\norm{\nabla f(x_k)}_2^2
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        2L(f(x_0) - \min f) \geq 2L\sum_{k=0}^{T-1}\Bigl(f(x_{k})-f(x_{k+1})\Bigr) \geq \sum_{k=0}^{T-1}\norm{\nabla f(x_k)}_2^2.
+    \end{align*}
+    Similarly, if $\alpha_k$ is chosen to satisfy the Armijo condition then $ f(x_{k+1})-f(x_k) \leq -\eta\alpha_k\norm{\nabla f(x_k)}_2^2$ by definition and by Lemma \ref{lemma:armijo-eventual-satisfaction} we know that
+    \begin{align*}
+        \alpha_k \geq \min\left(\alpha, \tau\frac{2(1-\eta)}{L}\right),
+    \end{align*}
+    and so
+    \begin{align*}
+        f(x_0) - \min f \geq \sum_{k=0}^{T-1}\Bigl(f(x_{k})-f(x_{k+1})\Bigr) \geq \min\left(\eta\alpha, \frac{2\tau\eta(1-\eta)}{L}\right)\sum_{k=0}^{T-1}\norm{\nabla f(x_k)}_2^2,
+    \end{align*}
+    from which we obtain
+    \begin{align*}
+        \max\left(\frac{1}{\eta\alpha}, \frac{L}{2\tau\eta(1-\eta)}\right)\Bigl[f(x_0) - \min f\Bigr] \geq \sum_{k=0}^{T-1}\Bigl(f(x_{k})-f(x_{k+1})\Bigr) \geq \sum_{k=0}^{T-1}\norm{\nabla f(x_k)}_2^2.
+    \end{align*}
+\end{proof}
+
+\begin{thm}\label{thm:convex-gd-guarantee}
+    Consider $f: \R^2 \to \R$ be convex with an $L$-Lipschitz gradient. Assume there exists a minimizer $x^{*} \in \argmin f$. Then, gradient descent with a stepsize of $\alpha_k = 1/L$ guarantees that
+    \begin{align*}
+        f(x_{k+1}) - \min f \leq \frac{2L\norm{x_0 - x^{*}}_2^2}{k}.
+    \end{align*}
+    Compare with Theorem \ref{thm:general-gd-guarantee}.
+\end{thm}
+
+\begin{proof}
+    By Theorem \ref{thm:general-gd-guarantee} we have
+    \begin{align*}
+        \min_{T_1 \leq k \leq T_2}\norm{\nabla f(x_k)}_2^2 \leq 2L\frac{f(x_{T_1}) - \min f}{T_2-T_1} \leq \frac{4L^2\norm{x_0-x^*}_2^2}{T_2-T_1}.
+    \end{align*}
+
+    Notice that
+    \begin{align*}
+        \norm{x_{k+1}-x^*}^2 = \norm{x_k - \frac{1}{L}\nabla f(x_k) - x^*}_2^2 = \norm{x_k-x^*}_2^2 - \frac{2}{L}\left\langle \nabla f(x_k), x_k-x^* \right\rangle + \frac{1}{L^2}\norm{\nabla f(x_k)}_2^2.
+    \end{align*}
+    Which, by Lemma \ref{lemma:lipschitz-convexity}, is upper-bounded by
+    \begin{align*}
+        \norm{x_k-x^*}_2^2 - \frac{1}{L^2}\norm{\nabla f(x_k)}_2^2.
+    \end{align*}
+    Let $\delta_k = f(x_k) - \min f$. By the Descent Lemma \ref{lemma:descent}, it follows that
+    \begin{align*}
+        \delta_{k+1} \leq \delta_k - \frac{1}{2L}\norm{\nabla f(x_k)}_2^2.
+    \end{align*}
+    By convexity and Cauchy-Schwarz,
+    \begin{align*}
+        \delta_k \leq \langle \rangle \leq \norm{\nabla f(x_k)}\norm{x_k-x^*}
+    \end{align*}
+    so
+    \begin{align*}
+        \frac{\delta_k}{\norm{x_k-x^*}}\leq \norm{\nabla f(x_k)}.
+    \end{align*}
+    Combining some of the above ({\color{red}label them}), we obtain
+    \begin{align*}
+        \delta_{k+1} \leq \delta_k - \frac{1}{2L}\frac{\delta_k^2}{\norm{xxx}^2} \leq \delta_k - \frac{1}{2L}\frac{\delta_k\delta_{k+1}}{\norm{xxx}^2}.
+    \end{align*}
+    Multiplying by $1/(\delta_k\delta_{k+1})$ we have
+    \begin{align*}
+        \frac{1}{\delta_{k}} \leq \frac{1}{\delta_[k+1]} + \frac{1}{2L}\frac{\cdot}{\cdot}
+    \end{align*}
+    and so
+    \begin{align*}
+        \frac{1}{\delta_{k+1}} \geq \frac{1}{\delta_k} + \frac{1}{2L}\frac{1}{\norm{xxx}^2} \geq \frac{1}{\delta_k} + \frac{1}{2L}\frac{1}{\norm{xxx}^2}
+    \end{align*}
+    and by induction
+    \begin{align*}
+        \frac{1}{\delta{k+1}} \geq \frac{1}{\delta_0} + \frac{k}{2L\norm{x_0-x^{*}}^2} \geq \frac{k}{2L\norm{x_0-x^{*}}^2},
+    \end{align*}
+    and so $\delta_{k+1} \leq \frac{2L\norm{x_0-x^*}^2}{k}$.
+\end{proof}
+
+\subsection{Strong Convexity}
+
+\begin{defn}
+    A convex function $f: \R^d \to \R$ is $\mu$-strongly convex when $f(x) - \frac{\mu}{2}\norm{x}_2^2$ is convex.
+\end{defn}
+
+\begin{lemma}Let $f$ be differentiable, then the following are equivalent.
+    \begin{enumerate}[label=(\arabic*)]
+        \item $f$ is $\mu$-strongly convex.
+        \item $f(y) \geq f(x) + \langle \nabla f(x), y - x \rangle + \frac{\mu}{2}\norm{y-x}_2^2$
+        \item For all $y, x$ we have $\langle \nabla f(y) - \nabla f(x), y - x \rangle \geq \mu \norm{y-x}_2^2$.
+    \end{enumerate}
+    If $f$ is twice differentiable, then we additionally have
+    \begin{align*}
+        \nabla^2 f(x) \succeq \mu I.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    {\Large\color{red}TODO}
+\end{proof}
+
+\begin{lemma}\label{lemma:lipschitz-strong-convexity-squeeze}
+    Let $f: \R^n \to \R$ have an $L$-Lipschitz gradient and be $\mu$-strongly convex. Then for all $x, y \in \R^n$ we have
+    \begin{align*}
+        \langle \nabla f(x) - \nabla f(y), y - x \rangle \geq \frac{\mu L}{\mu + L}\norm{x - y}_2^2 + \frac{1}{\mu + L}\norm{\nabla f(x) - \nabla f(y)}_2^2.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    {\color{red}\Large TODO}
+\end{proof}
+
+\begin{thm}
+    Let $f: \R^n \to \R$ be $L$-smooth and $\mu$-strongly convex function. Then gradient descent using $\alpha_k = 2/(\mu + L)$ produces
+    \begin{align*}
+        f(x_k) - \min f \leq \frac{L}{2}\left(\frac{\gamma - 1}{\gamma + 1}\right)^{2k}\norm{x_0-x^*}_2^2,
+    \end{align*}
+    where $\gamma = L/\mu$.
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        \norm{x_k-x^*}^2 &= \norm{x-k - x^* - \frac{2}{\mu + L}\norm{\nabla f(x_k)}_2^2} \\
+        &= \norm{x_k-x^*}_2^2 - \frac{4}{\mu + L}\langle \nabla f(x_k), x_k-x^* \rangle + \frac{4}{\left(\mu + L\right)^2}\langle \nabla f(x_k) \rangle_2^2.
+    \end{align*}
+    Using Lemma \ref{lemma:lipschitz-strong-convexity-squeeze} we find that
+    \begin{align*}
+        \norm{x_{k+1}-x^*}^2 &\leq \norm{x_k-x^*}_2^2 - \frac{4}{\mu + L}\left(\frac{1}{\mu + L}\norm{\nabla f(x_l)}_2^2 + \frac{\mu L}{\mu + L}\norm{x_k-x^*}_2^2\right) + \frac{4}{\left(\mu + L\right)^2\norm{\nabla f(x_k)}_2^2} \\
+        &= \norm{x_k-x^*}^2\left(1 - \frac{4\mu L}{\left(\mu + L\right)^2}\right).
+    \end{align*}
+    Since $f(x_k+1) - f(x^*) \leq \frac{L}{2}\norm{x_{k+1}-x^*}_2^2$, it follows that
+    \begin{align*}
+        f(x_k+1) - f(x^*) \leq \frac{L}{2}\left(1 - \frac{4\mu L}{\left(\mu + L\right)^2}\right)^k\norm{x_0-x^*}_2^2.
+    \end{align*}
+\end{proof}
+
+\subsection{Nesterov accelerated gradient descent}
+
+\begin{defn}
+    Given a function $f: \R^n \to \R$, define sequences $\lambda_k, y_k, x_k$ starting from $0, x_0, x_0$ as follows:
+    \begin{align*}
+        \lambda_{k+1} &= \frac{1 + \sqrt{1 + 4\lambda_k^2}}{2}, \\
+        y_{k+1} &= x_k - \frac{1}{L}\nabla f(x_k), \\
+        x_{k+1} &= y_{k+1} + \frac{\lambda_k-1}{\lambda_{k+1}}\left(y_{k+1}-y_k\right).
+    \end{align*}
+    This procedure is \emph{Nesterov accelerated gradient descent}.
+\end{defn}
+
+\begin{lemma}\label{lemma:nesterov:one}
+    The sequence $\{\lambda_k\}$ from Nesterov accelerated gradient descent satisfies
+    \begin{itemize}
+        \item $\forall k \geq 1$, $\lambda_{k+1}^2 - \lambda_{k+1} = \lambda_k^2$,
+        \item $\lambda_{k} \geq \frac{k}{2}$.
+    \end{itemize}
+\end{lemma}
+
+\begin{proof}
+    First, directly from the definition we have
+    \begin{align*}
+        \lambda_{k+1}^2 - \lambda_{k+1} = \frac{1 + 2\sqrt{1 + 4\lambda_k^2} + 1 + 4\lambda_k^2}{4} - \frac{2 + 2\sqrt{1 + 4\lambda_k^2}}{4} = \frac{4\lambda_k^2}{4} = \lambda_k^2.
+    \end{align*}
+    Secondly,
+    \begin{align*}
+        \lambda_{k+1} = \frac{1 + \sqrt{1 + 4\lambda_k^2}}{2} \geq \frac{1 + \sqrt{4\lambda_k^2}}{2} \geq \frac{1}{2} + \lambda_k \geq \frac{k+1}{2}.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}\label{lemma:nesterov:two}
+    For any $u, v \in \R^n$,
+    \begin{align*}
+        f(u - \frac{1}{L}\nabla f(u)) - f(v) \leq -\frac{1}{2L}\norm{\nabla f(u)}_2^2 + \left\langle \nabla f(u), u - v \right\rangle.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    By convexity of $f$, we have
+    \begin{align*}
+        f(u - \frac{1}{L}\nabla f(u)) - f(v) \leq f(u - \frac{1}{L}\nabla f(u)) - \left(f(u) + \langle \nabla f(u), v - u \rangle\right),
+    \end{align*}
+    which by the Descent lemma \ref{lemma:descent} we have
+    \begin{align*}
+        f(u - \frac{1}{L}\nabla f(u)) - f(v) \leq -\frac{1}{2L}\norm{\nabla f(u)}_2^2 + \langle \nabla f(u), u - v \rangle.
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $f: \R^n \to \R$ be an $L$-Lipschitz smooth convex function, and let $x^{*} \in \argmin(f)$ be a minimizer. Then computing $\lambda_k, y_k, x_k$ via Nesterov accelerated gradient descent, we have
+    \begin{align*}
+        f(y_k) - \min f \leq \frac{2L\norm{x_0 - x^{*}}^2}{k^2}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Define $\delta_k = f(y_k) - \min f$, then by Lemma \ref{lemma:nesterov:two} with $u = x_k$ and $v = y_k$. Then we have
+    \begin{align*}
+        \delta_{k+1} - \delta_{k} = f(y_{k+1}) - f(y_k) \leq -\frac{1}{2L}\norm{\nabla f(x_k)}_2^2 + \langle \nabla f(x_k), x_k - y_k \rangle.
+    \end{align*}
+    Since $\nabla f(x_k) = -L(y_k+1, x_k) = -\frac{L}{2}\norm{y_{k+1}-x_k}_2^2 + L(y_k-x_k)$, we have
+    \begin{equation*}\tag{$\diamondsuit$}\label{eq:nesterov:diamond}
+        \nabla f(x_k) \leq -\frac{L}{2}\norm{y_{k+1}-x_k}_2^2 - L\langle y_{k+1}-x_k, x_k-y_k \rangle. 
+    \end{equation*}
+    Again applying Lemma \ref{lemma:nesterov:two}, but with $u = x_{k+1}$ and $v = x^{*}$ weobtain
+    \begin{equation*}\tag{$\spadesuit$}\label{eq:nesterov:spade}
+        \delta_{k+1} = f(y_{k+1}) - \min f \leq -\frac{1}{2L}\norm{\nabla f(x_k)}_2^2 + \langle \nabla f(x_k), x_k-x^{*} \rangle.
+    \end{equation*}
+    Therefore, by adding $\left(\lambda_k - 1\right)$ times (\ref{eq:nesterov:diamond}) and (\ref{eq:nesterov:spade}) together, we obtain
+    \begin{align*}
+        \lambda_k\delta_{k+1} - - \left(\lambda_k - 1\right)\delta_k \leq -\frac{L\lambda_k}{2}\norm{y_{k+1}-x_k}^2 - L\left(y_{k+1}-\langle y_{k+1-x_k}, \lambda_kx_k - (\lambda_k - 1)y_k - \lambda^{*} \rangle\right).
+    \end{align*}
+    Multiplying by $\lambda_k$, we have that
+    \begin{align*}
+        -\frac{L}2{\left[ \abs{k(s)}\norm{\lambda_k}\right]},
+    \end{align*}
+    and so
+    \begin{align*}
+        \left(\lambda_k^2\delta_{k+1} - \lambda_{k-1}^2\delta_k\right) = -\frac{L}{2}\left[\left(\norm{\lambda{k+1}x_{k+1} - (\lambda_{k+1}-1)y_{k+1} - x^{*}}\right)^2 - \left(\norm{\lambda{k}x_{k} - (\lambda_{k}-1)y_{k} - x^{*}}\right)\right].
+    \end{align*}
+    Taking a sum from $k=1$ to $k=T-1$ gives us
+    \begin{align*}
+        \lambda_{T-1}^2\delta_{T} \leq -\frac{L}{2}\norm{x_1-x^*}_2^2.
+    \end{align*}
+    By Lemma \ref{lemma:nesterov:one} we have
+    \begin{align*}
+        \delta_{T} \leq \frac{2L}{T^2}\norm{x_0-x^{*}}_2^2.
+    \end{align*}
+    {\Large\color{red}TODO: fix}
+\end{proof}
+
+\begin{thm}
+    For first order descent methods of a certain class, Nesterov accelerated gradient descent achieves the best possible convergence.
+
+    Specifically, consider any method such that $x_k$ satisfies
+    \begin{align*}
+        x_{k+1} \in x_0 + \span\left\{\nabla f(x_0), \nabla f(x_1), \ldots, \nabla f(x_{k})\right\}.
+    \end{align*}
+    Then for any $1 \leq k \leq \frac{1}{2}(d - 1)$ and $L \geq 0$, there exists an $L$-Lipschitz smooth convex function such that
+    \begin{align*}
+        f(x_k) - \min f &\geq \frac{3L\norm{x_0-x^*}_2^2}{32(k+1)^2}, \\
+        \norm{x_k-x^*}_2^2 &\geq \frac{1}{32k^2}\norm{x_0-x^*}_2^2.
+    \end{align*}
+\end{thm}
+
+\vspace{2cm}
+{\color{Fuchsia}\Huge Start of old content:}
 
 \begin{defn}{Newton's Method}\label{newtons-method}\proofbreak
     Let $f: \R^n \to \R$ be twice continuously differentiable, and pick some $x^{(0)} \in \R^n$. For $i = 1, 2, \ldots, $ while $\nabla f(x^{(i)}) \neq 0$ (or until some other terminating condition), let
