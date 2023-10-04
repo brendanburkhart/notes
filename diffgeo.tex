@@ -660,11 +660,11 @@
 \section{First Fundamental Form}
 
 \begin{defn}
-    Let $S \subseteq \R^3$ be a regular surface, and let $p \in S$. The \emph{first fundamental form} of $S$ at $p$ is the map $I_p: T_pS \to \R$ defined by $I_p(w) = \norm{w}^2$.
+    Let $S \subseteq \R^3$ be a regular surface, and let $p \in S$. The \emph{first fundamental form} of $S$ at $p$ is the map $I_p: T_pS \to \R$ defined by $I_p(w) = \norm{w}_2^2$.
 \end{defn}
 
 \begin{prop}
-    Consider a local parameterization $m: \R^2 \to S$, and $w \in T_pS$, $\alpha: (-\varepsilon, \varepsilon) \to S$ such that $\alpha(t) = (u(t), v(t))$ and $w = \alpha'(0)$. Then there exist $E, F, G \in \R$ such that
+    Given a local parameterization $m: \R^2 \to S$, there exist $E, F, G \in \R$ such that the following holds: for any $w \in T_pS$ and $\alpha: (-\varepsilon, \varepsilon) \to S$ such that $\alpha(t) = (u(t), v(t))$ and $w = \alpha'(0)$, we can express $I_p(w)$ as the quadratic form
     \begin{align*}
         I_p(w) &= Eu'(0)^2 + Fu'(0)v'(0) + Gv'(0)^2.
     \end{align*}
@@ -673,10 +673,123 @@
 \begin{proof}
     The first fundamental form is given by $I_p(w) = I_p(\alpha'(0))$, so
     \begin{align*}
-        I_p(w) &= \left\langle \frac{\partial m}{\partial u}u'(0) + \frac{\partial m}{\partial v}v'(0), \frac{\partial m}{\partial u}(p)u'(0) + \frac{\partial m}{\partial v}(p)v'(0) \right\rangle \\
+        I_p(w) &= \langle \alpha'(0), \alpha'(0) \rangle \\
+        &= \left\langle \frac{\partial m}{\partial u}u'(0) + \frac{\partial m}{\partial v}v'(0), \frac{\partial m}{\partial u}(p)u'(0) + \frac{\partial m}{\partial v}(p)v'(0) \right\rangle \\
         &= u'(0)^2\left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial u}(p) \right\rangle + v'(0)^2\left\langle \frac{\partial m}{\partial v}(p), \frac{\partial m}{\partial v}(p) \right\rangle + u'(0)v'(0)\left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial v}(p) \right\rangle \\
-        &= Eu'(0)^2 + 2Fu'(0)v'(0) + Gv'(0)^2.
+        &= Eu'(0)^2 + 2Fu'(0)v'(0) + Gv'(0)^2 \\
+        &= \begin{pmatrix}
+            u'(0) \\ v'(0)
+        \end{pmatrix}^{\transpose}\begin{pmatrix}
+            E & F \\ F & G
+        \end{pmatrix}\begin{pmatrix}
+            u'(0) \\ v'(0)
+        \end{pmatrix}.
     \end{align*}
 \end{proof}
+
+\begin{exmp}
+    Consider a surface of revolution with unit speed profile curve $\gamma(t) = (f(t), 0, g(t))$, such that $f$ is positive and $\gamma$ does not self-intersect. The surface of revolution is then parameterized by $m(u, v) = (f(u)\cos(v), f(u)\sin(v), g(u))$. The first fundamental form with respect to $m$ is therefore given by
+    \begin{align*}
+        E &= \norm{\frac{\partial m}{\partial u}(p)}_2^2 = \norm{(f'(u)\cos(v), f'(u)\sin(v), g'(u))}^2 = f'(u)^2 + g'(u)^2 = 1 \\
+        F &= \left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial v}(p) \right\rangle = 0 \\
+        G &= \norm{\frac{\partial m}{\partial v}(p)} = f^2(u).
+    \end{align*}
+\end{exmp}
+
+\begin{rmk}
+    We can also use the fundamental form matrix to compute angles between tangent curves at a point $p$.
+\end{rmk}
+
+\begin{defn}
+    Let $S$ be a regular surface, and $\alpha: I \to S$ and $\beta: I \to S$ to be two parameterized curves such that $\alpha(t_0) = \beta(t_0)$. Then the angle between then at $\alpha(t_0)$ is given by
+    \begin{align*}
+        \cos(\theta) &= \frac{\langle \alpha'(t_0), \beta'(t_0) \rangle}{\norm{\alpha'(t_0)}\norm{\beta'(t_0)}}.
+    \end{align*}
+\end{defn}
+
+\begin{lemma}
+    With respect to a local parameterization $m: U \to S$ of $p \in S$, the angle between curves $\alpha, \beta: I \to S$ such that $\alpha(t_0) = p = \beta(t_0)$ is such that
+    \begin{align*}
+        \cos(\theta) = \frac{w^{\transpose}Mv}{\sqrt{w^{\transpose}Mw}\sqrt{v^{\transpose}Mv}},
+    \end{align*}
+    where $w = d(m^{-1} \circ \alpha)$, $v = d(m^{-1} \circ \beta)$, and $M$ is the matrix representation of the first fundamental form at $p$:
+    \begin{align*}
+        M = \begin{pmatrix}
+            E & F \\ F & G
+        \end{pmatrix}.
+    \end{align*}
+\end{lemma}
+
+\begin{rmk}
+    If $w = (1, 0)$ and $v = (0, 1)$, the $\cos(\theta) = F/\sqrt{EG}$.
+\end{rmk}
+
+\begin{defn}
+    Let $R \subseteq S \subseteq \R^3$ be a region of a regular surface, such that all of $R$ lies within one local parameterized $m: U \to S$. Then the \emph{area} of $R$ is defined to be
+    \begin{align*}
+        A(R) &= \iint_{m^{-1}(R)}\norm{m_u \times m_v}dudv.
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    The area of a region is independent of the parameterization used.
+\end{prop}
+
+\begin{rmk}
+    Note that
+    \begin{align*}
+        \norm{m_u \times m_v}^2 &= \norm{m_u}^2\norm{m_v}^2 - \langle m_u, m_v \rangle \\
+        &= EG - F,
+    \end{align*}
+    and so $\norm{m_u \times m_v} = \sqrt{EG-F}$.
+\end{rmk}
+
+\begin{rmk}
+    Recall that a surface of revolution with profile curve $\gamma(u) = (f(u), 0, g(u))$ will have local parameterization $m(u, v) = (f(u)\cos(v), f(u)\sin(v), g(u))$ for $v \in (0, 2\pi)$.
+
+    Consider the torus, described as a circle of revolution with profile curve given by $f(u) = 2 + \cos(u)$ and $g(u) = \sin(u)$ for $u \in (0, 2\pi)$. Therefore, the local parameterization is
+    \begin{align*}
+        m(u, v) = (\cos(v)(2 + \cos(u)), \sin(v)(2 + \cos(u)), \sin(u)),
+    \end{align*}
+    and we have
+    \begin{align*}
+        \frac{\partial m}{\partial u} &= (-\sin(u)\cos(u), -\sin(u)\sin(v), \cos(u)), \\
+        \frac{\partial m}{\partial v} &= (-\sin(v)(2 + \cos(u)), \cos(v)(2 + \cos(u)), 0).
+    \end{align*}
+    Therefore, the first fundamental form is represented by
+    \begin{align*}
+        E &= \norm{m_u}^2 = 1, \\
+        F &= 0, \\
+        G &= (2 + \cos(u))^2,
+    \end{align*}
+    and so the torus has area given by
+    \begin{align*}
+        \int_{0}^{2\pi}\int_{0}^{2\pi}\abs{2 + \cos(u)}dudv = \int_{0}^{2\pi}(4\pi + 0)dv = 8\pi^2.
+    \end{align*}
+\end{rmk}
+
+\section{Orientation}
+
+\begin{defn}
+    For a regular surface $S$, we say that $n \in \R^3$ is \emph{normal} to $S$ at $p$ if $n$ is in the orthogonal complement of $TpS$.
+\end{defn}
+
+\begin{defn}
+    Let $S \subseteq \R^3$ be a regular surface, and let $R$ be an open subset of $S$. A smooth unit normal vector field on $R$ is a smooth map $N: R \to \R^3$ such that $N(p)$ is normal to $S$ and $\norm{N(p)} = 1$ for all $p \in R$.
+\end{defn}
+
+\begin{defn}
+    A regular surface $S$ is \emph{orientable} if there exists a smooth unit normal vector field on all of $S$.
+\end{defn}
+
+\begin{exmp}
+    The M\"obius strip is a non-orientable regular surface.
+
+    \begin{tikzpicture}
+        \begin{axis}
+        \addplot3[variable=t,mesh,domain=0:720] ({cos(t)*(1 + 0.25*cos(t/2))}, {sin(t)*(1 + 0.25*cos(t/2))}, {0.25*sin(t/2)});
+        \end{axis}
+    \end{tikzpicture}
+\end{exmp}
 
 
