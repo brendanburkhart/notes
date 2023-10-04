@@ -3241,3 +3241,144 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \begin{thm}
     Every square matrix is similar to a Jordan matrix, which is unique up to ordering of the Jordan blocks.
 \end{thm}
+
+\begin{thm}
+    For any matrix $A$, there exists a diagonalizable matrix $B$ and nilpotent matrix $C$ such that $A = B + C$.
+\end{thm}
+
+\begin{proof}
+    Let $A = SJS^{-1}$ be a Jordan decomposition of $A$. Then $A = S[D + N]S^{-1} = SDS^{-1} + SNS^{-1}$.
+\end{proof}
+
+\begin{defn}
+    A complex polynomial $p(t)$ is said to \emph{annihilate} $A$ when $p(A) = 0$.
+\end{defn}
+
+\begin{defn}
+    Let $m$ be the least degree such that $A$ has a non-zero annihilating polynomial of degree $m$. There exists a unique monic polynomial of degree $m$ which annihilates $A$, which is called the \emph{minimal polynomial} of $A$.
+\end{defn}
+
+\begin{proof}
+    By Cayley-Hamilton, such a polynomial of degree at most $n$ exists. Suppose that $p$ and $q$ are two monic annihilating polynomials of minimal degree. Then $p(a) - q(A) = 0$, and $w(t) = (p(t) - q(t))/h$, where $h$ is the leading non-zero coefficient of $p-q$, is an annihilating polynomial of lower degree. Note that $h$ must be non-zero since $p \neq q$.
+\end{proof}
+
+\begin{thm}
+    Let $A$ be a square matrix with minimal polynomial $q(t)$. Then $q(t)$ divides all other annihilating polynomials of $A$.
+\end{thm}
+
+\begin{proof}
+    Using polynomial long division, we can always find polynomials $d(t)$ and $r(t)$ such that $p(t) = d(t)q(t) + r(t)$, where $r(t)$ has degree less than $q(t)$. Since $p($) and $q(t)$ are annihilating, $0 = d(A)0 + r(A)$, so $r(A) = 0$. Therefore, $r$ must be identically zero, since it is an annihilating polynomial of degree less than the minimal polynomial.
+\end{proof}
+
+\begin{thm}
+    The set of roots of the minimal polynomial equals the set of roots of the characteristic polynomial, and furthermore the multiplicity of each root $\lambda$ is the size/order of the largest Jordan block associated with $\lambda$.
+\end{thm}
+
+\begin{proof}
+    Let $\lambda$ and $x$ be an eigenvalue-eigenvector pair of $A$. We know that $0x = \vec{0}$, so $q(A)x = \vec{0}$. It follows that
+    \begin{align*}
+        \vec{0} = \left(\sum_{k=1}^{m}c_kA^k\right)x = \sum_{k=1}^{m}c_k\lambda^kx = q(\lambda)x.
+    \end{align*}
+    Since $x$ is non-zero, it must be that $\lambda$ is a root of $q(t)$. Since the characteristic polynomial is a multiple of the minimal polynomial, the minimal polynomial cannot have any extra roots.
+
+    Let $A = SJS^{-1}$ be a Jordan decomposition of $A$.  {\color{red}\Large TODO}
+\end{proof}
+
+\begin{cor}
+    A matrix is diagonalizable if and only if the minimal polynomial factors into distinct linear factors, or equivalently every root has multiplicity one.
+\end{cor}
+
+\begin{defn}
+    A matrix $A \in M_n$ is \emph{nonderogatory} if there is only a single Jordan block associated with each eigenvalue of $A$, so the minimal and characteristic polynomials are the same.
+\end{defn}
+
+\begin{defn}
+    Given a polynomial $g(t) = a_0 t^0 + \alpha_1 t^1 + \cdots + \alpha_n t^n$, the \emph{companion matrix} is
+    \begin{align*}
+        C_g = \begin{pmatrix}
+            0 & 1 & 0 & \cdots & 0 \\
+            0 & 0 & 1 & \cdots & 0 \\
+            0 & 0 & 0 & \cdots & 0 \\
+            \vdots & \vdots & \vdots & \ddots & \vdots \\
+            -a_0 & -a_1 & -a_2 & \cdots & -a_n.
+        \end{pmatrix}
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    $\lambda$ is an eigenvalue of $C_g$ if and only if $\lambda$ is a root of the $g(t)$.
+\end{prop}
+
+\begin{proof}
+    Any eigenvector of $C_g$ must have the form $x = \alpha(1, \lambda, \lambda^2, \ldots, \lambda^{n-1})$ which additionally satisfies $\alpha(-a_0 \lambda^0 - a_1\lambda^1 - \cdots - a_{n-1}\lambda^{n-1}) = \alpha \lambda^n$, and so $\lambda$ must be a root of $g(t)$.
+\end{proof}
+
+\begin{prop}
+    For any complex monic polynomial $g(t)$ with companion matrix $C_g$, the characteristic polynomial $p(t)$ and minimal polynomial $q(t)$ of $C_g$ are both equal to $g(t)$.
+\end{prop}
+
+\begin{proof}
+    We proceed by induction. In the base case, $g(t) = t + \alpha$, $C_g = [-\alpha]$, so $p(t) = \det(t + \alpha) = g(t)$. Since non-zero $h(t) = \alpha$ cannot annihilate $C_g$, we also have $q(t) = p(t) = g(t)$.
+
+    Applying a Laplace expansion to $tI - C_g$, we have
+    \begin{align*}
+        p(t) &= \det(tI - C_g) = 
+    \end{align*}
+    {\color{red}\Large TODO}
+\end{proof}
+
+\begin{defn}
+    A non-derogotory matrix has the same characteristic and minimal polynomials.
+\end{defn}
+
+\begin{prop}
+    A diagonalizable matrix $A$ is non-derogotory if and only if the set of matrices which commute with $A$ can all be expressed as polynomials of $A$.
+\end{prop}
+
+\begin{proof}
+    Trivially, any polynomial of $A$ must commute with $A$.
+
+    Suppose now that $B$ commutes with $A$, and $A = SDS^{-1}$ is a diagonalization of $A$. Since $A$ is non-derogotory, the eigenvalues $\lambda_i = D_{ii}$ of $A$ are all distinct, and so we know that $A$ and $B$ must be simultaneously diagonalizable, where $B = S\hat{D}S^{-1}$. Define an interpolating polynomial $p(t)$ such that $p(D_{ii}) = \hat{D}_{ii}$. Therefore,
+    \begin{align*}
+        p(A) &= Sp(D)S^{-1} = S\hat{D}S^{-1} = B.
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    Suppose that $A$ is a diagonalizable, derogotory matrix. Then there exists $B$ such that $A$ and $B$ commute, but $p(A) \neq B$ for all polynomials $p$.
+\end{prop}
+
+\begin{proof}
+    Let $A = SDS^{-1}$ be a diagonalization of $A$. Since $A$ is derogotory, it must have a repeated diagonal element $D_{kk} = D_{jj}$. Let $B = S\hat{D}S^{-1}$ where $\hat{D}$ is any diagonal matrix with all distinct diagonal elements. Therefore, $A$ and $B$ commute, but there clearly cannot exist a polynomial $p$ such that $p(A) = B$, since that would imply $p(D_{kk}) \neq p_(D_{jj})$.
+\end{proof}
+
+\begin{lemma}
+    Any unitary matrix is a bijection on $S^1$.
+\end{lemma}
+
+\begin{defn}
+    Given a complex matrix $A$, the \emph{field of values} of $A$, denoted by $\mathcal{F}(A)$, is the set
+    \begin{align*}
+        \left\{ \frac{x^*Ax}{x^*x} : x \in \C^n \right\}.
+    \end{align*}
+\end{defn}
+
+\begin{lemma}\label{lemma:field-of-values-convex-hull}
+    If $A$ is normal, then the field of values of $A$ is the convex hull of of the spectrum of $A$.
+\end{lemma}
+
+\begin{proof}
+    If $A$ is normal, then it is unitarily diagonalizable as $A = UDU^*$. Therefore,
+    \begin{align*}
+        \left\{ \frac{x^*Ax}{x^*x} : x \in \C^n \right\} = \left\{ \frac{x^*UDU^*x}{x^*x} : x \in \C^n \right\} = \left\{ y^*Dy : \norm{y}_2 = 1 \right\}.
+    \end{align*}
+    It follows that each element of the field of values is a linear combination of the elements of $D$.
+\end{proof}
+
+\begin{thm}{Rayleigh-Ritz}\proofbreak
+    Let $A$ be a Hermitian matrix, so the eigenvalues are all real, and therefore $\mathcal{F}(A) \subseteq \R$. Then $\min\mathcal{F}(A)$ is the smallest eigenvalue of $A$, and $\max\mathcal{F}(A)$ is the largest.
+\end{thm}
+
+\begin{proof}
+    Follows immediately from Lemma \ref{lemma:field-of-values-convex-hull}.
+\end{proof}
