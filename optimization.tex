@@ -1040,7 +1040,92 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     Note that $\abs{x} = \max\left\{-x, x\right\}$. Then $\partial \abs{x}$ at $x = 0$ is the convex hull of $\{-1, 1\}$ which is $[-1, 1]$.
 \end{exmp}
 
-\subsection{First-order memthods}
+\subsection{Bregman divergence and the proximal operator}
+
+\begin{defn}
+    Bregman divergence
+\end{defn}
+
+\begin{defn}
+    Given a closed convex function $\Psi: \R^d \to \R \union \{\infty\}$, we define the proximal operator $\prox_{\alpha\Psi}: \R^d \to \R$ by
+    \begin{align*}
+        \prox_{\alpha\Psi}(x) &= \argmin_{y}\left(\Psi(y) + \frac{1}{2\alpha}\norm{x-y}_2^2\right).
+    \end{align*}
+\end{defn}
+
+\begin{lemma}
+    The proximal operator is well-defined.
+\end{lemma}
+
+\begin{proof}
+    Since $y \mapsto \Psi(y) + \frac{1}{2\alpha}\norm{x-y}_2^2$ is strongly convex, it follows that it has a unique minimizer.
+\end{proof}
+
+\begin{lemma}\label{lemma:sum-smooth-convex}
+    Let $\Psi: \R^d \to \R \union \{\infty\}$ be a closed convex function, and let $f: \R^d\to \R$ be a smooth function. If $x^* \in \argmin (f + \Psi)$, we have
+    \begin{align*}
+        -\nabla f(x^*) \in \partial \Psi(x^*).
+    \end{align*}
+    If $f$ is additionally convex, then the converse holds as well: if $-\nabla f(x^*) \in \partial\Psi(x^*)$, then $x^* \in \argmin (f+\Psi)$.
+\end{lemma}
+
+\begin{proof}
+    Let $x \in \R^d$ and $t \in (0, 1]$ be given. Since $x^*$ is a minimizer,
+    \begin{align*}
+        f(x^*) + \Psi(x^*) \leq f(x^* + t(x - x^*)) + \Psi(x^* + t(x - x^*)).
+    \end{align*}
+    By convexity of $\Psi$, we know
+    \begin{align*}
+        f(x^*) + \Psi(x^*) \leq f(x^* + t(x - x^*)) + (1-t)\Psi(x^*) + t\Psi(x),
+    \end{align*}
+    and so
+    \begin{align*}
+        f(x^*) - f(x^* + t(x - x^*)) \leq t(\Psi(x) - \Psi(x^*)).
+    \end{align*}
+    Taking a limit, we find that
+    \begin{align*}
+        \langle -\nabla f(x^*), x - x^* \rangle = \lim_{t \to 0}\frac{f(x^*)-f(x^*+t(x-x^*))}{t} \leq \Psi(x) - \Psi(x^*)
+    \end{align*}
+    and so
+    \begin{align*}
+        \Psi(x^*) + \langle -\nabla f(x^*), x - x^* \rangle \leq \Psi(x),
+    \end{align*}
+    and so $-\nabla f(x^*) \in \partial \Psi(x^*)$ by definition.
+
+    Now, suppose instead that $f$ is convex and $-\nabla f(x^*) \in \partial \Psi(x^*)$, so by definition
+    \begin{align*}
+        \Psi(x^*) + \langle -\nabla f(x^*), x - x^*\rangle \leq \Psi(x).
+    \end{align*}
+    Since $f$ is assumed to be convex, $f(x^*) + \langle \nabla f(x^*), x - x^*\rangle \leq f(x)$, and so by adding this to the inequality immediately above that we have
+    \begin{align*}
+        f(x^*) + \Psi(x^*) \leq f(x) + \Psi(x),
+    \end{align*}
+    and so $x^*$ is necessarily a minimizer of $f + \Psi$.
+\end{proof}
+
+\begin{cor}
+    We have $x^+ \in \prox_{\alpha\Psi}(x)$ if and only if $(1/\alpha)(x-x^*) \in \partial \Psi(x^* + t(x-x^*))$.
+\end{cor}
+
+\begin{prop}
+    The proximal of the $\ell_1$ norm is given by
+    \begin{align*}
+        \left[\prox_{\alpha\norm{\cdot}_1}(x)\right]_i &= \begin{dcases}
+            x_i + \alpha, &x_i < -\alpha \\
+            0, &-\alpha \leq x \leq \alpha \\
+            x_i - \alpha, &x_i > \alpha
+        \end{dcases}.
+    \end{align*}
+\end{prop}
+
+\begin{prop}
+    Let $A$ be a matrix, with singular value decomposition $A = U\Sigma V^{*}$, and let $\sigma$ be the vector of singular values. The proximal of the nuclear norm is
+    \begin{align*}
+        \left[\prox_{\alpha\norm{\cdot}_{*}}(A)\right]_i &= U\textrm{diag}\left(\prox_{\alpha\norm{\cdot}_1}(\sigma)\right)V^{*}.
+    \end{align*}
+\end{prop}
+
+\subsection{Smooth or convex first-order memthods}
 
 \begin{defn}
     Bregman divergence
@@ -1220,6 +1305,20 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{lemma}
 
 \begin{proof}
+    Suppose that $f$ is $\mu$-strongly convex, and fix $x \in \R^d$ and $\alpha \in \R^d$ such that $\alpha \in \partial f(x)$. Note that
+    \begin{align*}\tag{$\star$}\label{eq:norm-diff-identity}
+        \norm{y - x}_2^2 = \langle y, y - x \rangle - \rangle x, y - x\rangle = \langle y, y \rangle - \langle y, x \rangle - \langle x, y - x \rangle = \norm{y}_2^2 - \norm{x}_2^2 - 2\langle x, y - x \rangle.
+    \end{align*}
+    Since $\alpha \in \partial f(x)$, we know that $\alpha - \mu x \in \partial (f - \frac{\mu}{2}\norm{x}_2^2)(x)$. By definition of the subdifferential and by convexity of $f - \frac{\mu}{2}\norm{x}_2^2$ it follows that for any $y \in \R^d$ we have
+    \begin{align*}
+        f(y) - \frac{\mu}{2}\norm{y}_2^2 &\geq f(x) - \frac{\mu}{2}\norm{x}_2^2 + \langle \alpha - \mu x, y - x\rangle
+    \end{align*}
+    and so by (\ref{eq:norm-diff-identity}) we have
+    \begin{align*}
+        f(y) &\geq f(x) + \frac{\mu}{2}\left(\norm{y}_2^2 - \norm{x}_2^2 - 2\langle x, y-x\rangle\right) + \langle \alpha, y - x\rangle \\
+        &= f(x) + \langle \alpha, y - x\rangle + \frac{\mu}{2}\norm{y-x}_2^2.
+    \end{align*}
+
     {\Large\color{red}TODO}
 \end{proof}
 
@@ -1355,14 +1454,178 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 
     Specifically, consider any method such that $x_k$ satisfies
     \begin{align*}
-        x_{k+1} \in x_0 + \span\left\{\nabla f(x_0), \nabla f(x_1), \ldots, \nabla f(x_{k})\right\}.
+        x_{k+1} \in x_0 + \spn\left\{\nabla f(x_0), \nabla f(x_1), \ldots, \nabla f(x_{k})\right\}.
     \end{align*}
-    Then for any $1 \leq k \leq \frac{1}{2}(d - 1)$ and $L \geq 0$, there exists an $L$-Lipschitz smooth convex function such that
+    Then for any $1 \leq k \leq \frac{1}{2}(d - 1)$ and $L \geq 0$, there exists an $L$-Lipschitz smooth convex function $f: \R^d \to \R$ such that
     \begin{align*}
         f(x_k) - \min f &\geq \frac{3L\norm{x_0-x^*}_2^2}{32(k+1)^2}, \\
-        \norm{x_k-x^*}_2^2 &\geq \frac{1}{32k^2}\norm{x_0-x^*}_2^2.
+        \norm{x_k-x^*}_2^2 &\geq \frac{1}{8}\norm{x_0-x^*}_2^2.
     \end{align*}
 \end{thm}
+
+\begin{proof}
+    Define
+    \begin{align*}
+        f_k(x) &= \frac{L}{4}\left[\frac{1}{2}x^{\transpose}A_kx - e_1^{\transpose}x\right],
+    \end{align*}
+    where $A_k$ has $2$ on the diagonal, $-1$ on the super and sub diagonals, and zeros elsewhere. Therefore,
+    \begin{align*}
+        \nabla f_k(x) &= \frac{L}{4}\left[A_kx - e_1\right], \\
+        \nabla^2 f_k(x) &= \frac{L}{4}A_k.
+    \end{align*}
+
+    Assume, without loss of generality, that $x_0 = \vec{0}$. Otherwise, we could simply define $\tilde{f}_k$ to be $f_k(x - x_0)$ and proceed identically.
+
+    Then,
+    \begin{equation*}\tag{$\star$}\label{eq:gradient-span}
+        \spn\left\{\nabla f_k(x_0), \ldots, \nabla f_k(x_{i})\right\} \subseteq \R^{i+1} \times \{0\}^{d-i-1}
+    \end{equation*}
+    for all $i \leq k$. We will prove this by induction on $i$. In the base case $i=0$ we have
+    \begin{align*}
+        \nabla f(x_0) &= \frac{L}{4}\left[A_k\vec{0} - e_1\right] = -\frac{L}{2}e_1,
+    \end{align*}
+    the span of which is precisely $\R^{1} \times \{0\}^{d-1}$. Now assuming (\ref{eq:gradient-span}) holds up to some $i$, then by the assumption that
+    \begin{align*}
+        x_{k+1} \in \span\left\{\nabla f(x_0), \nabla f(x_1), \ldots, \nabla f(x_{k})\right\},
+    \end{align*}
+    we necessarily have
+    \begin{align*}
+        \nabla f_k(x_{i+1}) &\subseteq \frac{L}{4}\left(A_k\spn\left\{\nabla f(x_0), \nabla f(x_1), \ldots, \nabla f(x_{k})\right\} - e_1\right) \\
+        &\subseteq \frac{L}{4}\left(A_k\left(\R^{i} \times \{0\}^{d-i-1}\right)\right).
+    \end{align*}
+    Since $A_k$ is tri-diagonal and $e_1$ is already in the span, it follows that
+    \begin{align*}
+        \nabla f_k(x_{i+1}) \subseteq \R^{i+1} \times \{0\}^{d-i-1}.
+    \end{align*}
+
+    Furthermore, $f_k$ is $L$-Lipschitz smooth and is convex. This is because it is twice-differentiable, and we can prove this by showing that $0 \preceq \nabla^2 f_k \preceq LI$.
+    \begin{align*}
+        \frac{L}{4}s^{\transpose}A_ks &= \frac{L}{4}\left(s^2_{1} + \sum_{i=1}^{k-1}\left(s_i - s_{i+1}\right)^2 + s_k^2\right) \\
+        &\leq \frac{L}{4}\left(s^2_{1} + 2\sum_{i=1}^{k-1}\left(s_i^2 - s_{i+1}^2\right) + s_k^2\right) \\
+        &\leq \frac{L}{4}\sum_{i=1}^{k-1}4s_i^2 \leq L\norm{s}^2,
+    \end{align*}
+    and so $\nabla^2 f_k \preceq LI$.
+
+    Finally, the vector $x^*$ given by
+    \begin{align*}
+        x_{i}^* &= \begin{dcases}
+            1 - \frac{i}{k+1}, &i \in \{1, \ldots, k\} \\
+            0, &\textrm{otherwise}
+        \end{dcases}
+    \end{align*}
+    is a minimizer of $f_k$. This is because $A-kx^* = e_1$, and so $\nabla f_k(x^*) = 0$. Therefore,
+    \begin{align*}
+        \min f_k &= f_k(x^*) = \frac{L}{4}\left(\frac{1}{2}(x^*)^{\transpose}A_kx6* - e_1^{\transpose}x^*\right) \\
+        &= -\frac{L}{8}e_1^{\transpose}x^8 = -\frac{L}{8}\left(\frac{k}{k+1}\right).
+    \end{align*}
+    Since $x_0 = \vec{0}$, it follows that
+    \begin{align*}
+        \norm{x_0-x^*}^2 &= \norm{x^*}^2 = \sum_{i=1}^{k}\left(1 - \frac{i}{k+1}\right)^2 \\
+        &= \frac{1}{(k+1)^2}\sum_{i=1}^{k}\left(k+1-i\right)^2 = \frac{1}{(k+1)^2}\sum_{i=1}^{k}i^2 = \frac{k(k+1)(2k+1)}{6(k+1)^2} \\
+        &\leq \frac{k+1}{3}.
+    \end{align*}
+
+    Finally, we will prove the main result. For some fixed $k$, take $f = f_{2k+1}$, so $f_k(x_k) = f_{2k+1}(x_k) = f_k(x_k) \geq \min f_k$. Therefore,
+    \begin{align*}
+        f(x_k) - \min f_{2k+1} \geq \min f_k - \min f_{2k+1},
+    \end{align*}
+    and so ({\Large\color{red}TODO: prove})
+    \begin{align*}
+        \frac{f(x_k) - \min f_{2k+1}}{\norm{x_0-x^*}^2} &\geq \frac{\min f_k - \min f_{2k+1}}{\norm{x^*}^2} \geq \frac{-L/8\left(1 - 1/(k+1) - 1 + 1/(2k+2)\right)}{(2k+2)/3} \\
+        &= \frac{3L}{8}\frac{1}{32(k+1)^2}.
+    \end{align*}
+
+    Additionally,
+    \begin{align*}
+        \norm{x_k-x^*}^2 &\geq \sum_{i=k+1}^{2k+1}(x_i^*)^2 = \sum_{i=k+1}^{2k+1}\left(1-\frac{i}{2k+1}\right)^2 \\
+        &= \frac{1}{(2k+2)^2}\frac{(k+1)(k+2)(2k+2)}{6} = \frac{k+2}{12} \geq \frac{1}{4}.
+    \end{align*}
+\end{proof}
+
+\subsection{Non-smooth}
+
+\begin{exmp}
+    Suppose we want to solve $Ax = b$, for an overdetermined linear system. A common approach is least-squares --- taking $x$ to be a solution to $\min_{x}\frac{1}{2}\norm{Ax - b}_2^2$. But what happens for underdetermined systems? We might want to impose sparsity on the solution, that is we solve $\min_{x}\norm{x}_{1}$, subject to the constraint $Ax = b$. More generally, we could solve
+    \begin{align*}
+        \min_{x}\frac{1}{2}\norm{Ax-b}_2^2 + \lambda\norm{x}_1,
+    \end{align*}
+    where $\lambda$ controls exactly how much we care about sparsity.
+\end{exmp}
+
+\begin{exmp}
+    Suppose we want to find $X \in M_{n,m}(\R)$ such that $AX = b$ for $A \in M_{k,n}(\R)$ and $b \in \R^k$. If multiple solutions exist, we may want the \emph{low-rank matrix factorization}, that is a solution $X$ of lowest possible rank. Specifically, we could solve
+    \begin{align*}
+        \min_{X}\frac{1}{2}\norm{AX-b}_2^2 + \lambda \norm{X}_{1}.
+    \end{align*}
+\end{exmp}
+
+\begin{rmk}
+    We will focus on solving minimization problems of functions of the form $f(x) + g(x)$, where $f: \R^n \to \R$ is smooth, and $g: \R^n \to \R \union \{\infty\}$ is a convex function.
+\end{rmk}
+
+\begin{defn}
+    Given smooth $f$ and convex $h$, we define
+    \begin{align*}
+        \Psi_k(x) &= f(x_k) + \langle \nabla f(x_k), x-x_k \rangle + h(x),
+    \end{align*}
+    and
+    \begin{align*}
+        x_{k+1} = \argmin\left\{\Psi_k(x) + \frac{1}{2\alpha_k}\norm{x-x_k}^2\right\},
+    \end{align*}
+\end{defn}
+
+\begin{proof}
+    By Lemma \ref{lemma:sum-smooth-convex}, then $-\nabla f(x_k) - \frac{1}{\alpha k}(x_{k+1}-x-k)$ is in $\partial h(x_{k+1})$, and so $x_{k+1} = \prox_{\alpha_k h}(x_k - \alpha_k \nabla f(x_k))$.
+\end{proof}
+
+\begin{defn}
+    For given $\alpha > 0$, the \emph{gradient mapping} of convex $h: \R^n \to \R$ is
+    \begin{align*}
+        G_{\alpha}(x) = \frac{1}{\alpha}\left(x - \prox_{\alpha h}(x - \alpha\nabla f(x))\right).
+    \end{align*}
+\end{defn}
+
+\begin{lemma}\label{lemma:descent2}
+    Let $f$ is an $L$-smooth function and $h$ a convex function. Then for any $x \in \R^n$ we have
+    \begin{align*}
+        (f + h)(x^{+}) \leq (f + h)(x) - \left(\alpha - \frac{L\alpha^2}{2}\right)\norm{G_{\alpha}(x)}^2.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    Since $f$ is $L$-smooth, we know that
+    \begin{align*}
+        f(x^+) \leq f(x) - \nabla f(x)^{\transpose}(x^+-x) + \frac{L}{2}\norm{x-x^+}^2.
+    \end{align*}
+    Additionally, by convexity of $h$ we know that
+    \begin{align*}
+        h(x^+) + \frac{1}{\alpha}\left(x - \alpha \nabla f(x) - x^+\right)^{\transpose}(x - x^+) \leq h(x).
+    \end{align*}
+    Since $\left(x - \alpha \nabla f(x) - x^+\right)^{\transpose}(x - x^+) = \norm{x-x^+}^2 - \nabla f(x)^{\transpose}(x-x^+)$, it follows that
+    \begin{align*}
+        f(x^+) + h(x^+) \leq f(x) + h(x) - \frac{1}{\alpha}\norm{x-x^+}^2 + \frac{L}{2}\norm{x-x^+}^2.
+    \end{align*}
+    The results follows immediately by substituting the definition of $G_{\alpha}(x)$.
+\end{proof}
+
+\begin{rmk}
+    Compare with the Descent Lemma \ref{lemma:descent}.
+\end{rmk}
+
+\begin{rmk}
+    Linesearch procedures for $\alpha$, such as exact or backtracking methods, can be applied here without having to know $L$.
+\end{rmk}
+
+\begin{thm}
+    For any $L$-smooth function $f$, and closed convex function $h$, the iterates of the forward-backward method with $\alpha = 1/L$ satisfy
+    \begin{align*}
+        \frac{1}{T}\sum_{k=0}^{T-1}\norm{G_{\alpha}(x_k)}^2 \leq \frac{2L}{T}\left((f+h)(x_0) - \min (f+h)\right).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    By Lemma \ref{lemma:descent2}, we have 
+\end{proof}
 
 \vspace{2cm}
 {\color{Fuchsia}\Huge Start of old content:}
