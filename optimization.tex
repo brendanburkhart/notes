@@ -683,10 +683,14 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \begin{itemize}
         \item If $x, y \in \R^{+}A$, then $x = \lambda_1s_1, y = \lambda_2s_2$ for some $\lambda_1, \lambda_2 \in \R^+$ and $s_1, s_2 \in A$. Therefore,
         \begin{align*}
-            tx + (1-t)y &= \frac{t\lambda_1}{t_1\lambda_1 + (1-t)\lambda_2}s_1 = \frac{(1-t)\lambda_2}{t_1\lambda_1 + (1-t)\lambda_2}s_2 \\
-            us_1 + (1-u)s_2,
+            tx + (1-t)y &= t\lambda_1s_1 + (1 - t)\lambda_2s_2 = \lambda_3\left[us_1 + (1-u)s_2\right],
         \end{align*}
-        where $u \in [0, 1]$.
+        where
+        \begin{align*}
+            \lambda_3 &= t\lambda_1 + (1-t)\lambda_2 \\
+            u &= \frac{t\lambda_1}{\lambda_3}.
+        \end{align*}
+        Since $\lambda_1, \lambda_2 \geq 0$, it follows that $u \in [0, 1]$ and so $us_1 + (1-u)s_2 = s_3 \in A$. Furthermore, $\lambda_3$ is strictly positive, so $tx + (1-t)y = \lambda_3s_3 \in \R^{+}A$.
         \item If $x = a_1 + b_1$ and $y = a_2 + b_2$, then $tx + (1-t)y = (ta_1 + (1-t)a_2) + (tb_1 + (1-t)b_2) \in A + B$.
         \item If $x \in A \intersect B$ and $y \in A \intersect B$, then of course $tx + (1-t)y \in A$ and $tx + (1-t)y \in B$ by convexity of $A$ and $B$, so $tx + (1-t)y \in A \intersect B$.
         \item Follows immediately from linearity of $T$ and the fact convex combinations are linear combinations.
@@ -716,11 +720,11 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{defn}
     Let $S \subseteq \R^n$, and consider $f: S \to \R$. The \emph{epigraph} of $f$ 
     \begin{align*}
-        \left\{\begin{bmatrix}
+        \left\{\begin{pmatrix}
             x \\ y
-        \end{bmatrix} \compbar x \in S, y \in R, y \geq f(x)\right\} \subseteq \R^{n+1}
+        \end{pmatrix} \in S \times \R : y \geq f(x)\right\} \subseteq \R^{n+1}
     \end{align*}
-    and is denoted by $\epigraphof{f}$. That is, the epigraph is all points above the graph of the function.
+    and is denoted by $\epigraphof{f}$. That is, the epigraph is the set of all points above the graph of the function.
 \end{defn}
 
 \begin{prop}\label{epigraph-convexity}
@@ -767,19 +771,6 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     by the definition of $\epigraphof{f}$, and so $f$ is a convex function.
 \end{proof}
 
-\begin{lemma}
-    Let $f_i: S \to \R$ be convex functions, for $i = 1, \ldots, n$. Then the following are also convex functions:
-    \begin{itemize}
-        \item $\max_{i}f_i$,
-    \end{itemize}
-\end{lemma}
-
-\begin{proof}\proofbreak
-    \begin{itemize}
-        \item The epigraph of $\max_{i}f_i$ is simply $\intersect_{i}\epigraphof{f_i}$, which is convex by Lemma \ref{lemma:convex-sets}.
-    \end{itemize}
-\end{proof}
-
 \begin{thm}{Support Theorem}\label{support-theorem}\proofbreak
     Let $S \subseteq \R^n$ be a convex set, and let $\bar{x}$ be a boundary point of $S$. There exists a hyperplane containing $\bar{x}$ such that $S$ is contained in an associated closed half-space.
 \end{thm}
@@ -805,7 +796,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
         f(x) \geq f(z_t) + \langle \nabla f(z_t), x - z_t\rangle, \\
         f(y) \geq f(z_t) + \langle \nabla f(z_t), y - z_t\rangle.
     \end{align*}
-    Since $t geq 0$ and $1-t \geq 0$, it follows that we may take a convex combination of the inequalities in order to obtain
+    Since $t \geq 0$ and $1-t \geq 0$, it follows that we may take a convex combination of the inequalities in order to obtain
     \begin{align*}
         (1-t)f(x) + tf(y) \geq \langle \nabla f(z_t), (1-t)x + ty \rangle,
     \end{align*}
@@ -859,7 +850,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{proof}
 
 \begin{defn}
-    A function $f: \R^n \to \R$ is $L$-Lipschitz smooth if it's gradient is an $L$-Lipschitz continuous function.
+    A function $f: \R^n \to \R$ is $L$-Lipschitz smooth if its gradient is an $L$-Lipschitz continuous function.
 \end{defn}
 
 \begin{lemma}\label{lemma:lipschitz-taylor-bound}
@@ -912,7 +903,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{lemma}
 
 \begin{proof}
-    Suppose (2) holds, then by Lemma \ref{convex-function-tangent-hyperplane} we have
+    Suppose (2) holds, then by Theorem \ref{convex-function-tangent-hyperplane} we have
     \begin{align*}
         \frac{L}{2}\norm{y}^2 - f(y) \geq \frac{L}{2}\norm{x}^2 - f(x) + \langle Lx - \nabla f(x), y - x\rangle
     \end{align*}

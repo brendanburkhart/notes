@@ -1,0 +1,320 @@
+\setchaptergraphic{}
+
+\chapter{Set Theory}
+\label{ch:sets}
+
+\section{Zermelo-Fraenkel Axioms}
+
+\begin{itemize}
+    \item Extensionality: if two sets contain the same elements, then they are equal.
+    \begin{align*}
+        \forall x\forall y \left[\forall z \left(z \in x \iff z \in y\right) \implies x = y\right].
+    \end{align*}
+    \item Foundation: every non-empty set contains an element disjoint from itself.
+    \begin{align*}
+        \forall x\left[y \neq \emptyset \implies \exists y(y \in x \land y \intersection x = \emptyset)\right].
+    \end{align*}
+    \item Comprehension Schema: given a well-formed formula $\varphi$ and a set $x$, then $\{y \in x : \varphi(y)\}$ is a set. If $y, x, w_1, \ldots, w_n$ are the free variables of $\varphi$, then
+    \begin{align*}
+        \forall x\forall w_1\forall w_2 \cdots \forall w_n \exists z\forall y\left[y \in z \iff \left(y \in x \land \varphi(y, x, w_1, w_2, \ldots, w_n)\right)\right].
+    \end{align*}
+    \item Pairing: for any sets $x$ and $y$, there exists a set $z$ that contains both $x$ and $y$.
+    \begin{align*}
+        \forall x\forall y \exists z\left[x \in z \land y \in z\right].
+    \end{align*}
+    \item Union: for any set $x$, there exists a set $y$ containing $\bigunion x$.
+    \begin{align*}
+        \forall x\exists y\left[\forall z\left(z \in x \implies z \subseteq y\right)\right].
+    \end{align*}
+    \item Replacement Schema: given a well-formed formula $f$ that is a function on a set $x$, then there exists a set containing the image $f(x)$.
+    \begin{align*}
+        \forall x\forall f\left[Fn(f, x) \implies \exists y\left(z \in x \implies f(z) \in y\right)\right],
+    \end{align*}
+    where $Fn(f, x)$ means $\forall y \in x \exists !z f(y, z)$.
+    \item Infinity: there exists a set $X$ such that $0 \in X$ and $S(y) \in X$ for every $y \in X$.
+    \begin{align*}
+        \exists X\left[0 \in X \land \forall y\left(y \in X \implies S(y) \in X\right)\right].
+    \end{align*}
+    \item Power Set: for every set $x$, there exists a set containing all subsets of $x$.
+    \begin{align*}
+        \forall x\exists y\forall z\left[z \subseteq x \implies z \in y\right].
+    \end{align*}
+\end{itemize}
+
+\section{Well-orderings}
+
+\begin{defn}
+    A (strict) linear order $R$ is a (strict) \emph{well-ordering} on a set $x$, if for any $y \subseteq x$, there exists an $R$-least (or $R$-minimal) element $z \in y$. That is, $\langle z, w\rangle \in R$ for all $w \in y$.
+\end{defn}
+
+\begin{defn}
+    We say that linear orders $\langle A, R\rangle$ and $\langle B, S \rangle$ are \emph{order isomorphic} if there exists a bijection $\varphi$ between $A$ and $B$ such that
+    \begin{align*}
+        \forall x, y \in A\left[\langle x, y \rangle \in R \implies \langle \varphi(x), \varphi(y)\rangle \in S\right].
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    Given a total order $R$ on a set $A$, the \emph{proper initial segment} of $x \in A$ (denoted by $\pis(A, x, R)$) is the set of elements which preceed $x$ in $A$ under the order $R$.
+    \begin{align*}
+        \pis(A, x, R) = \left\{y \in A : \langle y, x \rangle \in R\right\}.
+    \end{align*}
+\end{defn}
+
+\begin{lemma}
+    If $\langle A, R \rangle$ is a well-ordering, then $\pis(A, x, R)$ is well-ordered by $R$ for any $x \in A$.
+\end{lemma}
+
+\begin{proof}
+    Let $y \subseteq \pis(A, x, R)$, so by definition $y \subseteq A$. Since $R$ well-orders $A$, there exists an $R$-least element $z$ of $y$. 
+\end{proof}
+
+\begin{lemma}\label{lemma:pis-iso}
+    No strict well-ordering $\langle A, R \rangle$ can be order isomorphic to a proper initial segment of itself.
+\end{lemma}
+
+\begin{proof}
+    Suppose, for the sake of contradiction, that $f$ is an order isomorphism from $\langle \pis(A, x, R), R\rangle$ to $\langle A, R \rangle$ for some $x \in A$.
+
+    Then there exists some $y \in \pis(A, x, R)$ such that $f^{-1}(x)$, and we must have $y \neq x$ since $x \not\in \pis(A, x, R)$ (since $R$ is a strict linear order). Therfore, $x = f(y) \neq y$, and so the set $B = \{z \in A : f(z) \neq z\}$ is non-empty. Let $z$ be the $R$-least element of $B$. Since $f(z) \neq z$ by definition, either $f(z) <_{R} z$ or $z <_{R} f(z)$.
+
+    In the first case, it must be that $f(f(z)) = f(z)$, or else $z$ could not be the $R$-least element of $B$. But then $f^{-1}(f(f(z))) = f^{-1}(z)$ so $f(z) = z$, which is a contradiction. Therefore, it must be that $z <_{R} f(z)$. Since $f$ is order-preserving, so is $f^{-1}$, and so it must be that $f^{-1}(z) <_{R} z$. Therefore, it must be that $f(f^{-1}(z)) = f(z)$, which again yields the contradiction that $z = f(z)$.
+
+    Since both $f(z) <_{R} z$ and $z <_{R} f(z)$ yield a contradiction, it follows that such $f$ cannot exist.
+\end{proof}
+
+\begin{thm}{Order isomorphisms are unique}\label{thm:unique-order-isomorphisms}\proofbreak
+    If $\langle A, R \rangle$ and $\langle B, S\rangle$ are isomorphic, there is a \emph{unique} isomorphism between them.
+\end{thm}
+
+\begin{proof}
+    Let $f$ and $g$ be two order isomorphisms from $\langle A, R \rangle$ to $\langle B, S \rangle$. Suppose, for the sake of contradiction, that $f \neq g$, so there must exist an $R$-least element $x \in A$ such that $f(x) \neq g(x)$. Then either $f(x) <_{S} g(x)$ or $g(x) <_{S} f(x)$.
+
+    In the first case, we pullback by $g^{-1}$ to obtain $y = g^{-1}(f(x)) <_{R} x$. But then it must be that $g(y) = f(y)$ by the $R$-minimality of $x$, and so $f\left(g^{-1}(f(x))\right) = g(g^{-1}(f(x))) = f(x)$. However, this is a contradiction since $f$ must be order-preserving.
+
+    Without loss of generality, the second case is identical to the first by swapping $f$ and $g$. Therefore, we must in fact have $f = g$.
+\end{proof}
+
+\begin{thm}\label{thm:well-ordering-isomorphisms}
+    Let $\langle A, R \rangle$ and $\langle B, S \rangle$ be strict well-orderings. Either they are isomorphic to each other, or one is isomorphic to a proper initial segment of the other.
+\end{thm}
+
+\begin{proof}
+    Let $f$ be the following relation on $A$ and $B$:
+    \begin{align*}
+        f = \left\{\langle x, y \rangle \in A \times B : \langle \pis(A, x, R), R \rangle \iso \langle \pis(B, y, S), S \rangle\right\}.
+    \end{align*}
+    Suppose that $f(x, y)$ and $f(x, z)$. Then by composition of isomorphisms, we know $\langle \pis(B, y, S), S \rangle$ is isomorphic to $\langle \pis(B, z, S), S \rangle$, and so by Lemma \ref{lemma:pis-iso} it follows that $y = z$. Therefore, $f$ is a function from $A$ to $B$. Since the definition of $f$ is symmetric with respect to $A$ and $B$, it must also be a function from $B$ to $A$, and therefore $f$ is injective.
+
+    {\color{red}TODO: prove $f$ preserves order. If domain is A and range is B then $f$ is an isomorphism between them, if both fail we have contradiction, if single fail there is isomorphism to proper initial segment.}
+\end{proof}
+
+\section{Ordinals}
+
+\begin{defn}
+    A set $\alpha$ is an ordinal when $\in_{\alpha}$ is a transitive relation on $\alpha$ and $\alpha$ is well-ordered by $\in_{\alpha}$.
+\end{defn}
+
+\begin{prop}
+    If $\alpha$ is an ordinal, and $x \in \alpha$, then $x$ is an ordinal.
+\end{prop}
+
+\begin{proof}
+    Since $\alpha$ is transitive, $x$ must be a subset of $\alpha$, and so $\langle x, \in_{x} \rangle$ is a well-ordering because $\langle \alpha, \in_{\alpha}\rangle$ is a well-ordering.
+
+    Then $x$ is transitive, because if $z \in y$ and $y \in x$, then by transitivity of $\alpha$ we must have $y \in \alpha$, and so $z \in \alpha$. Therefore, $z, y, x$ are elements of $\alpha$ such that $z \in_{\alpha} y$ and $y \in_{\alpha} x$. Because $\in_{\alpha}$ is a linear order, it follows that $z \in_{\alpha} x$.
+\end{proof}
+
+\begin{thm}\label{thm:isomorphic-ordinals}
+    Let $\alpha, \beta$ be ordinals. If $\langle \alpha, \in_{\alpha} \rangle$ is isomorphic to $\langle \beta, \in_{\beta} \rangle$, then $\alpha = \beta$.
+\end{thm}
+
+\begin{proof}
+    By Theorem \ref{thm:unique-order-isomorphisms}, there is a unique isomorphism $f$ from $\langle \alpha, \in_{\alpha}\rangle$ to $\langle\beta, \in_{\beta}\rangle$. Suppose, for the sake of contradiction, that $\alpha \neq \beta$, or equivalently that $f$ is not the identity function. Let $\gamma$ be the $\in_{\alpha}$-least element of $\alpha$ such that $f(\gamma) \neq \gamma$. Then since $\alpha$ is transitive and $f$ is order-preserving, it follows that
+    \begin{align*}
+        \delta \in \gamma \iff \delta \in_{\alpha} \gamma \iff f(\delta) \in_{\beta} f(\gamma).
+    \end{align*}
+    Since $\delta < \gamma$, it follows that $f(\delta) = \delta$ and so we have $\delta \in \gamma \iff \delta \in f(\gamma)$. By Extensionality it follows that $\gamma = f(\gamma)$, and so $f$ must in fact be the identity map.
+\end{proof}
+
+\begin{lemma}\label{lemma:ordinal-linear-order}
+    If $\alpha$ and $\beta$ are ordinals, then at exactly one of:
+    \begin{itemize}
+        \item $\alpha \in \beta$,
+        \item $\alpha = \beta$,
+        \item $\beta \in \alpha$,
+    \end{itemize}
+    is true.
+\end{lemma}
+
+\begin{proof}
+    Follows from Theorem \ref{thm:well-ordering-isomorphisms}.
+\end{proof}
+
+\begin{lemma}\label{lemma:ordinal-well-order}
+    The class of all ordinals is well-ordered by $\in$.
+\end{lemma}
+
+\begin{proof}
+    By Lemma \ref{lemma:ordinal-linear-order}, we know $\in$ is a strict linear order on the class of all ordinals. Let $C$ be any non-empty set of ordinals. To show that the ordinals are well-ordered, we want to show that $C$ has an $\in$-least element.
+
+    Since $C$ is non-empty, there exists $z \in C$. Suppose that $z \intersection C$ is empty. For any $y \in C$, by trichotomy either $y \in z$, $y = z$, or $z \in y$. Since $z \intersection C$ is empty, we cannot have $y \in z$, and so $z$ is an $\in$-least element of $C$.
+
+    Now suppose instead that $z \intersection C$ is non-empty. Therefore, there exists an $\in$-least element $y$ of $z \intersection C$ since it is a non-empty subset of $z$. For any $x \in C$, either $x = z$, in which case $y \in x$, or $z \in x$, in which case $y \in x$ by transitivity, or $x \in z$, in which case $x \in z \intersection C$ and therefore $y \in x$. It follows that $y$ is the $\in$-least element of $C$.
+\end{proof}
+
+\begin{thm}{Burali-Forti Paradox}\label{burali-forti}\proofbreak
+    There cannot exist a set of all ordinals.
+\end{thm}
+
+\begin{proof}
+    Suppose, for the sake of contradiction, that a set $ON$ exists of all ordinals. By Lemma \ref{ordinal-well-order} we know that $ON$ is transitive and well-ordered by $\in_{ON}$, which would imply that $ON$ is an ordinal. But then $ON \in ON$ by definition, which is impossible for any ordinal by trichotomy.
+\end{proof}
+
+\begin{rmk}
+    This ``paradox'' is resolved simply by noticing that there appears to be no way to construct a set of all ordinals within ZFC.
+\end{rmk}
+
+\begin{thm}\label{thm:unique-isomorphic-ordinal}
+    If $\langle A, R\rangle$ is a well-ordering, then there is an unique ordinal $\alpha$ such that $\langle A, R\rangle$ is isomorphic to $\langle \alpha, \in_{\alpha}\rangle$.
+\end{thm}
+
+\begin{proof}
+    Let
+    \begin{align*}
+        B &= \left\{x \in A : \exists \alpha\in ON\left[\langle \pis(A, x, R), R\rangle \iso \langle \alpha, \in_{\alpha}\rangle\right]\right\}.
+    \end{align*}
+    Since isomorphic ordinals are identical by Theorem \ref{isomorphic-ordinals}, it follows that there is a function $f$ from $x \in B$ to the corresponding ordinal $\alpha$. By Replacement and Comprehension, there exists a set $C = f(B)$.
+
+    Then $f$ is surjective by definition. For any $x, y$ such that $f(x) =\alpha = f(y)$, we have by composition of isomorphisms that $\langle \pis(A, x, R), R\rangle \iso \langle \pis(A, y, R), R\rangle$. Therefore, $x = y$ by Lemma \ref{lemma:pis-iso}, and so $f$ is also injective.
+
+    Furthermore, $C$ is transitive, since for any $\alpha \in C$ and $\beta \in \alpha$ {\color{red}TODO}. Since $C$ is a set of ordinals it is well-ordered by Lemma \ref{lemma:ordinal-well-order}, and so $C$ is an ordinal.
+
+    Finally, $B$ must equal $A$. For if it was not, then there would be an $R$-least element $m$ of $A\setminus B$, which implies that $B = \pis(A, m, R)$. But then because $f$ is an isomorphism from $\langle B, R\rangle$ to $\langle C, \in_{C}\rangle$ and $C$ is an ordinal, it follows that $m \in B$ by definition of $B$. This yields a contradiction, so we must have $B = A$.
+
+    Therefore, $f$ is an isomorphism from $\langle A, R\rangle$ to $\langle C, \in_{C}\rangle$, where $C$ is an ordinal.
+\end{proof}
+
+\begin{defn}
+    Given a well-ordering $\langle A, R\rangle$, we write $\type(A, R)$ to denote the unique ordinal $\alpha$ such that $\langle \alpha, \in_{\alpha}\rangle$ is isomorphic to $\langle A, R\rangle$.
+\end{defn}
+
+\begin{defn}
+    For any set $x$, we define the \emph{successor} of $x$ to be $S(x) = x \union \{x\}$.
+\end{defn}
+
+\begin{defn}
+    An ordinal $\alpha$ is a \emph{successor ordinal} if there exists an ordinal $\beta$ such that $S(\beta) = \alpha$.
+
+    An ordinal $\alpha$ is a \emph{limit ordinal} if $\alpha \neq 0$ and it is not a successor ordinal.
+
+    An ordinal $\alpha$ is a \emph{natural number} if, for every $\beta \in \alpha$, either $\beta = 0$ or $\beta$ is a successor ordinal.
+\end{defn}
+
+\section{Ordinal Arithmetic}
+
+\begin{defn}
+    For ordinals $\alpha$ and $\beta$, we define
+    \begin{align*}
+        \alpha + \beta = \type\left(\alpha \times \{0\} \union \beta \times \{1\}, R\right),
+    \end{align*}
+    where $R$ is the relation
+    \begin{align*}
+        R &= \left\{\langle \langle x, 0 \rangle, \langle y, 0 \rangle \rangle : x < y < \alpha\right\} \\
+        &\union \left\{\langle \langle x, 1 \rangle, \langle y, 1 \rangle \rangle : x < y < \beta\right\} \\
+        &\union \left\{\langle \langle x, 0 \rangle, \langle y, 1 \rangle \rangle : x < \alpha \land y < \beta\right\}.
+    \end{align*}
+\end{defn}
+
+\begin{thm}
+    For ordinals $\alpha, \beta, \gamma$, we have
+    \begin{itemize}
+        \item $\alpha + (\beta + \gamma) = (\alpha + \beta) + \gamma$,
+        \item $\alpha + 0 = \alpha$,
+        \item $\alpha + 1 = S(\alpha)$,
+        \item $\alpha + S(\beta) = S(\alpha + \beta)$,
+        \item if $\beta$ is a limit ordinal, then $\alpha + \beta = \sup\left\{\alpha + \xi : \xi < \beta\right\}$.
+    \end{itemize}
+\end{thm}
+
+\begin{prop}
+    For $\alpha \neq 0$, $\alpha + \omega = \omega$ but $\omega < \omega + \alpha$.
+\end{prop}
+
+\begin{defn}
+    Let $\langle A, R\rangle$ and $\langle B, S\rangle$ be strict orderings. The \emph{lexicographic} order $L$ on $A \times B$ is
+    \begin{align*}
+        L = \left\{\langle \langle a, b \rangle, \langle c, d\rangle\rangle : \langle a, c\rangle \in R \lor \left(a = c \land \langle b, d\rangle \in S\right)\right\}.
+    \end{align*}
+    That is, $\langle a, b\rangle$ are first ordered by $a$ according to $R$, and then by $b$ according to $S$.
+\end{defn}
+
+\begin{lemma}
+    If $\langle A, R\rangle$ and $\langle B, S\rangle$ are well-orderings, then so is $\langle A \times B, L\rangle$.
+\end{lemma}
+
+\begin{proof}
+    For any non-empty $C \subseteq A \times B$, let $X = \pi_{0}(C)$ be the set of elements of $A$ occuring in the first entry of any element of $C$. Since $\langle A, R\rangle$ is a well-ordering, there is a $R$-least element $u$ of $X$. Next, let $Y = \pi_{1}\left(\langle a, b\rangle \in C : a = u\right)$, and let $v$ be the $S$-least element of $Y$. Therefore, $\langle u, v \rangle$ is the $L$-least element of $C$.
+\end{proof}
+
+\begin{defn}
+    For ordinals $\alpha$ and $\beta$ we define $\alpha \cdot \beta = \type\left(\beta \times \alpha, L\right)$.
+\end{defn}
+
+\begin{defn}
+    {\color{red}TODO: ordinal exponentiation}
+\end{defn}
+
+\section{Peano Axioms}
+
+The Peano axioms define the behavior of a set $\N$, the natural numbers, with regards to a unary operation $S$, and binary operations $+$ and $\cdot$, representing the successor, addition, and multiplication respectively.
+
+\begin{itemize}
+    \item $\forall n\forall m \left[S(n) = S(m) \implies n = m\right]$.
+    \item $\forall n\left[S(n) \neq 0\right]$.
+    \item $\forall n\left[n+0 = n\right]$.
+    \item $\forall n\forall m\left[n + S(m) = S(n+m)\right]$.
+    \item $\forall n\left[n\cdot 0 = 0\right]$.
+    \item $\forall n\forall m\left[n\cdot S(m) = n\cdot m + n\right]$.
+\end{itemize}
+
+\section{Cardinals}
+
+\begin{defn}
+    If $A$ can be well-ordered, then the set of ordinals equinumerous with $A$ is non-empty by Theorem \ref{thm:unique-isomorphic-ordinal}. In this case, we define the cardinality of $A$ (denoted $\abs{A}$) to be the \emph{least} ordinal that is equinumerous with $A$.
+\end{defn}
+
+\begin{defn}
+    A function $f: \alpha \to \beta$ is \emph{cofinal} when the range of $f$ is unbounded in $\beta$. That is, for any $\xi \in \beta$, there exists some $\eta \in \alpha$ such that $f(\eta) \geq \xi$.
+
+    We denote $cf(\kappa)$ the least ordinal $\alpha$ such that there is a cofinal map from $\alpha$ to $\kappa$. The cofinality of $\kappa$ always exists, since $id: \alpha \to \alpha$ is cofinal. Assuming Choice, then $cf(\kappa)$ is always a cardinal.
+\end{defn}
+
+\begin{lemma}{K\"onig's Lemma}\label{konigs-lemma-cofinality}\proofbreak
+    If $\kappa \geq \omega$ and $cf(\kappa) \leq \lambda$, then $\kappa < \kappa^{\lambda}$. \textbf{Note}: This assumes Choice in order to define $\kappa^{\lambda}$.
+\end{lemma}
+
+\begin{proof}
+    There exists a cofinal map from $cf(\kappa) \to \kappa$ by definition, and since $cf(\kappa) \in \lambda$ it follows there is a cofinal map $f: \lambda \to \kappa$. Fix any $g: \kappa \to {}^{\lambda}\kappa$, and let $g_{\xi}: \lambda \to \kappa$ be $g(\xi)$. We now construct $h: \lambda \to \kappa$ not in the range of $g$, thereby proving $g$ cannot be surjective. Define
+    \begin{align*}
+        h(\eta) = \min\left(\kappa \setminus \left\{g_{\xi}(\eta) : \eta < f(\eta)\right\}\right).
+    \end{align*}
+    Suppose, for the sake of contradiction, that $h = g(\alpha)$ for some $\alpha \in \kappa$. Since $f$ is cofinal, there exists $\beta \in \lambda$ such that $\alpha < f(\beta)$. Then it follows by construction that $h(\beta) \neq g_{\alpha}(\beta)$. Therefore, $g$ cannot be onto. If $\kappa^{\lambda} \leq \kappa$, there would necessarily exist an injection $\kappa^{\lambda} \to \kappa$, from which we could construct a surjection $\kappa \to \kappa^{\lambda}$. Since no such surjection exists, we must have $\kappa < \kappa^{\lambda}$.
+\end{proof}
+
+\begin{lemma}
+    Assuming both Choice and the Generalized Continuum Hypothesis, given $\kappa, \lambda \geq 2$ such that at least one is infinite, we have
+    \begin{itemize}
+        \item $\kappa \leq \lambda$ implies $\kappa^{\lambda} = \lambda^{+}$,
+        \item $\kappa > \lambda$ and $cf(\kappa) \leq \lambda$ implies $\kappa^{\lambda} = \kappa^{+}$,
+        \item $\kappa > \lambda$ and $cf(\kappa) > \lambda$ implies $\kappa^{\lambda} = \kappa$.
+    \end{itemize}
+\end{lemma}
+
+\begin{rmk}
+    Using $\aleph_{\alpha+1} = \aleph_{\alpha}^{+}$, consider
+    \begin{align*}
+        \kappa = \bigunion\left\{\aleph_{0}, \aleph_{\aleph_0}, \aleph_{\aleph_{\aleph_0}}, \ldots\right\}.
+    \end{align*}
+    Then $\aleph_{\kappa}$ has the same cardinality of $\kappa$.
+\end{rmk}
