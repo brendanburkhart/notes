@@ -783,13 +783,84 @@
 \end{defn}
 
 \begin{exmp}
-    The M\"obius strip is a non-orientable regular surface.
+    The M\"obius strip (shown in Figure \ref{fig:mobius}) is a non-orientable regular surface.
 
-    \begin{tikzpicture}
-        \begin{axis}
-        \addplot3[variable=t,mesh,domain=0:720] ({cos(t)*(1 + 0.25*cos(t/2))}, {sin(t)*(1 + 0.25*cos(t/2))}, {0.25*sin(t/2)});
-        \end{axis}
-    \end{tikzpicture}
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}
+            \centering
+            \begin{axis}[
+                unit vector ratio=1 1 1
+            ]
+                \addplot3 [
+                    surf, shader=faceted interp,
+                    point meta=x,
+                    colormap/viridis,
+                    samples=40,
+                    samples y=5,
+                    z buffer=sort,
+                    domain=0:360,
+                    y domain=-0.5:0.5
+                ] (
+                    {(1+0.5*y*cos(x/2))*cos(x)},
+                    {(1+0.5*y*cos(x/2))*sin(x)},
+                    {0.5*y*sin(x/2)});
+            \end{axis}
+        \end{tikzpicture}
+    \caption{M\"obius surface}
+    \label{fig:mobius}
+    \end{figure}
 \end{exmp}
 
+\begin{rmk}
+    Given a local parameterization $m: U \subseteq \R^2 \to S$, then one unit normal vector at $p \in m(U)$ is given by
+    \begin{align*}
+        N(p) = \frac{m_u \times m_v}{\norm{m_u \times m_v}},
+    \end{align*}
+    where $m_u$ and $m_v$ are the partials derivatives of $m$. Note that $-N(p)$ is also a unit normal vector $p$. Since $TpS$ is independent of any local parameterization, so is $\pm N(p)$ (up to sign). Furthermore, since charts are smooth, so is the unit normal.
+\end{rmk}
 
+\begin{thm}\label{thm:orientable-atlas}
+    A regular surface $S$ is orientable if and only if there exists an atlas $\{m_i: U_i \subseteq \R^n \to S\}$ such that for any $m_i(u_i, v_i), m_j(u_j, v_j)$, the transition map
+    \begin{align*}
+        \frac{\partial (u_i, v_i)}{\partial (u_,v_j)} = \begin{pmatrix}
+            \frac{\partial u_i}{\partial u_j} & \frac{\partial u_i}{\partial v_j} \\
+            \frac{\partial v_i}{\partial u_j} & \frac{\partial v_i}{\partial v_j}
+        \end{pmatrix}
+    \end{align*}
+    has positive determinant at all $p \in m_i(U_i) \intersect m_j(U_j)$.
+\end{thm}
+
+\begin{proof}
+    If $m: U \to S$ and $w: V \to S$ are two local parameterizations such that $p \in m(U) \intersect w(V)$, then $m_u \times m_v = \frac{\partial (u,v)}{\partial (a, b)}(w_a \times w_b)$. Therefore, the unit normals defined by distinct overlapping charts are the same if and only if the transition map has strictly positive determinant.
+\end{proof}
+
+\begin{cor}
+    If a surface has a global parameterization, then it is orientable.
+\end{cor}
+
+\begin{prop}
+    If a regular surface $S$ can be covered by two charts $m: U \to S$ and $w: V \to S$ such that $m(U) \intersect w(V)$ is connected, then $S$ is orientable.
+\end{prop}
+
+\begin{proof}
+    The determinant of the transition map is continuous and non-zero, so it must be positive on all of $m(U) \intersect w(V)$, or negative on all of $m(U) \intersect w(V)$. If it is positive, then by Theorem \ref{thm:orientable-atlas} we are done. Otherwise, we replace the chart $w$ with $q(u, v) = w(u, v)$. Then $q$ is still a chart, with the same image (although a different domain), but the rows of the transition map are swapped, and therefore the determinant of the transition map is now positive.
+\end{proof}
+
+\begin{prop}
+    Let $S$ be a regular surface defined by $S = f^{-1}(\{a\})$ for some $f: \R^3 \to \R$, where $f$ is smooth and $a$ is a regular value of $f$. Then $S$ is orientable.
+\end{prop}
+
+\begin{proof}
+    Since $\nabla f(p)$ doesn't vanish on $S$, we know that $\nabla f(p)/\norm{\nabla f(p)}$ defines a unit normal for all $p \in S$. Since $f$ is smooth, so is $\nabla f$, and so this unit normal vector field is smooth.
+\end{proof}
+
+\section{Gauss map}
+
+\begin{defn}
+    Let $S$ be an orientable surface. A smooth unit normal vector field $N$ on $S$ is the \emph{orientation}
+\end{defn}
+
+\begin{defn}
+    Let $S$ be a regular surface with orientation $N$. We define the \emph{Gauss map} from $\R^3 \to \R^3$ as $p \mapsto N'(p)$.
+\end{defn}
