@@ -3382,3 +3382,97 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \begin{proof}
     Follows immediately from Lemma \ref{lemma:field-of-values-convex-hull}.
 \end{proof}
+
+\begin{thm}
+    Let $A$ be a Hermitian matrix, so the eigenvalues are all real. Let the eigenvalues be ordered as $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_n$, with corresponding eigenvalues $\mu_1, \ldots, \mu_n$. Then
+    \begin{align*}
+        \lambda_k &= \min_{\substack{x \perp \mu_1, \ldots, \mu_{k-1} \\ x \neq \vec{0}}}\frac{x^*Ax}{x^*x}, \\
+        \lambda_k &= \max_{\substack{x \perp \mu_{k+1}, \ldots, \mu_{n} \\ x \neq \vec{0}}}\frac{x^*Ax}{x^*x}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Since $A$ is Hermitian, it has a unitary eigendecomposition $A = UDU^*$ such that $D_{kk} = \lambda_k$ and $U_k = \mu_k$. It follows that for $x \perp \mu_1, \ldots, \mu_{k-1}$, we have that $U^*x$ is zero in the first $k-1$ entries, and so $x^*UDU^*x$ is linear combination of $\lambda_k, \ldots, \lambda_n$. Therefore, the Rayleigh-Ritz quotient is a convex combination of these eigenvalues, and so the minimum is orecisely $\lambda_k$. Similarly, for $x \perp \lambda_{k+1}, \ldots, \lambda_n$, the Rayleigh-Ritz quotient is a convex combination of $\lambda_1, \ldots, \lambda_k$, and so the maximum is $\lambda_k$.
+\end{proof}
+
+\begin{thm}{Courant-Fischer min-max theorem}\label{thm:courant-fischer}\proofbreak
+    Let $A$ be a Hermitian matrix. Let the eigenvalues be ordered by $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_n$, with corresponding eigenvalues $\mu_1, \ldots, \mu_n$. Then
+    \begin{align*}
+        \lambda_k &= \max_{\substack{U \subseteq \C^n \\\dimn(U)=k-1}}\min_{\substack{x \in U^{\perp} \\ x \neq \vec{0}}}\frac{x^*Ax}{x^*x}, \\
+        \lambda_k &= \min_{\substack{U \subseteq \C^n \\ \dimn(U)=n-(k+1)}}\max_{\substack{x \in U^{\perp} \\ x \neq \vec{0}}}\frac{x^*Ax}{x^*x},
+    \end{align*}
+    where the outer min/max is over linear subspaces $U$.
+\end{thm}
+
+\begin{proof}
+    Since $A$ is Hermitian, it has a unitary eigendecomposition $A = UDU^*$ such that $D_{kk} = \lambda_k$ and $U_k = \mu_k$. 
+    
+    In the first equation, since $U^{\perp}$ has dimension $n-k$, and $\spn\{\mu_k, \ldots, \mu_n\}$ has dimension $n-k+1$, their intersection must contain some non-zero $w$, and so
+\end{proof}
+
+\begin{thm}{Weyl's theorem}\label{thm:weyl}\proofbreak
+    Let $A, B \in M_n$ be Hermitian matrices. For all $1 \leq k \leq n$,
+    \begin{align*}
+        \lambda_k(A) + \lambda_1(B) \leq \lambda_k(A + B) \leq \lambda_k(A) + \lambda_n(B).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    By Courant-Fischer,
+    \begin{align*}
+        \lambda_k(A + B) = \min\max \left(\frac{x^*Ax}{x^*x} + \frac{x^*Bx}{x^*x}\right).
+    \end{align*}
+    By Rayleigh-Ritz, $(x^*Bx)/(x^*x) \leq \lambda_n(B)$, and so
+    \begin{align*}
+        \min\max \left(\frac{x^*Ax}{x^*x} + \frac{x^*Bx}{x^*x}\right) \leq \min\max\frac{x^*Ax}{x^*x} + \lambda_n(B) = \lambda_k(A) + \lambda_n(B).
+    \end{align*}
+    Simiiarly, by Rayleigh-Ritz we have $(x^*Bx)/(x^*x) \geq \lambda_1(B)$ and so
+    \begin{align*}
+        \min\max \left(\frac{x^*Ax}{x^*x} + \frac{x^*Bx}{x^*x}\right) \geq \min\max\frac{x^*Ax}{x^*x} + \lambda_1(B) = \lambda_k(A) + \lambda_1(B).
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    If $B$ is also positive semi-definite, then $\lambda_k(A) \leq \lambda_k(A+B)$.
+\end{cor}
+
+\begin{thm}\label{thm:rank-one-eigen-shift}
+    Let $A \in M_n$ be Hermitian, and let $a \in \R$, $y \in \C^n$. Then for all $1 \leq k \leq n-1$ we have
+    \begin{align*}
+        \lambda_k(A+ayy^*) \leq \lambda_{k+1}(A).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    By Courant-Fischer \ref{thm:courant-fischer}, it follows that
+    \begin{align*}
+        \lambda_k(A + ayy^*) &= \max_{\dimn(U)=k-1}\min_{x \in U^{\perp}}\frac{x^*(A+ayy^*)x}{x^*x} \leq \max_{\dimn(U)=k-1}\min_{x \in U^{\perp},x\perp y} \frac{x^*(A+ayy^*)x}{x^*x} \\
+        &= \max_{\dimn(U)=k-1}\min_{x \in \left(U \oplus y\right)^{\perp}} \frac{x^*Ax} \leq \max_{\dimn(U)=k}\min_{x\in U^{\perp}}\frac{x^*Ax}{x^*x},
+    \end{align*}
+    and again by Courant-Fischer this last expression is simply $\lambda_{k+1}(A)$.
+\end{proof}
+
+\begin{cor}
+    Let $A, B \in M_n$ be Hermitian, such that $B$ has rank $r$. Letting $\lambda_{i}$ be $-\infty$ for $i \leq 0$ and $+\infty$ for $i > n$, we have
+    \begin{align*}
+        \lambda_k(A+B) \leq \lambda_{k+r}(A).
+    \end{align*}
+\end{cor}
+
+\begin{proof}
+    Let $B = UDU^*$ be an eigendecomposition, arranged such that the $r$ non-zero eigenvalues are $\lambda_i(B) = D_{ii}$. By Theorem \ref{thm:rank-one-eigen-shift}, we have
+    \begin{align*}
+        \lambda_{k}\left(A + \sum_{i=1}^{r}\lambda_{i}(B)U_iU_i^*\right) &\leq \lambda_{k+1}\left(A + \sum_{i=1}^{r-1}\lambda_{i}(B)U_iU_i^*\right) \\
+        &\leq \cdots \leq \lambda_{k+r-1}\left(A + \sum_{i=1}^{1}\lambda_{i}(B)U_iU_i^*\right) \leq \lambda_{k+r}(A).
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    \begin{align*}
+        \lambda_{k-r}(A) \leq \lambda_{A+B} \leq \lambda_{k+r}(A)
+    \end{align*}
+\end{cor}
+
+\begin{proof}
+    Since $B$ and $-B$ both have rank $r$, both inequalities follow immediately from the above corollary.
+\end{proof}
