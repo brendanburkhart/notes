@@ -660,20 +660,20 @@
 \section{First Fundamental Form}
 
 \begin{defn}
-    Let $S \subseteq \R^3$ be a regular surface, and let $p \in S$. The \emph{first fundamental form} of $S$ at $p$ is the map $I_p: T_pS \to \R$ defined by $I_p(w) = \norm{w}_2^2$.
+    Let $S \subseteq \R^3$ be a regular surface, and let $p \in S$. The \emph{first fundamental form} of $S$ at $p$ is the map $\ffform_p: T_pS \to \R$ defined by $\ffform_p(w) = \norm{w}_2^2$.
 \end{defn}
 
 \begin{prop}
-    Given a local parameterization $m: \R^2 \to S$, there exist $E, F, G \in \R$ such that the following holds: for any $w \in T_pS$ and $\alpha: (-\varepsilon, \varepsilon) \to S$ such that $\alpha(t) = (u(t), v(t))$ and $w = \alpha'(0)$, we can express $I_p(w)$ as the quadratic form
+    Given a local parameterization $m: \R^2 \to S$, there exist $E, F, G \in \R$ such that the following holds: for any $w \in T_pS$ and $\alpha: (-\varepsilon, \varepsilon) \to S$ such that $\alpha(t) = (u(t), v(t))$ and $w = \alpha'(0)$, we can express $\ffform_p(w)$ as the quadratic form
     \begin{align*}
-        I_p(w) &= Eu'(0)^2 + Fu'(0)v'(0) + Gv'(0)^2.
+        \ffform_p(w) &= Eu'(0)^2 + Fu'(0)v'(0) + Gv'(0)^2.
     \end{align*}
 \end{prop}
 
 \begin{proof}
-    The first fundamental form is given by $I_p(w) = I_p(\alpha'(0))$, so
+    The first fundamental form is given by $\ffform_p(w) = \ffform_p(\alpha'(0))$, so
     \begin{align*}
-        I_p(w) &= \langle \alpha'(0), \alpha'(0) \rangle \\
+        \ffform_p(w) &= \langle \alpha'(0), \alpha'(0) \rangle \\
         &= \left\langle \frac{\partial m}{\partial u}u'(0) + \frac{\partial m}{\partial v}v'(0), \frac{\partial m}{\partial u}(p)u'(0) + \frac{\partial m}{\partial v}(p)v'(0) \right\rangle \\
         &= u'(0)^2\left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial u}(p) \right\rangle + v'(0)^2\left\langle \frac{\partial m}{\partial v}(p), \frac{\partial m}{\partial v}(p) \right\rangle + u'(0)v'(0)\left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial v}(p) \right\rangle \\
         &= Eu'(0)^2 + 2Fu'(0)v'(0) + Gv'(0)^2 \\
@@ -862,5 +862,32 @@
 \end{defn}
 
 \begin{defn}
-    Let $S$ be a regular surface with orientation $N$. We define the \emph{Gauss map} from $\R^3 \to \R^3$ as $p \mapsto N'(p)$.
+    Let $S$ be a regular surface with orientation $N$. The \emph{Gauss map} is the map $p \mapsto N(p)$ from $S \to S^2$ (the unit sphere).
+\end{defn}
+
+\begin{rmk}
+    Consider the differential of the Gauss map $dN(p): T_pS \to T_{N(p)}S^2$, and notice that since $T_pS$ and $T_{N(p)}S^2$ have the same normal vector (by construction of the Gauss map), we can identity these vectors space. Therefore, we will consider the differential of the Gauss map to be a map $dN(p): T_pS \to T_pS$.
+\end{rmk}
+
+\begin{rmk}
+    For a curve $\alpha: I \to S$, let $N(t)$ be short for $N(\alpha(t))$. Then $N'(0) = dN_{\alpha(0)}(\alpha'(0))$, so $N'(0)$ can be interpreted as measuring the rate of change of the normal vectors along $\alpha$ at $p$. 
+\end{rmk}
+
+\begin{exmp}
+    Consider the unit sphere, with inward orientation. That is,
+    \begin{align*}
+        N(x,y,x) = -(x,y,z).
+    \end{align*}
+    For $p \in S$ and a curve $\alpha$ such that $\alpha(0) = p$, we have
+    \begin{align*}
+        dN_p(\alpha'(0)) &= \frac{d}{dt}|_{t=0}(-x(t), -y(t), -z(t)) = -\alpha'(0).
+    \end{align*}
+\end{exmp}
+
+\begin{defn}
+    The \emph{second fundamental form} of a regular surface $S$ at $p \in S$ is the map $\sfform_p: T_pS \to \R$ given by $\sfform_p(v) = -\langle dN_p(v), v\rangle$.
+\end{defn}
+
+\begin{defn}
+    Let $S$ be a regular surface with orientation $N$, and let $c \subseteq S$ be a regular parameterized curve passing through some $p \in S$. Let $\kappa$ be the curvature of $c$ at $p$, let $n(p)$ be the normal vector of $c$, and $N(p)$ the normal vector of $S$. Define $\cos(\theta) = \langle n(p), N(p) \rangle$, and then the \emph{normal curvature} of $C$ at $p$ in $S$ is $\kappa\cos(\theta)$.
 \end{defn}
