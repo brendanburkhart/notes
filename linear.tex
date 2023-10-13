@@ -3356,6 +3356,8 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     Any unitary matrix is a bijection on $S^1$.
 \end{lemma}
 
+\section{Hermitian Eigenvalues}
+
 \begin{defn}
     Given a complex matrix $A$, the \emph{field of values} of $A$, denoted by $\mathcal{F}(A)$, is the set
     \begin{align*}
@@ -3475,4 +3477,117 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 
 \begin{proof}
     Since $B$ and $-B$ both have rank $r$, both inequalities follow immediately from the above corollary.
+\end{proof}
+
+\begin{thm}{Inclusion Principle}\label{thm:hermitian-inclusion-principle}\proofbreak
+    Let $A \in M_n$ be Hermitian, and let $B$ be an $r \times r$ principle submatrix of $A$. Then for all $k$ we have
+    \begin{align*}
+        \lambda_{k}(A) \leq \lambda_k(B) \leq \lambda_{k+(n-r)}(A).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    By Courant-Fischer \ref{thm:courant-fischer},
+    \begin{align*}
+        \lambda_k(A) &= \max_{\dimn{U} \leq k-1}\min_{x\in U^{\perp}}\frac{x^*Ax}{x^*x} \\
+        &\leq \max_{\dimn{U} \leq k-1}\min_{x\in \left(U \oplus e_{p_1} \oplus \cdots \oplus e_{p_{n-r}}\right)^{\perp}}\frac{x^*Ax}{x^*x},
+    \end{align*}
+    where $p_{1}, \ldots, p_{n-r}$ are the columns of $A$ deleted to create $B$. But under those conditions, the Rayleigh-Ritz quotient is simply $x^*Bx/(x^*x)$, and so
+    \begin{align*}
+        \lambda_{k}(A) \leq \max_{\dimn{U} \leq k-1}\min_{x\in U^{\perp}}\frac{x^*Bx}{x^*x} = \lambda_{k}B.
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    If $A \in M_n$ is Hermitian, then for all $i$, we know that $\lambda_1(A) \leq A_{ii} \leq \lambda_n(A)$.
+\end{cor}
+
+\begin{defn}
+    Let $x, y \in \R^n$, and let $x_{(i)}$ be the $i$th least element of $x$, and similarly $y_{(i)}$ is the $i$th least element of $y$. Then $x$ \emph{majorizes} $y$ when
+    \begin{align*}
+        \sum_{i=1}^{k}x_{(i)} \geq \sum_{i=1}^{k}y_{(i)}
+    \end{align*}
+    for all $1 \leq k \leq n$, with equality of sums when $k=n$.
+\end{defn}
+
+\begin{thm}
+    For any $A \in M_n$ Hermitian, the diagonal $\diag(A)$ majorizes the spectrum $\lambda(A)$.
+\end{thm}
+
+\begin{proof}
+    We proceed by induction on $n$. The base case is trivially, since for a $1 \times 1$ matrix we have $\lambda(A) = \diag(A)$.
+
+    Now suppose the result holds for $n-1$, and let $B$ be the submatrix of $A$ obtained by removing the single row and column containing the largest diagonal element. Then by Theorem \ref{thm:hermitian-inclusion-principle}, we have for all $1 \leq k \leq n-1$ that
+    \begin{align*}
+        \sum_{i=1}^{k}\lambda_i(A) \leq \sum_{i=1}^{k}\lambda_i(B),
+    \end{align*}
+    and by the induction hypothesis
+    \begin{align*}
+        \sum_{i=1}^{k}\lambda_i(B) \leq \sum_{i=1}^{k}\diag(A)_{(i)}.
+    \end{align*}
+    Finally, when $k=n$ this holds because
+    \begin{align*}
+        \sum_{i=1}^{n}\lambda_n(A) = \trace(A) = \sum_{i=1}^{n}A_{ii}.
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    Let $A \in M_n$ be Hermitian, and $1 \leq r \leq n$. Then
+    \begin{align*}
+        \sum_{k=1}^{r}\lambda_k(A) &= \min_{\substack{U \in M_{n,r} \\ U^*U = I_r}}\trace(U^*AU), \\
+        \sum_{k=0}^{r-1}\lambda_{n-k}(A) &= \max_{\substack{U \in M_{n,r} \\ U^*U = I_r}}\trace(U^*AU).
+    \end{align*}
+\end{cor}
+
+\begin{proof}
+    Let $U \in M_{n,r}$ such that $U^*U = I_r$ --- that is, $U$ has orthonormal columns. Let $V \in M_{n,n}$ be a unitary matrix whose first $r$ columns are $U$. Notice that the $r \times r$ principle submatrix of $V^*AV$ is $U^*AU$. Therefore, by \ref{thm:hermitian-inclusion-principle}
+    \begin{align*}
+        \lambda_k(A) = \lambda_k(V^*AV) \leq \lambda_k(U^*AU). 
+    \end{align*}
+    Since the sum of the $r$ eigenvalues of $U^*AU$ is its trace, we have
+    \begin{align*}
+        \sum_{k=1}^{r}\lambda_k(A) \leq \trace(U^*AU).
+    \end{align*}
+
+    Since $A$ is Hermitian, by the Spectral Theorem we can find orthonormal eigenvectors $v^{(i)}$, such that $v^{(i)}$ has eigenvalue $\lambda_k(A)$. Then let $U \in M_{n,r}$ have $i$th column $v^{(i)}$.
+    It follows that the diagonal of $U^*AU$ is $\lambda_k(A)$, and so
+    \begin{align*}
+        \sum_{k=1}^{r}\lambda_k(A) = \trace(U^*AU).
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    Let $A, B \in M_n$ both be Hermitian. Then $\lambda(A+B)$ majories $\lambda(A) + \lambda(B)$.
+\end{cor}
+
+\begin{proof}
+    By the preceeding corollary, we know that for any $1 \leq k \leq n$
+    \begin{align*}
+        \sum_{i=1}^{k}\lambda_i(A+B) &= \min_{\substack{U\in M_{n,k} \\ U^*U = I_k}}\trace(U^*(A+B)U) = \min_{\substack{U\in M_{n,k} \\ U^*U = I_k}}\trace(U^*AU + U^*BU) \\
+        &\geq \min_{\substack{U\in M_{n,k} \\ U^*U = I_k}}\trace(U^*AU) + \min_{\substack{U\in M_{n,k} \\ U^*U = I_k}}\trace(U^*BU) = \sum_{i=1}^{k}\lambda_i(A) + \sum_{i=1}^{k}\lambda_i(B).
+    \end{align*}
+    For $k = n$,
+    \begin{align*}
+        \sum_{i=1}^{n}\lambda_i(A+B) = \trace(A + B) = \trace(A) + \trace(B) = \sum_{i=1}^{n}\lambda_i(A) + \sum_{i=1}^{n}\lambda_i(B).
+    \end{align*}
+\end{proof}
+
+\begin{thm}{Hadamard's inequality}\label{thm:hadamards-inequality}\proofbreak
+    Let $A \in M_n$ be a positive semi-definite matrix. Then
+    \begin{align*}
+        \det(A) = \sum_{i=1}^{n}\lambda_i(A) \leq \prod_{i=1}^{n}A_{ii}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Since the eigenvalues are non-negative, their product is non-negative. If $A$ is singular, this result simplifies to $0 \leq \prod A_{ii}$, which is true since $A_{ii} = e_i^*Ae_i \geq 0$. Therefore, we assume $A$ is positive-definite. Define $D$ to be a diagonal matrix such that $D_{ii} = 1/\sqrt{A_{ii}}$. It follows that $DAD$ is still positive definite and Hermitian. Therefore,
+    \begin{align*}
+        \frac{\det(A)}{\prod A_{ii}} &= \det(D^2)\det(A) = \det(DAD) \\
+        &\prod_{i}\lambda_i(DAD) \leq \left(\frac{1}{n}\sum_{i=1}^{n}\lambda_i(DAD)\right)^{n},
+    \end{align*}
+    where the inequality arises from the arithmetic-geometric mean inequality. Therefore,
+    \begin{align*}
+        \frac{\det(A)}{\prod A_{ii}} \leq \left(\frac{1}{n}\trace(DAD)\right)^{n} = \left(\frac{1}{n}n\right)^{n} = 1.
+    \end{align*}
+    Therefore, $\det(A) \leq \prod A_{ii}$.
 \end{proof}
