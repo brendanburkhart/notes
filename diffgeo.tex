@@ -855,6 +855,29 @@
     Since $\nabla f(p)$ doesn't vanish on $S$, we know that $\nabla f(p)/\norm{\nabla f(p)}$ defines a unit normal for all $p \in S$. Since $f$ is smooth, so is $\nabla f$, and so this unit normal vector field is smooth.
 \end{proof}
 
+\begin{thm}\label{thm:orientable-preserved-diffeomorphism}
+    Let $S_1$ and $S_2$ be regular surfaces, and let $\varphi: S_1 \to S_2$ be a diffeomorphism. Then $S_1$ is orientable if and only if $S_2$ is orientable.
+\end{thm}
+
+\begin{proof}
+    For any $p \in S_1$, let $m: U \subseteq \R^2 \to S_1$ be a chart for $p$ and $w: V \subseteq \R^2 \to S_2$ be a chart for $\varphi(p)$. Since $\varphi$ is a diffeomorphism, we know that $\psi = w^{-1} \circ \varphi \circ m$, where $\psi: U \to V$, must be a diffeomorphism. Then $\gamma = \varphi \circ m = w \circ \psi$ is a chart for $\varphi(U) \in S_2$. This is because
+    \begin{itemize}
+        \item $\gamma$ is the composition of smooth functions, and therefore is smooth,
+        \item $\gamma$ is the composition of homeomorphisms, and therefore is a homeomorphism,
+        \item and $dm$ is injective since $m$ is a chart, and $d\varphi$ is bijective since $\varphi$ is a diffeomorphism, so $d\gamma = d(\varphi \circ m) = (d\varphi)(dm)$ is injective.
+    \end{itemize}
+
+    Suppose that $S_1$ is orientable. Then by Theorem \ref{thm:orientable-atlas} there exists an atlas $A_1$ for $S_1$ such that every transition map between charts has positive determinant. Let $B = \{ \varphi \circ m : m \in A \}$. We just proved that $B$ is a set of charts for $S_2$. For any point $p \in S_2$, we know $\varphi^{-1} \in S_1$ has a chart $m \in A$. Then $\varphi \circ m$ contains $p$ in its domain, and so $B$ is in fact an atlas for $S_2$.
+
+    Now, notice the following relation between transition maps. For any $w_1, w_2 \in B$, by construction there exist $m_1, m_2 \in A$ such that $w_1 = \varphi \circ m_1$ and $w_2 = \varphi \circ m_2$. Letting $H$ be the intersection of the images of $w_1$ and $w_2$, we have at points in $H$ that
+    \begin{align*}
+        \frac{\partial w_1}{\partial w_2} = d\left(w_1^{-1} \circ w_2\right) = d(m_1^{-1} \circ \varphi^{-1} \circ \varphi \circ m_2) = d(m_1^{-1} \circ m_2) = \frac{\partial m_1}{\partial m_1}.
+    \end{align*}
+    By our choice of atlas $A$, we know that the transition map between $m_1$ and $m_2$ has positive determinant, so this proves that the transition map between $w_1$ and $w_2$ does as well. Therefore, by Theorem \ref{thm:orientable-atlas} we know that $S_2$ is orientable.
+
+    The converse follows immediately from symmetry of $S_1$ and $S_2$.
+\end{proof}
+
 \section{Gauss map}
 
 \begin{defn}
@@ -889,5 +912,58 @@
 \end{defn}
 
 \begin{defn}
-    Let $S$ be a regular surface with orientation $N$, and let $c \subseteq S$ be a regular parameterized curve passing through some $p \in S$. Let $\kappa$ be the curvature of $c$ at $p$, let $n(p)$ be the normal vector of $c$, and $N(p)$ the normal vector of $S$. Define $\cos(\theta) = \langle n(p), N(p) \rangle$, and then the \emph{normal curvature} of $C$ at $p$ in $S$ is $\kappa\cos(\theta)$.
+    Let $S$ be a regular surface with orientation $N$, and let $c \subseteq S$ be a regular parameterized curve passing through some $p \in S$. Let $\kappa$ be the curvature of $c$ at $p$, let $n(p)$ be the normal vector of $c$, and $N(p)$ the normal vector of $S$. Define $\cos(\theta) = \langle n(p), N(p) \rangle$, and then the \emph{normal curvature} of $C$ at $p$ in $S$ is $\kappa\cos(\theta)$. If $\kappa = 0$, so the normal $n(p)$ is not defined, then we define the normal curvature to be zero. We denote the normal curvature at $p$ by $\kappa_n(p)$.
 \end{defn}
+
+\begin{prop}
+    Let $v \in T_pS$. The normal curvature of any curve $C$ with tangent vector $v$ at $p$ is independent of $C$, and is equal to $\sfform_p(v)$.
+\end{prop}
+
+\begin{proof}
+    Suppose $\alpha = \alpha(s)$ is a unit speed parameterization of $C$, such that $\alpha(0) = p$ and $\alpha'(0) = v$. Let $N(s)$ be the normal vector of the surface at $\alpha(S)$. Since $\alpha'(s) \in T_{\alpha(s)}S$, we know that
+    \begin{align*}
+        \langle N(s), \alpha'(s)\rangle = 0,
+    \end{align*}
+    and so differentiating we obtain
+    \begin{align*}
+        \langle N'(s), \alpha'(s)\rangle = -\langle N(s), \alpha''(s)\rangle.
+    \end{align*}
+    Therefore, the second fundamental form at $p$ is given by
+    \begin{align*}
+        \sfform_{p}(v) &= -\langle dN_p(\alpha'(s)), \alpha'(0)\rangle = -\langle N'(0), \alpha'(0)\rangle = \langle N(0), \alpha''(0)\rangle.
+    \end{align*}
+    By Frenet-Serret, since $\alpha$ is unit speed we have $\alpha''(0) = \kappa(p)n(p)$, and so
+    \begin{align*}
+        \sfform_p(v) = \kappa(p)\langle N(p), n(p)\rangle = \kappa_n(p).
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    Since the normal curvature is independent of the curve used, for convienence we can always use the form formed by the intersection of $S$ with the plane spannded by $N(p)$ and $v$. This curve is knownas the \emph{normal section} of $S$ at $p$, along $v$.
+\end{rmk}
+
+\begin{exmp}
+    For the plane, all normal sections are straight lines, and so the normal curvature is zero everywhere.
+
+    For the unit sphere, with inward orientation, the normal sections are great circles. Therefore, the normal vector of any normal section is equal to the normal vector of the surface. Therefore, the normal curvature is $\kappa_n(p) = \kappa(p)1 = 1$, since a unit circle has curvature $1$.
+
+    For a unit cylinder with inward orientation, the normal section depends on the parameterization used. We can choose a parameterization such that the normal section is a circle, giving $\kappa_n(p) = 1$, or by swapping $(u, v)$ we get a normal section equal to a line, so $\kappa_n(p) = 0$.
+\end{exmp}
+
+\begin{defn}
+    Let $S$ be a regular surface, and $p \in S$. The maximum and minimum normal curvatures of $S$ at $p$, denoted by $\kappa_1(p), \kappa_2(p)$ are called the \emph{principal curvatures} of $S$ and $p$. A unit vector which attain these extrema is called a \emph{principal direction}.
+\end{defn}
+
+\begin{defn}
+    For a plane or sphere, $\kappa_1(p) = \kappa_2(p)$, so all directions are principal directions.
+
+    For the cylinder with inward orientation, $\kappa_1(p) = 1$ and $\kappa_2(p) = 0$, with corresponding principal directions $p \times w$ and $w$, where $w$ is the cylinder's axis.
+\end{defn}
+
+\begin{thm}\label{thm:principal-directions-gauss-eigenvectors}
+    Let $S$ be a regular surface. For $p \in S$, let $v_1(p), v_2(p)$ be principal directions corresponding to $\kappa_1(p)$ and $\kappa_2(p)$. Then $\{v_1(p), v_2(p)\}$ forms an orthonormal basis for $T_pS$, and $-dN_p(v_1) = \kappa_1v_1$ and $-dN_p(v_2) = \kappa_2v_2$.
+\end{thm}
+
+\begin{proof}
+    {\color{red}TODO.}
+\end{proof}
