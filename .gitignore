@@ -4,6 +4,7 @@
 *.png
 
 *.aux
+*.auxlock
 *.fls
 *.log
 *.out

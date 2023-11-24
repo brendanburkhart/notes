@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "**/*.aux": true,
+        "**/*.auxlock": true,
         "**/*.fdb_latexmk": true,
         "**/*.fls": true,
         "**/*.log": true,
@@ -11,5 +12,38 @@
     },
     "[latex]": {
         "editor.formatOnSave": false
-    }
+    },
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "--shell-escape",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "--shell-escape",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ]
 }

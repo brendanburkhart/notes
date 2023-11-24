@@ -5,8 +5,8 @@
         \end{axis}
     \end{tikzpicture}
     \begin{tikzpicture}[scale=0.875]
-        \begin{axis}[hide axis,colormap/bluered]
-            \addplot3[surf,domain=-1:1,y domain=-1:1] {(1-y)^2+100*(x-y^2)^2};
+        \begin{axis}[hide axis,colormap/cool]
+            \addplot3[surf,domain=-0.5:1.5,y domain=-1:1] {(1+y)^2+20*(x-y^2)^2};
         \end{axis}
     \end{tikzpicture}
 }
@@ -1049,7 +1049,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{lemma}
 
 \begin{proof}
-    Since $y \mapsto \Psi(y) + \frac{1}{2\alpha}\norm{x-y}_2^2$ is strongly convex, it follows that it has a unique minimizer.
+    Since $y \mapsto \Psi(y) + \frac{1}{2\alpha}\norm{x-y}_2^2$ is strongly convex, it follows that it has a unique minimizer by {\color{red}TODO: reference}.
 \end{proof}
 
 \begin{lemma}\label{lemma:sum-smooth-convex}
@@ -1094,8 +1094,11 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     and so $x^*$ is necessarily a minimizer of $f + \Psi$.
 \end{proof}
 
-\begin{cor}
-    We have $x^+ \in \prox_{\alpha\Psi}(x)$ if and only if $(1/\alpha)(x-x^*) \in \partial \Psi(x^* + t(x-x^*))$.
+\begin{cor}\label{cor:prox-criteria}
+    We have $x^+ = \prox_{\alpha\Psi}(x)$ if and only if
+    \begin{align*}
+        \frac{1}{\alpha}(x-x^+) \in \partial \Psi(x^+).
+    \end{align*}
 \end{cor}
 
 \begin{prop}
@@ -1233,48 +1236,43 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{thm}
 
 \begin{proof}
-    By Theorem \ref{thm:general-gd-guarantee} we have
-    \begin{align*}
-        \min_{T_1 \leq k \leq T_2}\norm{\nabla f(x_k)}_2^2 \leq 2L\frac{f(x_{T_1}) - \min f}{T_2-T_1} \leq \frac{4L^2\norm{x_0-x^*}_2^2}{T_2-T_1}.
-    \end{align*}
-
     Notice that
     \begin{align*}
-        \norm{x_{k+1}-x^*}^2 = \norm{x_k - \frac{1}{L}\nabla f(x_k) - x^*}_2^2 = \norm{x_k-x^*}_2^2 - \frac{2}{L}\left\langle \nabla f(x_k), x_k-x^* \right\rangle + \frac{1}{L^2}\norm{\nabla f(x_k)}_2^2.
+        \norm{x_{k+1}-x^*}_2^2 = \norm*{x_k - \frac{1}{L}\nabla f(x_k) - x^*}_2^2 = \norm{x_k-x^*}_2^2 - \frac{2}{L}\left\langle \nabla f(x_k), x_k-x^* \right\rangle + \frac{1}{L^2}\norm{\nabla f(x_k)}_2^2.
     \end{align*}
-    Which, by Lemma \ref{lemma:lipschitz-convexity}, is upper-bounded by
-    \begin{align*}
-        \norm{x_k-x^*}_2^2 - \frac{1}{L^2}\norm{\nabla f(x_k)}_2^2.
+    Since $f$ is convex and $L$-Lipschitz smooth, with $\nabla f(x^*)$ necessarily zero, it follows by (4) of Lemma \ref{lemma:lipschitz-convexity} that $\langle \nabla f(x_k), x_k-x^*\rangle \geq 1/L\norm{f(x_k)}^2$, and so
+    \begin{align*}\tag{$\dagger$}\label{eq:convex-gd-guarantee-1}
+        \norm{x_{k+1}-x^*}_2^2 \leq \norm{x_k-x^*}_2^2 - \frac{1}{L^2}\norm{\nabla f(x_k)}_2^2.
     \end{align*}
-    Let $\delta_k = f(x_k) - \min f$. By the Descent Lemma \ref{lemma:descent}, it follows that
+    Let $\delta_k = f(x_k) - \min f$. By convexity and Cauchy-Schwarz we have
     \begin{align*}
-        \delta_{k+1} \leq \delta_k - \frac{1}{2L}\norm{\nabla f(x_k)}_2^2.
-    \end{align*}
-    By convexity and Cauchy-Schwarz,
-    \begin{align*}
-        \delta_k \leq \langle \rangle \leq \norm{\nabla f(x_k)}\norm{x_k-x^*}
-    \end{align*}
-    so
-    \begin{align*}
-        \frac{\delta_k}{\norm{x_k-x^*}}\leq \norm{\nabla f(x_k)}.
-    \end{align*}
-    Combining some of the above ({\color{red}label them}), we obtain
-    \begin{align*}
-        \delta_{k+1} \leq \delta_k - \frac{1}{2L}\frac{\delta_k^2}{\norm{xxx}^2} \leq \delta_k - \frac{1}{2L}\frac{\delta_k\delta_{k+1}}{\norm{xxx}^2}.
-    \end{align*}
-    Multiplying by $1/(\delta_k\delta_{k+1})$ we have
-    \begin{align*}
-        \frac{1}{\delta_{k}} \leq \frac{1}{\delta_[k+1]} + \frac{1}{2L}\frac{\cdot}{\cdot}
+        \delta_k \leq \langle \nabla f(x_k), x_k - x^* \rangle \leq \norm{\nabla f(x_k)}\norm{x_k-x^*},
     \end{align*}
     and so
     \begin{align*}
-        \frac{1}{\delta_{k+1}} \geq \frac{1}{\delta_k} + \frac{1}{2L}\frac{1}{\norm{xxx}^2} \geq \frac{1}{\delta_k} + \frac{1}{2L}\frac{1}{\norm{xxx}^2}
+        \frac{\delta_k}{\norm{x_k-x^*}} \leq \norm{\nabla f(x_k)}.
+    \end{align*}
+    Applying the Descent Lemma \ref{lemma:descent}, we obtain
+    \begin{align*}
+        \delta_{k+1} \leq \delta_k - \frac{1}{2L}\norm{\nabla f(x_k)}_2^2 \leq \delta_k - \frac{1}{2L}\frac{\delta_k^2}{\norm{x_k-x^*}^2}.
+    \end{align*}
+    Since $\norm{x_k-x^*}^2 \leq \norm{x_0-x^*}^2$ by (\ref{eq:convex-gd-guarantee-1}) and $0 \leq \delta_{k+1} < \delta_{k}$, we have
+    \begin{align*}
+        \delta_{k+1} \leq \delta_k - \frac{1}{2L}\frac{\delta_k^2}{\norm{x_k-x^*}^2}\frac{\delta_{k+1}}{\delta_{k}}\frac{\norm{x_k-x^*}^2}{\norm{x_0-x^*}^2} = \delta_k - \frac{1}{2L}\frac{\delta_k\delta_{k+1}}{\norm{x_0-x^*}^2}.
+    \end{align*}
+    Multiplying by $1/(\delta_k\delta_{k+1})$ we then have
+    \begin{align*}
+        \frac{1}{\delta_{k}} \leq \frac{1}{\delta_{k+1}} - \frac{1}{2L\norm{x_0-x^*}^2}
+    \end{align*}
+    and so
+    \begin{align*}
+        \frac{1}{\delta_{k+1}} \geq \frac{1}{\delta_k} + \frac{1}{2L}\frac{1}{\norm{x_0-x^*}^2},
     \end{align*}
     and by induction
     \begin{align*}
-        \frac{1}{\delta{k+1}} \geq \frac{1}{\delta_0} + \frac{k}{2L\norm{x_0-x^{*}}^2} \geq \frac{k}{2L\norm{x_0-x^{*}}^2},
+        \frac{1}{\delta_{k+1}} \geq \frac{1}{\delta_0} + \frac{k}{2L\norm{x_0-x^{*}}^2} \geq \frac{k}{2L\norm{x_0-x^{*}}^2},
     \end{align*}
-    and so $\delta_{k+1} \leq \frac{2L\norm{x_0-x^*}^2}{k}$.
+    and so we conclude that $f(x_{k}) - \min f = \delta_{k} \leq \frac{2L\norm{x_0-x^*}^2}{k}$.
 \end{proof}
 
 \subsection{Strong Convexity}
@@ -1283,7 +1281,8 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     A convex function $f: \R^d \to \R$ is $\mu$-strongly convex when $f(x) - \frac{\mu}{2}\norm{x}_2^2$ is convex.
 \end{defn}
 
-\begin{lemma}Let $f$ be differentiable, then the following are equivalent.
+\begin{lemma}\label{lemma:strong-convexity}
+    Let $f$ be differentiable, then the following are equivalent.
     \begin{enumerate}[label=(\arabic*)]
         \item $f$ is $\mu$-strongly convex.
         \item $f(y) \geq f(x) + \langle \nabla f(x), y - x \rangle + \frac{\mu}{2}\norm{y-x}_2^2$
@@ -1363,8 +1362,8 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{lemma}\label{lemma:nesterov:one}
     The sequence $\{\lambda_k\}$ from Nesterov accelerated gradient descent satisfies
     \begin{itemize}
-        \item $\forall k \geq 1$, $\lambda_{k+1}^2 - \lambda_{k+1} = \lambda_k^2$,
-        \item $\lambda_{k} \geq \frac{k}{2}$.
+        \item $\lambda_{k+1}^2 - \lambda_{k+1} = \lambda_k^2$,
+        \item $\forall k \geq 1$, $\lambda_{k} \geq \frac{k+1}{2}$.
     \end{itemize}
 \end{lemma}
 
@@ -1375,8 +1374,9 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     Secondly,
     \begin{align*}
-        \lambda_{k+1} = \frac{1 + \sqrt{1 + 4\lambda_k^2}}{2} \geq \frac{1 + \sqrt{4\lambda_k^2}}{2} \geq \frac{1}{2} + \lambda_k \geq \frac{k+1}{2}.
+        \lambda_{k+1} = \frac{1 + \sqrt{1 + 4\lambda_k^2}}{2} \geq \frac{1 + \sqrt{4\lambda_k^2}}{2} \geq \frac{1}{2} + \lambda_k.
     \end{align*}
+    Since $\lambda_1 = 1 \geq (1+1)/2$, it follows by induction that $\lambda_k \geq (k+1)/2$.
 \end{proof}
 
 \begin{lemma}\label{lemma:nesterov:two}
@@ -1405,39 +1405,57 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{thm}
 
 \begin{proof}
-    Define $\delta_k = f(y_k) - \min f$, then by Lemma \ref{lemma:nesterov:two} with $u = x_k$ and $v = y_k$. Then we have
+    Define $\delta_k = f(y_k) - \min f$, then we apply Lemma \ref{lemma:nesterov:two} with $u = x_k$ and $v = y_k$ to obtain
     \begin{align*}
         \delta_{k+1} - \delta_{k} = f(y_{k+1}) - f(y_k) \leq -\frac{1}{2L}\norm{\nabla f(x_k)}_2^2 + \langle \nabla f(x_k), x_k - y_k \rangle.
     \end{align*}
-    Since $\nabla f(x_k) = -L(y_k+1, x_k) = -\frac{L}{2}\norm{y_{k+1}-x_k}_2^2 + L(y_k-x_k)$, we have
+    Then by construction of $y_{k+1}$ we have $\nabla f(x_k) = -L(y_{k+1} - x_k)$, and so
     \begin{equation*}\tag{$\diamondsuit$}\label{eq:nesterov:diamond}
-        \nabla f(x_k) \leq -\frac{L}{2}\norm{y_{k+1}-x_k}_2^2 - L\langle y_{k+1}-x_k, x_k-y_k \rangle. 
+        \delta_{k+1} - \delta_{k} \leq -\frac{L}{2}\norm{y_{k+1}-x_k}_2^2 - L\langle y_{k+1}-x_k, x_k-y_k \rangle. 
     \end{equation*}
-    Again applying Lemma \ref{lemma:nesterov:two}, but with $u = x_{k+1}$ and $v = x^{*}$ weobtain
+    Again applying Lemma \ref{lemma:nesterov:two}, but with $u = x_{k}$ and $v = x^{*}$ (and again substituting $\nabla f(x_k) = -L(y_{k+1}-x_k)$) we obtain
     \begin{equation*}\tag{$\spadesuit$}\label{eq:nesterov:spade}
-        \delta_{k+1} = f(y_{k+1}) - \min f \leq -\frac{1}{2L}\norm{\nabla f(x_k)}_2^2 + \langle \nabla f(x_k), x_k-x^{*} \rangle.
+        \delta_{k+1} = f(y_{k+1}) - \min f \leq -\frac{L}{2}\norm{y_{k+1}-x_k}_2^2 - L\langle y_{k+1}-x_k, x_k-x^{*} \rangle.
     \end{equation*}
-    Therefore, by adding $\left(\lambda_k - 1\right)$ times (\ref{eq:nesterov:diamond}) and (\ref{eq:nesterov:spade}) together, we obtain
+    Therefore, $\left(\lambda_k - 1\right)\textrm{(\ref{eq:nesterov:diamond})} + \textrm{(\ref{eq:nesterov:spade})}$ produces
     \begin{align*}
-        \lambda_k\delta_{k+1} - - \left(\lambda_k - 1\right)\delta_k \leq -\frac{L\lambda_k}{2}\norm{y_{k+1}-x_k}^2 - L\left(y_{k+1}-\langle y_{k+1-x_k}, \lambda_kx_k - (\lambda_k - 1)y_k - \lambda^{*} \rangle\right).
+        \lambda_k\delta_{k+1} - \left(\lambda_k - 1\right)\delta_k \leq -\frac{L\lambda_k}{2}\norm{y_{k+1}-x_k}^2 - L\left\langle y_{k+1}-x_k, \lambda_kx_k - (\lambda_k-1)y_k - x^* \right\rangle.
     \end{align*}
     Multiplying by $\lambda_k$, we have that
     \begin{align*}
-        -\frac{L}2{\left[ \abs{k(s)}\norm{\lambda_k}\right]},
+        \lambda_k^2\delta_{k+1} - \left(\lambda_k^2 - \lambda_k\right)\delta_k \leq -\frac{L}{2}\Bigl[\left\langle \lambda_k(y_{k+1}-x_k), \lambda_k(y_{k+1}-x_k) + 2\lambda_kx_k - 2(\lambda_k-1)y_k - 2x^* \right\rangle\Bigr].
     \end{align*}
-    and so
+    Let $A = \lambda_k(y_{k+1}-x_k)$, let $B = \lambda_kx_k - (\lambda_k-1)y_k - x^*$. Noticing that  $\lambda_k^2-\lambda_k = \lambda_{k-1}^2$ by Lemma \ref{lemma:nesterov:one}, we have
     \begin{align*}
-        \left(\lambda_k^2\delta_{k+1} - \lambda_{k-1}^2\delta_k\right) = -\frac{L}{2}\left[\left(\norm{\lambda{k+1}x_{k+1} - (\lambda_{k+1}-1)y_{k+1} - x^{*}}\right)^2 - \left(\norm{\lambda{k}x_{k} - (\lambda_{k}-1)y_{k} - x^{*}}\right)\right].
+        \lambda_k^2\delta_{k+1} - \lambda_{k-1}^2\delta_k &= -\frac{L}{2}\Bigl[\left\langle A, A + 2B\right\rangle\Bigr] = -\frac{L}{2}\Bigl[\left\langle A, A + B\right\rangle + \left\langle A, B\right\rangle\Bigr] \\
+        &= -\frac{L}{2}\Bigl[\left\langle A + B, A + B\right\rangle - \langle B, A + B\rangle + \left\langle A, B\right\rangle\Bigr] \\
+        &= -\frac{L}{2}\Bigl[\left\langle A + B, A + B\right\rangle - \langle B, B\rangle - \langle B, A\rangle + \left\langle A, B\right\rangle\Bigr] \\
+        &= -\frac{L}{2}\Bigl[\norm{A+B}^2 - \norm{B}^2\Bigr].
     \end{align*}
-    Taking a sum from $k=1$ to $k=T-1$ gives us
+    Expanding the definition of $x_{k+1}$ within $\lambda_{k+1}x_{k+1}$, we find
     \begin{align*}
-        \lambda_{T-1}^2\delta_{T} \leq -\frac{L}{2}\norm{x_1-x^*}_2^2.
+        x_{k+1} &= y_{k+1} + \frac{\lambda_k-1}{\lambda_{k+1}}(y_{k+1}-y_k) \\
+        \lambda_{k+1}x_{k+1} - (\lambda_{k+1}-1)y_{k+1} &= \lambda_ky_{k+1} - (\lambda_k-1)y_k.
     \end{align*}
-    By Lemma \ref{lemma:nesterov:one} we have
+    Furthermore, $A+B$ simplifies to $\lambda_{k}y_{k+1} - (\lambda_k-1)y_k-x^*$, and so $A+B = \lambda_{k+1}x_{k+1}-(\lambda_{k+1}-1)y_{k+1}-x^*$. Define $u_k = \lambda_kx_k - (\lambda_k-1)y_k - x^*$, and then we have
     \begin{align*}
-        \delta_{T} \leq \frac{2L}{T^2}\norm{x_0-x^{*}}_2^2.
+        \lambda_k^2\delta_{k+1} - \lambda_{k-1}^2\delta_k &= -\frac{L}{2}\Bigl[\norm{A+B}^2 - \norm{B}^2\Bigr] \\
+        &= -\frac{L}{2}\Bigl[\norm{\lambda_{k+1}x_{k+1}-(\lambda_{k+1}-1)y_{k+1}-x^*}^2 - \norm{\lambda_kx_k - (\lambda_k-1)y_k - x^*}^2\Bigr] \\
+        &= -\frac{L}{2}\Bigl[\norm{u_{k+1}}^2 - \norm{u_k}^2\Bigr].
     \end{align*}
-    {\Large\color{red}TODO: fix}
+    Taking a telescoping sum from $k=1$ to $k=T-1$ gives us
+    \begin{align*}
+        \lambda_{T-1}^2\delta_{T} - \lambda_{0}^2\delta_0 &= -\frac{L}{2}\left(\norm{u_{T}}^2 - \norm{u_1}^2\right).
+    \end{align*}
+    Since $\lambda_0 = 0$, $\lambda_1 = 1$, and $\norm{u_T}^2 \geq 0$, it follows that
+    \begin{align*}
+        \lambda_{T-1}^2(f(y_T)-\min f) &\leq \frac{L}{2}\norm{u_1}^2 = \frac{L}{2}\norm{\lambda_1x_1 - (\lambda_1 - 1)y_1 - x^*}^2 \\
+        &= \frac{L}{2}\norm{x_1 - x^*}^2.
+    \end{align*}
+    By Lemma \ref{lemma:nesterov:one} we have $\lambda_{T-1} \geq T/2$, and so
+    \begin{align*}
+        f(y_T)-\min f \leq \frac{L}{2\lambda_{T-1}^2}\norm{x_1 - x^*}^2 \leq \frac{2L\norm{x_1-x^*}^2}{T^2}.
+    \end{align*}
 \end{proof}
 
 \begin{thm}
@@ -1561,22 +1579,63 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     and
     \begin{align*}
-        x_{k+1} = \argmin\left\{\Psi_k(x) + \frac{1}{2\alpha_k}\norm{x-x_k}^2\right\},
+        x_{k+1} = \argmin\left\{\Psi_k(x) + \frac{1}{2\alpha_k}\norm{x-x_k}^2\right\}.
     \end{align*}
+    Then this sequence defines the \emph{forward-backward} minimization method.
 \end{defn}
 
+\begin{prop}\label{prop:foward-backward-prox-form}
+    The forward-backward update is equivalent to
+    \begin{align*}
+        x_{k+1} = \prox_{\alpha h}\left(x_k - \alpha_k\nabla f(x_k)\right).
+    \end{align*}
+\end{prop}
+
 \begin{proof}
-    By Lemma \ref{lemma:sum-smooth-convex}, then $-\nabla f(x_k) - \frac{1}{\alpha k}(x_{k+1}-x-k)$ is in $\partial h(x_{k+1})$, and so $x_{k+1} = \prox_{\alpha_k h}(x_k - \alpha_k \nabla f(x_k))$.
+    By definition of $x_{k+1}$ and Lemma \ref{lemma:sum-smooth-convex}, we know that
+    \begin{align*}
+        -\frac{1}{\alpha_k}\left(x_{k+1}-x_{k}\right) \in \partial\Psi(x_{k+1}).
+    \end{align*}
+    Since $\partial\Psi(x_{k+1}) = \partial h(x_{k+1}) + \nabla f(x_{k})$, it follows that
+    \begin{align*}
+        \frac{1}{\alpha_k}\left(x_{k}-\alpha_k\nabla f(x_{k})-x_{k+1}\right) \in \partial h(x_{k+1}).
+    \end{align*}
+    By Corollary \ref{cor:prox-criteria}, we conclude that
+    \begin{align*}
+        x_{k+1} = \prox_{\alpha h}\left(x_k - \alpha_k\nabla f(x_k)\right).
+    \end{align*}
 \end{proof}
 
 \begin{defn}
     For given $\alpha > 0$, the \emph{gradient mapping} of convex $h: \R^n \to \R$ is
     \begin{align*}
-        G_{\alpha}(x) = \frac{1}{\alpha}\left(x - \prox_{\alpha h}(x - \alpha\nabla f(x))\right).
+        G_{\alpha}(x) = \frac{1}{\alpha}\Bigl(x - \prox_{\alpha h}(x - \alpha\nabla f(x))\Bigr).
     \end{align*}
 \end{defn}
 
-\begin{lemma}\label{lemma:descent2}
+\begin{prop}
+    The gradient mapping satisfies
+    \begin{align*}
+        G_{\alpha_k}(x) \in \nabla f(x) + \partial h(x)
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Let $x^+ = \prox_{\alpha_k h}(x - \alpha_k\nabla f(x))$. Then by Corollary \ref{cor:prox-criteria},
+    \begin{align*}
+        \frac{1}{\alpha_k}\left(x - \alpha_k\nabla f(x)-x^+\right) \in \partial h(x^+),
+    \end{align*}
+    and so
+    \begin{align*}
+        G_{\alpha_k}(x) = \frac{1}{\alpha_k}\left(x - x^+\right) \in \nabla f(x) + \partial h(x^+).
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    It follows that if $G_{\alpha}(x_k) = 0$, then $x_k = x_{k+1}$ so the forward-backward method has stopped, and has achieved first-order optimality since $-\nabla f(x) \in \partial h(x)$.
+\end{rmk}
+
+\begin{lemma}{Descent 2}\label{lemma:descent2}\proofbreak
     Let $f$ is an $L$-smooth function and $h$ a convex function. Then for any $x \in \R^n$ we have
     \begin{align*}
         (f + h)(x^{+}) \leq (f + h)(x) - \left(\alpha - \frac{L\alpha^2}{2}\right)\norm{G_{\alpha}(x)}^2.
@@ -1586,17 +1645,25 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \begin{proof}
     Since $f$ is $L$-smooth, we know that
     \begin{align*}
-        f(x^+) \leq f(x) - \nabla f(x)^{\transpose}(x^+-x) + \frac{L}{2}\norm{x-x^+}^2.
+        f(x^+) \leq f(x) + \nabla f(x)^{\transpose}(x^+-x) + \frac{L}{2}\norm{x-x^+}^2.
     \end{align*}
-    Additionally, by convexity of $h$ we know that
+    By Corollary \ref{cor:prox-criteria}, we know
     \begin{align*}
-        h(x^+) + \frac{1}{\alpha}\left(x - \alpha \nabla f(x) - x^+\right)^{\transpose}(x - x^+) \leq h(x).
+        \frac{1}{\alpha}\left(x - \alpha \nabla f(x) - x^+\right) \in \partial h(x^+),
     \end{align*}
-    Since $\left(x - \alpha \nabla f(x) - x^+\right)^{\transpose}(x - x^+) = \norm{x-x^+}^2 - \nabla f(x)^{\transpose}(x-x^+)$, it follows that
+    and so by convexity of $h$ we know that
     \begin{align*}
-        f(x^+) + h(x^+) \leq f(x) + h(x) - \frac{1}{\alpha}\norm{x-x^+}^2 + \frac{L}{2}\norm{x-x^+}^2.
+        h(x) &\geq h(x^+) + \left(\frac{1}{\alpha}\left(x - \alpha \nabla f(x) - x^+\right)\right)^{\transpose}(x-x^+) \\
+        &= h(x^+) + \nabla f(x)^{\transpose}(x^+-x) + \frac{1}{\alpha}\norm{x-x^+}^2.
     \end{align*}
-    The results follows immediately by substituting the definition of $G_{\alpha}(x)$.
+    By adding these inequalities, we obtain
+    \begin{align*}
+        (f+h)(x^+) \leq (f+h)(x) - \left(\frac{1}{\alpha} - \frac{L}{2}\right)\norm{x-x^+}^2.
+    \end{align*}
+    The results follows immediately by noticing that
+    \begin{align*}
+        \norm{G_{\alpha}(x)}^2 = \frac{1}{\alpha^2}\norm{x-x^+}^2.
+    \end{align*}
 \end{proof}
 
 \begin{rmk}
@@ -1604,10 +1671,10 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{rmk}
 
 \begin{rmk}
-    Linesearch procedures for $\alpha$, such as exact or backtracking methods, can be applied here without having to know $L$.
+    Line search procedures for $\alpha$, such as exact or backtracking methods, can be applied here without having to know $L$.
 \end{rmk}
 
-\begin{thm}
+\begin{thm}\label{thm:sum_smooth_convex_convergence}
     For any $L$-smooth function $f$, and closed convex function $h$, the iterates of the forward-backward method with $\alpha = 1/L$ satisfy
     \begin{align*}
         \frac{1}{T}\sum_{k=0}^{T-1}\norm{G_{\alpha}(x_k)}^2 \leq \frac{2L}{T}\left((f+h)(x_0) - \min (f+h)\right).
@@ -1615,8 +1682,1011 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{thm}
 
 \begin{proof}
-    By Lemma \ref{lemma:descent2}, we have 
+    By Lemma \ref{lemma:descent2}, we have {\color{red}TODO}
 \end{proof}
+
+\begin{thm}
+    If we further suppose that $f+h$ is $\mu$-strongly convex, then
+    \begin{align*}
+        (f+h)(x_{k+1}) - \min(f+h) \leq \frac{1}{2}\left((f+h)(x_0) - \min(f+h)\right).
+    \end{align*}
+    if $k > \lceil 2L/\mu \rceil$.
+\end{thm}
+
+\begin{proof}
+    By homework ({\color{red}TODO: reference}) and the previous theorem \ref{thm:sum_smooth_convex_convergence} we have that
+    \begin{align*}
+        (f+h)(x_{k+1}) - \min(f+h) &\leq \frac{L}{2k}\norm{x_0-x^*}^2 \\
+        &\leq \frac{L}{\mu K}\left((f+h)(x_0) - \min(f+h)\right) \\
+        &\leq \frac{1}{2}\left((f+h)(x_0) - \min(f+h)\right).
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    Given an $L$-smooth function $f: \R^n \to \R$ and closed, proper, and convex $h: \R^n \to \R$, define sequences $\lambda_k, y_k, x_k$ starting from $0, x_0, x_0$ as follows:
+    \begin{align*}
+        \lambda_{k+1} &= \frac{1 + \sqrt{1 + 4\lambda_k^2}}{2}, \\
+        y_{k+1} &= x_k + \frac{\lambda_{k}-1}{\lambda_{k+1}}(x_{k}-x_{k-1}), \\
+        x_{k+1} &= \prox_{\alpha_k h}(y_{k+1} - \lambda_{k+1}\nabla f(y_{k+1})).
+    \end{align*}
+    This procedure is the \emph{accelerated proximal gradient} method.
+\end{defn}
+
+\begin{thm}
+    With $\alpha = 1/L$, the accelerated proximal gradient method's iterates satisfy
+    \begin{align*}
+        (f+h)(y_k) - \min (f+h) \leq \frac{2L(\norm{x_0-x^*}^2)}{(k+1)^2}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    {\color{red}\Large TODO}
+\end{proof}
+
+\subsection{Alternating Projections}
+
+\begin{rmk}
+    Consider the problem of finding the closest points between two convex sets $C_1$ and $C_2$:
+    \begin{align*}
+        \min_{x\in C_1, y \in C_2}\frac{1}{2}\norm{x-y}^2.
+    \end{align*}
+    If the sets intersect, we want to find a point in the intersection, and if not we want the pair $(x, y) \in C_1 \times C_2$ that are closest to each other.
+\end{rmk}
+
+\begin{defn}
+    The method of alternating projections is a simple approach to solving the above problem. Let $P_{1}$ be the projection function onto $C_1$, and $P_2$ which projects onto $C_2$. Then starting from some $x_0 \in C_1$, we take
+    \begin{align*}
+        y_{k+1} &= P_2(x_k), \\
+        x_{k+1} = P_1(y_{k+1}).
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    Let $C_1$ and $C_2$ be convex sets, and define $F(x) = P_2(P_1(x))$. Then $x^*$ is a fixed point of $F$ if and only if $(x^*, P_1(x^*))$ is a solution to
+    \begin{align*}
+        \min_{x\in C_1, y \in C_2}\frac{1}{2}\norm{x-y}^2.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Let $f(x, y) = \frac{1}{2}\norm{x-y}^2 + I_1(x) + I_2(y)$. Then $(x^*, y^*)$ is a minimizer if and only if
+    \begin{align*}
+        (0, 0) \in (x^* - y^*, y^*-x^*) + (\partial I_1(x^*), \partial I_2(y^*))
+    \end{align*}
+    by Lemma \ref{lemma:sum-smooth-convex},
+    if and only if $x^* = P_1(y^*)$ and $y^* = P_2(x^*)$ by Lemmma {\color{red} TODO: reference}.
+\end{proof}
+
+\begin{lemma}
+    Given $F = P_2(P_1(x))$, the function $R(x) = 2F(x) - x$ is $1$-Lipschitz. Furthermore, for all $a, b \in \R^n$, $\norm{(a+b)/2}^2 = \norm{a}^2/2 + \norm{b}^2/2 - \norm{a-b}^2/4$.
+\end{lemma}
+
+\begin{thm}
+    The iterates of the alternating projection method satisfy
+    \begin{align*}
+        \frac{1}{T}\sum_{k=0}^{T-1}\norm{x_k-F(x_k)}^2 \leq \frac{1}{T}\norm{x_0-x^*}^2.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    We know that $F(x) = (R(x)+x)/2$, and so
+    \begin{align*}
+        \norm{x_{k+1}-x^*}^2 = \norm{F(x_k)-F(x^*)}^2 = \norm{\frac{x_k}{2}+\frac{R(x_k)}{2} - \frac{x^*}{2} - \frac{R(x^*)}{2}}^2,
+    \end{align*}
+    and so
+    \begin{align*}
+        \norm{x_{k+1}-x^*}^2 = \norm{x_k-x^*}^2/2 + \norm{R(x_k)-R(x^*)}^2/2 - \norm{x_{k}-R(x_k)}^2/4.
+    \end{align*}
+    Since $R$ is $1$-Lipschitz, it follows that $\norm{x_{k}-R(x_k)} \leq \norm{R(x_k)-R(x^*)}$. {\color{red}ETC}
+\end{proof}
+
+\subsection{Black-box convex optimization}
+
+\begin{defn}
+    Black-box convex optimization is the problem of solving
+    \begin{align*}
+        \min_{x\in\R^d}f(x),
+    \end{align*}
+    where the only access we have is computation (via black-box oracle) of $(f(x), g(x))$ such that $g(x) \in \partial f(x)$.
+\end{defn}
+
+\begin{exmp}
+    In HW3 ({\color{red}TODO: reference}), we solved the SVM problem
+    \begin{align*}
+        \min_{w}\sum_{i}\left[\max\left(0, 1-y_ix_i^{\transpose}w\right) + \frac{\lambda}{2}\norm{\omega}^2\right].
+    \end{align*}
+\end{exmp}
+
+\begin{defn}
+    Subgradient descent is an optimization method defined by $x_{k+1} = x_k - \alpha_k\partial f(x_k)$.
+\end{defn}
+
+\begin{rmk}
+    With a non-smooth function, there is no guarantee of any convergence to first-order optimality.
+\end{rmk}
+
+\begin{exmp}
+    Consider minimizing $f(x) = \abs{x}$ using some constant step size $\alpha$, and $x_0 = 2.5\alpha$. If we use the subgradient $+1$ when $x \geq 0$ and $-1$ when $x < 0$, then subgradient descent will oscillate between $-0.5\alpha$ and $+0.5\alpha$ forever.
+\end{exmp}
+
+\begin{lemma}\label{lemma:subgradient-descent}
+    Let $f: \R^n \to \R$ be a convex function, and let $x^* \in \argmin f$. Then, the subgradient descent iterates satisfy
+    \begin{align*}
+        \norm{x_{k+1}-x^*}^2 \leq \norm{x_k-x^*}^2 - 2\alpha_k\left(f(x_k)-f(x^*)\right) + \alpha_k^2\norm{g_k}^2.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        \norm{x_{k+1}-x^*}^2 &= \norm{x_k-\alpha_kg_k-x^*}^2 = \norm{x_k-x^*}^2 - 2\langle x_k-x^*, \alpha_kg_k \rangle + \alpha_k^2\norm{g_k}^2.
+    \end{align*}
+    By convexity of $f$, we know that $f(x_k) + \langle g_k, x^*-x_k\rangle \leq f(x^*)$, and so
+    \begin{align*}
+        -\langle g_k, x_k - x^* \rangle = \langle g_k, x^* - x_k \rangle \leq f(x^*) - f(x_k) = -\left(f(x_k)-f(x^*)\right),
+    \end{align*}
+    and so
+    \begin{align*}
+        \norm{x_{k+1}-x^*}^2 &\leq \norm{x_k-x^*}^2 - 2\alpha_k\left(f(x_k)-f(x^*)\right) + \alpha_k^2\norm{g_k}^2.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}\label{lemma:lipschitz-convex-subgradient}
+    If $f: \R^n \to \R$ is convex and $\mu$-Lipschitz, then for all $x \in \R^n$ and $g \in \partial f(x)$ we have $\norm{g} \leq \mu$.
+\end{lemma}
+
+\begin{proof}
+    Assume, for the sake of contradiction, that there exists $x$ such that $g \in \partial f(x)$ but $\norm{g} > \mu$. Letting $y = x + g$, it follows that
+    \begin{align*}
+        f(y) \geq f(x) + \langle g, y-x\rangle = f(x) + \norm{g}^2 > f(x) + \mu\norm{y-x}.
+    \end{align*}
+    Therefore, $\norm{f(y)-f(x)} > \mu\norm{y-x}$, and so $f$ cannot be Lipschitz.
+\end{proof}
+
+{\color{red}TODO:!!!!! prove converse of above}
+
+\begin{thm}\label{thm:subgradient-descent}
+    Let $f: \R^n \to \R$ be a convex $\mu$-Lipschitz function, and suppose $x^* \in \argmin f$. Then the iterates of subgradient descent satisfy
+    \begin{align*}
+        \min_{k \leq T}\left(f(x_k)-f(x^*)\right) \leq \frac{\norm{x_0-x^*}^2 + \mu^2\sum_{k=0}^{T}\alpha_k^2}{2\sum_{k=0}^{T}\alpha_k}.
+    \end{align*}
+    If $\sum_{k=0}^{\infty}\alpha_k = \infty$ and $\sum_{k=0}^{\infty}\alpha_k^2 < \infty$, then
+    \begin{align*}
+        \lim_{T\to\infty}\min_{k\leq T}\left\{f(x_k)-\min f\right\} = 0.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    For any $k$, we know by Lemma \ref{lemma:subgradient-descent} that
+    \begin{align*}
+        2\alpha_k\left(f(x_k) - f(x^*)\right) \leq \norm{x_k-x^*}^2 - \norm{x_{k+1}-x^*}^2 + \alpha_k^2\norm{g_k}^2.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        2\sum_{k=0}^{T}\alpha_k\left(f(x_k) - f(x^*)\right) \leq \norm{x_0-x^*}^2 - \norm{x_{T+1}-x^*}^2 + \sum_{k=0}^{T}\alpha_k^2\norm{g_k}^2.
+    \end{align*}
+    Applying Lemmma \ref{lemma:lipschitz-convex-subgradient}, we can lower-bound this sum by
+    \begin{align*}
+        \min_{k\leq T}\left(f(x_k)-f(x^*)\right)2\sum_{k=0}^{T}\alpha_k \leq \norm{x_0-x^*}^2 + \mu^2\sum_{k=0}^{T}\alpha_k^2.
+    \end{align*}
+\end{proof}
+
+\begin{cor}\label{cor:subgradient-descent-step-size}
+    For constant $\alpha$,
+    \begin{align*}
+        \min_{k \leq T}\left\{f(x_k)-f(x^*)\right\} \leq \frac{\norm{x_0-x^*}^2}{2\alpha T} + \frac{\mu^2\alpha}{2}.
+    \end{align*}
+    Let $\alpha = \varepsilon/\mu^2$, and take any $T \geq \mu^2\norm{x_0-x^*}^2/\varepsilon^2$, then we have
+    \begin{align*}
+        \min_{k \leq T}\left\{f(x_k)-f(x^*)\right\} \leq \varepsilon.
+    \end{align*}
+\end{cor}
+
+\begin{proof}
+    {\color{red}TODO: prove}
+\end{proof}
+
+\begin{rmk}
+    Therefore, we need $T \in \Omega(1/\varepsilon^2)$ to find an $\varepsilon$-minimizer. For gradient descent, we only needed $T \in \Omega(1/\varepsilon)$, and with accelerated gradient descent we only needed $T \in \Omega(1/\sqrt{\varepsilon})$.
+\end{rmk}
+
+\begin{thm}
+    There exists a convex $\mu$-Lipschitz function $f: \R^n \to R$ and a subgradient oracle such that any algorithm of the form
+    \begin{align*}
+        x_{k+1} \in x_0 + \span\left\{ g(x_0), g(x_1), \ldots, g(x_k) \right\},
+    \end{align*}
+    if $k < d$ then
+    \begin{align*}
+        f(x_k) - \min f \geq \frac{\mu\norm{x_0-x^*}^2}{2\left(2+\sqrt{k+1}\right)}.
+    \end{align*}
+\end{thm}
+
+\begin{rmk}
+    This is equivalent to $T \in \Omega(1/\varepsilon^2)$.
+\end{rmk}
+
+\begin{proof}
+    See Nesterov's book, Theorem 3.2.1.
+\end{proof}
+
+\subsection{Stochastic Gradient Descent}
+
+\begin{thm}
+    If we have access to a stochastic oracle for an $L$-Lipschitz smooth function $f$, with unbiased estimates of the gradient $g(x, z)$ such that
+    \begin{align*}
+        \expectationof{\norm{g(x, z) - \nabla f(x)}^2} \leq \sigma^2,
+    \end{align*}
+    then with $0 \leq \alpha_k \leq 1/L$ we have
+    \begin{align*}
+        \expectationof{\min_{k\leq T}\norm{\nabla f(x_k)}} \leq \frac{f(x-0)-\min f + \sum_{k=0}^{T-1}(L\alpha_k^2\sigma^2)/2}{\sum_{k=0}^{T-1}\alpha_k\left(1 - (L\alpha_k)/2\right)}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Since $f$ is $L$-smooth, by Homework/Taylor expansion ({\color{red}TODO: reference}) we know that
+    \begin{align*}
+        f(x_{k+1}) &\leq f(x_k) + \langle \nabla f(x_k), x_{k+1} - x_k \rangle + \frac{L}{2}\norm{x_{k+1}-x_k}^2 \\
+        &= f(x_k) + \alpha_k\langle \nabla f(x_k), g_k\rangle + \frac{L\alpha_k^2}{2}\norm{g_k}^2.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \expectationof{f(x_{k+1}|x_k)} &\leq f(x_k) + \alpha_k\expectationof{\langle \nabla f(x_k), g_k\rangle | x_k} + \frac{L\alpha_k^2}{2}\expectationof{\norm{g_k}^2 | x_k} \\
+        &= f(x_k) + \alpha_k\langle \nabla f(x_k), \expectationof{g_k, x_k} \rangle + \frac{L\alpha_k^2}{2}\expectationof{\norm{g_k}^2 | x_k} \\
+        &\leq f(x_k) + \alpha_k\norm{\nabla f(x_k)}^2 + \frac{L\alpha_k^2}{2}\left(\norm{\nabla f(x_k)}^2 + \sigma^2\right) \\
+        &= f(x_k) - \left(\alpha_k - \frac{L\alpha_k^2}{2}\right)\norm{\nabla f(x_k)}^2 + \frac{L\alpha_k^2\sigma^2}{2}.
+    \end{align*}
+    By the Law of Total Expectation \ref{total-expectation-law},
+    \begin{align*}
+        \expectationof{f(x_{k+1})} \leq \expectationof{f(x_k)} - \left(\alpha_k - \frac{L\alpha_k^2}{2}\right)\expectationof{\norm{\nabla f(x_k)}^2} + \frac{L\alpha_k^2\sigma^2}{2}.
+    \end{align*}
+    It follows by induction that
+    \begin{align*}
+        \expectationof{f(x_T)} \leq f(0) - \sum_{k=0}^{T-1}\Bigl[\left(\alpha_k - \frac{L\alpha^2}{2}\expectationof{\norm{\nabla f(x_k)}^2}\right)\Bigr] + \sum_{k=0}^{T-1}\frac{L\alpha_k^2\sigma^2}{2}.
+    \end{align*}
+    Note that
+    \begin{align*}
+        \sum_{k=0}^{T-1}\Bigl[\left(\alpha_k - \frac{L\alpha^2}{2}\expectationof{\norm{\nabla f(x_k)}^2}\right)\Bigr] \geq \min_{k}\expectationof{\norm{\nabla f(x_k)}}\sum_{k=0}^{T-1}\left(\alpha_k - \frac{L\alpha_k^2}{2}\right).
+    \end{align*}
+    It follows that
+    \begin{align*}
+        \min_{k}\expectationof{\norm{\nabla f(x_k)}}\sum_{k=0}^{T-1}\left(\alpha_k - \frac{L\alpha_k^2}{2}\right) \leq \expectationof{f(x_0)} - \expectationof{f(x_{T})} + \sum_{k=0}^{T-1}\frac{L\alpha_k^2\sigma^2}{2}.
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    If we take $\alpha_k = \frac{1}{L\sqrt{k+1}}$, it follows that $1 - \frac{L\alpha_k}{2} \geq 1/2$, and so
+    \begin{align*}
+        \min_{k}\expectationof{\norm{\nabla f(x_k)}} \leq 2\frac{f(x_0) - \min f + \frac{\sigma^2}{2L}}{\sqrt{T+1}}.
+    \end{align*}
+\end{cor}
+
+\begin{thm}
+    Suppose we additionally know $f$ is convex and has minimizer $x^* \in \argmin f$. If we take $\alpha_k = \alpha \leq 1/L$, then
+    \begin{align*}
+        \expectationof{\min_{k \leq T}\left\{f(x_k)-f(x^*)\right\}} \leq \frac{\norm{x_0-x^*}^2}{2\alpha(T+1)} + \alpha\sigma^2.
+    \end{align*}
+    In particular, if $\alpha = 1/\sqrt{T+1}$ and $T \geq L^2$, then
+    \begin{align*}
+        \expectationof{\min_{k \leq T}\left\{f(x_k)-f(x^*)\right\}} \leq \frac{\norm{x_0-x^*}^2 + 2\sigma^2}{2\sqrt{T+1}}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    By the argument used in the preceeding proof,
+    \begin{align*}
+        \expectationof{f(x_{k+1})|x_k} \leq f(x_k) - \left(\alpha_k - \frac{L\alpha_k^2}{2}\right)\norm{\nabla f(x_k)}^2 + \frac{L\alpha_k^2}{2}\sigma^2.
+    \end{align*}
+    By convexity of $f$,
+    \begin{align*}
+        \expectationof{f(x_{k+1})|x_k} &\leq f(x^*) - \langle \nabla f(x_k), x^*-x_k\rangle - \left(\alpha_k - \frac{L\alpha_k^2}{2}\right)\norm{\nabla f(x_k)}^2 + \frac{L\alpha_k^2}{2}\sigma^2
+    \end{align*}
+    Since $\expectationof{\norm{g_k}^2 | x_k} - \sigma^2 \leq \expectationof{\norm{\nabla f(x_k)}^2 | x_k}$, we have
+    \begin{align*}
+        \expectationof{f(x_{k+1})|x_k} &\leq f(x^*) - \langle \nabla f(x_k), x^*-x_k\rangle - \frac{\alpha}{2}\expectationof{\norm{g_k}^2|x_k} + L\alpha_k^2\sigma^2 \\
+        &= f(x^*) - \expectationof{\langle g_k, x^* - x_k\rangle + \frac{\alpha}{2}\norm{g_k}^2 | x_k} + L\alpha_k^2\sigma^2.
+    \end{align*}
+    Using the fact that $\norm{x_{k+1}-x^*}^2 = \norm{(x_k-x^*) - \alpha g_k}^2$, which equals $\norm{x_k-x^*}^2 + 2\alpha\langle g_k, x^*-x\rangle + \alpha^2\norm{g_k}^2$, we obtain that
+    \begin{align*}
+        \expectationof{f(x_{k+1})|x_k} &\leq f(x^*) - \expectationof{\frac{1}{2\alpha}\left(\norm{x_{k+1}-x^*}^2 - \norm{x_k-x^*}^2\right) | x_k} + L\alpha^2\sigma^2.
+    \end{align*}
+    Note that $\alpha < 1/L$ so $L\alpha^2 < \alpha$. Finally, by the Law of Total Expectation \ref{total-expectation-law},
+    \begin{align*}
+        \expectationof{f(x_{k+1})-f(x_k)} \leq \expectationof{\frac{1}{2\alpha}\left(\norm{x_{k+1}-x^*}^2 - \norm{x_k-x^*}^2\right)} + \alpha\sigma^2.
+    \end{align*}
+    We can then take an average to bound the minimum.
+\end{proof}
+
+\begin{rmk}
+    The achieved convergence rate of $O(1/\sqrt{T})$ is the same as for deterministic non-smooth convex optimization.
+\end{rmk}
+
+\begin{rmk}
+    In randomized coordinate descent, we randomly choose a single dimension, and perform one step of stochastic gradient descent on the associated partial derivative.
+\end{rmk}
+
+\begin{thm}
+    With stochastic coordinate descent on $L$-smooth $f: \R^d \to \R$, with $\alpha = 1/(Ld)$, then
+    \begin{align*}
+        \expectationof{\min_{k\leq T}\norm{\nabla f(x_k)}^2} \leq \frac{2Ld(f(x_0)-\min f)}{T}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        f(x_{k+1}) &\leq f(x_k) + \langle \nabla f(x_k), x_{k+1}-x_k\rangle + \frac{L}{2}\norm{x_{k+1}-x_k}^2 \\
+        &= f(x_k) + \frac{1}{Ld}d\frac{\partial f}{\partial x_i}(x)\langle \nabla f(x_k), e_i\rangle + \frac{Ld^2}{2Ld^2}\left(\frac{\partial f(x)}{\partial x_i}\right)^2 \\
+        &= f(x_k) - \frac{1}{2L}\left(\frac{\partial f(x)}{\partial x_i}\right)^2.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \expectationof{f(x_{k+1})} &\leq \expectationof{f(x_k)} - \frac{1}{2L}\expectationof{\left(\frac{\partial f(x)}{\partial x_i}\right)^2} \\
+        &= \expectationof{f(x_k)} - \frac{1}{2L d}\norm{\nabla f(x_k)}^2.
+    \end{align*}
+    Induction then yields
+    \begin{align*}
+        \expectationof{f(x_{k+1})} \leq f(x_0) - \frac{1}{2Ld}\sum_{k=0}^{T}\expectationof{\norm{\nabla f(x_k)}^2}.
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    Stochastic variance reduction {\color{red}TODO}
+\end{defn}
+
+\subsection{Newton-Raphson method}
+
+\begin{rmk}
+    The Newton-Raphson method is a root-finding algorithm that finds zeros by constructing an approximation to a function, analytically finding a root of the approximation. A new approximation is then built at the new root estimate, and the process repeats.
+\end{rmk}
+
+\begin{exmp}
+    Consider $f: \R \to \R$, and some initial root estimate $x_k$. Then the Newton-Raphson method proceeds approximating $f$ as $\tilde{f}(x) = f(x_k) + f'(x_k)(x-x_k)$. Then solving $\tilde{f}(x_{k+1}) = 0$ gives
+    \begin{align*}
+        x_{k+1} - x_k &= -f(x_k)/f'(x_k), \\
+        x_{k+1} &= x_k - \frac{f(x_k)}{f'(x_k)}.
+    \end{align*}
+\end{exmp}
+
+\begin{rmk}
+    We can find critical points of a function by applying the Newton-Raphson method to the first derivative of a function, since the critical points of a function are precisely the roots of its first derivative.
+\end{rmk}
+
+\begin{defn}
+    The \emph{secant method} is similar to Newton's method, but uses a secant approximation to the first derivative. In particular,
+    \begin{align*}
+        x_{k+1} = x_k - \left(\frac{x_k-x_{k-1}}{f(x_k)-f(x_{k+1})}\right)f(x_k).
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    The secant method converges superlinearly, with convergence rate of order $\varphi = (\sqrt1+{5})/2$.
+\end{prop}
+
+\begin{defn}
+    In higher dimensions, the Newton-Raphson iteration for $F: \R^n \to \R^n$ is given by
+    \begin{align*}
+        x_{k+1} &= \argmin_{x\in \R^n}\norm{F(x_k) + dF(x_k)(x-x_k)}_2 \\
+        &= x_k - (dF(x_k))^{\dagger}F(x_k).
+    \end{align*}
+    To find the zeros of $F = \nabla f$ for $f: \R^n \to \R$, this instead takes the form
+    \begin{align*}
+        x_{k+1} &= x_k - \left(\nabla^2 f(x_k)\right)^{\dagger}\nabla f(x_k).
+    \end{align*}
+\end{defn}
+
+\begin{prop}\proofbreak
+    \begin{itemize}
+        \item If $\nabla^2 f(x_k) \prec 0$, then $f(x_k)$ is concave, and the Newton-Raphson method will ascend.
+        \item If $\nabla^2 f(x_k) \succ 0$, then $f(x_k)$ is convex, and the Newton-Raphson method will descend.
+        \item If $\nabla^2 f(x_k)$ is indefinite, then $f(x_k)$ is a saddle point, and nothing can be said without further information.
+    \end{itemize}
+\end{prop}
+
+\begin{thm}
+    Let $F: \R^n \to \R^n$ be a continuously differentiable map, and assume $F(x^*) = 0$. If $dF(x^*)$ is nonsingular, then there exists a neighborhood $S$ of $x^*$ such that for any $x_0 \in S$ the iterates of the Newton-Raphson method will satisfy $x_k \in S$, $dF(x_k)$ is nonsingular, and $x_k$ will converge to $x^*$.
+\end{thm}
+
+\begin{exmp}
+    In general, global convergence is not guaranteed, and the algorithm may not converge to $x^*$ if $dF(x^*)$ is singular. For example, consider $F(x) = \exp(-x^{-2})$. While $x = 0$ is the only root, the Newton-Raphson iterates will not converge to $x = 0$.
+\end{exmp}
+
+\begin{thm}
+    Let $F: \R^d \to \R^d$ be continuously differentiable, and assume that $F(x^*) = 0$ for some $x^* \in \R^d$, and that $\nabla F(x^*)$ is nonsingular. Suppose furthermore that there exists some $r > 0$ such that $\nabla F(x)$ is $L$-Lipschitz on a ball centered at $x^*$ with radius $r$.
+
+    Then there exists $\varepsilon > 0$ such that $\norm{x_0-x^*}_2 < \varepsilon$, then the iterates of the Newton-Raphson method satisfies
+    \begin{align*}
+        \norm{x_k-x^*}_2 < \varepsilon \\
+        \nabla F(x_k) \textrm{ is nonsingular} \\
+        \norm{x_{k+1}-x^*} \leq c\norm{x_k-x^*}^2,
+    \end{align*}
+    for some $c > 0$.
+\end{thm}
+
+\begin{proof}
+    Let $M = \norm{\nabla F(x^*)^{-1}}_2$. Without loss of generality, we assume that $\nabla F(x)$ is nonsingular for all $x \in B(x^*, r)$. Define $\varepsilon  = \min(r, 1/(2L))$.
+
+    Recall that if $A$ is nonsingular, and $\norm{A^{-1}(B_A)}_2 < 1$, then $B$ is nonsingular with $\norm{B^{-1}\norm{A^{-1}}/(1-\norm{A^{-1}(B-A)})}$. Since $A$ is invertible, $B$ is nonsingular if and only if $A^{-1}B$ is nonsingular. Notice that
+    \begin{align*}
+        \norm{A^{-1}Bx} = \norm{(I+A^{-1}B - I)x} = \norm{(I+A^{-1}(B-A))x}.
+    \end{align*}
+    By the reverse triangle inequality and then by Cauchy-Schwarz,
+    \begin{align*}
+        \norm{A^{-1}Bx} \geq \norm{x} - \norm{A^{-1}(B-A)x} \geq (1 - \norm{A^{-1}(B-A)})\norm{x}.
+    \end{align*}
+    Therefore, $A^{-1}Bx$ is zero if and only if $x = 0$, and so $B$ is invertible. Furthermore,
+    \begin{align*}
+        \norm{B^{-1}}(1-\norm{A^{-1}(B_A)}) \leq \norm{B^{-1}} - \norm{A^{-1}(B-A)B^{-1}} = \norm{B^{-1}} - \norm{A^{-1} - B^{-1}} \leq \norm{A^{-1}}.
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    In HW 4 ({\color{red}TODO: copy to here}), we show Newton-Raphson can diverge. For example, consider $F(x) = \abs{x}^{1/4}$. It might also ``cycle'', for example $x^3 - 2x + 2$. For some $x$, the iterates will satisfy $x_{k+2} = x_k$. If $\nabla F(x^*)$ is not invertible, the convergence might be subquadratic.
+
+    If $A \in M_{d\times d}(\R)$ is invertible, then the iterates $x_k$ when applied to $F(x)$, and $y_k$ when applied to $F(Ay)$, and $x_0 = Ay_0$, then $x_k = Ay_k$ for all $k$.
+\end{rmk}
+
+\subsection{Quasi-Newton methods}
+
+\begin{rmk}
+    In both gradient descent and the Newton-Raphson method, we take $x_{k+1}$ to be a minimizer of
+    \begin{align*}
+        f(x_k) + \nabla f(x_k)(x-x_k) + (x-x_k)^{*}B(x-x_k),
+    \end{align*}
+    where $B_k = I$ for gradient descent, and $B_k = \nabla^2f(x_k)$ for Newton's method. Can we find a happy medium --- some $B_k$ that is computationally cheaper than $\nabla^2 f(x_k)$, but better at directing the optimization than $I$?
+\end{rmk}
+
+\begin{rmk}
+    Suppose that $\nabla^2 f(x_k)$ is nonsingular, and consider its eigendecomposition $\nabla^2 f(x_k) = V\Lambda V^{\transpose}$, ordered such that $\Lambda_{kk}$ is a non-increasing sequence. Then the Newton-Raphson update step is
+    \begin{align*}
+        p_k &= -(\nabla^2 f(x_k))^{\transpose}\nabla f(x_k) = -(V\Lambda^{-1}V^{\transpose})\nabla f(x_k).
+    \end{align*}
+    Let $\Lambda_{+}$ denote the diagonal matrix of positive eigenvalues, $\Lambda_{-}$ the negative eigenvalues, and $V_{+}$, $V_{-}$ the corresponding eigenvectors. Then
+    \begin{align*}
+        p_{k} &= -V_{+}\lambda_{+}^{-1}V_{+}^{\transpose}\nabla f(x_k) - V_{-}\lambda_{-}^{-1}V_{-}^{\transpose}\nabla f(x_k) = -p_k^{+} - p_{k}^-.
+    \end{align*}
+    Then $\nabla f(x_k)^{\transpose}p_k^{+} \leq 0$, since
+    \begin{align*}
+        \nabla f(x_k)^{\transpose}p_k^+ = -\nabla f(x_k)^{\transpose}V_{+}\Lambda_{+}^{-1}V_{+}^{\transpose}\nabla f(x_k),
+    \end{align*}
+    which is negative since $V_{+}\Lambda_{+}^{-1}V_{+}^{\transpose}$ is positive semi-definite (not positive-definite unless $\nabla^2f(x_k)$ is, since $V_{+}\Lambda_{+}^{-1}V_{+}^{\transpose}$ is not full rank).
+\end{rmk}
+
+\begin{lemma}
+    Assume that $B_k \succeq 0$, $g_k \neq \vec{0}$, and let $p_k$ be defined by
+    \begin{align*}
+        \argmin\left\{ f_k + g_k^{\transpose}p + p^{\transpose}B_kp \right\}.
+    \end{align*}
+    Then $g_k^{\transpose}p_k < 0$.
+\end{lemma}
+
+\begin{proof}
+    $p_k$ is a unique minimizer by strong convexity, and so $p_k = -B_kg_k$. Therefore, $g_k^{\transpose}p_k = -g_k^{\transpose}B_kg_k < 0$.
+\end{proof}
+
+\begin{rmk}
+    Warning: this is not enough to guarantee descent, only that we have a descent direction. We need sufficiently small steps in order to guarantee descent. We could use a line search method (e.g. Armijo's) to find a step that produces descent.
+\end{rmk}
+
+\begin{defn}{Modified Newton's method}\proofbreak
+    Given $x_0$, consider a sequence of positive definite matrices $B_k$, and let
+    \begin{align*}
+        p_k &= B_k^{-1}\nabla f(x_k), \\
+        \alpha_k &\;\textrm{sufficiently small to give descent}, \\
+        x_{k+1} &= x_k - \alpha_kp_k.
+    \end{align*}
+\end{defn}
+
+\begin{defn}{Variant \#1}\proofbreak
+    We could try essentially only using the positive eigenvalues.
+    
+    Fix some small $\varepsilon > 0$. Consider an eigendecomposition $\nabla^2 f(x_k) = V\Lambda V^{\transpose}$, set $\overline{\lambda}_i = \max(\lambda_i, \varepsilon)$, and $\bar{\Lambda} = \diag(\bar{\lambda}_i)$. Finally, $B_k = V\bar{\Lambda}V^{\transpose}$.
+\end{defn}
+
+\begin{defn}{Variant \#2}\proofbreak
+    We could try only using the \emph{magnitude} of non-zero eigenvalues.
+    
+    Fix some small $\varepsilon > 0$. Consider an eigendecomposition $\nabla^2 f(x_k) = V\Lambda V^{\transpose}$, set $\overline{\lambda}_i = \max(\abs{\lambda_i}, \varepsilon)$, and $\bar{\Lambda} = \diag(\bar{\lambda}_i)$. Finally, $B_k = V\bar{\Lambda}V^{\transpose}$.
+\end{defn}
+
+\begin{rmk}
+    This is essentially descending using Newton's method for strongly positive or negative eigenvalues, and applying gradient descent where $\abs{\lambda_i} \leq \varepsilon$.
+\end{rmk}
+
+\begin{defn}{Variant \#3}\proofbreak
+    We could try shifting the entire spectrum to make it positive.
+    
+    For some $\varepsilon > 0$, if $\lambda_{min}(\nabla^2 f(x_k)) > \varepsilon$, then take $B_k = \nabla^2 f(x_k)$. Otherwise, take $B_k = \nabla^2 f(x_k) + \gamma I$, where $\gamma = \varepsilon - \lambda_{min}$.
+\end{defn}
+
+\begin{rmk}
+    When $\nabla^2 f(x_k) \succeq \varepsilon I$, all three variants above yield $B_k = \nabla^2 f(x_k)$, and so the update equation reduces to the standard Newton-Raphson method with a step-size, and local quadratic convergence under strong convexity holds.
+\end{rmk}
+
+\begin{lemma}{Descent Lemma for Modified Newton}\label{lemma:descent-modified-newton}\proofbreak
+    Suppose that $f: \R^n \to \R$ is $L$-smooth. Then
+    \begin{align*}
+        x_{k+1} &= x_k - \alpha_k B_k^{-1}\nabla f(x_k).
+    \end{align*}
+    If $B_k \succ 0$, then
+    \begin{align*}
+        f(x_{k+1}) - f(x_k) \leq -\left(\frac{\alpha_k}{\lambda_{1}(B_k)} - \frac{L\alpha_k}{2\lambda_n^2(B_k)}\right)\norm{\nabla f(x_k)}_2^2,
+    \end{align*}
+    where $\lambda_1$ is the largest eigenvalue of $B_k$, and $\lambda_n$ is the smallest.
+\end{lemma}
+
+\begin{proof}
+    {\color{red}\Large HW \#5}
+\end{proof}
+
+\begin{rmk}
+    The step size can be chosen such that
+    \begin{align*}
+        f(x_{k+1}) \leq f(x_k) - c\norm{\nabla f(x_k)}_2^2 \leq f(x_0) - c\sum_{i=1}^{k}\norm{\nabla f(x_i)}_2^2.
+    \end{align*}
+\end{rmk}
+
+\begin{thm}
+    If $f: \R^n \to \R$ is $L$-smooth, $\min f > -\infty$, and there exist $\alpha, \beta$ such that $0 < \alpha \leq \lambda_i(B_k) \leq \beta < \infty$, then there exists a constant $M > 0$ such that
+    \begin{align*}
+        \min_{i\leq T}\norm{\nabla f(x_i)} \leq \frac{M}{\sqrt{T}}.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    {\color{red}\Large HW \# 5}
+\end{proof}
+
+\begin{rmk}
+    To perform these variants of the modified Newton's method, we need to compute the Hessian, taking $O(n^2)$ space, we need to solve the linear system $B_k$ taking $O(n^3)$ time, and we need to compute an eigendecomposition. When $\varepsilon$ is chosen to be very small, numerical error and instability is likely to arise ($B_k$ will be ill-conditioned).
+
+    Can we extend the secant method to higher dimensions, to achieve superlinear convergence without computing and inverting the Hessian?
+
+    In the standard secant method, we take
+    \begin{align*}
+        m_{k}(x) = f(x_k) + f'(x_k)(x-x_k) + \frac{1}{2}\left(\frac{f'(x_k)-f'(x_{k-1})}{x_k-x_{k-1}}\right)(x-x_k)^2.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        m_k'(x_k) &= f'(x_k) \\
+        m_k'(x_{k-1}) &= f'(x_k) + \frac{f'(x_k)-f'(x_{k-1})}{(x_k-x_{k-1})}(x_{k-1}-x_k) = f'(x_{k-1}).
+    \end{align*}
+    Taking inspiration from this property, we want a generalized method for $f: \R^n \to \R$ that satisfies the following properties:
+    \begin{enumerate}
+        \item $B_k$ is symmetric,
+        \item $m_k(x_k) = f(x_k)$,
+        \item $\nabla m_k(x_k) = \nabla f(x_k)$,
+        \item $\nabla m_k(x_{k-1}) = \nabla f(x_{k-1})$,
+        \item $B_k \succ 0$,
+        \item and updating and solving $B_k$ is computationally efficient.
+    \end{enumerate}
+\end{rmk}
+
+\begin{lemma}
+    If $A \in M_{n,n}(\R)$ is invertible, and $u, v \in \R^n$ such that $v^{\transpose}A^{-1}u \neq 1$, then $A + uv^{\transpose}$ is invertible, and
+    \begin{align*}
+        (A + uv^{\transpose})^{-1} = A^{-1} - \frac{A^{-1}uv^{\transpose}A^{-1}}{1 + v^{\transpose}A^{-1}u}.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    {\color{red}\Large HW \# 5}
+\end{proof}
+
+\begin{defn}
+    We define a generalized secant method satisfying the properties above. By property (2) and (3), we need
+    \begin{align*}
+        m_k(x) &= f(x_k) + \nabla f(x_k)^{\transpose}(x-x_k) + \frac{1}{2}(x-x_k)^{\transpose}B_k(x-x_k).
+    \end{align*}
+    Since
+    \begin{align*}
+        \nabla m_k(x) &= \nabla f(x_k) + B_k(x-x_k),
+    \end{align*}
+    in order to satisfy property (4) we need
+    \begin{align*}
+        \nabla m_k(x_{k-1}) &= \nabla f(x_k) + B_k(x_{k-1}-x_k) = \nabla f(x_{k-1})
+    \end{align*}
+    so we require
+    \begin{align*}
+        B_k(x_{k}-x_{k-1}) &= \nabla f(x_k) - \nabla f(x_{k-1}).
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    In the \emph{symmetric rank-one update}, we require that $B_{k+1}$ and $B_{k}$ differ by a rank one matrix, so $B_{k+1} = B_{k} + \alpha ww^{\transpose}$. Define $s_k = x_k - x_{k+1}$ and $y_k = \nabla f(x_k)-\nabla f(x_{k-1})$, so property (4) becomes $B_{k+1}s_{k+1} = y_{k+1}$. Expanding this, we obtain
+    \begin{align*}
+        B_ks_{k+1} - y_{k+1} &= -\left(\alpha w^{\transpose}s_{k+1}\right)w,
+    \end{align*}
+    and so we take
+    \begin{align*}
+        w &= \left(B_{k}s_{k+1}-y_{k+1}\right).
+    \end{align*}
+    Therefore, $0 = B_{k+1}s_{k+1} - y_{k+1}$ yields
+    \begin{align*}
+        0 &= B_{k+1}s_{k+1} - y_{k+1} = B_ks_{k+1} + \alpha ww^{\transpose}s_{k+1} - y_{k+1} \\
+        &= B_ks_{k+1}\left(1 + \alpha w^{\transpose}s_{k+1}\right) - \left(1 + \alpha w^{\transpose}s_{k+1}\right)y_{k+1} \\
+        &= \left(1 + \alpha w^{\transpose}s_{k+1}\right)\left(B_{k}s_{k+1} - y_{k+1}\right).
+    \end{align*}
+    If $B_{k}s_{k+1} - y_{k+1}$ is already zero, we simply take $w = \vec{0}$ and do not update $B_k$, otherwise we need $1 + \alpha w^{\transpose}s_{k+1}$ to be zero, and so we take
+    \begin{align*}
+        \alpha &= -\frac{1}{(B_ks_{k+1} - y_{k+1})^{\transpose}s_{k+1}}.
+    \end{align*}
+    This yields the symmetric rank-one update,
+    \begin{align*}
+        B_{k+1}= B_k - \frac{(B_ks_{k+1}-y_k)(B_ks_{k+1}-y_{k+1})^{\transpose}}{(B_ks_{k+1} - y_{k+1})^{\transpose}s_{k+1}}.
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    While this update is computationally efficient, there is no guarantee that $B_{k+1}$ will remain positive definite. However, we can construct positive definite $B_{k+1}$ if we instead use a rank-two update.
+\end{rmk}
+
+\begin{defn}{BFGS method}\proofbreak
+    The BFGS method, named after Broyden, Fletcher, Goldfarb, and Shanno who independently constructed the same method, uses a symmetric rank two update to $B_k$.
+
+    Recall that any rank two matrix can be written as $\alpha uu^{\transpose} + \beta vv^{\transpose}$ for some $\alpha, \beta \in \R$ and $u, v \in \R^d$. We can use rank two updates to construct a modified Newton's method. In particular, since we used $w = B_ks_{k+1} - y_{k+1}$ for the symmetric rank one update, we will use $u = y_{k+1}$ and $v = B_ks_{k+1}$. Property (4) can then be satisfied by taking
+    \begin{align*}
+        \alpha &= \frac{1}{\langle y_{k+1}, s_{k+1}\rangle}, \\
+        \beta &= -\frac{1}{\langle s_{k+1}, B_ks_{k+1}\rangle}, \\
+        u &= y_{k+1}, \\
+        v &= B_ks_{k+1}.
+    \end{align*}
+\end{defn}
+
+\begin{lemma}
+    Assume that $B_k$ is positive definite, and $y_{k+1}^{\transpose}s_{k+1} > 0$. Then in the rank two update scheme given above, $B_{k+1}$ will also be positive definite.
+\end{lemma}
+
+\begin{proof}
+    {\color{red}\Large TODO: HW \#5}
+\end{proof}
+
+\begin{lemma}
+    If $f$ is $\mu$-strongly convex and $x_k \neq x_{k-1}$, then $y_{k+1}^{\transpose}s_{k+1} > 0$.
+\end{lemma}
+
+\begin{proof}
+    Since $f$ is $\mu$-strongly convex, by Lemma \ref{lemma:strong-convexity} we have
+    \begin{align*}
+        y_{k+1}^{\transpose}s_{k+1} = \left(\nabla f(x_k)-\nabla f(x_{k-1})\right)^{\transpose}(x_k-x_{k-1}) \geq \mu\norm{x_{k}-x_{k-1}}^2 > 0.
+    \end{align*}
+\end{proof}
+
+\begin{rmk}
+    Even if $f$ is not strongly convex, we can use a line search procedure for $\alpha$ to ensure $y_{k+1}^{\transpose}s_{k+1}$ is positive.
+
+    Notice that if $\nabla f(x_{k}+\alpha p_{k})^{\transpose}p_k \geq c\nabla f(x_{k})^{\transpose}p_k$, where $0 < c < 1$, then we can substract $\nabla f(x_k)^{\transpose}p_k$ from both sides of this inequality, and multiply by $\alpha$ to obtain
+    \begin{align*}
+        \alpha\left(\nabla f(x_{k+1})-\nabla f(x_k)\right)^{\transpose}p_k \geq \alpha (c-1)\nabla f(x_k)^{\transpose}p_k.
+    \end{align*}
+    Since $s_{k+1} = x_{k+1}-x_k = \alpha p_k$ and $y_{k+1} = \nabla f(x_{k+1})-\nabla f(x_k)$, it follows that $y_{k+1}^{\transpose}s_{k+1} = \alpha (c-1)\nabla f(x_k)^{\transpose}p_k$. Since $c < 1$, we know $c-1 < 0$ and $\nabla f(x_k)^{\transpose}p_k < 0$ since $p_k$ is constructed to be a descent direction. Therefore, $y_{k+1}^{\transpose}s_{k+1} > 0$.
+\end{rmk}
+
+\begin{defn}
+    Fix $\eta \in (0, 1)$ and $c \in (\eta, 1)$. Then the \emph{Wolfe conditions} for a line search procedure for $\alpha$ are
+    \begin{align*}
+        f(x_k + \alpha p_k) \leq f(x_k) + \eta\alpha p_{k}^{\transpose}\nabla f(x_k). \\
+        \nabla f(x_k + \alpha p_k)^{\transpose}p_k \geq c\nabla f(x_k)^{\transpose}p_k.
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    The first condition guarantees descent, while the second guarantees $y_{k+1}^{\transpose}s_{k+1} > 0$ so that $B_{k+1}$ is guaranteed to be positive definite.
+\end{rmk}
+
+\begin{lemma}
+    Let $f: \R^d \to \R$ be $C^1$ and lower bounded from below. Then there are intervals in $\R$ that satisfy the Wolfe conditions.
+\end{lemma}
+
+\begin{defn}
+    The \emph{DFP} method, developed by Davidon, Fletcher, and Powell is another rank two update method that takes $u = B_k^{-1}y_k$ and $v = s_{k+1}$.
+
+    {\color{red}\Large TODO: work out the derivation}
+    \begin{align*}
+        B_{k+1} = (I - \frac{y_{k+1}s_{k+1}^{\transpose}}{y_{k+1}^{\transpose}s_{k+1}})B_k(I - \frac{y_{k+1}s_{k+1}^{\transpose}}{y_{k+1}^{\transpose}s_{k+1}})^{\transpose} + \frac{y_{k+1}y_{k+1}^{\transpose}}{y_{k+1}^{\transpose}s_{k+1}}.
+    \end{align*}
+    {\color{red}\Large TODO: HW \#5: this update preserves positive definiteness}
+\end{defn}
+
+\begin{rmk}
+    In both BFGS and DFP, the updates are chosen to satisfy the modified Newton axioms, while minimizing change to $B_k$ according to some loss function.
+
+    In particular, if we treat $B_{k}$ as a covariance matrix, it induces a normal distribution $N(0, B_{k+1})$. BFGS then minimizes the Kullbeck-Leibler divergence of $N(0, B_{k+1})$ from $N(0, B_{k})$. This is equivalent to the convex optimization problem
+    \begin{align*}
+        \min_{X}\trace(B_k^{-1}x) - \log\det(B_{k}^{-1}X),
+    \end{align*}
+    subject to $X = X^{\transpose}$, $Xs_{k+1} = y_{k+1}$, and $X \succ 0$.
+
+    In contrast, the DFP method takes $B_{k+1}$ to be the solution to the convex (with respect to $X^{-1}$) optimization problem
+    \begin{align*}
+        \min_{X}\trace(X^{-1}B_{k}) - \log\det(X^{-1}B_k)
+    \end{align*}
+    subject to $X = X^{\transpose}$, $Xs_{k+1} = y_{k+1}$, and $X \succ 0$.
+
+    Alternatively, these methods can be interpreted as solving the optimization problem
+    \begin{align*}
+        \min_{X}\norm{X-B_k}
+    \end{align*}
+    subject to $X = X^{\transpose}$, $Xs_{k+1} = y_{k+1}$, and $X \succ 0$. DFP can be derived using a norm $\norm{A} = \norm{W^{1/2}AW^{1/2}}_F$ where $W$ is any positive definite matrix satisfying $Wy_{k+1} = s_{k+1}$. BFGS can be derived using the same norm, but optimizing with respect to $X^{-1}$.
+\end{rmk}
+
+\begin{lemma}\label{lemma:descent-cosine-bound}
+    Let $f: \R^d \to \R$ be an $L$-smooth function, and consider the iteration update $x_{k+1} = x_k + \alpha_k p_k$, where $p_k$ is a descent direction and $\alpha_k$ satisfies the Wolfe conditions. Then
+    \begin{align*}
+        \sum_{k=0}^{\infty}\cos^2(\theta_k)\norm{\nabla f(x_k)}^2 < \infty,
+    \end{align*}
+    where
+    \begin{align*}
+        \cos(\theta) = \frac{\langle p_k, -\nabla f(x_k)}{\langle -\nabla f(x_k), -\nabla f(x_k)\rangle}.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    By the second Wolfe condition, we have
+    \begin{align*}
+        (c-1)\langle p_k, \nabla f(x_k)\rangle \leq \langle \nabla f(x_{k+1}) - \nabla f(x_k), p_k\rangle \leq \norm{\nabla f(x_{k-1})-\nabla f(x_k)}\norm{p_k},
+    \end{align*}
+    and since $f$ is $L$-smooth, we obtain
+    \begin{align*}
+        (c-1)\langle p_k, \nabla f(x_k)\rangle \leq L\norm{\alpha_kp_k}\norm{p_k} = \alpha_k L\norm{p_k}^2.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \alpha_k \geq \frac{c-1}{L}\frac{\langle p_k, \nabla f(x_k)\rangle}{\norm{p_k}^2}.
+    \end{align*}
+    Applying the first Wolfe condition, we obtain
+    \begin{align*}
+        f(x_{k+1}) \leq f(x_k) - \eta\frac{1-c}{L}\frac{\langle p_k, \nabla f(x_k)\rangle^2}{\norm{p_k}^2} = f(x_k) - \eta\frac{1-c}{L}\cos(\theta_k)^2\norm{\nabla f(x_k)}^2.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        f(x_{k+1}) \leq f(0) - \frac{\eta(1-c)}{L}\sum_{i=0}^{k}\cos^2(\theta_i)\norm{\nabla f(x_i)}^2,
+    \end{align*}
+    and so
+    \begin{align*}
+        \sum_{i=0}^{k}\cos^2(\theta_i)\norm{\nabla f(x_i)}^2 \leq \frac{L}{\eta(1-c)}\left(f(0)-\min f\right).
+    \end{align*}
+    Since this upper bound is independent of $k$, it holds in the limit as $k \to \infty$.
+\end{proof}
+
+\begin{thm}
+    Let $B_0$ be a positive definite matrix, and let $f: \R^d \to \R$ be a $C^2$ function such that
+    \begin{align*}
+        \mu I \preceq \nabla^2 f(x) \preceq LI,
+    \end{align*}
+    for $0 < \mu \leq L$, meaning that $f$ is $\mu$-strongly convex and $L$-smooth.
+
+    The iterates of BFGS will converge linearly to the unique global minimizer $x^*$.
+\end{thm}
+
+\begin{proof}
+    If we can prove that $\liminf_{k}\cos^2(\theta_k)$ is non-zero, then Lemma \ref{lemma:descent-cosine-bound} implies that $\liminf_{k}\norm{\nabla f(x_k)}^2$ is zero, and so there is some subsequence $x_k$ such that $\norm{\nabla f(x_k)}$ converges to zero. By strong convexity, we have
+    \begin{align*}
+        \frac{\mu^2}{2^2}\norm{x_{k+1}-x^*}^2 \leq \frac{\mu}{2}\left(f(x_{k+1})-\min f\right) \leq \norm{\nabla f(x_{k+1})}^2,
+    \end{align*}
+    and so any subsequence $x_k$ such that $\norm{\nabla f(x_k)}$ converges to zero must itself (linearly) converge to $x^*$. Therefore, if we can prove that $\liminf_k\cos^2(\theta_k)$ is positive, we are done.
+
+    Recall the relative entropy $\psi(B) = \trace(B) - \log\det(B)$. Since $\lambda - \log(\lambda)$ is positive, we have $\psi(B) > 0$. Notice also that, by definition of BFGS, the angle $\theta_k$ is the angle between $-B_k^{-1}\nabla f(x_k)$ and $-\nabla f(x_k)$. Since $s_{k+1} = -\alpha_kB_k^{-1}\nabla f(x_k)$, it follows $\theta_k$ is the angle between $s_{k+1}$ and $B_ks_{k+1}$.
+
+    Since $B_{k+1} = B_k + \alpha uu^{\transpose} + \beta vv^{\transpose}$, it follows that
+    \begin{align*}
+        \trace(B_{k+1}) &= \trace(B_k) - \frac{\norm{B_ks_{k+1}}^2}{\langle s_{k+1}, B_ks_{k+1}\rangle} + \frac{\norm{y_{k+1}}^2}{\langle y_{k+1}, s_{k+1}\rangle} \\
+        \det(B_{k+1}) &= \det(B_k)\frac{\langle y_{k+1}, s_{k+1}\rangle}{\langle s_{k+1}, B_ks_{k+1}\rangle}.
+    \end{align*}
+    ({\color{red}TODO: check determinant formula})
+    
+    For convienence, define $\mu_k = \frac{\langle y_{k+1}, s_{k+1}\rangle}{\norm{s_{k+1}}^2}$ and $L_k = \frac{\norm{y_{k+1}}^2}{\langle y_{k+1}, s_{k+1}\rangle}$. Notice that
+    \begin{align*}
+        \mu_k = \frac{\langle s_{k+1}, B_{k+1}s_{k+1}\rangle}{\norm{s_{k+1}}^2},
+    \end{align*}
+    which is positive since $B_{k+1}$ is positive definite. Define
+    \begin{align*}
+        q_k =\frac{s_{k+1}^{\transpose}B_ks_{k+1}}{\norm{s_{k+1}}^2},
+    \end{align*}
+    and note that
+    \begin{align*}
+        \det(B_{k+1}) = \det(B_k)\frac{\mu_k}{q_k}.
+    \end{align*}
+    Since
+    \begin{align*}
+        \frac{\norm{B_ks_{k+1}}^2}{s_{k+1}^{\transpose}B_ks_{k+1}} = \frac{1}{\cos^2(\theta_k)}\frac{s_{k+1}^{\transpose}B_ks_{k+1}}{\norm{s_{k+1}}^2} = \frac{q_k}{\cos^2(\theta_k)},
+    \end{align*}
+    we have
+    \begin{align*}
+        \psi(B_{k+1}) &= \trace(B_k) + L_k - \frac{q_k}{\cos^2(\theta_k)} - \log\det(B_k) + \log(q_k) - \log(\mu_k) \\
+        &= \psi(B_k) + L_k - \log\mu_k - 1 + \left(1 - \frac{q_k}{\cos^2(\theta_k)} + \log\left(\frac{q_k}{\cos^2(\theta_k)}\right)\right) + \log(\cos^2(\theta_k)).
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $B_0$ be a positive definite matrix, and let $f: \R^d \to \R$ be a $C^2$ function with a local minimizer $x^*$, such that $\mu I \preceq \nabla^2 f(x^*)$, and the Hessian of $f$ is $L$-Lipschitz on some neighborhood $U$ of $x^*$. If $x_0 \in U$, then the iterates of BFGS will converge superlinearly to $x^*$. 
+\end{thm}
+
+\begin{proof}
+    Omitted.
+\end{proof}
+
+\begin{rmk}
+    With BFGS, we are guaranteed descent, we have local superlinear convergence, and we only need to compute gradients rather than than full Hessians. However, the space complexity is $O(d^2)$ due to the need to store $B_k^{-1}$. Since $B_{k+1}^{-1}$ is obtained from $B_{k}^{-1}$ be a rank two update, we have
+    \begin{align*}
+        B_{k}^{-1} = B_0^{-1} + \sum_{i=1}^{2k}\alpha_iw_iw_i^{\transpose}.
+    \end{align*}
+    Instead of storing $B_{k}^{-1}$, we could store these rank one updates. Each update requires $O(d)$ space. In particular, we could store only the last $2m$ of these updates. If $B_0^{-1}$ can be stored in $O(d)$ space (or even constant space), we could achieve $O(dm)$ space complexity.
+\end{rmk}
+
+\begin{defn}
+    L-BFGS is a low-memory alternative to BFGS where $B_0^{-1}$ is taken to be a simple matrix (for example, $I_d$), and only the last $2m$ rank one updates are stored, for some constant $m$. It achieves $O(md)$ space complexity, while achieving similar convergence guarantees as BFGS.
+\end{defn}
+
+\subsection{Conjugate Gradient Method}
+
+Suppose $A$ is positive-definite, and therefore $Ax = b$ always has a unique solution. Solving $Ax = b$ is equivalent to solving $\argmin_{x}\frac{1}{2}x^{\transpose}Ax - b^{\transpose}x$.
+
+Since $A$ is positive-definite, it has an eigendecomposition $A = V^{\transpose}\Lambda V$. If we make the substitution $y = Vx$, so $x = V^{\transpose}y$, we obtain
+\begin{align*}
+    \min_{x}\frac{1}{2}x^{\transpose}Ax - b^{\transpose}x &= \min_{y}\frac{1}{2}(V^{\transpose}y)^{\transpose}A(V^{\transpose}y) - b^{\transpose}V^{\transpose}y \\
+    &= \min_{y}\frac{1}{2}y^{\transpose}\Lambda y - b^{\transpose}V^{\transpose}y \\
+    &= \min_{y}\sum_{i=1}^{n}\left[\frac{1}{2}y_i^2\lambda_i - b^{\transpose}V_iy_i\right].
+\end{align*}
+The minimizer $y^*$ must therefore satisfy
+\begin{align*}
+    y_i^* = \argmin_{y_i}\frac{1}{2}y_i^2\lambda_i - b^{\transpose}V_iy_i,
+\end{align*}
+and so
+\begin{align*}
+    x^* &= Vy^* = \sum_{i=1}^{n}V_iy_i* = \sum_{i=1}^{n}\frac{1}{\lambda_i}V_iV_i^{\transpose}b.
+\end{align*}
+
+Of course, computing an eigendecomposition would be extraordinarily expensive. Thankfully, we can avoid all that work!
+
+\begin{lemma}
+    Let $A$ be a positive-definite matrix, so $\langle x, y\rangle = x^{\transpose}Ay$ defines an inner product. If $s_1, \ldots, s_n$ are conjugate under this inner product, then
+    \begin{align*}
+        \min_{x}\frac{1}{2}x^{\transpose}Ax - b^{\transpose}x &= \min_{y}\frac{1}{2}\sum_{i,j}y_iy_js_i^{\transpose}As_j - \sum_{i}b^{\transpose}s_iy_i \\
+        &= \min_{y}\frac{1}{2}\sum_{i}y_i^2s_i^{\transpose}As_i - \sum_{i}b^{\transpose}s_iy_i.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        x^* &= \sum s_iy_i^* = \sum\frac{s_is_i^{\transpose}b}{s_i^{\transpose}As_i}.
+    \end{align*}
+\end{lemma}
+
+How can we obtain a basis $s_i$ that is orthogonal under the inner product induced by $A$? By Gram-Schmidt of course! However, naively computing $x^*$ via the formula above would still require $O(n^3)$ time.
+
+\begin{lemma}
+    {\color{red}TODO: fill in from lecture notes}
+\end{lemma}
+
+\begin{defn}{Conjugate Gradient Method}\proofbreak
+    Let $A$ be a positive definite matrix, and $x_0 \in \R^n$. Define $s_0 = r_0 = b - Ax_0$. Then we take
+    \begin{align*}
+        \alpha_i &= \argmin_{\alpha}f(x_i + \alpha x_i) = \frac{s_i^{\transpose}r_i}{s_i^{\transpose}As_i}, \\
+        x_{i+1} &= x_i + \alpha_is_i, \\
+        r_{i+1} &= -\nabla f(x_{i+1}) = b - Ax_{i+1}, \\
+        s_{i+1} &= r_{i+1} - \sum_{j=0}^i\frac{s_j^{\transpose}Ar_{i+1}}{r_{i+1}^{\transpose}Ar_{i+1}}s_j.
+    \end{align*}
+\end{defn}
+
+\begin{lemma}\label{lemma:conjugate-gradient-1}
+    Let $x_0$, and $s_1, \ldots, s_k$ be arbitrary vectors in $\R^n$. Let
+    \begin{align*}
+        x_{k+1} = \argmin_{(x-x_0) \in \spn\{s_i\}}f(x),
+    \end{align*}
+    then $\nabla f(x_{k+1})$ must be orthogonal to $\spn\{s_i\}$.
+\end{lemma}
+
+\begin{proof}
+    We can equivalently express $x_{k+1}$ as
+    \begin{align*}
+        y^* &\in \argmin_{y \in \R^k}f(x_0 + Sy), \\
+        x &= x_0 + Sy^*,
+    \end{align*}
+    where the $i$th column of $S$ is $s_i$. Since this is unconstrained optimization, by first order optimality we must have $\nabla g(y^*) = \vec{0}$ where $g(y) = f(x_0 + Sy^*)$. Therefore, $S^{\transpose}\nabla f(x_0 + Sy^*) = \vec{0}$.
+\end{proof}
+
+\begin{lemma}\label{lemma:conjugate-gradient-2}
+    Let $x_{k+1} = \argmin_{(x-x_0) \in \spn\{s_i\}}f(x)$. If $s_1, \ldots, s_k$ are $A$-conjugate, then
+    \begin{align*}
+        x_{k+1} &= \argmin_{(x-x_0) \in \spn\{s_i\}}f(x) \\
+        &= \argmin_{(x-x_k) = \alpha s_{k}}f(x).
+    \end{align*}
+\end{lemma}
+
+\begin{thm}\label{thm:conjugate-gradient-1}
+    The iterates of the Conjugate Gradient method satisfy
+    \begin{align*}
+        \spn\left\{r_1, \ldots, r_k\right\} = \spn\left\{s_0, \ldots, s_k\right\},
+    \end{align*}
+    \begin{align*}
+        x_{k+1} = \argmin_{(x-x_0) \in \spn\{s_i\}}f(x),
+    \end{align*}
+    and finds the exact solution after at most $n$ iterations.
+\end{thm}
+
+\begin{proof}
+    1 follows from Lemma \ref{lemma:conjugate-gradient-1}.
+
+    2 follows from Lemma \ref{lemma:conjugate-gradient-2}.
+
+    3 follows from 1 and 2.
+    {\color{red}TODO}
+\end{proof}
+
+\begin{lemma}
+    For $j < i$, $\langle r_{i+1}, s_j\rangle_{A} = 0$.
+\end{lemma}
+
+\begin{proof}
+    Let $L = \spn\left\{r_1, \ldots, r_k\right\}$. By Theorem \ref{thm:conjugate-gradient-1}, we know that $L = \spn\left\{s_0, \ldots, s_k\right\}$, and by Lemma \ref{lemma:conjugate-gradient-1} we know that $r_{i+1}^{\transpose}r_{j} = 0$. Therefore,
+    \begin{align*}
+        \langle r_{i+1}, s_j\rangle_{A} &= r_{i+1}^{\transpose}As_j \\
+        &= \frac{1}{\alpha_j}r_{i+1}^{\transpose}A(x_{j+1}-x_j) \\
+        &= \frac{1}{\alpha_j}r_{i+1}^{\transpose}\left(b-Ax_j\right)\left(b-Ax_{j+1}\right) \\
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    The iterates of the Conjugate Gradient method satisfy
+    \begin{align*}
+        f(x_k)-\min f \leq \left(\frac{\sqrt{\kappa(A)}-1}{\sqrt{\kappa(A)}+1}\right)^{k}\left(f(x_0)-\min f\right).
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    See {\color{red}TODO: get reference, maybe Kincaid?}
+\end{proof}
+
+\begin{rmk}
+    This convergence guarantee achieves the same rate as accelerated gradient descent. If the eigenvalues of $A$ are clustered into $p$ clusters, the convergence will behave almost as if the dimension is $p$.
+    
+    Furthermore, the better the condition number of $A$, the better the convergence. A \emph{preconditioner} $P$ can be used to instead solve $PAP^{\transpose}y = Pb$, where $P$ is chosen such that $PAP^{\transpose}$ has a better condition number than $A$.
+\end{rmk}
+
+\begin{defn}
+    GMRES is a method for minimizing $\norm{Ax-b}$ when $A$ is assymetric. We take iterates
+    \begin{align*}
+        x_{k+1} = \argmin\frac{1}{2}\norm{Ax-b}^2,
+    \end{align*}
+    subject to $(x-x_0) \in L_k$, where $L_k$ is the Krylov subspace $\spn\{r_0, Ar_0, A^2r_0, \ldots, A^{k-1}r_0\}$. The minimization at each step is solved via Arnoldi iteration.
+\end{defn}
+
+\subsection{Nonlinear Least Squares}
+
+\begin{defn}
+    Given a map $r: \R^n \to \R^m$, where $n$ and $m$ may be distinct, the nonlinear least-squares problem is to minimize $f(x) = \frac{1}{2}\norm{r(x)}_2^2$.
+\end{defn}
+
+\begin{rmk}
+    We know $\nabla f = (Jr)^{\transpose}r(x)$, and $\nabla^2 f(x) = (Jr)^{\transpose}\nabla r(x) + \sum_{i=0}^{m}\left(\nabla^2r_i(x)\right)r_i(x)$.
+
+    Two populate approaches to finding a critical point of $f$ are
+    \begin{itemize}
+        \item the Gauss-Newton method, a modification of the Newton-Raphson method,
+        \item the Levenberg-Marquardt method.
+    \end{itemize}
+\end{rmk}
+
+\begin{defn}
+    The Gauss-Newton method takes iterates
+    \begin{align*}
+        x_{k+1} = x_k + \alpha_k p_k,
+    \end{align*}
+    where $\alpha_k$ can be found via line search and the Wolfe conditions, and $p_k$ is given by
+    \begin{align*}
+        B_k &= , \\
+        p_k &= \argmin_{p}\left(f(x_k) + \nabla f(x_k)^{\transpose}p + \frac{1}{2}p^{\transpose}B_kp\right) \\
+        &= \argmin\frac{1}{2}\norm{r(x_k)+\nabla r(x_k)p}_2^2.
+    \end{align*}
+\end{defn}
+
+\begin{defn}
+    The Levenberg-Marquardt method uses
+    \begin{align*}
+        p_k = \argmin f(x_k) + \nabla f(x_k)^{\transpose}p + \frac{1}{2}p^{\transpose}B_k p
+    \end{align*}
+    subject to $\norm{p} \leq \nabla_k$.
+\end{defn}
+
+\begin{defn}
+    Trust region method.
+\end{defn}
 
 \vspace{2cm}
 {\color{Fuchsia}\Huge Start of old content:}

@@ -119,6 +119,12 @@ Then the total error is
     \end{align*}
 \end{exmp}
 
+\begin{rmk}
+    Since $\norm{I} \geq 1$, it follows that $\kappa(A) = \norm{A}\norm{A^{-1}} = \norm{I} \geq 1$.
+
+    If $U$ is unitary, it's condition number under the $\ell_2$ induced norm is one, since $\norm{U}_{2} = \sqrt{\rho(U^*U)} = \sqrt{\rho(I)} = 1$. If $\kappa(U) = 1$, then $U$ is unitary.
+\end{rmk}
+
 \begin{defn}
     Let $f(x)$ be a function with condition number $K_f$, and let $x_y = g(x_n)$ be an iterative algorithm, where $K_n(y_n)$ is the condition number of $g(x_n)$. Then we define
     \begin{align*}
@@ -250,7 +256,7 @@ Then the total error is
     \begin{align*}
         \sum_{k=\max(i, j)}^{n}T_{ik}\bar{T}_{jk} = \sum_{k=1}^{\min(i, j)}\bar{T}_{ki}T_{kj}.
     \end{align*}
-    In particular, if
+    In particular, let $T_{i}$ be the $i$th column of $T$, and then taking $1 = i = j$ in the above equations implies $\abs{T_{11}}^2 = \norm{T_{1}}_2^2$, so $T_{1j} = 0$ for $j > 1$. By induction, it follows that $T$ is diagonal.
 \end{proof}
 
 \begin{lemma}\label{lemma:normality-unitary-similarity}
@@ -297,14 +303,14 @@ Then the total error is
     If it is symmetric, it is Hermitian and therefore by Corollary \ref{thm:spectral-hermitian} has real eigenvalues. Therefore $A$ has a real Schur decomposition $A = QTQ^{\transpose}$. But then $A$ is normal so $T$ is normal, and so by Lemma \ref{lemma:normal-triangular} we know $T$ is diagonal. It follows $QTQ^{\transpose}$ is an orthogonal diagonalization of $A$.
 \end{proof}
 
-\begin{cor}
+\begin{cor}\label{cor:skew-hermitian-imaginary-eigenvalues}
     A matrix $B$ is skew-Hermitian if and only if the eigenvalues of $B$ are purely imaginary.
 \end{cor}
 
 \begin{proof}
     Suppose $B$ is skew-Hermitian, so $BB^{*} = -B^2 = B^*B$, and so by the Spectral Theorem \ref{thm:spectral-normal} we find that $B = UDU^{*}$. Therefore, $D$ is also skew-Hermitian, and so $B$ must have purely imaginary eigenvalues.
 
-    Conversely, if $B$ has purely imaginary eigenvalues then its Schur decomposition $B = QTQ^{*}$ must have $T = Q^{*}BQ$ so $T^{*} = Q^{*}(-B)Q = -T$ is skew-Hermitian and therefore purely imaginary
+    Conversely, suppose $B$ has purely imaginary eigenvalues. Consider its Schur decomposition $B = QTQ^{*}$, so $T = Q^*BQ$. Then $T^* = Q^*(-B)Q = -T$, so $T$ is skew-Hermitian, and so $B^* = Q^*T^*Q = -Q^*TQ = -B$.
 \end{proof}
 
 \begin{thm}
@@ -314,7 +320,7 @@ Then the total error is
 \begin{proof}
     If $B$ is skew-Hermitian we know it is normal, and therefore unitarily diagonalizable as $B = UDU^{*}$. Therefore, $A = \exp(B) = U\exp(D)U^{*}$, where $D_{kk} = \theta_k i$ for some real $\theta_k$. Therefore, $\exp(D)$ is unitary, and so $A$ is as well.
 
-    Suppose instead $A$ is unitary, so $A$ is normal and therefore unitarily diagonalizable as $A = UDU^{*}$. It follows that $D$ must be unitary, and so $\abs{D_{kk}} = 1$. Therefore, $D_{kk} = \exp(\theta_k i)$ for real $\theta_k \in \R$. It follows that $A = U\exp(B)U^{*}$, where $B$ is diagonal and $B_{kk} = \theta_k i$. Therefore, $A = \exp(UBU^{*})$, and $UBU^{*}$ is skew-Hermitian.
+    Suppose instead $A$ is unitary, so $A$ is normal and therefore unitarily diagonalizable as $A = UDU^{*}$. It follows that $D$ must be unitary, and so $\abs{D_{kk}} = 1$. Therefore, $D_{kk} = \exp(\theta_k i)$ for real $\theta_k \in \R$. It follows that $A = U\exp(B)U^{*}$, where $B$ is diagonal and $B_{kk} = \theta_k i$. Then $B$ is skew-Hermitian by Corollary \ref{cor:skew-hermitian-imaginary-eigenvalues}, and so $A = \exp(UBU^{*})$, and $UBU^{*}$ is skew-Hermitian since $B$ is.
 \end{proof}
 
 \begin{defn}
@@ -354,32 +360,6 @@ Then the total error is
             \overline{b} & a_{kk}
         \end{pmatrix}
     \]
-\end{proof}
-
-\begin{thm}{Gershgorin circle theorem}\label{gershgorin}\proofbreak
-    Let $A$ be an $n \times n$ matrix. Any eigenvalue $\lambda$ of $A$ must be in at least one of the discs
-    \begin{align*}
-        D_i = \left\{r \in \C : \abs{r - A_{ii}} \leq \sum_{j\neq i}\abs{A_{ij}}\right\} \subseteq \C.
-    \end{align*}
-\end{thm}
-
-\begin{proof}
-    Let $\lambda$ be an eigenvalue of $A$, so there exists non-zero $x$ such that $Ax = \lambda x$. Therefore,
-    \begin{align*}
-        \left(\lambda - A_{ii}\right)x_i = \sum_{j \neq i}A_{ij}x_j,
-    \end{align*}
-    for all $1 \leq i \leq n$. Let
-    \begin{align*}
-        k = \argmax_{1 \leq \ell \leq n}\abs{x_{\ell}},
-    \end{align*}
-    so by the triangle inequality \ref{cauchy-schwarz-triangle}
-    \begin{align*}
-        \abs{\lambda - A_{kk}}\abs{x_k} = \sum_{j \neq k}\abs{A_{kj}}\abs{x_j} \leq \sum_{j \neq k}\abs{A_{kj}}\abs{x_k}.
-    \end{align*}
-    Since $x$ is non-zero and $x_k$ is the largest component, $x_k \neq 0$ so we may divide and obtain
-    \begin{align*}
-        \abs{\lambda - A_{kk}} \leq \sum_{j \neq k}\abs{A_{kj}}.
-    \end{align*}
 \end{proof}
 
 \begin{defn}
@@ -443,6 +423,8 @@ Then the total error is
     \begin{align*}
         \norm{C} \geq \abs{\frac{0}{\norm{x}} - \frac{\norm{x}}{\norm{x}}} = 1.
     \end{align*}
+
+    Alternatively, if we suppose that $\norm{C} < 1$, then $I-C$ is invertible. But $B = A(I-C)$, so $B$ must be invertible.
 \end{proof}
 
 \begin{thm}
@@ -467,27 +449,18 @@ Then the total error is
 \end{defn}
 
 \begin{prop}
-    Let $Ax = b$ be a linear system with solution $x$, and let $r$ be the residual of some approximate solution. Then by consistency of the norm, we obtain
-    \begin{itemize}
-        \item $\norm{r} \leq \norm{A}\norm{e}$,
-        \item $\norm{e} \leq \norm{A^{-1}}\norm{r}$,
-        \item $\norm{b} \leq \norm{A}\norm{x}$,
-        \item $\norm{x} \leq \norm{A^{-1}}\norm{b}$.
-    \end{itemize}
-\end{prop}
-
-\begin{prop}
-    The relative error in an approximate solution $\tilde{x}$ can be bounded by
+    Suppose $Ax = b$ for some $b \neq \vec{0}$. If $A(x + \Delta x) = b + \Delta B$, and we have a compatible matrix and vector norm, then we can bound $\Delta x$ as follows:
     \begin{align*}
-        \frac{\norm{e}}{\norm{x_0}} \leq \kappa(A)\frac{\norm{r}}{\norm{b}}.
+        \frac{1}{\kappa(A)} \leq \frac{\norm{\Delta x}}{\norm{x}} \leq \kappa(A)\frac{\norm{\Delta b}}{\norm{b}}.
     \end{align*}
 \end{prop}
 
 \begin{proof}
-    Note that $\norm{e} \leq \norm{A^{-1}}\norm{r}$ and $\norm{b} \leq \norm{A}\norm{x_0}$ so $\norm{x_0} \geq \norm{b}/\norm{A}$. Therefore,
+    Since $\Delta x = A^{-1}\Delta b$ and $b = Ax$, we have $\norm{\Delta x} \leq \norm{A^{-1}}\norm{\Delta b}$, and $\norm{b} \leq \norm{A}\norm{x}$. Therefore, $\norm{x} \geq \norm{b}/\norm{A}$, and so we obtain
     \begin{align*}
-        \frac{\norm{e}}{\norm{x_0}} \leq \norm{A}\norm{A^{-1}}\frac{\norm{r}}{\norm{b}} = \kappa(A)\frac{\norm{r}}{\norm{b}}.
+        \frac{\norm{\Delta x}}{\norm{x}} \leq \norm{A}\norm{A^{-1}}\frac{\norm{\Delta b}}{\norm{b}} = \kappa(A)\frac{\norm{\Delta b}}{\norm{b}}.
     \end{align*}
+    The lower bound follows by reversing the roles of $A$ and $A^{-1}$.
 \end{proof}
 
 \begin{defn}

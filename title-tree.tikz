@@ -9,9 +9,8 @@
     \clip (0, 1) circle (5);
     \filldraw[fill=black] (-5,0) rectangle (5,-5);
 
-    \draw[rotate=-90, line width=2pt,draw=white] (0, 0) [l-system={Fractal tree, step=2cm, angle=15, axiom=[++++L][L][----L], order=4}] lindenmayer system -- cycle;
-    \draw[rotate=90, line width=3pt] (0, 0) [l-system={Fractal tree, step=2.25cm, angle=15, axiom=F[++++L][L][----L], order=6}] lindenmayer system -- cycle;
-    \draw[line width=5pt] (0, 0) -- (0, 2.25);
+    \draw[rotate=90, line width=3pt] (-0.25, 0) [l-system={Fractal tree, step=2.25cm, angle=15, axiom=F[++++L][L][----L], order=6}] lindenmayer system -- cycle;
+    \draw[rotate=-90, line width=2pt,draw=white] (0, 0) [l-system={Fractal tree, step=2cm, angle=15, axiom=[+++L][L][---L], order=4}] lindenmayer system -- cycle;
 \end{scope}
 
 % draw border circle

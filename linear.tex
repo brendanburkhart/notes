@@ -2293,6 +2293,52 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
     Therefore, $A$ and $B$ are simultaneously diagonalizable.
 \end{proof}
 
+\begin{thm}{Gershgorin circle theorem}\label{thm:gershgorin}\proofbreak
+    Let $A$ be an $n \times n$ matrix. Any eigenvalue $\lambda$ of $A$ must be in at least one of the discs
+    \begin{align*}
+        D_i = \left\{r \in \C : \abs{r - A_{ii}} \leq \sum_{j\neq i}\abs{A_{ij}}\right\} \subseteq \C.
+    \end{align*}
+
+    Furthermore, a connected component of $\bigunion D_i$ consisting of $k$ discs contains precisely $k$ eigenvalues.
+\end{thm}
+
+\begin{proof}
+    Let $\lambda$ be an eigenvalue of $A$, so there exists non-zero $x$ such that $Ax = \lambda x$. Therefore,
+    \begin{align*}
+        \left(\lambda - A_{ii}\right)x_i = \sum_{j \neq i}A_{ij}x_j,
+    \end{align*}
+    for all $1 \leq i \leq n$. Let
+    \begin{align*}
+        k = \argmax_{1 \leq \ell \leq n}\abs{x_{\ell}},
+    \end{align*}
+    so by the triangle inequality \ref{cauchy-schwarz-triangle}
+    \begin{align*}
+        \abs{\lambda - A_{kk}}\abs{x_k} = \abs{\sum_{j \neq k}A_{kj}x_j} \leq \sum_{j \neq k}\abs{A_{kj}}\abs{x_k}.
+    \end{align*}
+    Since $x$ is non-zero and $x_k$ is the largest component, $x_k \neq 0$ so we may divide and obtain
+    \begin{align*}
+        \abs{\lambda - A_{kk}} \leq \sum_{j \neq k}\abs{A_{kj}}.
+    \end{align*}
+
+    Let $A = D + N$, where $D$ is a diagonal matrix with the same diagonal as $A$. For $0 \leq t \leq t$, define $A(t) = D + tN$. Therefore $A(0) = D$ and $A(1) = A$. It follows that for a disc $D_i$ with center $A_{kk}$ and radius $r$, we have a corresponding disc $D_i(t)$ with center $A_{kk}$ and radius $tr$ for $A(t)$. By continuity of the eigenvalues with respect to $t$, it follows that the connected components of $\bigunion D_i$ contain exactly one eigenvalue for each disc in the component.
+\end{proof}
+
+\begin{thm}
+    Let $\lambda$ be an eigenvalue of $A \in M_n$, such that $\lambda$ is not in the interior of any Gershgorin disc. Let $x$ be an associated eigenvector of $\lambda$, and define $\mathcal{I} = \argmin_{i}\abs{x_i}$. Then the following hold:
+    \begin{enumerate}
+        \item For all $i \in \mathcal{I}$, $\lambda$ must be on the boundary of $G_i$.
+        \item For all $i \in \mathcal{I}$, if $(i, j)$ is an edge in the digraph of $A$, then $j \in \mathcal{I}$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    For all $i \in \mathcal{I}$, we have $\abs{\lambda - A_{ii}} \leq \sum_{j\neq i}\abs{A_{ij}}$. Since $\lambda$ is not in the interior of any Gershgorin disc, we also know $\abs{\lambda - A_{ii}} \geq \sum_{j \neq i}\abs{A_{ij}}$. Therefore, $\abs{\lambda- A_{ii}} = \sum_{j\neq i}\abs{A_{ij}}$. Furthermore, $\abs{\lambda-A_{ii}}\abs{x_i} = \sum_{j\neq i}\abs{A_{ij}}\norm{x}_{\infty}$. Therefore,
+    \begin{align*}
+        \sum_{j\neq i}\abs{A_{ij}}\left(\norm{x}_{\infty}-\abs{x_j}\right) = 0.
+    \end{align*}
+    Therefore, if $A_{ij} \neq 0$ it follows $\abs{x_j} = \norm{x}_{\infty}$ and so $j \in \mathcal{I}$.
+\end{proof}
+
 \section{Powers of a Matrix}
 
 Let $f: V \to V$ be a linear transformation. Define $f^m = f \circ f^{m-1}$ for $m > 1$. For any eigenvector $v$ with corresponding eigenvalue $\lambda$, we have $f^m(v) = \lambda^{m}v$. Now consider a diagonalizable matrix $A = PDP^{-1}$. Note that $A^2 = (PDP^{-1})(PDP^{-1}) = PD(P^{-1}P)DP^{-1} = PD^2P^{-1}$. In general, \[A^m = AA^{m-1} = (PDP^{-1})(PD^{m-1}P^{-1}) = PD(P^{-1}P)D^{m-1}P^{-1}) = PD^mP^{-1}.\] Now consider $D^m$. For every eigenvector $v$ with corresponding eigenvalue $\lambda$, we have $D^mv = \lambda^mv$, so
@@ -3032,8 +3078,8 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     The \emph{spectral radius} of an $n \times n$ matrix $A$ is the magnitude of the largest eigenvalue of $A$.
 \end{defn}
 
-\begin{prop}
-    Let $A \in M_{n \times n}(\R)$. Then for any consistent matrix norm, $\rho(A) \leq \norm{A}$.
+\begin{prop}\label{spectral-radius-norm-bound}
+    Let $A \in M_{n}(\R)$. Then for any consistent matrix norm, $\rho(A) \leq \norm{A}$.
 \end{prop}
 
 \begin{proof}
@@ -3068,6 +3114,20 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     so it is consistent with the described vector norm.
 \end{proof}
 
+\begin{thm}
+    Let $A \in M_{n \times n}$. Then for any proper matrix norm, $\rho(A) \leq \norm{A}$.
+\end{thm}
+
+\begin{proof}
+    This follows immediately from the fact that every proper norm is consistent, and then applying Proposition \ref{spectral-radius-norm-bound}.
+
+    Alternatively, let $\lambda, v$ be an eigenpair such that $\abs{\lambda} = \rho(A)$. Then consider $B \in M_{n}$ such that the $i$th column is $x$. It follows that
+    \begin{align*}
+        \abs{\lambda}\norm{B} = \norm{\lambda B} = \norm{AB} \leq \norm{A}\norm{B},
+    \end{align*}
+    and so $\rho(A) = \abs{\lambda} \leq \norm{A}$.
+\end{proof}
+
 \begin{defn}
     The \emph{Frobenius norm} of $A \in M_{n \times n}(F)$ is
     \begin{align*}
@@ -3076,7 +3136,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \end{defn}
 
 \begin{prop}
-    The Frobenius norm is a proper matrix norm, and furthmore is consistent with the $\ell_2$ vector norm.
+    The Frobenius norm is a proper matrix norm, and furthermore is consistent with the $\ell_2$ vector norm.
 \end{prop}
 
 \begin{proof}
@@ -3099,19 +3159,22 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     \end{align*}
 \end{proof}
 
-\begin{thm}\label{induced-norm}
-    Let $\norm{\cdot}_v$ be a norm on $F^n$. Then
+\begin{defn}
+    Let $V$ and $W$ be normed vector spaces over a field $K$. For $T: V \to W$ in the space of linear maps from $V$ to $W$, the \emph{induced norm} or \emph{operator norm} is
     \begin{align*}
-        \norm{A} = \sup_{v \neq 0}\frac{\norm{Av}_v}{\norm{v}_v} = \sup_{\norm{v} = 1}\norm{Av}_v = \sup_{\norm{v} \leq 1}\norm{Av}_v
+        \norm{T} = \sup_{\substack{v \in V \\ v \neq 0}}\frac{\norm{T(v)}}{\norm{v}}.
     \end{align*}
-    is a norm on $M_{n\times n}(F)$. This norm is an called \emph{induced norm}, or the norm \emph{induced by} $\norm{\cdot}_v$, and is both proper (submultiplicative) and consistent with the inducing vector norm.
+\end{defn}
+
+\begin{thm}\label{induced-norm}
+    The operator norm is a norm on the space of linear maps, and is consistent with the inducing vector norms.
 \end{thm}
 
 \begin{proof}
-    Clearly if $A = 0$ then $\norm{A} = 0$, and if $A \neq 0$ there must exist $v \neq \vec{0}$ such $Av \neq \vec{0}$, and so $\norm{A} > 0$, giving us positive definiteness. Additionally, since $\norm{(sA)v} = \abs{s}\norm{Av}$, it follows that $\norm{sA} = \abs{s}\norm{A}$ so we have absolute homogeneity. Finally, for matrices $A$ and $B$, since $\norm{(A + B)v} = \norm{Av + Bv} \leq \norm{Av} + \norm{Bv}$, it follows that $\norm{A + B} \leq \norm{A} + \norm{B}$.
+    Clearly if $T = 0$ then $\norm{T} = 0$, and if $T \neq 0$ there must exist $v \neq \vec{0}$ such $T(v) \neq \vec{0}$. Therefore, $\norm{T} > 0$, giving us positive definiteness. Additionally, since $\norm{(sT)v} = \abs{s}\norm{Tv}$, it follows that $\norm{sT} = \abs{s}\norm{T}$ so we have absolute homogeneity. Finally, for linear maps $A$ and $B$, since $\norm{(A + B)v} = \norm{Av + Bv} \leq \norm{Av} + \norm{Bv}$, it follows that $\norm{A + B} \leq \norm{A} + \norm{B}$.
 
-    Notice that $\norm{A} \geq \norm{Av}/\norm{v}$ by definition, so $\norm{Av} \leq \norm{A}\norm{v}$ and therefore this norm is consistent with the inducing norm. Furthermore, $\norm{ABv} \leq \norm{A}\norm{Bv} \leq \norm{A}\norm{B}\norm{v}$, and so $\norm{AB} \leq \norm{A}\norm{B}$. Therefore, this norm must be submultiplicative.
-
+    Notice that $\norm{A} \geq \norm{Av}/\norm{v}$ by definition, so $\norm{Av} \leq \norm{A}\norm{v}$ and therefore this norm is consistent with the inducing norms.
+    
     Since
     \begin{align*}
         \frac{\norm{Av}}{\norm{v}} = \norm{\frac{Av}{\norm{v}}} \norm{A\frac{v}{\norm{v}}},
@@ -3124,6 +3187,14 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     \begin{align*}
         \sup_{\norm{v} \leq 1}\norm{Av} = \sup_{0 < \norm{v} \leq 1}\norm{v}\norm{A\frac{v}{\norm{v}}} \leq \sup_{\norm{v}=1}\norm{Av} \leq \sup_{\norm{v} \leq 1}\norm{Av}.
     \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $U, V, W$ be normed vector spaces over a field $K$. Then for $T: U \to V$ and $S: V \to W$, the operator norm is proper (submultiplicative), meaning $\norm{S \circ T} \leq \norm{S}\norm{T}$.
+\end{thm}
+
+\begin{proof}
+    By consistency, we know for any $v \in U$ we have $\norm{(S \circ T)(v)} \leq \norm{S}\norm{T(v)} \leq \norm{S}\norm{T}\norm{v}$, and so $\norm{S \circ T} \leq \norm{S}\norm{T}$.
 \end{proof}
 
 \begin{prop}
@@ -3211,6 +3282,302 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     and so
     \begin{align*}
         \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}} \leq \norm{A}_{\infty} \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}}.
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $V$ be a normed linear space over $K = \R$ or $K = \C$. The following are equivalent:
+    \begin{enumerate}
+        \item $V$ is finite dimensional,
+        \item the closed unit ball is compact,
+        \item the closed unit sphere is compact,
+        \item for all $S \subseteq V$, $S$ is compact if and only if $S$ is closed and bounded.
+    \end{enumerate}
+\end{thm}
+
+\begin{defn}
+    Let $V$ be a vector space over $K = \R$ or $K = \C$, and let $\norm{\cdot}_a$ and $\norm{\cdot}_b$ be norms on $V$. We say these norms are \emph{equivalent} if there exists $a, b \in \R^+$ such that $a\norm{x}_a \leq \norm{x}_b \leq b\norm{x}_a$ for all $x \in V$.
+\end{defn}
+
+\begin{lemma}
+    Given a vector space $V$, equivalence of norms is an equivalence relation on the set of all norms on $V$.
+\end{lemma}
+
+\begin{proof}
+    Taking $a = b = 1$, norm equivalence is clearly reflexive. Taking $a' = 1/b$ and $b' = 1/a$,
+    we see that
+    \begin{align*}
+        a\norm{x}_a \leq &\norm{x}_b \leq b\norm{x}_a,
+    \end{align*}
+    so $\norm{x}_a \leq b'\norm{x}_b$ and $a'\norm{x}_b \leq \norm{x}_a$, and so
+    \begin{align*}
+        a'\norm{x}_b \leq &\norm{x}_a \leq b'\norm{x}_b.
+    \end{align*}
+    Therefore, the relation is symmetric. Finally, if $a\norm{x}_a \leq \norm{x}_b \leq b\norm{x}_a$, and $c\norm{x}_b \leq \norm{x}_c \leq d\norm{x}_b$, then
+    \begin{align*}
+        ac\norm{x}_a \leq c\norm{x}_b \leq \norm{x}_c \leq d\norm{x}_b \leq bd\norm{x}_a.
+    \end{align*}
+    Therefore, $\norm{\cdot}_a$ and $\norm{\cdot}_c$ are equivalent, so the relation is transitive.
+\end{proof}
+
+\begin{thm}
+    Let $V$ be a vector space, and let $\norm{\cdot}_a$ and $\norm{\cdot}_b$ be equivalent norms on $V$. Then a sequence is Cauchy with respect to $\norm{\cdot}_a$ if and only if it is Cauchy with respect to $\norm{\cdot}_b$.
+\end{thm}
+
+\begin{thm}
+    For a finite dimensional vector space $V^n$, all norms are equivalent to the $\ell_1$ norm.
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        \norm{x} \leq \sum_{k=0}^{n}\norm{x_ie_i} = \sum_{k=0}^{n}\abs{x_i}\norm{e_i}.
+    \end{align*}
+    Letting $b = \max_{k=0}^{n}\norm{e_i}$, then
+    \begin{align*}
+        \norm{x} \leq \sum_{k=0}^{n}\abs{x_i}b = b\norm{x}_1.
+    \end{align*}
+    Similarly,
+    \begin{align*}
+        \norm{x}_1 = \sum_{k=0}^{n}\abs{x_i}
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    In a finite dimensional vector space $V^n$, all norms are equivalent.
+\end{cor}
+
+\begin{lemma}\label{lemma:matrix-norm-similar}
+    Let $\norm{\cdot}$ be a matrix norm on $M_n$, and fix any invertible $S \in M_n$. Then $\norm{\cdot}_S$ defined by $\norm{A}_S = \norm{S^{-1}AS}$ is a matrix norm.
+\end{lemma}
+
+\begin{proof}
+    For any $A, B \in M_n$ and $\alpha \in \C$, we have
+    \begin{itemize}
+        \item $A \neq 0$ implies $S^{-1}SA \neq 0$ since $S$ is invertible, and so $\norm{A}_S > 0$,
+        \item $\norm{\alpha A}_S = \norm{S^{-1}\alpha AS} = \abs{\alpha}\norm{S^{-1}AS} = \abs{\alpha}\norm{A}_S$,
+        \item $\norm{A + B}_S = \norm{S^{-1}(A+B)S} \leq \norm{S^{-1}AS} + \norm{S^{-1}BS} = \norm{A}_S + \norm{B}_S$,
+        \item $\norm{AB}_S = \norm{S^{-1}ASS^{-1}BS} \neq \norm{S^{-1}AS}\norm{S^{-1}BS} = \norm{A}_S\norm{B}_S$.
+    \end{itemize}
+\end{proof}
+
+\begin{thm}
+    Let $A \in M_n$. For any $\varepsilon > 0$, there exists a matrix norm such that $\norm{A} \leq \rho(A) + \varepsilon$.
+\end{thm}
+
+\begin{proof}
+    Let $A = SJS^{-1}$ be a Jordan decomposition of $A$, and define $D$ to be a diagonal matrix such that $D_{kk} = \varepsilon^{k}$. Notice that $D^{-1}JD$ has the same diagonal as $J$, but the super diagonal is scaled by $\varepsilon$. Then $\norm{D^{-1}JD}_{1}\leq \rho(A) + \varepsilon$. Therefore, the matrix norm defined by $\norm{M} = \norm{D^{-1}S^{-1}MSD}_1$ for any $M$ is a matrix norm by Lemma \ref{lemma:matrix-norm-similar} since $SD$ is invertible, and $\norm{A} = \norm{D^{-1}JD} \leq \rho(A) + \varepsilon$ as desired. 
+\end{proof}
+
+\begin{cor}
+    For any $A \in M_n$,
+    \begin{align*}
+        \inf_{\norm{\cdot}}\norm{A} = \rho(A).
+    \end{align*}
+\end{cor}
+
+\begin{rmk}
+    If $A$ is nilpotent, so $\rho(A) = 0$ but $A \neq 0$, it follows that $\norm{A} > \rho(A)$ for any matrix norm, so this infimum is not necessarily a minimum.
+\end{rmk}
+
+\begin{thm}\label{thm:matrix-power-convergence}
+    For $A \in M_n$, we have
+    \begin{align*}
+        \lim_{k\to\infty}A^{k} = 0
+    \end{align*}
+    is and only if $\rho(A) < 1$.
+\end{thm}
+
+\begin{proof}
+    If $\rho(A) < 1$, then there exists a matrix norm $\norm{\cdot}$ such that $\norm{A} < 1$. Therefore, $\norm{A^k} \leq \norm{A}^{k}$, and so $A^k$ converges to the zero matrix.
+    
+    If $A^k$ converges to zero, then all eigenvalues $\lambda$ must satisfy $\abs{\lambda} < 1$, and so $\rho(A) < 1$.
+\end{proof}
+
+\begin{thm}
+    For any (proper) matrix norm and any $A \in M_n$, $\lim_{k\to\infty}\norm{A^k}^{k} = \rho(A)$.
+\end{thm}
+
+\begin{proof}
+    By Proposition \ref{spectral-radius-norm-bound},
+    \begin{align*}
+        \rho(A^k) = \rho(A)^k \leq \norm{A}^{k},
+    \end{align*}
+    and so $\rho(A) \leq \norm{A^k}^{1/k}$.
+
+    For any $\varepsilon > 0$, let $\alpha = 1/(\rho(A)+\varepsilon)$. Therefore, $\rho(\alpha A) < 1$, and so by Theorem \ref{thm:matrix-power-convergence} we know $(\alpha A)^{k}$ converges to the zero matrix. It follows there exists some $M$ such that $k > M$ implies $\norm{\alpha^kA^k} < 1$, or equivalently $\norm{A^k} < \alpha^{k} = (\rho(A)+\varepsilon)^k$. Therefore, $\norm{A^k}^{1/k} < \rho(A) + \varepsilon$ for all $k > M$, and so $\norm{A^k}^{1/k}$ must converge to $\rho(A)$.
+\end{proof}
+
+\begin{thm}
+    Let $V$ be a normed vector space over a field $K$. Then $V$ is complete if and only if all absolutely convergent sequenecs converge, where a sequence $\{x_i\} \subseteq V$ converges absolutely when
+    \begin{align*}
+        \sum_{i=1}^{\infty}\norm{x_i}
+    \end{align*}
+    converges.
+\end{thm}
+
+\begin{cor}
+    For all $A \in M_n$, the matrix exponential
+    \begin{align*}
+        e^A = \sum_{k=0}^{n}\frac{A^k}{k!}
+    \end{align*}
+    is well-defined.
+\end{cor}
+
+\begin{proof}
+    Let $\norm{\cdot}$ be any matrix norm. Since $M_n$ is finite dimensional, it is complete. Therefore,
+    \begin{align*}
+        \sum_{k=0}^{\infty}\norm{\frac{A^k}{k!}} \leq \sum_{k=0}^{\infty}\frac{\norm{A}^k}{k!} = e^{\norm{A}}.
+    \end{align*}
+\end{proof}
+
+\begin{thm}\label{thm:matrix-geometric-series}
+    Let $B \in M_n$ such that $\norm{B} < 1$ for some matrix norm. Then $I-B$ is invertible, and
+    \begin{align*}
+        (I-B)^{-1} = \sum_{k=0}^{\infty}B^k.
+    \end{align*}
+\end{thm}
+
+\begin{proof}
+    Notice that
+    \begin{align*}
+        (I-B)\sum_{i=0}^{N}B^i = I - B^{N+1}.
+    \end{align*}
+    Since $\norm{B} < 1$, it follows that
+    \begin{align*}
+        \lim_{N\to\infty}\norm{(I-B)\sum_{i=0}^{N}B^i - I} = \lim_{N\to\infty}\norm{-B^{N+1}} \leq \lim_{N\to\infty}\norm{B}^{N+1} = 0.
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    A norm $\norm{\cdot}$ on $\C^n$ is \emph{absolute} if $\norm{\abs{x}} = \norm{x}$, where the absolute value is taken coordinate-wise.
+\end{defn}
+
+\begin{defn}
+    A norm on $\C^n$ is \emph{monotone} if $\abs{x} < \abs{y}$ coordinate-wise implies $\norm{x} \leq \norm{y}$.
+\end{defn}
+
+\begin{thm}
+    Let $\norm{\cdot}$ be a norm on $\C^n$. The following are equivalent:
+    \begin{itemize}
+        \item The norm is monotone,
+        \item The norm is absolute,
+        \item The induced matrix norm of a diagonal matrix is the maximum diagonal element in absolute value.
+    \end{itemize}
+\end{thm}
+
+\begin{proof}
+    Since $x_i < \abs{x_i}$, monotonicity implies $\norm{x} \leq \norm{\abs{x}}$. Further, $\abs{\abs{x_i}} \leq \abs{x_i}$, so $\norm{\abs{x}} \leq \norm{x}$. Therefore, $\norm{x} = \norm{\abs{x}}$.
+
+    ({\color{red}TODO: prove absolute implies monotone})
+
+    Suppose that $\norm{\cdot}$ is monotone, and let $D$ be a diagonal matrix. For any non-zero $x \in \C^n$, we have $(Dx)_i = D_{ii}x_i$ so $\abs{D_x} \leq (\max\abs{D_{ii}})\abs{x}$ coordinate-wise. So by monotonicity, $\norm{Dx} \leq (\max\abs{D_{ii}})\norm{x}$, and so $\norm{D} \leq \max\abs{D_{ii}}$. To show equality can be attained, consider $x = e_k$ where $k = \argmax\abs{D_{ii}}$, so $\norm{Dx} = (\max\abs{D_{ii}})\norm{x}$.
+
+    For the converse, suppose an induced matrix norm satisfies $\norm{D} = \max\abs{D_{ii}}$ for all diagonal matrices $D$. Consider any $x$ and $y$ such that $\abs{x_i} \leq \abs{y_i}$. Let $D$ be the diagonal matrix such that
+    \begin{align*}
+        D_{ii} &= \begin{dcases}
+            \frac{x_i}{y_i}, &y_i \neq 0, \\
+            0, &y_i = 0
+        \end{dcases}.
+    \end{align*}
+    Note that $x_i = 0$ if $y_i = 0$, and so $Dy = x$. Furthermore, $\abs{y_i} \geq \abs{x_i}$ implies $\norm{D} \leq 1$, so we know that $\norm{x} = \norm{Dy} \leq \norm{D}\norm{y} \leq \norm{y}$.
+\end{proof}
+
+\begin{thm}{Bauer-Fike Theorem}\label{thm:bauer-fike}\proofbreak
+    Let $\norm{\cdot}$ be an operator norm induced by some monotone norm. Let $A, \Delta A$ be matrices such that $A = SDS^{-1}$ is diagonalizable. For every eigenvalue $\lambda$ of $A + \Delta A$, there exists an eigenvalue $\tau$ of $A$ such that $\abs{\lambda-\tau} \leq K_{\norm{\cdot}}(S)\norm{\Delta A}$.
+\end{thm}
+
+\begin{proof}
+    If $\lambda$ is an eigenvalue of $A$, we are done. So suppose that $\lambda \not\in \sigma(A)$. Therefore, $(A + \Delta A) - \lambda I$ is singular, but $A - \lambda I$ is not. It follows $D + S^{-1}\Delta AS - \lambda I$ is singular and $D - \lambda I$ is not, so
+    \begin{align*}
+        \left(\lambda I - D\right)^{-1}\left[\lambda I - D - S^{-1}\Delta AS\right] = I - \left(\lambda I - D\right)^{-1}S^{-1}\Delta A S
+    \end{align*}
+    is singular. It follows by Theorem \ref{thm:matrix-geometric-series} that $\norm{\left(\lambda I - D\right)^{-1}S^{-1}\Delta A S} \geq 1$. Therefore,
+    \begin{align*}
+        1 \leq \norm{\left(\lambda I - D\right)^{-1}S^{-1}\Delta A S} \leq \norm{(\lambda I - D)^{-1}}\norm{S^{-1}}\norm{S}\norm{\Delta A} = \norm{(\lambda I - D)^{-1}}K(S)\norm{\Delta A}.
+    \end{align*}
+    Since the norm is monotone and $\lambda I - D$ is diagonal with entries $1/(\lambda - \tau_k)$ where $\tau_k$ are the eigenvalues of $A$, it follows that $\norm{(\lambda I - D)^{-1}} = 1/\abs{\lambda-\tau}$ where $\tau$ is the closest eigenvalue of $A$ to $\lambda$.
+\end{proof}
+
+\begin{cor}
+    If $A$ is additionally normal, then taking the $\ell_2$ norm there exists $\tau \in \sigma(A)$ such that $\abs{\lambda-\tau} \leq \norm{\Delta A}_{2}$.
+
+    If $A$ is Hermitian, by Weyl's theorem \ref{thm:weyl} we have $\lambda_1(\Delta A) + \lambda_k(A) \leq \lambda_k(A + \Delta A) \leq \lambda_n(\Delta A) + \lambda_k(A)$, and so $\abs{\lambda_k(A) - \lambda_k(A + \Delta A)} \leq \rho(\Delta A) \leq \norm{\Delta A}_2$.
+\end{cor}
+
+\section{Dual spaces}
+
+\begin{defn}
+    Let $V$ be a vector space on a field $F$. The dual space $V^*$ is the space of all linear functionals from $V$ to $f$.
+\end{defn}
+
+\begin{prop}
+    The dual space is a vector space.
+\end{prop}
+
+\begin{thm}
+    If $V$ is finite dimensional, then $V$ is isomorphic to $V^*$.
+\end{thm}
+
+\begin{proof}
+    Let $B$ be a basis for $V$. {\color{red}TODO}
+\end{proof}
+
+\begin{defn}
+    Let $\norm{\cdot}$ be a norm on $K^n$. The dual norm $\norm{\cdot}^{D}$ on $K^n$ is defined as
+    \begin{align*}
+        \norm{y}^{D} = \max_{\substack{x\in K^n \\ \norm{x}=1}}\abs{y^*x}.
+    \end{align*}
+\end{defn}
+
+\begin{lemma}
+    Let $\norm{\cdot}$ be a norm on $K^n$. Then for all $x, y \in K^n$ we have $\abs{y^*x} \leq \norm{x}\norm{y}^D$.
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        \abs{y^*x} = \abs{\sum_{i=1}^{n}\bar{y_i}x_i} \leq \sum_{i=1}^{n}\abs{y_i}\abs{x_i} \leq \sum_{i=1}^{n}\left(\max_{j}\abs{y_i}\right)\abs{x_i} = \norm{y}_{\infty}\norm{x}_1.
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    On $K^n$, the $\ell_1$ and $\ell_{\infty}$ norms are duals, and the $\ell_2$ norm is self-dual.
+\end{prop}
+
+\begin{proof}
+    By H\"older's inequality,
+    \begin{align*}
+        \norm{y}_1^{D} = \max_{\norm{x}_1 = 1}\abs{y^*x} \leq \norm{y}_{\infty}
+    \end{align*}
+    and furthermore, taking $x$ to be $e_i$ where $i = \argmax_{j}\abs{y_j}$, we have $\abs{y^*x} = \norm{y}_{\infty}$, and so $\norm{y}_1^{D} = \norm{y}_{\infty}$.
+
+    Similarly, by H\"older's inequality, $\abs{y^*x} \leq \norm{y}_1$. Taking $x_i = e^{\theta_i}$, where $\theta_i$ is the argument of $y_i$, we have $\bar{y_i}x_i = \frac{1}{\abs{y_i}}\abs{y_i}^2 = \abs{y_i}$, and so $\abs{y^*x} = \norm{y}_1$. Therefore, $\norm{y}_{\infty}^D = \norm{y}_1$.
+
+    Furthermore, by Cauchy-Schwarz $\abs{y^*x} \leq \norm{y}_2$. Taking $x = y/\norm{y}_2$, we have $\norm{x}_2 = 1$, and $\abs{y^*x} = \norm{y}_2^2/\norm{y}_2 = \norm{y}_2$. Therefore, $\norm{y}_2^{D} = \norm{y}_2$.
+\end{proof}
+
+\begin{thm}\label{thm:hahn-banach-norm-functional}
+    Let $V$ be a normed linear space over a field $K$. FOr non-zero $x \in V$, there exists $f \in V^*$ such that $\norm{f}_{V^*} = 1$ and $\norm{x}_V$.
+\end{thm}
+
+\begin{cor}
+    Let $\norm{\cdot}$ be a norm on $K^n$. Then the dual of the dual of $\norm{\cdot}$ is just $\norm{\cdot}$.
+\end{cor}
+
+\begin{proof}
+    \begin{align*}
+        \left(\norm{x}^{D}\right)^{D} = \max_{\norm{y}^D=1}\abs{y^*x} \leq \max_{\norm{y}^D=1}\norm{y}^{D}\norm{x} = \norm{x}.
+    \end{align*}
+    By Theorem \ref{thm:hahn-banach-norm-functional}, there exists $y \in K^n$ achieving this maximum, and so $\left(\norm{x}^D\right)^D = \norm{x}$.
+\end{proof}
+
+\begin{thm}
+    Let $A$ and $A^*$ denote a norm and its dual on $K^n$. For any linear operator $T$ on $K^n$, $\norm{T}_{A} = \norm{T^*}_{A^*}$.
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        \norm{T^*}_{A^*} &= \max_{\substack{x\in K^n \\ \norm{x}_{A^*}=1}}\norm{T^*x}^D_{A} = \max_{\norm{x}^D = 1}\max_{\norm{y}=1}\abs{(T^*x)^*y} \\
+        &= \max_{\norm{y}=1}\max_{\norm{x}^D = 1}\abs{(Ty)^*x} = \max_{\norm{y}=1}\left(\norm{Ty}^D\right)^D = \norm{T}.
     \end{align*}
 \end{proof}
 
@@ -3377,7 +3744,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     It follows that each element of the field of values is a linear combination of the elements of $D$.
 \end{proof}
 
-\begin{thm}{Rayleigh-Ritz}\proofbreak
+\begin{thm}{Rayleigh-Ritz}\label{thm:rayleigh-ritz}\proofbreak
     Let $A$ be a Hermitian matrix, so the eigenvalues are all real, and therefore $\mathcal{F}(A) \subseteq \R$. Then $\min\mathcal{F}(A)$ is the smallest eigenvalue of $A$, and $\max\mathcal{F}(A)$ is the largest.
 \end{thm}
 
@@ -3386,7 +3753,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \end{proof}
 
 \begin{thm}
-    Let $A$ be a Hermitian matrix, so the eigenvalues are all real. Let the eigenvalues be ordered as $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_n$, with corresponding eigenvalues $\mu_1, \ldots, \mu_n$. Then
+    Let $A$ be a Hermitian matrix, so the eigenvalues are all real. Let the eigenvalues be ordered as $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_n$, with corresponding eigenvectors $\mu_1, \ldots, \mu_n$. Then
     \begin{align*}
         \lambda_k &= \min_{\substack{x \perp \mu_1, \ldots, \mu_{k-1} \\ x \neq \vec{0}}}\frac{x^*Ax}{x^*x}, \\
         \lambda_k &= \max_{\substack{x \perp \mu_{k+1}, \ldots, \mu_{n} \\ x \neq \vec{0}}}\frac{x^*Ax}{x^*x}.
@@ -3394,14 +3761,14 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \end{thm}
 
 \begin{proof}
-    Since $A$ is Hermitian, it has a unitary eigendecomposition $A = UDU^*$ such that $D_{kk} = \lambda_k$ and $U_k = \mu_k$. It follows that for $x \perp \mu_1, \ldots, \mu_{k-1}$, we have that $U^*x$ is zero in the first $k-1$ entries, and so $x^*UDU^*x$ is linear combination of $\lambda_k, \ldots, \lambda_n$. Therefore, the Rayleigh-Ritz quotient is a convex combination of these eigenvalues, and so the minimum is orecisely $\lambda_k$. Similarly, for $x \perp \lambda_{k+1}, \ldots, \lambda_n$, the Rayleigh-Ritz quotient is a convex combination of $\lambda_1, \ldots, \lambda_k$, and so the maximum is $\lambda_k$.
+    Since $A$ is Hermitian, it has a unitary eigendecomposition $A = UDU^*$ such that $D_{kk} = \lambda_k$ and $U_k = \mu_k$. It follows that for $x \perp \mu_1, \ldots, \mu_{k-1}$, we have that $U^*x$ is zero in the first $k-1$ entries, and so $x^*UDU^*x$ is linear combination of $\lambda_k, \ldots, \lambda_n$. Therefore, the Rayleigh-Ritz quotient is a convex combination of these eigenvalues, and so the minimum is precisely $\lambda_k$. Similarly, for $x \perp \lambda_{k+1}, \ldots, \lambda_n$, the Rayleigh-Ritz quotient is a convex combination of $\lambda_1, \ldots, \lambda_k$, and so the maximum is $\lambda_k$.
 \end{proof}
 
 \begin{thm}{Courant-Fischer min-max theorem}\label{thm:courant-fischer}\proofbreak
     Let $A$ be a Hermitian matrix. Let the eigenvalues be ordered by $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_n$, with corresponding eigenvalues $\mu_1, \ldots, \mu_n$. Then
     \begin{align*}
-        \lambda_k &= \max_{\substack{U \subseteq \C^n \\\dimn(U)=k-1}}\min_{\substack{x \in U^{\perp} \\ x \neq \vec{0}}}\frac{x^*Ax}{x^*x}, \\
-        \lambda_k &= \min_{\substack{U \subseteq \C^n \\ \dimn(U)=n-(k+1)}}\max_{\substack{x \in U^{\perp} \\ x \neq \vec{0}}}\frac{x^*Ax}{x^*x},
+        \lambda_k &= \max_{\substack{U \subseteq \C^n \\\dimn(U)\leq k-1}}\min_{\substack{x \in U^{\perp} \\ x \neq \vec{0}}}\frac{x^*Ax}{x^*x}, \\
+        \lambda_k &= \min_{\substack{U \subseteq \C^n \\ \dimn(U)\leq n-k}}\max_{\substack{x \in U^{\perp} \\ x \neq \vec{0}}}\frac{x^*Ax}{x^*x},
     \end{align*}
     where the outer min/max is over linear subspaces $U$.
 \end{thm}
@@ -3409,7 +3776,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \begin{proof}
     Since $A$ is Hermitian, it has a unitary eigendecomposition $A = UDU^*$ such that $D_{kk} = \lambda_k$ and $U_k = \mu_k$. 
     
-    In the first equation, since $U^{\perp}$ has dimension $n-k$, and $\spn\{\mu_k, \ldots, \mu_n\}$ has dimension $n-k+1$, their intersection must contain some non-zero $w$, and so
+    In the first equation, since $U^{\perp}$ has dimension $n-k$, and $\spn\{\mu_k, \ldots, \mu_n\}$ has dimension $n-k+1$, their intersection must contain some non-zero $w$, and so {\color{red}TODO}
 \end{proof}
 
 \begin{thm}{Weyl's theorem}\label{thm:weyl}\proofbreak
@@ -3471,7 +3838,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 
 \begin{cor}
     \begin{align*}
-        \lambda_{k-r}(A) \leq \lambda_{A+B} \leq \lambda_{k+r}(A)
+        \lambda_{k-r}(A) \leq \lambda_{k}(A+B) \leq \lambda_{k+r}(A)
     \end{align*}
 \end{cor}
 
@@ -3494,7 +3861,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     \end{align*}
     where $p_{1}, \ldots, p_{n-r}$ are the columns of $A$ deleted to create $B$. But under those conditions, the Rayleigh-Ritz quotient is simply $x^*Bx/(x^*x)$, and so
     \begin{align*}
-        \lambda_{k}(A) \leq \max_{\dimn{U} \leq k-1}\min_{x\in U^{\perp}}\frac{x^*Bx}{x^*x} = \lambda_{k}B.
+        \lambda_{k}(A) \leq \max_{\dimn{U} \leq k-1}\min_{x\in U^{\perp}}\frac{x^*Bx}{x^*x} = \lambda_{k}(B).
     \end{align*}
 \end{proof}
 
@@ -3527,7 +3894,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     \end{align*}
     Finally, when $k=n$ this holds because
     \begin{align*}
-        \sum_{i=1}^{n}\lambda_n(A) = \trace(A) = \sum_{i=1}^{n}A_{ii}.
+        \sum_{i=1}^{n}\lambda_i(A) = \trace(A) = \sum_{i=1}^{n}A_{ii}.
     \end{align*}
 \end{proof}
 
@@ -3590,4 +3957,132 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
         \frac{\det(A)}{\prod A_{ii}} \leq \left(\frac{1}{n}\trace(DAD)\right)^{n} = \left(\frac{1}{n}n\right)^{n} = 1.
     \end{align*}
     Therefore, $\det(A) \leq \prod A_{ii}$.
+\end{proof}
+
+\section{Singular Value Decomposition}
+
+\begin{thm}
+    Let $A \in M_{m,n}$ such that $m < n$. There exists unitary $U \in M_m$, diagonal $\Sigma \in M_{m}$, and $W \in M_{m,n}$ with orthonormal rows ($WW^* = I_{m}$) such that $A = U\Sigma W$, and $\Sigma_{ii}$ is a non-negative non-increasing sequence.
+\end{thm}
+
+\begin{proof}
+    We know that $AA^*$ is a Hermitian positive semi-definite matrix, there it has an eigendecomposition $AA^* = UDU^*$. We can simultaneously re-order the columns of $U$ and entries of $D$ in order to achieve $D_{kk}$ a non-increasing sequence. Let $k$ be the index of the smallest non-zero $D_{kk}$. Now let $\Sigma = D^{1/2}$, and define a matrix $W$ such that for $1 \leq i \leq k$ we have $W_i = \frac{1}{\Sigma_{ii}}U_i^*A$, where $W_i$ is the $i$th \emph{row} of $W$ and $U_i$ is the $i$th \emph{column} of $U$. For $k < i \leq m$, choose $W_i$ to be orthonormal to the preceeding rows.
+
+    Note that
+    \begin{align*}
+        W_{i}W_j^* = \frac{1}{\Sigma_{ii}\Sigma_{jj}}U_i^*AA^*U_j = \frac{1}{\Sigma_{ii}\Sigma_{jj}}U_i^*D_{jj}U_j.
+    \end{align*}
+    When $i = j$, $U_i^*D_{jj}U_j = D_{ii} = \Sigma_{ii}^2$, so $W_{i}W_{j}^* = 1$. When $i \neq J$, we have $U_i^*D_{jj}U_j = 0$, and so $W_iW_j^* = 0$. Therefore, $WW^* = I_m$.
+
+    Furthermore $U^*A = \Sigma W$ by construction, so $A = U\Sigma W$.
+\end{proof}
+
+\begin{rmk}
+    If $A$ is real, then $AA^{\transpose}$ is symmetric, and so a real eigendecomposition. Therefore, the above decomposition can taken to have all real components when $A$ is real.
+\end{rmk}
+
+\begin{thm}{Singular Value Decomposition}\proofbreak
+    For any $A \in M_{m,n}$, there exists unitary $U \in M_m$, unitary $V \in M_n$, and diagonal $\Sigma \in M_{m,n}$ such that $A = U\Sigma V^*$.
+
+    If $A \in M_{m,n}(\R)$, then $U, V, \Sigma$ exist all real. 
+\end{thm}
+
+\begin{thm}{Polar Decomposition}\proofbreak
+    For all $A \in M_n$, there exists a Hermitian positive semi-definite matrix $P \in M_n$, and unitary $W \in M_n$ such that $A = PW$.
+\end{thm}
+
+\begin{proof}
+    Let $A = U\Sigma V^*$ be a singular value decomposition of $A$. Then $A = U\Sigma U^*UV^*$. Note that $P = U\Sigma U^*$ is Hermitian and positive semi-definite, and $W = UV^*$ is unitary.
+\end{proof}
+
+\begin{defn}
+    For $A \in M_{m,n}$, a matrix $A^{+} \in M_{n,m}$ is a \emph{Moore-Penrose inverse} of $A$ (also called a pseudoinverse or generalized inverse) if
+    \begin{enumerate}
+        \item $AA^+A = A$,
+        \item $AA^+$ is Hermitian,
+        \item $A^+AA^+ = A^+$,
+        \item $A^+A$ is Hermitian.
+    \end{enumerate}
+\end{defn}
+
+\begin{thm}\label{thm:lst-sqrs-pseudoinverse}
+    Let $A \in M_{m,n}$ and $A^+$ be a pseudoinverse of $A$. Then $x = A^+b$ is the solution of $Ax = b$ that minimizes $\norm{Ax - b}_2$.
+\end{thm}
+
+\begin{proof}
+    If $Ax = b$ has some solution $z$ so $Az = b$, then $A^+b$ is a solution since $A(A^+b) = (AA^+)(Az) = (AA^+A)z = Az = b$.
+
+    For general $A$ such that $Ax - b$ may not have a solution, we can always express $x$ as $A^+b + y$. Then
+    \begin{align*}
+        \norm{Ax - b}_2^2 &= \norm{A(A^+b + y) - b}^2 = \norm{(AA^+-b)b + Ay}_2^2 \\
+        &= \norm{(AA^+-I)b}_2^2 + \norm{Ay}_2^2 + \langle (AA^+-I)b, Ay \rangle + \langle Ay, (AA^+-I)b \rangle.
+    \end{align*}
+    Then we see that since $AA^+$ is Hermitian and $AA^+A = A$, we have
+    \begin{align*}
+        (A^*(AA^+-I))^* = (A^*AA^+ - A^*)^* = AA^+A - A = A - A = 0.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \langle (AA^+-I)b, Ay \rangle = \langle A^*(AA^+-I)b, y \rangle = \langle b, 0y\rangle = 0.
+    \end{align*}
+    It follows that $\norm{Ax - b}^2 = \norm{A(A^+b + y) - b}^2$ is minimized when $y$ is in the nullspace of $A$. Since $A\vec{0} = \vec{0}$, it follows that $x = A^+b$ is a minimizer of $\norm{Ax - b}$.
+\end{proof}
+
+\begin{lemma}\label{lemma:diagonal-pseudoinverse}
+    Let $\Sigma \in M_{m,n}$ be a rectangular diagonal matrix. Let $\Sigma^{\dagger} \in M_{n,m}$ also be diagonal, such that
+    \begin{align*}
+        \Sigma^{\dagger}_{ii} = \begin{dcases}
+            \frac{1}{\Sigma_{ii}}, &\Sigma_{ii} \neq 0 \\
+            0, &\Sigma_{ii} = 0
+        \end{dcases}.
+    \end{align*}
+    Then $\Sigma^{\dagger}$ is a Moore-Penrose inverse of $\Sigma$, since $\Sigma\Sigma^{\dagger}$ and $\Sigma^{\dagger}\Sigma$ are real diagonal matrices, and the conditions $\Sigma^{\dagger}\Sigma\Sigma^{\dagger} = \Sigma^{\dagger}$ and $\Sigma\Sigma^{\dagger}\Sigma = \Sigma$ can be easily checked algebraically.
+\end{lemma}
+
+\begin{thm}
+    For any $A \in M_{m,n}$, there exists a unique Moore-Penrose pseudoinverse $A^+$. If $A$ is real, then $A^+$ is real.
+\end{thm}
+
+\begin{proof}
+    To address uniqueness, suppose that $B$ and $C$ are both Moore-Penrose inverses of $A$. Since $AC$ and $AB$ are Hermitian, and $ACA = A = ABA$, we obtain
+    \begin{align*}
+        AB &= (ACA)B = (AC)(AB) = (C^*A^*)(B^*A^*) = C^*(ABA)^* = C^*A^* = AC.
+    \end{align*}
+    Similarly,
+    \begin{align*}
+        BA &= (BA)(CA) = (A^*B^*)(A^*C^*) = (ABA)^*C^* = A^*C^* = CA.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        B = (BA)B = (CA)B = C(AB) = C(AC) = C,
+    \end{align*}
+    and so the Moore-Penrose inverse must be unique when it exists.
+
+    For the question of existence, we consider the singular value decomposition $A = U\Sigma V^*$. Let $A^{\dagger} = V\Sigma^{\dagger}U^*$. Then by Lemma \ref{lemma:diagonal-pseudoinverse}, we have
+    \begin{align*}
+        AA^{\dagger} &= U\Sigma V^*V\Sigma^{\dagger}U^* = U\Sigma\Sigma^{\dagger}U^* = UHU^* \\
+        A^{\dagger}A &= V\Sigma^{\dagger}U^*U\Sigma V^* = V\Sigma^{\dagger}V^* = URU^*
+    \end{align*}
+    for some Hermitian matrices $H$ and $R$, and so $AA^{\dagger}$ and $A^{\dagger}A$ are Hermitian. Then,
+    \begin{align*}
+        AA^{\dagger}A &= U\Sigma V^*V\Sigma^{\dagger}U^*U\Sigma V^* = U\Sigma\Sigma^{\dagger}\Sigma V^* = U\Sigma V^* = A, \\
+        A^{\dagger}AA^{\dagger} &= V\Sigma^{\dagger}U^*U\Sigma V^*V\Sigma^{\dagger}U^* = V\Sigma^{\dagger}\Sigma\Sigma^{\dagger}U^* = V\Sigma^{\dagger}U^*,
+    \end{align*}
+    so the Moore-Penrose inverse always exists.
+
+    Finally, if $A$ is real, then $U$, $\Sigma$, and $V$ are real, and so $A^{\dagger} = V\Sigma^{\dagger}U^*$ is also real.
+\end{proof}
+
+\begin{thm}
+    Let $A \in M_{m,n}$. Among all minimizers of $\norm{Ax-b}_2$, $x = A^+b$ is the unique solution that minimizes $\norm{x}_2$.
+\end{thm}
+
+\begin{proof}
+    By Theorem \ref{thm:lst-sqrs-pseudoinverse}, we know that any minimizer of $Ax - b$ has the form $A^+b + y$ for $y \in \ker A$.
+
+    Let $A = U\Sigma V^*$ be a singular value decomposition, and let $k$ be the rank of $A$. Recall that the nullspace of $A$ is spanned by columns $k+1$ through $n$ of $V$, and the range of $A^+$ is spanned by columns $1$ through $k$ of $V$. Since $V$ is unitary, it follows $y \in \ker A$ must be orthogonal to $A^+b$. Therefore,
+    \begin{align*}
+        \norm{x}_2^2 = \norm{A^+b}_2^2 + \norm{y}_2^2,
+    \end{align*}
+    and so is minimized (among all minimizers of $\norm{Ax-b}_2$) when $y = \vec{0}$ and so $x = A^+b$.
 \end{proof}

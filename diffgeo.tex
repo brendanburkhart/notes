@@ -6,7 +6,7 @@
 \section{Curves}
 
 \begin{defn}
-    Let $U \subseteq \R^n$ be an open set, and $f: U \to \R^m$ a function on $U$. If each component function $f^i$ has partial derivatives of all orders, we say $f$ is \emph{smooth}.
+    Let $U \subseteq \R^n$ be an open set, and $f: U \to \R^m$ a function on $U$. If $f$ has continuous (mixed) partial derivatives of all orders, we say $f$ is \emph{smooth}.
 \end{defn}
 
 \begin{defn}
@@ -204,15 +204,14 @@
             | & | & |
         \end{bmatrix}^{-1}.
     \end{align*}
-    Furthermore,
+    Then by applying $R$ to $\tilde{\alpha}$, we obtain $t(0) = \tilde{t}(0)$, $n(0) = \tilde{n}(0)$, and $b(0) = \tilde{b}(0)$. Furthermore, by Frenet-Serret \ref{thm:frenet-serret} we have
     \begin{align*}
-        \frac{1}{2}\frac{d}{ds}\left(\norm{t-\tilde{t}}^2 + \norm{n-\tilde{n}}^2 + \norm{n-\tilde{n}}^2\right) &= \langle t-\tilde{t}, t' - \tilde{t'} \rangle + \langle n-\tilde{n}, n' - \tilde{n'} \rangle + \langle b-\tilde{b}, b' - \tilde{b'} \rangle \\
+        \frac{1}{2}\frac{d}{ds}\left(\norm{t-\tilde{t}}^2 + \norm{n-\tilde{n}}^2 + \norm{b-\tilde{b}}^2\right) &= \langle t-\tilde{t}, t' - \tilde{t'} \rangle + \langle n-\tilde{n}, n' - \tilde{n'} \rangle + \langle b-\tilde{b}, b' - \tilde{b'} \rangle \\
         &= \langle t-\tilde{t}, \kappa n - \kappa n' \rangle + \langle n-\tilde{n}, -\tau b - \kappa t - \tau \tilde{b} - \kappa \tilde{t} \rangle + \langle b-\tilde{b},\tau n - n \tilde{n} \rangle \\
         &= \kappa \langle t-\tilde{t}, n-\tilde{n}\rangle - \kappa \langle n-\tilde{n}, t-\tilde{t}\rangle - \tau\langle n-\tilde{n},b-\tilde{b}\rangle + \tau\langle b-\tilde{b}, n-\tilde{n} \rangle \\
         &= 0.
     \end{align*}
-    Therefore, $t = \tilde{t}$, and so $\tilde{\alpha}(s) + t = \tilde{\alpha}$.
-    {\large\color{red}TODO}
+    Since $t(0) = \tilde{t}(0)$, we find that $t(s) = \tilde{t}(s)$ for all $s \in I$. Therefore, $\alpha(s) - \alpha(0) = \tilde{\alpha}(s) - \tilde{\alpha}(0)$ is constant.
 \end{proof}
 
 \begin{defn}
@@ -248,7 +247,7 @@
     A \emph{Jordan curve} (or \emph{simple curve}) is a closed curve without self-intersections, i.e. if $\abs{t - s} < T$ then $\alpha(t) \neq \alpha(s)$.
 \end{defn}
 
-\begin{thm}{Sniith Schoerflies Theorem}
+\begin{thm}{Smooth Schoenflies Theorem}\proofbreak
     Let $\alpha: [0, T] \to \R^2$ be a Jordan curve. Then there exists a diffeomorphism $f: \R^2 \to \R^2$ such that $f(S^1)$ coincides with the image of $\alpha$.
 \end{thm}
 
@@ -527,7 +526,7 @@
             \frac{\partial f}{\partial x}(p) & \frac{\partial f}{\partial y}(p) & \frac{\partial f}{\partial z}(p)
         \end{pmatrix}.
     \end{align*}
-    Since $\frac{\partial f}{\partial z}(p) \neq 0$ by assumption, $dF_p$ must be invertible. By the Inverse Function Theorem, there exists a neighborhood $V$ of $p$ and $W$ of $F(p)$ such that $F: V \to W$ has smooth inverse $F^{-1}: W \to V$, which necessarily has the form $F^{-1}(u, v, w) = (u, v, g(u, v, w))$ for some smooth $g: W \to \R$. Next, we can define $h: \tilde{W} \to V$ by $h(u, v) = g(u, v, \alpha)$, where $\tilde{W}$ is the projection of $W$ on to the $UV$ plane.
+    Since $\frac{\partial f}{\partial z}(p) \neq 0$ by assumption, $dF_p$ must be invertible. By the Inverse Function Theorem \ref{thm:inverse-function}, there exists a neighborhood $V$ of $p$ and $W$ of $F(p)$ such that $F: V \to W$ has smooth inverse $F^{-1}: W \to V$, which necessarily has the form $F^{-1}(u, v, w) = (u, v, g(u, v, w))$ for some smooth $g: W \to \R$. Next, we can define $h: \tilde{W} \to V$ by $h(u, v) = g(u, v, \alpha)$, where $\tilde{W}$ is the projection of $W$ onto the $UV$ plane.
     
     Notice that the graph of $h$ is $f^{-1}(\{\alpha\}) \intersect V$. By Proposition \ref{prop:graph-is-regular-surface}, $h$ is a chart for $p$, and so $f^{-1}(\{\alpha\})$ must be a regular surface.
 \end{proof}
@@ -556,7 +555,7 @@
     \begin{align*}
         dF(q, t) = dx(q) + tw
     \end{align*}
-    must be full-rank, since $dx(q)$ is injective and $w$ is orthogonal to it's image. Therefore, we can apply the inverse function theorem \ref{thm:inverse-function} to find that $F$ is a diffeomorphism in some neighborhood $M$ of $(q, 0)$. Therefore, $h = \pi \circ F^{-1} \circ y$ (where $\pi$ is the projection on to the $uv$ plane) is smooth in a neighborhood of $r$.
+    must be full-rank, since $dx(q)$ is injective and $w$ is orthogonal to its image. Therefore, we can apply the inverse function theorem \ref{thm:inverse-function} to find that $F$ is a diffeomorphism in some neighborhood $M$ of $(q, 0)$. Therefore, $h = \pi \circ F^{-1} \circ y$ (where $\pi$ is the projection onto the $uv$ plane) is smooth in a neighborhood of $r$.
 
     Since the roles of $x$ and $y$ are symmetric, interchanging them yields smoothness of $y^{-1} \circ x = h^{-1}$.
 \end{proof}
@@ -566,7 +565,7 @@
 \end{defn}
 
 \begin{lemma}
-    A function $f: S \to \R$ is smooth at a point $p$, independent of the choice of chart used. That is, if it is smooth with respect to one chart then it is smooth with respect to every chart, and conversely if it is not smooth with respect to one chart then it is not smooth with repsect to any chart.
+    A function $f: S \to \R$ is smooth at a point $p$, independent of the choice of chart used. That is, if it is smooth with respect to one chart then it is smooth with respect to every chart, and conversely if it is not smooth with respect to one chart then it is not smooth with respect to any chart.
 \end{lemma}
 
 \begin{proof}
@@ -624,7 +623,7 @@
 \end{cor}
 
 \begin{defn}
-    Let $S_1$ and $S_2$ be regular surfaces, and suppose $\varphi: V \subseteq S_1 \to S_2$ is smooth, where $V$ is open. Let $p \in V$ and define $d\varphi_p: T_pS_1 \to T_{\varphi(p)}S_2$ by $d\varphi_p(w) = \beta'(0)$, where $\beta = \varphi \cdot \alpha$, and $\alpha: (-\varepsilon, \varepsilon) \to S_1$ is such that $w = \alpha'(0)$ (in the relevant basis) and $\alpha(0) = p$. The map $d\varphi_p$ is the \emph{differential} of $\varphi$ at $p$.
+    Let $S_1$ and $S_2$ be regular surfaces, and suppose $\varphi: V \subseteq S_1 \to S_2$ is smooth, where $V$ is open. Let $p \in V$ and define $d\varphi_p: T_pS_1 \to T_{\varphi(p)}S_2$ by $d\varphi_p(w) = \beta'(0)$, where $\beta = \varphi \cdot \alpha$, and $\alpha: (-\varepsilon, \varepsilon) \to S_1$ is such that $w = \alpha'(0)$ and $\alpha(0) = p$. The map $d\varphi_p$ is the \emph{differential} of $\varphi$ at $p$.
 \end{defn}
 
 \begin{prop}
@@ -738,10 +737,10 @@
 \begin{rmk}
     Note that
     \begin{align*}
-        \norm{m_u \times m_v}^2 &= \norm{m_u}^2\norm{m_v}^2 - \langle m_u, m_v \rangle \\
-        &= EG - F,
+        \norm{m_u \times m_v}^2 &= \norm{m_u}^2\norm{m_v}^2 - \left(\langle m_u, m_v \rangle\right)^2 \\
+        &= EG - F^2,
     \end{align*}
-    and so $\norm{m_u \times m_v} = \sqrt{EG-F}$.
+    and so $\norm{m_u \times m_v} = \sqrt{EG-F^2}$, which is the square root of the determinant.
 \end{rmk}
 
 \begin{rmk}
@@ -881,7 +880,7 @@
 \section{Gauss map}
 
 \begin{defn}
-    Let $S$ be an orientable surface. A smooth unit normal vector field $N$ on $S$ is the \emph{orientation}
+    Let $S$ be an orientable surface. A smooth unit normal vector field $N$ on $S$ is an \emph{orientation} of $S$.
 \end{defn}
 
 \begin{defn}
@@ -889,7 +888,7 @@
 \end{defn}
 
 \begin{rmk}
-    Consider the differential of the Gauss map $dN(p): T_pS \to T_{N(p)}S^2$, and notice that since $T_pS$ and $T_{N(p)}S^2$ have the same normal vector (by construction of the Gauss map), we can identity these vectors space. Therefore, we will consider the differential of the Gauss map to be a map $dN(p): T_pS \to T_pS$.
+    Consider the differential of the Gauss map $dN(p): T_pS \to T_{N(p)}S^2$, and notice that since $T_pS$ and $T_{N(p)}S^2$ have the same normal vector (by construction of the Gauss map), we can identify these vectors space. Therefore, we will consider the differential of the Gauss map to be a map $dN(p): T_pS \to T_pS$.
 \end{rmk}
 
 \begin{rmk}
@@ -939,7 +938,7 @@
 \end{proof}
 
 \begin{rmk}
-    Since the normal curvature is independent of the curve used, for convienence we can always use the form formed by the intersection of $S$ with the plane spannded by $N(p)$ and $v$. This curve is knownas the \emph{normal section} of $S$ at $p$, along $v$.
+    Since the normal curvature is independent of the curve used, for convienence we can always use the plane formed by the intersection of $S$ with the plane spanned by $N(p)$ and $v$. This curve is known as the \emph{normal section} of $S$ at $p$, along $v$.
 \end{rmk}
 
 \begin{exmp}
@@ -965,5 +964,708 @@
 \end{thm}
 
 \begin{proof}
-    {\color{red}TODO.}
+    Since $dN_{p}: T_pS \to T_pS$ is a differential, it is a linear map. Let $m(u, v)$ be a local parameterization for $p \in S$. Then $m_{u}$ and $m_{v}$ form a basis for $T_pS$. Let $\alpha'(0) \in TpS$ be a tangent vector, where $\alpha(t) = m(u(t), v(t))$ for some $u(t), v(t): I \to \R$, $\alpha(0) = p$, and $\alpha$ is unit speed.
+    
+    Let $N_u = dN_{p}(m_u)$, and $N_v = dN_{p}(m_v)$. We know that $\langle N(p), m_u \rangle = 0$ and $\langle N(p), m_v\rangle = 0$ since $N(p)$ is normal to the tangent plane, so by differentiating with respect to $v$ and $u$ respectively, we obtain
+    \begin{align*}
+        \langle N_v, m_u \rangle + \langle N(p), m_{uv}\rangle &= 0, \\
+        \langle N_u, m_v \rangle + \langle N(p), m_{vu}\rangle &= 0.
+    \end{align*}
+    Since all second partial derivatives of $m$ are continuous by smoothness of $m$, we know that $m_{uv} = m_{vu}$, and so we have $\langle N_v, m_u\rangle = \langle N_u, m_v \rangle$. Since $N_u = dN_{p}(m_u)$ and $N_v = dN_{p}(m_v)$, it follows that
+    \begin{align*}
+        \langle dN_{p}(m_u), m_v \rangle = \langle m_u, dN_{p}m_v\rangle.
+    \end{align*}
+    Therefore, $-dN_{p}$ is self-adjoint, and so by the Spectral Theorem \ref{spectral-theorem} we know that there exists a orthonormal basis of eigenvalues. Furthermore, by the Rayleigh-Ritz theorem \ref{thm:rayleigh-ritz} it follows that the eigenvalues are the principal curvatures of $S$ at $p$, and the corresponding unit eigenvectors are the corresponding principal directions.
 \end{proof}
+
+\begin{thm}{Euler's formula}\proofbreak
+    For any $v \in TpS$, $\sfform_p(v) = \kappa_1\cos^2(\theta) + \kappa_2\sin^2(\theta)$, where $\theta$ is the angle of $v$, measured from $v_1$ towards $v_2$.
+\end{thm}
+
+\begin{proof}
+    Since $v_1, v_2$ are an orthonormal eigenbasis, we know that $v = \cos(\theta)v_1 + \sin(\theta)v_2$. Therefore,
+    \begin{align*}
+        \sfform_p(v) &= \langle -dN_p(\cos(\theta)v_1 + \sin(\theta)v_2), \cos(\theta)v_1 + \sin(\theta)v_2 \rangle \\
+        &= \langle \kappa_1\cos(\theta)v_1 + \kappa_2\sin(\theta)v_2, \cos(\theta)v_1 + \sin(\theta)v_2 \rangle \\
+        &= \kappa_1\cos^2(\theta) + \kappa_2\sin^2(\theta).
+    \end{align*}
+\end{proof}
+
+\begin{defn}
+    For $p \in S$, the determinant of $-dN_p$ (which is $\kappa_1\kappa_2$) is the \emph{Gauss curvature} $K(p)$ of $S$ at $p$. Additionally, $\frac{1}{2}\trace(-dN_p) = (\kappa_1 + \kappa_2)/2$ is the \emph{mean curvature} $H(p)$ of $S$ at $p$.
+\end{defn}
+
+\begin{rmk}
+    When we reverse the orientation of $S$, then the sign of $\kappa_1$ and $\kappa_2$ reverse. Therefore, the Gauss curvature $K$ is independent of orientation, but the mean curvature $H$ is not.
+\end{rmk}
+
+\begin{defn}
+    We say that $p \in S$ is
+    \begin{itemize}
+        \item \emph{elliptic} when $K(p) > 0$ (e.g. points on surface of a sphere),
+        \item \emph{hyperbolic} when $K(p) < 0$ (e.g. points on surface of a hyperbolic paraboloid).
+        \item \emph{parabolic} when $K(p) = 0$ but $H(p) \neq 0$ (e.g. points on surface of a cylinder),
+        \item \emph{planar} when $K(p) = 0$ and $H(p) = 0$ (e.g. points on surface of a plane).
+    \end{itemize}
+\end{defn}
+
+\begin{rmk}
+    All points in a sufficiently small neighborhood of a elliptic (respectively hyperbolic) point remain elliptic (respectively hyperbolic), by continuity of $K(p)$. However, this is not necessarily the case for parabolic or planar points.
+\end{rmk}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item If $S$ is the graph of $z = x^2 + y^2$, all points are elliptic.
+        \item If $S$ is the graph of $z = x^4 + y^2$, the origin is a parabolic point, and all other points are elliptic.
+        \item If $S$ is the graph of $z = x^4 + y^4$, the origin is planar, and all other points are elliptic. 
+    \end{itemize}
+\end{exmp}
+
+\begin{defn}
+    If $p \in S$ satisfies $\kappa_1(p) = \kappa_2(p)$, then $p$ is an \emph{umbilical point.}
+\end{defn}
+
+\begin{exmp}\proofbreak
+    \begin{itemize}
+        \item Every point on a plane is an umbilical point.
+        \item No point on a cylinder is an umbilical point,
+        \item On a paraboloid, the origin is the only umbilical point.
+    \end{itemize}
+\end{exmp}
+
+\begin{prop}
+    Let $S$ be a connected surface such that every point $p \in S$ is an umbilical point. Then $S$ is either a portion of a sphere, or a portion of a plane.
+\end{prop}
+
+\begin{proof}
+    Let $p \in S$, and let $m(u, v)$ be a chart whose image contains $p$. Since every $q \in V$ is umbilical, we have $dN_{q}(w) = \lambda(q)w$, where $\lambda: V \to \R$ is smooth. In fact, $\lambda(q)$ is constant! This is because we can express $w = a_1m_u + a_2m_v$, and so
+    \begin{align*}
+        dN_q(w) = a_1N_u + a_2N_v,
+    \end{align*}
+    and then since $dN_q(m_u) = N_u$ and $dN_q(m_v) = N_v$, so $N_u = \lambda(q)m_u$ and $N_v = \lambda(q)m_v$. Differentiating this last two equations with respect to $v$ and $u$ respectively, we obtain $N_{uv} = \lambda_v(q)m_u + \lambda(q)m_{uv}$ and $N_{vu} = \lambda_u(q)m_v + \lambda(q)m_{vu}$. By smoothness, $N_{uv} = N_{vu}$ and $m_{uv} = m_{vu}$, so we have $\lambda_vm_u - \lambda_um_v = \vec{0}$. But $m_u$ and $m_v$ are linearly independent, so it follows that $\lambda_u, \lambda_v$ are zero. Therefore, $\lambda$ is constant as claimed.
+
+    Now we separately consider the cases $\lambda = 0$ and $\lambda \neq 0$. When $\lambda = 0$, we have $N_u = \lambda(q)m_u = \vec{0}$ and similarly $N_v = \vec{0}$. Therefore, $N(q)$ is some constant $N_0$ across the surface. Furthermore,
+    \begin{align*}
+        \frac{\partial}{\partial u}\langle m, N_0\rangle &= \langle m_u, N_0\rangle + \langle m, \vec{0}\rangle, \\
+        \frac{\partial}{\partial v}\langle m, N_0\rangle &= \langle m_v, N_0\rangle + \langle m, \vec{0}\rangle.
+    \end{align*}
+    Since $N$ is normal to $m_u$ and $m_v$ by definition, it follows that $\langle m(u, v), N(m(u, v))\rangle = \langle q, N(q)\rangle$ is constant, which is precisely the definition of a plane with normal vector $N_0$.
+
+    Now suppose instead that $\lambda \neq 0$. Since $N_u = \lambda m_u$ and $N_v = \lambda m_v$, we find that
+    \begin{align*}
+        0 = \frac{\partial}{\partial u}\left(m(u, v) - \frac{1}{\lambda}N(m(u, v))\right) = \frac{\partial}{\partial v}\left(m(u, v) - \frac{1}{\lambda}N(m(u, v))\right).
+    \end{align*}
+    Therefore, $m(u, v) - \frac{1}{\lambda}N(m(u, v))$ is some constant vector $d$. Therefore, $\norm{m(u, v) - d} = 1/\abs{\lambda}$, and so $V$ must be contained in a sphere centered at $d$ with radius $1/\abs{\lambda}$.
+
+    While the above argument holds only for the image of $m(u, v) \subseteq S$, it can be extended to all of $S$ by the connectedness of $S$ and a compactness argument. {\color{red}TODO: complete (or find in do Carmo)}.
+\end{proof}
+
+\begin{conjecture}{Carath\'eodory's conjecture}\proofbreak
+    Every regular surface $S \in \R^3$ that is closed and convex contains at least two umbilical points.
+\end{conjecture}
+
+Let $S$ be a oriented surface with orientation $N$, and let $m: U \to S$ be a chart such that the normal induced by $m$ agrees with the orientation $N$. Let $p \in m(U)$ and let $\alpha$ be a parameterized curve such that $\alpha'(0) = p$. We know that $\alpha(t)$ can be expressed as $(u(t), v(t))$, and then
+\begin{align*}
+    \alpha'(0) &= u'(0)m_u + v'(0)m_v \\
+    dN_p(\alpha'(0)) &= u'(0)N_u + v'(0)N_v.
+\end{align*}
+Of course, since $\{m_u, m_v\}$ is a basis for $T_pS$, we can express $N_u = a_{11}m_u + a_{12}m_v$ and $N_v = a_{21}m_u + a_{22}m_v$, so
+\begin{align*}
+    dN_p\begin{pmatrix}
+        u'(0) \\ v'(0)
+    \end{pmatrix} &= \begin{pmatrix}
+        a_{11} & a_{12} \\
+        a_{21} & a_{22}
+    \end{pmatrix}\begin{pmatrix}
+        u'(0) \\ v'(0)
+    \end{pmatrix}.
+\end{align*}
+
+Therefore, we can express the second fundamental form as
+\begin{align*}
+    \sfform_p(\alpha'(0)) &= -\langle dN_p(\alpha'(0)), \alpha'(0)\rangle \\
+    &= -\langle u'(0)N_u + v'(0)N_v, u'(0)m_u + v'(0)m_v \rangle \\
+    &= e(u'(0))^2 + 2fu'(0)v'(0) + g(v'(0))^2,
+\end{align*}
+where
+\begin{align*}
+    e &= -\langle N_u, m_u \rangle, \\
+    f &= -\frac{\langle N_v, m_u\rangle + \langle N_u, m_v\rangle}{2}, \\
+    g &= -\langle N_v, m_v \rangle.
+\end{align*}
+Since $N$ is orthogonal to $T_pS$, we know $\langle N, m_u\rangle = \langle N, m_v\rangle = 0$. Differentiating we obtain $\langle N, m_{uu}\rangle = -\langle N_u, m_u\rangle$ and several other useful identities, which allow us to rewrite the above as
+\begin{align*}
+    e &= \langle N, m_{uu}\rangle, \\
+    f &= \langle N, m_{uv}\rangle, \\
+    g &= \langle N, m_{vv}\rangle.
+\end{align*}
+
+Given the coefficients $E, F, G$ for the first fundamental form, and $e, f, g$ for the second fundamental form, we find
+\begin{align*}
+    -f &= \langle N_u, m_v \rangle = a_{11}F + a_{21}E, \\
+    -f &= \langle N_v, m_u \rangle = a_{12}E + a_{22}F, \\
+    -e &= \langle N_u, m_u \rangle = a_{11}E + a_{21}F, \\
+    -g &= \langle N_v, m_v \rangle = a_{12}F + a_{22}G,
+\end{align*}
+and so
+\begin{align*}
+    -\begin{pmatrix}
+        e & f \\ f & g
+    \end{pmatrix} &= \begin{pmatrix}
+        a_{11} & a_{12} \\ a_{21} & a_{22}
+    \end{pmatrix}\begin{pmatrix}
+        E & F \\ F & G
+    \end{pmatrix},
+\end{align*}
+and it follows that, with respect to a specific chart,
+\begin{align*}
+    dN_{p} &= -\begin{pmatrix}
+        e & f \\ f & g
+    \end{pmatrix}\begin{pmatrix}
+        E & F \\ F & G
+    \end{pmatrix}^{-1} = \frac{1}{EG - F^2}\begin{pmatrix}
+        fF - eG & gF - fG\\
+        eF - fE & fF - gE
+    \end{pmatrix},
+\end{align*}
+which are the Weingarten equations for $dN_{p}$.
+
+\begin{cor}
+    The Gauss curvature is
+    \begin{align*}
+        K &= \frac{eg-f^2}{EG-F^2},
+    \end{align*}
+    and the mean curvature is
+    \begin{align*}
+        H &= \frac{1}{2}\trace(dN_p) = \frac{1}{2}\frac{eG-2fF+gE}{EG-F^2}.
+    \end{align*}
+    Furthermore, the principal curvatures at $p \in S$ are $H \pm \sqrt{H^2 - K}$.
+\end{cor}
+
+\begin{exmp}
+    Consider the torus $m(u, v) = \left((a + r\cos(u))\cos(v), (a + r\cos(u))\sin(v), r\sin(u)\right)$, where $u \in (0, 2\pi)$, and $v \in (0, 2\pi)$.
+
+    Suppose we want to compute $K, H$, and determine which points are elliptic, parabolic, hyperbolic, or planar.
+
+    We compute $m_u = (-r\sin(u)\cos(v), -r\sin(u)\sin(v), r\cos(u))$ and $m_v = (-(a+r\cos(u))\sin(v), (a+r\cos(u))\cos(v), 0)$, and so
+    \begin{align*}
+        E &= \langle m_u, m_u\rangle = r^2 \\
+        F &= \langle m_u, m_v\rangle = 0 \\
+        G &= \langle m_v, m_v\rangle = (a+r\cos(u))^2.
+    \end{align*}
+    Furthermore,
+    \begin{align*}
+        m_{uv} &= (r\sin(u)\sin(v), -r\sin(u)\cos(v), 0) \\
+        m_{uu} &= (-r\cos(u)\cos(v), -r\cos(u)\sin(v), -r\sin(u)) \\
+        m_{vv} &= (-(a + r\cos(u))\cos(v), -(a + r\cos(u))\sin(v), 0).
+    \end{align*}
+    Using the fact that $a \cdot (b \times c)$ is the determinant of the matrix with rows $a$, $b$, and $c$, and $\norm{m_u \times m_v} = \sqrt{EG - F^2}$, it follows that
+    \begin{align*}
+        e &= -\langle N, m_{uu}\rangle = \frac{1}{\sqrt{EG-F^2}}\det\begin{pmatrix}
+            -r\cos(u)\cos(v) & -r\cos(u)\sin(v) & -r\sin(u) \\
+            -r\sin(u)\cos(v) & -r\sin(u)\sin(v) & r\cos(u) \\
+            -(a+r\cos(u))\sin(v) & (a+r\cos(u))\cos(v) & 0
+        \end{pmatrix} = r \\
+        f &= 0 \\
+        g &= \cos(u)(a + r\cos(u)).
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        K &= \frac{eg-f^2}{EG-F^2} = \frac{\cos(u)}{r(a + r\cos(u))} \\
+        H &= -\frac{1}{2}\frac{eG-2fF+gE}{EG-F^2} = \frac{r(a+r\cos(u))^2 + r^2\cos(u)(a + r\cos(u))}{2r(a+r\cos(u))}.
+    \end{align*}
+    For $u \in (3\pi/2, 2\pi) \union (0, \pi/2)$ we then have $K > 0$ so such points are elliptic, for $u = \pi/2$ and $u = 3\pi/2$ we have $K = 0$, and for $u \in (\pi/2, 3\pi/2)$ we have $K < 0$ so such points are hyperbolic.
+
+    When $u = \pi/2$ or $u = 3\pi/2$, $H = a/2 > 0$, and so such points are parabolic.
+\end{exmp}
+
+\begin{defn}
+    A regular connected curve $C \subset S$ is called a \emph{line of curvature} of $S$ if the tangent of $C$ at $p$ is a principal direction of $S$, for all $p \in C$.
+\end{defn}
+
+\begin{prop}
+    Let $m: U \to S$ be a local parameterization of $S$, such that $f = F = 0$. Then the coordinate curves $m(t, c)$ and $m(c, t)$, for constant $c$, are lines of curvature.
+\end{prop}
+
+\begin{proof}
+    Suppose $C$ is a line of curvature, contained entirely within the image $m(U)$, and let $\alpha: I \to S$ be a unit speed parameterization of $C$. Therefore, $dN(\alpha'(t)) = \lambda(t)\alpha'(t)$ for all $t \in I$. By the Weingarten identities, we then have
+    \begin{align*}
+        (fF - eG)(u'(t)) + (gF - fG)(v'(t)) &= (EG - F^2)\lambda(t)u'(t), \\
+        (eF - fE)(u'(t)) + (fF - gE)(v'(t)) &= (EG - F^2)\lambda(t)v'(t).
+    \end{align*}
+    Since $f = F = 0$, these simplify to
+    \begin{align*}
+        eG(u'(t)) &= EG\lambda(t)u'(t), \\
+        -gE(v'(t)) &= EG\lambda(t)v'(t).
+    \end{align*}
+    Therefore, taking either $u(t)$ to be constant or $v(t)$ be to constant gives a line of curvature.
+\end{proof}
+
+\begin{prop}
+    Consider a surface of revolution, parameterized by
+    \begin{align*}
+        m(u, v) = (\varphi(v)\cos(u), \varphi(v)\sin(u), \psi(v)),
+    \end{align*}
+    with $\varphi(v) > 0$, $u \in (0, 2\pi)$, and $v \in (a, b)$. Then $m$ has $E = \varphi^2$, $F = 0$, $G = (\varphi')^2 + (\psi')^2$. If we assume the profile has unit speed, so $G = 1$, then $e = -\varphi(v)\psi'(v)$, $f = 0$, and $g = \psi'\varphi'' - \psi''\varphi'$.
+\end{prop}
+
+\section{Intrinsic geometry}
+
+\begin{defn}
+    We say a quantity defined on a surface $S \subseteq \R^3$ is \emph{intrinsic} if it depends on only the first fundamental form, otherwise we say it is \emph{extrinsic}.
+\end{defn}
+
+\begin{exmp}
+    Lengths of curves in a surface, angles between curves, and areas are all intrinsic. As we will prove, the mean curvature is extrinsic, but the Gauss curvature is intrinsic.
+\end{exmp}
+
+\begin{defn}
+    Let $S_1$ and $S_2$ be regular surfaces. We say a map $\varphi: S_1 \to S_2$ is an \emph{isometry} if it is a diffeomorphism such that for any $p \in S$ and any $w_1, w_1 \in TpS_1$, the map satisfies
+    \begin{align*}
+        \langle w_1, w_2\rangle = \langle d\varphi_p(w_1), d\varphi_p(w_2)\rangle.
+    \end{align*}
+\end{defn}
+
+\begin{prop}\label{prop:isometry-iff-preserves-ffform}
+    A diffeomorphism $\varphi: S_1 \to S_2$ is an isometry if and only if
+    \begin{align*}
+        \ffform_p^{S_1}(w) = \ffform_{\varphi(p)}^{S_1}(d\varphi_p(w))
+    \end{align*}
+    for all $w \in TpS$.
+\end{prop}
+
+\begin{proof}
+    Suppose that $\varphi: S_1 \to S_2$ is an isometry. Then for all $w \in TpS$, we have
+    \begin{align*}
+        \ffform_p^{S_1}(w) = \langle w, w\rangle = \langle d\varphi_p(w), d\varphi_p(w)\rangle = \ffform_{\varphi(p)}^{S_2}(d\varphi_p(w)).
+    \end{align*}
+
+    Conversely, suppose $\varphi$ preserves the inner product on tangent spaces. Then for any $w_1, w_2 \in TpS$, we have
+    \begin{align*}
+        2\langle w_1, w_2\rangle &= \ffform_p^{S_1}(w_1 + w_2) - \ffform_{p}^{S_1}(w_1) - \ffform_{p}^{S_1}(w_2) \\
+        &= \ffform_{\varphi(p)}^{S_2}(d\varphi_p(w_1 + w_2)) - \ffform_{\varphi_p}^{S_2}(d\varphi_p(w_1)) - \ffform_{\varphi_p}^{S_2}(d\varphi_p(w_2)) \\
+        &= 2\langle d\varphi_p(w_1), d\varphi_p(w_2)\rangle.
+    \end{align*}
+\end{proof}
+
+\begin{prop}\label{prop:isometry-iff-preserves-length}
+    A diffeomorphism is an isometry if and only if it preserves lengths of curves on the surfaces.
+\end{prop}
+
+\begin{proof}
+    Let $\varphi: S_1 \to S_2$ be an isometry, and consider a curve $\alpha: I \to S_1$, and $\beta: I \to S_2$ given by $\beta = \varphi \circ \alpha$, where $I = (a, b)$. Since $\varphi$ is an isometry, by definition we have
+    \begin{align*}
+        \norm{\alpha'(s)} = \sqrt{\langle \alpha'(s), \alpha'(s)} = \sqrt{\langle d\varphi_{\alpha(s)}(\alpha'), d\varphi_{\alpha(s)}(\alpha') \rangle} = \norm{d\varphi_{\alpha(s)\alpha'}} = \norm{\beta'(s)}.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        L(\beta) = \int_{a}^{b}\norm{\beta'(s)}ds = \int_{a}^{b}\norm{\alpha'}ds = L(\alpha),
+    \end{align*}
+    so isometries preserve lengths of curves.
+
+    Now, suppose that $\varphi: S_1 \to S_2$ is a diffeomorphism which preserves lengths of curves. For any $p \in S_1$ and any $w \in TpS_1$, let $\alpha$ be a curve through $p$ such that $\alpha(0) = p$ and $\alpha'(0) = w$. Let $\beta = \varphi \circ \alpha$ as before.
+
+    Then we know that for all $t \in (a, b)$ we have
+    \begin{align*}
+        \int_{a}^{t}\norm{\alpha'(s)}ds = \int_{a}^{t}\norm{\beta'(s)}ds.
+    \end{align*}
+    Since $\alpha'(s)$ is smooth, we know $\norm{\alpha'(s)}$ is smooth, and so by the Fundamental Theorem of Calculus it follows that
+    \begin{align*}
+        \norm{\alpha'(s)} = \norm{\beta'(s)},
+    \end{align*}
+    and in particular
+    \begin{align*}
+        I^{S_1}_p(w) = \norm{\alpha'(0)} = \norm{\beta'(0)} = \norm{d\varphi_{\alpha(0)}(\alpha'(0))} = \norm{d\varphi_p(w)} = I^{S_2}_{\varphi(p)}(d\varphi(w)).
+    \end{align*}
+    Since this holds for all $p \in S_1$ and all $w \in TpS_1$, it follows from Proposition \ref{prop:isometry-iff-preserves-ffform} that $\varphi$ must be an isometry.
+\end{proof}
+
+\begin{rmk}
+    What if two surfaces are not diffeomorphic, but have the same metric structure locally? For example, a cylinder and the M\"obius surface are not diffeomorphic (since the cylinder is orientable but the M\"obius surface is not), but certainly they are very similar locally.
+\end{rmk}
+
+\begin{defn}
+    Let $S_1$ and $S_2$ be regular surfaces, and fix $p \in S_1$ and a neighborhood $V \subseteq S_1$ of $p$. A map $\varphi: V \to S_2$ is called a local isometry at $p$ if $\varphi$ is an isometry onto its image $\varphi(V) \subseteq S_2$.
+\end{defn}
+
+\begin{exmp}
+    Recall that $s(u, v) = (\cos(u), \sin(u), v)$, where $u \in (0, 2\pi)$ and $v \in \R$, is a local parameterization for the cylinder (except for $s(0, v)$). We know that the First Fundamental form has coefficients $E = G = 1$ and $F = 0$.
+
+    The portion of the plane parameterized by $t(u, v) = (u, v, 0)$ for $u \in (0, 2\pi)$ and $v \in \R$ also has First Fundamental form coefficients $\tilde{E} = \tilde{G} = 1$ and $\tilde{F} = 0$.
+\end{exmp}
+
+\begin{exmp}
+    The catenoid is parameterized by $s(u, v) = (a\cosh(v)\cos(u), a\cosh(v)\sin(u), av)$ for $v \in \R$ and $u \in (0, 2\pi)$. Since this is a surface of revolution, the First Fundamental form satisfies
+    \begin{align*}
+        E &= (f(v))^2 = a^2\cosh^2(v), \\
+        F &= 0, \\
+        G &= (f'(v))^2 + (g'(v))^2 = a^2\cosh^2(v).
+    \end{align*}
+    The helicoid is parameterized by $t(\tilde{u}, \tilde{v}) = (\tilde{v}\cos(\tilde{u}), \tilde{v}\sin(\tilde{u}), a\tilde{u})$ for $\tilde{u} \in (0, 2\pi)$ and $\tilde{v} \in \R$. Consider the re-parameterization $u = u$ and $v = a\sinh(v)$. Then for $u \in (0, 2\pi)$ and $v \in \R$, we have $t(u, v) = (a\sinh(v)\cos(u), a\sinh(v)\sin(u), au)$. The coefficients of the first fundamental form are the same as for the catenoid above.
+\end{exmp}
+
+\begin{thm}
+    Let $S_1$ and $S_2$ be two surfaces. For some $U \subseteq \R^2$, suppose $s: U \to S_1$ and $t: U \to S_2$ are local parameterizations for $S_1$ and $S_2$. Let the coefficients of the First Fundamental form of $s$ be $\{E, F, G\}$, and those of $t$ be $\{\tilde{E}, \tilde{F}, \tilde{G}\}$. Let $\varphi: s(U) \subseteq S_1 \to t(U) \subseteq S_2$ be given by $\varphi = t \circ s^{-1}$. If $E = \tilde{E}$, $F = \tilde{F}$, and $G = \tilde{G}$, then $\varphi$ is a local isometry.
+\end{thm}
+
+\begin{proof}
+    We know that $\varphi$ is a diffeomorphism, since $t^{-1} \circ \varphi \circ s = \id$ is a diffeomorphism from $U$ to $U$. Then for any $p \in s(U)$ and $w \in TpS_1$, we have $t^{-1}(\varphi(w)) = s^{-1}(w)$, and so
+    \begin{align*}
+        \ffform_{p}^{S_1}(w) &= s^{-1}(w)\begin{pmatrix}
+            E & F \\
+            F & G
+        \end{pmatrix}s^{-1}(w) = s^{-1}(w)\begin{pmatrix}
+            \tilde{E} & \tilde{F} \\
+            \tilde{F} & \tilde{G}
+        \end{pmatrix}s^{-1}(w) \\
+        &= t^{-1}(\varphi(w))\begin{pmatrix}
+            \tilde{E} & \tilde{F} \\
+            \tilde{F} & \tilde{G}
+        \end{pmatrix}t^{-1}(\varphi(w)) = \ffform_{\varphi(p)}^{S_2}(\varphi(w)).
+    \end{align*}
+    It follows by Proposition \ref{prop:isometry-iff-preserves-ffform} that $\varphi$ is a local isometry.
+\end{proof}
+
+\begin{cor}
+    The mean curvature is not an intrinsic quantity, since the plane and cylinder are locally isometric, yet have different mean curvatures everywhere.
+\end{cor}
+
+\begin{defn}
+    Let $S_1$ and $S_2$ be regular surfaces.  We say a map $\varphi: S_1 \to S_2$ is a \emph{conformal map} if it is a diffeomorphism such that for any $p \in S$ and any $w_1, w_1 \in TpS_1$, the map satisfies
+    \begin{align*}
+        \langle w_1, w_2\rangle = \lambda(p)\langle d\varphi_p(w_1), d\varphi_p(w_2)\rangle.
+    \end{align*}
+    for some smooth positive function $\lambda: S_1 \to \R^+$.
+
+    If there exists a conformal map between surfaces, then we say they are conformal, or conformally equivalent.
+\end{defn}
+
+\begin{defn}
+    Let $S_1$ and $S_2$ be regular surfaces, and fix $p \in S_1$ and a neighborhood $V \subseteq S_1$ of $p$. A map $\varphi: V \to S_2$ is a \emph{local conformal} map if $\varphi$ is a conformal map onto its image $\varphi(V) \subseteq S_2$.
+
+    If there exists a local conformal map between surfaces, then we say they are locally conformally equivalent.
+\end{defn}
+
+\begin{rmk}
+    While (local) isometries preserve both lengths of curves, and angles between curves, a (local) conformal map will preserve angles between curves but not necessarily their lengths.
+\end{rmk}
+
+\begin{prop}
+    If $\varphi: U \to V$ is a local conformal map, then for curves $\alpha, \beta$ contained by $U$ that intersect at a point $p \in U$, the angle between the curves at $p$, and the angle between the curves $\varphi(\alpha)$ and $\varphi(\beta)$ at $\varphi(p)$ are equal.
+\end{prop}
+
+\begin{proof}
+    The cosine of the angle between $\alpha$ and $\beta$ is
+    \begin{align*}
+        \cos(\theta) &= \frac{\langle \alpha', \beta'\rangle}{\norm{\alpha'}\norm{\beta'}} \\
+    \end{align*}
+    while the cosine of the angle between $\varphi(\alpha)$ and $\varphi(\beta)$ is
+    \begin{align*}
+        \frac{\langle d\varphi(\alpha'), d\varphi(\beta')\rangle}{\norm{d\varphi(\alpha')}\norm{d\varphi(\beta')}} &= \frac{\lambda(p)\langle \alpha', \beta'\rangle}{\sqrt{\lambda(p)\langle \alpha', \alpha'\rangle}\sqrt{\lambda(p)\langle \beta', \beta'\rangle}} \\
+        &=  \frac{\langle d\varphi(\alpha'), d\varphi(\beta')\rangle}{\norm{d\varphi(\alpha')}\norm{d\varphi(\beta')}} = \cos(\theta).
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $S_1$ and $S_2$ be two surfaces. For some $U \subseteq \R^2$, suppose $s: U \to S_1$ and $t: U \to S_2$ are local parameterizations for $S_1$ and $S_2$. Let the coefficients of the First Fundamental form of $s$ be $\{E, F, G\}$, and those of $t$ be $\{\tilde{E}, \tilde{F}, \tilde{G}\}$. Let $\varphi: s(U) \subseteq S_1 \to t(U) \subseteq S_2$ be given by $\varphi = t \circ s^{-1}$. If $E = \lambda\tilde{E}$, $F = \lambda\tilde{F}$, and $G = \lambda\tilde{G}$ for some smooth $\lambda: U \to \R^+$, then $\varphi$ is a local conformal map.
+\end{thm}
+
+\begin{rmk}
+    Any two regular surfaces are locally conformally equivalent, which can be shown via isothermal parameterizations.
+\end{rmk}
+
+\section{Theorema Egregium}
+
+\begin{defn}
+    Let $S$ be a regular oriented surface with orientation $N$, and let $m: U \to S$ be a chart consistent with the orientation. For any $p \in m(U) \subseteq S$, we know that $N(p)$, $m_u$, and $m_v$ are all linearly independent.
+
+    Therefore, we have coefficients $\Gamma_{ij}^{k}$ ($1 \leq i,j,k \leq k$), $L_1$, $L_2$, $\tilde{L}_2$, and $L_3$ such that
+    \begin{align*}
+        m_{uu} &= \Gamma_{11}^{1}m_u + \Gamma_{11}^{2}m_v + L_1N, \\
+        m_{uv} &= \Gamma_{12}^{1}m_u + \Gamma_{12}^{2}m_v + L_2N, \\
+        m_{vu} &= \Gamma_{21}^{1}m_u + \Gamma_{21}^{2}m_v + \tilde{L}_2N, \\
+        m_{vv} &= \Gamma_{22}^{1}m_u + \Gamma_{22}^{2}m_v + L_3N.
+    \end{align*}
+    From the Weingarten identities, we have know
+    \begin{align*}
+        N_u &= a_{11}m_u + a_{21}m_v, \\
+        N_v &= a_{12}m_u + a_{22}m_v
+    \end{align*}
+    for some coefficients $a_{ij}$.
+
+    The coefficients $\Gamma_{ij}^{k}$ are the \emph{Christoffel symbols} of $m$.
+\end{defn}
+
+\begin{rmk}
+    Since $m_{uv} = m_{vu}$, we have $\Gamma_{ij}^{k} = \Gamma_{ji}^{k}$ and $L_2 = \tilde{L_2}$.
+\end{rmk}
+
+\begin{lemma}
+    Let $e, f, g$ be the coefficients of the second fundamental form. Then
+    \begin{align*}
+        L_1 &= e, \\
+        L_2 &= f, \\
+        L_3 &= g.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        e &= \langle x_{uu}, N\rangle = L_1, \\
+        f &= \langle x_{uv}, N\rangle = L_2, \\
+        f &= \langle x_{vu}, N\rangle = \tilde{L}_2, \\
+        g &= \langle x_{vv}, N\rangle = L_3.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}
+    The Christoffel symbols are intrinsic quantities.
+\end{lemma}
+
+\begin{proof}
+    Notice that
+    \begin{align*}
+        \langle m_{uu}, m_u \rangle &= \Gamma_{11}^{1}\langle m_{uu}, m_u\rangle + \Gamma_{11}^{2}\langle m_{uu}, m_v\rangle = \Gamma_{11}^{1}E + \Gamma_{11}^{2}F \\
+        \langle m_{uu}, m_u \rangle &= \frac{1}{2}\frac{\partial}{\partial u}\langle m_{u}, m_u\rangle = \frac{1}{2}E_u.
+    \end{align*}
+    Via a similar approach to $\langle m_{uv}, m_u\rangle$, etcetera, we find that
+    \begin{align*}
+        \Gamma_{11}^{1}E + \Gamma_{11}^{2}G &= \frac{1}{2}E_u, \\
+        \Gamma_{11}^{1}F + \Gamma_{11}^{2}G &= F_u - \frac{1}{2}E_v, \\
+        \Gamma_{12}^{1}E + \Gamma_{12}^{2}G &= \frac{1}{2}E_v, \\
+        \Gamma_{12}^{1}F + \Gamma_{12}^{2}G &= \frac{1}{2}G_u, \\
+        \Gamma_{22}^{1}E + \Gamma_{22}^{2}G &= F_v - \frac{1}{2}G_u, \\
+        \Gamma_{22}^{1}F + \Gamma_{22}^{2}G &= \frac{1}{2}G_v.
+    \end{align*}
+    Since $\det\begin{pmatrix}
+        E & F \\
+        F & G
+    \end{pmatrix} = \norm{m_u \times m_v} \neq 0$, it follows that we can solve these systems and express every Christoffel symbol in terms of $E, F, G$, and their derivatives.
+\end{proof}
+
+\begin{thm}{Theorema Egregium (Gauss' Theorem)}\label{thm:gauss}\proofbreak
+    The Gaussian curvature $K$ is intrinsic.
+\end{thm}
+
+\begin{proof}
+    Let $S$ be a regular surface, and $m: U \to S$ a chart. Since $m$ is smooth, we know that $(m_{uu})_v = (m_{uv})_u$. Expanding these, we find that
+    \begin{align*}
+        (m_{uu})_v &= \left(\Gamma_{11}^{1}\right)_vm_u + \Gamma_{11}^{1}m_{uv} + (\Gamma_{11}^{2})_vm_v + \Gamma_{11}^{2}m_{vv} + e_vN + eN_v \\
+        &= \left(\Gamma_{11}^{1}\right)_vm_u + \Gamma_{11}^{1}\left(\Gamma_{12}^{1}m_u + \Gamma_{12}^{2}m_v + fN\right) + (\Gamma_{11}^{2})_vm_v \\
+        &\quad\quad+ \Gamma_{11}^{2}\left(\Gamma_{22}^{1}m_u + \Gamma_{22}^{2}m_v\right) + e_vN + e\left(a_{12}m_u + a_{22}m_v\right).
+    \end{align*}
+    Similarly,
+    \begin{align*}
+        \left(m_{uv}\right)_u &= \left(\Gamma_{12}^{1}\right)_um_u + \Gamma_{12}^{1}m_{uu} + \left(\Gamma_{12}^{2}\right)_um_v + \Gamma_{12}^{2}m_{uv} + f_uN + fN_u \\
+        &= \left(\Gamma_{12}^{1}\right)_um_u + \Gamma_{12}^{1}\left(\Gamma_{11}^{1}m_u + \Gamma_{11}^{2}m_v + eN\right) + \left(\Gamma_{12}^{2}\right)_um_v \\
+        &\quad\quad+ \Gamma_{12}^{2}\left(\Gamma_{12}^1m_u + \Gamma_{12}^{2}m_v + fN\right) + f_uN + f\left(a_{11}m_u + a_{21}m_v\right).
+    \end{align*}
+    Since $m_u$, $m_v$, and $N$ are linearly independent, and the above expressions are equal, it follows that the coefficients in each equation of $m_u$, $m_v$, and $N$ must be equal. In particular, by equating the coefficients of $m_u$ we obtain
+    \begin{align*}
+        \Gamma_{11}^{1}\Gamma_{12}^{2} + \left(\Gamma_{11}^{2}\right)_v + \Gamma_{11}^{2}\Gamma_{22}^{2} + ea_{22} &= \Gamma_{12}^{1}\Gamma_{11}^{2} + \left(\Gamma_{12}^{2}\right)_u + \Gamma_{12}^{2}\Gamma_{12}^{2} + fa_{21}.
+    \end{align*}
+    Substituting the Weingarten equations $a_{21} = (eF - fE)/(EG - F^2)$ and $a_{22} = (fF - gE)/(EG - F^2)$, we have
+    \begin{align*}
+        \Gamma_{11}^{1}\Gamma_{12}^{2} + \left(\Gamma_{11}^{2}\right)_v + \Gamma_{11}^{2}\Gamma_{22}^{2} - \Gamma_{12}^{1}\Gamma_{11}^{2} - (\Gamma_{12}^2)_u - \left(\Gamma_{12}^{2}\right)^2 &= fa_{21} - ea_{22} = \frac{efF - f^2E}{EG-F^2} - \frac{efF - egE}{EG - F^2} \\
+        &= \frac{E(eg - f^2)}{EG - F^2} = EK.
+    \end{align*}
+    Therefore,
+    \begin{align*}\tag{$\star$}
+        K &= \frac{1}{E}\left(\Gamma_{11}^{1}\Gamma_{12}^{2} + \left(\Gamma_{11}^{2}\right)_v + \Gamma_{11}^{2}\Gamma_{22}^{2} - \Gamma_{12}^{1}\Gamma_{11}^{2} - (\Gamma_{12}^2)_u - \left(\Gamma_{12}^{2}\right)^2\right).
+    \end{align*}
+    This is known as the \emph{Gauss formula}.
+\end{proof}
+
+\begin{rmk}
+    If we had instead equated the coefficients of $m_u$, we would instead have obtained a different version of the Gauss formula, and by equating coefficients of $N$ we would have obtained
+    \begin{align}
+        e_v - f_u &= e\Gamma_{12}^{1} + f\left(\Gamma_{12}^{2} - \Gamma_{11}^{1}\right) - g\Gamma_{11}^2.
+    \end{align}
+    By repeating this prcedure, but instead using $(m_vv)_u = (m_[uv])_v$, we obtain that
+    \begin{align*}
+        f_v - g_u &= e\Gamma_{22}^{1} + f(\Gamma_{22}^{2} - \Gamma_{12}^{1}) - g\Gamma_{12}^{2}.
+    \end{align*}
+\end{rmk}
+
+\begin{cor}
+    The Gauss curvature is invariant under local isometries.
+\end{cor}
+
+\begin{defn}
+    The \emph{Mainardi-Codazzi} equations are
+    \begin{align*}
+        e_v - f_u &= e\Gamma_{12}^{1} + f\left(\Gamma_{12}^{2}-\Gamma_{11}^{1}\right) - g\Gamma_{11}^2, \\
+        f_v - g_u &= e\Gamma_{22}^{1} + f\left(\Gamma_{22}^{2}-\Gamma_{12}^{1}\right) - g\Gamma_{12}^2.
+    \end{align*}
+\end{defn}
+
+\begin{exmp}
+    Consider a surface of revolution $m(u, v) = (f(v)\cos(u), f(v)\sin(u), g(v))$, in which setting we know that $E = (f(v))^2$, $F = 0$, and $G = (f'(v))^2 + (g'(v))^2$. Therefore,
+    \begin{align*}
+        E_u &= 0, \\
+        E_v &= 2f(v)f'(v), \\
+        F_u &= F_v = 0, \\
+        G_u &= 0, \\
+        G_v &= 2f(v)f'(v) + 2g(v)g'(v).
+    \end{align*}
+    It follows that
+    \begin{align*}
+        \Gamma_{11}^{1} &= 0, &&\Gamma_{11}^{2} = \frac{-f(v)f'(v)}{(f')^2 + (g')^2}, \\
+        \Gamma_{12}^{1} &= \frac{f'}{f}, &&\Gamma_{12}^{2} = 0, \\
+        \Gamma_{22}^{1} &= 0, &&\Gamma_{22}^{2} = \frac{f'f'' + g'g''}{(f')^2 + (g')^2}.
+    \end{align*}
+\end{exmp}
+
+\section{Parallel transport and geodesics}
+
+\begin{defn}
+    Let $\alpha: I \to S$ be a curve in a surface $S$. A \emph{vector field} $X$ along $\alpha$ is a map $X: I \to \R^3$ such that $X(t) \in T_{\alpha(t)}S$ for all $t \in I$.
+
+    We say a vector field $X$ along $\alpha$ is \emph{smooth} at $t_0 \in I$ if, for some chart $m(u, v)$ whose image contains $\alpha(t_0)$, expressing $X(t) = a(t)m_u + b(t)m_v$ yields $a(t)$ and $b(t)$ which are smooth at $t_0$. If $X$ is smooth at all $t \in I$, then we simply say it is smooth.
+\end{defn}
+
+\begin{rmk}
+    Given a vector field $X: I \to \R^3$ along a curve $\gamma: I \to S$, we can differentiate $X$ to obtain a new map $X': I \to \R^3$. However, $X'(t)$ is not necessarily contained with $T_{\gamma(t)}S$, and so $X'$ is not necessarily a vector field. But given an orientation $N$ on $S$, we could instead consider
+    \begin{align*}
+        X'(t) - \left(X'(t) \cdot N\right)N,
+    \end{align*}
+    which is necessarily contained within $T_{\gamma(t)}S$ and therefore is a vector field.
+\end{rmk}
+
+\begin{defn}
+    Given a vector field $X: I \to \R^3$ along $\gamma: I \to S$, we define the \emph{covariant derivative}
+    \begin{align*}
+        \nabla_{\gamma'} X = X' - \langle X', N\rangle N
+    \end{align*}
+    of $X$ along $\gamma$.
+\end{defn}
+
+\begin{rmk}
+    Notice that $X' - \langle X', -N\rangle(-N) = X' - \langle X', N\rangle N$, and so $\nabla_{\gamma'}X$ is independent of the direction of the orientation. Therefore, $\nabla_{\gamma'}X$ can be defined without reference to (or existence of) any global orientation.
+\end{rmk}
+
+\begin{exmp}
+    Given a curve $\alpha: I \to S$, define $X: I \to \R^3$ by $X(t) = \alpha'(t)$. Then
+    \begin{align*}
+        \nabla_{\alpha'}X(t) &= \alpha''(t) - \langle \alpha''(t), N\rangle N = \kappa(t)\left(n(t)-\langle n(t), N(t)\rangle\right).
+    \end{align*}
+\end{exmp}
+
+\begin{defn}
+    A vector field $X$ along a curve $\gamma: I \to S$ is called \emph{parallel} along $\gamma$ if $\nabla_{\gamma'}X$ is identically zero.
+\end{defn}
+
+\begin{exmp}
+    If $S = \R^2$, then $\nabla_{\gamma'}X$ is simply $X'$, and so $X$ is parallel along $\gamma$ if and only if $X$ is constant.
+\end{exmp}
+
+\begin{prop}
+    Let $X$ and $Y$ be parallel vector fields along $\gamma: I \to S$. Then $\langle X(t), Y(t)\rangle$ is constant.
+\end{prop}
+
+\begin{prop}
+    Suppose the image of a curve $\gamma: I \to \R$ lies entirely within the image of a chart $m(u, v)$, so we can write $\gamma(t) = m(u(t), v(t))$ for some $u: I \to \R$ and $v: I \to \R$. For an arbitary vector field $X$ along $\gamma$, we can write $X(t) = a(t)m_u + b(t)m_v$, for some $a, b: I \to \R$. Given $v \in \R^3$, there exist unique $a(t), b(t)$ such that $X(t_0) = v$ and $X$ is parallel along $\gamma$.
+\end{prop}
+
+\begin{proof}
+    \begin{align*}
+        X' = a'(t)m_u + b'(t)m_v + a(t)\left[u'(t)\left(\Gamma_{11}^{1}m_u\right) \cdots\right]
+    \end{align*}
+
+    Then the condition $X$ is parallel along $\gamma$ gives a system of ordinary differential equations with two initial conditions. Therefore, we have the existence and uniqueness of a solution.
+\end{proof}
+
+\begin{rmk}
+    If $\gamma$ is not contained within a single chart, the above result can be applied multiple times to stitch together a unique solution across the entire curve $\gamma$.
+\end{rmk}
+
+\begin{defn}
+    We call the $X(t)$ resulting from the proposition above the \emph{parallel transport} of $v$ along $\gamma$.
+\end{defn}
+
+\begin{exmp}
+    Consider the parameterization of the sphere $m(\theta, \varphi) = (\cos(\theta)\cos(\varphi), \cos(\theta)\sin(\varphi), \sin(\theta))$, where $\theta \in (-\pi/2, \pi/2)$ and $\varphi \in (0, 2\pi)$. Then the Christoffel symbols are
+    \begin{align*}
+        \Gamma_{11}^{k} &= \Gamma_{22}^{2} = \Gamma_{12}^{1} = 0 \\
+        \Gamma_{12}^{2} &= -\tan(\theta) \\
+        \Gamma_{22}^{1} &= \sin(\theta)\cos(\theta).
+    \end{align*}
+    Let $\gamma$ be a line of latitude, so $\gamma(t) = m(\theta, t)$ for some constant $\theta$. The system of differential equations describing $a(t)$ and $b(t)$ are then
+    \begin{align*}
+        a'(t) &= -b\sin(\theta)\cos(\theta) \\
+        b'(t) &= a\tan(\theta).
+    \end{align*}
+    If $\theta = 0$ (so $\gamma$ is the equator), then $a(t)$ and $b(t)$ are constants. If $\theta \neq 0$, we observe that $a''(t) + a(t)\sin^2(\theta) = 0$ and $b''(t) + b(t)\sin(\theta)\sin^2(\theta)$. Therefore,
+    \begin{align*}
+        a(t) &= A\cos(t\sin(\theta)) + B\sin(t\sin(\theta)) \\
+        b(t) &= \frac{A}{\cos(\theta)}\sin(t\sin(\theta)) -\frac{B}{\sin(\theta)}\cos(t\sin(\theta)).
+    \end{align*}
+    For example, if $a(t) = 0$ and $b(t) = 1$, we would obtain $A = 0$ and $B = -\sin(\theta)$, so
+    \begin{align*}
+        X(t) &= a(t)m_u + b(t)m_v = -\sin(\theta)\sin(t\sin(\theta))m_{\theta} + \cos(t\sin(\theta))m_{\varphi}.
+    \end{align*}
+    In particular, notice that $X(2\pi) \neq X(0)$ unless $\theta = 0$.
+\end{exmp}
+
+\begin{defn}
+    A parameterized curve $\gamma: I \to S$ is a geodesic if $\nabla_{\gamma'}\gamma'$ is identically zero --- that is, the velocity field of $\gamma$ is parallel along $\gamma$.
+\end{defn}
+
+\begin{prop}\label{prop:geodesic-iff-no-tangential-acceleration}
+    $\gamma: I \to S$ is a geodesic if and only if the tangential component of $\gamma''$ is zero everywhere.
+\end{prop}
+
+\begin{proof}
+    $\nabla_{\gamma'}\gamma' = \gamma'' - (\gamma'' \cdot N)N$.
+\end{proof}
+
+\begin{prop}
+    All geodesics are constant speed.
+\end{prop}
+
+\begin{proof}
+    Note that the derivative of $\norm{\gamma'(t)}^2$ is $2\langle \gamma'(t), \gamma''(t)\rangle$. Since $\gamma'(t)$ has no normal component, and $\gamma''(t)$ has no tangential component by Proposition \ref{prop:geodesic-iff-no-tangential-acceleration}, it follows that $\norm{\alpha'(t)}$ must be constant.
+\end{proof}
+
+\begin{rmk}
+    Therefore, we may assume any geodesic is unit speed without loss of generality.
+\end{rmk}
+
+\begin{defn}
+    Define the \emph{geodesic curvature} of a unit speed curve $\gamma$ by $\kappa_g(t) = \langle \gamma''(t), N \times \gamma'(t)\rangle$.
+\end{defn}
+
+\begin{lemma}
+    Let $S$ be a regular surface, and $\gamma: I \to S$ be a unit speed curve on $S$. Then
+    \begin{align*}
+        \gamma''(t) &= \kappa_n N + \kappa_g (N \times \gamma'), \\
+        \kappa^2 &= \kappa_n^2 + \kappa_g^2.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    For the portion of $\gamma$ contained within a single chart $m$, we can uniquely express $\gamma(t) = m(u(t), v(t))$ for some $u(t), v(t)$. Then $\gamma'(t) = u'(t)m_u + v'(t)m_v$. Since $\gamma'(t) \in T_{\gamma(t)}S$, we know that $\gamma'(t)$ is orthogonal to $N$. It follows that $\{N, \gamma', N \times \gamma'\}$ is a right-handed orthonormal basis for $\R^3$. Since $\gamma$ is unit speed, we know $\gamma'' \perp \gamma'$, and so $\gamma''(t) = \alpha(t)N + \beta(t)(N \times \gamma')$ for some $\alpha(t), \beta(t)$.
+
+    Note that
+    \begin{align*}
+        \langle \gamma''(t), N\rangle &= \alpha(t), \\
+        \langle \gamma''(t), N \times \gamma'\rangle &= \beta(t).
+    \end{align*}
+    Since $\gamma''(t) = \kappa(t) n(t)$ where $\kappa$ is the curvature of $\gamma$ and $n(t)$ is the normal of $\gamma$, it follows that $\alpha(t) = \kappa(t)\langle n(t), N\rangle$, and so $\alpha(t)$ is the normal curvature of $\gamma$. Furthermore, $\beta(t)$ is, by definition, the geodesic curvature of $\gamma$. We conclude by noticing that
+    \begin{align*}
+        \kappa^2 = \norm{\gamma''} = \kappa_n^2 + \kappa_g^2
+    \end{align*}
+    by orthonormality of the basis.
+\end{proof}
+
+\begin{prop}
+    A unit speed curve $\gamma: I \to S$ is a geodesic if and only if $\kappa_g(t) \equiv 0$, or equivalently the normal curvature of $\gamma$ is the curvature of $S$ everywhere.
+\end{prop}
+
+\begin{thm}
+    Let $p \in S$ and $w \in TpS$ with $\norm{w} = 1$. There exists a unique unit speed geodesic $\gamma: I \to S$ which passes through $p$ with direction $w$.
+\end{thm}
+
+\begin{cor}
+    A curve on $S^2$ is a geodesic if and only if it is a (portion of) a great circle.
+\end{cor}
