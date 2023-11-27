@@ -651,6 +651,14 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
     Let $A$ be an $n \times n$ matrix. If $A$ is irreducibly diagonally dominant, then the Jacobi method converges for all $x^{(0)} \in \R^n$.
 \end{prop}
 
+\begin{proof}
+    If $A$ is diagonally dominant, then $\norm{T_j}_{\infty} \leq 1$. If $\norm{T_j} < 1$, then we are done. Otherwise, we must have strictly inequality in some row $p$, and so we know that
+    \begin{align*}
+        \sum_{j}\abs{T_{pj}} = \frac{1}{\abs{A_{pp}}}\left[\left(\sum_{j}\abs{A_{pj}}\right) - \abs{A_{pp}}\right] < 1 = \norm{A}_{\infty}.
+    \end{align*}
+    Therefore, by Corollary \ref{cor:irreducible-spectral-norm-gap} it follows that $\rho(T_j) < \norm{T_j} = 1$, and so the Jacobi method converges.
+\end{proof}
+
 \begin{defn}{SOR method}\proofbreak
     Consider the decomposition
     \begin{align*}

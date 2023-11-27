@@ -2324,19 +2324,54 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
 \end{proof}
 
 \begin{thm}
-    Let $\lambda$ be an eigenvalue of $A \in M_n$, such that $\lambda$ is not in the interior of any Gershgorin disc. Let $x$ be an associated eigenvector of $\lambda$, and define $\mathcal{I} = \argmin_{i}\abs{x_i}$. Then the following hold:
+    Let $\lambda$ be an eigenvalue of $A \in M_n$, such that $\lambda$ is not in the interior of any Gershgorin disc. Let $x$ be an associated eigenvector of $\lambda$, and define $\mathscr{I} = \argmax_{i}\abs{x_i}$. Then the following hold:
     \begin{enumerate}
-        \item For all $i \in \mathcal{I}$, $\lambda$ must be on the boundary of $G_i$.
-        \item For all $i \in \mathcal{I}$, if $(i, j)$ is an edge in the digraph of $A$, then $j \in \mathcal{I}$.
+        \item For all $i \in \mathscr{I}$, $\lambda$ must be on the boundary of $G_i$.
+        \item For all $i \in \mathscr{I}$, if $(i, j)$ is an edge in the digraph of $A$, then $j \in \mathcal{I}$.
     \end{enumerate}
 \end{thm}
 
 \begin{proof}
-    For all $i \in \mathcal{I}$, we have $\abs{\lambda - A_{ii}} \leq \sum_{j\neq i}\abs{A_{ij}}$. Since $\lambda$ is not in the interior of any Gershgorin disc, we also know $\abs{\lambda - A_{ii}} \geq \sum_{j \neq i}\abs{A_{ij}}$. Therefore, $\abs{\lambda- A_{ii}} = \sum_{j\neq i}\abs{A_{ij}}$. Furthermore, $\abs{\lambda-A_{ii}}\abs{x_i} = \sum_{j\neq i}\abs{A_{ij}}\norm{x}_{\infty}$. Therefore,
+    For all $i \in \mathscr{I}$, we have $\abs{\lambda - A_{ii}} \leq \sum_{j\neq i}\abs{A_{ij}}$. Since $\lambda$ is not in the interior of any Gershgorin disc, we also know $\abs{\lambda - A_{ii}} \geq \sum_{j \neq i}\abs{A_{ij}}$. Therefore, $\abs{\lambda- A_{ii}} = \sum_{j\neq i}\abs{A_{ij}}$.
+    
+    Since
     \begin{align*}
-        \sum_{j\neq i}\abs{A_{ij}}\left(\norm{x}_{\infty}-\abs{x_j}\right) = 0.
+        \abs{\lambda-A_{ii}}\abs{x_i} \leq \sum_{i\neq j}\abs{A_{ij}}\abs{x_j} \leq \sum_{i\neq j}\abs{A_{ij}}\norm{x}_{\infty},
     \end{align*}
-    Therefore, if $A_{ij} \neq 0$ it follows $\abs{x_j} = \norm{x}_{\infty}$ and so $j \in \mathcal{I}$.
+    if $i \in \mathscr{I}$ we have equality across the entire inequality chain, and so in particular we obtain
+    \begin{align*}
+        \sum_{j\neq i}\abs{A_{ij}}\Bigl(\norm{x}_{\infty}-\abs{x_j}\Bigr) = 0.
+    \end{align*}
+    Therefore, if $A_{ij} \neq 0$ it follows $\abs{x_j} = \norm{x}_{\infty}$ and so $j \in \mathscr{I}$.
+\end{proof}
+
+\begin{cor}
+    Suppose $A \in M_n$ is irreducible. If $\lambda$ is an eigenvalue of$A$ which is not in the interior of any Gershgorin disc, then it is on the boundary of \emph{all} discs.
+\end{cor}
+
+\begin{proof}
+    Since $A$ is irreducible, the digraph $\Gamma(A)$ is strongly connected. Let $x$ be an eigenvector associated with $\lambda$, and let $\mathscr{I} = \argmax_{i}\abs{x_i}$. It follows that any $j$ such that $i$ is adjacent to $j$ in $\Gamma(A)$ must be contained in $\mathscr{I}$. Since $\Gamma(A)$ is strongly connected, it follows that $\mathscr{I} = \{1, \ldots, n\}$. 
+\end{proof}
+
+\begin{cor}\label{cor:irreducible-spectral-norm-gap}
+    Let $A \in M_n$ be irreducible, and suppose there exists $p$ such that $\sum_{j}\abs{A_{pj}} < \norm{A}_{\infty}$. Then $\rho(A) < \norm{A}_{\infty}$.
+\end{cor}
+
+\begin{proof}
+    Fort the sake of contradiction, suppose there exists an eigenvalue with $\abs{\lambda} = \norm{A}_{\infty}$. Then for all $i$,
+    \begin{align*}
+        \abs{\lambda-A_{ii}} &\geq \abs{\lambda} - \abs{A_{ii}} = \norm{A}_{\infty} - A_{ii} \\
+        &\geq \sum_{j}\abs{A_{ij}} - \abs{A_{ii}} = \sum_{j\neq i}\abs{A_{ij}}.
+    \end{align*}
+    Therefore, $\lambda$ is cannot be in the interior of any Gershgorin disc. Since $A$ is irreducible, it must be on the boundary of all discs, and so in particular $\norm{A}_{\infty} = \sum_{j}\abs{A_{pj}}$, contradicting our assumption.
+\end{proof}
+
+\begin{thm}
+    Let $A$ be irreducible, diagonally dominant, and strictly diagonally dominant in at least one row. Then $A$ must be invertible.
+\end{thm}
+
+\begin{proof}
+    Since $A$ is diagonally dominant, we know $\abs{A_{ii}} \geq \sum_{j\neq i}\abs{A_{ij}}$. Since $A$ is strictly dominant in one row, if $0$ was an eigenvalue it could not be on the boundary of the associated discs. Then since $A$ is irreducible, we know $0$ is not in the interior of any Gershgorin disc, and so $0$ cannot be an eigenvalue.
 \end{proof}
 
 \section{Powers of a Matrix}
