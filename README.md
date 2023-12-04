@@ -1,5 +1,5 @@
 # Notes
-Notes from my math (and math-adjacent) class
+Notes from my math (and math-adjacent) courses.
 
 Contains my notes from the following courses:
 - Introduction to Analysis, taken Fall 2019 at Reed College
@@ -15,6 +15,12 @@ Contains my notes from the following courses:
 - Numerical Linear Algebra, taken Spring 2022 at Johns Hopkins University
 - Automata and Computation Theory, taken Spring 2022 at Johns Hopkins University
 - Introduction to Statistics, taken Spring 2022 at Johns Hopkins University
-
+- Honors Analysis I, taken Fall 2022 at Johns Hopkins University
+- Honors Analysis II, taken Spring 2023 at Johns Hopkins University
+- Axiomatic Set Theory, taken Spring 2023 at Johns Hopkins University
+- Graph Theory, taken Spring 2023 at Johns Hopkins University
+- Introduction to Differential Geometry, taken Fall 2023 at Johns Hopkins University
+- Nonlinear Optimization I, taken Fall 2023 at Johns Hopkins University
+- Matrix Analysis and Linear Algebra, taken Fall 2023 at Johns Hopkins University
 
 The compiled PDF is available as a build artifact --- go to the `Actions` tab and select a commit and a zip file titled `notes` containing a PDF will be listed. Build artifacts expire after 90 days, so only recent versions are available.
