@@ -1304,7 +1304,7 @@ which are the Weingarten equations for $dN_{p}$.
     The helicoid is parameterized by $t(\tilde{u}, \tilde{v}) = (\tilde{v}\cos(\tilde{u}), \tilde{v}\sin(\tilde{u}), a\tilde{u})$ for $\tilde{u} \in (0, 2\pi)$ and $\tilde{v} \in \R$. Consider the re-parameterization $u = u$ and $v = a\sinh(v)$. Then for $u \in (0, 2\pi)$ and $v \in \R$, we have $t(u, v) = (a\sinh(v)\cos(u), a\sinh(v)\sin(u), au)$. The coefficients of the first fundamental form are the same as for the catenoid above.
 \end{exmp}
 
-\begin{thm}
+\begin{thm}\label{thm:local-isometry-coefficients}
     Let $S_1$ and $S_2$ be two surfaces. For some $U \subseteq \R^2$, suppose $s: U \to S_1$ and $t: U \to S_2$ are local parameterizations for $S_1$ and $S_2$. Let the coefficients of the First Fundamental form of $s$ be $\{E, F, G\}$, and those of $t$ be $\{\tilde{E}, \tilde{F}, \tilde{G}\}$. Let $\varphi: s(U) \subseteq S_1 \to t(U) \subseteq S_2$ be given by $\varphi = t \circ s^{-1}$. If $E = \tilde{E}$, $F = \tilde{F}$, and $G = \tilde{G}$, then $\varphi$ is a local isometry.
 \end{thm}
 
@@ -1563,7 +1563,7 @@ which are the Weingarten equations for $dN_{p}$.
     Let $X$ and $Y$ be parallel vector fields along $\gamma: I \to S$. Then $\langle X(t), Y(t)\rangle$ is constant.
 \end{prop}
 
-\begin{prop}
+\begin{prop}\label{prop:parallel-vector-field-existance-uniqueness}
     Suppose the image of a curve $\gamma: I \to \R$ lies entirely within the image of a chart $m(u, v)$, so we can write $\gamma(t) = m(u(t), v(t))$ for some $u: I \to \R$ and $v: I \to \R$. For an arbitary vector field $X$ along $\gamma$, we can write $X(t) = a(t)m_u + b(t)m_v$, for some $a, b: I \to \R$. Given $v \in \R^3$, there exist unique $a(t), b(t)$ such that $X(t_0) = v$ and $X$ is parallel along $\gamma$.
 \end{prop}
 
@@ -1659,13 +1659,157 @@ which are the Weingarten equations for $dN_{p}$.
 \end{proof}
 
 \begin{prop}
-    A unit speed curve $\gamma: I \to S$ is a geodesic if and only if $\kappa_g(t) \equiv 0$, or equivalently the normal curvature of $\gamma$ is the curvature of $S$ everywhere.
+    A unit speed curve $\gamma: I \to S$ is a geodesic if and only if $\kappa_g(t) \equiv 0$, or equivalently the curvature of $\gamma$ is everywhere equal to the normal curvature of $S$ in the direction $\gamma'$.
 \end{prop}
 
 \begin{thm}
     Let $p \in S$ and $w \in TpS$ with $\norm{w} = 1$. There exists a unique unit speed geodesic $\gamma: I \to S$ which passes through $p$ with direction $w$.
 \end{thm}
 
+\begin{proof}
+    Suppose $p = m(a, b)$ and $w = cm_u + dm_v$ for some chat $m$. Then a curve $\gamma(t) = m(u(t), v(t))$ passes through $p$ with direction $w$ if and only if $u(t_0) = a$, $v(t_0) = b$, $u'(t_0) = d$, and $v'(t_0) = d$. By existance and uniquess of parallel transport Proposition \ref{prop:parallel-vector-field-existance-uniqueness}, it follows that for $\gamma'$ to be parallel along $\gamma$ we must have
+    \begin{align*}
+        u''(t) + \Gamma_{11}^{1}\left(u'(t)\right)^2 + 2\Gamma_{12}^{1}u'(t)v'(t) + \Gamma_{22}^{1}\left(v'(t)\right)^2 &= 0, \\
+        v''(t) + \Gamma_{11}^{2}\left(u'(t)\right)^2 + 2\Gamma_{12}^{2}u'(t)v'(t) + \Gamma_{22}^{2}\left(v'(t)\right)^2 &= 0.
+    \end{align*}
+    By Cauchy-Lipschitz, it follows that there exists a unique solution to this system of differential equations, and so there exists a unique unit speed geodesic which passes through $p$ with direction $w$.
+\end{proof}
+
 \begin{cor}
     A curve on $S^2$ is a geodesic if and only if it is a (portion of) a great circle.
 \end{cor}
+
+\begin{prop}
+    Let $f: S_1 \to S_2$ be a local isometry. Then $\gamma: I \to S_1$ is a geodesic if and only if $f \circ \gamma: I \to S_2$ is a geodesic.
+\end{prop}
+
+\begin{proof}
+    Since $f$ is an local isometry, for any $p$ in the domain of $f$ we have by Theorem \ref{thm:local-isometry-coefficients} that there are charts $s: U \to S_1$ and $t: V \to S_2$ such that, with respect to $s$ and $t$, the coefficients of the first fundamental forms agree. Since the equations of a geodesic can be expressed in terms of the Christoffel symbols, and therefore in terms of the coefficients of the first fundamental form, it follows that local isometries preserve geodesics.
+\end{proof}
+
+\begin{rmk}
+    Let $p, q \in S$, and let $\gamma: [a, b] \to S$ such that $\gamma(a) = p$ and $\gamma(b) = q$. Consider a one-parameter family $\{\gamma^{\tau}\}$ of such curves, for $\tau \in (-\varepsilon,\varepsilon)$. Let $L(\tau)$ be the length of $\gamma^{\tau}$, so
+    \begin{align*}
+        L(\tau) &= \int_{a}^{b}\norm{(\gamma^{\tau})'(t)}dt.
+    \end{align*}
+    A length-minimizing curve between $p$ and $q$ must therefore satisfy $d/d\tau L(0) = 0$.
+\end{rmk}
+
+\begin{thm}
+    A unit speed curve $\gamma$ is a geodesic if and only if $\frac{d}{d\tau}L(0) = 0$ for \emph{all} possible one-parameter family of curves.
+\end{thm}
+
+\begin{cor}
+    Given $p, q \in S$, the shortest curve between $p$ and $q$ in $S$ is a geodesic.
+\end{cor}
+
+\begin{rmk}
+    Given a closed, non-self intersecting curve $\gamma$ in $\R^3$, a \emph{minimal curve} is one which minimizes the area among all regular surfaces whose boundary is $\gamma$. A minimal surface must have zero mean curvature.
+\end{rmk}
+
+\section{Gauss-Bonnet Theorem}
+
+\begin{defn}
+    A \emph{triangulation} of a region $
+    R$ contained in a surface $S$ is a finite set of triangles $T_i$ such that $\bigunion T_i = R$, and for $i \neq j$, the intersection $T_i \intersect T_j$ is a single vertex or a single edge (including two vertices).
+\end{defn}
+
+\begin{thm}
+    Every compact surface has a triangulation.
+\end{thm}
+
+\begin{defn}
+    Let $V$ be the number of vertices, $E$ the number of edges, and $F$ the number of faces. The \emph{Euler characteristic} of a triangulation is $\chi = V - E + F$.
+\end{defn}
+
+\begin{exmp}
+    Since the tetrahedron, octohedron, and icosahedron are all homeomorphic to the sphere, they produce triangulations via a spherical tiling. The tetrahedron has $V = 4$, $E = 6$, and $F = 4$, so $\chi = 4 - 6 + 4 = 2$. Similarly, the octohedron has $V = 6$, $E = 12$, and $F = 8$, so $\chi = 2$. The icosahedron has $\chi = 12 - 30 + 20 = 2$.
+\end{exmp}
+
+\begin{thm}
+    The Euler characteristic is the same for all triangulations of a surface.
+\end{thm}
+
+\begin{thm}
+    Homeomorphic surfaces have the same Euler characteristic.
+\end{thm}
+
+\begin{thm}{Gauss-Bonnet}\proofbreak
+    Let $S$ be a closed surface, and $K$ its Gaussian curvature. Then
+    \begin{align*}
+        \chi(S) = \frac{1}{2\pi}\iint_{S}KdA.
+    \end{align*}
+\end{thm}
+
+\begin{cor}
+    If $S_1$ and $S_2$ are homeomorphic surfaces with Gaussian curvatures $K_1$ and $K_2$, then
+    \begin{align*}
+        \iint_{S_1}K_2dA &= \iint_{S_2}K_2dA = 2\pi \chi(S).
+    \end{align*}
+\end{cor}
+
+\begin{exmp}
+    Consider the following sequence of closed surfaces, for different \emph{genus} $g$:
+    \begin{itemize}
+        \item $g = 0$: the sphere $S^2$,
+        \item $g = 1$, the torus $S_1 \times S_1$,
+        \item $g=2$, the double torus with two holes,
+        \item etc.
+    \end{itemize}
+\end{exmp}
+
+\begin{thm}
+    Every closed surface is homeomorphic to a surface in the above sequence.
+\end{thm}
+
+\begin{rmk}
+    Since the Euler characteristic is invariant under homeomorphisms, it follows that the Euler characteristic of closed surfaces is determined by the genus of the surface.
+\end{rmk}
+
+\begin{prop}
+    The torus has $\chi(\Sigma_1) = 0$. In general, a genus $g$ surface $\Sigma_G$ has $\chi(\Sigma_g) = 2 - 2g$.
+\end{prop}
+
+\begin{proof}
+    Consider the torus as a quotient space of the unit square. Tiling the square with two triangles is not a triangulation of the torus, since all vertices are identified and we don't have valid triangles. Subdiving the square into four squares, and dividing each into two triangles also doesn't work, as opposite triangles will intersect at one (identified) edge, as well as the center vertex. However, subdividing into a three by three grid of nine squares, and dividing each into two triangles does work. After identification, we have a triangulation of the torus with $V = 9$, $E = 27$, and $F = 18$, so $\chi(\Sigma_g) = 9 - 27 + 18 = 0$.
+
+    We have now know that $\chi(\Sigma_g) = 2 - 2g$ for $g = 0$ and $g = 1$. We can now proceed by induction on $g$, since $\Sigma_{g+1}$ can be obtained from $\Sigma_g$ by attaching a copy of $\Sigma_1$. In particular, fix a triangulation on each of $\Sigma_1$ and $\Sigma_g$, remove an arbitary triangle from each, and glue the triangulations at the missing triangle. We clearly have a surface with one more hole, so it is homeomorphic to $\Sigma_{g+1}$. Let $V', E', F'$ denote number of vertices, edges, and faces for the triangulation of $\Sigma_1$, and similarly define $V'', E'', F''$ for $\Sigma_g$. Then our glued triangulation on $\Sigma_{g+1}$ has $V = V' + V'' - 3$, and $E = E' + E'' - 3$, and $F = F' + F'' - 2$. Therefore,
+    \begin{align*}
+        \chi(\Sigma_{g+1}) &= (V' - E' + F') + (V'' - E'' + F'') + (-3 + 3 - 2) \\
+        &= \chi(\Sigma_1) + \chi(\Sigma_g) - 2 \\
+        &= 0 + 2-2g - 2 = 2-2(g+1).
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    Suppose $S$ is a closed surface of genus $g$. Then
+    \begin{align*}
+        \iint_{S}KdA &= 4\pi(1-g).
+    \end{align*}
+\end{cor}
+
+\begin{proof}
+    \begin{align*}
+        \iint_{S}KdA &= 2\pi\chi(S) = 2\pi(2-2g) = 4\pi(1-g).
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    If $S$ is a closed surface with $K > 0$, then $S$ is homeomorphic to the sphere.
+\end{cor}
+
+\begin{proof}
+    Since $K > 0$, we have $\iint_{S}KdA > 0$, and so it must be that $S$ has genus $g > 0$.
+\end{proof}
+
+\section{Future topics}
+
+\begin{itemize}
+    \item Minimal surfaces (mean curvature is zero everywhere, or minimize surface given boundary),
+    \item Geodesics, particularly completeness (Hopf-Rinow),
+    \item Gauss-Bonnet for compact surfaces with a boundary.
+    \item Visual differential geometry (Needham),
+    \item Introduction to manifolds (Tu),
+    \item Introduction to smooth manifolds (Lee),
+    \item Differential geometry - Connections, Curvature, and Characteristic classes (Tu).
+\end{itemize}
