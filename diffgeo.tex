@@ -674,7 +674,7 @@
     \begin{align*}
         \ffform_p(w) &= \langle \alpha'(0), \alpha'(0) \rangle \\
         &= \left\langle \frac{\partial m}{\partial u}u'(0) + \frac{\partial m}{\partial v}v'(0), \frac{\partial m}{\partial u}(p)u'(0) + \frac{\partial m}{\partial v}(p)v'(0) \right\rangle \\
-        &= u'(0)^2\left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial u}(p) \right\rangle + v'(0)^2\left\langle \frac{\partial m}{\partial v}(p), \frac{\partial m}{\partial v}(p) \right\rangle + u'(0)v'(0)\left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial v}(p) \right\rangle \\
+        &= u'(0)^2\left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial u}(p) \right\rangle + v'(0)^2\left\langle \frac{\partial m}{\partial v}(p), \frac{\partial m}{\partial v}(p) \right\rangle + 2u'(0)v'(0)\left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial v}(p) \right\rangle \\
         &= Eu'(0)^2 + 2Fu'(0)v'(0) + Gv'(0)^2 \\
         &= \begin{pmatrix}
             u'(0) \\ v'(0)
@@ -689,9 +689,9 @@
 \begin{exmp}
     Consider a surface of revolution with unit speed profile curve $\gamma(t) = (f(t), 0, g(t))$, such that $f$ is positive and $\gamma$ does not self-intersect. The surface of revolution is then parameterized by $m(u, v) = (f(u)\cos(v), f(u)\sin(v), g(u))$. The first fundamental form with respect to $m$ is therefore given by
     \begin{align*}
-        E &= \norm{\frac{\partial m}{\partial u}(p)}_2^2 = \norm{(f'(u)\cos(v), f'(u)\sin(v), g'(u))}^2 = f'(u)^2 + g'(u)^2 = 1 \\
+        E &= \left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial u}(p)\right\rangle = f'(u)^2 + g'(u)^2 = 1 \\
         F &= \left\langle \frac{\partial m}{\partial u}(p), \frac{\partial m}{\partial v}(p) \right\rangle = 0 \\
-        G &= \norm{\frac{\partial m}{\partial v}(p)} = f^2(u).
+        G &= \left\langle \frac{\partial m}{\partial v}(p), \frac{\partial m}{\partial v}(p)\right\rangle = f^2(u).
     \end{align*}
 \end{exmp}
 
@@ -778,7 +778,7 @@
 \end{defn}
 
 \begin{defn}
-    A regular surface $S$ is \emph{orientable} if there exists a smooth unit normal vector field on all of $S$.
+    Let $S$ be a regular surface. A smooth unit normal vector field $N$ on $S$ is an \emph{orientation} of $S$. We say $S$ is \emph{orientable} if an orientation of $S$ exists.
 \end{defn}
 
 \begin{exmp}
@@ -880,10 +880,6 @@
 \section{Gauss map}
 
 \begin{defn}
-    Let $S$ be an orientable surface. A smooth unit normal vector field $N$ on $S$ is an \emph{orientation} of $S$.
-\end{defn}
-
-\begin{defn}
     Let $S$ be a regular surface with orientation $N$. The \emph{Gauss map} is the map $p \mapsto N(p)$ from $S \to S^2$ (the unit sphere).
 \end{defn}
 
@@ -931,14 +927,14 @@
     \begin{align*}
         \sfform_{p}(v) &= -\langle dN_p(\alpha'(s)), \alpha'(0)\rangle = -\langle N'(0), \alpha'(0)\rangle = \langle N(0), \alpha''(0)\rangle.
     \end{align*}
-    By Frenet-Serret, since $\alpha$ is unit speed we have $\alpha''(0) = \kappa(p)n(p)$, and so
+    By Frenet-Serret, since $\alpha$ is unit speed we have $\alpha''(0) = \kappa(0)n(0)$, and so
     \begin{align*}
-        \sfform_p(v) = \kappa(p)\langle N(p), n(p)\rangle = \kappa_n(p).
+        \sfform_p(v) = \kappa(0)\langle N(p), n(0)\rangle = \kappa_n(p).
     \end{align*}
 \end{proof}
 
 \begin{rmk}
-    Since the normal curvature is independent of the curve used, for convienence we can always use the plane formed by the intersection of $S$ with the plane spanned by $N(p)$ and $v$. This curve is known as the \emph{normal section} of $S$ at $p$, along $v$.
+    Since the normal curvature is independent of the curve used, for convienence we can always use the curve formed by the intersection of $S$ with the plane spanned by $N(p)$ and $v$. This curve is known as the \emph{normal section} of $S$ at $p$, along $v$.
 \end{rmk}
 
 \begin{exmp}
@@ -953,11 +949,11 @@
     Let $S$ be a regular surface, and $p \in S$. The maximum and minimum normal curvatures of $S$ at $p$, denoted by $\kappa_1(p), \kappa_2(p)$ are called the \emph{principal curvatures} of $S$ and $p$. A unit vector which attain these extrema is called a \emph{principal direction}.
 \end{defn}
 
-\begin{defn}
+\begin{exmp}
     For a plane or sphere, $\kappa_1(p) = \kappa_2(p)$, so all directions are principal directions.
 
     For the cylinder with inward orientation, $\kappa_1(p) = 1$ and $\kappa_2(p) = 0$, with corresponding principal directions $p \times w$ and $w$, where $w$ is the cylinder's axis.
-\end{defn}
+\end{exmp}
 
 \begin{thm}\label{thm:principal-directions-gauss-eigenvectors}
     Let $S$ be a regular surface. For $p \in S$, let $v_1(p), v_2(p)$ be principal directions corresponding to $\kappa_1(p)$ and $\kappa_2(p)$. Then $\{v_1(p), v_2(p)\}$ forms an orthonormal basis for $T_pS$, and $-dN_p(v_1) = \kappa_1v_1$ and $-dN_p(v_2) = \kappa_2v_2$.
@@ -973,7 +969,7 @@
     \end{align*}
     Since all second partial derivatives of $m$ are continuous by smoothness of $m$, we know that $m_{uv} = m_{vu}$, and so we have $\langle N_v, m_u\rangle = \langle N_u, m_v \rangle$. Since $N_u = dN_{p}(m_u)$ and $N_v = dN_{p}(m_v)$, it follows that
     \begin{align*}
-        \langle dN_{p}(m_u), m_v \rangle = \langle m_u, dN_{p}m_v\rangle.
+        \langle dN_{p}(m_u), m_v \rangle = \langle m_u, dN_{p}(m_v)\rangle.
     \end{align*}
     Therefore, $-dN_{p}$ is self-adjoint, and so by the Spectral Theorem \ref{spectral-theorem} we know that there exists a orthonormal basis of eigenvalues. Furthermore, by the Rayleigh-Ritz theorem \ref{thm:rayleigh-ritz} it follows that the eigenvalues are the principal curvatures of $S$ at $p$, and the corresponding unit eigenvectors are the corresponding principal directions.
 \end{proof}
@@ -1069,7 +1065,7 @@ Let $S$ be a oriented surface with orientation $N$, and let $m: U \to S$ be a ch
     \alpha'(0) &= u'(0)m_u + v'(0)m_v \\
     dN_p(\alpha'(0)) &= u'(0)N_u + v'(0)N_v.
 \end{align*}
-Of course, since $\{m_u, m_v\}$ is a basis for $T_pS$, we can express $N_u = a_{11}m_u + a_{12}m_v$ and $N_v = a_{21}m_u + a_{22}m_v$, so
+Of course, since $\{m_u, m_v\}$ is a basis for $T_pS$, we can express $N_u = a_{11}m_u + a_{21}m_v$ and $N_v = a_{12}m_u + a_{22}m_v$, so
 \begin{align*}
     dN_p\begin{pmatrix}
         u'(0) \\ v'(0)
@@ -1102,8 +1098,8 @@ Since $N$ is orthogonal to $T_pS$, we know $\langle N, m_u\rangle = \langle N, m
 
 Given the coefficients $E, F, G$ for the first fundamental form, and $e, f, g$ for the second fundamental form, we find
 \begin{align*}
-    -f &= \langle N_u, m_v \rangle = a_{11}F + a_{21}E, \\
     -f &= \langle N_v, m_u \rangle = a_{12}E + a_{22}F, \\
+    -f &= \langle N_u, m_v \rangle = a_{11}F + a_{21}G, \\
     -e &= \langle N_u, m_u \rangle = a_{11}E + a_{21}F, \\
     -g &= \langle N_v, m_v \rangle = a_{12}F + a_{22}G,
 \end{align*}
@@ -1112,12 +1108,12 @@ and so
     -\begin{pmatrix}
         e & f \\ f & g
     \end{pmatrix} &= \begin{pmatrix}
-        a_{11} & a_{12} \\ a_{21} & a_{22}
+        a_{11} & a_{21} \\ a_{12} & a_{22}
     \end{pmatrix}\begin{pmatrix}
         E & F \\ F & G
-    \end{pmatrix},
+    \end{pmatrix}.
 \end{align*}
-and it follows that, with respect to a specific chart,
+Note that transposition of the values $a_{ij}$. However, we know $dN_p$ is symmetric (self-adjoint), so we may disregard the transpose, and obtain that, with respect to a specific chart, we have
 \begin{align*}
     dN_{p} &= -\begin{pmatrix}
         e & f \\ f & g
@@ -1255,11 +1251,11 @@ which are the Weingarten equations for $dN_{p}$.
 \begin{proof}
     Let $\varphi: S_1 \to S_2$ be an isometry, and consider a curve $\alpha: I \to S_1$, and $\beta: I \to S_2$ given by $\beta = \varphi \circ \alpha$, where $I = (a, b)$. Since $\varphi$ is an isometry, by definition we have
     \begin{align*}
-        \norm{\alpha'(s)} = \sqrt{\langle \alpha'(s), \alpha'(s)} = \sqrt{\langle d\varphi_{\alpha(s)}(\alpha'), d\varphi_{\alpha(s)}(\alpha') \rangle} = \norm{d\varphi_{\alpha(s)\alpha'}} = \norm{\beta'(s)}.
+        \norm{\alpha'(s)} = \sqrt{\langle \alpha'(s), \alpha'(s)\rangle} = \sqrt{\langle d\varphi_{\alpha(s)}(\alpha'), d\varphi_{\alpha(s)}(\alpha') \rangle} = \norm{d\varphi_{\alpha(s)\alpha'}} = \norm{\beta'(s)}.
     \end{align*}
     Therefore,
     \begin{align*}
-        L(\beta) = \int_{a}^{b}\norm{\beta'(s)}ds = \int_{a}^{b}\norm{\alpha'}ds = L(\alpha),
+        L(\beta) = \int_{a}^{b}\norm{\beta'(s)}ds = \int_{a}^{b}\norm{\alpha'(s)}ds = L(\alpha),
     \end{align*}
     so isometries preserve lengths of curves.
 
@@ -1478,10 +1474,10 @@ which are the Weingarten equations for $dN_{p}$.
 
 \begin{rmk}
     If we had instead equated the coefficients of $m_u$, we would instead have obtained a different version of the Gauss formula, and by equating coefficients of $N$ we would have obtained
-    \begin{align}
+    \begin{align*}
         e_v - f_u &= e\Gamma_{12}^{1} + f\left(\Gamma_{12}^{2} - \Gamma_{11}^{1}\right) - g\Gamma_{11}^2.
-    \end{align}
-    By repeating this prcedure, but instead using $(m_vv)_u = (m_[uv])_v$, we obtain that
+    \end{align*}
+    By repeating this prcedure, but instead using $(m_{vv})_u = (m_{uv})_v$, we obtain that
     \begin{align*}
         f_v - g_u &= e\Gamma_{22}^{1} + f(\Gamma_{22}^{2} - \Gamma_{12}^{1}) - g\Gamma_{12}^{2}.
     \end{align*}
@@ -1525,7 +1521,7 @@ which are the Weingarten equations for $dN_{p}$.
 \end{defn}
 
 \begin{rmk}
-    Given a vector field $X: I \to \R^3$ along a curve $\gamma: I \to S$, we can differentiate $X$ to obtain a new map $X': I \to \R^3$. However, $X'(t)$ is not necessarily contained with $T_{\gamma(t)}S$, and so $X'$ is not necessarily a vector field. But given an orientation $N$ on $S$, we could instead consider
+    Given a vector field $X: I \to \R^3$ along a curve $\gamma: I \to S$, we can differentiate $X$ to obtain a new map $X': I \to \R^3$. However, $X'(t)$ is not necessarily contained within $T_{\gamma(t)}S$, and so $X'$ is not necessarily a vector field. But given an orientation $N$ on $S$, we could instead consider
     \begin{align*}
         X'(t) - \left(X'(t) \cdot N\right)N,
     \end{align*}
@@ -1541,7 +1537,7 @@ which are the Weingarten equations for $dN_{p}$.
 \end{defn}
 
 \begin{rmk}
-    Notice that $X' - \langle X', -N\rangle(-N) = X' - \langle X', N\rangle N$, and so $\nabla_{\gamma'}X$ is independent of the direction of the orientation. Therefore, $\nabla_{\gamma'}X$ can be defined without reference to (or existence of) any global orientation.
+    Notice that $X' - \langle X', -N\rangle(-N) = X' - \langle X', N\rangle N$, so the covariant derivative $\nabla_{\gamma'}X$ is independent of the direction of the orientation. Therefore, $\nabla_{\gamma'}X$ can be defined without reference to (or even existence of) any global orientation.
 \end{rmk}
 
 \begin{exmp}
@@ -1571,12 +1567,13 @@ which are the Weingarten equations for $dN_{p}$.
     \begin{align*}
         X' = a'(t)m_u + b'(t)m_v + a(t)\left[u'(t)\left(\Gamma_{11}^{1}m_u\right) \cdots\right]
     \end{align*}
+    {\color{red}TODO}
 
     Then the condition $X$ is parallel along $\gamma$ gives a system of ordinary differential equations with two initial conditions. Therefore, we have the existence and uniqueness of a solution.
 \end{proof}
 
 \begin{rmk}
-    If $\gamma$ is not contained within a single chart, the above result can be applied multiple times to stitch together a unique solution across the entire curve $\gamma$.
+    Suppose $\gamma(I)$ is not contained within a single chart. Since $\gamma(I)$ is necessarily covered by the set of images of all charts, and $\gamma(I)$ is compact, there exists a finite sequence of charts which cover $\gamma(I)$ and necessarily overlap, which allows us to stich together a solution across all of $\gamma$.
 \end{rmk}
 
 \begin{defn}
@@ -1584,7 +1581,11 @@ which are the Weingarten equations for $dN_{p}$.
 \end{defn}
 
 \begin{exmp}
-    Consider the parameterization of the sphere $m(\theta, \varphi) = (\cos(\theta)\cos(\varphi), \cos(\theta)\sin(\varphi), \sin(\theta))$, where $\theta \in (-\pi/2, \pi/2)$ and $\varphi \in (0, 2\pi)$. Then the Christoffel symbols are
+    Consider the parameterization of the sphere
+    \begin{align*}
+        m(\theta, \varphi) = (\cos(\theta)\cos(\varphi), \cos(\theta)\sin(\varphi), \sin(\theta)),
+    \end{align*}
+    where $\theta \in (-\pi/2, \pi/2)$ and $\varphi \in (0, 2\pi)$. Then the Christoffel symbols are
     \begin{align*}
         \Gamma_{11}^{k} &= \Gamma_{22}^{2} = \Gamma_{12}^{1} = 0 \\
         \Gamma_{12}^{2} &= -\tan(\theta) \\
