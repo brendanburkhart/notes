@@ -278,7 +278,7 @@
 
 \begin{proof}
     We will prove this by showing that this is equivalent to the definition.
-    
+
     $(\impliedby)$ If every convex combination of finite $X \subseteq S$ is in $S$, then every convex combination of $x, y \in S$ is in $X$.
 
     $(\implies)$ We will prove, via induction on $n = \abs{X}$, that if $z$ is a convex combination of $x, y \in S$ implies that $z \in S$, then every convex combination of $X \subseteq S$ is also in $S$.
@@ -534,7 +534,7 @@ where $M$ is a very large value. This penalizes the artificial variables and cau
 
 \begin{prop}
     Given a primal linear program, the dual of the dual is the primal.
-\end{prop} 
+\end{prop}
 
 \begin{proof}
     Consider a linear program in canonical form.  By definition, the dual is maximizing $\transposeof{b}y$ such that $\transposeof{A}y \leq c$ and $y \geq 0$. This program is equivalent to minimizing $-\transposeof{b}y$ such that $-\transposeof{A}y \geq -c$ and $y \geq 0$. The dual of this equivalent form of the dual is to maximizing $-\transposeof{c}x$ such that $\transposeof{\left(-\transposeof{A}\right)}x \leq -b$ and $x \geq 0$. Finally, this program is equivalent to minimizing $\transposeof{c}x$ such that $Ax \geq b$ and $x \geq 0$, which is the primal linear program.
@@ -718,7 +718,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{rmk}
 
 \begin{defn}
-    Let $S \subseteq \R^n$, and consider $f: S \to \R$. The \emph{epigraph} of $f$ 
+    Let $S \subseteq \R^n$, and consider $f: S \to \R$. The \emph{epigraph} of $f$
     \begin{align*}
         \left\{\begin{pmatrix}
             x \\ y
@@ -1135,7 +1135,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 
 \begin{lemma}{Descent lemma}\label{lemma:descent}\proofbreak
     Let $f: \R^d \to \R$ be a differentiable function with $L$-Lipschitz gradient. Let $x_0$ be given and recursively define $x_{k+1} = x_k - \alpha_k\nabla f(x_k)$ by gradient descent.
-    
+
     Then for any $k \geq 0$,
     \begin{align*}
         f(x_{k+1}) \leq f(x_k) - \left(\alpha_k - \frac{L\alpha_k^2}{2}\right)\norm{\nabla f(x_k)}^2.
@@ -1411,7 +1411,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
     \end{align*}
     Then by construction of $y_{k+1}$ we have $\nabla f(x_k) = -L(y_{k+1} - x_k)$, and so
     \begin{equation*}\tag{$\diamondsuit$}\label{eq:nesterov:diamond}
-        \delta_{k+1} - \delta_{k} \leq -\frac{L}{2}\norm{y_{k+1}-x_k}_2^2 - L\langle y_{k+1}-x_k, x_k-y_k \rangle. 
+        \delta_{k+1} - \delta_{k} \leq -\frac{L}{2}\norm{y_{k+1}-x_k}_2^2 - L\langle y_{k+1}-x_k, x_k-y_k \rangle.
     \end{equation*}
     Again applying Lemma \ref{lemma:nesterov:two}, but with $u = x_{k}$ and $v = x^{*}$ (and again substituting $\nabla f(x_k) = -L(y_{k+1}-x_k)$) we obtain
     \begin{equation*}\tag{$\spadesuit$}\label{eq:nesterov:spade}
@@ -2150,7 +2150,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{rmk}
 
 \begin{lemma}
-    Assume that $B_k \succeq 0$, $g_k \neq \vec{0}$, and let $p_k$ be defined by
+    Assume that $B_k \succ 0$, $g_k \neq \vec{0}$, and let $p_k$ be defined by
     \begin{align*}
         \argmin\left\{ f_k + g_k^{\transpose}p + p^{\transpose}B_kp \right\}.
     \end{align*}
@@ -2158,7 +2158,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{lemma}
 
 \begin{proof}
-    $p_k$ is a unique minimizer by strong convexity, and so $p_k = -B_kg_k$. Therefore, $g_k^{\transpose}p_k = -g_k^{\transpose}B_kg_k < 0$.
+    By first-order optimality, $B_kp_k = -g_k$. Since $g_k \neq 0$, we have $p_k \neq 0$. Therefore, $g_k^{\transpose}p_k = -p_k^{\transpose}B_kp_k < 0$.
 \end{proof}
 
 \begin{rmk}
@@ -2176,13 +2176,13 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 
 \begin{defn}{Variant \#1}\proofbreak
     We could try essentially only using the positive eigenvalues.
-    
+
     Fix some small $\varepsilon > 0$. Consider an eigendecomposition $\nabla^2 f(x_k) = V\Lambda V^{\transpose}$, set $\overline{\lambda}_i = \max(\lambda_i, \varepsilon)$, and $\bar{\Lambda} = \diag(\bar{\lambda}_i)$. Finally, $B_k = V\bar{\Lambda}V^{\transpose}$.
 \end{defn}
 
 \begin{defn}{Variant \#2}\proofbreak
     We could try only using the \emph{magnitude} of non-zero eigenvalues.
-    
+
     Fix some small $\varepsilon > 0$. Consider an eigendecomposition $\nabla^2 f(x_k) = V\Lambda V^{\transpose}$, set $\overline{\lambda}_i = \max(\abs{\lambda_i}, \varepsilon)$, and $\bar{\Lambda} = \diag(\bar{\lambda}_i)$. Finally, $B_k = V\bar{\Lambda}V^{\transpose}$.
 \end{defn}
 
@@ -2192,7 +2192,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 
 \begin{defn}{Variant \#3}\proofbreak
     We could try shifting the entire spectrum to make it positive.
-    
+
     For some $\varepsilon > 0$, if $\lambda_{min}(\nabla^2 f(x_k)) > \varepsilon$, then take $B_k = \nabla^2 f(x_k)$. Otherwise, take $B_k = \nabla^2 f(x_k) + \gamma I$, where $\gamma = \varepsilon - \lambda_{min}$.
 \end{defn}
 
@@ -2471,7 +2471,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
         \det(B_{k+1}) &= \det(B_k)\frac{\langle y_{k+1}, s_{k+1}\rangle}{\langle s_{k+1}, B_ks_{k+1}\rangle}.
     \end{align*}
     ({\color{red}TODO: check determinant formula})
-    
+
     For convienence, define $\mu_k = \frac{\langle y_{k+1}, s_{k+1}\rangle}{\norm{s_{k+1}}^2}$ and $L_k = \frac{\norm{y_{k+1}}^2}{\langle y_{k+1}, s_{k+1}\rangle}$. Notice that
     \begin{align*}
         \mu_k = \frac{\langle s_{k+1}, B_{k+1}s_{k+1}\rangle}{\norm{s_{k+1}}^2},
@@ -2496,7 +2496,7 @@ To dual pivot, we choose the row $j$ with the most-negative value in $B^{-1}b$, 
 \end{proof}
 
 \begin{thm}
-    Let $B_0$ be a positive definite matrix, and let $f: \R^d \to \R$ be a $C^2$ function with a local minimizer $x^*$, such that $\mu I \preceq \nabla^2 f(x^*)$, and the Hessian of $f$ is $L$-Lipschitz on some neighborhood $U$ of $x^*$. If $x_0 \in U$, then the iterates of BFGS will converge superlinearly to $x^*$. 
+    Let $B_0$ be a positive definite matrix, and let $f: \R^d \to \R$ be a $C^2$ function with a local minimizer $x^*$, such that $\mu I \preceq \nabla^2 f(x^*)$, and the Hessian of $f$ is $L$-Lipschitz on some neighborhood $U$ of $x^*$. If $x_0 \in U$, then the iterates of BFGS will converge superlinearly to $x^*$.
 \end{thm}
 
 \begin{proof}
@@ -2549,10 +2549,6 @@ Of course, computing an eigendecomposition would be extraordinarily expensive. T
 \end{lemma}
 
 How can we obtain a basis $s_i$ that is orthogonal under the inner product induced by $A$? By Gram-Schmidt of course! However, naively computing $x^*$ via the formula above would still require $O(n^3)$ time.
-
-\begin{lemma}
-    {\color{red}TODO: fill in from lecture notes}
-\end{lemma}
 
 \begin{defn}{Conjugate Gradient Method}\proofbreak
     Let $A$ be a positive definite matrix, and $x_0 \in \R^n$. Define $s_0 = r_0 = b - Ax_0$. Then we take
@@ -2635,7 +2631,7 @@ How can we obtain a basis $s_i$ that is orthogonal under the inner product induc
 
 \begin{rmk}
     This convergence guarantee achieves the same rate as accelerated gradient descent. If the eigenvalues of $A$ are clustered into $p$ clusters, the convergence will behave almost as if the dimension is $p$.
-    
+
     Furthermore, the better the condition number of $A$, the better the convergence. A \emph{preconditioner} $P$ can be used to instead solve $PAP^{\transpose}y = Pb$, where $P$ is chosen such that $PAP^{\transpose}$ has a better condition number than $A$.
 \end{rmk}
 
@@ -2656,7 +2652,7 @@ How can we obtain a basis $s_i$ that is orthogonal under the inner product induc
 \begin{rmk}
     We know $\nabla f = (Jr)^{\transpose}r(x)$, and $\nabla^2 f(x) = (Jr)^{\transpose}\nabla r(x) + \sum_{i=0}^{m}\left(\nabla^2r_i(x)\right)r_i(x)$.
 
-    Two populate approaches to finding a critical point of $f$ are
+    Two popular approaches to finding a critical point of $f$ are
     \begin{itemize}
         \item the Gauss-Newton method, a modification of the Newton-Raphson method,
         \item the Levenberg-Marquardt method.
@@ -2685,8 +2681,293 @@ How can we obtain a basis $s_i$ that is orthogonal under the inner product induc
 \end{defn}
 
 \begin{defn}
-    Trust region method.
+    In a \emph{trust region method}, rather than minimizing a via a step in a fixed direction we minimzing an approximation over a small \emph{trust region} where we hope the approximation is sufficiently close to the function.
 \end{defn}
+
+\begin{rmk}
+    Given a radius $\Delta_k$, we take
+    \begin{align*}
+        s_k &= \argmin_{\norm{s}_2 \leq \Delta_k}\left[f(x_k) + \nabla f(x_k)^{\transpose}s + \frac{s^{\transpose}B_k s}{2}\right],
+    \end{align*}
+    and then $x_{k+1} = x_k + s_k$.
+\end{rmk}
+
+\begin{thm}(4.1 in Nocedal and Wright)\proofbreak
+    For some symmetric $B$, consider minimizing $f + g^{\transpose}s + \frac{1}{2}s^{\transpose}Bs$, subject to the constraint $\norm{s}_2 \leq \Delta$. Then $s^*$ is a global minimizer if and only if $\norm{s^*} \leq \Delta$ \emph{and} there exists $\lambda \geq 0$ such that the following hold:
+    \begin{align*}
+        \left(B + \lambda I\right)s^{*} &= -g, \\
+        \lambda\left(\Delta - \norm{s^*}_2\right) &= 0, \\
+        B + \lambda I \succeq 0.
+    \end{align*}
+\end{thm}
+
+\begin{rmk}
+    If $\lambda = 0$, then $Bs^* = -g$, so we are finding a unconstrained global minimizer since $B$ must be positive semi-definite in this case.
+
+    If $\lambda > 0$, then we have $\norm{s^*}_2 = \Delta$, and $\lambda s^* = -g - Bs^*$, so $s^*$ is parallel to the gradient at the boundary of the constraint.
+
+    The requirement that $B + \lambda I \succeq 0$ means that $\lambda \geq -\lambda_1$, where $\lambda_1 \leq \lambda_2 \leq \ldots \leq \lambda_n$ are the eigenvalues of $B$. Therefore, we can search for $\lambda \in [-\lambda_1, \infty)$. Define $s(\lambda) = -(B+\lambda I)^{-1}g$, so that the first and third conditions are satisfied. To satisfy the second condition, we either take $\lambda = 0$, or we need $\norm{s(\lambda)}_2 = \Delta$ and since $B + \lambda I$ is symmetric, we can express
+    \begin{align*}
+        \norm{s(\lambda)}^2 = \sum\left(\frac{v_i^{\transpose}g}{\lambda_i + \lambda}\right)^2,
+    \end{align*}
+    where $\lambda_i, v_i$ are the eigenvalues and corresponding eigenvectors of an orthonormal eigenbasis. We can use Newton-Rahpson or similar to find $\lambda$.
+\end{rmk}
+
+\begin{proof}
+    Suppose that $s^*$ and $\lambda$ satisfy all three conditions. Let
+    \begin{align*}
+        m(s) &= f + g^{\transpose}s + \frac{1}{2}s^{\transpose}Bs, \\
+        \hat{m}(s) &= f + g^{\transpose}s + \frac{1}{2}s^{\transpose}(B + \lambda I)s.
+    \end{align*}
+    By the third condition, $\hat{m}$ is convex. By the first condition, $s^*$ globally minimizes $\hat{m}$. Since $\hat{m} = m + \frac{\lambda}{2}\norm{s}_2^2$, it follows that $m(s) \geq m(s^*) + \frac{\lambda}{2}\left(\norm{s^*}^2 - \norm{s}^2\right)$. By the second condition, we know $\lambda\norm{s^*}^2 = \lambda\Delta^2$, and so, for $\norm{s} \leq \Delta$ we have
+    \begin{align*}
+        m(s) \geq m(s^*) + \frac{\lambda}{2}\left(\Delta^2 - \norm{s}^2\right) \geq m(s^*),
+    \end{align*}
+    and so $s^*$ must globally minimize $m$.
+
+    Now, suppose instead that $s^*$ is a global minimizer. If $\norm{s^*} < \Delta$, then $s^*$ globally minimizes $m(s)$ over all $\R^n$, so $m$ must be convex and the gradient at $s^*$ is zero. Therefore, $Bs^* = -g$, and $B \succeq 0$.
+\end{proof}
+
+\begin{rmk}
+    If $m_k(s)$ is convex (equivalently, $B_k \succ 0$), then for large enough $\Delta_k$, we have $s = -B_k^{-1}g$ which globally minimizes $m(s)$. For small enough $\Delta_k$, we effectively have $s = \gamma g$ for some $\gamma < 0$. While exactly minimizing $m_k(s)$ may be difficult, we can use the \emph{dog-leg} model, where we approximate $s^*$ be minimizing
+    \begin{align*}
+        s^{DL}(\tau) = \begin{dcases}
+            \tau s^{GD}, &\tau \in [0, 1] \\
+            s^{GD} + (\tau - 1)(s^{N}-S^{GD}), &\tau  \in [1, 2].
+        \end{dcases},
+    \end{align*}
+    where
+    \begin{align*}
+        s^{GD} &= -\frac{\norm{g}^2}{g^{\transpose}B_kg}\nabla f(x_k) \\
+        s^{N} &= -B_k^{-1}\nabla f(x_k).
+    \end{align*}
+    We select $\argmin_{\tau}m_k(s^{DL}\tau)$ such that $\norm{s^{DL}(\tau)} \leq \Delta_k$.
+
+    There are alternative versions of the dog-leg method, as well as others such as the Lanczos Method, or a reformulation into a generalized eigenvalue problem.
+\end{rmk}
+
+\begin{defn}
+    The \emph{model objective decrease} is $\Delta m_k(s) = m_k(0) - m_k(s)$. The \emph{objective decrease} is $\Delta f_k(s) = f(x_k) - f(x_k + s)$.
+\end{defn}
+
+\begin{lemma}\label{lemma:model-objective-decrease}
+    If $f$ has an $L$-Lipschitz gradient, then for all $\norm{s} \leq \Delta_k$, we have
+    \begin{align*}
+        \abs{\Delta f_k(s) - \Delta m_k(s)} \leq \frac{1}{2}\left(L+\norm{B_k}\right)\Delta_k^2.
+    \end{align*}
+    If $f$ furthermore has a $Q$-Lipschitz Hessian, then
+    \begin{align*}
+        \abs{\Delta f_k(s) - \Delta m_k(s)} \leq \frac{Q}{6}\Delta_k^3 + \frac{\norm{B_k-\nabla^2f(x_k)}}{2}\Delta_k^2.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    By definition,
+    \begin{align*}
+        \abs{\Delta f_k(s) - \Delta m_k(s)} &= \abs{\left(f(x_k) - f(x_k+s)\right) - \left(f(x_k) - f(x_k) - \nabla f(x_k)^{\transpose}s - \frac{1}{2}s^{\transpose}B_ks\right)} \\
+        &= \abs{f(x_k+s) - \left(f(x_k) + \nabla f(x_k)^{\transpose}s\right) - \frac{1}{2}s^{\transpose}B_ks} \\
+        &\leq \abs{f(x_k + s) - \left(f(x_k) + \nabla f(x_k)^{\transpose}s\right)} + \frac{1}{2}\abs{s^{\transpose}B_ks} \\
+        &\leq \frac{L}{2}\norm{s}^2 + \frac{1}{2}\norm{B_k}\norm{s}^2,
+    \end{align*}
+    where we bound the error in the tangent plane approximation by Theorem \ref{lemma:lipschitz-taylor-bound}.
+
+    If $f$ has a $Q$-Lipschitz Hessian, we instead have
+    \begin{align*}
+        \abs{\Delta f_k(s) - \Delta m_k(s)} &= \abs{f(x_k+s) - \left(f(x_k) + \nabla f(x_k)^{\transpose}s + \frac{1}{2}s^{\transpose}\nabla^2f(x_k)s\right) - \frac{1}{2}s^{\transpose}\left(B_k - \nabla^2f(x_k)\right)s} \\
+        &\leq \frac{Q}{6}\norm{x_k}^3 + \frac{1}{2}\norm{B_k-\nabla^2 f(x_k)}\norm{s}^2.
+    \end{align*}
+    The bound $Q/6$ results from a Taylor approximation bound similar to Theorem \ref{lemma:lipschitz-taylor-bound}.
+\end{proof}
+
+\begin{defn}
+    For the dog-leg method, the \emph{Cauchy point} is
+    \begin{align*}
+        s^{C} &= \argmin_{\substack{\norm{s}\leq\Delta_k \\ s\in\spn\{\nabla f(x_k)\}}}m_k(s) \\
+        &= \begin{dcases}
+            \frac{-\Delta_k g}{\norm{g}}, &\textrm{if }\Delta_k g^{\transpose}B_k g \leq \norm{g}^3 \\
+            -\left(\frac{\norm{g}^2}{g^{\transpose}Bg}\right)g,&\textrm{otherwise}.
+        \end{dcases}
+    \end{align*}
+\end{defn}
+
+\begin{lemma}\label{lemma:dog-leg-cauchy-point-descent}
+    The Cauchy point satisfies
+    \begin{align*}
+        \Delta m_k(s^C) \geq \frac{1}{2}\norm{\nabla f(x_k)}\min\left\{\frac{\norm{\nabla f(x_k)}}{\norm{B_k}}, \Delta_k\right\}.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    We consider cases. If $\Delta_k g^{\transpose}B_kg \leq \norm{g}^3$, then
+    \begin{align*}
+        \Delta m_k(s^C) &= \Delta_k\norm{g} - \frac{1}{2}\Delta_k^2\frac{g^{\transpose}B_kg}{\norm{g}^2} \\
+        &\geq \Delta_k\norm{g} - \frac{1}{2}\Delta_k\norm{g} = \frac{\Delta_k}{2}\norm{G}.
+    \end{align*}
+    Otherwise, we have
+    \begin{align*}
+        \Delta m_k(s^C) &= \frac{g^{\transpose}g}{g^{\transpose}B_kg}\norm{g}^2 - \frac{1}{2}(s^C)^{\transpose}B_k(s^C) \\
+        &= \frac{\norm{g}^4}{g^{\transpose}B_kg} - \frac{1}{2}\frac{\norm{g}^4(g^{\transpose}B_kg)}{g^{\transpose}B_kg} \\
+        &= \frac{1}{2}\frac{\norm{g}^4}{g^{\transpose}B_kg} \\
+        &\geq \frac{1}{2}\frac{\norm{g}^4}{\norm{g}^2\norm{B_k}} = \frac{1}{2}\frac{\norm{g}^2}{\norm{B_k}}.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}
+    If $m_k(s) \leq m_k(s^C)$, we have
+    \begin{align*}
+        \Delta f(x_k+s) &= \Delta m_k(s) + \Delta f(x_k+s) - \Delta m_k(s) \\
+        &\geq \Delta m_k(s) - \abs{\Delta f(x_k+s) - \Delta m_k(s)} \\
+        &= \Delta m_k(s) - \frac{1}{2}\norm{L+\norm{B_k}}\Delta_k^2 \\
+        &\geq \frac{1}{2}\norm{g}\min\left\{\frac{\norm{g}}{\norm{B_k}}, \Delta_k\right\} - \frac{1}{2}\norm{L+\norm{B_k}}\Delta_k^2,
+    \end{align*}
+    by applying Lemmas \ref{lemma:model-objective-decrease} and \ref{lemma:dog-leg-cauchy-point-descent}. For sufficiently small $\Delta_k$, this quantity is positive so we have descent.
+\end{lemma}
+
+\begin{defn}
+    Define a $\rho_k(s)$ as a measure of how much we trust our model:
+    \begin{align*}
+        \rho_k(s) &= \frac{\Delta f_k(s)}{\Delta m_k(s)}.
+    \end{align*}
+\end{defn}
+
+\begin{rmk}
+    If $\rho_k(s)$ is near one, then $m_k$ well-approximates $f$. If $\rho_k(s)$ is near zero, or negative, then $m_k$ is a poor approximation.
+\end{rmk}
+
+\begin{defn}{Trust Region Method}\proofbreak
+    Select thresholds $0 \leq \eta_s \leq \eta_{vs} \leq 1$, as well as $x_0$, and $\Delta_0$. We iterate the following update procedure:
+    \begin{itemize}
+        \item Find $s_k$ minimizing $m_k(s)$ subject to $\norm{s}\leq\Delta_k$.
+        \item If $\rho_k(s_k) \geq \eta_{vs}$, then we update $x_{k+1} = x_k + s_k$ and $\Delta_{k+1} = 2\Delta_k$.
+        \item Otherwise, if $\eta_{s} \leq \rho_k(s_k)$, we update $x_{k+1} = x_k + s_k$ but don't increase $\Delta_k$.
+        \item Finally, if $\rho_k(s_k) < \eta_{s}$, we take $x_{k+1} = x_k$ (so we don't update), and take $\Delta_{k+1} = \Delta_k/2$.
+    \end{itemize}
+\end{defn}
+
+\begin{rmk}
+    Often $\eta_s$ is chosen near $0.1$ and $\eta_{vs}$ near $0.9$.
+\end{rmk}
+
+\section{Composite Optimization}
+
+\begin{defn}
+    A function $f: \R^n \to \R$ is \emph{$\rho$-weakly convex} if $f(x) + \frac{\rho}{2}\norm{x}^2$ is convex.
+\end{defn}
+
+\begin{exmp}
+    $f(x) = \abs{x^2-1}$ is $2$-weakly convex.
+\end{exmp}
+
+\begin{defn}
+    A vector $\xi \in \R^d$ is a \emph{subgradient} of a $\rho$-weakly convex function $f: \R^d \to \R$ at $x \in \R^d$ if, for any $y \in \R^d$, we have
+    \begin{align*}
+        f(y) \geq f(x) + \langle \xi, y - x\rangle - \frac{\rho}{2}\norm{x-y}^2.
+    \end{align*}
+    A point $x$ is \emph{critical} if $0 \in \partial f(x)$.
+\end{defn}
+
+\begin{prop}
+    Let $f: \R^d \to \R$ be $\rho$-weakly convex. For any $\lambda > 0$ such that $\rho < 1/\lambda$, the following are well-defined:
+    \begin{itemize}
+        \item $\prox_{\lambda f}(x) = \argmin_{y}\left(f(y) + \frac{1}{2\lambda}\norm{y-x}^2\right)$,
+        \item $f_y(x) = \min_{y} f(y) + \frac{1}{2\lambda y}\norm{y-x}^2$.
+    \end{itemize}
+    Moreover, $f_{\lambda}$ is $C^1$, and $x^+ = \prox_{\lambda f}(x)$ satisfies
+    \begin{itemize}
+        \item $\norm{x-x^+} = \lambda\norm{\nabla f_{\lambda}(x)}$,
+        \item $f(x^+) \leq f(x)$,
+        \item $\inf_{\xi\in\partial f(x^+)}\norm{\xi} \leq \norm{\nabla f_{\lambda}(x)}$.
+    \end{itemize}
+\end{prop}
+
+\begin{prop}
+    Consider $f(x) = h(G(x))$, where $G: \R^d \to \R^m$, and $h: \R^m \to \R$ is convex. If $\nabla G$ is $L$-smooth, and $h$ is Lipschitz, then $f(x)$ is weakly convex.
+\end{prop}
+
+\begin{proof}
+    {\color{red}TODO}
+\end{proof}
+
+\begin{exmp}
+    Many recovery/retrieval problems can be expressed in the form of finding an original value $x^*$ minimizing some convex (e.g. $\ell_1$ or $\ell_2$ norms) distance from an observed measurement $y$. That is, we know $y \approx G(x^*)$ where $G$ is a measurement model, and we want to find $x$ which minimizes $\norm{y-G(x)}$.
+\end{exmp}
+
+\begin{rmk}
+    In the \emph{Gauss-Seidel method}, we start with $x_0$ and take
+    \begin{align*}
+        x_{k+1} &= \argmin_{x}\left\{ h\left(G(x_k) + \nabla G(x_k)(x-x_k)\right) + \frac{\beta}{2}\norm{x-x_k}^2 \right\}.
+    \end{align*}
+    In the \emph{subgradient methpd}, we start with $x_0$ and take
+    \begin{align*}
+        x_{k+1} &= x_k - \alpha_k \xi_k,
+    \end{align*}
+    where $\xi_k \in \partial f(x_k)$.
+\end{rmk}
+
+\begin{thm}{Result of Davis and Drusvyatskiy, 2018}\proofbreak
+    For appropriate choice of $\alpha_k$, then subgradient descent for weakly convex functions
+    \begin{align*}
+        \norm{\nabla f_{\lambda}(\bar{x}_k)} \leq O(1/k^{1/4}),
+    \end{align*}
+    where $\bar{x}_k$ is the average of the first $k$ iterates.
+\end{thm}
+
+\begin{defn}
+    A function $f: \R^d \to \R$ is \emph{$\mu$-sharp} if, for every $x$, we have
+    \begin{align*}
+        \mu \textrm{dist}(x, S) \leq f(x) - \min f,
+    \end{align*}
+    where $S = \argmin f(x)$, and $\textrm{dist}(x, S) = \min_{y\in S}\norm{x-y}$.
+\end{defn}
+
+\begin{thm}
+    Suppose $f$ is $\rho$-weakly convex, $\mu$-sharp, and $L$-Lipschitz. If $\textrm{dist}(x_0, S) < \frac{1}{2}\frac{\mu}{\rho}$ and
+    \begin{align*}
+        \alpha_k = \frac{f(x_k)-\min f}{\norm{\xi_k}^2},
+    \end{align*}
+    the iterates of subgradient descent will satisfy
+    \begin{align*}
+        \textrm{dist}(x_{k+1}, S)^2 \leq \left(1-\frac{\mu^2}{2L^2}\right)\textrm{dist}(x_k, S)^2.
+    \end{align*}
+    Since $\mu < L$, we have $0 < 1 - \mu^2/2L^2 < 1$.
+\end{thm}
+
+\begin{proof}
+    Let $x^* = \argmin_{y\in S}\norm{y-x_{k}}$.
+    \begin{align*}
+        \textrm{dist}(x_{k+1}, S)^2 &\leq \norm{x_{k+1}-x^*}^2 = \norm{x_k-\alpha_k\xi_k-x^*}^2 \\
+        &= \norm{x_k-x^*}^2 + 2\alpha_k\langle \xi_k, x^*-x_k\rangle + \alpha_k^2\norm{\xi_k}^2.
+    \end{align*}
+    By substituting our choice of $\alpha_k$, we have
+    \begin{align*}
+        \textrm{dist}(x_{k+1}, S)^2 &\leq \textrm{dist}(x_k, S)^2  + 2\frac{f(x_k)-f(x^*)}{\norm{\xi_k}^2}\langle \xi_k, x^*-x_k\rangle + \frac{\left(f(x_k)-f^*\right)^2}{\norm{\xi_k}^2}.
+    \end{align*}
+    By the subgradient inequality for weak convexity
+    \begin{align*}
+        2\langle \xi_k, x^*-x_k \rangle \leq 2\left(f(x^*) - f(x_k)\right) + \rho\norm{x^*-x_k}^2,
+    \end{align*}
+    and so
+    \begin{align*}
+        \textrm{dist}(x_{k+1}, S)^2 &\leq \textrm{dist}(x_k, S)^2 + \frac{f(x_k)-f(x^*)}{\norm{\xi_k}^2}\left(-2\left(f(x_k) - f(x^*)\right) + (f(x_k)-f(x^*)) + \rho\norm{x^*-x_k}^2\right) \\
+        &\leq \textrm{dist}(x_k, S)^2 + \frac{f(x_k)-f(x^*)}{\norm{\xi_k}^2}\left(-\left(f(x_k) - f(x^*)\right) + \rho\norm{x^*-x_k}^2\right).
+    \end{align*}
+    By assumption, $\norm{x^*-x_k} \leq \frac{\mu}{2\rho}$ and by $\mu$-sharpness $-(f(x_k)-f(x^*)) \leq -\mu\norm{x^*-x_k}$ and so
+    \begin{align*}
+        \textrm{dist}(x_{k+1}, S)^2 &\leq \textrm{dist}(x_k, S)^2 + \frac{f(x_k)-f(x^*)}{\norm{\xi_k}^2}\left(-\mu\norm{x^*-x_k} + \frac{\mu}{2}\norm{x^*-x_k}\right).
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \textrm{dist}(x_{k+1}, S)^2 &\leq \textrm{dist}(x_k, S)^2 - \frac{\mu}{2}\frac{f(x_k)-f(x^*)}{\norm{\xi_k}^2}\norm{x^*-x_k}.
+    \end{align*}
+    Applying $\mu$-sharpness, we have
+    \begin{align*}
+        \textrm{dist}(x_{k+1}, S)^2 &\leq \textrm{dist}(x_k, S)^2 - \frac{\mu^2}{2\norm{\xi_k}^2}\norm{x^*-x_k}^2.
+    \end{align*}
+    Since $f$ is $L$-Lipschitz, we know $\norm{\xi_k} < L$, and so we obtain
+    \begin{align*}
+        \textrm{dist}(x_{k+1}, S)^2 &\leq \textrm{dist}(x_k, S)^2 - \frac{\mu^2}{2L^2}\textrm{dist}(x_k, S)^2 = \left(1-\frac{\mu^2}{2L^2}\right)\textrm{dist}(x_k, S)^2.
+    \end{align*}
+\end{proof}
 
 \vspace{2cm}
 {\color{Fuchsia}\Huge Start of old content:}
@@ -2713,7 +2994,7 @@ How can we obtain a basis $s_i$ that is orthogonal under the inner product induc
 \end{rmk}
 
 \begin{defn}{Steepest Descent}\label{steepest-method}\proofbreak
-    Let $f: \R^n \to \R$ be continuously differentiable, and pick some $x^{(0)} \in \R^n$. 
+    Let $f: \R^n \to \R$ be continuously differentiable, and pick some $x^{(0)} \in \R^n$.
     For $i = 1, 2, \ldots, $ while $\nabla f(x^{(i)}) \neq 0$ (or until some other terminating condition), define
     \begin{align*}
         g(\alpha) = f(x^{(i)} - \alpha\nabla f(x^{(i)})),
@@ -2808,7 +3089,7 @@ How can we obtain a basis $s_i$ that is orthogonal under the inner product induc
 \end{defn}
 
 \begin{lemma}\label{kkt-lemma-1}
-    If $x$ is a local minimum of $P$ (and therefore feasible), then there \emph{does not} exist $d \in \R^n$ that is a descent direction for $f(x)$ and for $g_i(x)$ for all $i \in \mathcal{A}_x$. 
+    If $x$ is a local minimum of $P$ (and therefore feasible), then there \emph{does not} exist $d \in \R^n$ that is a descent direction for $f(x)$ and for $g_i(x)$ for all $i \in \mathcal{A}_x$.
 \end{lemma}
 
 \begin{proof}
