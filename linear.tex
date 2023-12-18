@@ -2333,7 +2333,7 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
 
 \begin{proof}
     For all $i \in \mathscr{I}$, we have $\abs{\lambda - A_{ii}} \leq \sum_{j\neq i}\abs{A_{ij}}$. Since $\lambda$ is not in the interior of any Gershgorin disc, we also know $\abs{\lambda - A_{ii}} \geq \sum_{j \neq i}\abs{A_{ij}}$. Therefore, $\abs{\lambda- A_{ii}} = \sum_{j\neq i}\abs{A_{ij}}$.
-    
+
     Since
     \begin{align*}
         \abs{\lambda-A_{ii}}\abs{x_i} \leq \sum_{i\neq j}\abs{A_{ij}}\abs{x_j} \leq \sum_{i\neq j}\abs{A_{ij}}\norm{x}_{\infty},
@@ -2350,7 +2350,7 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
 \end{cor}
 
 \begin{proof}
-    Since $A$ is irreducible, the digraph $\Gamma(A)$ is strongly connected. Let $x$ be an eigenvector associated with $\lambda$, and let $\mathscr{I} = \argmax_{i}\abs{x_i}$. It follows that any $j$ such that $i$ is adjacent to $j$ in $\Gamma(A)$ must be contained in $\mathscr{I}$. Since $\Gamma(A)$ is strongly connected, it follows that $\mathscr{I} = \{1, \ldots, n\}$. 
+    Since $A$ is irreducible, the digraph $\Gamma(A)$ is strongly connected. Let $x$ be an eigenvector associated with $\lambda$, and let $\mathscr{I} = \argmax_{i}\abs{x_i}$. It follows that any $j$ such that $i$ is adjacent to $j$ in $\Gamma(A)$ must be contained in $\mathscr{I}$. Since $\Gamma(A)$ is strongly connected, it follows that $\mathscr{I} = \{1, \ldots, n\}$.
 \end{proof}
 
 \begin{cor}\label{cor:irreducible-spectral-norm-gap}
@@ -2371,7 +2371,7 @@ How can we go about finding the eigenvectors and eigenvalues of a particular mat
 \end{thm}
 
 \begin{proof}
-    Since $A$ is diagonally dominant, we know $\abs{A_{ii}} \geq \sum_{j\neq i}\abs{A_{ij}}$. Since $A$ is strictly dominant in one row, if $0$ was an eigenvalue it could not be on the boundary of the associated discs. Then since $A$ is irreducible, we know $0$ is not in the interior of any Gershgorin disc, and so $0$ cannot be an eigenvalue.
+    Since $A$ is diagonally dominant, if $0$ is an eigenvalue it would necessarily be on the boundary of some Gershgorin disc. But since $A$ is irreducible, this would imply it was on the boundary of \emph{every} disc. However, $A$ is strictly diagonally dominant in one row, so $0$ cannot be contained in the associated disc. Therefore, $0$ is not an eigenvalue of $A$, and so $A$ is invertible.
 \end{proof}
 
 \section{Powers of a Matrix}
@@ -2901,7 +2901,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     \end{align*}
     and so $Ax = \vec{0}$ by Theorem \ref{inner-product-properties} (4). Therefore, the kernel of $L_{A^*A}$ is also a subset of the kernel of $L_A$, and so the kernels (and therefore the nullities) of $L_A$ and $L_{A^*A}$ are equal.
 \end{proof}
- 
+
 \begin{rmk}
     Note that since $A^*A$ is an $n \times n$ matrix, it is invertible precisely when the rank of $A$ is $n$.
 \end{rmk}
@@ -2963,7 +2963,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     Since $x \neq 0$, it follows that $\lambda = \overline{\lambda}$ and so $\lambda \in \R$. Therefore, all eigenvalues of $A$ are real and so $A$ has at least one real eigenvalue.
 
     We will proceed by induction on $n$. First, a $1 \times 1$ matrix $A = (a)$ is trivially both symmetric and diagonalizable, and $\{(1)\}$ is a basis for $\R^1$ that is vacuously orthogonal and composed of eigenvectors of $A$. Now assume that for $m \leq n-1$, any $m \times m$ real symmetric matrix is diagonalizable, and there exists an orthogonal basis for $\R^m$ composed of its eigenvectors.
-    
+
     Let $\lambda_1$ be a real eigenvalue and $v_1$ be the corresponding eigenvector. Complete to an ordered orthogonal basis $B = \langle v_1, \ldots, v_n \rangle$ for $\R^n$. Let $Q$ be a matrix whose $i$th column is $v_i$, and let
     $\tilde{A} = [L_A]_{B}^{B}$. Then $\tilde{A} = Q^{-1}AQ = \transposeof{Q}AQ$. Note that $\tilde{A}$ is symmetric: $\transposeof{\left(\transposeof{Q}AQ\right)} = \transposeof{Q}\transposeof{A}\transposeof{\left(\transposeof{Q}\right)} = \transposeof{Q}AQ = \tilde{A}$.
 
@@ -3004,7 +3004,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 
 \begin{defn}
     A symmetric matrix $A \in M_{n\times n}(\R)$ is \emph{positive definite} if $\transposeof{z}Mz$ is strictly positive for \emph{every} non-zero real $z \in \R^n$, and \emph{positive semidefinite} if $\transposeof{z}Mz$ is positive or zero for every non-zero real $z \in \R^n$. Negative definite and negative semidefinite are defined similarly.
-    
+
     For Hermitian matrices $H \in M_{n\times n}(\C)$, these are defined similarly using $z^{*}Hz$.
 
     A matrix that is neither positive nor negative (semi)definite is said to be \emph{indefinite}.
@@ -3099,6 +3099,71 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
         \norm{v}_p = \left[\sum_{i=1}^{n}\abs{v_i}^p\right]^{1/p} \leq \left[\sum_{i=1}^{n}\max_{i}\abs{v_i}^p\right]^{1/p} = n^{1/p}\norm{v}_{\infty}.
     \end{align*}
     Finally, note that $\lim_{p\to\infty}n^{1/p}\norm{v}_{\infty} = \norm{v}_{\infty}$, and the result follows.
+\end{proof}
+
+\begin{defn}
+    Let $V$ be a vector space over $K = \R$ or $K = \C$, and let $\norm{\cdot}_a$ and $\norm{\cdot}_b$ be norms on $V$. We say these norms are \emph{equivalent} if there exists $a, b \in \R^+$ such that $a\norm{x}_a \leq \norm{x}_b \leq b\norm{x}_a$ for all $x \in V$.
+\end{defn}
+
+\begin{lemma}{lemma:norm-equivalence-relation}
+    In a vector space $V$, equivalence of norms is an equivalence relation on the set of all norms on $V$.
+\end{lemma}
+
+\begin{proof}
+    Taking $a = b = 1$, norm equivalence is clearly reflexive. Taking $a' = 1/b$ and $b' = 1/a$,
+    we see that
+    \begin{align*}
+        a\norm{x}_a \leq &\norm{x}_b \leq b\norm{x}_a,
+    \end{align*}
+    so $\norm{x}_a \leq b'\norm{x}_b$ and $a'\norm{x}_b \leq \norm{x}_a$, and so
+    \begin{align*}
+        a'\norm{x}_b \leq &\norm{x}_a \leq b'\norm{x}_b.
+    \end{align*}
+    Therefore, the relation is symmetric. Finally, if $a\norm{x}_a \leq \norm{x}_b \leq b\norm{x}_a$, and $c\norm{x}_b \leq \norm{x}_c \leq d\norm{x}_b$, then
+    \begin{align*}
+        ac\norm{x}_a \leq c\norm{x}_b \leq \norm{x}_c \leq d\norm{x}_b \leq bd\norm{x}_a.
+    \end{align*}
+    Therefore, $\norm{\cdot}_a$ and $\norm{\cdot}_c$ are equivalent, so the relation is transitive.
+\end{proof}
+
+\begin{lemma}\label{lemma:norm-continuity}
+    Let $V$ be a finite dimensional normed vector space. The norm $\norm{\cdot}$ is continuous with respect to the $\ell_1$ norm.
+\end{lemma}
+
+\begin{proof}
+    Fix some $\varepsilon > 0$ and $x \in V$. Fix some basis $v_1, \ldots, v_n$, and express $x = a_1v_1 + \cdots + a_nv_n$. Then by the triangle inequality,
+    \begin{align*}
+        \norm{x} \leq \sum_{i=1}^{n}\abs{a_i}\norm{v_i}.
+    \end{align*}
+    Let $M = \max_{i}\norm{v_i}$, so $\norm{x} \leq M\norm{x}_1$. It follows if $\norm{x}_1 < \varepsilon/M$, then $\norm{x} < \varepsilon$. Therefore, $\norm{\cdot}$ is continuous with respect to $\ell_1$ at zero, and by the reverse triangle inequality is continuous everywhere.
+\end{proof}
+
+\begin{thm}
+    Let $V$ be a vector space, and let $\norm{\cdot}_a$ and $\norm{\cdot}_b$ be equivalent norms on $V$. Then a sequence is Cauchy with respect to $\norm{\cdot}_a$ if and only if it is Cauchy with respect to $\norm{\cdot}_b$.
+\end{thm}
+
+\begin{thm}\label{thm:finite-dim-norm-equivalence}
+    For a finite dimensional normed vector space $V$, all norms are equivalent to the $\ell_1$ norm.
+\end{thm}
+
+\begin{proof}
+    By Heine-Borel \ref{thm:heine-borel}, the unit sphere $S^{n-1} \subset \R^n$ is compact since it is closed and bounded. By Lemma \ref{lemma:norm-continuity}, any $\norm{\cdot}$ is continuous with respect to $\norm{\cdot}_1$, and so by the Extreme Value Theorem must attain a minimum $C_1$ and maximum $C_2$ on $S^{n-1}$. Since $0 < \norm{\cdot} < \infty$, we have $0 < C_1 \leq C_2 < \infty$. Therefore, $C_1\norm{x} \leq \norm{x}_1 \leq C_2\norm{x}$ for $x \in S^{n-1}$.
+
+    For arbitrary $v \in V$, if $v = 0$ then $\norm{v} = 0 = \norm{v}_1$, and so $C_1\norm{v} \leq \norm{v}_1 \leq C_2\norm{v}$ is trivial. Otherwise, take $x = v/\norm{v} \in S^{n-1}$, and so
+    \begin{align*}
+        C_1\norm{x} \leq &\norm{x}_1 \leq C_2\norm{x}, \\
+        C_1\norm{v}\norm{x} \leq &\norm{v}\norm{x}_1 \leq C_2\norm{v}\norm{x}, \\
+        C_1\norm{\norm{v}x} \leq \norm{\norm{v}x}_1 \leq C_2\norm{\norm{v}x}, \\
+        C_1\norm{x} \leq \norm{x}_1 \leq C_2\norm{x}.
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    In a finite dimensional vector space $V^n$, all norms are equivalent.
+\end{cor}
+
+\begin{proof}
+    Follows immediately from Theorem \ref{thm:finite-dim-norm-equivalence} and Lemma \ref{lemma:norm-equivalence-relation}.
 \end{proof}
 
 \begin{defn}
@@ -3209,7 +3274,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     Clearly if $T = 0$ then $\norm{T} = 0$, and if $T \neq 0$ there must exist $v \neq \vec{0}$ such $T(v) \neq \vec{0}$. Therefore, $\norm{T} > 0$, giving us positive definiteness. Additionally, since $\norm{(sT)v} = \abs{s}\norm{Tv}$, it follows that $\norm{sT} = \abs{s}\norm{T}$ so we have absolute homogeneity. Finally, for linear maps $A$ and $B$, since $\norm{(A + B)v} = \norm{Av + Bv} \leq \norm{Av} + \norm{Bv}$, it follows that $\norm{A + B} \leq \norm{A} + \norm{B}$.
 
     Notice that $\norm{A} \geq \norm{Av}/\norm{v}$ by definition, so $\norm{Av} \leq \norm{A}\norm{v}$ and therefore this norm is consistent with the inducing norms.
-    
+
     Since
     \begin{align*}
         \frac{\norm{Av}}{\norm{v}} = \norm{\frac{Av}{\norm{v}}} \norm{A\frac{v}{\norm{v}}},
@@ -3257,7 +3322,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
         w &= \argmax_{1\leq j \leq n}\sum_{i=1}^{n}\abs{A_{ij}}, \\
         x &= e_{w}.
     \end{align*}
-    Note that $\norm{x}_1 = \abs{1} = 1$. With this choice of $x$ 
+    Note that $\norm{x}_1 = \abs{1} = 1$. With this choice of $x$
     \begin{align*}
         \norm{Ax}_1 = \sum_{i=1}^{n}\abs{\left(Ax\right)_i} = \sum_{i=1}^{n}\abs{A_{iw}} = \max_{1\leq j \leq n}\sum_{i=1}^{n}\abs{A_{ij}}
     \end{align*}
@@ -3282,7 +3347,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     Since $\left(A^{*}A\right)^{*} = A^{*}A$ is Hermitian, by the Spectral theorem \ref{spectral-theorem} for Hermitian matrices there exists an orthonormal basis $B = \{ u_1, u_2, \ldots, u_n \}$ consisting of eigenvectors of $A^{*}A$. For any $x$, let $x = x_1u_1 + x_2u_2 + \cdots + x_nu_n$, and therefore
     \begin{align*}
         \norm{Ax}_2^2 &= \langle x, A^{*}Ax \rangle = \left\langle \sum_{i=1}^{n}x_iu_i, \sum_{i=1}^{n}x_i\lambda_i u_i \right\rangle \\
-        &= \sum_{i=1}^{n}x_i^2\lambda_i = \max_{i}\lambda_i\norm{x}_2^2 = \rho(A^{*}A)\norm{x}_2^2,
+        &= \sum_{i=1}^{n}x_i^2\lambda_i \leq \max_{i}\lambda_i\norm{x}_2^2 = \rho(A^{*}A)\norm{x}_2^2,
     \end{align*}
     and therefore $\norm{A}_2^2 \leq \rho(A^{*}A)$. Furthermore,
     \begin{align*}
@@ -3306,7 +3371,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     \begin{align*}
         \norm{Ax}_{\infty} = \max_{1\leq i\leq n}\abs{\left(Ax\right)_i} = \max_{1\leq i\leq n}\abs{\sum_{j=1}^{n}A_{ij}x_{j}} \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}}\abs{x_{j}} \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}}.
     \end{align*}
-    If $\norm{x}_{\infty} = 1$, then 
+    If $\norm{x}_{\infty} = 1$, then
     \begin{align*}
         \norm{A}_{\infty} \leq \max_{1\leq i\leq n}\sum_{j=1}^{n}\abs{A_{ij}}.
     \end{align*}
@@ -3320,67 +3385,6 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     \end{align*}
 \end{proof}
 
-\begin{thm}
-    Let $V$ be a normed linear space over $K = \R$ or $K = \C$. The following are equivalent:
-    \begin{enumerate}
-        \item $V$ is finite dimensional,
-        \item the closed unit ball is compact,
-        \item the closed unit sphere is compact,
-        \item for all $S \subseteq V$, $S$ is compact if and only if $S$ is closed and bounded.
-    \end{enumerate}
-\end{thm}
-
-\begin{defn}
-    Let $V$ be a vector space over $K = \R$ or $K = \C$, and let $\norm{\cdot}_a$ and $\norm{\cdot}_b$ be norms on $V$. We say these norms are \emph{equivalent} if there exists $a, b \in \R^+$ such that $a\norm{x}_a \leq \norm{x}_b \leq b\norm{x}_a$ for all $x \in V$.
-\end{defn}
-
-\begin{lemma}
-    Given a vector space $V$, equivalence of norms is an equivalence relation on the set of all norms on $V$.
-\end{lemma}
-
-\begin{proof}
-    Taking $a = b = 1$, norm equivalence is clearly reflexive. Taking $a' = 1/b$ and $b' = 1/a$,
-    we see that
-    \begin{align*}
-        a\norm{x}_a \leq &\norm{x}_b \leq b\norm{x}_a,
-    \end{align*}
-    so $\norm{x}_a \leq b'\norm{x}_b$ and $a'\norm{x}_b \leq \norm{x}_a$, and so
-    \begin{align*}
-        a'\norm{x}_b \leq &\norm{x}_a \leq b'\norm{x}_b.
-    \end{align*}
-    Therefore, the relation is symmetric. Finally, if $a\norm{x}_a \leq \norm{x}_b \leq b\norm{x}_a$, and $c\norm{x}_b \leq \norm{x}_c \leq d\norm{x}_b$, then
-    \begin{align*}
-        ac\norm{x}_a \leq c\norm{x}_b \leq \norm{x}_c \leq d\norm{x}_b \leq bd\norm{x}_a.
-    \end{align*}
-    Therefore, $\norm{\cdot}_a$ and $\norm{\cdot}_c$ are equivalent, so the relation is transitive.
-\end{proof}
-
-\begin{thm}
-    Let $V$ be a vector space, and let $\norm{\cdot}_a$ and $\norm{\cdot}_b$ be equivalent norms on $V$. Then a sequence is Cauchy with respect to $\norm{\cdot}_a$ if and only if it is Cauchy with respect to $\norm{\cdot}_b$.
-\end{thm}
-
-\begin{thm}
-    For a finite dimensional vector space $V^n$, all norms are equivalent to the $\ell_1$ norm.
-\end{thm}
-
-\begin{proof}
-    \begin{align*}
-        \norm{x} \leq \sum_{k=0}^{n}\norm{x_ie_i} = \sum_{k=0}^{n}\abs{x_i}\norm{e_i}.
-    \end{align*}
-    Letting $b = \max_{k=0}^{n}\norm{e_i}$, then
-    \begin{align*}
-        \norm{x} \leq \sum_{k=0}^{n}\abs{x_i}b = b\norm{x}_1.
-    \end{align*}
-    Similarly,
-    \begin{align*}
-        \norm{x}_1 = \sum_{k=0}^{n}\abs{x_i}
-    \end{align*}
-\end{proof}
-
-\begin{cor}
-    In a finite dimensional vector space $V^n$, all norms are equivalent.
-\end{cor}
-
 \begin{lemma}\label{lemma:matrix-norm-similar}
     Let $\norm{\cdot}$ be a matrix norm on $M_n$, and fix any invertible $S \in M_n$. Then $\norm{\cdot}_S$ defined by $\norm{A}_S = \norm{S^{-1}AS}$ is a matrix norm.
 \end{lemma}
@@ -3391,7 +3395,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
         \item $A \neq 0$ implies $S^{-1}SA \neq 0$ since $S$ is invertible, and so $\norm{A}_S > 0$,
         \item $\norm{\alpha A}_S = \norm{S^{-1}\alpha AS} = \abs{\alpha}\norm{S^{-1}AS} = \abs{\alpha}\norm{A}_S$,
         \item $\norm{A + B}_S = \norm{S^{-1}(A+B)S} \leq \norm{S^{-1}AS} + \norm{S^{-1}BS} = \norm{A}_S + \norm{B}_S$,
-        \item $\norm{AB}_S = \norm{S^{-1}ASS^{-1}BS} \neq \norm{S^{-1}AS}\norm{S^{-1}BS} = \norm{A}_S\norm{B}_S$.
+        \item $\norm{AB}_S = \norm{S^{-1}ASS^{-1}BS} \leq \norm{S^{-1}AS}\norm{S^{-1}BS} = \norm{A}_S\norm{B}_S$.
     \end{itemize}
 \end{proof}
 
@@ -3400,7 +3404,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \end{thm}
 
 \begin{proof}
-    Let $A = SJS^{-1}$ be a Jordan decomposition of $A$, and define $D$ to be a diagonal matrix such that $D_{kk} = \varepsilon^{k}$. Notice that $D^{-1}JD$ has the same diagonal as $J$, but the super diagonal is scaled by $\varepsilon$. Then $\norm{D^{-1}JD}_{1}\leq \rho(A) + \varepsilon$. Therefore, the matrix norm defined by $\norm{M} = \norm{D^{-1}S^{-1}MSD}_1$ for any $M$ is a matrix norm by Lemma \ref{lemma:matrix-norm-similar} since $SD$ is invertible, and $\norm{A} = \norm{D^{-1}JD} \leq \rho(A) + \varepsilon$ as desired. 
+    Let $A = SJS^{-1}$ be a Jordan decomposition of $A$, and define $D$ to be a diagonal matrix such that $D_{kk} = \varepsilon^{k}$. Notice that $D^{-1}JD$ has the same diagonal as $J$, but the super diagonal is scaled by $\varepsilon$. Then $\norm{D^{-1}JD}_{1}\leq \rho(A) + \varepsilon$. Therefore, the matrix norm defined by $\norm{M} = \norm{D^{-1}S^{-1}MSD}_1$ for any $M$ is a matrix norm by Lemma \ref{lemma:matrix-norm-similar} since $SD$ is invertible, and $\norm{A} = \norm{D^{-1}JD} \leq \rho(A) + \varepsilon$ as desired.
 \end{proof}
 
 \begin{cor}
@@ -3424,31 +3428,31 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 
 \begin{proof}
     If $\rho(A) < 1$, then there exists a matrix norm $\norm{\cdot}$ such that $\norm{A} < 1$. Therefore, $\norm{A^k} \leq \norm{A}^{k}$, and so $A^k$ converges to the zero matrix.
-    
+
     If $A^k$ converges to zero, then all eigenvalues $\lambda$ must satisfy $\abs{\lambda} < 1$, and so $\rho(A) < 1$.
 \end{proof}
 
-\begin{thm}
-    For any (proper) matrix norm and any $A \in M_n$, $\lim_{k\to\infty}\norm{A^k}^{k} = \rho(A)$.
+\begin{thm}\label{thm:spectral-radius-matrix-power-limit}
+    For any (proper) matrix norm and any $A \in M_n$, $\lim_{k\to\infty}\norm{A^k}^{1/k} = \rho(A)$.
 \end{thm}
 
 \begin{proof}
-    By Proposition \ref{spectral-radius-norm-bound},
-    \begin{align*}
-        \rho(A^k) = \rho(A)^k \leq \norm{A}^{k},
-    \end{align*}
-    and so $\rho(A) \leq \norm{A^k}^{1/k}$.
+    By Proposition \ref{spectral-radius-norm-bound} we know $\rho(A)^k = \rho(A^k) \leq \norm{A}^{k}$, and so $\rho(A) \leq \norm{A^k}^{1/k}$.
 
-    For any $\varepsilon > 0$, let $\alpha = 1/(\rho(A)+\varepsilon)$. Therefore, $\rho(\alpha A) < 1$, and so by Theorem \ref{thm:matrix-power-convergence} we know $(\alpha A)^{k}$ converges to the zero matrix. It follows there exists some $M$ such that $k > M$ implies $\norm{\alpha^kA^k} < 1$, or equivalently $\norm{A^k} < \alpha^{k} = (\rho(A)+\varepsilon)^k$. Therefore, $\norm{A^k}^{1/k} < \rho(A) + \varepsilon$ for all $k > M$, and so $\norm{A^k}^{1/k}$ must converge to $\rho(A)$.
+    For any $\varepsilon > 0$, let $\alpha = 1/(\rho(A)+\varepsilon)$. Therefore, $\rho(\alpha A) < 1$, and so by Theorem \ref{thm:matrix-power-convergence} we know $(\alpha A)^{k}$ converges to the zero matrix. It follows there exists some $M$ such that $k > M$ implies $\norm{\alpha^kA^k} < 1$, or equivalently $\norm{A^k} < (1/\alpha)^{k} = (\rho(A)+\varepsilon)^k$. Therefore, $\rho(A) \leq \norm{A^k}^{1/k} \leq \rho(A) + \varepsilon$ for all $k > M$, and so $\norm{A^k}^{1/k}$ must converge to $\rho(A)$.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{thm:completeness-absolute-convergence}
     Let $V$ be a normed vector space over a field $K$. Then $V$ is complete if and only if all absolutely convergent sequenecs converge, where a sequence $\{x_i\} \subseteq V$ converges absolutely when
     \begin{align*}
         \sum_{i=1}^{\infty}\norm{x_i}
     \end{align*}
-    converges.
+    converges. {\color{red}TODO: reformulate in more generality for metric spaces, move to Analysis?}
 \end{thm}
+
+\begin{proof}
+    {\color{red}TODO}
+\end{proof}
 
 \begin{cor}
     For all $A \in M_n$, the matrix exponential
@@ -3459,10 +3463,11 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \end{cor}
 
 \begin{proof}
-    Let $\norm{\cdot}$ be any matrix norm. Since $M_n$ is finite dimensional, it is complete. Therefore,
+    Let $\norm{\cdot}$ be any matrix norm. Since $M_n$ is finite dimensional, it is complete. Notice that
     \begin{align*}
         \sum_{k=0}^{\infty}\norm{\frac{A^k}{k!}} \leq \sum_{k=0}^{\infty}\frac{\norm{A}^k}{k!} = e^{\norm{A}}.
     \end{align*}
+    Therefore, $e^A$ converges by Theorem \ref{thm:completeness-absolute-convergence}.
 \end{proof}
 
 \begin{thm}\label{thm:matrix-geometric-series}
@@ -3488,7 +3493,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \end{defn}
 
 \begin{defn}
-    A norm on $\C^n$ is \emph{monotone} if $\abs{x} < \abs{y}$ coordinate-wise implies $\norm{x} \leq \norm{y}$.
+    A norm on $\C^n$ is \emph{monotone} if $\abs{x} \leq \abs{y}$ coordinate-wise implies $\norm{x} \leq \norm{y}$.
 \end{defn}
 
 \begin{thm}
@@ -3501,7 +3506,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \end{thm}
 
 \begin{proof}
-    Since $x_i < \abs{x_i}$, monotonicity implies $\norm{x} \leq \norm{\abs{x}}$. Further, $\abs{\abs{x_i}} \leq \abs{x_i}$, so $\norm{\abs{x}} \leq \norm{x}$. Therefore, $\norm{x} = \norm{\abs{x}}$.
+    Since $\abs{x_i} \leq \abs{\left(\abs{x_i}\right)}$, monotonicity implies $\norm{x} \leq \norm{\abs{x}}$. Further, $\abs{\left(\abs{x_i}\right)} \leq \abs{x_i}$, so $\norm{\abs{x}} \leq \norm{x}$. Therefore, $\norm{x} = \norm{\abs{x}}$.
 
     ({\color{red}TODO: prove absolute implies monotone})
 
@@ -3538,6 +3543,79 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 
     If $A$ is Hermitian, by Weyl's theorem \ref{thm:weyl} we have $\lambda_1(\Delta A) + \lambda_k(A) \leq \lambda_k(A + \Delta A) \leq \lambda_n(\Delta A) + \lambda_k(A)$, and so $\abs{\lambda_k(A) - \lambda_k(A + \Delta A)} \leq \rho(\Delta A) \leq \norm{\Delta A}_2$.
 \end{cor}
+
+\section{Banach Spaces}
+
+\begin{defn}
+    A \emph{Banach space} is complete normed vector space.
+\end{defn}
+
+\begin{lemma}\label{lemma:finite-dim-banach}
+    Any finite dimensional normed vector space over a complete field $K$ is a Banach space.
+\end{lemma}
+
+\begin{proof}
+    Let $\{x_k\}$ be a Cauchy sequence, so for any $\varepsilon > 0$ there exists $N$ such that $i, j > N$ implies $\norm{x_i-x_j} < \varepsilon$. By the equivalence of norms in finite dimensions \ref{thm:finite-dim-norm-equivalence}, we have $\norm{x_i-x_j}_{\infty} < C\varepsilon$ for some $C > 0$. Let $x_i = \sum_{k=1}^{n}a^{(i)}_kv_k$ for some basis $\langle v_1, \ldots, v_n\rangle$. Then $\norm{x_i-x_j}_{\infty} < C\varepsilon$ necessarily implies that $\abs{a^{(i)}_k-a^{(j)}_k} < C\varepsilon$, and so for each dimension $k$, the coefficients ${a^{(i)}_k}$ form a Cauchy sequence. Since the underlying field $K$ is complete, the coefficients $a^{(i)}_k$ necessarily converge to some $a_k$. Let $x = a_1v_1 + \cdots a_nv_n$. Then
+    \begin{align*}
+        \norm{x_k-x} \leq C\norm{x_k-x}_{\infty} \leq C\max_{i}\abs{a^{(k)}_i-a_i}.
+    \end{align*}
+    Since $a^{(k)}_i \to a_i$, it follows that $\max_{i}\abs{a^{(k)}_i-a_i} \to 0$, and so $x_k \to x$.
+\end{proof}
+
+\begin{lemma}\label{lemma:finite-dim-closed}
+    Any finite dimensional normed vector space is closed.
+\end{lemma}
+
+\begin{proof}
+    By Lemma \ref{lemma:finite-dim-banach}, the space is complete. Any complete metric space is necessarily closed (in the metric topology).
+\end{proof}
+
+\begin{lemma}{Riesz's Lemma}\label{lemma:riesz}\proofbreak
+    Let $X$ be a normed vector space, and let $Y$ be a closed proper subspace of $X$. For any $0 < \alpha < 1$, there exists $v \in X$ such that $\norm{v} = 1$ and $\norm{v-y} > \alpha$ for all $y \in Y$.
+\end{lemma}
+
+\begin{proof}
+    Since $Y$ is a proper subspace of $X$, there exists $w \in X \setminus Y$. Since $Y$ is closed, $X \setminus Y$ is open, and so there exists an open ball $B_{\varepsilon}(w) \subseteq X \setminus Y$. Now let
+    \begin{align*}
+        d = \inf_{y \in Y}\norm{w-y}.
+    \end{align*}
+    Since $\norm{x-w} < \varepsilon$ implies $x \in B_{\varepsilon}(w)$ and so $x \not\in Y$, we know $d \geq \varepsilon$. We also know that there exists $u \in Y$ such that $\norm{w-u} < d\alpha^{-1}$ since $\alpha^{-1} > 1$. Let
+    \begin{align*}
+        v = \frac{w-u}{\norm{w-u}}.
+    \end{align*}
+    It follows that $\norm{v} = 1$, and that for any $y\in Y$ we have
+    \begin{align*}
+        \norm{v - y} &= \norm{\frac{w-u}{\norm{w-u}} - y} = \norm{\frac{w-u - \norm{w-u}y}{\norm{w-u}}}.
+    \end{align*}
+    Of course, $u, y \in Y$ and so $u + \norm{w-u}y \in Y$. Therefore, $\norm{w-(u + \norm{w-u}y)} \geq d$, and so
+    \begin{align*}
+        \norm{v-y} \geq \frac{d}{\norm{w-u}} > \frac{d}{d\alpha^{-1}} = \alpha.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}\label{lemma:infinite-dim-unit-sphere-not-compact}
+    In an infinite dimensional Banach space $V$, the unit sphere is not compact.
+\end{lemma}
+
+\begin{proof}
+    Let $y_0 = 0$, and let $Y_k = \spn\{y_0, \ldots, y_k\}$. Since $Y_k$ is finite dimensional, by Lemma \ref{lemma:finite-dim-closed} it is closed. Since $V$ is infinite dimensional, $Y_k$ is necessarily a proper subspace. Therefore, by Riesz's Lemma \ref{lemma:riesz} there exists $y_{k+1}$ such that $\norm{y_{k+1}} = 1$ and $\norm{y_{k+1}-y_j} > 0.5$ for $j \leq k$. It follows that $y_1, y_2, \ldots$ is an infinite sequence in the unit sphere which has no convergent subsequence, and so by Bolzano-Weierstrass \ref{thm:bolzano-weierstrass} it follows by the unit sphere cannot be compact.
+\end{proof}
+
+\begin{thm}
+    Let $V$ be a complete normed linear space over $K = \R$ or $K = \C$. The following are equivalent:
+    \begin{enumerate}
+        \item $V$ is finite dimensional,
+        \item the closed unit ball is compact,
+        \item the unit sphere is compact,
+        \item for all $S \subseteq V$, $S$ is compact if and only if $S$ is closed and bounded.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    If $V$ is finite dimensional with $n$ dimensions, it is isomorphic to either $\R^n$ (if $K = \R$), or $\R^{2n}$ (if $K = \C$). By Heine-Borel \ref{thm:heine-borel}, it follows that $S \subseteq V$ is compact if and only if $S$ is closed and bounded. Since the unit sphere and closed unit ball are both closed and bounded, they are compact.
+
+    If $V$ is infinite dimensional, then by Lemma \ref{lemma:infinite-dim-unit-sphere-not-compact}, the unit sphere is not compact. By the same argument, the closed unit ball is not compact, and both serve as a counter-example to the fourth property.
+\end{proof}
 
 \section{Dual spaces}
 
@@ -3591,7 +3669,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \end{proof}
 
 \begin{thm}\label{thm:hahn-banach-norm-functional}
-    Let $V$ be a normed linear space over a field $K$. FOr non-zero $x \in V$, there exists $f \in V^*$ such that $\norm{f}_{V^*} = 1$ and $\norm{x}_V$.
+    Let $V$ be a normed linear space over a field $K$. For non-zero $x \in V$, there exists $f \in V^*$ such that $\norm{f}_{V^*} = 1$ and $f(x) = \norm{x}_V$.
 \end{thm}
 
 \begin{cor}
@@ -3612,7 +3690,8 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \begin{proof}
     \begin{align*}
         \norm{T^*}_{A^*} &= \max_{\substack{x\in K^n \\ \norm{x}_{A^*}=1}}\norm{T^*x}^D_{A} = \max_{\norm{x}^D = 1}\max_{\norm{y}=1}\abs{(T^*x)^*y} \\
-        &= \max_{\norm{y}=1}\max_{\norm{x}^D = 1}\abs{(Ty)^*x} = \max_{\norm{y}=1}\left(\norm{Ty}^D\right)^D = \norm{T}.
+        &= \max_{\norm{y}=1}\max_{\norm{x}^D = 1}\abs{(Ty)^*x} = \max_{\norm{y}=1}\left(\norm{Ty}^D\right)^D = \\
+        & \max_{\norm{y}=1}\norm{Ty} = \norm{T}.
     \end{align*}
 \end{proof}
 
@@ -3669,7 +3748,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \end{thm}
 
 \begin{proof}
-    Using polynomial long division, we can always find polynomials $d(t)$ and $r(t)$ such that $p(t) = d(t)q(t) + r(t)$, where $r(t)$ has degree less than $q(t)$. Since $p($) and $q(t)$ are annihilating, $0 = d(A)0 + r(A)$, so $r(A) = 0$. Therefore, $r$ must be identically zero, since it is an annihilating polynomial of degree less than the minimal polynomial.
+    Let $p(t)$ be any polynomial which annihilates $A$. Using polynomial long division, we can always find polynomials $d(t)$ and $r(t)$ such that $p(t) = d(t)q(t) + r(t)$, where $r(t)$ has degree less than $q(t)$. Therefore, $p(A) = d(A)q(A) + r(A)$ becomes $0 = d(A)0 + r(A)$, and so it must be that $r(A) = 0$. Therefore, $r$ must be identically zero, or else it would be a non-zero annihilating polynomial of degree less than the minimal polynomial.
 \end{proof}
 
 \begin{thm}
@@ -3683,7 +3762,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
     \end{align*}
     Since $x$ is non-zero, it must be that $\lambda$ is a root of $q(t)$. Since the characteristic polynomial is a multiple of the minimal polynomial, the minimal polynomial cannot have any extra roots.
 
-    Let $A = SJS^{-1}$ be a Jordan decomposition of $A$.  {\color{red}\Large TODO}
+    Since the Jordan Canonical Form is block diagonal, the minimal polynomial $q(A) = Sq(J)S^{-1}$ must evaluate to zero on each block. But a Jordan block for $\lambda$ of size $k$ has minimal polynomial $(t-\lambda)^k$, so the minimal polynomial of $A$ must have $(t-\lambda)^k$ as a factor for each such block. Therefore, the multiplicity of $\lambda$ is precisely the size of the largest Jordan block for $\lambda$.
 \end{proof}
 
 \begin{cor}
@@ -3724,7 +3803,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 
     Applying a Laplace expansion to $tI - C_g$, we have
     \begin{align*}
-        p(t) &= \det(tI - C_g) = 
+        p(t) &= \det(tI - C_g) =
     \end{align*}
     {\color{red}\Large TODO}
 \end{proof}
@@ -3809,8 +3888,8 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \end{thm}
 
 \begin{proof}
-    Since $A$ is Hermitian, it has a unitary eigendecomposition $A = UDU^*$ such that $D_{kk} = \lambda_k$ and $U_k = \mu_k$. 
-    
+    Since $A$ is Hermitian, it has a unitary eigendecomposition $A = UDU^*$ such that $D_{kk} = \lambda_k$ and $U_k = \mu_k$.
+
     In the first equation, since $U^{\perp}$ has dimension $n-k$, and $\spn\{\mu_k, \ldots, \mu_n\}$ has dimension $n-k+1$, their intersection must contain some non-zero $w$, and so {\color{red}TODO}
 \end{proof}
 
@@ -3944,7 +4023,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \begin{proof}
     Let $U \in M_{n,r}$ such that $U^*U = I_r$ --- that is, $U$ has orthonormal columns. Let $V \in M_{n,n}$ be a unitary matrix whose first $r$ columns are $U$. Notice that the $r \times r$ principle submatrix of $V^*AV$ is $U^*AU$. Therefore, by \ref{thm:hermitian-inclusion-principle}
     \begin{align*}
-        \lambda_k(A) = \lambda_k(V^*AV) \leq \lambda_k(U^*AU). 
+        \lambda_k(A) = \lambda_k(V^*AV) \leq \lambda_k(U^*AU).
     \end{align*}
     Since the sum of the $r$ eigenvalues of $U^*AU$ is its trace, we have
     \begin{align*}
@@ -4019,7 +4098,7 @@ We define $A^0 = I$, and if $A^{-1}$ exists then we define $A^{-m} = (A^{-1})^m$
 \begin{thm}{Singular Value Decomposition}\proofbreak
     For any $A \in M_{m,n}$, there exists unitary $U \in M_m$, unitary $V \in M_n$, and diagonal $\Sigma \in M_{m,n}$ such that $A = U\Sigma V^*$.
 
-    If $A \in M_{m,n}(\R)$, then $U, V, \Sigma$ exist all real. 
+    If $A \in M_{m,n}(\R)$, then $U, V, \Sigma$ exist all real.
 \end{thm}
 
 \begin{thm}{Polar Decomposition}\proofbreak
