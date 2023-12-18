@@ -342,12 +342,12 @@ Then the total error is
     Positive definite $\iff$ $\forall k A_k$ is positive definite.
 
     Positive definite $\iff$ $\forall k \det A_k > 0$ \emph{and} $A$ is Hermitian.
-    
+
     Positive definite $\iff$ $A$ is Hermitian and Gaussian elimination can be performed without permutations.
 \end{thm}
 
 \begin{thm}{Cholesky Factorization}\label{cholesky-factorization}\proofbreak
-    Let $A \in M_{n \times n}(\C)$ be a positive definite matrix. There exists a unique lower triangular matrix $L \in M_{n \times n}(\C)$ such that $L_{ii} > 0$ such that $A = LL^{*}$. 
+    Let $A \in M_{n \times n}(\C)$ be a positive definite matrix. There exists a unique lower triangular matrix $L \in M_{n \times n}(\C)$ such that $L_{ii} > 0$ such that $A = LL^{*}$.
 \end{thm}
 
 \begin{proof}
@@ -699,7 +699,7 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \begin{proof}
     Since $A$ is invertible, its columns are linearly independent by Theorem \ref{row-column-rank-equivalence}. Let $\langle x_1, \ldots, x_n \rangle$ be the basis formed by these columns, and apply the Gram-Schimdt process to produce an orthonormal basis $\langle e_1, \ldots, e_n \rangle $ where $e_i$ is computed as a linearly combination of $x_j$'s for $j \leq i$. Therefore, there exists an upper triangular matrix $U$ such that
     \begin{align*}
-        AU = 
+        AU =
         \begin{bmatrix}
             \vdots & \vdots & \cdots & \vdots \\
             x_1 & x_2 & \cdots & x_n \\
@@ -1137,3 +1137,107 @@ Note that for all invertible $n \times n$ matrices $B$, where we have $Ax = b$ f
 \begin{rmk}
     A \emph{reduced} singular value decomposition of $A$ (as opposed to the full SVD decscribed above) is one where any columns of $U$, $\Sigma$, and $V$ corresponding to zero singular values have been removed, leaving $\hat{U}$ and $\hat{V}$ to be \emph{semi-unitary} and $\hat{\Sigma}$ square diagonal, such that $U^{*}U = V^{*}V = I_r$, where $r$ is the rank of $A$.
 \end{rmk}
+
+\section{Non-negative matrices}
+
+For $A \in M_n$, let $\abs{A} \in M_n$ denote the matrix such that $\abs{A}_{ij} = \abs{A_{ij}}$. Note that $\abs{AB} \leq \abs{A}\abs{B}$, where the inequality is taken coordinate-wise. Therefore, $\abs{A^k} \leq \abs{A}^k$.
+
+\begin{prop}\label{prop:inf-norm-identity}
+    Let $A \in M_n$ such that $0 \leq A$, and $\sum_{j}A_{ij} = \alpha$ for all rows $i$, then
+    \begin{align*}
+        \alpha = \rho(A) = \norm{A}_{\infty}.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    Notice that $A\vec{1} = \alpha\vec{1}$, so $\alpha \leq \rho(A)$. But $\norm{A}_{\infty} = \alpha$, and $\rho(A) \leq \norm{A}_{\infty}$, so the result follows.
+\end{proof}
+
+\begin{thm}\label{thm:positive-matrix-spectral-inequality}
+    Let $A \in M_n$ and $B \in M_n(\R)$ such that $\abs{A} \leq B$. Then $\rho(A) \leq \rho(\abs{A}) \leq \rho(B)$.
+\end{thm}
+
+\begin{proof}
+    Notice that $\abs{A^k} \leq \abs{A}^k \leq B^k$. Therefore, by coordinate-wise monotonicity of the Frobenius norm, we obtain
+    \begin{align*}
+        \norm{\abs{A^k}}_{F}^{1/k} \leq \norm{\abs{A}^k}_{F}^{1/k} \leq \norm{B^{k}}_F^{1/k}.
+    \end{align*}
+    Since $\norm{\abs{A}}_F = \norm{A}_F$, we have
+    \begin{align*}
+        \norm{A^k}_F^{1/k} \leq \norm{\abs{A}^k}_F^{1/k} \leq \norm{B^k}_F^{1/k}.
+    \end{align*}
+    As $k \to \infty$, we know $\rho(A) = \norm{A^k}_F^{1/k}$ by Theorem \ref{thm:spectral-radius-matrix-power-limit}. Therefore, $\rho(A) \leq \rho(\abs{A}) \leq \rho(B)$.
+\end{proof}
+
+\begin{cor}\label{cor:minimum-row-sum-spectral-bound}
+    Let $A \in M_n$ such that $0 \leq A$. Then the minimum row sum is at most the spectral radius.
+\end{cor}
+
+\begin{proof}
+    If the minimum row sum is zero, the result is trivial. Therefore, we consider $\sum_{i}A_{ij} > 0$. Let $\tilde{A} \in M_n$ such that the $k$th row of $\tilde{A}$ is the $k$th row of $A$, scaled by
+    \begin{align*}
+        \frac{\min_{i}\sum_{j}A_{ij}}{\sum_{j}A_{kj}},
+    \end{align*}
+    which is at most one. Therefore, $0 \leq \tilde{A} \leq A$, and the row sums of $\tilde{A}$ are all $\min_{i}\sum_{j}A_{ij}$. Therefore, by Proposition \ref{prop:inf-norm-identity} we have
+    \begin{align*}
+        \rho(\tilde{A}) = \norm{\tilde{A}}_{\infty} = \min_{i}\sum_{j}A_{ij},
+    \end{align*}
+    and so by Theorem \ref{thm:positive-matrix-spectral-inequality} we have $\rho(\tilde{A}) \leq \rho(A)$.
+\end{proof}
+
+\begin{cor}
+    Let $A \in M_n$. If $A > 0$, then $\rho(A) > 0$. If $A \geq 0$ and $A$ is irreducible, we have $\rho(A) > 0$.
+\end{cor}
+
+\begin{proof}
+    If $A > 0$, then the minimum row sum is positive, and so $\rho(A) > 0$ by Corollary \ref{cor:minimum-row-sum-spectral-bound}.
+
+    If $A \geq 0$ and $A$ is irreducible, we cannot have a row of all zeros, so $\rho(A) > 0$ by Corollary \ref{cor:minimum-row-sum-spectral-bound}.
+\end{proof}
+
+\begin{thm}\label{thm:positive-matrix-spectral-inequalities}
+    Let $A \in M_n$, and $x \in \C^n$ such that $A \geq 0$ and $x > 0$. If there exists $\alpha \geq 0$ such that $Ax > \alpha x$, then $\rho(A) > \alpha$. If $Ax \geq \alpha x$, then $\rho(A) \geq \alpha$.
+
+    If there exists $\alpha \geq 0$ such that $Ax < \alpha x$, then $\rho(A) < \alpha$ (or with non-strict inequalities).
+\end{thm}
+
+\begin{proof}
+    Let $X$ be the diagonal matrix whose diagonal is $x$. Note that $X\vec{1} = x$. It follows that $AX\vec{1} \geq \alpha X\vec{1}$, and so $X^{-1}AX\vec{1} \geq \alpha \vec{1}$. Therefore, every row sum of $X^{-1}AX$ is at least $\alpha$, and so $\rho(A) = \rho(X^{-1}AX) \geq \alpha$ by Corollary \ref{cor:minimum-row-sum-spectral-bound}.
+
+    Similarly, if $Ax \leq \alpha x$, then $X^{-1}AX\vec{1} \leq \alpha\vec{1}$, and so the row sums are at most $\alpha$. It follows that $\rho(A) = \rho(X^{-1}AX) \leq \norm{X^{-1}AX}_{\infty} \leq \alpha$.
+
+    If the inequalities are strict, there is some $\varepsilon$ gap such that $Ax \geq (\alpha + \varepsilon)x$ or $Ax \leq (\alpha - \varepsilon)x$, and so the above arguments imply $\rho(A) \geq \alpha+\varepsilon > \alpha$, or $\rho(A) \leq \alpha-\varepsilon < \alpha$ respectively.
+\end{proof}
+
+\begin{cor}
+    Let $A \in M_n$ such that $A \geq 0$. If $A$ has a strictly positive eigenvector, then its associated eigenvalue is $\rho(A)$.
+\end{cor}
+
+\begin{proof}
+    If $x > 0$ such that $Ax = \lambda x$, then we have $\rho(A) \leq \lambda$ and $\rho(A) \geq \lambda$, so $\rho(A) = \lambda$.
+\end{proof}
+
+\begin{lemma}\label{lemma:perron}
+    Let $A \in M_n$ such that $A > 0$. If $\lambda, x$ is an eigenvalue, eigenvector pair such that $\abs{\lambda} = \rho(A)$, then $\abs{x} > 0$ and $A\abs{x} = \abs{\lambda}\abs{x}$.
+\end{lemma}
+
+\begin{proof}
+    Since $A > 0$ and $\abs{x} \neq \vec{0}$, we know $A\abs{x}$ is a non-zero linear combination of strictly positive vectors, and so $A\abs{x} > 0$. We also know that
+    \begin{align*}
+        A\abs{x} = \abs{A}\abs{x} \geq \abs{Ax} = \abs{\lambda x} = \abs{\lambda}\abs{x},
+    \end{align*}
+    and so $A\abs{x} \geq \rho(A)\abs{x}$. Suppose, for the sake of contradiction, that $A\abs{x} \neq \rho(A)\abs{x}$, and so $w = A\abs{x} - \rho(A)\abs{x}$ satisfies $w \geq 0$. But then $Aw > 0$, so $A\left(A\abs{x}\right) > \rho(A)\left(A\abs{x}\right)$, and so by Theorem \ref{thm:positive-matrix-spectral-inequalities}, it follows that $\rho(A) > \rho(A)$. Therefore, we have a contradiction and so we must in fact have $A\abs{x} = \rho(A)\abs{x}$.
+
+    Finally, $\abs{x} = (A\abs{x})/\abs{\lambda} > 0$, since $\abs{x} \geq 0$ implies $A\abs{x} > 0$.
+\end{proof}
+
+\begin{thm}{Perron}\proofbreak
+    If $A \in M_n$ is a positive matrix, then
+    \begin{itemize}
+        \item $\rho(A) > 0$,
+        \item $\rho(A) \in \sigma(A)$,
+        \item there exists $x > 0$ such that $Ax = \rho(A)x$,
+        \item the algebraic multiplicity of $\rho(A)$ is one,
+        \item all other eigenvalues $\lambda$ satisfy $\abs{\lambda} < \rho(A)$.
+    \end{itemize}
+\end{thm}
