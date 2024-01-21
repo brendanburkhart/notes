@@ -1409,7 +1409,7 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
 \end{proof}
 
 \begin{cor}\label{orbit-stabilizer-cor}
-    If $G$ is finite, then $\abs{G \cdot X} = \frac{\abs{G}}{\abs{G_x}}$.
+    If $G$ is finite, then $\abs{G \cdot x} = \frac{\abs{G}}{\abs{G_x}}$.
 \end{cor}
 
 \begin{thm}\label{prime-order-center-nontrivial}
@@ -1491,22 +1491,134 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
     We have shown that $\sigma$ is a bijection, and the result follows immediately.
 \end{proof}
 
-\section{Sylow's Theorems}
+\begin{thm}{Class Equation}\label{thm:class-equation}\proofbreak
+    Consider an action of $G$ on a finite set $X$. Let $A$ contain one representative per \emph{non-trivial} orbit, and let $Z \subseteq X$ be the elements fixed by every $g \in G$. Then
+    \begin{align*}
+        \abs{X} = \abs{Z} + \sum_{a\in A}\frac{\abs{G}}{\abs{G_{a}}}.
+    \end{align*}
+\end{thm}
 
-For this section, consider a finite group $G$ with order divisible by a prime $p$. Let $m$ be largest $m$ such that $p^m$ divides the order of $G$, and let $k = \abs{G}/p^m$.
+\begin{proof}
+    Since the orbits partition $X$, we clearly have
+    \begin{align*}
+        \abs{X} = \abs{Z} + \sum_{a\in A}\abs{G \cdot a},
+    \end{align*}
+    which simply adds up the lengths of the non-trivial orbits and the number of trivial orbits. The result then follows immediately from the Orbit-Stabilizer theorem \ref{orbit-stabilizer-cor}.
+\end{proof}
+
+\section{Sylow Theorems}
 
 \begin{defn}
-    A \emph{Sylow $p$-subgroup} is any subgroup of $G$ with order $p^m$.
+    A $p$-group $G$ is a finite group where $p$ is prime and $\abs{G}$ is a power of $p$.
 \end{defn}
 
-\begin{thm}
-    $G$ must contain at least one a subgroup with order $p^m$.
+\begin{defn}
+    Let $G$ be a finite group. A \emph{Sylow $p$-subgroup} of $G$ is a $p$-subgroup with order $p^m$ such that $p^m$ divides $\abs{G}$ but $p^{m+1}$ does not.
+\end{defn}
+
+\begin{lemma}\label{lemma:sylow-one-prequel}
+    If $p^k$ divides the order of a finite group $G$, then $G$ contains a subgroup of order $p^k$.
+\end{lemma}
+
+\begin{proof}
+    This is trivial when $k = 0$, so consider $k \geq 1$ and therefore $\abs{G} = pq$ for some $q$.
+
+    We will proceed by induction of the order of $G$. We will consider three separate cases, which is not particularly clean but fairly straight-forward. First, if $\abs{G} = p$, then Cauchy's theorem \ref{cauchy-thm} supplies a cyclic subgroup $\langle g \rangle$ of order $p$. If $\abs{G} > p$, and there is a proper subgroup $H$ whose order is divisible by $p^m$, then $\abs{H} < \abs{G}$ so by induction $H$ contains a subgroup $J$ of order $p^k$. But of course $J$ is also a subgroup of $G$.
+    
+    Finally, we consider $\abs{G} > p$, and every subgroup has order \emph{not} divisible by $p^m$. In particular, considering the conjugation action of $G$, all stablizer subgroups $G_{g}$ have order not divisible by $p^k$, but $\abs{G}$ is, so $\abs{G}/\abs{G_g}$ must be divisible by $p$. Then the class equation \ref{thm:class-equation} implies that the center $Z$ has order divisible by $p$, so Cauchy's theorem \ref{cauchy-thm} furnishes a subgroup $N$ of $Z$, with order $p$. Since $N$ is a subgroup of $Z$, it is a \emph{normal} subgroup of $G$, and so we can consider $G/N$. By induction, $G/N$ contains a subgroup $P/N$ with order $p^{k-1}$ (since $\abs{G/N} = \abs{G}/\abs{N} = \abs{G}/p$), and so $P$ is a subgroup of $G$ with order $p^{k}$.
+\end{proof}
+
+\begin{thm}{First Sylow Theorem}\label{thm:sylow-one}\proofbreak
+    A finite group $G$ must contain at least one Sylow $p$-subgroup, for all prime $p$.
 \end{thm}
 
-\begin{thm}
-    Any two subgroups of $G$ with order $p^m$ are conjugate.
+\begin{proof}
+    Follows immediately from \ref{lemma:sylow-one-prequel}.
+\end{proof}
+
+\begin{lemma}\label{lemma:sylow-two-prequel}
+    Let $G$ be a finite group, let $H$ be a Sylow $p$-subgroup, and $K$ be a $p$-group. Then $K$ is a subgroup of $gHg^{-1}$, for some $g \in G$.
+\end{lemma}
+
+\begin{proof}
+    Let $T = G/H$ be the set of left-cosets of $H$, and let $K$ act on $T$ be left multiplication. Since $\abs{T} = \abs{G}/\abs{P}$, we know $\abs{T}$ is not divisible by $p$. Since $K$ is a $p$-group, it follows by the class equation \ref{thm:class-equation} that the number of fixed points of this action is equivalent to $\abs{T}$ modulo $p$. In particular, $\abs{T} \centernot\equiv 0$ modulo $p$, so there must exist at least one fixed point $gH$. That is, $kgH = gH$ for all $k \in K$, and so $g^{-1}kgH = H$. Therefore, $g^{-1}Kg$ must be a subset of $H$, and so $K$ is a subgroup of $gHg^{-1}$.
+\end{proof}
+
+\begin{thm}{Second Sylow Theorem}\label{thm:sylow-two}\proofbreak
+    Let $G$ be a finite group. For given $p$, all Sylow $p$-subgroups are conjugate.
 \end{thm}
 
-\begin{thm}
-    The number of subgroups of $G$ with order $p^m$ is both congruent to $1$ modulo $p$, and is a factor of $k$.
+\begin{proof}
+    Follows immediately from \ref{lemma:sylow-two-prequel}.
+\end{proof}
+
+\begin{lemma}\label{lemma:sylow-normalizer-index}
+    Let $G$ be a finite group, $H$ be a $p$-subgroup of $G$, and let $N$ be the stablizer of $H \in G/H$ under the conjugation action. Then $H$ is a subgroup of $N$, and
+    \begin{align*}
+        \frac{\abs{N}}{\abs{H}} \equiv \frac{\abs{G}}{\abs{H}} \pmod p.
+    \end{align*}
+\end{lemma}
+
+\begin{proof}
+    If $H$ is trivial, it is stabilized by all of $G$, and so $N = G$, and the result follows. Therefore, suppose $H$ is non-trivial, and let $H$ act on the left-cosets $G/H$ by left-multiplication. If $gH$ is fixed, then $g^{-1}hgH = H$ for all $h \in H$, so $H \subseteq gHg^{-1}$. Since conjugation preserves order, $H = gHg^{-1}$, and so $g \in N$. In particular, it follows that the center $Z$ of this action is isomorphic to the cosets of $H$ in $N$.
+    
+    Since $H$ is a $p$-group, by the class equation \ref{thm:class-equation} we know $\abs{G/H} \equiv \abs{Z} \pmod p$, and we just proved that $\abs{Z} = \abs{N}/\abs{H}$.
+\end{proof}
+
+\begin{lemma}
+    Let $G$ be a finite group, and let $H$ is a $p$-subgroup which is \emph{not} Sylow. Then there exists a $p$-subgroup $H'$ containing $H$ such that $H$ is normal in $H'$, and $\abs{H'/H} = p$.
+\end{lemma}
+
+\begin{proof}
+    Since $H$ is not Sylow, $p$ must divide $\abs{G}/\abs{H}$, and therefore divides $\abs{N}/\abs{H}$ by the preceeding lemma. Noting that $H$ is normal in $N$, we consider the quotient group $N/H$ whose order is a multiple of $p$. It follows by Cauchy's theorem \ref{cauchy-thm} that $N/H$ has a cyclic subgroup $H'/H$ of order $p$, and so $H'$ is a $p$-subgroup of $G$ whose order is $p\abs{H}$. Since $H$ is normal in $N$ and $H'$ is a subgroup of $N$, it follows that $H$ is normal in $N$.
+\end{proof}
+
+\begin{rmk}
+    It follows that in any finite group $G$ whose order is divisible by $p^m$ but not $p^{m+1}$, there exists a chain of subgroups starting with $H_{0} = \{e\}$ and ending with a Sylow $p$-subgroup $H_{m}$ such that $H_{i}$ is normal in $H_{i+1}$ and $\abs{H_{i}} = p^i$.
+\end{rmk}
+
+\begin{thm}{Third Sylow Theorem}\label{thm:sylow-three}\proofbreak
+    Let $G$ be a group of order $p^rm$, where $p$ is prime and does not divide $m$. Then the number of Sylow $p$-subgroups is both congruent to $1$ modulo $p$, and is a factor of $m$.
 \end{thm}
+
+\begin{proof}
+    Let $P$ be any Sylow $p$-subgroup, and $N$ be the stablizer of $P$ under the conjugation action. Let $N_p$ denote the number of Sylow $p$-subgroups. By the Orbit Stabilizer theorem \ref{orbit-stabilizer-cor}, we know that $N_p = \abs{G}/\abs{N}$. Furthermore, we know that $P \subseteq N$, and so
+    \begin{align*}
+        m &= \frac{\abs{G}}{\abs{P}} = \frac{\abs{G}}{\abs{N}}\cdot \frac{\abs{N}}{\abs{P}} = N_p \cdot \frac{\abs{N}}{\abs{P}}.
+    \end{align*}
+    From Lemma \ref{lemma:sylow-normalizer-index}, we also obtain
+    \begin{align*}
+        m = \abs{G}/\abs{P} \equiv \abs{N}/\abs{P} \pmod p.
+    \end{align*}
+    Therefore, $mN_p \equiv m \pmod p$. Since $m \neq 0$, and $\Z/p\Z \setminus \{0\}$ forms a field under multiplication, it follows that we must have $N_p \equiv 1 \pmod p$.
+\end{proof}
+
+\section{Jordan-H\"older Theorem}
+
+\begin{defn}
+    A \emph{series} of a group $G$ is a sequence of subgroups $G_{i}$ such that $G_0 = G$, and $G_{i+1}$ is a subgroup of $G_i$.
+
+    A series is \emph{normal} when $G_{i+1}$ is normal in $G_i$. A normal series is a \emph{composition series} when $G_{i}/G_{i+1}$ is a simple group. Let $\ell(G)$ denote the maximum length of any normal series, with $\ell(G) = \infty$ if the length can be unbounded.
+\end{defn}
+
+\begin{rmk}
+    A group $G$ is trivial if and only if $\ell(G) = 0$, and simple if and only if $\ell(G) = 1$.
+\end{rmk}
+
+\begin{rmk}
+    If a normal series is \emph{not} a composition series, then it can be extended to a longer sequence. This is because if $H$ is a normal subgroup of $G_{i}/G_{i+1}$, then $H$ is isomorphic to $H'/G_{i+1}$ where $H'$ is a normal subgroup of $G_{i}$, and so $G_{i+1} \triangleleft H' \triangleleft G_i$.
+
+    In particular, if $\ell(G)$ is finite, then any normal series of length $\ell(G)$ must be a composition series.
+\end{rmk}
+
+\begin{thm}{Jordan-H\"older}\label{thm:jordan-holder}\proofbreak
+    Let $G_i$ and $G'_i$ be any two compositions series of $G$. Then they must have the same length, and there exists a permutation $\sigma$ such that the successive quotients $G_{k}/G_{k+1}$ and $G'_{\sigma(k)}/G'_{\sigma(k+1)}$ are isomorphic.
+\end{thm}
+
+\begin{proof}
+    Proceed by induction on the length of the series $G_i$. If it has length zero, then $G$ is trivial, and we are done.
+    
+    If $G_1 = G'_1$ are isomorphic then of course $G_0/G_1 \simeq G'_0/G'_1$. Tthe remainder of the series form strictly shorter composition series of $G_1$ and $G'_1$, so the results follows by induction.
+
+    Otherwise, we suppose $G_1 \neq G'_1$.
+\end{proof}
