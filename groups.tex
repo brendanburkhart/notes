@@ -1618,7 +1618,11 @@ It is also possible to show that any rotation in $\R^3$ which fixes the origin c
 \begin{proof}
     Proceed by induction on the length of the series $G_i$. If it has length zero, then $G$ is trivial, and we are done.
     
-    If $G_1 = G'_1$ are isomorphic then of course $G_0/G_1 \simeq G'_0/G'_1$. Tthe remainder of the series form strictly shorter composition series of $G_1$ and $G'_1$, so the results follows by induction.
+    If $G_1 = G'_1$ are isomorphic then of course $G_0/G_1 \cong G'_0/G'_1$. The remainder of the series form strictly shorter composition series of $G_1$ and $G'_1$, so the results follows by induction.
 
-    Otherwise, we suppose $G_1 \neq G'_1$.
+    Otherwise, we suppose $G_1 \neq G'_1$, so $G_1$ is a strict subset of $G_1G'_1$. Since $G_1G'_1$ is normal in $G$, a proper superset of $G_1$, and $G/G_1$ is simple, it follows that $G_1G'_1$ must equal $G$. Let $K = G_1 \intersect G'_1$, so by the second isomorphism theorem \ref{second-isomorphism}, we know that
+    \begin{align*}
+        \frac{G_1}{K} \cong \frac{G_1G'_1}{G'_1} = \frac{G}{G'_1},
+    \end{align*}
+    and similarly $G'_1/K$ is isomorphic to $G/G_1$. Therefore, $G_1/K$ and $G'_1/K$ are both simple, and so $G \supset G_1 \supset K \supset \cdots$ and $G \supset G'_1 \supset K \supset \cdots$ are both composition series. By hypothesis, $G_1$ and $G'_1$ both have composition series of length $n-1$, so by induction the composition series for $K$ must have length $n-1$ and the same quotients (up to permutation).
 \end{proof}
