@@ -631,6 +631,47 @@
     Now we prove that $\ell_{\infty}$ induces the product topology. Let $B$ be any basis element in the product topology, so $B = (a_1, b_1) \times (a_2, b_2) \times \cdots \times (a_n, b_n)$. Let $x \in B$, and take $\delta_i$ such that $x + \delta_i < b_i$ and $x - \delta_i > a_i$. Let $\delta = \min(\delta_i)$, and then $B_{\infty}(x, \delta) \subseteq B$. Conversely, any basis element $B_{\infty}(x, \delta)$ in the metric topology is itself a basis element in the product topology. It follows by Lemma \ref{lemma:finer-metric-topology} that these topologies are the same.
 \end{proof}
 
+\begin{defn}
+    A metric $d: X \times X \to \R$ is an \emph{ultrametric} if it satisfies the \emph{strong triangle inequality}
+    \begin{align*}
+        d(x, z) \leq \max\left(d(x, y), d(y, z)\right).
+    \end{align*}
+\end{defn}
+
+\begin{exmp}
+    Consider the field $\C((x))$ of formal Laurent series in the complex numbers, which are power series
+    \begin{align*}
+        f(x) &= \sum_{k=N}^{\infty}c_kx^k,
+    \end{align*}
+    where $c_k \in \C$ and $N > -\infty$. We define $\abs{f(x)} = 2^{-k}$, where $k$ is the smallest index such that $c_k$ is non-zero. Then $d(f, g) = \abs{f-g}$ is an ultrametric on $\C((x))$. We quickly verify this is an (ultra)metric. Let $f(x), g(x), h(x) \in \C((x))$ have coefficients $b_k, c_k$, $d_k$ respectively, then:
+    \begin{itemize}
+        \item $d(f, g) = 2^{-k} \geq 0$, which $d(f, g) = 0$ if and only if $k = \infty$ if and only if $f = g$, so positive-definiteness is satisfied.
+        \item Since $b_k-c_k = 0 \iff c_k-b_k = 0$, it follows immediately that $d(f,g) = d(g, f)$.
+        \item Suppose $b_{k}$, $c_{j}$, and $d_{\ell}$ are the non-zero coefficients of smallest index. If $k = \ell$, then $d(f,h) \leq 2^{-k}$ and $d(f, g), d(g, h) \geq 2^{-k}$, so $\max(d(f,g),d(g,h)) \geq d(f,h)$ and the strong triangle inequality holds. If $k \neq \ell$, then either $k \neq j$ and $j \neq \ell$, so $d(f,g) \geq 2^{-\min(k,j)} \geq 2^{-k}$ and $d(g,h) \geq 2^{-\min(j,\ell)} \geq 2^{-\ell}$. Therefore, $\max(d(f,g),d(g,h)) \geq 2^{-\min(k,\ell)} \geq d(f,h)$, so the strong triangle inequality holds in all cases.
+    \end{itemize}
+\end{exmp}
+
+\begin{prop}
+    Let $(M, d)$ be an ultrametric space.
+    \begin{itemize}
+        \item If $d(x,y) \neq d(y,z)$, then $d(x,z) = \max(d(x,y),d(y,z))$.
+        \item If $y \in B_{r}(x)$, then $B_r(y) = B_r(x)$.
+        \item If $B_r(x) \intersect B_s(y) \neq \emptyset$, then one ball is contained within the other.
+        \item Every closed ball is open, and every open ball is closed.
+    \end{itemize}
+\end{prop}
+
+\begin{proof}
+    \begin{itemize}
+        \item Without loss of generality, assume that $d(x, y) > d(y,z)$. Therefore, by the strong triangle inequality $d(x, z) \leq \max(d(x,y),d(y,z)) = d(x,y)$. Similarly, $d(x,y) \leq \max(d(x,z),d(z,y))$ but $d(x,y) > d(y,z)$ by assumption so $d(x,y) \leq d(x,z)$. Therefore, $d(x,z) = d(x,y) = \max(d(x,y),d(y,z))$.
+        \item If $y \in B_r(x)$, then $d(x,y) < r$ by definition. Then for any $p \in M$, we have $d(y, p) \leq \max(d(y,x), d(x,p)) = \max(r, d(x, p))$ and similarly $d(x,p) \leq \max(r, d(y, p))$. But then $d(x, p) < r \implies d(x,p) = d(y,p)$ by the previous property, and similarly if $d(y,p) < r$ then $d(x,p) = d(y,p)$. Therefore $p \in B_r(x) \iff p \in B_r(y)$, so $B_r(x) = B_r(y)$.
+        \item Without loss of generality, suppose that $r \leq s$. If $p \in B_r(x)$ and $p \in B_s(y)$, then $B_r(x) = B_r(p)$ and $B_s(p) = B_s(y)$. Since $r \leq s$ we know $B_r(p) \subseteq B_s(p)$, and so $B_r(x) \subseteq B_s(y)$.
+        \item Let $B_r(x)$ be an open ball. Suppose $y$ is a limit point, so every $B_s(y)$ intersects $B_r(x)$. Since this holds for $s < r$, by the previous property we know $B_s(y) \subseteq B_r(x)$ and so $y \in B_r(x)$. Therefore, $B_r(x)$ contains all its limit points, and so is closed.
+
+        Let $C_r(x)$ be a closed ball, and consider any $y \in C_r(x)$ so $d(y, x) \leq r$. Considering $B_{r/2}(y)$, we see that $p \in B_{r/2}(y) \implies d(p, y) < r/2$, and so $d(p, x) \leq \max(d(p, y), d(y, x)) \leq \max(r/2, r) = r$. Therefore, $p \in C_r(x)$, and so $B_{r/2}(y) \subseteq C_r(x)$. It follows that all points in $C_r(x)$ are interiors points, and so $C_r(x)$ is open.
+    \end{itemize}
+\end{proof}
+
 \section{Quotient Topology}
 
 \begin{defn}
