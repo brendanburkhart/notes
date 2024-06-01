@@ -168,7 +168,7 @@
 \end{thm}
 
 \begin{proof}
-    Suppose, for the sake of contradiction, that a set $ON$ exists of all ordinals. By Lemma \ref{ordinal-well-order} we know that $ON$ is transitive and well-ordered by $\in_{ON}$, which would imply that $ON$ is an ordinal. But then $ON \in ON$ by definition, which is impossible for any ordinal by trichotomy.
+    Suppose, for the sake of contradiction, that a set $ON$ exists of all ordinals. By Lemma \ref{lemma:ordinal-well-order} we know that $ON$ is transitive and well-ordered by $\in_{ON}$, which would imply that $ON$ is an ordinal. But then $ON \in ON$ by definition, which is impossible for any ordinal by trichotomy.
 \end{proof}
 
 \begin{rmk}
@@ -184,7 +184,7 @@
     \begin{align*}
         B &= \left\{x \in A : \exists \alpha\in ON\left[\langle \pis(A, x, R), R\rangle \iso \langle \alpha, \in_{\alpha}\rangle\right]\right\}.
     \end{align*}
-    Since isomorphic ordinals are identical by Theorem \ref{isomorphic-ordinals}, it follows that there is a function $f$ from $x \in B$ to the corresponding ordinal $\alpha$. By Replacement and Comprehension, there exists a set $C = f(B)$.
+    Since isomorphic ordinals are identical by Theorem \ref{thm:isomorphic-ordinals}, it follows that there is a function $f$ from $x \in B$ to the corresponding ordinal $\alpha$. By Replacement and Comprehension, there exists a set $C = f(B)$.
 
     Then $f$ is surjective by definition. For any $x, y$ such that $f(x) =\alpha = f(y)$, we have by composition of isomorphisms that $\langle \pis(A, x, R), R\rangle \iso \langle \pis(A, y, R), R\rangle$. Therefore, $x = y$ by Lemma \ref{lemma:pis-iso}, and so $f$ is also injective.
 
