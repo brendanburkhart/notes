@@ -19,7 +19,7 @@
 \begin{exmp}\proofbreak
     \begin{itemize}
         \item The \emph{trivial topology} (also \emph{indiscrete topology}) on $X$ is simply $\topo = \{\emptyset, X\}$.
-        \item The \emph{discrete topology} on $X$ is $\topo = \mathcal{P}(X)$. 
+        \item The \emph{discrete topology} on $X$ is $\topo = \mathcal{P}(X)$.
     \end{itemize}
 \end{exmp}
 
@@ -134,7 +134,7 @@
     \begin{align*}
         S = \left\{\pi_1^{-1}(U) : U \in \topo_X\right\} \union \left\{\pi_2^{-1}(V) : V \in \topo_Y\right\}
     \end{align*}
-    is a subbasis for the product topology on $X \times Y$, where $\pi_1: X \times Y \to X$ and $\pi_2: X \times Y \to Y$ are the first and second projections. 
+    is a subbasis for the product topology on $X \times Y$, where $\pi_1: X \times Y \to X$ and $\pi_2: X \times Y \to Y$ are the first and second projections.
 \end{thm}
 
 \begin{proof}
@@ -425,7 +425,7 @@
     If $f^{-1}(S_i)$ is open, then $f^{-1}(B)$ is a finite intersection of open sets and therefore is open.
 \end{proof}
 
-\begin{thm} Let $X$ and $Y$ be topological spaces, and $f: X \to Y$ a function between them. Then the following are equivalent:
+\begin{thm}\label{thm:continuity-characterizations} Let $X$ and $Y$ be topological spaces, and $f: X \to Y$ a function between them. Then the following are equivalent:
     \begin{enumerate}[label=(\arabic*)]
         \item $f$ is continuous,
         \item For every $A \subseteq X$, $f(\closure{A})$ is a subset of the closure of $f(A)$.
@@ -654,19 +654,19 @@
 \begin{prop}
     Let $(M, d)$ be an ultrametric space.
     \begin{itemize}
-        \item If $d(x,y) \neq d(y,z)$, then $d(x,z) = \max(d(x,y),d(y,z))$.
-        \item If $y \in B_{r}(x)$, then $B_r(y) = B_r(x)$.
+        \item If $d(x,y) \neq d(y,z)$, then $d(x,z) = \max(d(x,y),d(y,z))$.This is known as the isosceles triangle principle.
+        \item If $y \in B_{r}(x)$, then $B_r(y) = B_r(x)$. This says every point in an open ball is a center for the ball.
         \item If $B_r(x) \intersect B_s(y) \neq \emptyset$, then one ball is contained within the other.
         \item Every closed ball is open, and every open ball is closed.
     \end{itemize}
 \end{prop}
 
-\begin{proof}
+\begin{proof}\proofbreak
     \begin{itemize}
-        \item Without loss of generality, assume that $d(x, y) > d(y,z)$. Therefore, by the strong triangle inequality $d(x, z) \leq \max(d(x,y),d(y,z)) = d(x,y)$. Similarly, $d(x,y) \leq \max(d(x,z),d(z,y))$ but $d(x,y) > d(y,z)$ by assumption so $d(x,y) \leq d(x,z)$. Therefore, $d(x,z) = d(x,y) = \max(d(x,y),d(y,z))$.
+        \item Without loss of generality, assume that $d(x, y) > d(y,z)$. Therefore, by the strong triangle inequality $d(x, z) \leq \max(d(x,y),d(y,z)) = d(x,y)$. Similarly, $d(x,y) \leq \max(d(x,z),d(z,y))$ but $d(x,y) > d(y,z)$ by assumption so $\max(d(x,z),d(z,y)) = d(x,z)$. Therefore, $d(x,y) \leq d(x,z)$ and so $d(x,z) = d(x,y) = \max(d(x,y),d(y,z))$.
         \item If $y \in B_r(x)$, then $d(x,y) < r$ by definition. Then for any $p \in M$, we have $d(y, p) \leq \max(d(y,x), d(x,p)) = \max(r, d(x, p))$ and similarly $d(x,p) \leq \max(r, d(y, p))$. But then $d(x, p) < r \implies d(x,p) = d(y,p)$ by the previous property, and similarly if $d(y,p) < r$ then $d(x,p) = d(y,p)$. Therefore $p \in B_r(x) \iff p \in B_r(y)$, so $B_r(x) = B_r(y)$.
         \item Without loss of generality, suppose that $r \leq s$. If $p \in B_r(x)$ and $p \in B_s(y)$, then $B_r(x) = B_r(p)$ and $B_s(p) = B_s(y)$. Since $r \leq s$ we know $B_r(p) \subseteq B_s(p)$, and so $B_r(x) \subseteq B_s(y)$.
-        \item Let $B_r(x)$ be an open ball. Suppose $y$ is a limit point, so every $B_s(y)$ intersects $B_r(x)$. Since this holds for $s < r$, by the previous property we know $B_s(y) \subseteq B_r(x)$ and so $y \in B_r(x)$. Therefore, $B_r(x)$ contains all its limit points, and so is closed.
+        \item Let $B_r(x)$ be an open ball. Suppose $y$ is a limit point, so every $B_s(y)$ intersects $B_r(x)$. Since this holds in particular for $s < r$, by the previous property we know $B_s(y) \subseteq B_r(x)$ and so $y \in B_r(x)$. Therefore, $B_r(x)$ contains all its limit points, and so is closed.
 
         Let $C_r(x)$ be a closed ball, and consider any $y \in C_r(x)$ so $d(y, x) \leq r$. Considering $B_{r/2}(y)$, we see that $p \in B_{r/2}(y) \implies d(p, y) < r/2$, and so $d(p, x) \leq \max(d(p, y), d(y, x)) \leq \max(r/2, r) = r$. Therefore, $p \in C_r(x)$, and so $B_{r/2}(y) \subseteq C_r(x)$. It follows that all points in $C_r(x)$ are interiors points, and so $C_r(x)$ is open.
     \end{itemize}
@@ -694,4 +694,701 @@
     If $f(p(x)) = g(x)$, then $f(y)$ must equal $g(x)$ for all $x \in p^{-1}(y)$. Since $g$ is constant on $p^{-1}(y)$, this gives us a well-defined function.
 
     Note that for any $U \subseteq Z$, we have $g^{-1}(U) = p^{-1}(f^{-1})(U)$, so $g^{-1}(U)$ is open if and only if $f^{-1}(U)$ is, and the conditions of continuity and quotient map for $f$ and $g$ become equivalent.
+\end{proof}
+
+\section{Connectedness}
+
+\begin{defn}
+    A \emph{separation} of a topological space $X$ is a pair of disjoint open subsets $U$ and $V$ such that $U \union V = X$. We say that $U$ and $V$ \emph{disconnect} $X$ if they form a separation.
+\end{defn}
+
+\begin{defn}
+    A topological space is \emph{disconnected} if it has a separation, and \emph{connected} otherwise.
+\end{defn}
+
+\begin{prop}
+    The connected components of a space form a partition of that space.
+\end{prop}
+
+\begin{proof}
+    {\color{red}TODO}
+\end{proof}
+
+\begin{prop}
+    Let $X$ be a connected space, $Y$ a space with the discrete topology, and $f: X \to Y$ a function. If $f$ is continuous, it must be constant.
+\end{prop}
+
+\begin{proof}
+    Let $p \in f(X)$. Then $f^{-1}(\{p\})$ and $f^{-1}(f(X)\setminus \{p\})$ are preimages of open sets and therefore are disjoint open sets in $X$. Since $f^{-1}(\{p\})$ is non-empty, either $f$ is the constant function $f(x) = p$, or else $f^{-1}(f(X)\setminus \{p\})$ is also non-empty, in which case $f^{-1}(\{p\})$ and $f^{-1}(X\setminus\{p\})$ is a separation of $X$.
+\end{proof}
+
+\begin{prop}\label{prop:continuous-image-connectedness}
+    Let $f: X \to Y$ be a continuous function between topological spaces. If $X$ is connected, then so is $f(X)$.
+\end{prop}
+
+\begin{proof}
+    Let $U$, $V$ be a separation of $f(X)$. Then $f^{-1}(U)$ and $f^{-1}(V)$ are necessarily disjoint and non-empty since $f$ is a function, and also open since $f$ is continuous. Since $U \union V = f(X)$, we know $f^{-1}(U) \union f^{-1}(V) = X$, and so $X$ has a separation.
+\end{proof}
+
+\begin{thm}\label{thm:connected-tools}
+    Consider an arbitrary topological space $X$.
+
+    \begin{enumerate}[label=(\arabic*)]
+        \item Consider disjoint open subsets $U$, $V$ of $X$. If $A \subseteq X$ is connected and $A \subseteq U \union V$, then either $A \subseteq U$ or $A \subset V$.
+        \item If $A \subseteq X$ is connected, and $A \subseteq B \subseteq \bar{A}$, then $B$ is also connected.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}[label=(\arabic*)]
+        \item Suppose $A$ is not entirely contained within either $U$ or $V$. Therefore $A \intersect U$ and $A \intersect V$ are open in the subspace topology, disjoint, non-empty, and $(A \intersect U) \union (A \intersect V) = A$, and so $A$ is not connected.
+        \item Suppose $B = U \union V$ is a separation. Since $A \subseteq B$ is connected, so without loss of generality we have $A \subseteq U$ by (1). Therefore, $\bar{A} \subseteq \bar{U}$. Since $B \subseteq \bar{A}$, and we know $\bar{U}$ and $V$ are disjoint, it follows $V$ is empty.
+    \end{enumerate}
+\end{proof}
+
+\begin{thm}\label{thm:connected-constructs}\proofbreak
+    \begin{enumerate}[label=(\arabic*)]
+        \item Let $X$ be a topological space, and $\{B_{\alpha}\}_{\alpha\in A}$ be a collection of subsets of $X$ that are connected and all share a point $p$ in common. Then their union is also connected.
+        \item The Cartesian product of finitely many connected topological spaces is connected.
+        \item Any quotient space of a connected space is connected.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}[label=(\arabic*)]
+        \item Consider any disjoint open subsets $U$, $V$ such that $\bigunion_{\alpha\in A}B_{\alpha} \subseteq U \union V$. Suppose $p \in U$. By Theorem \ref{thm:connected-tools}, it follows that the union of $B_{\alpha}$ is entirely contained within either $U$, or within $V$.
+        \item Let $X$, $Y$ be topological spaces, and suppose $U$, $V$ are disjoint open subsets of $X \times Y$. Consider some $(x_0, y_0) \in X \times Y$, and without loss of generality suppose $(x_0, y_0) \in U$. Since $(x_0, y_0) \in \{x_0\} \times Y$, and $\{x_0\} \times Y$ is isomorphic to $Y$ and therefore connected, it follows by Theorem \ref{thm:connected-tools} that $\{x_0\} \times Y$ is contained within $U$. For any $y \in Y$, it follows $X \times \{y\}$ is a connected space containing $(x_0, y)$, and so by the same argument $X \times \{y\} \subseteq U$. Therefore, the union $X \times Y$ is a subset of $U$, and so $V$ must be empty.
+        \item A quotient space is the image of a continuous function, so if the domain is connected so is the quotient space by Proposition \ref{prop:continuous-image-connectedness}
+    \end{enumerate}
+\end{proof}
+
+\begin{rmk}
+    In fact, the Cartesian product $\prod_{\alpha\in A}X_{\alpha}$ of \emph{arbitrarily many} connected spaces is still connected under the product topology. Under the Axiom of Choice, the Cartesian product contains a fixed point $a$ with coordinates $a_{\alpha}$ for $\alpha \in A$. For any finite $K \subseteq A$, the set of points $x$ such that $\pi_{\alpha}(x) = a_{\alpha}$ for all $\alpha \not\in K$ is isomorphic to the finite product $\prod_{\alpha\in K}X_{\alpha}$, which is connected by Theorem \ref{thm:connected-constructs} (2). Since all such products contain $a$, their union is connected by Theorem \ref{thm:connected-constructs} (1). Finally, it can be shown the closure of this union is equal to $\prod X_{\alpha}$ under the product topology, and so $\prod X_{\alpha}$ is connected by Theorem \ref{thm:connected-tools} (2).
+\end{rmk}
+
+\begin{defn}
+    A linearly ordered set $L$ with at least two distinct elements is a \emph{linear continuum} if it has the least upper bound property, and for any $x < y$ there exists $z$ such that $x < z < y$. A subset $S$ of a linear order is \emph{convex} if for any $a, b \in S$, we have $[a, b] \subseteq S$.
+\end{defn}
+
+\begin{lemma}\label{lemma:linear-continuum-hausdorff}
+    A linear continuum $L$ with the order topology is Hausdorff.
+\end{lemma}
+
+\begin{proof}
+    Consider points $x, y \in L$. Since $L$ is a linear continuum there exists $x < z < y$, and so $(-\infty, z)$ and $(z, +\infty)$ are disjoint open sets containing $x$ and $y$ respectively.
+\end{proof}
+
+\begin{rmk}
+    The convex subsets are the intervals, rays, singletons, or the whole space.
+\end{rmk}
+
+\begin{prop}
+    Let $L$ be a linear continuum with the order topology. In $L$, a set is connected if and only if it is convex.
+\end{prop}
+
+\begin{proof}
+    Let $S \subseteq L$ be convex. If $S$ is a singleton set $\{p\}$, it is trivially connected. Otherwise, suppose for the sake of contradiction that $U$, $V$ separate $S$. Fix $a \in U$ and $b \in V$, without loss of generality we suppose $a < b$. Since $S$ is convex, we know $[a, b] \subseteq S$ so $[a, b] \intersect U$ and $[a, b] \intersect V$ is a separation of $[a, b]$. Let $c = \sup ([a, b] \intersect U)$, which exists by the least upper bound property as $[a, b] \intersect U$ is non-empty. Since $b$ is an upper bound on $[a, b]$, we know $a \leq c \leq b$ so $c \in [a, b]$ and we must have $c \in U$ or $c \in V$.
+
+    Suppose $c \in V$. We know $[a, b] \intersect V$ is open in the subspace $[a, b]$, so there exists an interval $(d, c] \subseteq V \intersect [a, b]$. Since $U$ does not intersect $V$, and $c$ upper bounds $U \intersect [a, b]$, it follows $d$ also upper bounds $U \intersect [a, b]$ but $d < c$, which is a contradiction.
+
+    Suppose $c \in U$, then since $[a, b] \intersect U$ is open, there exists $[c, e) \subseteq U \intersect [a, b]$. Since $L$ is a linear continuum, there exists $c < z < e$, so $c$ fails to upper bound $z \in U \intersect [a, b]$.
+
+    We have shown that in either case, we reach a contradiction, so $S$ must be connected. Now conversely, suppose $S$ is convex and let us show it is convex. We again proceed by contradiction, and suppose it is not convex. Then there must exist $a < c < b$ such that $a, b \in S$ but $c \not\in S$. It follows that $S \intersect (-\infty, c)$ and $S \intersect (c, \infty)$ disconnect $S$.
+\end{proof}
+
+\begin{thm}
+    Let $X$ be a connected topological space, $Y$ be linearly ordered set with the order topology, and $f: X \to Y$ be a continuous map. Consider any $p, q \in X$ such that $f(p) \leq f(q)$. For any $c \in Y$ such that $f(p) \leq c \leq f(q)$, there exists $x \in X$ such that $f(x) = c$.
+\end{thm}
+
+\begin{proof}
+    Note that $A = f(X) \intersect (-\infty, c)$ and $B = f(x) \intersect (c, \infty)$ are open in the subspace topology of $f(X)$, are disjoint, and are non-empty as they contain $f(p)$ and $f(q)$ respectively. If we suppose, for the sake of contradiction, that $c \not\in f(X)$, it follows that $A \union B = f(X)$ and so $f(X)$ is disconnected. But by Proposition \ref{prop:continuous-image-connectedness} $f(X)$ is connected, and so we must have $c \in f(X)$.
+\end{proof}
+
+\begin{defn}
+    Let $X$ be a topological space. For $p, q \in X$, a \emph{path} from $p$ to $q$ is a continuous function from $f: [a, b] \subset \R \to X$ such that $f(a) = p$ and $f(b) = q$.
+
+    We say that $X$ is \emph{path-connected} if there is a path between any two points $p, q \in X$.
+\end{defn}
+
+\begin{thm}
+    Any path connected topological space is also a connected space.
+\end{thm}
+
+\begin{proof}
+    Let $X$ be a path-connected space, and suppose for the space of contradiction it has a separation $U$, $V$. Therefore, there exists $p\in U$ and $q \in V$. Since $X$ is path-connected, there exists a continuous path $f: [a, b] \to X$ from $p$ to $q$. Since $f$ is continuous and $[a, b]$ is connected, we know by Proposition \ref{prop:continuous-image-connectedness} that $f([a, b])$ is connected, and so by Theorem \ref{thm:connected-tools} that $f([a, b])$ is entirely contained within $U$ and $V$. But $f(a) = p \in U$ and $f(b) = q \in V$, so we have reached a contradiction.
+\end{proof}
+
+\section{Compactness}
+
+\begin{defn}
+    A \emph{cover} of $S \subseteq X$ is a collection of sets $\mathcal{A}$ such that $X = \bigunion \mathcal{A}$. It is an \emph{open} cover if all $U \in \mathcal{A}$ are open sets. A \emph{subcover} is a subset of the collection whose union is still all of $X$.
+\end{defn}
+
+\begin{defn}
+    A topological space $X$ is \emph{compact} if every open cover of $X$ has a finite subcover.
+\end{defn}
+
+\begin{prop}
+    If $X_{i}$ be a finite family of compact spaces, then $\bigunion_{i=1}^{n}X_i$ is compact.
+\end{prop}
+
+\begin{proof}
+    Let $\mathcal{A}$ be any open cover of $\bigunion X_i$. Then $\{ U \intersect X_i : U \in \mathcal{A} \}$ is an open cover of $X_i$, and so has a finite subcover $\{U_1 \intersect X_i, \ldots, U_k \intersect X_i\}$. Let $\mathcal{A}_i$ be the set of $U_i$ corresponding to this finite subcover of $X_i$, and let $\mathcal{A}' = \bigunion_{i} \mathcal{A}_i$. Since $\mathcal{A}'$ is a finite union of finite sets, it is finite. And of course $X_i \subseteq \union_{U \in \mathcal{A}_i}U$, so $\bigunion X_i \subseteq \bigunion_{U \in \mathcal{A}'}U$, so $\mathcal{A}'$ is a finite subcover of $\mathcal{A}$, and so $\bigunion X_i$ is compact.
+\end{proof}
+
+\begin{prop}\label{prop:continuous-image-compact}
+    Let $X$ be a compact space, and $f: X \to Y$ be a continuous function. Then $f(X)$ is compact.
+\end{prop}
+
+\begin{proof}
+    Let $\mathcal{A}$ be any open cover of $f(X)$. Then $f^{-1}(U)$ is open for all $U \in \mathcal{A}$, and so $\{f^{-1}(U): U \in \mathcal{A}\}$ is an open cover of $X$. Since $X$ is compact, there is a finite subcover $\mathcal{B}$. Finally, $\mathcal{A}' = \{f(U) : U \in \mathcal{B}\}$ is a finite subcover of $\mathcal{A}$, so $f(X)$ is compact.
+\end{proof}
+
+\begin{prop}\label{prop:compactness}Let $X$ be a topological space.\proofbreak
+    \begin{enumerate}
+        \item If $X$ is compact, every closed subset of $X$ is compact.
+        \item If $X$ is a metric space, every compact subset is bounded.
+        \item If $X$ is compact, every quotient space of $X$ is compact.
+    \end{enumerate}
+\end{prop}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}
+        \item If $C \subseteq X$ is closed, and $\mathcal{A}$ is an open cover of $C$, then $\mathcal{A} \union (X\setminus C)$ is an open cover of $X$. Therefore it has a finite subcover, and removing $X \setminus C$ necessarily produces a finite subcover of $\mathcal{A}$.
+        \item Let $\mathcal{A}$ be the open cover of all open balls of radius one, and let $\mathcal{A}'$ be a finite subcover. Let $M = \max_{B_1(p),B_2(q)\in \mathcal{A'}}d(x, y)$ be the greatest distance between the centers of any two balls in the subcover.
+
+        Then for any $p, q \in X$, we know there are balls $B(c), B(d) \in \mathcal{A'}$ containing $p$ and $q$ respectively. Since $d(c, p), d(d, q) < 1$, it follows by the triangle inequality that
+        \begin{align*}
+            d(p, q) \leq d(p, c) + d(c, q) \leq d(p, c) + d(c, d) + d(d, q) < 1 + M + 1.
+        \end{align*}
+        Therefore $X$ is bounded.
+        \item If $Y$ is a quotient space of $X$ under quotient map $q: X \to Y$, then $q(X) = Y$ so $Y$ is compact by Proposition \ref{prop:continuous-image-compact}.
+    \end{enumerate}
+\end{proof}
+
+\begin{prop}\label{prop:hausdorff-compact-closed}
+    Every compact subset $Y$ of a Hausdorff space $X$ is closed.
+\end{prop}
+
+\begin{proof}
+    Let $x \in X \setminus Y$. If we can find a neighborhood of $x$ disjoint from $Y$, it follows that $x$ is not a limit point of $Y$, and so $Y$ is closed. Since $X$ is Hausdorff, we know that for every $y \in Y$ there exists disjoint open sets $U$ and $V$ such that $x \in U$ and $y \in V$. The set of all such $V$ are an open cover of $Y$, and so there is a finite subcover. The intersection of the corresponding $U$ is then open, disjoint from $Y$, and contains $x$.
+\end{proof}
+
+\begin{lemma}Tube lemma\label{lemma:tube}\proofbreak
+    Let $X$ be any topological space, and let $Y$ be a compact space. For $x \in X$ and open $U \subseteq X \times Y$ containing $\{x\} \times Y$, there is an open neighborhood $V \subseteq X$ of $x$ such that $V \times Y \subseteq U$.
+\end{lemma}
+
+\begin{proof}
+    We know the set $W \times Z$ for open $W \subseteq X$ and open $Z \subseteq Y$ is a basis for the product topology. Let $\mathcal{A}$ be the set of all open subsets $W \times Z \subseteq U$ such $x \in W$, and consider $\mathcal{B} = \{ Z : W \times Z \in \mathcal{A} \}$. We note $\mathcal{B}$ is an open cover of $Y$, and so has a finite subbasis. Let $\{W_i\}$ be the set of corresponding open subsets of $U$. Since $x \in W_i$, we know both that $\bigintersection_{i=1}^{n}W_i$ is an open neighborhood of $x$ such that
+    \begin{align*}
+        \left(\bigintersection_{i=1}^{n}W_i\right) \times Y \subseteq U.
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    If $X$ and $Y$ are compact spaces, then $X \times Y$ is compact.
+\end{thm}
+
+\begin{proof}
+    Let $\mathcal{A}$ be an open cover of $X \times Y$. For every $x \in X$, we know $\{x\} \times Y$ is compact and so many be covered by finitely many elements $\{A_i\}$ of $\mathcal{A}$. Then by the tube lemma \ref{lemma:tube} we know $\bigunion\{A_i\}$ contains a tube $W_x \times Y$ containing $\{x\} \times Y$. Then the set of all such $W_x$ is an open cover of $X$, and so contains a finite subcover $\{W_i\}$. By the above, each $W_i \times Y$ is covered by a finite subset of $\mathcal{A}$ and so the union $\bigunion_{i}W_i \times Y$ can be covered by a finite subset of $\mathcal{A}$. But $\bigunion_{i}W_i \times Y = X \times Y$, and so $\mathcal{A}$ has a finite subcover.
+\end{proof}
+
+\begin{cor}\label{cor:finite-product-compact}
+    A finite product of compact spaces is compact.
+\end{cor}
+
+\begin{lemma}\label{lemma:closed-bounded-interval-compactness}
+    Let $L$ be a linear continuum, considered under the order topology. Then any closed and bounded interval in $L$ is compact.
+\end{lemma}
+
+\begin{proof}
+    Consider $[a, b] \subseteq L$, and let $\mathcal{A}$ be an open cover of $[a, b]$. Let
+    \begin{align}
+        \mathcal{U} = \{x \in [a, b] : [a, x] \textrm{ has a finite subcover of }\mathcal{A}\}
+    \end{align}
+    Note that $a$ must be covered by some element of $\mathcal{A}$, so $a \in \mathcal{U}$. Therefore $\mathcal{U}$ is non-empty and so $c = \sup U$ exists. Furthermore, $a$ is contained in a basis element $(x, y)$ so there exists $a < z < y$, and so $c > a$. Since $a < c \leq b$, we know $c \in [a, b]$ so $c \in U$ for some $U \in \mathcal{A}$. Since $[a, b]$ is a subspace of a linear continuum, there exists $B = (x, y)$ such that $c \in B \subseteq U$, and so $c \in (x, c] \subseteq U$. It follows that $x \in \mathcal{U}$, so $[a, x]$ has a finite cover $\{A_i\}$. But then $\{A_i\}\union \{U\}$ is a finite cover of $[a, c]$, so $\sup \mathcal{U} \in \mathcal{U}$.
+
+    We now consider the two possibilities: $c < b$ or $c = b$. If $c < b$ there exists $c \in (x, y)$ and $c < z < y$, but then $z \in \mathcal{B}$, contradicting the definition of $c$. Therefore, $c = b$, and so $[a, b]$ has a finite subcover of $\mathcal{A}$.
+\end{proof}
+
+\begin{rmk}
+    The hypothesis of the above lemma can be relaxed from a linear continuum to a linear order with the least upper bound property, however this complicates the proof.
+\end{rmk}
+
+\begin{thm}Heine-Borel\label{thm:heine-borel-topology}\proofbreak
+    For any $E \subseteq \R^{n}$, $E$ is compact if and only if it is closed and bounded.
+\end{thm}
+
+\begin{proof}
+    Since $\R^n$ is a metric space, every compact set is bounded by Proposition \ref{prop:compactness}, and every compact set is closed by Proposition \ref{prop:hausdorff-compact-closed}.
+
+    If $E$ is closed and bounded, there exists $m > 0$ such $d(p, 0) < m$ for all $p \in E$. Therefore, $E \subseteq [-m, m]^n$. By Lemma \ref{lemma:closed-bounded-interval-compactness} we know $[-m, m] \subseteq \R$ is compact, and so $[-m, m]^n$ is compact by Corollary \ref{cor:finite-product-compact}. Finally, $E$ is compact by Proposition \ref{prop:compactness} since it is a closed subset of the compact space $[-m, m]^n$.
+\end{proof}
+
+\begin{thm}{Extreme value theorem}\label{thm:extreme-value}\proofbreak
+    Let $f: X \to Y$ be a continuous map, where $X$ is compact and $Y$ has the order topology. Then there exist $m, M \in X$ such that $f(m) \leq f(x) \leq f(M)$ for all $x \in X$.
+\end{thm}
+
+\begin{proof}
+    Since $f$ is continuous and $X$ is compact, we know $f(X)$ is compact by Proposition \ref{prop:continuous-image-compact}. {\color{red}TODO}
+\end{proof}
+
+{\color{red}TODO: limit point compactness, sequential compactness, extreme value theorem, }
+
+{\color{red}todo: one-point compactification}
+
+\section{Countability and separability}
+
+\begin{defn}
+    For a topological space $X$ and $p \in X$, we say $\mathcal{B}$ is a neighborhood basis at $p$ if $\mathcal{B}$ is a set of neighborhoods of $p$ such that \emph{any} neighborhood of $p$ contains at least one $B \in \mathcal{B}$.
+\end{defn}
+
+\begin{defn}
+    A topological space $X$ is \emph{first countable} when every $p \in X$ has a countable neighborhood basis.
+\end{defn}
+
+\begin{prop}
+    Every metric space is first countable.
+\end{prop}
+
+\begin{proof}
+    For each $p \in X$, the open balls $B_{1/n}(p)$ for $n \in \Z^+$ form a countable neighborhood basis of $p$.
+\end{proof}
+
+\begin{thm}
+    Let $X$ be an arbitrary topological space. If $A \subseteq X$ is a subspace, and $\{x_n\} \subseteq A$ is a sequence converging to $x$ then $x \in \bar{A}$.
+
+    If $f: X \to Y$ is a continuous function, then for every convergent sequence $x_n \to x$ it holds that $f(x_n) \to f(x)$.
+
+    If $X$ is first countable, the converges hold. Given $x \in \bar{A}$, there exists a sequence in $A$ converging to $x$. If every convergent sequence $x_n \to x$ satisfies $f(x_n) \to f(x)$, then $f$ is continuous.
+\end{thm}
+
+\begin{proof}
+    Suppose $x_n \to x$. By definition, for any open neighborhood $U$ of $x$ there exists $N$ such that $x_n \in U$ for all $n \geq N$. Therefore, every neighborhood of $x$ contains a point $x_N$ of $A$, and so $x \in \bar{A}$ by Theorem \ref{thm:closure-neighborhood-characterization}.
+
+    Suppose $f$ is continuous, and $x_n \to x$. Then for any open neighborhood $U$ of $f(x)$, we know $f^{-1}(U)$ is an open neighborhood of $x$. Since $x_n \to x$, there must exist $N$ such that $x_n \in f^{-1}(U)$ for all $n \geq N$, and so $f(x_n) \in U$ for all $n \geq N$. It follows that $f(x_n) \to f(x)$.
+
+    Now we prove the first converse, adding the assumption that $X$ is first countable. Let $\mathcal{B}$ be a countable neighborhood basis of $x \in \bar{A}$. First $\mathcal{B}$ is countable, it can be enumerated as $B_0, B_1, \ldots$. Let $C_0 = B_0$, and $C_k$ be an open neighborhood of $x$ contained within $C_{k-1} \intersect B_k$. Note that $C_{k+1} \subseteq C_k$, and so $x_m \in C_k$ for all $m \geq k$. Since $x \in \bar{A}$, we know that each $C_k$ must contain a point $x_k$ of $\bar{A}$. Then for any open neighborhood $U$ of $x$, by definition of a neighborhood basis we know $U$ contains some $B_N \in \mathcal{B}$. Since $C_N \subseteq B_N \subseteq U$, and $x_n \in C_N$ for all $n \geq N$, it follows that $x_n \in U$ for all $n \geq N$. Therefore $x_n \to x$.
+
+    Suppose every convergent sequence $x_n \to x$ satisfies $f(x_n) \to f(x)$. Let $A$ be any subset of $X$, we will show $f(\bar{A}) \subseteq \bar{f(A)}$ which will imply $f$ is continuous by Theorem \ref{thm:continuity-characterizations}. For any $x \in \bar{A}$, we know by the first converse that there exists a convergent sequence $x_n \to x$, and by hypothesis we know that $f(x_n) \to f(x)$. But $f(x_n) \in f(A)$, and so by the first half of this theorem it follows that $f(x) \in \bar{f(A)}$.
+\end{proof}
+
+\begin{defn}
+    A topological space $X$ is \emph{second countable} when there exists a countable basis for $X$.
+\end{defn}
+
+\begin{prop}
+    Second countability implies first countability.
+\end{prop}
+
+\begin{exmp}
+    $\R^n$ is second countable.
+
+    $\R^{\omega}$ under the uniform metric $d(x, y) = \sup_{i}\min(1, |x_i-y_i|)$ is first countable but not second countable.
+\end{exmp}
+
+\begin{thm}
+    Subspaces and countable products of first countable spaces (respectively second countable) are themselves first countable (respectively second countable).
+\end{thm}
+
+\begin{defn}
+    A subset $A$ of a topological space $X$ is \emph{dense} in $X$ if $\bar{A} = X$. If there exists a countable dense subset, we say that $X$ is separable.
+\end{defn}
+
+\begin{thm}
+    Let $X$ be second countable. Then $X$ is Lindel\"of (every open cover of $X$ admits a countable subcover) and separable.
+\end{thm}
+
+\begin{proof}
+    Let $\{B_n\}$ be a countable basis for $X$, and let $\mathcal{A}$ be any open cover of $X$. For each $n$, let $A_n \in \mathcal{A}$ be a set containing $B_n$, if such a set exists. Then $\{A_n\}$ is clearly countable, and it covers $X$: for any $p \in X$, there exists $A \in \mathcal{A}$ such that $p \in A$ since $A$ is an open cover. Since $\{B_n\}$ is a basis and $A$ is open, there exists $B_n$ such that $p \in B_n \subseteq A$, and so $p \in A \in \{A_n\}$.
+
+    For each basis element $B_n$, let $x_n \in B_n$ be an arbitrary point, and let $D = \{x_n\}$. Clearly $D$ is countable, and it is also dense in $X$: if $p \in X$, then every basis element containing $p$ must contain some $x_n$, and so $p \in \bar{D}$.
+\end{proof}
+
+\begin{defn}
+    Let $X$ be a topological space such that every singleton is closed.
+
+    $X$ is said to be regular if for every $p \in X$ and closed $B \subseteq X$ where $p \not\in B$, there exists disjoint open $U, V$ containing $p$ and $B$ respectively.
+
+    $X$ is said to be normal if for every pair of disjoint closed sets $A, B \subseteq X$, there exists disjoint open sets $U, V$ containing $A$ and $B$ respectively.
+\end{defn}
+
+\begin{thm}
+    Let $X$ be a topological space. If $X$ is normal, then it is regular. If $X$ is regular, then it is Hausdorff.
+\end{thm}
+
+\begin{thm}\label{thm:topo-regular-normal-characterization}
+    $X$ is regular if and only if for all $p \in X$ and neighborhood $U$ of $p$, there exists a neighborhood $V$ of $p$ such that $\bar{V} \subseteq U$.
+
+    $X$ is normal if and only if for all closed $A$ and open $U$ containing $A$, there exists open $V$ such that $A \subseteq V$ and $\bar{V} \subseteq U$.
+\end{thm}
+
+\begin{proof}
+    Suppose $X$ is regular, and consider some $p \in X$ and neighborhood $U$ of $p$. Let $B = X \setminus U$, which is closed and does not contain $p$. Since $X$ is regular, there exists disjoint open $V, W$ such that $p \in V$ and $B \subseteq W$. Since $V \subseteq (X \setminus W)$ and $X \setminus W$ is closed, we also know that $\bar{V} \subseteq (X \setminus W)$. Furthermore, $B \subseteq W$ implies $X \setminus W \subseteq X \setminus B = U$, and so we conclude $p \in V$ and $\bar{V} \subseteq U$.
+
+    Conversely, suppose $B \subseteq X$ is closed and does not contain $p \in X$. Then $X\setminus B$ is open and does contain $p$, so by hypothesis there exists $V$ such that $p \in V$ and $\bar{V} \subseteq X \setminus B$. Then $X \setminus \bar{V}$ is open, contains $B$, and is disjoint from $V$.
+
+    The proof for when $X$ is normal proceeds by effectively the same argument.
+\end{proof}
+
+\begin{prop}
+    Subspaces and products of Hausdorff (respectively regular) spaces are themselves Hausdorff (respectively regular), but this is not true in general for normal spaces.
+\end{prop}
+
+\begin{itemize}
+    \item $T_0$ (Kolmogorov)
+    \item $T_1$ (Frechet),
+    \item $T_2$ (Hausdorff),
+    \item $T_3$ (regular),
+    \item $T_{3\frac{1}{2}}$ (Tychonoff/completely regular),
+    \item $T_4$ (normal)
+\end{itemize}
+
+\begin{lemma}\label{lemma:urysohn-proto}
+    Let $X$ be a topological space, such that for each $q \in [0, 1] \intersect \Q$ there exists an open set $U_q \subseteq X$ and $\bar{U_q} \leq U_p$ when $q < p$. Then there exists a continuous function $f: X \to [0, 1]$ such that
+    \begin{itemize}
+        \item $f(x) \leq q$ if $x \in U_q$,
+        \item $f(x) = 1$ if $x \in U_1$.
+    \end{itemize}
+\end{lemma}
+
+\begin{proof}
+    Note that $\mathcal{S} = \{[0, a) : a \in [0, 1]\} \union \{(b, 1] : b \in [0, 1]\}$ is a subbasis for the standard topology on $[0, 1]$, because any element of the subbasis is already a basis element, and all other basis elements are of the form $(a, b)$ which is simply the intersection of $[0, a)$ with $(b, 1]$.
+
+    Consider $f: X \to [0, 1]$ given by $f(x) = 1$ if $x \not\in U_1$ and $f(x) = \inf \{q : x \in U_q\}$ if $x \in U_1$. Then if $x \in U_q$ we know $x\in U_1$, and so $f(x) = \inf \{p : x \in U_p\} \leq q$.
+
+    Note that if $f(x) < b$ then by construction there exists $p \in [0, 1] \intersect \Q$ such that $f(x) \leq p < b$ and $x \in U_p$. Therefore,
+    \begin{align*}
+        f^{-1}([0, b)) = \bigunion_{p < b}U_p,
+    \end{align*}
+    which is open since it is a union of open sets.
+
+    If $f(x) > a$, then necessarily $x \not\in U_q$ for all $f(x) > q$. Since $\bar{U_p} \subseteq U_q$ for any $p < q$, it follows $x \not\in \bar{U_p}$. Conversely, if $x \not\in \bar{U_p}$, then $x \not\in U_q$ for all $q < p$, and so $f(x) \geq p$. Therefore,
+    \begin{align*}
+        f^{-1}((a, 1]) = \bigunion_{p > a}(X \setminus \bar{U_p}),
+    \end{align*}
+    since we just proved $x \in X \setminus \bar{U_p}$ implies $f(x) \geq p > a$, and that $f(x) > a$ implies $x \in X \setminus \bar{U_p}$ for any $p < f(x)$, so in particular for $p = (a + f(x))/2$ which satisfies $a < p < f(x)$. Since this is a union of open sets, it is also open.
+
+    Therefore $f^{-1}(U)$ is open for all $U \in \mathcal{S}$, and so $f(x)$ is continuous.
+\end{proof}
+
+\begin{thm}{Urysohn's lemma}\label{lemma:urysohn}\proofbreak
+    Let $X$ be a normal space, and let $A$ and $B$ be disjoint closed subsets of $X$. There exists a continuous map $f: X \to [0, 1] \subseteq \R$ such that $A \subseteq f^{-1}(\{0\})$ and $B \subseteq f^{-1}(\{1\})$.
+\end{thm}
+
+\begin{proof}
+    Since $X$ is normal and $A$ and $B$ are closed and disjoint, by definition there exists an open set $U_1$ containing $A$ and disjoint from $B$ (so $B \subseteq X \setminus U_1$). Then by Theorem \ref{thm:topo-regular-normal-characterization}, there exists $U_0$ such that $A \subseteq U_0$ and $\bar{U_0} \subseteq U_1$.
+
+    Now we will proceed by induction on $q_k \in [0, 1] \intersect \Q$, where $q_k = 0$, $q_1 = 1$, and the remainder are in no particular order. Suppose that for distinct $a, b \in [0, 1] \intersect \Q$ (where $a < b$ without loss of generality), we have $U_a, U_b$ such that $\bar{U_a} \subseteq U_b$. Then for any distinct $c \in (0, 1) \intersect \Q$ we have either $0 < c < a$, $a < c < b$, or $b < c < 1$. Let $U_p, U_q$ be $U_0, U_a$, or $U_a,U_b$, or $U_b,U_1$ respectively. Suppose that $\bar{U_p} \subseteq U_q$. By Theorem \ref{thm:topo-regular-normal-characterization}, there exists $U_c$ such that $\bar{U_p} \subseteq U_c$, and $\bar{U_c} \subseteq U_q$.
+
+    It follows by induction that there exists $\{U_q\}$ such that $A \subseteq U_0$, $B\subseteq X\setminus U_1$, and $\bar{U_p} \subseteq U_q$ if $p < q$. By Lemma \ref{lemma:urysohn-proto}, there exists a continuous map $f: X \to [0, 1]$ such that $f(x) \leq q$ if $x \in U_q$ and $f(x) = 1$ if $x \not\in X_1$. In particular, this implies that $f(X \setminus U_1) = 1$ so $B \subseteq f^{-1}(\{1\})$, and also that $f(A) \subseteq f(U_0) = \{0\}$, so $A \subseteq f^{-1}(\{0\})$.
+\end{proof}
+
+\begin{defn}
+    A topological space $X$ is said to be \emph{completely regular}, \emph{Tychonoff},or satisfies the $T_{3\frac{1}{2}}$ separation axiom, when singletons are closed in $X$, and given any $x \in X$ and closed $A \subseteq X$ not containing $x$ there exists a function $f: X \to [0, 1]$ such that $f(x) = 1$ and $f(A) = \{0\}$.
+\end{defn}
+
+\begin{prop}
+    If a topological space $X$ is $T_4$ (normal), then it is $T_{3\frac{1}{2}}$ (completely regular), and if it is $T_{3\frac{1}{2}}$ then it is $T_3$ (regular).
+\end{prop}
+
+\begin{proof}
+    If $X$ is normal, then it is completely regular by Urysohn's lemma \ref{lemma:urysohn} since $\{x\}$ is closed.
+
+    If $X$ is completely regular, then by definition for any $x \in X$ and closed $A \subseteq X$ not containing $x$, we know there exists $f: X \to [0, 1]$ such that $x \in f^{-1}(\{1\})$ and $A \subseteq f^{-1}(\{0\})$. Then $f^{-1}((1/2, 1])$ and $f^{-1}([0, 1/2)]$ are disjoint open sets containing $x$ and $A$ respectively, and so $X$ is regular.
+\end{proof}
+
+\begin{rmk}
+    Regular spaces are not necessarily completely regular --- the Tychonoff corkscrew is a regular Hausdorff space containing two points such that every continuous real-valued map is constant on those points.
+\end{rmk}
+
+\begin{thm}{Tietze extension theorem}\label{thm:tietze-extension}\proofbreak
+    Let $X$ be a normal topological space, and $A \subseteq X$ a closed subset. Then
+    \begin{enumerate}[label=(\alph*)]
+        \item Given continuous $f: A \to [a, b] \subseteq \R$, there exists a continuous function $\hat{f}: X \to [a, b]$ such that $\hat{f}|_{A} = f$.
+        \item Given continuous $f: A \to \R$, there exists a continuous function $\hat{f}: X \to \R$ such that $\hat{f}|_{A} = f$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}\proofbreak
+    \begin{enumerate}[label=(\alph*)]
+        \item For any $n \in \Z^{+}$, by Urysohn's lemma \ref{lemma:urysohn} there exists $f_n: X \to [a, b]$ such that {\color{red}TODO: complete}
+        \item Since $(-1, 1)$ is homeomorphic to $\R$, it suffices to show that any continuous map $f: A \to (-1, 1)$ can be extended to a continuous map $f: X \to (-1, 1)$. Since such $f$ is also a function $f: A \to [-1, 1]$, by part (a) there exists $g: X \to [-1, 1]$ such that $g|_A = f$. Let $B = g^{-1}(\{-1, 1\})$, so $A$ and $B$ must be disjoint closed subsets of $X$. By Urysohn's lemma \ref{lemma:urysohn}, there exists a continuous function $h: X \to [0, 1]$ such that $h(A) = \{1\}$ and $h(B) = \{0\}$. It follows that $\hat{f}(x) = g(x)h(x)$ is a continuous map such that for $x \in A$ we have $\hat{f}(x) = g(x)1 = f(x)$, and for $x \not\in A$ either $\abs{g(x)} < 1$ and $h(x) \leq 1$ so $\hat{f(x)} \in (-1, 1)$, or else $\abs{g(x)} = 1$ and $h(x) = 0$ so $\hat{f(x)} = 0 \in (-1, 1)$. Therefore $\hat{f}: X \to (-1, 1)$ is a continuous function extending $f$.
+    \end{enumerate}
+\end{proof}
+
+\begin{thm}
+    Let $X$ be a $T_1$ topological space. The following are equivalent:
+    \begin{enumerate}[label=(\arabic*)]
+        \item $X$ is normal,
+        \item Given disjoint closed $A, B \subseteq X$, there exists a continuous map $f: X \to [0, 1]$ such that $A \subseteq f^{-1}(\{0\})$ and $B \subseteq f^{-1}(\{1\})$.
+        \item Given closed $A \subseteq X$, any continuous map $f: A \to \R$ can be extended to a continuous map $\hat{f}: X \to \R$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    We know (2) follows from (1) by Urysohn's lemma \ref{lemma:urysohn}, and (3) follows from (1) by the Tietze extension theorem \ref{thm:tietze-extension}.
+
+    Suppose (2) holds, so given $A, B \subseteq X$ disjoint open sets and the continuous map $f$ given by (2), we have $U = f^{-1}([0, 1/2))$ and $V = f^{-1}((1/2, 1])$ are disjoint open sets containing $A$ and $B$ respectively.
+
+    ({\color{red}TODO}: (3) $\implies$ (1)).
+\end{proof}
+
+\begin{exmp}
+    Peano curve, partition of unity, {\color{red}TODO}
+\end{exmp}
+
+\begin{defn}
+    An imbedding of $X$ into $Y$ is a homeomorphism from $X$ to a subset of $Y$.
+\end{defn}
+
+\begin{thm}{Urysohn's metrization theorem}\label{thm:urysohn-metrization}\proofbreak
+    Every second countable regular space is metrizable.
+\end{thm}
+
+\begin{proof}
+    Let $\{B_n\}$ be a countable basis for $X$. For every pair $n, m$ such that $\bar{B_n} \subseteq B_m$, by Urysohn's lemma \ref{lemma:urysohn} there exists a continuous map $g_{n,m}: X \to [0, 1]$ such that $g_{n,m}(\bar{B_{n}}) = \{1\}$ and $g_{n,m}(X\setminus B_m) = \{0\}$. Then for any point $p \in X$ and neighborhood $U$ of $p$, there must exist a basis element $B_m$ such that $p \in B_m \subseteq U$. Since $X$ is regular, by Theorem \ref{thm:topo-regular-normal-characterization} there exists $B_n$ such that $p \in B_n$ and $\bar{B_n} \subseteq B_m$. Therefore, $g_{n,m}$ was constructed, so $g_{n,m}(p) = 1$ and $g_{n,m}$ vanishes outside of $U$. Note that $\abs{\{g_{n,m}\}}$ is at most $\abs{\N^2}$, so this is a countable collection. Therefore, we can re-index it as a countable collection $\{h_n\}$, and then define the countable collection $\{f_n\}$, where $f_n = h_n/n$, so that $f_n < 1/n$ since $g_{n,m} \leq 1$.
+
+    We now show we can imbed $X$ into the metric space $(\R^{\omega}, \bar{\rho})$, where $\bar{\rho}(x, y) = \sup_{i}\max(\abs{x_i-y_i}, 1)$. Then since a subspace of a metric space is a metric space, it will follow $X$ is homeomorphic to a metric space, and so must be metrizable.
+
+    Define $F(x) = (f_{n}(x))$. Suppose $x \neq y$, then since singletons are closed we know there exists an open neighborhood $U$ containing $x$ but not $y$. Therefore, there exists $f_n$ which is positive at $x$ but zero at $y$, so $F(x) \neq F(y)$. {\color{red}TODO: complete}
+\end{proof}
+
+\section{Fundamental Groups}
+
+\begin{defn}
+    Let $f, f': X \to Y$ be continuous. A \emph{homotopy} between $f$ and $f'$ is a continuous map $F: X \times [0, 1] \to Y$ such that $F(x, 0) = f(x)$ and $F(x, 1)= f'(x)$.
+
+    When there exists a homotopy between $f$ and $f'$, we write $f \simeq f'$ and say $f$ is homotopic to $f'$. If $f'$ is a constant function, we say $f$ is \emph{nulhomotopic}.
+\end{defn}
+
+\begin{defn}
+    Two paths $f, f': [0, 1] \to X$ with the same endpoints $x_0 = f(0) = f'(0)$ and $x_1 = f(1) = f'(1)$ are \emph{path homotopic} if there is a continuous function $F: [0, 1] \times [0, 1] \to X$ such that
+    \begin{align*}
+        F(s, 0) &= f(s), \\
+        F(s, 1) &= f'(s), \\
+        F(0, t) &= x_0, \\
+        F(1, t) &= x_1.
+    \end{align*}
+    The first two conditions ensure $F$ is a homotopy between $f$ and $f'$, and the second two conditions ensure any ``intermediate'' path $g_{t}(s) = F(s, t)$ still have fixed endpoints $x_0$ and $x_1$.
+
+    If $f$ and $f'$ are path homotopic, we write $f \simeq_{h} f'$.
+\end{defn}
+
+\begin{prop}
+    Homotopic and path homotopic are both equivalence relations.
+\end{prop}
+
+\begin{proof}
+    Taking $F(x, s) = f(x)$ is clearly a (path) homotopy from $f$ to itself, so the relations are reflexive. If $F$ is a homotopy from $f$ to $g$, then $G(x, s) = F(x, 1-s)$ is a (path) homotopy from $g$ to $f$, so the relations are symmetric. Finally, given (path) homotopies $F$ and $G$ from $f: X \to Y$ to $g: X \to Y$, and from $g: X \to Y$ to $h: X \to Y$ respectively, consider $T: X\times [0, 1] \to Y$ given by
+    \begin{align*}
+        T(x, s) = \begin{dcases}
+            F(x, 2s), &0 \leq s \leq \frac{1}{2} \\
+            G(x, 2s-1), &\frac{1}{2} < s \leq 1
+        \end{dcases}.
+    \end{align*}
+    Since $F(x, 1) = g(x) = G(x, 0)$, $T(x, s)$ is continuous at $s = 1/2$ where $F$ and $G$ are ``glued'' together. Therefore $T$ is continuous and satisfies $T(x, 0) = F(x, 0) = f(x)$ and $T(x, 1) = G(x, 1) = h(x)$. Furthermore, if $F$ and $G$ are \emph{path} homotopies, then $T(0, t)$ is equal to either $F(0, 2t)$ or $G(0, 2t-1)$, so in either case $T(0, t) = x_0$ and similarly $T(1, t) = x_1$. Therefore the relations are transitive.
+\end{proof}
+
+\begin{defn}
+    For paths $f, g: [0, 1] \to X$ such that $f(1) = g(0)$, we define $f * g$ to be the path from $f(0)$ to $g(1)$ such that
+    \begin{align*}
+        (f * g)(s) &= \begin{dcases}
+            f(2s), &s \in [0, 1/2] \\
+            g(2s-1), &s \in [1/2, 1]
+        \end{dcases}.
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    $*$ induces a well-defined operation on path homotopy equivalence classes.
+\end{prop}
+
+\begin{proof}
+    Suppose $f \simeq_p f'$ and $g \simeq_p g'$, such that $f(1) = g(0)$, where $F, G: [0, 1]^2 \to X$ are path homotopies from $f$ to $f'$ and from $g$ to $g'$ respectively. Then $H: [0, 1]^2 \to X$ given by
+    \begin{align*}
+        H(s, t) &= \begin{dcases}
+            F(2s, t), &s \in [0, 1/2] \\
+            G(2s-1, t), &s \in [0, 1'2]
+        \end{dcases}
+    \end{align*}
+    is a path homotopy from $f * g$ to $f' * g'$, since it is continuous, satisfies $H(s, 0) = f * g$, $H(s, 1) = f' * g'$, and $H(0, t) = F(0, t) = x_0$, $H(1, t) = G(1, t) = x_1$.
+\end{proof}
+
+\begin{prop}
+    The path product $*$ on the set of all paths in a space $X$ is a groupoid called the \emph{fundamental groupoid}.
+\end{prop}
+
+\begin{proof}
+    Associativity holds because given $f, g, h: [0, 1] \to X$ such that $f(1) = g(0)$ and $g(1) = h(0)$, we have
+    \begin{align*}
+        (f * g) * h &= \begin{dcases}
+            f(2(2s)), &s \in [0, 1/4] \\
+            g(2(2s-1)), &s \in [1/4, 1/2] \\
+            h(2s-1), &s \in [1/2, 1]
+        \end{dcases}, \\
+        f * (g * h) &= \begin{dcases}
+            f(2s), &s \in [0, 1/2] \\
+            g(2(2s-1)) &s \in [1/2, 3/4] \\
+            h(2(2s-1)-1), &s \in [3/4, 1]
+        \end{dcases}.
+    \end{align*}
+    Define $\ell_{a,b}(x) = (x-a)/(b-a)$, so $\ell_{a,b}(a) = 0$, $\ell_{a,b}(b) = 1$, and $\ell_{a,b}(x)$ is linear between $a$ and $b$. Then we can express
+    \begin{align*}
+        (f * g) * h &= \begin{dcases}
+            f(\ell_{0,1/4}(s)), &s \in [0, 1/4] \\
+            g(\ell_{1/4,1/2}(s)), &s \in [1/4, 1/2] \\
+            h(\ell_{1/2,1}(s)), &s \in [1/2, 1]
+        \end{dcases}, \\
+        f * (g * h) &= \begin{dcases}
+            f(\ell_{0,1/2}(s)), &s \in [0, 1/2] \\
+            g(\ell_{1/2,3/4}(s)), &s \in [1/2, 3/4] \\
+            h(\ell_{3/4,1}(s)), &s \in [3/4, 1]
+        \end{dcases},
+    \end{align*}
+    and we can express one possible homotopy from $(f * g) * h$ to $f * (g * h)$ as
+    \begin{align*}
+        a &= 1/4 + 1/4t, \\
+        b &= 1/2 + 1/4t, \\
+        T(s, t) &= \begin{dcases}
+            f(\ell_{0,a}(s)), &s \in [0, a] \\
+            g(\ell_{a,b}(s)), &s \in [a, b] \\
+            h(\ell_{b,1}(s)), &s \in [b, 1]
+        \end{dcases}.
+    \end{align*}
+    Then $T(s, 0) = (f * g) * h$, $T(s, 1) = f * (g * h)$, $T(0, t) = f(0)$, and $T(1, t) = h(1)$, so we indeed see that $[(f * g) * h] = [f * (g * h)]$.
+
+    For $x \in X$, define $e_x: [0, 1] \to X$. Then $e_{f(0)} * f = f$ and $f * e_{f(1)} = f$ for all paths $f$.
+
+    For any $f: [0, 1] \to X$, define $f^{-1} = f(1-s)$. Then $f * f^{-1}$ is path homotopic to $e_{f(0)}$ and $f^{-1} * f$ is path homotopic to $e_{f(1)}$, via the homotopy
+    \begin{align*}
+        F(s, t) &= \begin{dcases}
+            f(2(1-t)s), &s \in [0, 1/2] \\
+            f(2(1-t)(1-s)), &s \in [1/2, 1]
+        \end{dcases}
+    \end{align*}
+    Note that at $s = 1/2$ we have $f(2(1-t)s) = f(1-t)$ and $f(2(1-t)(1-s)) = f(1-t)$. Furthermore, $F(s, 0) = f * f^{-1}$, $F(s, 1) = f(0)$, and $F(0, t) = f(0) e_{f(0)}(t) = F(1, t)$. Since $(f^{-1})^{-1} = f$, a symmetric argument proves $f^{-1} * f$ is path homotopic to $e_{f(1)}$.
+\end{proof}
+
+\begin{defn}
+    Given a specified \emph{base point} $x_0$, the subgroup of the fundamental groupoid consisting of paths starting and ending at $x_0$ is called the \emph{fundamental group}.
+\end{defn}
+
+\begin{prop}
+    Within a path connected component, all choices of base point $x_0$ result in the same fundamental group.
+\end{prop}
+
+\section{Covering Maps}
+
+\begin{defn}
+    Let $p: E \to B$ be a continuous surjection function, and $U \subseteq B$ an open subset. We say that $U$ is \emph{evenly covered} by $p$ if the preimage $p^{-1}(U)$ is a disjoint union of $U_{\alpha} \subseteq E$ such that the restriction of $p$ to any \emph{single} $U_{\alpha}$ is a homeomorphism between $U_{\alpha}$ and $U$.
+
+    If there exists an open neighborhood $U_b$ for each $b \in B$ such that $p$ evenly covers $U_b$, then $p$ is a \emph{covering map} for $B$ and $E$ is a \emph{covering space} for $B$.
+\end{defn}
+
+\begin{exmp}
+    Let $X$ be any topological space, and let $E = X \times \N$. Then $p: E \to X$ given by $(x, n) \mapsto x$ is a covering map.
+
+    Let $\varepsilon: \R \to S^1$ be the exponential map $\varepsilon(r) = \exp(2\pi i r)$.
+
+    For any $k \in \Z^+$, the map $p: S^1 \to S^1$ be given by $z \to z^{k}$ (where we consider $S^1 \subseteq \C$) is a covering map.
+\end{exmp}
+
+\begin{rmk}
+    Typically we want $E$ to be connected and locally path-connected (so $E$ is path connected), in order to avoid covering spaces like $X \times \N$ which are homeomorphic to a disjoint union of $B$, and so a covering map carries effectively no information.
+\end{rmk}
+
+\begin{thm}
+    Let $p: E \to B$ be a covering map, and $B_{0} \subseteq B$. Then the restriction of $p$ to the preimage of $B_{0}$ is a covering map of $B_{0}$.
+\end{thm}
+
+\begin{proof}
+    Let $q: E_{0} \to B_{0}$ be this restricted map. We know $q$ is continuous since $p$ is, and $q$ is surjective by construction. For any $b \in B_{0} \subseteq B$, there exists a neighborhood $U$ containing $b$ and evenly covered by $p$ via $\{U_{\alpha}\}$. Take $V = U \intersect B_0$, which contains $b$ and is evenly covered by $q$ via $\{U_{\alpha} \intersect E_{0}\}$.
+\end{proof}
+
+\begin{thm}\label{thm:covering-map-product}
+    If $p: E \to B$ and $p': E' \to B'$ are covering maps, then so is $p \times p': E \times E' \to B \times B'$.
+\end{thm}
+
+\begin{proof}
+    Let $(b, b') \in B \times B'$. We know there are neighborhoods $U$, $U'$ of $b$ and $b'$ which are evenly covered by $p$ and $p'$ via $\{U_{\alpha}\}$ and $\{V_{\alpha}\}$ respectively. Let $W_{\alpha,\beta} = U_{\alpha} \times V_{\beta}$. Then the preimage of $U \times U'$ is the disjoint union of $W_{\alpha,\beta}$, and each $W_{\alpha,\beta}$ is homeomorphic to $U \times U'$ via the restriction of $p \times p'$.
+\end{proof}
+
+\begin{exmp}
+    Consider $B = \R^2 \setminus \{0\}$. We know the exponential map from $\R$ to $S^1$ is a covering map, and the identity map $\R^+ \to \R^+$ is a covering map. By THeorem \ref{thm:covering-map-product}, there is a covering map from $\R \times \R^+$ to $S^1 \times \R^+$. Since $S^+ \times \R^+$ is homeomorphic to $\R^2 \times \{0\}$ via $\varphi(x, \lambda) = \lambda x$, it follows that we have a covering map $p: \R \times \R^+ \to \R^2 \times \{0\}$ given by $p(a, b) = b\exp(2\pi i a)$.
+\end{exmp}
+
+\begin{defn}
+    Let $p: E \to B$ be a covering map, and $\varphi: Y \to B$ a continuous map. A \emph{lift} $\tilde{\varphi}: Y \to E$ of $\varphi$ is a continuous function such that $p \circ \tilde{\varphi} = \varphi$.
+\end{defn}
+
+\begin{thm}{Unique lifting}\label{thm:unique-lifting}\proofbreak
+    Let $\varphi: Y \to X$ be continuous, and $p: E \to X$ a covering map. Suppose $\tilde{\varphi}_{1}$ and $\tilde{\varphi}_{2}$ are two lifts of $\varphi$. If $\tilde{\varphi}_{1}(x) = \tilde{\varphi}_{2}(x)$ for any $x$, then the lifts are the same.
+\end{thm}
+
+\begin{thm}
+    Let $p: E \to X$ be a covering map, and $\varphi_{0},\varphi_{1}$ be continuous maps $Y \to X$ with a homotopy $H: Y \times I \to X$ between them, then there is a unique homotopy $\tilde{H}: Y \times I \to E$ such that $\tilde{H}_{0} = \tilde{\varphi}_{0}$.
+
+    If $H$ is a path-homotopy, then so is $\tilde{H}$.
+\end{thm}
+
+\begin{thm}
+    {\color{red}TODO: add group work 3 theeorem}
+\end{thm}
+
+\section{Homotopy Equivalences}
+
+\begin{defn}
+    Let $f: X \to Y$ and $g: Y \to X$ be continuous maps such that $g \circ f$ is homotopic to $\textrm{id}_{X}$ and $f \circ g$ is homotopic to $\textrm{id}_{Y}$. Then $f$ and $g$ are \emph{homotopy equivalences}, $g$ ($f$) is the homotopy inverse of $f$ ($g$), and $X$ and $Y$ have the same \emph{homotopy type}.
+\end{defn}
+
+\begin{prop}
+    Having the same homotopy type is an equivalence relation.
+\end{prop}
+
+\begin{defn}
+    A subspace $A \subseteq x$ is a \emph{deformation retract} of $X$ if there exists a homotopy $H: X \times I \to X$ such that $H(\cdot, 0) = \textrm{id}_{X}$, $H(x, 1) \in A$, and $H(a, t) = a$ for all $a \in A$. That is, the identity map on $X$ can be continuously deformed into a map from $X$ to $A$, such that all points in $A$ are fixed throughout the deformation.
+
+    We call $r(x) = H(x, 1)$ a \emph{retraction} of $X$ onto $A$.
+\end{defn}
+
+\begin{rmk}
+    Let $\iota: A \to X$ be the inclusion map. Then $r \circ \iota = \textrm{id}_{A}$, and $H$ is a homotopy between $\textrm{id}_{X}$ and $\iota \circ r$. Therefore, $A$ and $X$ have the same homotopy type.
+\end{rmk}
+
+\begin{exmp}
+    Let $X = \R^{n+1}\setminus \{0\}$, let $A = S^n$, and $H(x, t) = t\frac{x}{\norm{x}} + (1-t)x$.
+\end{exmp}
+
+\begin{lemma}
+    Let $h, k: (X, x_0) \to (Y, y_0)$ be pointed continuous maps which are homotopic and $x_0 \mapsto y_0$ is fixed throughout the homotopy. Then $h_{*}, k_{*}: \pi_1(X, x_0) \to \pi_1(Y, y_0)$ are equal.
+\end{lemma}
+
+\begin{proof}
+    Let $H: (X, x_0) \times I \to (Y, y_0)$ be the homotopy from $h$ to $k$. Let $f$ is any loop at $x_0$, then $h_*(f) = H(\cdot, 0) \circ f$ and $k_* = H(\cdot, 1)$. {\color{red}TODO}
+\end{proof}
+
+\begin{thm}
+    Let $A$ be a deformation retract of $X$. The inclusion map $\iota: A \to X$ induces an isomorphism $\iota_{*}: \pi_1(A, x_0) \to \pi_1(X, x_0)$ on the fundamental groups.
+\end{thm}
+
+\begin{proof}
+    ({\color{red}TODO: from homework}) We know $\iota_*$ is injective and a homomorphism of groups, so it remains only to prove it is surjective. Let $r: X \to A$ be the retraction, which we know satisfies $(\iota \circ r)_{*} = (\textrm{id}_{X})_{*} = \textrm{id}_{\pi_1(X,x_0)}$. Since $(\iota \circ r)_{*} = \iota_* \circ r_*$, it follows that $\iota_*$ must be surjective.
+\end{proof}
+
+\begin{thm}
+    If $f: (X, x_0) \to (Y, y_0)$ is a pointed continuous map which is a homotopy equivalence, then $f_{*}: \pi_1(X, x_0) \to \pi_1(Y, y_0)$ is an isomorphism.
+\end{thm}
+
+\begin{proof}
+    Let $g: (Y, y_0) \to (X, x_1)$ be a homotopy inverse of $f$. Consider
+    % https://q.uiver.app/#q=WzAsNCxbMiwwLCJcXGxlZnQoWSx5XzBcXHJpZ2h0KSJdLFs2LDAsIihZLHlfMSkiXSxbMCwwLCJcXGxlZnQoWCx4XzBcXHJpZ2h0KSJdLFs0LDAsIlxcbGVmdChYLHhfMVxccmlnaHQpIl0sWzIsMCwiZiJdLFswLDMsImciXSxbMywxLCJmIl1d
+    \tikzexternaldisable
+    \[\begin{tikzcd}
+        {\left(X,x_0\right)} && {\left(Y,y_0\right)} && {\left(X,x_1\right)} && {(Y,y_1)}
+        \arrow["f", from=1-1, to=1-3]
+        \arrow["g", from=1-3, to=1-5]
+        \arrow["f", from=1-5, to=1-7]
+    \end{tikzcd}\]
+    \tikzexternalenable
 \end{proof}
